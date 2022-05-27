@@ -12,14 +12,16 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     src/elemental_profile.cpp \
-    src/elemental_profile_set.cpp
+    src/elemental_profile_set.cpp \
+    src/sourcesinkdata.cpp
 
 HEADERS += \
-    include/elemental_profile.h \
-    include/elemental_profile_set.h \
     mainwindow.h
 
 INCLUDEPATH += include/
+INCLUDEPATH += ../QXlsx/QXlsx/header/
+
+LIBS += /home/arash/Projects/QXlsx/build-QXlsx-Desktop_Qt_5_15_2_GCC_64bit-Release/libQXlsx.a
 
 FORMS += \
     mainwindow.ui

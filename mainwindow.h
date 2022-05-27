@@ -17,5 +17,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void on_import_excel();
 };
 #endif // MAINWINDOW_H
