@@ -17,6 +17,9 @@ SOURCES += \
     src/sourcesinkdata.cpp
 
 HEADERS += \
+    include/elemental_profile.h \
+    include/elemental_profile_set.h \
+    include/sourcesinkdata.h \
     indicatesheetsdialog.h \
     mainwindow.h
 

@@ -11,7 +11,9 @@ class Elemental_Profile_Set
 {
 public:
     Elemental_Profile_Set();
-
+    Elemental_Profile_Set(const Elemental_Profile_Set& mp);
+    Elemental_Profile_Set& operator=(const Elemental_Profile_Set &mp);
+    Elemental_Profile *Profile(const string &name);
 private:
     map<string,Elemental_Profile> elemental_profiles;
 };
