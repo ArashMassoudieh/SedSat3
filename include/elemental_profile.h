@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 using namespace std;
 class Elemental_Profile
@@ -16,6 +17,7 @@ public:
     bool AppendElement(const string &name,const double &val=0);
     map<string,double>::iterator begin() {return profile.begin(); }
     map<string,double>::iterator end() {return profile.end(); }
+    vector<double> Vals();
 private:
     map<string,double> profile;
 };

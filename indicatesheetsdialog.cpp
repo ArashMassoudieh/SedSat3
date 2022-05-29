@@ -56,8 +56,7 @@ void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
 
 void IndicateSheetsDialog::reject()
 {
-
-    this->hide();
+    QDialog::reject();
 }
 void IndicateSheetsDialog::accept()
 {
@@ -66,8 +65,7 @@ void IndicateSheetsDialog::accept()
         if (radio_buttons_sinks[i]->isChecked())
             dynamic_cast<MainWindow*>(parent())->SetSinkSheet(i);
     }
-
-    this->hide();
+    QDialog::accept();
 }
 
 void IndicateSheetsDialog::on_radio_button_changed()

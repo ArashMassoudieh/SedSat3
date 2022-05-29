@@ -54,3 +54,12 @@ bool Elemental_Profile::AppendElement(const string &name,const double &val)
         return false;
     }
 }
+
+vector<double> Elemental_Profile::Vals()
+{
+    vector<double> vals;
+    for (map<string,double>::iterator it=profile.begin(); it!=profile.end(); it++)
+        vals.push_back(it->second);
+
+    return vals;
+}

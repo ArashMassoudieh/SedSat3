@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     ../qcustomplot6/qcustomplot6/qcustomplot.cpp \
+    customplotbar.cpp \
     indicatesheetsdialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     ../qcustomplot6/qcustomplot6/qcustomplot.h \
+    customplotbar.h \
     include/elemental_profile.h \
     include/elemental_profile_set.h \
     include/sourcesinkdata.h \

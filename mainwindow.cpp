@@ -68,6 +68,7 @@ bool MainWindow::ReadExcel(const QString &filename)
     IndicateSheetsDialog *indicatesheetdialog = new IndicateSheetsDialog(this);
     indicatesheetdialog->Populate_Table(sheetnames);
     indicatesheetdialog->exec();
+    indicatesheetdialog->close();
     qDebug()<<"Sink Sheet is: " << Sink_Sheet;
 
     QList<QStringList> element_names;

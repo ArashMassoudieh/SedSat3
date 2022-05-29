@@ -42,3 +42,15 @@ vector<string> Elemental_Profile_Set::SampleNames()
     }
     return out;
 }
+
+Elemental_Profile *Elemental_Profile_Set::Profile(const string &name)
+{
+    if (elemental_profiles.count(name)==0)
+    {
+        cout<<"Sample '" + name + "' does not exist!"<<endl;
+        return nullptr;
+    }
+    else
+        return &elemental_profiles[name];
+
+}

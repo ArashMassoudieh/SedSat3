@@ -96,11 +96,7 @@ vector<string> SourceSinkData::ElementNames()
 {
     vector<string> out;
 
-    for (map<string,Elemental_Profile>::iterator it=targets.begin()->second.begin(); it!=targets.begin()->second.end(); it++)
-    {
-        out.push_back(it->first);
-    }
-    for (map<string,Elemental_Profile>::iterator it=sources.begin()->second.begin(); it!=sources.begin()->second.end(); it++)
+    for (map<string,double>::iterator it=targets.begin()->second.begin()->second.begin(); it!=targets.begin()->second.begin()->second.end(); it++)
     {
         out.push_back(it->first);
     }
