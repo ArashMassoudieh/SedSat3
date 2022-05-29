@@ -35,12 +35,24 @@
     </property>
     <addaction name="actionImport_Elemental_Profile_from_Excel"/>
    </widget>
+   <widget class="QMenu" name="menuPlot">
+    <property name="title">
+     <string>Plot</string>
+    </property>
+    <addaction name="actionRaw_Elemental_Profiles"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuPlot"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionImport_Elemental_Profile_from_Excel">
    <property name="text">
     <string>Import Elemental Profile from Excel</string>
+   </property>
+  </action>
+  <action name="actionRaw_Elemental_Profiles">
+   <property name="text">
+    <string>Raw Elemental Profiles</string>
    </property>
   </action>
  </widget>

@@ -12,6 +12,7 @@
 #include "xlsxrichstring.h"
 #include "xlsxworkbook.h"
 #include "indicatesheetsdialog.h"
+#include "plotwindow.h"
 #include "QMessageBox"
 using namespace QXlsx;
 
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->actionImport_Elemental_Profile_from_Excel,SIGNAL(triggered()),this,SLOT(on_import_excel()));
+    connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
 }
 
 MainWindow::~MainWindow()
@@ -40,6 +42,12 @@ void MainWindow::on_import_excel()
         ReadExcel(fileName);
     }
 
+}
+
+void MainWindow::on_plot_raw_elemental_profiles()
+{
+    PlotWindow *plotwindow = new PlotWindow(this);
+    plotwindow->show();
 }
 
 bool MainWindow::ReadExcel(const QString &filename)
@@ -71,7 +79,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         int col = 2;
         while (elem!="" && xlsxR.cellAt(1,col))
         {
-            elem = xlsxR.cellAt(1,col)->readValue().toString();
+            elem = xlsxR.cellAt(1,col)->readValue().toString().trimmed();
             if (elem!="")
                 elem_names.append(elem);
             qDebug()<<elem;
@@ -89,6 +97,36 @@ bool MainWindow::ReadExcel(const QString &filename)
 
     }
 
+    for (int sheetnumber=0; sheetnumber<sheetnames.count(); sheetnumber++)
+    {
+        xlsxR.selectSheet(sheetnames[sheetnumber]);
+        int row=2;
+        Elemental_Profile_Set *elemental_profile_set = nullptr;
+        if (sheetnumber==Sink_Sheet)
+        {
+            elemental_profile_set = data.Append_Target(sheetnames[sheetnumber].toStdString());
+        }
+        else
+        {
+            elemental_profile_set = data.Append_Source(sheetnames[sheetnumber].toStdString());
+        }
+
+        while (xlsxR.cellAt(row,1))
+        {
+            QString sample_name=xlsxR.cellAt(row,1)->readValue().toString();
+            Elemental_Profile elemental_profile;
+            for (int col=0; col<element_names[0].count(); col++)
+            {
+                double value = xlsxR.cellAt(row,col+2)->readValue().toDouble();
+                elemental_profile.AppendElement(element_names[0][col].toStdString(),value);
+            }
+            row++;
+            elemental_profile_set->Append_Profile(sample_name.toStdString(),elemental_profile);
+        }
+
+    }
+
+    qDebug()<<"Reading element information done!";
 
     /*bool endoftable = false;
         int rownum = 8;
