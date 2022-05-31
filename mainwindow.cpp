@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
     connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
+
 }
 
 MainWindow::~MainWindow()
@@ -44,6 +45,8 @@ void MainWindow::on_import_excel()
     {
         ReadExcel(fileName);
     }
+    ui->treeView->setModel(ToQStandardItemMode(&data));
+    connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
 
 }
 
@@ -131,7 +134,6 @@ bool MainWindow::ReadExcel(const QString &filename)
     }
 
     qDebug()<<"Reading element information done!";
-    ui->treeView->setModel(ToQStandardItemMode(&data));
 
     return true;
 }
@@ -192,4 +194,17 @@ QStandardItemModel* MainWindow::ToQStandardItemMode(const SourceSinkData* srcsin
     for (int i = 0; i < columnTitles.count(); ++i)
         columnviewmodel->setHeaderData(i, Qt::Horizontal, columnTitles.at(i), Qt::DisplayRole);
     return columnviewmodel;
+}
+
+void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
+{
+    qDebug()<<"Selection changed "<<changed;
+
+    QModelIndexList indexes = ui->treeView->selectionModel()->selectedIndexes();
+        for (int i=0; i<indexes.size(); i++) {
+        qDebug()<<indexes[i].data();
+
+    }
+    plotter->Clear();
+
 }

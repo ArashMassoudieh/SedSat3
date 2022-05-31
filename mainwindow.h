@@ -31,6 +31,7 @@ private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
     void on_test_plot();
+    void on_tree_selectionChanged(const QItemSelection &changed);
 
 
 
