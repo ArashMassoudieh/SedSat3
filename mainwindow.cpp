@@ -14,6 +14,7 @@
 #include "indicatesheetsdialog.h"
 #include "plotwindow.h"
 #include "QMessageBox"
+#include "Utilities.h"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -23,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->actionImport_Elemental_Profile_from_Excel,SIGNAL(triggered()),this,SLOT(on_import_excel()));
     connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
+    connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
+    ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
 }
 
 MainWindow::~MainWindow()
@@ -128,34 +131,8 @@ bool MainWindow::ReadExcel(const QString &filename)
     }
 
     qDebug()<<"Reading element information done!";
+    ui->treeView->setModel(ToQStandardItemMode(&data));
 
-    /*bool endoftable = false;
-        int rownum = 8;
-        while (!endoftable)
-        {
-            _row Row;
-            Row.CourseCode = xlsxR.cellAt(rownum,2)->readValue().toString() + " " + xlsxR.cellAt(rownum,3)->readValue().toString();
-            Row.CourseName = xlsxR.cellAt(rownum,5)->readValue().toString();
-            Row.Instructor = xlsxR.cellAt(rownum,9)->readValue().toString();
-            Row.section = xlsxR.cellAt(rownum,4)->readValue().toString();
-            QString solefilename = filename.split("/")[filename.split("/").count()-1];
-            Row.Semester = solefilename.split(" ")[0] + solefilename.split(" ")[1];
-            Row.EvaluationScore = xlsxR.cellAt(rownum,31)->readValue().toDouble();
-            qDebug()<< Row.CourseCode << ", " << Row.CourseName << ", " << Row.Instructor << ", " << Row.EvaluationScore << ", " << Row.Semester;
-            data.append(Row);
-            rownum++;
-            if (!xlsxR.cellAt(rownum,2))
-                endoftable = true;
-            else if (xlsxR.cellAt(rownum,2)->readValue().toString()=="")
-                endoftable = true;
-
-        }
-    }
-    else
-    {
-        qDebug() << "[debug][error] failed to load xlsx file.";
-    }
-    return data;*/
     return true;
 }
 
@@ -163,4 +140,56 @@ void MainWindow::WriteMessageOnScreen(const QString &text, QColor color)
 {
     ui->textBrowser->setTextColor(color);
     ui->textBrowser->append(text);
+}
+
+void MainWindow::on_test_plot()
+{
+    plotter = new GeneralPlotter(this);
+    vector<string> x;
+    vector<vector<double>> y;
+
+    for (int i=0; i<10; i++)
+        x.push_back("case " + aquiutils::numbertostring(i));
+
+    vector<string> names;
+    for (int j=0; j<5; j++)
+    {   vector<double> y_vec;
+        for (int i=0; i<10; i++)
+        {
+            y_vec.push_back(sin(i)+0.1*j);
+        }
+        y.push_back(y_vec);
+        names.push_back("Scenario: " + aquiutils::numbertostring(j));
+
+    }
+    plotter->AddScatters(names,x,y);
+    ui->dockWidgetGraph->setWidget(plotter);
+}
+
+QStandardItemModel* MainWindow::ToQStandardItemMode(const SourceSinkData* srcsinkdata)
+{
+    if (columnviewmodel)
+        delete columnviewmodel;
+    columnviewmodel = new QStandardItemModel();
+
+    vector<string> group_names = data.GroupNames();
+    for (int i=0; i<group_names.size(); i++)
+    {
+        /* Create the phone groups as QStandardItems */
+        QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
+
+        /* Append to each group 5 person as children */
+        for (map<string,Elemental_Profile>::iterator it= data.sample_set(group_names[i])->begin();it!=data.sample_set(group_names[i])->end(); it++)
+        {
+            QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
+            group->appendRow(child);
+        }
+        /* append group as new row to the model. model takes the ownership of the item */
+        columnviewmodel->appendRow(group);
+    }
+    columnviewmodel->setColumnCount(1);
+    QStringList columnTitles = QStringList() << "Groups";
+    for (int i = 0; i < columnTitles.count(); ++i)
+        columnviewmodel->setHeaderData(i, Qt::Horizontal, columnTitles.at(i), Qt::DisplayRole);
+    return columnviewmodel;
 }

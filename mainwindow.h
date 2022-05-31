@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "sourcesinkdata.h"
+#include "generalplotter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,9 +24,14 @@ private:
     int Sink_Sheet=-1;
     bool ReadExcel(const QString &filename);
     SourceSinkData data;
+    GeneralPlotter *plotter;
+    QStandardItemModel* ToQStandardItemMode(const SourceSinkData* srcsinkdata);
+    QStandardItemModel *columnviewmodel = nullptr;
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
+    void on_test_plot();
+
 
 
 };

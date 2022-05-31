@@ -1,0 +1,49 @@
+#pragma once
+
+#include <QPoint>
+#include "qcustomplot.h"
+
+class QRubberBand;
+class QMouseEvent;
+class QWidget;
+#include "vector"
+
+enum class AxisScale {normal, log};
+enum class Axis {x, y};
+
+using namespace std;
+
+class GeneralPlotter : public QCustomPlot
+{
+
+
+public:
+    GeneralPlotter(QWidget * parent = 0);
+    virtual ~GeneralPlotter();
+    void Clear();
+    bool AddScatter(const string &name, const vector<double> &x, const vector<double> &y, const QCPScatterStyle &symbol = QCPScatterStyle::ssDisc);
+    bool AddScatter(const string &name, const vector<string> &x, const vector<double> &y, const QCPScatterStyle &symbol = QCPScatterStyle::ssDisc);
+    bool AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y);
+    bool AddScatters(const vector<string> names, const vector<string> &x,const vector<vector<double>> &y);
+    bool AddTimeSeries(const string &name, const vector<double> &x, const vector<double> &y);
+    bool AddTimeSeriesSet(const string &name, const vector<vector<double>> &x, const vector<vector<double>> &y);
+    bool SetYAxisScaleType(AxisScale axisscale);
+    void setZoomMode(bool mode);
+    void SetRange(const vector<double> &range, const Axis &whichaxis);
+    void SetLegend(bool onoff);
+private:
+    vector<double> x_max_min_range;
+    vector<double> y_max_min_range;
+    QVector<QCPScatterStyle::ScatterShape> shapes;
+
+private slots:
+    void mousePressEvent(QMouseEvent * event) override;
+    void mouseMoveEvent(QMouseEvent * event) override;
+    void wheelEvent(QWheelEvent * event);
+    void mouseReleaseEvent(QMouseEvent * event) override;
+    void axisDoubleClick(QCPAxis *  axis, QCPAxis::SelectablePart  part, QMouseEvent *  event);
+private:
+    bool mZoomMode;
+    QRubberBand * mRubberBand;
+    QPoint mOrigin;
+};
