@@ -24,9 +24,13 @@ private:
     int Sink_Sheet=-1;
     bool ReadExcel(const QString &filename);
     SourceSinkData data;
-    GeneralPlotter *plotter;
-    QStandardItemModel* ToQStandardItemMode(const SourceSinkData* srcsinkdata);
+    GeneralPlotter *plotter = nullptr;
+    QStandardItemModel* ToQStandardItemModel(const SourceSinkData* srcsinkdata);
+    QStandardItem* ToQStandardItem(const QString &key, const QJsonObject &json);
+    QStandardItemModel* ToQStandardItemModel(const QJsonDocument &jsondocument);
     QStandardItemModel *columnviewmodel = nullptr;
+    QJsonDocument loadJson(const QString &fileName);
+    void saveJson(const QJsonDocument &document, const QString &fileName);
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();

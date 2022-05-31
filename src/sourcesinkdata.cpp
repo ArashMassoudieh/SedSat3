@@ -103,4 +103,17 @@ vector<string> SourceSinkData::ElementNames()
     return out;
 }
 
+profiles_data SourceSinkData::ExtractData(const vector<vector<string>> &indicators)
+{
+    profiles_data extracted_data;
+    extracted_data.element_names = ElementNames();
+    for (int i=0; i<indicators.size(); i++)
+    {
+        vector<double> vals = sample_set(indicators[i][0])->GetProfileForSample(indicators[i][1]);
+        extracted_data.values.push_back(vals);
+        extracted_data.sample_names.push_back(indicators[i][1]);
+    }
+    return extracted_data;
+}
+
 

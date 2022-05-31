@@ -147,6 +147,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, con
     graph->setData(xvals, yvals);
     SetRange(x_max_min_range,Axis::x);
     SetRange(y_max_min_range,Axis::y);
+    replot();
 }
 bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, const vector<double> &y, const QCPScatterStyle &symbol)
 {
@@ -183,6 +184,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     graph->setData(ticks, yvals);
     SetRange(x_max_min_range,Axis::x);
     SetRange(y_max_min_range,Axis::y);
+    replot();
 }
 bool GeneralPlotter::AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y)
 {
@@ -194,6 +196,7 @@ bool GeneralPlotter::AddScatters(const vector<string> names, const vector<vector
     {
         AddScatter(names[i],x[i],y[i],shapes[i%shapes.size()]);
     }
+    replot();
     return true;
 }
 bool GeneralPlotter::AddScatters(const vector<string> names, const vector<string> &x,const vector<vector<double>> &y)
@@ -206,6 +209,7 @@ bool GeneralPlotter::AddScatters(const vector<string> names, const vector<string
             return false;
         AddScatter(names[i],x,y[i],shapes[i%shapes.size()]);
     }
+    replot();
     return true;
 }
 bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, const vector<double> &y)
@@ -219,7 +223,18 @@ bool GeneralPlotter::AddTimeSeriesSet(const string &name, const vector<vector<do
 }
 bool GeneralPlotter::SetYAxisScaleType(AxisScale axisscale)
 {
-
+    if (axisscale==AxisScale::log)
+    {
+        QSharedPointer<QCPAxisTickerLog> logTicker(new QCPAxisTickerLog);
+        logTicker->setLogBase(10);
+        logTicker->setSubTickCount(10);
+        yAxis->setTicker(logTicker);
+        yAxis->setScaleType(QCPAxis::ScaleType::stLogarithmic);
+    }
+    else
+    {
+        yAxis->setScaleType(QCPAxis::ScaleType::stLinear);
+    }
 }
 
 void GeneralPlotter::SetRange(const vector<double> &range, const Axis &whichaxis)
@@ -251,3 +266,10 @@ void GeneralPlotter::SetLegend(bool onoff)
         setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
     }
 }
+
+ void GeneralPlotter::Clear()
+ {
+     clearPlottables();
+     clearGraphs();
+ }
+

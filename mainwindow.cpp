@@ -15,6 +15,8 @@
 #include "plotwindow.h"
 #include "QMessageBox"
 #include "Utilities.h"
+#include "QMap"
+#include "QJsonDocument"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -26,7 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
     connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
-
+    ui->frame->setVisible(false);
+    QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
+    QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
+    ui->treeViewtools->setModel(toolsmodel);
 }
 
 MainWindow::~MainWindow()
@@ -45,7 +50,7 @@ void MainWindow::on_import_excel()
     {
         ReadExcel(fileName);
     }
-    ui->treeView->setModel(ToQStandardItemMode(&data));
+    ui->treeView->setModel(ToQStandardItemModel(&data));
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
 
 }
@@ -165,10 +170,13 @@ void MainWindow::on_test_plot()
 
     }
     plotter->AddScatters(names,x,y);
-    ui->dockWidgetGraph->setWidget(plotter);
+    ui->verticalLayout_3->addWidget(plotter);
+    ui->frame->setVisible(true);
+    ui->frame->setEnabled(true);
+
 }
 
-QStandardItemModel* MainWindow::ToQStandardItemMode(const SourceSinkData* srcsinkdata)
+QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsinkdata)
 {
     if (columnviewmodel)
         delete columnviewmodel;
@@ -179,11 +187,12 @@ QStandardItemModel* MainWindow::ToQStandardItemMode(const SourceSinkData* srcsin
     {
         /* Create the phone groups as QStandardItems */
         QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
-
+        group->setData("Parent",Qt::UserRole);
         /* Append to each group 5 person as children */
         for (map<string,Elemental_Profile>::iterator it= data.sample_set(group_names[i])->begin();it!=data.sample_set(group_names[i])->end(); it++)
         {
             QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
+            child->setData("Child",Qt::UserRole);
             group->appendRow(child);
         }
         /* append group as new row to the model. model takes the ownership of the item */
@@ -199,12 +208,85 @@ QStandardItemModel* MainWindow::ToQStandardItemMode(const SourceSinkData* srcsin
 void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 {
     qDebug()<<"Selection changed "<<changed;
-
+    vector<vector<string>> samples_selected;
     QModelIndexList indexes = ui->treeView->selectionModel()->selectedIndexes();
         for (int i=0; i<indexes.size(); i++) {
-        qDebug()<<indexes[i].data();
+        {
+            qDebug()<<indexes[i].data(Qt::UserRole).toString();
+            if (indexes[i].data(Qt::UserRole).toString()=="Parent")
+            {
+                QString Group_Name_Selected = indexes[i].data().toString();
+                vector<string> Sample_Names = data.sample_set(Group_Name_Selected.toStdString())->SampleNames();
+                for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
+                {
+                    vector<string> item;
+                    item.push_back(indexes[i].data().toString().toStdString());
+                    item.push_back(indexes[i].child(sample_counter,0).data().toString().toStdString());
+                    samples_selected.push_back(item);
+                }
+            }
+            else
+            {
+                vector<string> item;
+                item.push_back(indexes[i].parent().data().toString().toStdString());
+                item.push_back(indexes[i].data().toString().toStdString());
+                samples_selected.push_back(item);
+            }
+        }
+    }
+
+    profiles_data extracted_data = data.ExtractData(samples_selected);
+
+    if (plotter==nullptr)
+    {
+        plotter = new GeneralPlotter(this);
+        ui->verticalLayout_3->addWidget(plotter);
 
     }
-    plotter->Clear();
 
+    plotter->Clear();
+    plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
+    plotter->SetYAxisScaleType(AxisScale::log);
+    ui->frame->setVisible(true);
+    ui->frame->setEnabled(true);
+
+}
+
+QJsonDocument MainWindow::loadJson(const QString &fileName) {
+    QFile jsonFile(fileName);
+    jsonFile.open(QFile::ReadOnly);
+    return QJsonDocument().fromJson(jsonFile.readAll());
+}
+
+void MainWindow::saveJson(const QJsonDocument &document, const QString &fileName) {
+    QFile jsonFile(fileName);
+    jsonFile.open(QFile::WriteOnly);
+    jsonFile.write(document.toJson());
+}
+
+QStandardItem* MainWindow::ToQStandardItem(const QString &key, const QJsonObject &json)
+{
+    QStandardItem *standarditem = new QStandardItem(key);
+    for (int i=0; i<json.keys().size(); i++)
+    {
+        if (json[json.keys()[i]].isObject())
+        {
+            standarditem->appendRow(ToQStandardItem(json.keys()[i],json[json.keys()[i]].toObject()));
+        }
+        else
+        {
+            QStandardItem *subitem = new QStandardItem(json.keys()[i]);
+            standarditem->appendRow(subitem);
+        }
+    }
+    return standarditem;
+}
+
+QStandardItemModel* MainWindow::ToQStandardItemModel(const QJsonDocument &jsondocument)
+{
+    QStandardItemModel *standarditemmodel = new QStandardItemModel();
+    QJsonObject jsonobject = jsondocument.object();
+    QStandardItem *standarditem = ToQStandardItem("Tools",jsonobject);
+    standarditemmodel->appendRow(standarditem);
+    return standarditemmodel;
 }

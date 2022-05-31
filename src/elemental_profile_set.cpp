@@ -54,3 +54,11 @@ Elemental_Profile *Elemental_Profile_Set::Profile(const string &name)
         return &elemental_profiles[name];
 
 }
+
+vector<double> Elemental_Profile_Set::GetProfileForSample(const string &sample_name)
+{
+    if (!Profile(sample_name))
+        return vector<double>();
+
+    return Profile(sample_name)->Vals();
+}

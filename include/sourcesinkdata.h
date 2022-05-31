@@ -4,6 +4,14 @@
 #include <elemental_profile_set.h>
 #include "vector"
 
+struct profiles_data
+{
+    vector<string> element_names;
+    vector<string> sample_names;
+    vector<vector<double>> values;
+};
+
+
 class SourceSinkData
 {
 public:
@@ -18,6 +26,7 @@ public:
     vector<string> GroupNames();
     vector<string> ElementNames();
     vector<string> SampleNames(const string groupname);
+    profiles_data ExtractData(const vector<vector<string>> &indicators);
 private:
     map<string,Elemental_Profile_Set> sources;
     map<string,Elemental_Profile_Set> targets;

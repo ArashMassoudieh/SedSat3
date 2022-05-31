@@ -1,0 +1,14 @@
+{
+  "Pre Analysis Tools":
+  {
+    "Principal Component Analysis": "PCA",
+    "Discriminatory Power Analysis": "DPA",
+    "Distribution Fitting": "DF"
+  },
+  "Analysis Tools":
+  {
+    "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
+    "Deterministic Chemical Mass Balance Analysis": "CMB-Det",
+    "Positive Matrix Factorization": "PMF"
+  }
+}
