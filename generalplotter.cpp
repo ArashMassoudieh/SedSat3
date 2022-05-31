@@ -141,8 +141,8 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, con
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
-    QVector<double> xvals = QVector<double>(x.begin(),x.end());
-    QVector<double> yvals = QVector<double>(y.begin(),y.end());
+    QVector<double> xvals = QVector<double>::fromStdVector(x);
+    QVector<double> yvals = QVector<double>::fromStdVector(y);
 
     graph->setData(xvals, yvals);
     SetRange(x_max_min_range,Axis::x);
@@ -164,7 +164,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
-    QVector<double> yvals = QVector<double>(y.begin(),y.end());
+    QVector<double> yvals = QVector<double>::fromStdVector(y);
 
     QVector<double> ticks;
     QVector<QString> labels;

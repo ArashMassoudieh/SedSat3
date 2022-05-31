@@ -17,7 +17,7 @@ SOURCES += \
     ../Utilities/Utilities.cpp \
     ../Utilities/Vector.cpp \
     ../Utilities/Vector_arma.cpp \
-    ../qcustomplot6/qcustomplot6/qcustomplot.cpp \
+    ../qcustomplot6/qcustomplot.cpp \
     customplotbar.cpp \
     generalplotter.cpp \
     indicatesheetsdialog.cpp \
@@ -41,7 +41,7 @@ HEADERS += \
     ../Utilities/Utilities.h \
     ../Utilities/Vector.h \
     ../Utilities/Vector_arma.h \
-    ../qcustomplot6/qcustomplot6/qcustomplot.h \
+    ../qcustomplot6/qcustomplot.h \
     customplotbar.h \
     generalplotter.h \
     include/elemental_profile.h \
@@ -55,11 +55,10 @@ HEADERS += \
 
 INCLUDEPATH += include/
 INCLUDEPATH += ../QXlsx/QXlsx/header/
-INCLUDEPATH += ../qcustomplot6/qcustomplot6
+INCLUDEPATH += ../qcustomplot6/
 INCLUDEPATH += ../Utilities/
 
-
-LIBS += /home/arash/Projects/QXlsx/build-QXlsx-Desktop_Qt_5_15_2_GCC_64bit-Release/libQXlsx.a
+LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
 LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 
 FORMS += \

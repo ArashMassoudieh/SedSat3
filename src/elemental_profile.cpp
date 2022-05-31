@@ -1,6 +1,8 @@
 #include "elemental_profile.h"
 #include "iostream"
 
+using namespace std;
+
 Elemental_Profile::Elemental_Profile()
 {
 
@@ -16,6 +18,8 @@ Elemental_Profile& Elemental_Profile::operator=(const Elemental_Profile &mp)
     profile = mp.profile;
     return *this;
 }
+
+
 
 double Elemental_Profile::Val(const string &name) const
 {
