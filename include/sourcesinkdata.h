@@ -11,6 +11,20 @@ struct profiles_data
     vector<vector<double>> values;
 };
 
+struct element_data
+{
+    string group_name;
+    vector<string> sample_names;
+    vector<double> values;
+};
+
+struct element_data_groups
+{
+    vector<string> group_names;
+    vector<string> sample_names;
+    vector<vector<double>> values;
+};
+
 
 class SourceSinkData
 {
@@ -27,6 +41,8 @@ public:
     vector<string> ElementNames();
     vector<string> SampleNames(const string groupname);
     profiles_data ExtractData(const vector<vector<string>> &indicators);
+    element_data ExtractElementData(const string &element, const string &group);
+    map<string,vector<double>> ExtractElementData(const string &element);
 private:
     map<string,Elemental_Profile_Set> sources;
     map<string,Elemental_Profile_Set> targets;

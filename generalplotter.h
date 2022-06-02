@@ -25,6 +25,7 @@ public:
     bool AddScatter(const string &name, const vector<string> &x, const vector<double> &y, const QCPScatterStyle &symbol = QCPScatterStyle::ssDisc);
     bool AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y);
     bool AddScatters(const vector<string> names, const vector<string> &x,const vector<vector<double>> &y);
+    bool AddNoneUniformScatter(const map<string,vector<double>> &data, int shape_counter=0);
     bool AddTimeSeries(const string &name, const vector<double> &x, const vector<double> &y);
     bool AddTimeSeriesSet(const string &name, const vector<vector<double>> &x, const vector<vector<double>> &y);
     bool SetYAxisScaleType(AxisScale axisscale);
@@ -34,7 +35,7 @@ public:
 private:
     vector<double> x_max_min_range;
     vector<double> y_max_min_range;
-    QVector<QCPScatterStyle::ScatterShape> shapes;
+    static QVector<QCPScatterStyle::ScatterShape> shapes;
 
 private slots:
     void mousePressEvent(QMouseEvent * event) override;
@@ -47,3 +48,5 @@ private:
     QRubberBand * mRubberBand;
     QPoint mOrigin;
 };
+
+QVector<QCPScatterStyle::ScatterShape> Make_Shapes();

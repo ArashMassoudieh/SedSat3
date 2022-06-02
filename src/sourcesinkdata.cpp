@@ -116,4 +116,27 @@ profiles_data SourceSinkData::ExtractData(const vector<vector<string>> &indicato
     return extracted_data;
 }
 
+element_data SourceSinkData::ExtractElementData(const string &element, const string &group)
+{
+    element_data extracted_data;
+    extracted_data.group_name = group;
+    for (map<string,Elemental_Profile>::iterator profile=sample_set(group)->begin(); profile!=sample_set(group)->end() ; profile++)
+    {
+        extracted_data.values.push_back(profile->second.Val(element));
+        extracted_data.sample_names.push_back(profile->first);
+    }
+    return extracted_data;
+}
+
+map<string,vector<double>> SourceSinkData::ExtractElementData(const string &element)
+{
+    map<string,vector<double>> extracted_data;
+    for (int i=0; i<GroupNames().size(); i++)
+    {
+        element_data row = ExtractElementData(element,GroupNames()[i]);
+        extracted_data[GroupNames()[i]]=row.values;
+    }
+    return extracted_data;
+}
+
 

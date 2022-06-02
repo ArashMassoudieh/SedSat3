@@ -50,7 +50,19 @@ void MainWindow::on_import_excel()
     {
         ReadExcel(fileName);
     }
-    ui->treeView->setModel(ToQStandardItemModel(&data));
+    QList<QStandardItem*> modelitems;
+    QList<QStandardItem*> elementitems;
+
+
+    if (columnviewmodel)
+        delete columnviewmodel;
+    columnviewmodel = new QStandardItemModel();
+    columnviewmodel->setColumnCount(1);
+    modelitems.append(ToQStandardItem("Samples",&data));
+    columnviewmodel->appendRow(modelitems);
+    elementitems.append(ElementsToQStandardItem("Elements",&data));
+    columnviewmodel->appendRow(elementitems);
+    ui->treeView->setModel(columnviewmodel);
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
 
 }
@@ -152,24 +164,18 @@ void MainWindow::WriteMessageOnScreen(const QString &text, QColor color)
 void MainWindow::on_test_plot()
 {
     plotter = new GeneralPlotter(this);
-    vector<string> x;
-    vector<vector<double>> y;
+    map<string,vector<double>> data;
 
     for (int i=0; i<10; i++)
-        x.push_back("case " + aquiutils::numbertostring(i));
-
-    vector<string> names;
-    for (int j=0; j<5; j++)
-    {   vector<double> y_vec;
-        for (int i=0; i<10; i++)
+    {
+        vector<double> y_val(i+1);
+        for (int j=0; j<y_val.size(); j++)
         {
-            y_vec.push_back(sin(i)+0.1*j);
+            y_val[j]=i+0.2*j;
         }
-        y.push_back(y_vec);
-        names.push_back("Scenario: " + aquiutils::numbertostring(j));
-
+        data["case " + aquiutils::numbertostring(i)] = y_val;
     }
-    plotter->AddScatters(names,x,y);
+    plotter->AddNoneUniformScatter(data,1);
     ui->verticalLayout_3->addWidget(plotter);
     ui->frame->setVisible(true);
     ui->frame->setEnabled(true);
@@ -205,51 +211,128 @@ QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsi
     return columnviewmodel;
 }
 
+QStandardItem* MainWindow::ToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata)
+{
+
+    QStandardItem *columnviewitem = new QStandardItem(key);
+    columnviewitem->setData("RootItem",Qt::UserRole);
+    vector<string> group_names = data.GroupNames();
+    for (int i=0; i<group_names.size(); i++)
+    {
+        /* Create the phone groups as QStandardItems */
+        QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
+        group->setData("Group",Qt::UserRole);
+        /* Append to each group 5 person as children */
+        for (map<string,Elemental_Profile>::iterator it= data.sample_set(group_names[i])->begin();it!=data.sample_set(group_names[i])->end(); it++)
+        {
+            QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
+            child->setData("Sample",Qt::UserRole);
+            group->appendRow(child);
+        }
+        /* append group as new row to the model. model takes the ownership of the item */
+        columnviewitem->appendRow(group);
+    }
+    return columnviewitem;
+}
+
+QStandardItem* MainWindow::ElementsToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata)
+{
+    QStandardItem *columnviewitem = new QStandardItem(key);
+    columnviewitem->setData("RootItem",Qt::UserRole);
+    vector<string> group_names = data.GroupNames();
+    vector<string> element_names = data.ElementNames();
+    for (int elem_counter=0; elem_counter<element_names.size(); elem_counter++)
+    {   QStandardItem *element_item=new QStandardItem(QString::fromStdString(element_names[elem_counter]));
+        element_item->setData("Element",Qt::UserRole);
+        for (int group_counter=0; group_counter<group_names.size(); group_counter++)
+        {
+            QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[group_counter]));
+            group->setData("GroupInElements",Qt::UserRole);
+            element_item->appendRow(group);
+        }
+        columnviewitem->appendRow(element_item);
+    }
+    return columnviewitem;
+}
+
+
 void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 {
     qDebug()<<"Selection changed "<<changed;
-    vector<vector<string>> samples_selected;
-    QModelIndexList indexes = ui->treeView->selectionModel()->selectedIndexes();
-        for (int i=0; i<indexes.size(); i++) {
-        {
-            qDebug()<<indexes[i].data(Qt::UserRole).toString();
-            if (indexes[i].data(Qt::UserRole).toString()=="Parent")
-            {
-                QString Group_Name_Selected = indexes[i].data().toString();
-                vector<string> Sample_Names = data.sample_set(Group_Name_Selected.toStdString())->SampleNames();
-                for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
-                {
-                    vector<string> item;
-                    item.push_back(indexes[i].data().toString().toStdString());
-                    item.push_back(indexes[i].child(sample_counter,0).data().toString().toStdString());
-                    samples_selected.push_back(item);
-                }
-            }
-            else
-            {
-                vector<string> item;
-                item.push_back(indexes[i].parent().data().toString().toStdString());
-                item.push_back(indexes[i].data().toString().toStdString());
-                samples_selected.push_back(item);
-            }
-        }
-    }
-
-    profiles_data extracted_data = data.ExtractData(samples_selected);
-
+    if (treeitemchangedprogramatically) return;
     if (plotter==nullptr)
     {
         plotter = new GeneralPlotter(this);
         ui->verticalLayout_3->addWidget(plotter);
 
     }
-
     plotter->Clear();
-    plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
-    plotter->SetYAxisScaleType(AxisScale::log);
+    enum class plottype {elemental_profiles, element_scatters} PlotType = plottype::elemental_profiles;
+    vector<vector<string>> samples_selected;
+    QModelIndexList indexes = ui->treeView->selectionModel()->selectedIndexes();
+    if (changed.size()>0)
+    {   QModelIndex changed_index = changed.at(0).indexes()[0];
+        if (indexes.size()>0)
+        {   if (indexes.contains(changed.at(0).indexes()[0]))
+                if (changed.at(0).indexes()[0].data(Qt::UserRole)!=SelectedTreeItemType && SelectedTreeItemType!="None")
+                {
+                    SelectedTreeItemType = changed.at(0).indexes()[0].data(Qt::UserRole).toString();
+                    treeitemchangedprogramatically=true;
+                    ui->treeView->selectionModel()->clearSelection();
+                    ui->treeView->selectionModel()->select(changed_index,QItemSelectionModel::Select | QItemSelectionModel::Rows);
+                    treeitemchangedprogramatically=false;
+                    indexes = ui->treeView->selectionModel()->selectedIndexes();
+                }
+        }
+    }
+    for (int i=0; i<indexes.size(); i++)
+    {
+        qDebug()<<indexes[i].data(Qt::UserRole).toString();
+        if (indexes[i].data(Qt::UserRole).toString()=="Group")
+        {
+            QString Group_Name_Selected = indexes[i].data().toString();
+            vector<string> Sample_Names = data.sample_set(Group_Name_Selected.toStdString())->SampleNames();
+            for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
+            {
+                vector<string> item;
+                item.push_back(indexes[i].data().toString().toStdString());
+                item.push_back(indexes[i].child(sample_counter,0).data().toString().toStdString());
+                samples_selected.push_back(item);
+            }
+        }
+        else if (indexes[i].data(Qt::UserRole).toString()=="Sample")
+        {
+            vector<string> item;
+            item.push_back(indexes[i].parent().data().toString().toStdString());
+            item.push_back(indexes[i].data().toString().toStdString());
+            samples_selected.push_back(item);
+        }
+        if (indexes[i].data(Qt::UserRole).toString()=="Element")
+        {
+            PlotType = plottype::element_scatters;
+            QString Element_Name_Selected = indexes[i].data().toString();
+            map<string,vector<double>> extracted_data = data.ExtractElementData(Element_Name_Selected.toStdString());
+            if (plotter==nullptr)
+            {
+                plotter = new GeneralPlotter(this);
+                ui->verticalLayout_3->addWidget(plotter);
+
+            }
+
+            plotter->AddNoneUniformScatter(extracted_data,i);
+            plotter->SetYAxisScaleType(AxisScale::log);
+        }
+    }
+
+
+    if (samples_selected.size()>0 && PlotType==plottype::elemental_profiles)
+    {   profiles_data extracted_data = data.ExtractData(samples_selected);
+        plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
+        plotter->SetYAxisScaleType(AxisScale::log);
+    }
     ui->frame->setVisible(true);
     ui->frame->setEnabled(true);
-
+    SelectedTreeItemType = TreeQStringSelectedType();
 }
 
 QJsonDocument MainWindow::loadJson(const QString &fileName) {
@@ -290,3 +373,12 @@ QStandardItemModel* MainWindow::ToQStandardItemModel(const QJsonDocument &jsondo
     standarditemmodel->appendRow(standarditem);
     return standarditemmodel;
 }
+
+QString MainWindow::TreeQStringSelectedType()
+{
+    if (ui->treeView->selectionModel()->selectedIndexes().size()>0)
+        return ui->treeView->selectionModel()->selectedIndexes()[0].data(Qt::UserRole).toString();
+    else
+        return "none";
+}
+

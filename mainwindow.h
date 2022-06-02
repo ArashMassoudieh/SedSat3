@@ -26,11 +26,16 @@ private:
     SourceSinkData data;
     GeneralPlotter *plotter = nullptr;
     QStandardItemModel* ToQStandardItemModel(const SourceSinkData* srcsinkdata);
+    QStandardItem* ToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata);
+    QStandardItem* ElementsToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata);
+    QString TreeQStringSelectedType();
     QStandardItem* ToQStandardItem(const QString &key, const QJsonObject &json);
     QStandardItemModel* ToQStandardItemModel(const QJsonDocument &jsondocument);
     QStandardItemModel *columnviewmodel = nullptr;
     QJsonDocument loadJson(const QString &fileName);
     void saveJson(const QJsonDocument &document, const QString &fileName);
+    QString SelectedTreeItemType = "None";
+    bool treeitemchangedprogramatically = false;
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();

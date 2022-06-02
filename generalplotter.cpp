@@ -2,6 +2,8 @@
 #include "generalplotter.h"
 #include "Utilities.h"
 
+QVector<QCPScatterStyle::ScatterShape> GeneralPlotter::shapes = Make_Shapes();
+
 GeneralPlotter::GeneralPlotter(QWidget * parent)
     : QCustomPlot(parent)
     , mZoomMode(true)
@@ -9,20 +11,7 @@ GeneralPlotter::GeneralPlotter(QWidget * parent)
 {
     x_max_min_range.push_back(1e12);x_max_min_range.push_back(-1e12);
     y_max_min_range.push_back(1e12);y_max_min_range.push_back(-1e12);
-    shapes << QCPScatterStyle::ssCross;
-    shapes << QCPScatterStyle::ssPlus;
-    shapes << QCPScatterStyle::ssCircle;
-    shapes << QCPScatterStyle::ssDisc;
-    shapes << QCPScatterStyle::ssSquare;
-    shapes << QCPScatterStyle::ssDiamond;
-    shapes << QCPScatterStyle::ssStar;
-    shapes << QCPScatterStyle::ssTriangle;
-    shapes << QCPScatterStyle::ssTriangleInverted;
-    shapes << QCPScatterStyle::ssCrossSquare;
-    shapes << QCPScatterStyle::ssPlusSquare;
-    shapes << QCPScatterStyle::ssCrossCircle;
-    shapes << QCPScatterStyle::ssPlusCircle;
-    shapes << QCPScatterStyle::ssPeace;
+
 
 }
 
@@ -128,9 +117,9 @@ void GeneralPlotter::axisDoubleClick(QCPAxis * axis, QCPAxis::SelectablePart par
 bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, const vector<double> &y, const QCPScatterStyle &symbol)
 {
     x_max_min_range[0] = min(x_max_min_range[0],aquiutils::Min(x));
-    x_max_min_range[1] = max(x_max_min_range[0],aquiutils::Max(x));
+    x_max_min_range[1] = max(x_max_min_range[1],aquiutils::Max(x));
     y_max_min_range[0] = min(y_max_min_range[0],aquiutils::Min(y));
-    y_max_min_range[1] = max(y_max_min_range[0],aquiutils::Max(y));
+    y_max_min_range[1] = max(y_max_min_range[1],aquiutils::Max(y));
     if (x.size()!=y.size())
         return false;
 
@@ -152,9 +141,9 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, con
 bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, const vector<double> &y, const QCPScatterStyle &symbol)
 {
     x_max_min_range[0] = min(x_max_min_range[0],double(0));
-    x_max_min_range[1] = max(x_max_min_range[0],double(x.size())*1.1);
+    x_max_min_range[1] = max(x_max_min_range[1],double(x.size())*1.1);
     y_max_min_range[0] = min(y_max_min_range[0],aquiutils::Min(y));
-    y_max_min_range[1] = max(y_max_min_range[0],aquiutils::Max(y));
+    y_max_min_range[1] = max(y_max_min_range[1],aquiutils::Max(y));
     if (x.size()!=y.size())
         return false;
 
@@ -267,9 +256,65 @@ void GeneralPlotter::SetLegend(bool onoff)
     }
 }
 
- void GeneralPlotter::Clear()
- {
-     clearPlottables();
-     clearGraphs();
- }
+void GeneralPlotter::Clear()
+{
+ clearPlottables();
+ clearGraphs();
+}
 
+bool GeneralPlotter::AddNoneUniformScatter(const map<string,vector<double>> &data, int shape_counter)
+{
+    x_max_min_range[0] = min(x_max_min_range[0],double(0));
+    x_max_min_range[1] = max(x_max_min_range[1],double(data.size()*1.1));
+
+
+    QCPGraph *points = new QCPGraph(xAxis, yAxis);
+    points->setLineStyle(QCPGraph::lsNone);
+    points->setScatterStyle(shapes[shape_counter]);
+    points->setPen(QPen(QColor(drand48()*256, drand48()*256, drand48()*256),2));
+    int x_val=1;
+    QMap<double,QString> ticks;
+    for (map<string,vector<double>>::const_iterator set=data.begin(); set!=data.end(); set++ )
+    {
+        for (int i=0; i<set->second.size(); i++)
+            points->addData(x_val,set->second[i]);
+
+        ticks[x_val]=QString::fromStdString(set->first);
+        x_val++;
+        y_max_min_range[0] = min(y_max_min_range[0],aquiutils::Min(set->second));
+        y_max_min_range[1] = max(y_max_min_range[1],aquiutils::Max(set->second));
+    }
+
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    textTicker->addTicks(ticks);
+    xAxis->setTicker(textTicker);
+    xAxis->setTickLabelRotation(60);
+    xAxis->setSubTicks(false);
+    xAxis->setTickLength(0, 4);
+
+    SetRange(x_max_min_range,Axis::x);
+    SetRange(y_max_min_range,Axis::y);
+    replot();
+
+}
+
+
+QVector<QCPScatterStyle::ScatterShape> Make_Shapes()
+{
+    QVector<QCPScatterStyle::ScatterShape> shapes;
+    shapes << QCPScatterStyle::ssCross;
+    shapes << QCPScatterStyle::ssPlus;
+    shapes << QCPScatterStyle::ssCircle;
+    shapes << QCPScatterStyle::ssDisc;
+    shapes << QCPScatterStyle::ssSquare;
+    shapes << QCPScatterStyle::ssDiamond;
+    shapes << QCPScatterStyle::ssStar;
+    shapes << QCPScatterStyle::ssTriangle;
+    shapes << QCPScatterStyle::ssTriangleInverted;
+    shapes << QCPScatterStyle::ssCrossSquare;
+    shapes << QCPScatterStyle::ssPlusSquare;
+    shapes << QCPScatterStyle::ssCrossCircle;
+    shapes << QCPScatterStyle::ssPlusCircle;
+    shapes << QCPScatterStyle::ssPeace;
+    return shapes;
+}
