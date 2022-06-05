@@ -11,25 +11,23 @@ struct profiles_data
     vector<vector<double>> values;
 };
 
-
 class SourceSinkData
 {
 public:
     SourceSinkData();
     SourceSinkData(const SourceSinkData& mp);
     SourceSinkData& operator=(const SourceSinkData &mp);
-    Elemental_Profile_Set* Append_Source(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
-    Elemental_Profile_Set* Append_Target(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
-    Elemental_Profile_Set *source(const string &name);
-    Elemental_Profile_Set *target(const string &name);
+    Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
     Elemental_Profile_Set *sample_set(const string &name);
     vector<string> GroupNames();
     vector<string> ElementNames();
     vector<string> SampleNames(const string groupname);
     profiles_data ExtractData(const vector<vector<string>> &indicators);
+    void PopulateElementDistributions();
+    void AssignAllDistributions();
 private:
-    map<string,Elemental_Profile_Set> sources;
-    map<string,Elemental_Profile_Set> targets;
+    map<string,Elemental_Profile_Set> sample_sets;
+    map<string,ConcentrationSet> element_distributions;
 };
 
 #endif // SOURCESINKDATA_H

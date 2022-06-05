@@ -116,11 +116,11 @@ bool MainWindow::ReadExcel(const QString &filename)
         Elemental_Profile_Set *elemental_profile_set = nullptr;
         if (sheetnumber==Sink_Sheet)
         {
-            elemental_profile_set = data.Append_Target(sheetnames[sheetnumber].toStdString());
+            elemental_profile_set = data.AppendSampleSet(sheetnames[sheetnumber].toStdString());
         }
         else
         {
-            elemental_profile_set = data.Append_Source(sheetnames[sheetnumber].toStdString());
+            elemental_profile_set = data.AppendSampleSet(sheetnames[sheetnumber].toStdString());
         }
 
         while (xlsxR.cellAt(row,1))
@@ -137,7 +137,8 @@ bool MainWindow::ReadExcel(const QString &filename)
         }
 
     }
-
+    data.PopulateElementDistributions();
+    data.AssignAllDistributions();
     qDebug()<<"Reading element information done!";
 
     return true;
@@ -217,7 +218,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
             {
                 QString Group_Name_Selected = indexes[i].data().toString();
                 vector<string> Sample_Names = data.sample_set(Group_Name_Selected.toStdString())->SampleNames();
-                for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
+                for (unsigned int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
                 {
                     vector<string> item;
                     item.push_back(indexes[i].data().toString().toStdString());

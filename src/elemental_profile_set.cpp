@@ -30,6 +30,10 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
     {
         elemental_profiles[name] = profile;
     }
+    for (map<string,double>::const_iterator it=profile.begin(); it!=profile.end(); it++)
+    {
+        element_distributions[it->first].push_back(it->second);
+    }
     return &elemental_profiles[name];
 }
 
@@ -52,6 +56,46 @@ Elemental_Profile *Elemental_Profile_Set::Profile(const string &name)
     }
     else
         return &elemental_profiles[name];
+
+}
+
+Elemental_Profile *Elemental_Profile_Set::Profile(unsigned int i)
+{
+    if (i>=elemental_profiles.size())
+        return nullptr;
+    else
+    {
+        map<string,Elemental_Profile>::iterator it=elemental_profiles.begin();
+        for (int ii=0; ii<i; ii++)
+            it++;
+        return &it->second;
+    }
+
+}
+
+Elemental_Profile Elemental_Profile_Set::Profile(const string &name) const
+{
+    if (elemental_profiles.count(name)==0)
+    {
+        cout<<"Sample '" + name + "' does not exist!"<<endl;
+        return Elemental_Profile();
+    }
+    else
+        return elemental_profiles.at(name);
+
+}
+
+Elemental_Profile Elemental_Profile_Set::Profile(unsigned int i) const
+{
+    if (i>=elemental_profiles.size())
+        return Elemental_Profile();
+    else
+    {
+        map<string,Elemental_Profile>::const_iterator it=elemental_profiles.begin();
+        for (int ii=0; ii<i; ii++)
+            it++;
+        return it->second;
+    }
 
 }
 
