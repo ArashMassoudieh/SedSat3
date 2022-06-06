@@ -39,7 +39,7 @@ double ConcentrationSet::stdev()
 
 double ConcentrationSet::stdevln()
 {
-    return sqrt(normln(2)/double(size())-pow(mean(),2));
+    return sqrt(normln(2)/double(size())-pow(meanln(),2));
 }
 
 double ConcentrationSet::meanln()

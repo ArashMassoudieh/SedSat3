@@ -14,7 +14,7 @@ public:
     Distribution(const Distribution &dist);
     Distribution& operator = (const Distribution &dist);
     double Eval(const double &x);
-    CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 2);
+    CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
     vector<double> parameters;
     distribution_type distribution;
 private:

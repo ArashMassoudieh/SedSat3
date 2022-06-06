@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
     ui->treeViewtools->setModel(toolsmodel);
+    connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
 }
 
 MainWindow::~MainWindow()
@@ -64,6 +65,8 @@ void MainWindow::on_import_excel()
     columnviewmodel->appendRow(elementitems);
     ui->treeView->setModel(columnviewmodel);
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
+    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(preparetreeviewMenu(const QPoint &)));
 
 }
 
@@ -381,5 +384,43 @@ QString MainWindow::TreeQStringSelectedType()
         return ui->treeView->selectionModel()->selectedIndexes()[0].data(Qt::UserRole).toString();
     else
         return "none";
+}
+
+void MainWindow::preparetreeviewMenu(const QPoint &pos)
+{
+    menu.reset(new QMenu(this));
+    QTreeView *tree = ui->treeView;
+
+    QModelIndex index = tree->currentIndex();
+    QAction* showdistributions = menu->addAction("Show fitted distributions");
+
+    QVariant v = QVariant::fromValue(QString::fromStdString("SFD;") + columnviewmodel->itemFromIndex(index)->text());
+    showdistributions->setData(v);
+
+    connect(showdistributions, SIGNAL(triggered()), this, SLOT(showdistributionsforelements()));
+
+    if (menu)
+        menu->exec( tree->mapToGlobal(pos) );
+    return;
+
+}
+
+void MainWindow::showdistributionsforelements()
+{
+    QAction* act = qobject_cast<QAction*>(sender());
+    QStringList keys = act->data().toString().split(";");
+    QString key2 = keys[0];
+    QString item = keys[1];
+    PlotWindow *plotwindow = new PlotWindow(this);
+    CTimeSeries<double> elem_dist = data.FittedDistribution(item.toStdString())->EvaluateAsTimeSeries();
+    plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+    for (map<string,Elemental_Profile_Set>::iterator it=data.begin(); it!=data.end(); it++)
+    {
+        elem_dist = data.sample_set(it->first)->ElementalDistribution(item.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+        plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+    }
+    plotwindow->Plotter()->SetLegend(true);
+    plotwindow->show();
+
 }
 

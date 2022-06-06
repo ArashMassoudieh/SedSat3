@@ -203,8 +203,8 @@ bool GeneralPlotter::AddScatters(const vector<string> names, const vector<string
 }
 bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, const vector<double> &y)
 {
-    x_max_min_range[0] = min(x_max_min_range[0],double(0));
-    x_max_min_range[1] = max(x_max_min_range[1],double(x.size())*1.1);
+    x_max_min_range[0] = min(x_max_min_range[0],aquiutils::Min(x));
+    x_max_min_range[1] = max(x_max_min_range[1],aquiutils::Max(x)*1.1);
     y_max_min_range[0] = min(y_max_min_range[0],aquiutils::Min(y));
     y_max_min_range[1] = max(y_max_min_range[1],aquiutils::Max(y));
     if (x.size()!=y.size())
@@ -213,7 +213,9 @@ bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, 
     QCPGraph *graph = new QCPGraph(xAxis, yAxis);
 
     graph->setName(QString::fromStdString(name));
-    graph->setPen(QPen(QColor(drand48()*256, drand48()*256, drand48()*256)));
+    QPen Pen = QPen(QColor(drand48()*256, drand48()*256, drand48()*256));
+    Pen.setWidth(3);
+    graph->setPen(Pen);
     graph->setLineStyle(QCPGraph::lsLine);
 
     QVector<double> yvals = QVector<double>::fromStdVector(y);

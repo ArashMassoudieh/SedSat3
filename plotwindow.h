@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "sourcesinkdata.h"
 #include "QComboBox"
-#include "customplotbar.h"
+#include "generalplotter.h"
 
 namespace Ui {
 class PlotWindow;
@@ -18,17 +18,13 @@ public:
     explicit PlotWindow(QWidget *parent = nullptr);
     ~PlotWindow();
     SourceSinkData *Data();
-
+    GeneralPlotter *Plotter() {return plot;}
 private:
     Ui::PlotWindow *ui;
-    QComboBox *combo_groups = nullptr;
-    QComboBox *combo_sample = nullptr;
-    CustomPlotBar *plot = nullptr;
-    void PlotData();
+    GeneralPlotter *plot = nullptr;
 
 public slots:
-    void on_combo_group_changed();
-    void on_combo_sample_changed();
+
 };
 
 #endif // PLOTWINDOW_H

@@ -10,9 +10,9 @@ double Distribution::Eval(const double &x)
 {
     double out = 0;
     if (distribution==distribution_type::normal)
-            out = 1.0 / (sqrt(2*pi)*parameters[2])*exp(-pow(x - parameters[1], 2) / (2 * parameters[2]*parameters[2]));
+            out = 1.0 / (sqrt(2*pi)*parameters[1])*exp(-pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]));
     if (distribution==distribution_type::lognormal)
-            out = 1.0 / (sqrt(2*pi)*parameters[2] * x)*exp(-pow(log(x) - parameters[1], 2) / (2 * parameters[2] * parameters[2]));
+            out = 1.0 / (sqrt(2*pi)*parameters[1] * x)*exp(-pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]));
 
     return out;
 }
@@ -31,6 +31,7 @@ CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const
         {
             x = exp(parameters[0] - stdcoeff*parameters[1] + i*2*stdcoeff*parameters[1]/(numberofpoints-1));
         }
+        out.append(x,Eval(x));
     }
     return out;
 }
