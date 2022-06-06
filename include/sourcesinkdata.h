@@ -25,6 +25,12 @@ struct element_data_groups
     vector<vector<double>> values;
 };
 
+struct element_information
+{
+    bool isotope;
+    double standard_ratio;
+    string base_element;
+};
 
 class SourceSinkData
 {
@@ -47,9 +53,18 @@ public:
     map<string,Elemental_Profile_Set>::iterator end() {return sample_sets.end();}
     map<string,Elemental_Profile_Set>::const_iterator cbegin() {return sample_sets.begin();}
     map<string,Elemental_Profile_Set>::const_iterator cend() {return sample_sets.end();}
+    element_information* GetElementInformation(string element_name)
+    {
+        if (ElementInformation.count(element_name))
+            return  &ElementInformation.at(element_name);
+        else
+            return nullptr;
+    }
+    void PopulateElementInformation();
 private:
     map<string,Elemental_Profile_Set> sample_sets;
     map<string,ConcentrationSet> element_distributions;
+    map<string, element_information> ElementInformation;
 };
 
 #endif // SOURCESINKDATA_H

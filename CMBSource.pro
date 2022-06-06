@@ -19,6 +19,7 @@ SOURCES += \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
     customplotbar.cpp \
+    formelementinformation.cpp \
     generalplotter.cpp \
     include/distribution.cpp \
     indicatesheetsdialog.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
     customplotbar.h \
+    formelementinformation.h \
     generalplotter.h \
     include/concentrationset.h \
     include/distribution.h \
@@ -68,6 +70,7 @@ LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
 LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 
 FORMS += \
+    formelementinformation.ui \
     indicatesheetsdialog.ui \
     mainwindow.ui \
     plotwindow.ui

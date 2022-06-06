@@ -44,7 +44,7 @@ private slots:
     void on_tree_selectionChanged(const QItemSelection &changed);
     void preparetreeviewMenu(const QPoint &pos);
     void showdistributionsforelements();
-
+    void on_constituent_properties_triggered();
 
 
 };

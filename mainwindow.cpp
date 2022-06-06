@@ -17,6 +17,8 @@
 #include "Utilities.h"
 #include "QMap"
 #include "QJsonDocument"
+#include "formelementinformation.h"
+
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -33,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
     ui->treeViewtools->setModel(toolsmodel);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
+    connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
 }
 
 MainWindow::~MainWindow()
@@ -152,6 +155,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         }
 
     }
+    data.PopulateElementInformation();
     data.PopulateElementDistributions();
     data.AssignAllDistributions();
     qDebug()<<"Reading element information done!";
@@ -313,9 +317,11 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
         }
         if (indexes[i].data(Qt::UserRole).toString()=="Element")
         {
+            qDebug()<<"Element selected!";
             PlotType = plottype::element_scatters;
             QString Element_Name_Selected = indexes[i].data().toString();
             map<string,vector<double>> extracted_data = data.ExtractElementData(Element_Name_Selected.toStdString());
+            qDebug()<<"Data extracted!";
             if (plotter==nullptr)
             {
                 plotter = new GeneralPlotter(this);
@@ -419,8 +425,15 @@ void MainWindow::showdistributionsforelements()
         elem_dist = data.sample_set(it->first)->ElementalDistribution(item.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
         plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
     }
+    plotwindow->setWindowTitle(item);
     plotwindow->Plotter()->SetLegend(true);
     plotwindow->show();
 
 }
 
+void MainWindow::on_constituent_properties_triggered()
+{
+    ui->textBrowser->hide();
+    FormElementInformation *formelems = new FormElementInformation(this);
+    ui->verticalLayout_middle->addWidget(formelems);
+}

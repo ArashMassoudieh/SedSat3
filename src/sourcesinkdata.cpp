@@ -135,3 +135,12 @@ Distribution *SourceSinkData::FittedDistribution(const string &element_name)
         return nullptr;
 }
 
+void SourceSinkData::PopulateElementInformation()
+{
+    ElementInformation.clear();
+    vector<string> element_names = ElementNames();
+    for (unsigned int i=0; i<element_names.size(); i++)
+    {
+        ElementInformation[element_names[i]] = element_information();
+    }
+}

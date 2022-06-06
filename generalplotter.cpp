@@ -137,6 +137,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, con
     SetRange(x_max_min_range,Axis::x);
     SetRange(y_max_min_range,Axis::y);
     replot();
+    return true;
 }
 bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, const vector<double> &y, const QCPScatterStyle &symbol)
 {
@@ -174,6 +175,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     SetRange(x_max_min_range,Axis::x);
     SetRange(y_max_min_range,Axis::y);
     replot();
+    return true;
 }
 bool GeneralPlotter::AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y)
 {
@@ -229,11 +231,12 @@ bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, 
     SetRange(x_max_min_range,Axis::x);
     SetRange(y_max_min_range,Axis::y);
     replot();
+    return true;
 
 }
 bool GeneralPlotter::AddTimeSeriesSet(const string &name, const vector<vector<double>> &x, const vector<vector<double>> &y)
 {
-
+    return true;
 }
 bool GeneralPlotter::SetYAxisScaleType(AxisScale axisscale)
 {
@@ -249,6 +252,7 @@ bool GeneralPlotter::SetYAxisScaleType(AxisScale axisscale)
     {
         yAxis->setScaleType(QCPAxis::ScaleType::stLinear);
     }
+    return true;
 }
 
 void GeneralPlotter::SetRange(const vector<double> &range, const Axis &whichaxis)
@@ -320,7 +324,7 @@ bool GeneralPlotter::AddNoneUniformScatter(const map<string,vector<double>> &dat
     SetRange(x_max_min_range,Axis::x);
     SetRange(y_max_min_range,Axis::y);
     replot();
-
+    return true;
 }
 
 
