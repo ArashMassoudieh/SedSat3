@@ -2,6 +2,7 @@
 #define FORMELEMENTINFORMATION_H
 
 #include <QWidget>
+#include <QTableView>
 
 namespace Ui {
 class FormElementInformation;
@@ -14,7 +15,7 @@ class FormElementInformation : public QWidget
 public:
     explicit FormElementInformation(QWidget *parent = nullptr);
     ~FormElementInformation();
-
+    QTableView *table();
 private:
     Ui::FormElementInformation *ui;
 };

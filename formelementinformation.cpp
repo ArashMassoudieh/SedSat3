@@ -12,3 +12,8 @@ FormElementInformation::~FormElementInformation()
 {
     delete ui;
 }
+
+QTableView *FormElementInformation::table()
+{
+    return ui->tableView;
+}

@@ -19,6 +19,8 @@ SOURCES += \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
     customplotbar.cpp \
+    elementstablemodel.cpp \
+    elementtabledelegate.cpp \
     formelementinformation.cpp \
     generalplotter.cpp \
     include/distribution.cpp \
@@ -46,6 +48,8 @@ HEADERS += \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
     customplotbar.h \
+    elementstablemodel.h \
+    elementtabledelegate.h \
     formelementinformation.h \
     generalplotter.h \
     include/concentrationset.h \

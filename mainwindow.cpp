@@ -18,6 +18,7 @@
 #include "QMap"
 #include "QJsonDocument"
 #include "formelementinformation.h"
+#include "elementstablemodel.h"
 
 using namespace QXlsx;
 
@@ -435,5 +436,7 @@ void MainWindow::on_constituent_properties_triggered()
 {
     ui->textBrowser->hide();
     FormElementInformation *formelems = new FormElementInformation(this);
+    ElementTableModel *elementtablemodel = new ElementTableModel(&data,this);
+    formelems->table()->setModel(elementtablemodel);
     ui->verticalLayout_middle->addWidget(formelems);
 }
