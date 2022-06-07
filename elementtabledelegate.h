@@ -5,7 +5,7 @@
 #include <QAbstractTableModel>
 #include <QStyleOptionViewItem>
 #include <QStyledItemDelegate>
-
+#include "sourcesinkdata.h"
 
 class ElementTableDelegate : public QStyledItemDelegate
 {
@@ -13,7 +13,7 @@ class ElementTableDelegate : public QStyledItemDelegate
 
 public:
 
-    ElementTableDelegate(QObject *parent);
+    ElementTableDelegate(SourceSinkData *_Data, QObject *parent);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const override;
@@ -32,7 +32,7 @@ public:
 public slots:
 
 private:
-
+    SourceSinkData *Data;
 };
 
 #endif // ELEMENTTABLEDELEGATE_H

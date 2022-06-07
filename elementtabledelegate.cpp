@@ -4,9 +4,9 @@
 #include "QLineEdit"
 #include "QLabel"
 
-ElementTableDelegate::ElementTableDelegate(QObject *parent)
+ElementTableDelegate::ElementTableDelegate(SourceSinkData *_Data, QObject *parent)
 {
-
+    Data=_Data;
 }
 
 QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
@@ -17,17 +17,27 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
 
     if (index.column()==1)
     {
-        QCheckBox *editor = new QCheckBox(parent);
-        QVariant var = index.data(Qt::DisplayRole);
-        if (var.toString()=="Yes")
-            editor->setCheckState(Qt::CheckState::Checked);
-        else
-            editor->setCheckState(Qt::CheckState::Unchecked);
+        QComboBox *editor = new QComboBox(parent);
+        editor->addItem("Element");editor->addItem("Exclude"); editor->addItem("Isotope"); editor->addItem("Particle Size");
+        string element_name = index.sibling(index.row(),0).data(Qt::DisplayRole).toString().toStdString();
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::do_not_include)
+            editor->setCurrentText("Exclude");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::element)
+            editor->setCurrentText("Element");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::isotope)
+            editor->setCurrentText("Isotope");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::particle_size)
+            editor->setCurrentText("Particle Size");
+
         return editor;
     }
     if (index.column()==2)
     {
         QComboBox *editor = new QComboBox(parent);
+        vector<string> element_names = Data->ElementNames();
+        for (unsigned int i=0; i<element_names.size(); i++)
+            if (element_names[i]!=index.sibling(index.row(),0).data(Qt::DisplayRole).toString().toStdString())
+                editor->addItem(QString::fromStdString(element_names[i]));
         editor->setCurrentText(index.data().toString());
         return editor;
     }
@@ -52,12 +62,16 @@ void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
     }
     if (index.column()==1)
     {
-        QCheckBox *checkbox = static_cast<QCheckBox*>(editor);
-        if (var.toString()=="Yes")
-            checkbox->setCheckState(Qt::CheckState::Checked);
-        else
-            checkbox->setCheckState(Qt::CheckState::Unchecked);
-        checkbox->show();
+        QComboBox *combo = static_cast<QComboBox*>(editor);
+        string element_name = index.sibling(index.row(),0).data(Qt::DisplayRole).toString().toStdString();
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::do_not_include)
+            combo->setCurrentText("Exclude");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::element)
+            combo->setCurrentText("Element");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::isotope)
+            combo->setCurrentText("Isotope");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::particle_size)
+            combo->setCurrentText("Particle Size");
         return;
     }
     if (index.column()==2)
@@ -74,7 +88,27 @@ void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 void ElementTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                   const QModelIndex &index) const
 {
+    if (index.column() == 0) QStyledItemDelegate::setModelData(editor, model, index);
+    QString element = model->data(index.sibling(index.row(), 0)).toString();
 
+    if (index.column() == 1)
+    {
+        QComboBox *comboBox = static_cast<QComboBox*>(editor);
+        model->setData(index,comboBox->currentText());
+        return;
+    }
+    if (index.column() == 2)
+    {
+        QComboBox *comboBox = static_cast<QComboBox*>(editor);
+        model->setData(index,comboBox->currentText());
+        return;
+    }
+    if (index.column() == 3)
+    {
+        QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
+        model->setData(index,lineEdit->text());
+        return;
+    }
 }
 
 void ElementTableDelegate::updateEditorGeometry(QWidget *editor,

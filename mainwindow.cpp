@@ -439,7 +439,7 @@ void MainWindow::on_constituent_properties_triggered()
     FormElementInformation *formelems = new FormElementInformation(this);
     ElementTableModel *elementtablemodel = new ElementTableModel(&data,this);
     formelems->table()->setModel(elementtablemodel);
-    ElementTableDelegate *elemDelegate = new ElementTableDelegate(this);
+    ElementTableDelegate *elemDelegate = new ElementTableDelegate(&data, this);
     formelems->table()->setItemDelegate(elemDelegate);
     ui->verticalLayout_middle->addWidget(formelems);
 }

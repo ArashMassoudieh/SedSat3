@@ -27,9 +27,10 @@ struct element_data_groups
 
 struct element_information
 {
-    bool isotope;
+    enum class role {do_not_include, isotope, particle_size, element} Role = role::element;
     double standard_ratio;
     string base_element;
+
 };
 
 class SourceSinkData
