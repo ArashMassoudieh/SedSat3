@@ -6,11 +6,11 @@ ElementTableModel::ElementTableModel(SourceSinkData *_data, QObject *parent) : Q
 }
 int ElementTableModel::rowCount(const QModelIndex &index) const
 {
-    return 4;
+    return Data->ElementNames().size();;
 }
 int ElementTableModel::columnCount(const QModelIndex &index) const
 {
-    return Data->ElementNames().size();
+    return 4;
 }
 QVariant ElementTableModel::data(const QModelIndex &index, int role) const
 {
