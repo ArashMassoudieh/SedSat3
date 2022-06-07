@@ -14,23 +14,28 @@ int ElementTableModel::columnCount(const QModelIndex &index) const
 }
 QVariant ElementTableModel::data(const QModelIndex &index, int role) const
 {
-    if (index.column()==0)
-    {
-        return QString::fromStdString(Data->ElementNames()[index.row()]);
+    if (role == Qt::DisplayRole)
+    {   if (index.column()==0)
+        {
+            return QString::fromStdString(Data->ElementNames()[index.row()]);
+        }
+        if (index.column()==1)
+        {
+            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->isotope)
+                return "Yes";
+            else
+                return "No";
+        }
+        if (index.column()==2)
+        {
+            return QString::fromStdString(Data->GetElementInformation(Data->ElementNames()[index.row()])->base_element);
+        }
+        if (index.column()==3)
+        {
+            return QString::number(Data->GetElementInformation(Data->ElementNames()[index.row()])->standard_ratio);
+        }
     }
-    if (index.column()==1)
-    {
-        return Data->GetElementInformation(Data->ElementNames()[index.row()])->isotope;
-    }
-    if (index.column()==2)
-    {
-        return QString::fromStdString(Data->GetElementInformation(Data->ElementNames()[index.row()])->base_element);
-    }
-    if (index.column()==3)
-    {
-        return QString::number(Data->GetElementInformation(Data->ElementNames()[index.row()])->standard_ratio);
-    }
-
+    return QVariant();
 
 }
 QVariant ElementTableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -60,9 +65,13 @@ QVariant ElementTableModel::headerData(int section, Qt::Orientation orientation,
 }
 bool ElementTableModel::setData(const QModelIndex & index, const QVariant & value, int role)
 {
-
+    QString result="Done!";
+    emit editCompleted(result);
 }
 Qt::ItemFlags ElementTableModel::flags(const QModelIndex & index) const
 {
-
+    if (index.column()!=0)
+        return Qt::ItemIsSelectable |  Qt::ItemIsEditable | Qt::ItemIsEnabled ;
+    else
+        return Qt::ItemIsSelectable |  Qt::ItemIsEnabled ;
 }
