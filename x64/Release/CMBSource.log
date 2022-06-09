@@ -1,0 +1,31 @@
+﻿  Utilities.cpp
+  generalplotter.cpp
+  mainwindow.cpp
+..\Utilities\Utilities.cpp(138): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+..\Utilities\Utilities.cpp(170): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+..\Utilities\Utilities.cpp(177): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+..\Utilities\Utilities.cpp(422): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+..\Utilities\Utilities.cpp(549): warning C4100: 'scientific': unreferenced formal parameter
+..\Utilities\Utilities.cpp(576): error C2039: 'max': is not a member of 'std'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cctype(25): note: see declaration of 'std'
+..\Utilities\Utilities.cpp(576): error C2660: 'aquiutils::max': function does not take 2 arguments
+..\Utilities\Utilities.cpp(580): error C2039: 'max': is not a member of 'std'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cctype(25): note: see declaration of 'std'
+..\Utilities\Utilities.cpp(580): error C2661: 'aquiutils::max': no overloaded function takes 2 arguments
+..\Utilities\Utilities.cpp(584): error C2039: 'max': is not a member of 'std'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cctype(25): note: see declaration of 'std'
+..\Utilities\Utilities.cpp(584): error C2661: 'aquiutils::max': no overloaded function takes 2 arguments
+..\Utilities\Utilities.cpp(585): error C2039: 'min': is not a member of 'std'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cctype(25): note: see declaration of 'std'
+..\Utilities\Utilities.cpp(585): error C3861: 'min': identifier not found
+..\Utilities\Utilities.cpp(590): error C2039: 'max': is not a member of 'std'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.11.25503\include\cctype(25): note: see declaration of 'std'
+..\Utilities\Utilities.cpp(590): error C2661: 'aquiutils::max': no overloaded function takes 2 arguments
+generalplotter.cpp(82): warning C4100: 'event': unreferenced formal parameter
+generalplotter.cpp(82): warning C4100: 'part': unreferenced formal parameter
+generalplotter.cpp(82): warning C4100: 'axis': unreferenced formal parameter
+generalplotter.cpp(129): error C3861: 'drand48': identifier not found
+generalplotter.cpp(153): error C3861: 'drand48': identifier not found
+generalplotter.cpp(216): error C3861: 'drand48': identifier not found
+generalplotter.cpp(299): error C3861: 'drand48': identifier not found
+mainwindow.cpp(8): fatal error C1083: Cannot open include file: 'xlsxdocument.h': No such file or directory
