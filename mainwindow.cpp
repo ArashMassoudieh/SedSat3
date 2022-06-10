@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->frame->setVisible(false);
     QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
+    formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
     ui->treeViewtools->setModel(toolsmodel);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));

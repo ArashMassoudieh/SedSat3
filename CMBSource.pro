@@ -23,6 +23,7 @@ SOURCES += \
     elementtabledelegate.cpp \
     formelementinformation.cpp \
     generalplotter.cpp \
+    genericform.cpp \
     indicatesheetsdialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     elementtabledelegate.h \
     formelementinformation.h \
     generalplotter.h \
+    genericform.h \
     include/GA/Binary.h \
     include/GA/GA.h \
     include/GA/GA.hpp \
@@ -84,6 +86,7 @@ LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 
 FORMS += \
     formelementinformation.ui \
+    genericform.ui \
     indicatesheetsdialog.ui \
     mainwindow.ui \
     plotwindow.ui

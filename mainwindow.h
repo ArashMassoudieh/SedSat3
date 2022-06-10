@@ -37,6 +37,7 @@ private:
     QString SelectedTreeItemType = "None";
     bool treeitemchangedprogramatically = false;
     std::unique_ptr<QMenu> menu;
+    QJsonDocument formsstructure;
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
