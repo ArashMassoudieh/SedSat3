@@ -2,6 +2,10 @@
 #include "generalplotter.h"
 #include "Utilities.h"
 
+#ifdef _WINDOWS
+#include "drand.h"
+#endif
+
 QVector<QCPScatterStyle::ScatterShape> GeneralPlotter::shapes = Make_Shapes();
 
 GeneralPlotter::GeneralPlotter(QWidget * parent)
