@@ -23,12 +23,15 @@ SOURCES += \
     elementtabledelegate.cpp \
     formelementinformation.cpp \
     generalplotter.cpp \
-    include/distribution.cpp \
     indicatesheetsdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     plotwindow.cpp \
+    src/GA/Binary.cpp \
+    src/GA/GADistribution.cpp \
+    src/GA/Individual.cpp \
     src/concentrationset.cpp \
+    src/distribution.cpp \
     src/elemental_profile.cpp \
     src/elemental_profile_set.cpp \
     src/sourcesinkdata.cpp
@@ -52,8 +55,12 @@ HEADERS += \
     elementtabledelegate.h \
     formelementinformation.h \
     generalplotter.h \
+    include/GA/Binary.h \
+    include/GA/GA.h \
+    include/GA/GA.hpp \
+    include/GA/GADistribution.h \
+    include/GA/Individual.h \
     include/concentrationset.h \
-    include/distribution.h \
     include/elemental_profile.h \
     include/elemental_profile_set.h \
     include/sourcesinkdata.h \
@@ -69,6 +76,8 @@ INCLUDEPATH += ../qcustomplot6/
 INCLUDEPATH += ../Utilities/
 INCLUDEPATH += /usr/include/
 INCLUDEPATH += /usr/include/x86_64-linux-gnu/
+INCLUDEPATH += include/GA/
+INCLUDEPATH += include/MCMC/
 
 LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
 LIBS += -L"/usr/local/lib/ -lsuperlu.so"

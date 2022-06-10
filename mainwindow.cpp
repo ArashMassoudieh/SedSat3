@@ -20,6 +20,8 @@
 #include "formelementinformation.h"
 #include "elementstablemodel.h"
 #include "elementtabledelegate.h"
+#include "GA.h"
+//#include "MCMC.h"
 
 using namespace QXlsx;
 
@@ -38,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeViewtools->setModel(toolsmodel);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
+    CGA<SourceSinkData> GA;
 }
 
 MainWindow::~MainWindow()
