@@ -45,6 +45,7 @@
     </property>
     <addaction name="actionRaw_Elemental_Profiles"/>
     <addaction name="actionTestGraphs"/>
+    <addaction name="actionTestDialog"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -254,6 +255,11 @@
   <action name="actionConstituent_Properties">
    <property name="text">
     <string>Constituent Properties</string>
+   </property>
+  </action>
+  <action name="actionTestDialog">
+   <property name="text">
+    <string>TestDialog</string>
    </property>
   </action>
  </widget>

@@ -21,6 +21,7 @@
 #include "elementstablemodel.h"
 #include "elementtabledelegate.h"
 #include "GA.h"
+#include "genericform.h"
 //#include "MCMC.h"
 
 using namespace QXlsx;
@@ -41,7 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeViewtools->setModel(toolsmodel);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
+    connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     CGA<SourceSinkData> GA;
+    centralform = ui->textBrowser;
 }
 
 MainWindow::~MainWindow()
@@ -439,11 +442,25 @@ void MainWindow::showdistributionsforelements()
 
 void MainWindow::on_constituent_properties_triggered()
 {
-    ui->textBrowser->hide();
+
+    if (centralform)
+        delete centralform;
     FormElementInformation *formelems = new FormElementInformation(this);
     ElementTableModel *elementtablemodel = new ElementTableModel(&data,this);
     formelems->table()->setModel(elementtablemodel);
     ElementTableDelegate *elemDelegate = new ElementTableDelegate(&data, this);
     formelems->table()->setItemDelegate(elemDelegate);
     ui->verticalLayout_middle->addWidget(formelems);
+    centralform = formelems;
+}
+
+void MainWindow::on_test_dialog_triggered()
+{
+    if (centralform)
+        delete centralform;
+    QJsonObject mainjsonobject = formsstructure.object();
+    QJsonObject GA_object = mainjsonobject.value("GA").toObject();
+    GenericForm *form = new GenericForm(&GA_object);
+    ui->verticalLayout_middle->addWidget(form);
+    centralform = form;
 }

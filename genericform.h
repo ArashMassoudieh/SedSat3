@@ -4,6 +4,16 @@
 #include <QWidget>
 #include "QJsonObject"
 
+
+enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBix};
+struct parameter_property
+{
+    QString Discription;
+    delegate_type Type = delegate_type::LineEdit;
+    QWidget *InputWidget=nullptr;
+    QString DefaultValue;
+};
+
 namespace Ui {
 class GenericForm;
 }
@@ -14,6 +24,7 @@ class GenericForm : public QWidget
 
 public:
     explicit GenericForm(QJsonObject *formdata, QWidget *parent = nullptr);
+    QVector<parameter_property> Parameter_Properties;
     ~GenericForm();
 
 private:

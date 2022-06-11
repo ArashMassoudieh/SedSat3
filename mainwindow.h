@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "sourcesinkdata.h"
 #include "generalplotter.h"
+#include "formelementinformation.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -38,6 +39,7 @@ private:
     bool treeitemchangedprogramatically = false;
     std::unique_ptr<QMenu> menu;
     QJsonDocument formsstructure;
+    QWidget *centralform = nullptr;
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
@@ -46,6 +48,7 @@ private slots:
     void preparetreeviewMenu(const QPoint &pos);
     void showdistributionsforelements();
     void on_constituent_properties_triggered();
+    void on_test_dialog_triggered();
 
 
 };

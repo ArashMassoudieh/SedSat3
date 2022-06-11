@@ -10,6 +10,14 @@
     		"Population": {
    			"type": "spinBox",
 			"default": "40"
+    		},
+    		"Cross-over probability": {
+   			"type": "lineEdit",
+			"default": "1.0"
+    		},
+    		"Numerical cross-over": {
+   			"type": "checkBox",
+			"default": "false"
     		}
 	}
 }
