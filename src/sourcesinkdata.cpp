@@ -58,7 +58,7 @@ vector<string> SourceSinkData::GroupNames()
 vector<string> SourceSinkData::ElementNames()
 {
     vector<string> out;
-
+    if (sample_sets.size()>0)
     for (map<string,double>::iterator it=sample_sets.begin()->second.begin()->second.begin(); it!=sample_sets.begin()->second.begin()->second.end(); it++)
     {
         out.push_back(it->first);

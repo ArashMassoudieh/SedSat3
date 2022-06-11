@@ -66,11 +66,19 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent) :
 
             }
         }
+
     }
+
+    buttonOk = new QPushButton("Ok",this);
+    ui->horizontalLayout->addWidget(buttonOk);
+    buttonCancel = new QPushButton("Cancel",this);
+    ui->horizontalLayout->addWidget(buttonCancel);
+
 
 }
 
 GenericForm::~GenericForm()
 {
+    Parameter_Properties.clear();
     delete ui;
 }

@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    if (centralform)
+        delete centralform;
     delete ui;
 }
 

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "QJsonObject"
+#include "QPushButton"
 
 
 enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBix};
@@ -27,7 +28,10 @@ public:
     QVector<parameter_property> Parameter_Properties;
     ~GenericForm();
 
+
 private:
+    QPushButton *buttonOk = nullptr;
+    QPushButton *buttonCancel = nullptr;
     Ui::GenericForm *ui;
 };
 
