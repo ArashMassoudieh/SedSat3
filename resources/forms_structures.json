@@ -1,8 +1,5 @@
 {
 	"GA": {
-		"type": "block",
-		"typecategory": "Blocks",
-		"description": "Variably Saturated Soil Block",
     		"Number of Generations": {
    			"type": "spinBox",
    			"default": "40"

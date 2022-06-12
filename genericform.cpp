@@ -5,6 +5,7 @@
 #include "QLineEdit"
 #include "QCheckBox"
 #include "QSpinBox"
+#include "mainwindow.h"
 
 GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent) :
     QWidget(parent),
@@ -70,10 +71,15 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent) :
     }
 
     buttonOk = new QPushButton("Ok",this);
+    QIcon iconOk = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Proceed.png");
+    buttonOk->setIcon(iconOk);
     ui->horizontalLayout->addWidget(buttonOk);
+    connect(buttonOk,SIGNAL(clicked()),this,SLOT(onProceed()));
     buttonCancel = new QPushButton("Cancel",this);
+    QIcon iconCancel = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Cancel.png");
+    buttonCancel->setIcon(iconCancel);
     ui->horizontalLayout->addWidget(buttonCancel);
-
+    connect(buttonCancel,SIGNAL(clicked()),this,SLOT(onCancel()));
 
 }
 
@@ -81,4 +87,19 @@ GenericForm::~GenericForm()
 {
     Parameter_Properties.clear();
     delete ui;
+}
+
+void GenericForm::onProceed()
+{
+
+}
+void GenericForm::onCancel()
+{
+    this->close();
+}
+
+MainWindow *GenericForm::mainwindow()
+{
+    if (parent()!=nullptr)
+    return dynamic_cast<MainWindow*>(parent());
 }

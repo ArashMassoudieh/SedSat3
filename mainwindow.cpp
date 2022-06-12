@@ -40,9 +40,11 @@ MainWindow::MainWindow(QWidget *parent)
     formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
     ui->treeViewtools->setModel(toolsmodel);
+    ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
+    connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
 }
@@ -81,6 +83,7 @@ void MainWindow::on_import_excel()
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(preparetreeviewMenu(const QPoint &)));
+
 
 }
 
@@ -380,6 +383,7 @@ QStandardItem* MainWindow::ToQStandardItem(const QString &key, const QJsonObject
         else
         {
             QStandardItem *subitem = new QStandardItem(json.keys()[i]);
+            subitem->setData(json.value(json.keys()[i]).toString(),Qt::UserRole);
             standarditem->appendRow(subitem);
         }
     }
@@ -465,4 +469,18 @@ void MainWindow::on_test_dialog_triggered()
     GenericForm *form = new GenericForm(&GA_object);
     ui->verticalLayout_middle->addWidget(form);
     centralform = form;
+}
+
+void MainWindow::on_tool_executed(const QModelIndex &index)
+{
+    qDebug()<<"Tool executed"<<index.data()<<": "<<index.data(Qt::UserRole);
+    if (centralform)
+        delete centralform;
+    QJsonObject mainjsonobject = formsstructure.object();
+    if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
+    {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
+        GenericForm *form = new GenericForm(&GA_object);
+        ui->verticalLayout_middle->addWidget(form);
+        centralform = form;
+    }
 }

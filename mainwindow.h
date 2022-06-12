@@ -49,7 +49,7 @@ private slots:
     void showdistributionsforelements();
     void on_constituent_properties_triggered();
     void on_test_dialog_triggered();
-
+    void on_tool_executed(const QModelIndex&);
 
 };
 #endif // MAINWINDOW_H

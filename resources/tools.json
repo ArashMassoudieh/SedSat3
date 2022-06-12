@@ -8,7 +8,7 @@
   "Analysis Tools":
   {
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
-    "Deterministic Chemical Mass Balance Analysis": "CMB-Det",
-    "Positive Matrix Factorization": "PMF"
+    "Positive Matrix Factorization": "PMF",
+    "Maximum likelihood unmixing": "GA"
   }
 }

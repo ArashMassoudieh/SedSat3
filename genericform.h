@@ -5,6 +5,7 @@
 #include "QJsonObject"
 #include "QPushButton"
 
+class MainWindow;
 
 enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBix};
 struct parameter_property
@@ -13,6 +14,7 @@ struct parameter_property
     delegate_type Type = delegate_type::LineEdit;
     QWidget *InputWidget=nullptr;
     QString DefaultValue;
+    QString value;
 };
 
 namespace Ui {
@@ -33,6 +35,10 @@ private:
     QPushButton *buttonOk = nullptr;
     QPushButton *buttonCancel = nullptr;
     Ui::GenericForm *ui;
+    MainWindow *mainwindow();
+public slots:
+    void onProceed();
+    void onCancel();
 };
 
 #endif // GENERICFORM_H
