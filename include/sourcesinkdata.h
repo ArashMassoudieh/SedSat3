@@ -3,6 +3,7 @@
 
 #include <elemental_profile_set.h>
 #include "vector"
+#include "parameter.h"
 
 struct profiles_data
 {
@@ -62,10 +63,23 @@ public:
             return nullptr;
     }
     void PopulateElementInformation();
+    bool Execute(const string &command, const map<string,string> &arguments);
+    string OutputPath();
+    bool SetOutputPath(const string &oppath);
+    vector<Parameter> &Parameters() {return parameters;}
+    Parameter *parameter(size_t i)
+    {
+        if (i>=0 && i<parameters.size())
+            return &parameters[i];
+        else
+            return nullptr;
+    }
 private:
     map<string,Elemental_Profile_Set> sample_sets;
     map<string,ConcentrationSet> element_distributions;
     map<string, element_information> ElementInformation;
+    string outputpath;
+    vector<Parameter> parameters;
 };
 
 #endif // SOURCESINKDATA_H

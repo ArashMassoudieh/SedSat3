@@ -5,7 +5,7 @@
 #include "BTC.h"
 
 using namespace std;
-enum class distribution_type {normal, lognormal, none};
+enum class distribution_type {normal, lognormal, dirichlet, none};
 
 class Distribution
 {

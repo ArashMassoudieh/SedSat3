@@ -32,9 +32,12 @@ SOURCES += \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
     src/concentrationset.cpp \
+    src/conductor.cpp \
     src/distribution.cpp \
     src/elemental_profile.cpp \
     src/elemental_profile_set.cpp \
+    src/interface.cpp \
+    src/parameter.cpp \
     src/sourcesinkdata.cpp
 
 HEADERS += \
@@ -63,8 +66,11 @@ HEADERS += \
     include/GA/GADistribution.h \
     include/GA/Individual.h \
     include/concentrationset.h \
+    include/conductor.h \
     include/elemental_profile.h \
     include/elemental_profile_set.h \
+    include/interface.h \
+    include/parameter.h \
     include/sourcesinkdata.h \
     indicatesheetsdialog.h \
     mainwindow.h \

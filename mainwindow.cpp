@@ -480,7 +480,14 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
     if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
     {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
         GenericForm *form = new GenericForm(&GA_object);
+        form->SetCommand(index.data(Qt::UserRole).toString());
         ui->verticalLayout_middle->addWidget(form);
         centralform = form;
     }
+}
+
+bool MainWindow::Execute(const string &command, map<string,string> arguments)
+{
+    conductor.SetData(&data);
+    return conductor.Execute(command,arguments);
 }

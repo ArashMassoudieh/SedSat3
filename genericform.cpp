@@ -1,16 +1,13 @@
 #include "genericform.h"
 #include "ui_genericform.h"
 #include "QLabel"
-#include "QComboBox"
-#include "QLineEdit"
-#include "QCheckBox"
-#include "QSpinBox"
 #include "mainwindow.h"
 
 GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GenericForm)
 {
+
     ui->setupUi(this);
 
     for (int i=0; i<formdata->keys().size(); i++)
@@ -29,7 +26,7 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent) :
                 QString typeval = object.value("type").toString();
                 if (object.value("type").toString()=="spinBox")
                 {
-                    parameter_prop.Type = delegate_type::SpinBix;
+                    parameter_prop.Type = delegate_type::SpinBox;
                     QSpinBox *spinbox = new QSpinBox(this);
                     spinbox->setValue(object.value("default").toString().toInt());
                     ui->formLayout->addRow(label,spinbox);
@@ -91,6 +88,12 @@ GenericForm::~GenericForm()
 
 void GenericForm::onProceed()
 {
+    map<string,string> arguments;
+    for (int i=0; i<Parameter_Properties.count(); i++)
+    {
+        arguments[Parameter_Properties[i].Discription.toStdString()] = Parameter_Properties[i].value().toStdString();
+    }
+    mainwindow()->Execute(command.toStdString(),arguments);
 
 }
 void GenericForm::onCancel()
@@ -102,4 +105,10 @@ MainWindow *GenericForm::mainwindow()
 {
     if (parent()!=nullptr)
     return dynamic_cast<MainWindow*>(parent());
+}
+
+bool GenericForm::SetCommand(const QString &cmd)
+{
+    command = cmd;
+    return true;
 }

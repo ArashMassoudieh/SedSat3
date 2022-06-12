@@ -5,6 +5,7 @@
 #include "sourcesinkdata.h"
 #include "generalplotter.h"
 #include "formelementinformation.h"
+#include "conductor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,7 @@ public:
     void SetSinkSheet(int i) {Sink_Sheet = i;}
     void WriteMessageOnScreen(const QString &text, QColor color=Qt::black);
     SourceSinkData *Data() {return &data;}
+    bool Execute(const string &command, map<string,string> arguments);
 private:
     Ui::MainWindow *ui;
     int Sink_Sheet=-1;
@@ -40,6 +42,8 @@ private:
     std::unique_ptr<QMenu> menu;
     QJsonDocument formsstructure;
     QWidget *centralform = nullptr;
+    Conductor conductor;
+
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
@@ -50,6 +54,7 @@ private slots:
     void on_constituent_properties_triggered();
     void on_test_dialog_triggered();
     void on_tool_executed(const QModelIndex&);
+
 
 };
 #endif // MAINWINDOW_H

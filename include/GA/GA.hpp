@@ -8,6 +8,8 @@
 #include <omp.h>
 #endif
 
+#include "parameter.h"
+
 #ifdef Q_version
     #include "runtimewindow.h"
 #endif
@@ -116,15 +118,15 @@ CGA<T>::CGA(T *model)
 	{
         GA_params.nParam++;
         params.push_back(i);
-        if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")
-        {	minval.push_back(log10(Model->Parameters()[i]->GetVal("low")));
-            maxval.push_back(log10(Model->Parameters()[i]->GetVal("high")));
+        if (Model->parameter(i)->GetPriorDistribution() == distribution_type::lognormal)
+        {	minval.push_back(log10(Model->parameter(i)->GetVal("low")));
+            maxval.push_back(log10(Model->parameter(i)->GetVal("high")));
 
         }
         else
         {
-            minval.push_back(Model->Parameters()[i]->GetVal("low"));
-            maxval.push_back(Model->Parameters()[i]->GetVal("high"));
+            minval.push_back(Model->parameter(i)->GetVal("low"));
+            maxval.push_back(Model->parameter(i)->GetVal("high"));
         }
         apply_to_all.push_back(false);
         if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")

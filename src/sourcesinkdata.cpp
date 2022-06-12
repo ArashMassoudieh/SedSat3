@@ -144,3 +144,20 @@ void SourceSinkData::PopulateElementInformation()
         ElementInformation[element_names[i]] = element_information();
     }
 }
+
+bool SourceSinkData::Execute(const string &command, const map<string,string> &arguments)
+{
+    return true;
+}
+
+string SourceSinkData::OutputPath()
+{
+    return outputpath;
+}
+
+bool SourceSinkData::SetOutputPath(const string &oppath)
+{
+    outputpath = oppath;
+    return true;
+}
+
