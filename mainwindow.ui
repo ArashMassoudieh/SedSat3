@@ -46,6 +46,7 @@
     <addaction name="actionRaw_Elemental_Profiles"/>
     <addaction name="actionTestGraphs"/>
     <addaction name="actionTestDialog"/>
+    <addaction name="actionTestLikelihoods"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -260,6 +261,11 @@
   <action name="actionTestDialog">
    <property name="text">
     <string>TestDialog</string>
+   </property>
+  </action>
+  <action name="actionTestLikelihoods">
+   <property name="text">
+    <string>TestLikelihoods</string>
    </property>
   </action>
  </widget>

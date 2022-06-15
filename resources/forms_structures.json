@@ -15,6 +15,10 @@
     		"Numerical cross-over": {
    			"type": "checkBox",
 			"default": "false"
+    		},
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
     		}
 	}
 }

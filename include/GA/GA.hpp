@@ -118,7 +118,7 @@ CGA<T>::CGA(T *model)
 	{
         GA_params.nParam++;
         params.push_back(i);
-        if (Model->parameter(i)->GetPriorDistribution() == distribution_type::lognormal)
+        if (Model->parameter(i)->GetPriorDistribution().distribution == distribution_type::lognormal)
         {	minval.push_back(log10(Model->parameter(i)->GetVal("low")));
             maxval.push_back(log10(Model->parameter(i)->GetVal("high")));
 
@@ -129,12 +129,12 @@ CGA<T>::CGA(T *model)
             maxval.push_back(Model->parameter(i)->GetVal("high"));
         }
         apply_to_all.push_back(false);
-        if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")
+        if (Model->parameter(i)->GetPriorDistribution().distribution == distribution_type::lognormal)
             loged.push_back(1);
         else
             loged.push_back(0);
 
-        paramname.push_back(Model->Parameters().getKeyAtIndex(i));
+        paramname.push_back(Model->GetNameForParameterID(i));
 
 	}
 

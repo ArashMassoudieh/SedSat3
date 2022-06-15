@@ -22,6 +22,7 @@
 #include "elementtabledelegate.h"
 #include "GA.h"
 #include "genericform.h"
+#include "QMessageBox"
 //#include "MCMC.h"
 
 using namespace QXlsx;
@@ -45,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
+    connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
 }
@@ -474,12 +476,16 @@ void MainWindow::on_test_dialog_triggered()
 void MainWindow::on_tool_executed(const QModelIndex &index)
 {
     qDebug()<<"Tool executed"<<index.data()<<": "<<index.data(Qt::UserRole);
+    if (data.ElementNames().size()==0)
+    {   QMessageBox::warning(this, "OpenHydroQual",tr("No data has been loaded!\n"), QMessageBox::Ok);
+        return;
+    }
     if (centralform)
         delete centralform;
     QJsonObject mainjsonobject = formsstructure.object();
     if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
     {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
-        GenericForm *form = new GenericForm(&GA_object);
+        GenericForm *form = new GenericForm(&GA_object,this);
         form->SetCommand(index.data(Qt::UserRole).toString());
         ui->verticalLayout_middle->addWidget(form);
         centralform = form;
@@ -490,4 +496,32 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
 {
     conductor.SetData(&data);
     return conductor.Execute(command,arguments);
+}
+
+void MainWindow::on_test_likelihood()
+{
+    vector<string> elements = data.ElementsToBeUsedInCMB();
+    vector<string> sources = data.SourceGroupNames();
+    data.InitializeParametersObservations(data.SelectedTargetSample());
+    data.SetParameterValue(0, 0.25);
+    data.SetParameterValue(1, 0.25);
+    data.SetParameterValue(2, 0.25);
+
+    for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
+    {
+        for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
+        {
+            data.SetParameterValue(3+element_counter*sources.size()+source_group_counter,data.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[0]);
+        }
+    }
+    for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
+    {
+        for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
+        {
+            data.SetParameterValue(3+source_group_counter+element_counter*sources.size()+sources.size()*elements.size(),data.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[1]);
+        }
+    }
+    data.SetParameterValue(3+2*sources.size()*elements.size(),1);
+    data.SetSelectedTargetSample("CTAIL3");
+    cout<<data.LogLikelihood()<<endl;
 }

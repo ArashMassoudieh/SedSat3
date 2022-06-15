@@ -37,6 +37,7 @@ SOURCES += \
     src/elemental_profile.cpp \
     src/elemental_profile_set.cpp \
     src/interface.cpp \
+    src/observation.cpp \
     src/parameter.cpp \
     src/sourcesinkdata.cpp
 
@@ -70,6 +71,7 @@ HEADERS += \
     include/elemental_profile.h \
     include/elemental_profile_set.h \
     include/interface.h \
+    include/observation.h \
     include/parameter.h \
     include/sourcesinkdata.h \
     indicatesheetsdialog.h \
@@ -125,4 +127,41 @@ CONFIG(debug, debug|release) {
     macx: DEFINES += NO_OPENMP
     ! macx: LIBS += -lgomp -lpthread -lgsl -larmadillo
     macx: LIBS += -lpthread
+}
+
+win32 {
+
+    LAPACK_INCLUDE = $$PWD/include
+    #64 bits build
+    contains(QMAKE_TARGET.arch, x86_64) {
+        #debug
+        CONFIG(debug, debug|release) {
+            LAPACK_LIB_DIR = $$PWD/libs/lapack-blas_lib_win64/debug
+            LIBS +=  -L$${LAPACK_LIB_DIR} -llapack_win64_MTd \
+                    -lblas_win64_MTd
+        }
+        #release
+        CONFIG(release, debug|release) {
+            LAPACK_LIB_DIR = $$PWD/libs/lapack-blas_lib_win64/release
+            LIBS +=  -L$${LAPACK_LIB_DIR} -llapack_win64_MT \
+                    -lblas_win64_MT
+        }
+    }
+
+    INCLUDEPATH += $${LAPACK_INCLUDE}
+
+    DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
+
+}
+
+linux {
+    #sudo apt-get install libblas-dev liblapack-dev
+     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
+     LIBS += -larmadillo -llapack -lblas
+}
+
+macx {
+    #sudo apt-get install libblas-dev liblapack-dev
+     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
+     LIBS += -llapack -lblas
 }

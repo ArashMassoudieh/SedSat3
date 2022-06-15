@@ -32,9 +32,14 @@ public:
     double LogLikelihood(const vector<double> &params=vector<double>(),distribution_type disttype=distribution_type::none);
     distribution_type SelectBestDistribution();
     Distribution* FittedDistribution() {return &FittedDist;}
-
+    void SetEstimatedMu(const double &mu) {EstimatedDistribution.parameters[0] = mu;}
+    void SetEstimatedSigma(const double &sigma) {EstimatedDistribution.parameters[1] = sigma;}
+    double EstimatedMu() {return EstimatedDistribution.parameters[0];}
+    double EstimatedSigma() {return EstimatedDistribution.parameters[1];}
+    Distribution* GetEstimatedDistribution() {return &EstimatedDistribution;}
 private:
     Distribution FittedDist;
+    Distribution EstimatedDistribution;
 };
 
 #endif // CONCENTRATIONSET_H

@@ -23,7 +23,7 @@ private:
     Ui::IndicateSheetsDialog *ui;
     QList<QRadioButton*> radio_buttons_sinks;
     QList<QRadioButton*> radio_buttons_sources;
-
+    QStringList group_names;
 private slots:
     void reject();
     void accept();

@@ -27,8 +27,13 @@ public:
     map<string,Elemental_Profile>::iterator begin() {return elemental_profiles.begin(); }
     map<string,Elemental_Profile>::iterator end() {return elemental_profiles.end(); }
     vector<string> SampleNames();
-    ConcentrationSet *ElementalDistribution(const string &element_name) { return &element_distributions[element_name]; }
-    ConcentrationSet ElementalDistribution(const string &element_name) const { return element_distributions.at(element_name); }
+    ConcentrationSet *ElementalDistribution(const string &element_name)
+    {
+        return &element_distributions[element_name];
+    }
+    ConcentrationSet ElementalDistribution(const string &element_name) const {
+        return element_distributions.at(element_name);
+    }
     distribution_type DistributionAssigned(const string &element_name)
     {
         if (element_distributions.count(element_name)==0)
@@ -36,12 +41,58 @@ public:
 
         return element_distributions[element_name].FittedDistribution()->distribution;
     }
+    double Estimated_mu(const string &element)
+    {
+        if (element_distributions.count(element)>0)
+            return element_distributions[element].EstimatedMu();
+        else
+            return 0;
+    }
+    double Estimated_sigma(const string &element)
+    {
+        if (element_distributions.count(element)>0)
+            return element_distributions[element].EstimatedSigma();
+        else
+            return 0;
+    }
+    bool Set_Estimated_mu(const string &element, const double &value)
+    {
+        if (element_distributions.count(element)>0)
+        {   element_distributions[element].SetEstimatedMu(value);
+            return true;
+        }
+        else
+            return false;
 
+    }
+    bool Set_Estimated_sigma(const string &element, const double &value)
+    {
+        if (element_distributions.count(element)>0)
+        {   element_distributions[element].SetEstimatedSigma(value);
+            return true;
+        }
+        else
+            return false;
 
+    }
+    bool SetContribution(const double &x)
+    {
+        contribution = x;
+        return true;
+    }
+    double Contribution() {return contribution; }
+    Distribution* GetEstimatedDistribution(const string &element_name )
+    {
+        if (element_distributions.count(element_name)>0)
+            return element_distributions[element_name].GetEstimatedDistribution();
+        else
+            return nullptr;
 
+    }
 private:
     map<string,Elemental_Profile> elemental_profiles;
     map<string,ConcentrationSet> element_distributions;
+    double contribution = 0;
 
 };
 

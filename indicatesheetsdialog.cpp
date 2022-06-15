@@ -25,8 +25,8 @@ void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
     for (int i=0; i<sheets.count(); i++)
     {
         QLabel *label = new QLabel(ui->scrollAreaWidgetContents);
-        label->setObjectName(QString::fromUtf8("label_2"));
         label->setText(sheets[i]);
+        group_names<<sheets[i];
         ui->formLayout->setWidget(i, QFormLayout::LabelRole, label);
 
         QGroupBox *groupBox = new QGroupBox(ui->scrollAreaWidgetContents);
@@ -63,7 +63,9 @@ void IndicateSheetsDialog::accept()
     for (int i=0; i<radio_buttons_sinks.count(); i++)
     {
         if (radio_buttons_sinks[i]->isChecked())
-            dynamic_cast<MainWindow*>(parent())->SetSinkSheet(i);
+        {   dynamic_cast<MainWindow*>(parent())->SetSinkSheet(i);
+            dynamic_cast<MainWindow*>(parent())->Data()->SetTargetGroup(group_names[i].toStdString());
+        }
     }
     QDialog::accept();
 }

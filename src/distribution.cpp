@@ -17,6 +17,17 @@ double Distribution::Eval(const double &x)
     return out;
 }
 
+double Distribution::EvalLog(const double &x)
+{
+    double out = 0;
+    if (distribution==distribution_type::normal)
+            out = -log(sqrt(2*pi)*parameters[1]) -pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]);
+    if (distribution==distribution_type::lognormal)
+            out = -log(sqrt(2*pi)*parameters[1] * x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
+
+    return out;
+}
+
 CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff)
 {
     CTimeSeries<double> out;
@@ -49,3 +60,25 @@ Distribution& Distribution::operator = (const Distribution &dist)
     distribution = dist.distribution;
     return *this;
 }
+
+void Distribution::SetType(const distribution_type &typ)
+{
+    distribution = typ;
+    if (typ == distribution_type::lognormal)
+        parameters.resize(2);
+    if (typ == distribution_type::normal)
+        parameters.resize(2);
+}
+
+
+double Distribution::Mean()
+{
+
+    if (distribution == distribution_type::lognormal)
+        return exp(parameters[0]+pow(parameters[1],2)/2);
+    if (distribution == distribution_type::normal)
+        return parameters[0];
+
+    return 0;
+}
+

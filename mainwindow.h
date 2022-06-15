@@ -54,6 +54,7 @@ private slots:
     void on_constituent_properties_triggered();
     void on_test_dialog_triggered();
     void on_tool_executed(const QModelIndex&);
+    void on_test_likelihood();
 
 
 };
