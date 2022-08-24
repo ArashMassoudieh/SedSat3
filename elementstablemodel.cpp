@@ -97,6 +97,7 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
     }
     QString result = "Done";
     emit editCompleted(result);
+    return true; 
 }
 Qt::ItemFlags ElementTableModel::flags(const QModelIndex & index) const
 {

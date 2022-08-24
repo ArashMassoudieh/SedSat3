@@ -7,7 +7,7 @@ Parameter::Parameter()
 
 double Parameter::GetVal(const string &quantity)
 {
-
+    return 0; 
 }
 
 void Parameter::SetRange(const vector<double> &rng)

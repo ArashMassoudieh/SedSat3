@@ -14,7 +14,10 @@ public:
     Conductor();
     bool Execute(const string &command, map<string,string> arguments);
     SourceSinkData *Data() {return data;}
-    void SetData(SourceSinkData *_data) {data = _data;}
+    void SetData(SourceSinkData *_data)
+    {
+	    data = _data;
+    }
 private:
     SourceSinkData *data;
     CGA<SourceSinkData> *GA = nullptr;

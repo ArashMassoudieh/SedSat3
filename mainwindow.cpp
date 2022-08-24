@@ -77,9 +77,9 @@ void MainWindow::on_import_excel()
         delete columnviewmodel;
     columnviewmodel = new QStandardItemModel();
     columnviewmodel->setColumnCount(1);
-    modelitems.append(ToQStandardItem("Samples",&data));
+    modelitems.append(ToQStandardItem("Samples",&DataCollection));
     columnviewmodel->appendRow(modelitems);
-    elementitems.append(ElementsToQStandardItem("Elements",&data));
+    elementitems.append(ElementsToQStandardItem("Elements",&DataCollection));
     columnviewmodel->appendRow(elementitems);
     ui->treeView->setModel(columnviewmodel);
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
@@ -150,11 +150,11 @@ bool MainWindow::ReadExcel(const QString &filename)
         Elemental_Profile_Set *elemental_profile_set = nullptr;
         if (sheetnumber==Sink_Sheet)
         {
-            elemental_profile_set = data.AppendSampleSet(sheetnames[sheetnumber].toStdString());
+            elemental_profile_set = DataCollection.AppendSampleSet(sheetnames[sheetnumber].toStdString());
         }
         else
         {
-            elemental_profile_set = data.AppendSampleSet(sheetnames[sheetnumber].toStdString());
+            elemental_profile_set = DataCollection.AppendSampleSet(sheetnames[sheetnumber].toStdString());
         }
 
         while (xlsxR.cellAt(row,1))
@@ -171,9 +171,9 @@ bool MainWindow::ReadExcel(const QString &filename)
         }
 
     }
-    data.PopulateElementInformation();
-    data.PopulateElementDistributions();
-    data.AssignAllDistributions();
+    DataCollection.PopulateElementInformation();
+    DataCollection.PopulateElementDistributions();
+    DataCollection.AssignAllDistributions();
     qDebug()<<"Reading element information done!";
 
     return true;
@@ -188,7 +188,7 @@ void MainWindow::WriteMessageOnScreen(const QString &text, QColor color)
 void MainWindow::on_test_plot()
 {
     plotter = new GeneralPlotter(this);
-    map<string,vector<double>> data;
+    map<string,vector<double>> _data;
 
     for (int i=0; i<10; i++)
     {
@@ -197,9 +197,9 @@ void MainWindow::on_test_plot()
         {
             y_val[j]=i+0.2*j;
         }
-        data["case " + aquiutils::numbertostring(i)] = y_val;
+        _data["case " + aquiutils::numbertostring(i)] = y_val;
     }
-    plotter->AddNoneUniformScatter(data,1);
+    plotter->AddNoneUniformScatter(_data,1);
     ui->verticalLayout_3->addWidget(plotter);
     ui->frame->setVisible(true);
     ui->frame->setEnabled(true);
@@ -212,14 +212,14 @@ QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsi
         delete columnviewmodel;
     columnviewmodel = new QStandardItemModel();
 
-    vector<string> group_names = data.GroupNames();
+    vector<string> group_names = DataCollection.GroupNames();
     for (int i=0; i<group_names.size(); i++)
     {
         /* Create the phone groups as QStandardItems */
         QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
         group->setData("Parent",Qt::UserRole);
         /* Append to each group 5 person as children */
-        for (map<string,Elemental_Profile>::iterator it= data.sample_set(group_names[i])->begin();it!=data.sample_set(group_names[i])->end(); it++)
+        for (map<string,Elemental_Profile>::iterator it= DataCollection.sample_set(group_names[i])->begin();it!=DataCollection.sample_set(group_names[i])->end(); it++)
         {
             QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
             child->setData("Child",Qt::UserRole);
@@ -240,14 +240,14 @@ QStandardItem* MainWindow::ToQStandardItem(const QString &key, const SourceSinkD
 
     QStandardItem *columnviewitem = new QStandardItem(key);
     columnviewitem->setData("RootItem",Qt::UserRole);
-    vector<string> group_names = data.GroupNames();
+    vector<string> group_names = DataCollection.GroupNames();
     for (int i=0; i<group_names.size(); i++)
     {
         /* Create the phone groups as QStandardItems */
         QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
         group->setData("Group",Qt::UserRole);
         /* Append to each group 5 person as children */
-        for (map<string,Elemental_Profile>::iterator it= data.sample_set(group_names[i])->begin();it!=data.sample_set(group_names[i])->end(); it++)
+        for (map<string,Elemental_Profile>::iterator it= DataCollection.sample_set(group_names[i])->begin();it!=DataCollection.sample_set(group_names[i])->end(); it++)
         {
             QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
             child->setData("Sample",Qt::UserRole);
@@ -263,8 +263,8 @@ QStandardItem* MainWindow::ElementsToQStandardItem(const QString &key, const Sou
 {
     QStandardItem *columnviewitem = new QStandardItem(key);
     columnviewitem->setData("RootItem",Qt::UserRole);
-    vector<string> group_names = data.GroupNames();
-    vector<string> element_names = data.ElementNames();
+    vector<string> group_names = DataCollection.GroupNames();
+    vector<string> element_names = DataCollection.ElementNames();
     for (int elem_counter=0; elem_counter<element_names.size(); elem_counter++)
     {   QStandardItem *element_item=new QStandardItem(QString::fromStdString(element_names[elem_counter]));
         element_item->setData("Element",Qt::UserRole);
@@ -315,7 +315,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
         if (indexes[i].data(Qt::UserRole).toString()=="Group")
         {
             QString Group_Name_Selected = indexes[i].data().toString();
-            vector<string> Sample_Names = data.sample_set(Group_Name_Selected.toStdString())->SampleNames();
+            vector<string> Sample_Names = DataCollection.sample_set(Group_Name_Selected.toStdString())->SampleNames();
             for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
             {
                 vector<string> item;
@@ -336,7 +336,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
             qDebug()<<"Element selected!";
             PlotType = plottype::element_scatters;
             QString Element_Name_Selected = indexes[i].data().toString();
-            map<string,vector<double>> extracted_data = data.ExtractElementData(Element_Name_Selected.toStdString());
+            map<string,vector<double>> extracted_data = DataCollection.ExtractElementData(Element_Name_Selected.toStdString());
             qDebug()<<"Data extracted!";
             if (plotter==nullptr)
             {
@@ -352,7 +352,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 
 
     if (samples_selected.size()>0 && PlotType==plottype::elemental_profiles)
-    {   profiles_data extracted_data = data.ExtractData(samples_selected);
+    {   profiles_data extracted_data = DataCollection.ExtractData(samples_selected);
         plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
         plotter->SetYAxisScaleType(AxisScale::log);
     }
@@ -435,11 +435,11 @@ void MainWindow::showdistributionsforelements()
     QString key2 = keys[0];
     QString item = keys[1];
     PlotWindow *plotwindow = new PlotWindow(this);
-    CTimeSeries<double> elem_dist = data.FittedDistribution(item.toStdString())->EvaluateAsTimeSeries();
+    CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(item.toStdString())->EvaluateAsTimeSeries();
     plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-    for (map<string,Elemental_Profile_Set>::iterator it=data.begin(); it!=data.end(); it++)
+    for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
     {
-        elem_dist = data.sample_set(it->first)->ElementalDistribution(item.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+        elem_dist = DataCollection.sample_set(it->first)->ElementalDistribution(item.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
         plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
     }
     plotwindow->setWindowTitle(item);
@@ -454,9 +454,9 @@ void MainWindow::on_constituent_properties_triggered()
     if (centralform)
         delete centralform;
     FormElementInformation *formelems = new FormElementInformation(this);
-    ElementTableModel *elementtablemodel = new ElementTableModel(&data,this);
+    ElementTableModel *elementtablemodel = new ElementTableModel(&DataCollection,this);
     formelems->table()->setModel(elementtablemodel);
-    ElementTableDelegate *elemDelegate = new ElementTableDelegate(&data, this);
+    ElementTableDelegate *elemDelegate = new ElementTableDelegate(&DataCollection, this);
     formelems->table()->setItemDelegate(elemDelegate);
     ui->verticalLayout_middle->addWidget(formelems);
     centralform = formelems;
@@ -468,7 +468,7 @@ void MainWindow::on_test_dialog_triggered()
         delete centralform;
     QJsonObject mainjsonobject = formsstructure.object();
     QJsonObject GA_object = mainjsonobject.value("GA").toObject();
-    GenericForm *form = new GenericForm(&GA_object);
+    GenericForm *form = new GenericForm(&GA_object,this,this);
     ui->verticalLayout_middle->addWidget(form);
     centralform = form;
 }
@@ -476,7 +476,7 @@ void MainWindow::on_test_dialog_triggered()
 void MainWindow::on_tool_executed(const QModelIndex &index)
 {
     qDebug()<<"Tool executed"<<index.data()<<": "<<index.data(Qt::UserRole);
-    if (data.ElementNames().size()==0)
+    if (DataCollection.ElementNames().size()==0)
     {   QMessageBox::warning(this, "OpenHydroQual",tr("No data has been loaded!\n"), QMessageBox::Ok);
         return;
     }
@@ -485,7 +485,7 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
     QJsonObject mainjsonobject = formsstructure.object();
     if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
     {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
-        GenericForm *form = new GenericForm(&GA_object,this);
+        GenericForm *form = new GenericForm(&GA_object,this, this);
         form->SetCommand(index.data(Qt::UserRole).toString());
         ui->verticalLayout_middle->addWidget(form);
         centralform = form;
@@ -494,34 +494,34 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
 
 bool MainWindow::Execute(const string &command, map<string,string> arguments)
 {
-    conductor.SetData(&data);
+    conductor.SetData(&DataCollection);
     return conductor.Execute(command,arguments);
 }
 
 void MainWindow::on_test_likelihood()
 {
-    vector<string> elements = data.ElementsToBeUsedInCMB();
-    vector<string> sources = data.SourceGroupNames();
-    data.InitializeParametersObservations(data.SelectedTargetSample());
-    data.SetParameterValue(0, 0.25);
-    data.SetParameterValue(1, 0.25);
-    data.SetParameterValue(2, 0.25);
+    vector<string> elements = DataCollection.ElementsToBeUsedInCMB();
+    vector<string> sources = DataCollection.SourceGroupNames();
+    DataCollection.InitializeParametersObservations(DataCollection.SelectedTargetSample());
+    DataCollection.SetParameterValue(0, 0.25);
+    DataCollection.SetParameterValue(1, 0.25);
+    DataCollection.SetParameterValue(2, 0.25);
 
     for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
     {
         for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
         {
-            data.SetParameterValue(3+element_counter*sources.size()+source_group_counter,data.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[0]);
+            DataCollection.SetParameterValue(3+element_counter*sources.size()+source_group_counter,DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[0]);
         }
     }
     for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
     {
         for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
         {
-            data.SetParameterValue(3+source_group_counter+element_counter*sources.size()+sources.size()*elements.size(),data.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[1]);
+            DataCollection.SetParameterValue(3+source_group_counter+element_counter*sources.size()+sources.size()*elements.size(),DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[1]);
         }
     }
-    data.SetParameterValue(3+2*sources.size()*elements.size(),1);
-    data.SetSelectedTargetSample("CTAIL3");
-    cout<<data.LogLikelihood()<<endl;
+    DataCollection.SetParameterValue(3+2*sources.size()*elements.size(),1);
+    DataCollection.SetSelectedTargetSample("CTAIL3");
+    cout<<DataCollection.LogLikelihood()<<std::endl;
 }

@@ -74,13 +74,13 @@ public:
     {
         if (!sample_set(sample_group))
         {
-            cout<<"Sample Group '" + sample_group +"' does not exist!"<<endl;
+            cout<<"Sample Group '" + sample_group +"' does not exist!"<<std::endl;
             return nullptr;
 
         }
         if (!sample_set(sample_group)->ElementalDistribution(element_name))
         {
-            cout<<"Element '" + element_name +"' does not exist!"<<endl;
+            cout<<"Element '" + element_name +"' does not exist!"<<std::endl;
             return nullptr;
         }
 
@@ -109,7 +109,11 @@ public:
             return nullptr;
     }
     string GetNameForParameterID(int i);
-    bool SetTargetGroup(const string &targroup) {target_group = targroup;}
+    bool SetTargetGroup(const string &targroup)
+    {
+	    target_group = targroup;
+        return true; 
+    }
     string TargetGroup() {return target_group;}
     bool InitializeParametersObservations(const string &targetsamplename="");
     bool SetParameterValue(unsigned int i, double value);

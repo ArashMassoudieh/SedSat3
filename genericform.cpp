@@ -3,11 +3,11 @@
 #include "QLabel"
 #include "mainwindow.h"
 
-GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent) :
+GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_mainwindow) :
     QWidget(parent),
     ui(new Ui::GenericForm)
 {
-
+    mainWindow = _mainwindow; 
     ui->setupUi(this);
 
     for (int i=0; i<formdata->keys().size(); i++)
@@ -111,8 +111,8 @@ void GenericForm::onCancel()
 
 MainWindow *GenericForm::mainwindow()
 {
-    if (parent()!=nullptr)
-    return dynamic_cast<MainWindow*>(parent());
+    if (mainWindow!=nullptr)
+    return mainWindow;
 }
 
 bool GenericForm::SetCommand(const QString &cmd)

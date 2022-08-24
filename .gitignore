@@ -79,3 +79,6 @@ Thumbs.db
 x64/Release/CMBSource.tlog/
 
 x64/Release/
+/.vs/CMBSource
+/CMB_Source-cache
+/x64/Debug

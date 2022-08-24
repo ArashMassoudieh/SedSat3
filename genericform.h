@@ -52,7 +52,7 @@ class GenericForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit GenericForm(QJsonObject *formdata, QWidget *parent = nullptr);
+    explicit GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *mainwindow);
     QVector<parameter_property> Parameter_Properties;
     ~GenericForm();
     bool SetCommand(const QString &cmd);
@@ -63,8 +63,10 @@ private:
     Ui::GenericForm *ui;
     MainWindow *mainwindow();
     QString command;
+    MainWindow* mainWindow=nullptr;
 public slots:
-    void onProceed();
+    
+	void onProceed();
     void onCancel();
 };
 

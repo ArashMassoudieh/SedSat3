@@ -20,13 +20,13 @@ public:
     ~MainWindow();
     void SetSinkSheet(int i) {Sink_Sheet = i;}
     void WriteMessageOnScreen(const QString &text, QColor color=Qt::black);
-    SourceSinkData *Data() {return &data;}
+    SourceSinkData *Data() {return &DataCollection;}
     bool Execute(const string &command, map<string,string> arguments);
 private:
     Ui::MainWindow *ui;
     int Sink_Sheet=-1;
     bool ReadExcel(const QString &filename);
-    SourceSinkData data;
+    SourceSinkData DataCollection;
     GeneralPlotter *plotter = nullptr;
     QStandardItemModel* ToQStandardItemModel(const SourceSinkData* srcsinkdata);
     QStandardItem* ToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata);
