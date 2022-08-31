@@ -8,10 +8,12 @@
 #include "QLineEdit"
 #include "QCheckBox"
 #include "QSpinBox"
+#include "filebrowserpushbuttom.h"
+
 
 class MainWindow;
 
-enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBox};
+enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBox, FileBrowser};
 struct parameter_property
 {
     QString Discription;
@@ -38,6 +40,10 @@ struct parameter_property
         if (Type==delegate_type::SpinBox)
         {
             return QString::number(dynamic_cast<QSpinBox*>(InputWidget)->value());
+        }
+        if (Type==delegate_type::FileBrowser)
+        {
+            return dynamic_cast<FileBrowserPushButtom*>(InputWidget)->text();
         }
         return "";
     }

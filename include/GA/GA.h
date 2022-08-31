@@ -85,6 +85,8 @@ public:
     void getinitialpop(string filename);
     int optimize();
     bool SetProperty(const string &varname, const string &value);
+    bool SetProperties(const map<string,string> &arguments);
+    void InitiatePopulation();
     string last_error;
 #ifdef Q_version
     void SetRunTimeWindow(RunTimeWindow *_rtw) {rtw=_rtw;}

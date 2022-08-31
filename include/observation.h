@@ -12,7 +12,8 @@ public:
     void SetName(const string &nam) {name = nam;}
     string Name() {return name;}
     string GetName() { return name; }
-
+    void SetValues(const CTimeSeries<double> &values);
+    void AppendValues(const double &t, const double &val);
 private:
     CTimeSeries<double> values;
     string name;

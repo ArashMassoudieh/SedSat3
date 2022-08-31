@@ -12,6 +12,22 @@
    			"type": "lineEdit",
 			"default": "1.0"
     		},
+    		"Shake coefficient": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Shake coefficient reduction factor": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    		},
+    		"Number of threads to be used": {
+   			"type": "spinBox",
+			"default": "8"
+    		},
+    		"Mutation probability": {
+   			"type": "lineEdit",
+			"default": "0.02"
+    		},
     		"Numerical cross-over": {
    			"type": "checkBox",
 			"default": "false"
@@ -19,6 +35,10 @@
     		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
+    		},
+    		"GA output file": {
+    			"type": "fileBrowser_Save",
+    			"default": "GA_Output.txt"
     		}
 	}
 }

@@ -265,6 +265,19 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     p.SetRange(-5, 5);
     parameters.push_back(p);
 
+    // Observations
+    for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+    {
+        if (element_iterator->second.Role == element_information::role::element)
+        {
+            Observation obs;
+            obs.SetName(targetsamplename + "_" + element_iterator->first);
+            obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
+            observations.push_back(obs);
+        }
+
+    }
+
     return true;
 }
 
@@ -358,7 +371,7 @@ CMatrix SourceSinkData::SourceMeanMatrix()
         for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
         {
             Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
-            Y(element_counter,source_group_counter) = this_source_group->GetEstimatedDistribution(elementorder[element_counter])->Mean();
+            Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(elementorder[element_counter])->Mean();
         }
     }
     return Y;
@@ -460,4 +473,16 @@ bool SourceSinkData::SetSelectedTargetSample(const string &sample_name)
 string SourceSinkData::SelectedTargetSample()
 {
     return selected_target_sample;
+}
+
+Elemental_Profile *SourceSinkData::GetElementalProfile(const string sample_name)
+{
+
+    for (map<string,Elemental_Profile_Set>::const_iterator group=sample_sets.begin(); group!=sample_sets.end(); group++ )
+    {
+        for (map<string,Elemental_Profile>::const_iterator sample=group->second.cbegin(); sample!=group->second.cend(); sample++)
+            if (sample->first == sample_name)
+                return sample_set(group->first)->Profile(sample->first);
+    }
+    return nullptr;
 }

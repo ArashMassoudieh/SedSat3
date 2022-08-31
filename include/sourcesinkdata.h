@@ -45,10 +45,11 @@ public:
     Elemental_Profile_Set *sample_set(const string &name);
     vector<string> GroupNames();
     vector<string> ElementNames();
-    vector<string> SampleNames(const string groupname);
+    vector<string> SampleNames(const string groupname); // List of sample names for a particular group
     profiles_data ExtractData(const vector<vector<string>> &indicators);
     element_data ExtractElementData(const string &element, const string &group);
     map<string,vector<double>> ExtractElementData(const string &element);
+    Elemental_Profile *GetElementalProfile(const string sample_name); //Get Elemental Profile for a particular sample
     void PopulateElementDistributions();
     void AssignAllDistributions();
     Distribution *FittedDistribution(const string &element_name);

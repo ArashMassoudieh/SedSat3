@@ -26,6 +26,8 @@ public:
     Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile());
     map<string,Elemental_Profile>::iterator begin() {return elemental_profiles.begin(); }
     map<string,Elemental_Profile>::iterator end() {return elemental_profiles.end(); }
+    map<string,Elemental_Profile>::const_iterator cbegin() const {return elemental_profiles.cbegin(); }
+    map<string,Elemental_Profile>::const_iterator cend() const {return elemental_profiles.cend(); }
     vector<string> SampleNames();
     ConcentrationSet *ElementalDistribution(const string &element_name)
     {

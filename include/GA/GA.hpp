@@ -148,9 +148,9 @@ CGA<T>::CGA(T *model)
 	for (int i=0; i<GA_params.maxpop; i++)
 	{
 		Ind[i] = CIndividual(GA_params.nParam);
-        Ind[i].fit_measures.resize(model->ObservationsCount()*3);
+        Ind[i].fit_measures.resize(model->ObservationsCount());
 		Ind_old[i] = CIndividual(GA_params.nParam);
-        Ind_old[i].fit_measures.resize(model->ObservationsCount()*3);
+        Ind_old[i].fit_measures.resize(model->ObservationsCount());
 	}
 
 	for (int j = 0; j < GA_params.nParam; j++)
@@ -159,6 +159,53 @@ CGA<T>::CGA(T *model)
 	MaxFitness = 0;
 }
 
+template<class T>
+void CGA<T>::InitiatePopulation()
+{
+    for (unsigned int i=0; i<Model->Parameters().size(); i++)
+    {
+        GA_params.nParam++;
+        params.push_back(i);
+        if (Model->parameter(i)->GetPriorDistribution().distribution == distribution_type::lognormal)
+        {	minval.push_back(log10(Model->parameter(i)->GetVal("low")));
+            maxval.push_back(log10(Model->parameter(i)->GetVal("high")));
+
+        }
+        else
+        {
+            minval.push_back(Model->parameter(i)->GetVal("low"));
+            maxval.push_back(Model->parameter(i)->GetVal("high"));
+        }
+        apply_to_all.push_back(false);
+        if (Model->parameter(i)->GetPriorDistribution().distribution == distribution_type::lognormal)
+            loged.push_back(1);
+        else
+            loged.push_back(0);
+
+        paramname.push_back(Model->GetNameForParameterID(i));
+
+    }
+
+
+    Ind.resize(GA_params.maxpop);
+    Ind_old.resize(GA_params.maxpop);
+
+    fitdist = GADistribution(GA_params.nParam);
+    GA_params.cross_over_type = 1;
+
+    for (int i=0; i<GA_params.maxpop; i++)
+    {
+        Ind[i] = CIndividual(GA_params.nParam);
+        Ind[i].fit_measures.resize(Model->ObservationsCount());
+        Ind_old[i] = CIndividual(GA_params.nParam);
+        Ind_old[i].fit_measures.resize(Model->ObservationsCount());
+    }
+
+    for (int j = 0; j < GA_params.nParam; j++)
+        Setminmax(j, minval[j], maxval[j], 4);
+
+    MaxFitness = 0;
+}
 
 template<class T>
 void CGA<T>::setnparams(int n_params)
@@ -314,7 +361,7 @@ void CGA<T>::assignfitnesses()
         //Models[k].SetNumThreads(1);
 		for (int i = 0; i < GA_params.nParam; i++)
 			Models[k].SetParameterValue(i, inp[k][i]);
-        Models[k].ApplyParameters();
+        //Models[k].ApplyParameters();
 
 	}
 
@@ -351,7 +398,7 @@ int counter=0;
             //for (unsigned int i=0; i<Models[k].fit_measures.size(); i++)
             //    Ind[k].fit_measures[i] = Models[k].fit_measures[i];
 
-			epochs[k] += Models[k].EpochCount();
+//			epochs[k] += Models[k].EpochCount();
             time_[k] = time(nullptr)-t0;
             counter++;
 #pragma omp critical
@@ -370,9 +417,9 @@ int counter=0;
 #endif
 
             {
-                FileOut = fopen((filenames.pathname+"detail_GA.txt").c_str(),"a");
-                fprintf(FileOut, "%i, fitness=%e, time=%e, internal_time=%e, failed=%i\n", k, Ind[k].actual_fitness, time_[k], double(Models[k].GetSimulationDuration()), Models[k].GetSolutionFailed());
-                fclose(FileOut);
+//              FileOut = fopen((filenames.pathname+"detail_GA.txt").c_str(),"a");
+//              fprintf(FileOut, "%i, fitness=%e, time=%e, internal_time=%e, failed=%i\n", k, Ind[k].actual_fitness, time_[k], double(Models[k].GetSimulationDuration()), Models[k].GetSolutionFailed());
+//              fclose(FileOut);
             }
 
 		}
@@ -446,20 +493,27 @@ void CGA<T>::crossoverRC()
 template<class T>
 bool CGA<T>::SetProperty(const string &varname, const string &value)
 {
-    if (aquiutils::tolower(varname) == "maxpop") {GA_params.maxpop = aquiutils::atoi(value); setnumpop(GA_params.maxpop); return true;}
-    if (aquiutils::tolower(varname) == "ngen") {GA_params.nGen = aquiutils::atoi(value); return true;}
-	if (aquiutils::tolower(varname) == "pcross") {GA_params.pcross = aquiutils::atof(value); return true;}
-	if (aquiutils::tolower(varname) == "pmute") {GA_params.pmute = aquiutils::atof(value); return true;}
-	if (aquiutils::tolower(varname) == "shakescale") {GA_params.shakescale = aquiutils::atof(value); return true;}
-	if (aquiutils::tolower(varname) == "shakescalered") {GA_params.shakescalered = aquiutils::atof(value); return true;}
-	if (aquiutils::tolower(varname) == "outputfile") {filenames.outputfilename = value; return true;}
-	if (aquiutils::tolower(varname) == "getfromfilename") {filenames.getfromfilename = value.c_str(); return true;}
-	if (aquiutils::tolower(varname) == "initial_population") {filenames.initialpopfilemame = value; return true;}
-	if (aquiutils::tolower(varname) == "numthreads") {numberOfThreads = aquiutils::atoi(value.c_str()); return true;}
+    if (aquiutils::tolower(varname) == "maxpop" || varname == "Population") {GA_params.maxpop = aquiutils::atoi(value); setnumpop(GA_params.maxpop); return true;}
+    if (aquiutils::tolower(varname) == "ngen" || varname == "Number of Generations") {GA_params.nGen = aquiutils::atoi(value); return true;}
+    if (aquiutils::tolower(varname) == "pcross" || varname == "Cross-over probability") {GA_params.pcross = aquiutils::atof(value); return true;}
+    if (aquiutils::tolower(varname) == "pmute" || varname == "Mutation probability") {GA_params.pmute = aquiutils::atof(value); return true;}
+    if (aquiutils::tolower(varname) == "shakescale" || varname == "Shake coefficient") {GA_params.shakescale = aquiutils::atof(value); return true;}
+    if (aquiutils::tolower(varname) == "shakescalered" || varname == "Shake coefficient reduction factor") {GA_params.shakescalered = aquiutils::atof(value); return true;}
+    if (aquiutils::tolower(varname) == "outputfile"  || varname == "GA output file") {filenames.outputfilename = value; return true;}
+    if (aquiutils::tolower(varname) == "getfromfilename") {filenames.getfromfilename = value.c_str(); return true;}
+    if (aquiutils::tolower(varname) == "initial_population") {filenames.initialpopfilemame = value; return true;}
+    if (aquiutils::tolower(varname) == "numthreads"  || varname == "Number of threads to be used") {numberOfThreads = aquiutils::atoi(value.c_str()); return true;}
     last_error = "Property '" + varname + "' was not found!";
     return false;
 }
 
+template<class T>
+bool CGA<T>::SetProperties(const map<string,string> &arguments)
+{
+    for (map<string,string>::const_iterator it=arguments.begin(); it!=arguments.end(); it++)
+        SetProperty(it->first, it->second);
+    return true;
+}
 
 template<class T>
 double CGA<T>::avgfitness()

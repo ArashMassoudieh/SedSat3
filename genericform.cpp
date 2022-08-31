@@ -56,6 +56,26 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                         }
                     }
                 }
+                if (object.value("type").toString()=="fileBrowser_Save")
+                {
+                    parameter_prop.Type = delegate_type::FileBrowser;
+                    FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
+                    filebrowserpushbuttom->dialog_use = save_open::save;
+                    filebrowserpushbuttom->setText(object.value("default").toString());
+                    ui->formLayout->addRow(label,filebrowserpushbuttom);
+                    parameter_prop.InputWidget = filebrowserpushbuttom;
+
+                }
+                if (object.value("type").toString()=="fileBrowser_Open")
+                {
+                    parameter_prop.Type = delegate_type::FileBrowser;
+                    FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
+                    filebrowserpushbuttom->dialog_use = save_open::open;
+                    filebrowserpushbuttom->setText(object.value("default").toString());
+                    ui->formLayout->addRow(label,filebrowserpushbuttom);
+                    parameter_prop.InputWidget = filebrowserpushbuttom;
+
+                }
                 if (object.value("type").toString()=="checkBox")
                 {
                     parameter_prop.Type = delegate_type::CheckBox;

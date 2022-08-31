@@ -17,3 +17,13 @@ Observation& Observation::operator=(const Observation &obs)
     name = obs.name;
     return *this;
 }
+
+void Observation::SetValues(const CTimeSeries<double> &_values)
+{
+    values = _values;
+}
+
+void Observation::AppendValues(const double &t, const double &val)
+{
+    values.append(t,val);
+}

@@ -481,7 +481,9 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
         return;
     }
     if (centralform)
-        delete centralform;
+    {   delete centralform;
+        centralform = nullptr;
+    }
     QJsonObject mainjsonobject = formsstructure.object();
     if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
     {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
