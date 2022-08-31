@@ -309,9 +309,9 @@ void CGA<T>::assignfitnesses()
         Ind[k].actual_fitness = 0;
 
         Models[k] = *Model;
-        Models[k].SetSilent(true);
-		Models[k].SetRecordResults(false);
-        Models[k].SetNumThreads(1);
+        //Models[k].SetSilent(true);
+		//Models[k].SetRecordResults(false);
+        //Models[k].SetNumThreads(1);
 		for (int i = 0; i < GA_params.nParam; i++)
 			Models[k].SetParameterValue(i, inp[k][i]);
         Models[k].ApplyParameters();
@@ -345,17 +345,12 @@ int counter=0;
             }
             time_t t0 = time(nullptr);
 
-#ifdef Debug_GA
-            Models[k].SavetoScriptFile(filenames.pathname+"/temp/model_" + aquiutils::numbertostring(k) +"_" +aquiutils::numbertostring(current_generation)+".ohq",string(""), vector<string>());
-#endif
-            Models[k].Solve();
+
+            
             Ind[k].actual_fitness = Models[k].GetObjectiveFunctionValue();
-            for (unsigned int i=0; i<Models[k].fit_measures.size(); i++)
-                Ind[k].fit_measures[i] = Models[k].fit_measures[i];
-#ifdef Debug_GA
-            Models[k].GetModeledObjectiveFunctions().writetofile(filenames.pathname+"/temp//observedoutputs_"+aquiutils::numbertostring(k)+"_"+aquiutils::numbertostring(current_generation)+".txt");
-            Models[k].GetOutputs().writetofile(filenames.pathname+"/temp//outputs_"+aquiutils::numbertostring(k)+"_"+aquiutils::numbertostring(current_generation)+".txt");
-#endif
+            //for (unsigned int i=0; i<Models[k].fit_measures.size(); i++)
+            //    Ind[k].fit_measures[i] = Models[k].fit_measures[i];
+
 			epochs[k] += Models[k].EpochCount();
             time_[k] = time(nullptr)-t0;
             counter++;
@@ -527,12 +522,12 @@ int CGA<T>::optimize()
 		fprintf(FileOut, "ID, ");
 		for (int k=0; k<Ind[0].nParams; k++)
 			fprintf(FileOut, "%s, ", paramname[k].c_str());
-        fprintf(FileOut, "%s, %s, %s, ", "likelihood", "Fitness", "Rank");
-        for (unsigned int i=0; i<Model->ObservationsCount();i++)
-        {
-            fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
-        }
-        fprintf(FileOut, "\n");
+        //fprintf(FileOut, "%s, %s, %s, ", "likelihood", "Fitness", "Rank");
+        //for (unsigned int i=0; i<Model->ObservationsCount();i++)
+        //{
+        //    fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
+        //}
+        //fprintf(FileOut, "\n");
         write_to_detailed_GA("Generation: " + aquiutils::numbertostring(current_generation));
 		for (int j1=0; j1<GA_params.maxpop; j1++)
 		{
@@ -678,12 +673,12 @@ double CGA<T>::assignfitnesses(vector<double> inp)
 	for (int i = 0; i < GA_params.nParam; i++)
         Model1.SetParameterValue(i, inp[i]);
 
-    Model1.ApplyParameters();
-    Model1.Solve();
+    //Model1.ApplyParameters();
+    //Model1.Solve();
     likelihood -= Model1.GetObjectiveFunctionValue();
 
     Model_out = Model1;
-    Model_out.TransferResultsFrom(&Model1);
+    //Model_out.TransferResultsFrom(&Model1);
 	return likelihood;
 
 }

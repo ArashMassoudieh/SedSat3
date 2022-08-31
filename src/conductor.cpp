@@ -11,6 +11,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         if (GA!=nullptr) delete GA;
         GA = new CGA<SourceSinkData>(Data());
+        GA->optimize();
     }
     return true;
 }
