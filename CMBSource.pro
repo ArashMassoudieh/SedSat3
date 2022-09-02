@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += _arma
 SOURCES += \
+    ../Utilities/Distribution.cpp \
     ../Utilities/Matrix.cpp \
     ../Utilities/Matrix_arma.cpp \
     ../Utilities/Matrix_arma_sp.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     ../Utilities/BTC.hpp \
     ../Utilities/BTCSet.h \
     ../Utilities/BTCSet.hpp \
+    ../Utilities/Distribution.h \
     ../Utilities/Matrix.h \
     ../Utilities/Matrix_arma.h \
     ../Utilities/Matrix_arma_sp.h \
@@ -164,6 +166,12 @@ linux {
 
 macx {
     #sudo apt-get install libblas-dev liblapack-dev
+
      DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
-     LIBS += -llapack -lblas
+     LIBS += -lblas -llapack
+     LIBS += -L$$PWD/../Armadillo/ -larmadillo.11.2.3
+     INCLUDEPATH += $$PWD/../Armadillo/include/
+     DEPENDPATH += $$PWD/../Armadillo
+     INCLUDEPATH += /opt/homebrew/Cellar/gsl/2.7.1/include/
 }
+
