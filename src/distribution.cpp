@@ -52,12 +52,14 @@ Distribution::Distribution(const Distribution &dist)
     pi = 4 * atan(1.0);
     parameters = dist.parameters;
     distribution = dist.distribution;
+    SetType(dist.distribution);
 }
 Distribution& Distribution::operator = (const Distribution &dist)
 {
     pi = 4 * atan(1.0);
     parameters = dist.parameters;
     distribution = dist.distribution;
+    SetType(dist.distribution);
     return *this;
 }
 

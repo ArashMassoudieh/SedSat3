@@ -4,12 +4,12 @@
 
 ConcentrationSet::ConcentrationSet():vector<double>()
 {
-
+    
 }
 
 ConcentrationSet::ConcentrationSet(const ConcentrationSet &cs):vector<double>(cs)
 {
-
+    EstimatedDistribution = cs.EstimatedDistribution;
 }
 
 ConcentrationSet::ConcentrationSet(int n):vector<double>(n)
@@ -20,6 +20,7 @@ ConcentrationSet::ConcentrationSet(int n):vector<double>(n)
 ConcentrationSet& ConcentrationSet::operator=(const ConcentrationSet &cs)
 {
     vector<double>::operator=(cs);
+    EstimatedDistribution = cs.EstimatedDistribution;
     return *this;
 }
 

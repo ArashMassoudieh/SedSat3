@@ -17,6 +17,8 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp)
     outputpath = mp.outputpath;
     parameters = mp.parameters;
     target_group = mp.target_group;
+    samplesetsorder = mp.samplesetsorder;
+    elementorder = mp.elementorder;
 
 }
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
@@ -30,6 +32,8 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     outputpath = mp.outputpath;
     parameters = mp.parameters;
     target_group = mp.target_group;
+    samplesetsorder = mp.samplesetsorder;
+    elementorder = mp.elementorder;
     return *this;
 }
 
@@ -189,6 +193,7 @@ string SourceSinkData::GetNameForParameterID(int i)
 
 bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
 {
+    ElementsToBeUsedInCMB();
    if (sample_sets.size()==0)
    {
         cout<<"Data has not been loaded!"<<endl;
