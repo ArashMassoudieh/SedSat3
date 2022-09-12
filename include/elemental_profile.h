@@ -6,7 +6,7 @@
 #include <vector>
 
 using namespace std;
-class Elemental_Profile
+class Elemental_Profile : public map<string,double>
 {
 public:
     Elemental_Profile();
@@ -15,13 +15,9 @@ public:
     double Val(const string &name) const;
     bool SetVal(const string &name, const double &val);
     bool AppendElement(const string &name,const double &val=0);
-    map<string,double>::iterator begin() {return profile.begin(); }
-    map<string,double>::iterator end() {return profile.end(); }
-    map<string,double>::const_iterator begin() const {return profile.begin(); }
-    map<string,double>::const_iterator end() const {return profile.end(); }
     vector<double> Vals();
 private:
-    map<string,double> profile;
+    
 };
 
 #endif // ELEMENTAL_PROFILE_H
