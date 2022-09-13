@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Elemental_Profile::Elemental_Profile()
+Elemental_Profile::Elemental_Profile() :map<string, double>()
 {
 
 }

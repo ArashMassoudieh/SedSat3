@@ -162,9 +162,9 @@ CGA<T>::CGA(T *model)
 template<class T>
 void CGA<T>::InitiatePopulation()
 {
-    for (unsigned int i=0; i<Model->Parameters().size(); i++)
+	GA_params.nParam = Model->Parameters().size(); 
+	for (unsigned int i=0; i<Model->Parameters().size(); i++)
     {
-        GA_params.nParam++;
         params.push_back(i);
         if (Model->parameter(i)->GetPriorDistribution().distribution == distribution_type::lognormal)
         {	minval.push_back(log10(Model->parameter(i)->GetVal("low")));

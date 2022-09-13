@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-class Elemental_Profile_Set
+class Elemental_Profile_Set: public map<string, Elemental_Profile>
 {
 public:
     Elemental_Profile_Set();
@@ -24,11 +24,8 @@ public:
     vector<double> GetAllConcentrationsFor(const string &element_name);
     vector<double> GetProfileForSample(const string &source_name);
     Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile());
-    map<string,Elemental_Profile>::iterator begin() {return elemental_profiles.begin(); }
-    map<string,Elemental_Profile>::iterator end() {return elemental_profiles.end(); }
-    map<string,Elemental_Profile>::const_iterator cbegin() const {return elemental_profiles.cbegin(); }
-    map<string,Elemental_Profile>::const_iterator cend() const {return elemental_profiles.cend(); }
-    vector<string> SampleNames();
+   
+    vector<string> SampleNames(); // Return the list of the name of samples
     ConcentrationSet *ElementalDistribution(const string &element_name)
     {
         return &element_distributions[element_name];
@@ -43,7 +40,7 @@ public:
 
         return element_distributions[element_name].FittedDistribution()->distribution;
     }
-    double Estimated_mu(const string &element)
+    double Estimated_mu(const string &element) //return the estimated mean for an element
     {
         if (element_distributions.count(element)>0)
             return element_distributions[element].EstimatedMu();
@@ -92,8 +89,7 @@ public:
 
     }
 private:
-    map<string,Elemental_Profile> elemental_profiles;
-    map<string,ConcentrationSet> element_distributions;
+    map<string,ConcentrationSet> element_distributions; // concentrations for each element
     double contribution = 0;
 
 };

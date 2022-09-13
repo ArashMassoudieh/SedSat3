@@ -35,7 +35,7 @@ struct element_information
 
 };
 
-class SourceSinkData
+class SourceSinkData: public map<string, Elemental_Profile_Set>
 {
 public:
     SourceSinkData();
@@ -53,10 +53,6 @@ public:
     void PopulateElementDistributions();
     void AssignAllDistributions();
     Distribution *FittedDistribution(const string &element_name);
-    map<string,Elemental_Profile_Set>::iterator begin() {return sample_sets.begin();}
-    map<string,Elemental_Profile_Set>::iterator end() {return sample_sets.end();}
-    map<string,Elemental_Profile_Set>::const_iterator cbegin() {return sample_sets.begin();}
-    map<string,Elemental_Profile_Set>::const_iterator cend() {return sample_sets.end();}
     element_information* GetElementInformation(const string &element_name)
     {
         if (ElementInformation.count(element_name))
@@ -130,7 +126,7 @@ public:
     string SelectedTargetSample();
 
 private:
-    map<string,Elemental_Profile_Set> sample_sets;
+    
     map<string,ConcentrationSet> element_distributions;
     map<string, element_information> ElementInformation;
     string outputpath;

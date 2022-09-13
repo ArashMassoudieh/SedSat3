@@ -1,14 +1,14 @@
 #include "sourcesinkdata.h"
 #include "iostream"
 
-SourceSinkData::SourceSinkData()
+SourceSinkData::SourceSinkData():map<string, Elemental_Profile_Set>()
 {
 
 }
 
-SourceSinkData::SourceSinkData(const SourceSinkData& mp)
+SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_Profile_Set>(mp)
 {
-    sample_sets = mp.sample_sets;
+
     ElementInformation = mp.ElementInformation;
     element_distributions = mp.element_distributions;
     numberofelements = mp.numberofelements;
@@ -23,7 +23,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp)
 }
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
 {
-    sample_sets = mp.sample_sets;
+    map<string, Elemental_Profile_Set>::operator=(mp);
     ElementInformation = mp.ElementInformation;
     element_distributions = mp.element_distributions;
     numberofelements = mp.numberofelements;
@@ -39,21 +39,21 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
 
 Elemental_Profile_Set* SourceSinkData::AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set)
 {
-    if (sample_sets.count(name)==0)
-        sample_sets[name] = elemental_profile_set;
+    if (count(name)==0)
+        operator[](name) = elemental_profile_set;
     else
     {   cout<<"Sample set type '" + name + "' already exists!"<<endl;
         return nullptr;
     }
 
-    return &sample_sets[name];
+    return &operator[](name);
 }
 
 Elemental_Profile_Set *SourceSinkData::sample_set(const string &name)
 {
-    if (sample_sets.count(name)!=0)
+    if (count(name)!=0)
     {
-        return &sample_sets[name];
+        return &operator[](name);
     }
     return nullptr;
 }
@@ -70,7 +70,7 @@ vector<string> SourceSinkData::SampleNames(const string groupname)
 vector<string> SourceSinkData::GroupNames()
 {
     vector<string> out;
-    for (map<string,Elemental_Profile_Set>::iterator it=sample_sets.begin(); it!=sample_sets.end(); it++)
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
         out.push_back(it->first);
     }
@@ -79,8 +79,8 @@ vector<string> SourceSinkData::GroupNames()
 vector<string> SourceSinkData::ElementNames()
 {
     vector<string> out;
-    if (sample_sets.size()>0)
-    for (map<string,double>::iterator it=sample_sets.begin()->second.begin()->second.begin(); it!=sample_sets.begin()->second.begin()->second.end(); it++)
+    if (size()>0)
+    for (map<string,double>::iterator it=begin()->second.begin()->second.begin(); it!=begin()->second.begin()->second.end(); it++)
     {
         out.push_back(it->first);
     }
@@ -114,7 +114,7 @@ element_data SourceSinkData::ExtractElementData(const string &element, const str
 void SourceSinkData::PopulateElementDistributions()
 {
     vector<string> element_names = ElementNames();
-    for (map<string,Elemental_Profile_Set>::iterator it=sample_sets.begin(); it!=sample_sets.end(); it++)
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
         for (unsigned int i=0; i<element_names.size(); i++)
         {
@@ -140,7 +140,7 @@ void SourceSinkData::AssignAllDistributions()
     {
         element_distributions[element_names[i]].FittedDistribution()->distribution = element_distributions[element_names[i]].SelectBestDistribution();
         element_distributions[element_names[i]].FittedDistribution()->parameters = element_distributions[element_names[i]].EstimateParameters();
-        for (map<string, Elemental_Profile_Set>::iterator it=sample_sets.begin(); it!=sample_sets.end(); it++)
+        for (map<string, Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
         {
             it->second.ElementalDistribution(element_names[i])->FittedDistribution()->distribution = FittedDistribution(element_names[i])->distribution;
             it->second.ElementalDistribution(element_names[i])->FittedDistribution()->parameters = it->second.ElementalDistribution(element_names[i])->EstimateParameters(FittedDistribution(element_names[i])->distribution);
@@ -193,13 +193,14 @@ string SourceSinkData::GetNameForParameterID(int i)
 
 bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
 {
-    ElementsToBeUsedInCMB();
-   if (sample_sets.size()==0)
+   ElementsToBeUsedInCMB();
+   
+   if (size()==0)
    {
         cout<<"Data has not been loaded!"<<endl;
         return false;
    }
-    numberofsourcesamplesets = sample_sets.size()-1;
+   numberofsourcesamplesets = size()-1;
 // Source contributions
     parameters.clear();
     samplesetsorder.clear();
@@ -288,12 +289,12 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
 
 CVector SourceSinkData::GetSourceContributions()
 {
-    CVector contributions(sample_sets.size()-2);
-    for (unsigned long int i=0; i<sample_sets.size()-2; i++)
+    CVector contributions(size()-2);
+    for (unsigned long int i=0; i<size()-2; i++)
     {
         contributions[i] = parameter(i)->Value();
     }
-    contributions[sample_sets.size()-2] = 1 - contributions.sum();
+    contributions[size()-2] = 1 - contributions.sum();
     return contributions;
 }
 
@@ -395,11 +396,11 @@ CVector SourceSinkData::ContributionVector()
 
 Parameter* SourceSinkData::ElementalContent_mu(int element_iterator, int source_iterator)
 {
-    return &parameters[sample_sets.size()-2+element_iterator*numberofsourcesamplesets +source_iterator];
+    return &parameters[size()-2+element_iterator*numberofsourcesamplesets +source_iterator];
 }
 Parameter* SourceSinkData::ElementalContent_sigma(int element_iterator, int source_iterator)
 {
-    return &parameters[sample_sets.size()-2+element_iterator*numberofsourcesamplesets +source_iterator + numberofelements*numberofsourcesamplesets];
+    return &parameters[size()-2+element_iterator*numberofsourcesamplesets +source_iterator + numberofelements*numberofsourcesamplesets];
 }
 
 double SourceSinkData::ElementalContent_mu_value(int element_iterator, int source_iterator)
@@ -483,7 +484,7 @@ string SourceSinkData::SelectedTargetSample()
 Elemental_Profile *SourceSinkData::GetElementalProfile(const string sample_name)
 {
 
-    for (map<string,Elemental_Profile_Set>::const_iterator group=sample_sets.begin(); group!=sample_sets.end(); group++ )
+    for (map<string,Elemental_Profile_Set>::const_iterator group=begin(); group!=end(); group++ )
     {
         for (map<string,Elemental_Profile>::const_iterator sample=group->second.cbegin(); sample!=group->second.cend(); sample++)
             if (sample->first == sample_name)
