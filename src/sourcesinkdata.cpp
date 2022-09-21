@@ -237,9 +237,9 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                 if (source_iterator->first!=target_group)
                 {   Parameter p;
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
-                    p.SetPriorDistribution(distribution_type::normal);
+                    p.SetPriorDistribution(distribution_type::lognormal);
                     source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
-                    p.SetRange(-10, 10);
+                    p.SetRange(1e-10, 1e10);
                     parameters.push_back(p);
                 }
             }
@@ -256,8 +256,8 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                 if (source_iterator->first!=target_group)
                 {   Parameter p;
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
-                    p.SetPriorDistribution(distribution_type::normal);
-                    p.SetRange(-10, 10);
+                    p.SetPriorDistribution(distribution_type::lognormal);
+                    p.SetRange(1e-3, 1e3);
                     parameters.push_back(p);
                 }
             }
@@ -268,7 +268,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     Parameter p;
     p.SetName("Error STDev");
     p.SetPriorDistribution(distribution_type::lognormal);
-    p.SetRange(-5, 5);
+    p.SetRange(1e-5, 1e5);
     parameters.push_back(p);
 
     // Observations

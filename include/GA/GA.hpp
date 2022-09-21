@@ -63,14 +63,14 @@ CGA<T>::CGA(string filename, const T &model)
         GA_params.nParam++;
         params.push_back(i);
         if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")
-        {	minval.push_back(log10(Model->Parameters()[i]->GetVal("low")));
-            maxval.push_back(log10(Model->Parameters()[i]->GetVal("high")));
+        {	minval.push_back(log10(Model->Parameters()[i]->GetRange(_range::low)));
+            maxval.push_back(log10(Model->Parameters()[i]->GetRange(_range::high)));
 
         }
         else
         {
-            minval.push_back(Model->Parameters()[i]->GetVal("low"));
-            maxval.push_back(Model->Parameters()[i]->GetVal("high"));
+            minval.push_back(Model->Parameters()[i]->GetRange(_range::low));
+            maxval.push_back(Model->Parameters()[i]->GetRange(_range::high));
         }
         apply_to_all.push_back(false);
         if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")
@@ -142,7 +142,7 @@ CGA<T>::CGA(T *model)
 	Ind.resize(GA_params.maxpop);
 	Ind_old.resize(GA_params.maxpop);
 
-    fitdist = GADistribution(GA_params.nParam);
+    fitdist = GADistribution(GA_params.maxpop);
 	GA_params.cross_over_type = 1;
 
 	for (int i=0; i<GA_params.maxpop; i++)
@@ -190,7 +190,7 @@ void CGA<T>::InitiatePopulation()
     Ind.resize(GA_params.maxpop);
     Ind_old.resize(GA_params.maxpop);
 
-    fitdist = GADistribution(GA_params.nParam);
+    fitdist = GADistribution(GA_params.maxpop);
     GA_params.cross_over_type = 1;
 
     for (int i=0; i<GA_params.maxpop; i++)
@@ -576,12 +576,13 @@ int CGA<T>::optimize()
 		fprintf(FileOut, "ID, ");
 		for (int k=0; k<Ind[0].nParams; k++)
 			fprintf(FileOut, "%s, ", paramname[k].c_str());
+
         //fprintf(FileOut, "%s, %s, %s, ", "likelihood", "Fitness", "Rank");
-        //for (unsigned int i=0; i<Model->ObservationsCount();i++)
-        //{
-        //    fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
-        //}
-        //fprintf(FileOut, "\n");
+        for (unsigned int i=0; i<Model->ObservationsCount();i++)
+        {
+            fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
+        }
+        fprintf(FileOut, "\n");
         write_to_detailed_GA("Generation: " + aquiutils::numbertostring(current_generation));
 		for (int j1=0; j1<GA_params.maxpop; j1++)
 		{
@@ -597,7 +598,7 @@ int CGA<T>::optimize()
             fprintf(FileOut, "%le, %le, %i, ", Ind[j1].actual_fitness, Ind[j1].fitness, Ind[j1].rank);
             for (unsigned int i=0; i<Model->ObservationsCount();i++)
             {
-                fprintf(FileOut, "%le, %le, %le", Ind[j1].fit_measures[i*3], Ind[j1].fit_measures[i*3+1], Ind[j1].fit_measures[i*3+2]);
+                fprintf(FileOut, ",%le, %le, %le", Ind[j1].fit_measures[i]);
             }
 			fprintf(FileOut, "\n");
 		}
@@ -697,7 +698,7 @@ int CGA<T>::optimize()
 	}
     for (unsigned int i=0; i<Model->ObservationsCount();i++)
     {
-        fprintf(FileOut, "%le, %le, %le\n", Ind[j].fit_measures[i*3], Ind[j].fit_measures[i*3+1], Ind[j].fit_measures[i*3+2]);
+        fprintf(FileOut, ",%le, %le, %le\n", Ind[j].fit_measures[i]);
     }
     fclose(FileOut);
 
