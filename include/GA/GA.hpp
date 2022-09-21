@@ -37,6 +37,7 @@ CGA<T>::CGA(string filename, const T &model)
 	GA_params.pcross = 1;
 	GA_params.N = 1;
 	GA_params.RCGA = false;
+	loged.clear(); 
     numberOfThreads = 20;
     filenames.pathname = Model->OutputPath();
 	vector<string> s;
@@ -112,6 +113,7 @@ CGA<T>::CGA(T *model)
 	GA_params.N = 1;
 	GA_params.RCGA = false;
     numberOfThreads = 20;
+	loged.clear();
     filenames.pathname = Model->OutputPath();
     GA_params.maxpop = max(1,GA_params.maxpop);
     for (unsigned int i=0; i<Model->Parameters().size(); i++)
@@ -163,6 +165,7 @@ template<class T>
 void CGA<T>::InitiatePopulation()
 {
 	GA_params.nParam = Model->Parameters().size(); 
+	loged.clear(); 
 	for (unsigned int i=0; i<Model->Parameters().size(); i++)
     {
         params.push_back(i);

@@ -19,6 +19,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     target_group = mp.target_group;
     samplesetsorder = mp.samplesetsorder;
     elementorder = mp.elementorder;
+    selected_target_sample = mp.selected_target_sample;
 
 }
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
@@ -34,6 +35,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     target_group = mp.target_group;
     samplesetsorder = mp.samplesetsorder;
     elementorder = mp.elementorder;
+    selected_target_sample = mp.selected_target_sample;
     return *this;
 }
 
@@ -194,7 +196,7 @@ string SourceSinkData::GetNameForParameterID(int i)
 bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
 {
    ElementsToBeUsedInCMB();
-   
+   selected_target_sample = targetsamplename;
    if (size()==0)
    {
         cout<<"Data has not been loaded!"<<endl;
@@ -237,9 +239,9 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                 if (source_iterator->first!=target_group)
                 {   Parameter p;
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
-                    p.SetPriorDistribution(distribution_type::lognormal);
+                    p.SetPriorDistribution(distribution_type::normal);
                     source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
-                    p.SetRange(1e-10, 1e10);
+                    p.SetRange(-3, 3);
                     parameters.push_back(p);
                 }
             }
@@ -257,7 +259,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                 {   Parameter p;
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
                     p.SetPriorDistribution(distribution_type::lognormal);
-                    p.SetRange(1e-3, 1e3);
+                    p.SetRange(0.01,4);
                     parameters.push_back(p);
                 }
             }
@@ -319,7 +321,7 @@ double SourceSinkData::LogLikelihoodSourceElementalDistributions()
 
             for (map<string,Elemental_Profile>::iterator sample = this_source_group->begin(); sample!=this_source_group->end(); sample++)
             {
-                logLikelihood += this_source_group->ElementalDistribution(elementorder[element_counter])->FittedDistribution()->EvalLog(sample->second.Val(elementorder[element_counter]));
+                logLikelihood += this_source_group->ElementalDistribution(elementorder[element_counter])->GetEstimatedDistribution()->EvalLog(sample->second.Val(elementorder[element_counter]));
             }
 
         }
@@ -343,7 +345,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured()
 {
     double LogLikelihood = 0;
     CVector C = PredictTarget();
-    CVector C_obs = ObservedDataforSelectedSample();
+    CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
     for (unsigned int i=0; i<numberofelements; i++)
     {
         LogLikelihood -= log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));

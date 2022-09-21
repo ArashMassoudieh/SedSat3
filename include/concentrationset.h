@@ -38,8 +38,8 @@ public:
     double EstimatedSigma() {return EstimatedDistribution.parameters[1];}
     Distribution* GetEstimatedDistribution() {return &EstimatedDistribution;}
 private:
-    Distribution FittedDist;
-    Distribution EstimatedDistribution;
+    Distribution FittedDist; // Distribution fitted based on the sample data
+    Distribution EstimatedDistribution; //Estimated distribution based on inverse modeling
 };
 
 #endif // CONCENTRATIONSET_H
