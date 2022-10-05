@@ -23,6 +23,7 @@
 #include "GA.h"
 #include "genericform.h"
 #include "QMessageBox"
+#include "ProgressWindow.h"
 //#include "MCMC.h"
 
 using namespace QXlsx;
@@ -47,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
     connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
+    connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
 }
@@ -526,4 +528,15 @@ void MainWindow::on_test_likelihood()
     DataCollection.SetParameterValue(3+2*sources.size()*elements.size(),1);
     DataCollection.SetSelectedTargetSample("CTAIL3");
     cout<<DataCollection.LogLikelihood()<<std::endl;
+}
+
+void MainWindow::on_test_progress_window()
+{
+    ProgressWindow* prgwindow = new ProgressWindow(this);
+    prgwindow->show(); 
+    prgwindow->SetProgress(0.5);
+    prgwindow->AppendPoint(0.1, 0.1);
+    prgwindow->AppendPoint(0.2, 0.05);
+    prgwindow->AppendPoint(0.3, 0.25);
+
 }

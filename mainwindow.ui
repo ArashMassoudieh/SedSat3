@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1047</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -47,6 +47,7 @@
     <addaction name="actionTestGraphs"/>
     <addaction name="actionTestDialog"/>
     <addaction name="actionTestLikelihoods"/>
+    <addaction name="actionTestProgressGraph"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -164,7 +165,7 @@
    <property name="minimumSize">
     <size>
      <width>400</width>
-     <height>107</height>
+     <height>111</height>
     </size>
    </property>
    <property name="features">
@@ -266,6 +267,11 @@
   <action name="actionTestLikelihoods">
    <property name="text">
     <string>TestLikelihoods</string>
+   </property>
+  </action>
+  <action name="actionTestProgressGraph">
+   <property name="text">
+    <string>TestProgressGraph</string>
    </property>
   </action>
  </widget>

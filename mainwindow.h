@@ -55,6 +55,7 @@ private slots:
     void on_test_dialog_triggered();
     void on_tool_executed(const QModelIndex&);
     void on_test_likelihood();
+    void on_test_progress_window();
 
 
 };
