@@ -27,7 +27,15 @@ ProgressWindow::ProgressWindow(QWidget *parent)
 	gradient.setColorAt(1.0, 0x26f626);
 	//gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
 	series->setBrush(gradient);
-	chart->createDefaultAxes();
+    yaxis = new QtCharts::QValueAxis();
+    xaxis = new QtCharts::QValueAxis();
+
+    chart->addAxis(xaxis,Qt::AlignBottom);
+    chart->addAxis(yaxis,Qt::AlignLeft);
+    series->attachAxis(xaxis);
+    series->attachAxis(yaxis);
+    //chart->createDefaultAxes();
+
 
 	ui.horizontalLayout->addWidget(chartView);
 	
@@ -46,4 +54,16 @@ void ProgressWindow::AppendPoint(const double& x, const double& y)
 void ProgressWindow::SetProgress(const double& prog)
 {
 	ui.progressBar->setValue(prog * 100);
+}
+
+void ProgressWindow::SetYRange(const double &y0, const double &y1)
+{
+    yaxis->setRange(y0, y1);
+    yaxis->setTitleText("Fitness");
+}
+
+void ProgressWindow::SetXRange(const double &x0, const double &x1)
+{
+    xaxis->setRange(x0, x1);
+    xaxis->setTitleText("Generation");
 }

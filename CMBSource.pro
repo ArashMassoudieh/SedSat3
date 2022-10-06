@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport charts
 
 CONFIG += c++11
 
@@ -8,17 +8,18 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += _arma
+DEFINES += Q_version
 SOURCES += \
     ../Utilities/Distribution.cpp \
     ../Utilities/Matrix.cpp \
     ../Utilities/Matrix_arma.cpp \
     ../Utilities/Matrix_arma_sp.cpp \
-    ../Utilities/NormalDist.cpp \
     ../Utilities/QuickSort.cpp \
     ../Utilities/Utilities.cpp \
     ../Utilities/Vector.cpp \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
+    ProgressWindow.cpp \
     customplotbar.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
@@ -52,12 +53,12 @@ HEADERS += \
     ../Utilities/Matrix.h \
     ../Utilities/Matrix_arma.h \
     ../Utilities/Matrix_arma_sp.h \
-    ../Utilities/NormalDist.h \
     ../Utilities/QuickSort.h \
     ../Utilities/Utilities.h \
     ../Utilities/Vector.h \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
+    ProgressWindow.h \
     customplotbar.h \
     elementstablemodel.h \
     elementtabledelegate.h \
@@ -97,6 +98,7 @@ LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
 LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 
 FORMS += \
+    ProgressWindow.ui \
     formelementinformation.ui \
     genericform.ui \
     indicatesheetsdialog.ui \

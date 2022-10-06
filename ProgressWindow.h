@@ -6,6 +6,7 @@
 #include <qchartview.h>
 #include <qchart.h>
 #include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
 
 class ProgressWindow : public QDialog
 {
@@ -16,10 +17,14 @@ public:
 	~ProgressWindow();
 	void AppendPoint(const double& x, const double& y);
 	void SetProgress(const double& prog);
+    void SetYRange(const double &y0, const double &y1);
+    void SetXRange(const double &x0, const double &x1);
 
 private:
 	Ui::ProgressWindow ui;
 	QtCharts::QChart* chart;
 	QtCharts::QChartView *chartView;
 	QtCharts::QLineSeries* series = nullptr;
+    QtCharts::QValueAxis *yaxis = nullptr;
+    QtCharts::QValueAxis *xaxis = nullptr;
 };

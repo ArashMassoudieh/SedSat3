@@ -11,7 +11,7 @@
 #include "parameter.h"
 
 #ifdef Q_version
-    #include "runtimewindow.h"
+    #include "ProgressWindow.h"
 #endif
 
 template<class T>
@@ -413,8 +413,8 @@ int counter=0;
                 if (omp_get_thread_num() == 0)
 #endif
 				{
-					rtw->SetProgress2(double(counter + 1) / GA_params.maxpop);
-					QCoreApplication::processEvents();
+//					rtw->SetProgress2(double(counter + 1) / GA_params.maxpop);
+//					QCoreApplication::processEvents();
 				}
 			}
 #endif
@@ -428,12 +428,12 @@ int counter=0;
 		}
     }
 	Model_out = Models[maxfitness()];
-#ifdef Q_Version
-    if (rtw != nullptr)
-    {
-        rtw->SetProgress2(1);
-        QCoreApplication::processEvents();
-    }
+#ifdef Q_version
+//    if (rtw != nullptr)
+//    {
+//        rtw->SetProgress(1);
+//        QCoreApplication::processEvents();
+//    }
 #endif
 	inp.clear();
 	assignfitness_rank(GA_params.N);
@@ -453,7 +453,7 @@ void CGA<T>::crossover()
         ////qDebug()<<"i = "<< i;
 		int j1 = fitdist.GetRand();
 		int j2 = fitdist.GetRand();
-		double x = GetRndUniF(0,1);
+        double x = fitdist.GetRndUniF(0,1);
 		if (x<GA_params.pcross)
 			if (GA_params.cross_over_type == 1)
 				cross(Ind_old[j1], Ind_old[j2], Ind[i], Ind[min(i+1,GA_params.maxpop-1)]);   //1 Breaking point
@@ -613,10 +613,14 @@ int CGA<T>::optimize()
 
 #ifdef Q_version
     if (rtw)
-    {   if (current_generation==0) rtw->SetYRange(0,Ind[j].actual_fitness*1.1);
+    {   if (current_generation==0)
+        {
+            rtw->SetYRange(0,Ind[j].actual_fitness*1.1);
+            rtw->SetXRange(0,GA_params.nGen);
+        }
         rtw->SetProgress(double(current_generation)/double(GA_params.nGen));
-        rtw->AddDataPoint(current_generation+1,Ind[j].actual_fitness);
-        rtw->Replot();
+        rtw->AppendPoint(current_generation+1,Ind[j].actual_fitness);
+        //rtw->Replot();
         QCoreApplication::processEvents();
     }
 #endif

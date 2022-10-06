@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->frame->setVisible(false);
+    qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
     QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
     formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
