@@ -2,11 +2,15 @@
 	"GA": {
     		"Number of Generations": {
    			"type": "spinBox",
-   			"default": "40"
+   			"default": "40",
+			"maximum": "200",
+			"minimum": "10"
     		},
     		"Population": {
    			"type": "spinBox",
-			"default": "40"
+			"default": "40",
+			"maximum": "200",
+			"minimum": "10"
     		},
     		"Cross-over probability": {
    			"type": "lineEdit",

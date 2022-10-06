@@ -44,7 +44,7 @@ Elemental_Profile_Set* SourceSinkData::AppendSampleSet(const string &name, const
     if (count(name)==0)
         operator[](name) = elemental_profile_set;
     else
-    {   cout<<"Sample set type '" + name + "' already exists!"<<endl;
+    {   cout<<"Sample set type '" + name + "' already exists!"<<std::endl;
         return nullptr;
     }
 
@@ -199,7 +199,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
    selected_target_sample = targetsamplename;
    if (size()==0)
    {
-        cout<<"Data has not been loaded!"<<endl;
+        cout<<"Data has not been loaded!"<<std::endl;
         return false;
    }
    numberofsourcesamplesets = size()-1;

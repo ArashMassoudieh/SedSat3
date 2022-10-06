@@ -16,7 +16,7 @@ public:
     GADistribution(const GADistribution &C);
     GADistribution operator = (const GADistribution &C);
     int GetRand();
-    double GetRndUniF(double xmin, double xmax);
+    static double GetRndUniF(double xmin, double xmax);
 
 };
 

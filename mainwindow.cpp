@@ -539,5 +539,7 @@ void MainWindow::on_test_progress_window()
     prgwindow->AppendPoint(0.1, 0.1);
     prgwindow->AppendPoint(0.2, 0.05);
     prgwindow->AppendPoint(0.3, 0.25);
+    prgwindow->SetXRange(0, 2);
+    prgwindow->SetYRange(0, 2);
 
 }

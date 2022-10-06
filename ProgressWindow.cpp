@@ -34,6 +34,8 @@ ProgressWindow::ProgressWindow(QWidget *parent)
     chart->addAxis(yaxis,Qt::AlignLeft);
     series->attachAxis(xaxis);
     series->attachAxis(yaxis);
+	areaseries->attachAxis(xaxis);
+	areaseries->attachAxis(yaxis);
     //chart->createDefaultAxes();
 
 
@@ -58,12 +60,15 @@ void ProgressWindow::SetProgress(const double& prog)
 
 void ProgressWindow::SetYRange(const double &y0, const double &y1)
 {
-    yaxis->setRange(y0, y1);
+    yaxis->setMin(y0);
+	yaxis->setMax(y1);
     yaxis->setTitleText("Fitness");
+	
 }
 
 void ProgressWindow::SetXRange(const double &x0, const double &x1)
 {
-    xaxis->setRange(x0, x1);
+	xaxis->setMin(x0);
+	xaxis->setMax(x1);
     xaxis->setTitleText("Generation");
 }

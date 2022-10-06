@@ -29,6 +29,10 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                     parameter_prop.Type = delegate_type::SpinBox;
                     QSpinBox *spinbox = new QSpinBox(this);
                     spinbox->setValue(object.value("default").toString().toInt());
+                    if (object.contains("minimum"))
+                        spinbox->setMinimum(object.value("minimum").toString().toInt());
+                    if (object.contains("maximum"))
+                    spinbox->setMaximum(object.value("maximum").toString().toInt());
                     ui->formLayout->addRow(label,spinbox);
                     parameter_prop.InputWidget = spinbox;
                 }

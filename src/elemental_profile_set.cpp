@@ -24,7 +24,7 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
 {
     if (count(name)>0)
     {
-        cout<<"Profile '" + name + "' already exists!"<<endl;
+        cout<<"Profile '" + name + "' already exists!"<<std::endl;
         return nullptr;
     }
     else
@@ -52,7 +52,7 @@ Elemental_Profile *Elemental_Profile_Set::Profile(const string &name)
 {
     if (count(name)==0)
     {
-        cout<<"Sample '" + name + "' does not exist!"<<endl;
+        cout<<"Sample '" + name + "' does not exist!"<<std::endl;
         return nullptr;
     }
     else
@@ -78,7 +78,7 @@ Elemental_Profile Elemental_Profile_Set::Profile(const string &name) const
 {
     if (count(name)==0)
     {
-        cout<<"Sample '" + name + "' does not exist!"<<endl;
+        cout<<"Sample '" + name + "' does not exist!"<<std::endl;
         return Elemental_Profile();
     }
     else

@@ -5,7 +5,7 @@
 #include "Binary.h"
 #include "math.h"
 #include <iostream>
-#include "DistributionNUnif.h"
+#include "GADistribution.h"
 #ifdef QT_version
 #include "qdebug.h"
 #endif // QT_version
@@ -225,7 +225,7 @@ void CBinary::show()
 void CBinary::mutate(double mu)
 {
 	for (int i=0; i<nDigits; i++)
-		if (GetRndUniF(0,1)<mu)
+		if (GADistribution::GetRndUniF(0,1)<mu)
 			Digit[i] = !Digit[i];
 
 
