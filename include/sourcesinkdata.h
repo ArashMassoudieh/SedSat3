@@ -142,10 +142,14 @@ private:
     Parameter* ElementalContent_sigma(int element_iterator, int source_iterator);
     double ElementalContent_mu_value(int element_iterator, int source_iterator);
     double ElementalContent_sigma_value(int element_iterator, int source_iterator);
-    unsigned int numberofelements = 0;
+    unsigned int numberofconstituents = 0;
     unsigned int numberofsourcesamplesets = 0;
     vector<string> samplesetsorder;
-    vector<string> elementorder;
+    vector<string> constituent_order;
+    vector<string> element_order;
+    vector<string> isotope_order;
+    vector<string> size_om_order;
+    void populate_constituent_orders();
     double error_stdev = 0;
 
 

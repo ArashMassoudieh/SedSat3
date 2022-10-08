@@ -11,15 +11,19 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
 
     ElementInformation = mp.ElementInformation;
     element_distributions = mp.element_distributions;
-    numberofelements = mp.numberofelements;
+    numberofconstituents = mp.numberofconstituents;
     numberofsourcesamplesets = mp.numberofsourcesamplesets;
     observations = mp.observations;
     outputpath = mp.outputpath;
     parameters = mp.parameters;
     target_group = mp.target_group;
     samplesetsorder = mp.samplesetsorder;
-    elementorder = mp.elementorder;
+    constituent_order = mp.constituent_order;
     selected_target_sample = mp.selected_target_sample;
+    element_order = mp.element_order;
+    isotope_order = mp.isotope_order;
+    size_om_order = mp.size_om_order;
+
 
 }
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
@@ -27,14 +31,17 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     map<string, Elemental_Profile_Set>::operator=(mp);
     ElementInformation = mp.ElementInformation;
     element_distributions = mp.element_distributions;
-    numberofelements = mp.numberofelements;
+    numberofconstituents = mp.numberofconstituents;
     numberofsourcesamplesets = mp.numberofsourcesamplesets;
     observations = mp.observations;
     outputpath = mp.outputpath;
     parameters = mp.parameters;
     target_group = mp.target_group;
     samplesetsorder = mp.samplesetsorder;
-    elementorder = mp.elementorder;
+    constituent_order = mp.constituent_order;
+    element_order = mp.element_order;
+    isotope_order = mp.isotope_order;
+    size_om_order = mp.size_om_order;
     selected_target_sample = mp.selected_target_sample;
     return *this;
 }
@@ -195,7 +202,7 @@ string SourceSinkData::GetNameForParameterID(int i)
 
 bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
 {
-   ElementsToBeUsedInCMB();
+   populate_constituent_orders();
    selected_target_sample = targetsamplename;
    if (size()==0)
    {
@@ -221,10 +228,10 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     parameters.pop_back();
 
 // Count the number of elements to be used
-    numberofelements = 0;
+    numberofconstituents = 0;
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
         if (it->second.Role == element_information::role::element)
-            numberofelements ++;
+            numberofconstituents ++;
 
 
 // Source elemental profile geometrical mean for each element
@@ -312,7 +319,7 @@ double SourceSinkData::LogPriorContributions()
 double SourceSinkData::LogLikelihoodSourceElementalDistributions()
 {
     double logLikelihood = 0;
-    for (unsigned int element_counter=0; element_counter<numberofelements; element_counter++)
+    for (unsigned int element_counter=0; element_counter<element_order.size(); element_counter++)
     {
         for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
         {
@@ -321,7 +328,7 @@ double SourceSinkData::LogLikelihoodSourceElementalDistributions()
 
             for (map<string,Elemental_Profile>::iterator sample = this_source_group->begin(); sample!=this_source_group->end(); sample++)
             {
-                logLikelihood += this_source_group->ElementalDistribution(elementorder[element_counter])->GetEstimatedDistribution()->EvalLog(sample->second.Val(elementorder[element_counter]));
+                logLikelihood += this_source_group->ElementalDistribution(element_order[element_counter])->GetEstimatedDistribution()->EvalLog(sample->second.Val(element_order[element_counter]));
             }
 
         }
@@ -331,12 +338,12 @@ double SourceSinkData::LogLikelihoodSourceElementalDistributions()
 
 CVector SourceSinkData::ObservedDataforSelectedSample(const string &SelectedTargetSample)
 {
-    CVector observed_data(numberofelements);
-    for (unsigned int i=0; i<numberofelements; i++)
+    CVector observed_data(element_order.size());
+    for (unsigned int i=0; i<element_order.size(); i++)
     {   if (SelectedTargetSample!="")
-            observed_data[i] = this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(elementorder[i]);
+            observed_data[i] = this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(element_order[i]);
         else if (selected_target_sample!="")
-            observed_data[i] = this->sample_set(TargetGroup())->Profile(selected_target_sample)->Val(elementorder[i]);
+            observed_data[i] = this->sample_set(TargetGroup())->Profile(selected_target_sample)->Val(element_order[i]);
     }
     return observed_data;
 }
@@ -346,7 +353,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured()
     double LogLikelihood = 0;
     CVector C = PredictTarget();
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
-    for (unsigned int i=0; i<numberofelements; i++)
+    for (unsigned int i=0; i<numberofconstituents; i++)
     {
         LogLikelihood -= log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
     }
@@ -373,13 +380,13 @@ double SourceSinkData::LogLikelihood()
 
 CMatrix SourceSinkData::SourceMeanMatrix()
 {
-    CMatrix Y(numberofelements,numberofsourcesamplesets);
-    for (unsigned int element_counter=0; element_counter<numberofelements; element_counter++)
+    CMatrix Y(element_order.size(),numberofsourcesamplesets);
+    for (unsigned int element_counter=0; element_counter<element_order.size(); element_counter++)
     {
         for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
         {
             Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
-            Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(elementorder[element_counter])->Mean();
+            Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(element_order[element_counter])->Mean();
         }
     }
     return Y;
@@ -402,7 +409,7 @@ Parameter* SourceSinkData::ElementalContent_mu(int element_iterator, int source_
 }
 Parameter* SourceSinkData::ElementalContent_sigma(int element_iterator, int source_iterator)
 {
-    return &parameters[size()-2+element_iterator*numberofsourcesamplesets +source_iterator + numberofelements*numberofsourcesamplesets];
+    return &parameters[size()-2+element_iterator*numberofsourcesamplesets +source_iterator + numberofconstituents*numberofsourcesamplesets];
 }
 
 double SourceSinkData::ElementalContent_mu_value(int element_iterator, int source_iterator)
@@ -425,19 +432,19 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
         sample_set(samplesetsorder[i])->SetContribution(value);
         sample_set(samplesetsorder[numberofsourcesamplesets-1])->SetContribution(1-ContributionVector().sum()+sample_set(samplesetsorder[numberofsourcesamplesets-1])->Contribution());
     }
-    else if (i<numberofsourcesamplesets-1+numberofelements*numberofsourcesamplesets)
+    else if (i<numberofsourcesamplesets-1+numberofconstituents*numberofsourcesamplesets)
     {
         int element_counter = (i-(numberofsourcesamplesets-1))/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1))%numberofsourcesamplesets;
-        GetElementDistribution(elementorder[element_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
+        GetElementDistribution(constituent_order[element_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
     }
-    else if (i<numberofsourcesamplesets-1+2*numberofelements*numberofsourcesamplesets)
+    else if (i<numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets)
     {
-        int element_counter = (i-(numberofsourcesamplesets-1)-numberofelements*numberofsourcesamplesets)/numberofsourcesamplesets;
-        int group_counter = (i-(numberofsourcesamplesets-1)-numberofelements*numberofsourcesamplesets)%numberofsourcesamplesets;
-        GetElementDistribution(elementorder[element_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
+        int element_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)/numberofsourcesamplesets;
+        int group_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)%numberofsourcesamplesets;
+        GetElementDistribution(constituent_order[element_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
     }
-    else if (i==numberofsourcesamplesets-1+2*numberofelements*numberofsourcesamplesets)
+    else if (i==numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets)
     {
         error_stdev = value;
     }
@@ -448,14 +455,48 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
 
 vector<string> SourceSinkData::ElementsToBeUsedInCMB()
 {
-    numberofelements = 0;
-    elementorder.clear();
+    numberofconstituents = 0;
+    constituent_order.clear();
+    element_order.clear();
+    size_om_order.clear();
+    isotope_order.clear();
+
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
         if (it->second.Role == element_information::role::element)
-        {   numberofelements ++;
-            elementorder.push_back(it->first);
+        {   numberofconstituents ++;
+            constituent_order.push_back(it->first);
         }
-    return elementorder;
+    return constituent_order;
+}
+
+void SourceSinkData::populate_constituent_orders()
+{
+    numberofconstituents = 0;
+    constituent_order.clear();
+    element_order.clear();
+    size_om_order.clear();
+    isotope_order.clear();
+
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        {   numberofconstituents ++;
+            constituent_order.push_back(it->first);
+        }
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        if (it->second.Role == element_information::role::element)
+        {
+            element_order.push_back(it->first);
+        }
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        if (it->second.Role == element_information::role::isotope)
+        {
+            isotope_order.push_back(it->first);
+        }
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        if (it->second.Role == element_information::role::particle_size)
+        {
+            size_om_order.push_back(it->first);
+        }
+
 }
 
 vector<string> SourceSinkData::SourceGroupNames()
