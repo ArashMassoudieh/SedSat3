@@ -20,6 +20,7 @@ SOURCES += \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
     ProgressWindow.cpp \
+    contribution.cpp \
     customplotbar.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
     mainwindow.cpp \
     plotwindow.cpp \
     results.cpp \
+    resultswindow.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
@@ -60,6 +62,7 @@ HEADERS += \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
     ProgressWindow.h \
+    contribution.h \
     customplotbar.h \
     elementstablemodel.h \
     elementtabledelegate.h \
@@ -83,7 +86,8 @@ HEADERS += \
     indicatesheetsdialog.h \
     mainwindow.h \
     plotwindow.h \
-    results.h
+    results.h \
+    resultswindow.h
 
 
 
@@ -105,7 +109,8 @@ FORMS += \
     genericform.ui \
     indicatesheetsdialog.ui \
     mainwindow.ui \
-    plotwindow.ui
+    plotwindow.ui \
+    resultswindow.ui
 
 TRANSLATIONS += \
     CMBSource_en_US.ts

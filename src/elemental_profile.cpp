@@ -1,20 +1,22 @@
 #include "elemental_profile.h"
 #include "iostream"
+#include "Utilities.h"
 
 using namespace std;
 
-Elemental_Profile::Elemental_Profile() :map<string, double>()
+Elemental_Profile::Elemental_Profile() :map<string, double>(), Interface()
 {
 
 }
 
-Elemental_Profile::Elemental_Profile(const Elemental_Profile& mp):map<string,double>(mp)
+Elemental_Profile::Elemental_Profile(const Elemental_Profile& mp):map<string,double>(mp),Interface()
 {
     
 }
 
 Elemental_Profile& Elemental_Profile::operator=(const Elemental_Profile &mp)
 {
+    Interface::operator=(mp);
     map<string,double>::operator=(mp);
     return *this;
 }
@@ -66,4 +68,14 @@ vector<double> Elemental_Profile::Vals()
         vals.push_back(it->second);
 
     return vals;
+}
+
+string Elemental_Profile::ToString()
+{
+    string out;
+    for (map<string,double>::iterator it=begin(); it!=end(); it++)
+    {
+        out += it->first + ":" + aquiutils::numbertostring(it->second) + "\n";
+    }
+    return out;
 }

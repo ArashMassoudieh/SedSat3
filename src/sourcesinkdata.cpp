@@ -535,3 +535,51 @@ Elemental_Profile *SourceSinkData::GetElementalProfile(const string sample_name)
     }
     return nullptr;
 }
+
+result_item SourceSinkData::GetContribution()
+{
+    result_item result_cont;
+    Contribution *contribution = new Contribution();
+    for (int i=0; i<SourceOrder().size(); i++)
+    {
+        contribution->operator[](SourceOrder()[i]) = ContributionVector()[i];
+    }
+    result_cont.name = "Contributions";
+    result_cont.result = contribution;
+    result_cont.type = result_type::contribution;
+
+    return  result_cont;
+}
+result_item SourceSinkData::GetPredictedElementalProfile()
+{
+    result_item result_modeled;
+
+    Elemental_Profile *modeled_profile = new Elemental_Profile();
+    CVector predicted_profile = PredictTarget();
+    vector<string> element_names = ElementOrder();
+    for (int i=0; i<element_names.size(); i++)
+    {
+        modeled_profile->AppendElement(element_names[i],predicted_profile[i]);
+    }
+    result_modeled.name = "Modeled Elemental Profile";
+    result_modeled.result = modeled_profile;
+    result_modeled.type = result_type::predicted_concentration;
+    return result_modeled;
+}
+
+result_item SourceSinkData::GetObservedElementalProfile()
+{
+    result_item result_obs;
+
+    Elemental_Profile *obs_profile = new Elemental_Profile();
+    CVector observed_profile = ObservedDataforSelectedSample(selected_target_sample);
+    vector<string> element_names = ElementOrder();
+    for (int i=0; i<element_names.size(); i++)
+    {
+        obs_profile->AppendElement(element_names[i],observed_profile[i]);
+    }
+    result_obs.name = "Observed Elemental Profile";
+    result_obs.result = obs_profile;
+    result_obs.type = result_type::predicted_concentration;
+    return result_obs;
+}

@@ -4,3 +4,17 @@ Interface::Interface()
 {
 
 }
+
+Interface::Interface(const Interface &intf)
+{
+
+}
+Interface& Interface::operator=(const Interface &intf)
+{
+    return *this;
+}
+
+string Interface::ToString()
+{
+    return "";
+}

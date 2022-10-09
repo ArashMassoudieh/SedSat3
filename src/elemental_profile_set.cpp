@@ -11,11 +11,13 @@ Elemental_Profile_Set::Elemental_Profile_Set() :map<string, Elemental_Profile>()
 Elemental_Profile_Set::Elemental_Profile_Set(const Elemental_Profile_Set& mp) :map<string, Elemental_Profile>(mp)
 {
     element_distributions = mp.element_distributions;
+    contribution = mp.contribution;
 }
 
 Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_Set &mp)
 {
     map<string, Elemental_Profile>::operator=(mp);
+    contribution = mp.contribution;
     element_distributions = mp.element_distributions;
     return *this;
 }

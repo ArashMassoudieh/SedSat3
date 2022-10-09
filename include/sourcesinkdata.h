@@ -5,6 +5,8 @@
 #include "vector"
 #include "parameter.h"
 #include "observation.h"
+#include "contribution.h"
+#include "results.h"
 
 struct profiles_data
 {
@@ -124,7 +126,15 @@ public:
     vector<string> SourceGroupNames();
     bool SetSelectedTargetSample(const string &sample_name);
     string SelectedTargetSample();
-
+    vector<string> SourceOrder() {return samplesetsorder;}
+    vector<string> SamplesetsOrder() {return samplesetsorder;}
+    vector<string> ConstituentOrder() {return constituent_order;}
+    vector<string> ElementOrder() {return element_order;}
+    vector<string> IsotopeOrder() {return isotope_order;}
+    vector<string> SizeOMOrder() {return size_om_order;}
+    result_item GetContribution();
+    result_item GetPredictedElementalProfile();
+    result_item GetObservedElementalProfile();
 private:
     
     map<string,ConcentrationSet> element_distributions;
@@ -151,6 +161,7 @@ private:
     vector<string> size_om_order;
     void populate_constituent_orders();
     double error_stdev = 0;
+
 
 
 };

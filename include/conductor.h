@@ -5,6 +5,7 @@
 #include <map>
 #include "sourcesinkdata.h"
 #include "GA.h"
+#include "results.h"
 
 using namespace std;
 
@@ -18,9 +19,11 @@ public:
     {
 	    data = _data;
     }
+    Results &GetResults() {return results;}
 private:
     SourceSinkData *data;
     CGA<SourceSinkData> *GA = nullptr;
+    Results results;
 };
 
 #endif // CONDUCTOR_H

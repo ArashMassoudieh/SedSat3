@@ -5,12 +5,17 @@ Results::Results()
 
 }
 
-Results::Results(const Results &rhs)
+Results::Results(const Results &rhs): map<string, result_item>()
 {
-    result_items = rhs.result_items;
+
 }
 Results& Results::operator = (const Results &rhs)
 {
-    result_items = rhs.result_items;
+    map<string, result_item>::operator=(rhs);
     return *this;
+}
+
+void Results::Append(const result_item &ritem)
+{
+    operator[](ritem.name) = ritem;
 }

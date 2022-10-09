@@ -24,6 +24,7 @@
 #include "genericform.h"
 #include "QMessageBox"
 #include "ProgressWindow.h"
+#include "resultswindow.h"
 //#include "MCMC.h"
 
 using namespace QXlsx;
@@ -495,12 +496,25 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
         ui->verticalLayout_middle->addWidget(form);
         centralform = form;
     }
+
+
+
 }
 
 bool MainWindow::Execute(const string &command, map<string,string> arguments)
 {
     conductor.SetData(&DataCollection);
-    return conductor.Execute(command,arguments);
+    bool outcome = conductor.Execute(command,arguments);
+    ResultsWindow *reswind = new ResultsWindow();
+    for (map<string,result_item>::iterator it=conductor.GetResults().begin(); it!=conductor.GetResults().end(); it++)
+    {
+        reswind->AppendText(it->second.name + ":");
+        reswind->AppendText(it->second.result->ToString());
+    }
+    reswind->show();
+
+    return outcome;
+
 }
 
 void MainWindow::on_test_likelihood()

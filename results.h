@@ -6,7 +6,7 @@
 
 using namespace std;
 
-enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set};
+enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration};
 
 struct result_item
 {
@@ -16,15 +16,15 @@ struct result_item
 
 };
 
-class Results
+class Results: public map<string,result_item>
 {
 public:
     Results();
     Results(const Results &rhs);
     Results& operator = (const Results &rhs);
-
+    void Append(const result_item&);
 private:
-    map<string,result_item> result_items;
+
 };
 
 #endif // RESULTS_H

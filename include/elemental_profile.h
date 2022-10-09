@@ -4,9 +4,10 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "interface.h"
 
 using namespace std;
-class Elemental_Profile : public map<string,double>
+class Elemental_Profile : public map<string,double>, public Interface
 {
 public:
     Elemental_Profile();
@@ -16,6 +17,7 @@ public:
     bool SetVal(const string &name, const double &val); //Sets the value of elemental content for a specific element/constituent
     bool AppendElement(const string &name,const double &val=0); //Append an element and it's value to the list of elements
     vector<double> Vals(); //Returns a vector containing the values of all emenents in the profile
+    string ToString() override;
 private:
     
 };
