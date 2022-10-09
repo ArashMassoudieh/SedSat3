@@ -31,6 +31,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     plotwindow.cpp \
+    results.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
@@ -81,7 +82,8 @@ HEADERS += \
     include/sourcesinkdata.h \
     indicatesheetsdialog.h \
     mainwindow.h \
-    plotwindow.h
+    plotwindow.h \
+    results.h
 
 
 
