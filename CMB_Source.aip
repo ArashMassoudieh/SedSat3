@@ -26,40 +26,50 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
     <ROW Directory="GIFMod_Dir" Directory_Parent="StartMenuFolder" DefaultDir="CMBSOU~1|CMBSource"/>
+    <ROW Directory="Icons_1_Dir" Directory_Parent="resources_Dir" DefaultDir="Icons"/>
     <ROW Directory="Icons_Dir" Directory_Parent="APPDIR" DefaultDir="Icons"/>
     <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
     <ROW Directory="StartMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="STARTM~1|StartMenuFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
-    <ROW Directory="platforms_Dir" Directory_Parent="APPDIR" DefaultDir="PLATFO~1|platforms"/>
+    <ROW Directory="bin_1_Dir" Directory_Parent="bin_Dir" DefaultDir="bin"/>
+    <ROW Directory="bin_Dir" Directory_Parent="APPDIR" DefaultDir="bin"/>
+    <ROW Directory="platforms_Dir" Directory_Parent="bin_1_Dir" DefaultDir="PLATFO~1|platforms"/>
+    <ROW Directory="resources_Dir" Directory_Parent="APPDIR" DefaultDir="RESOUR~1|resources"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="CMBSource" ComponentId="{11759CBC-CFA1-4DA3-8F24-870E0686A44E}" Directory_="GIFMod_Dir" Attributes="0"/>
-    <ROW Component="CMBSource.exe_1" ComponentId="{85792D1A-11D9-4557-9C63-37D389461DE4}" Directory_="APPDIR" Attributes="256" KeyPath="CMBSource.exe_1"/>
+    <ROW Component="CMBSource.exe_1" ComponentId="{85792D1A-11D9-4557-9C63-37D389461DE4}" Directory_="bin_1_Dir" Attributes="256" KeyPath="CMBSource.exe_1"/>
+    <ROW Component="Cancel.png" ComponentId="{CD3D714A-0F5F-48A9-AA45-1DF166ADDC4F}" Directory_="Icons_1_Dir" Attributes="0" KeyPath="Cancel.png" Type="0"/>
     <ROW Component="D36C9FE0826D4D2B9C2DDCCE2C83E860" ComponentId="{C5A82F84-796D-4BF3-AD8E-E6C550560CA8}" Directory_="APPDIR" Attributes="260" KeyPath="D36C9FE0826D4D2B9C2DDCCE2C83E860" Options="2"/>
     <ROW Component="Icons" ComponentId="{69B09046-16CF-42EF-8159-81DE85D9D4DE}" Directory_="Icons_Dir" Attributes="0"/>
     <ROW Component="ProductInformation" ComponentId="{347A6828-995F-46BA-BBF7-59D742BA3475}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
-    <ROW Component="QXlsx.dll" ComponentId="{239CC19C-7B19-4125-8DD0-AE3B8D1D0120}" Directory_="APPDIR" Attributes="256" KeyPath="QXlsx.dll"/>
-    <ROW Component="Qt5Core.dll" ComponentId="{2225F3F3-B5A5-4E5B-85DC-46F252B2F90F}" Directory_="APPDIR" Attributes="256" KeyPath="Qt5Core.dll"/>
-    <ROW Component="Qt5Gui.dll" ComponentId="{1CBC4EC2-2744-416F-8480-64799D14F690}" Directory_="APPDIR" Attributes="256" KeyPath="Qt5Gui.dll"/>
-    <ROW Component="Qt5Widgets.dll" ComponentId="{40A4793F-5F92-4A62-B431-DA39AA97CD80}" Directory_="APPDIR" Attributes="256" KeyPath="Qt5Widgets.dll"/>
-    <ROW Component="blas_win64_MT.dll" ComponentId="{B2C764EA-DB9B-4444-8C99-162D554A033D}" Directory_="APPDIR" Attributes="256" KeyPath="blas_win64_MT.dll"/>
-    <ROW Component="lapack_win64_MT.dll" ComponentId="{D61B4CBD-26F4-4114-999C-B014EABB9023}" Directory_="APPDIR" Attributes="256" KeyPath="lapack_win64_MT.dll"/>
+    <ROW Component="QXlsx.dll" ComponentId="{239CC19C-7B19-4125-8DD0-AE3B8D1D0120}" Directory_="bin_1_Dir" Attributes="256" KeyPath="QXlsx.dll"/>
+    <ROW Component="Qt5Core.dll" ComponentId="{2225F3F3-B5A5-4E5B-85DC-46F252B2F90F}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Core.dll"/>
+    <ROW Component="Qt5Gui.dll" ComponentId="{1CBC4EC2-2744-416F-8480-64799D14F690}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Gui.dll"/>
+    <ROW Component="Qt5Widgets.dll" ComponentId="{40A4793F-5F92-4A62-B431-DA39AA97CD80}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Widgets.dll"/>
+    <ROW Component="blas_win64_MT.dll" ComponentId="{B2C764EA-DB9B-4444-8C99-162D554A033D}" Directory_="bin_1_Dir" Attributes="256" KeyPath="blas_win64_MT.dll"/>
+    <ROW Component="forms_structures.json" ComponentId="{F7CD0256-1D74-4E44-8BF5-27699EEFAB10}" Directory_="resources_Dir" Attributes="0" KeyPath="forms_structures.json" Type="0"/>
+    <ROW Component="lapack_win64_MT.dll" ComponentId="{D61B4CBD-26F4-4114-999C-B014EABB9023}" Directory_="bin_1_Dir" Attributes="256" KeyPath="lapack_win64_MT.dll"/>
     <ROW Component="qwindows.dll" ComponentId="{5008F710-0409-4657-A1A5-A9B65C4538C3}" Directory_="platforms_Dir" Attributes="256" KeyPath="qwindows.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D36C9FE0826D4D2B9C2DDCCE2C83E860"/>
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="CMBSource CMBSource.exe_1 Icons ProductInformation QXlsx.dll Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll blas_win64_MT.dll lapack_win64_MT.dll qwindows.dll"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="CMBSource CMBSource.exe_1 Cancel.png Icons ProductInformation QXlsx.dll Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll blas_win64_MT.dll forms_structures.json lapack_win64_MT.dll qwindows.dll"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="CMBSource.exe_1" Component_="CMBSource.exe_1" FileName="CMBSOU~1.EXE|CMBSource.exe" Attributes="0" SourcePath="release\CMBSource.exe" SelfReg="false" NextFile="QXlsx.dll" DigSign="true"/>
-    <ROW File="QXlsx.dll" Component_="QXlsx.dll" FileName="QXlsx.dll" Attributes="0" SourcePath="release\QXlsx.dll" SelfReg="false"/>
+    <ROW File="Cancel.png" Component_="Cancel.png" FileName="Cancel.png" Attributes="0" SourcePath="resources\Icons\Cancel.png" SelfReg="false" NextFile="Proceed.png"/>
+    <ROW File="Proceed.png" Component_="Cancel.png" FileName="Proceed.png" Attributes="0" SourcePath="resources\Icons\Proceed.png" SelfReg="false" NextFile="tools.json"/>
+    <ROW File="QXlsx.dll" Component_="QXlsx.dll" FileName="QXlsx.dll" Attributes="0" SourcePath="release\QXlsx.dll" SelfReg="false" NextFile="forms_structures.json"/>
     <ROW File="Qt5Core.dll" Component_="Qt5Core.dll" FileName="Qt5Core.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2019_64\bin\Qt5Core.dll" SelfReg="false" NextFile="Qt5Widgets.dll"/>
     <ROW File="Qt5Gui.dll" Component_="Qt5Gui.dll" FileName="Qt5Gui.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2019_64\bin\Qt5Gui.dll" SelfReg="false" NextFile="Qt5Core.dll"/>
     <ROW File="Qt5Widgets.dll" Component_="Qt5Widgets.dll" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2019_64\bin\Qt5Widgets.dll" SelfReg="false" NextFile="blas_win64_MT.dll"/>
     <ROW File="blas_win64_MT.dll" Component_="blas_win64_MT.dll" FileName="BLAS_W~1.DLL|blas_win64_MT.dll" Attributes="0" SourcePath="..\Armadillo\libs\lapack-blas_lib_win64\blas_win64_MT.dll" SelfReg="false" NextFile="CMBSource.exe_1"/>
+    <ROW File="forms_structures.json" Component_="forms_structures.json" FileName="FORMS_~1.JSO|forms_structures.json" Attributes="0" SourcePath="resources\forms_structures.json" SelfReg="false" NextFile="Cancel.png"/>
     <ROW File="lapack_win64_MT.dll" Component_="lapack_win64_MT.dll" FileName="LAPACK~1.DLL|lapack_win64_MT.dll" Attributes="0" SourcePath="..\Armadillo\libs\lapack-blas_lib_win64\lapack_win64_MT.dll" SelfReg="false" NextFile="Qt5Gui.dll"/>
     <ROW File="qwindows.dll" Component_="qwindows.dll" FileName="qwindows.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2015_64\plugins\platforms\qwindows.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
+    <ROW File="tools.json" Component_="forms_structures.json" FileName="TOOLS~1.JSO|tools.json" Attributes="0" SourcePath="resources\tools.json" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
     <ROW BuildKey="x64_Release" BuildName="x64_Release" BuildOrder="1" BuildType="0" PackageFolder="..\CMB_Source_setup" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>

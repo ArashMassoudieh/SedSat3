@@ -3,12 +3,12 @@
 
 using namespace std;
 
-Elemental_Profile_Set::Elemental_Profile_Set() :map<string, Elemental_Profile>()
+Elemental_Profile_Set::Elemental_Profile_Set() :map<string, Elemental_Profile>(), Interface()
 {
 
 }
 
-Elemental_Profile_Set::Elemental_Profile_Set(const Elemental_Profile_Set& mp) :map<string, Elemental_Profile>(mp)
+Elemental_Profile_Set::Elemental_Profile_Set(const Elemental_Profile_Set& mp) :map<string, Elemental_Profile>(mp), Interface()
 {
     element_distributions = mp.element_distributions;
     contribution = mp.contribution;
@@ -17,6 +17,7 @@ Elemental_Profile_Set::Elemental_Profile_Set(const Elemental_Profile_Set& mp) :m
 Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_Set &mp)
 {
     map<string, Elemental_Profile>::operator=(mp);
+    Interface::operator=(mp);
     contribution = mp.contribution;
     element_distributions = mp.element_distributions;
     return *this;
@@ -49,6 +50,40 @@ vector<string> Elemental_Profile_Set::SampleNames()
     }
     return out;
 }
+
+string Elemental_Profile_Set::ToString()
+{
+    string out; 
+    if (size() == 0) return string(); 
+    out += "Element name \t";
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        out += it->first + "\t";
+    }
+    out += "\n";
+    vector<string> elements = ElementNames(); 
+    for (int i = 0; i < elements.size(); i++)
+    {
+        out += elements[i];
+        for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+        {
+            out += "\t" + aquiutils::numbertostring(it->second.at(elements[i])); 
+        }
+        out += "\n";
+    }
+    return out; 
+}
+
+vector<string> Elemental_Profile_Set::ElementNames()
+{
+    vector<string> out; 
+    if (size() == 0)
+        return vector<string>(); 
+    for (map<string, double>::iterator it = operator[](SampleNames()[0]).begin(); it != operator[](SampleNames()[0]).end(); it++)
+        out.push_back(it->first);
+    return out; 
+}
+
 
 Elemental_Profile *Elemental_Profile_Set::Profile(const string &name)
 {

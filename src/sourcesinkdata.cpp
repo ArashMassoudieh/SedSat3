@@ -248,7 +248,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
                     p.SetPriorDistribution(distribution_type::normal);
                     source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
-                    p.SetRange(-3, 3);
+                    p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]*0.8, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]*1.2);
                     parameters.push_back(p);
                 }
             }
@@ -266,7 +266,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                 {   Parameter p;
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
                     p.SetPriorDistribution(distribution_type::lognormal);
-                    p.SetRange(0.01,4);
+                    p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
                     parameters.push_back(p);
                 }
             }
@@ -582,4 +582,139 @@ result_item SourceSinkData::GetObservedElementalProfile()
     result_obs.result = obs_profile;
     result_obs.type = result_type::predicted_concentration;
     return result_obs;
+}
+
+result_item SourceSinkData::GetCalculatedElementMeans()
+{
+    Elemental_Profile_Set *profile_set = new Elemental_Profile_Set();
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
+    { 
+        if (it->first != target_group)
+        {
+            Elemental_Profile element_profile;
+            for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
+            {
+                element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->mean());
+            }
+            profile_set->Append_Profile(it->first, element_profile);
+        }
+    }
+    result_item resitem;
+    resitem.name = "Calculated mean elemental contents";
+    resitem.type = result_type::elemental_profile_set;
+    resitem.result = profile_set;
+    return resitem;
+    
+}
+result_item SourceSinkData::GetCalculatedElementStandardDev()
+{
+    Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            Elemental_Profile element_profile;
+            for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
+            {
+                if (it->second.ElementalDistribution(element_order[element_counter])->FittedDistribution()->distribution == distribution_type::normal)
+                    element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->stdev());
+                else if (it->second.ElementalDistribution(element_order[element_counter])->FittedDistribution()->distribution == distribution_type::lognormal)
+                    element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->stdevln());
+            }
+            profile_set->Append_Profile(it->first, element_profile);
+        }
+    }
+    result_item resitem;
+    resitem.name = "Calculated elemental contents standard deviations";
+    resitem.type = result_type::elemental_profile_set;
+    resitem.result = profile_set;
+    return resitem;
+}
+result_item SourceSinkData::GetCalculatedElementMu()
+{
+    Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            Elemental_Profile element_profile;
+            for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
+            {
+                element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->meanln());
+            }
+            profile_set->Append_Profile(it->first, element_profile);
+        }
+    }
+    result_item resitem;
+    resitem.name = "Calculated geometrical mean of elemental contents";
+    resitem.type = result_type::elemental_profile_set;
+    resitem.result = profile_set;
+    return resitem;
+}
+result_item SourceSinkData::GetEstimatedElementMu()
+{
+    Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            Elemental_Profile element_profile;
+            for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
+            {
+                element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->EstimatedMu());
+            }
+            profile_set->Append_Profile(it->first, element_profile);
+        }
+    }
+    result_item resitem;
+    resitem.name = "Infered geometrical mean of elemental contents";
+    resitem.type = result_type::elemental_profile_set;
+    resitem.result = profile_set;
+    return resitem;
+}
+
+result_item SourceSinkData::GetEstimatedElementMean()
+{
+    Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            Elemental_Profile element_profile;
+            for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
+            {
+                double sigma = it->second.ElementalDistribution(element_order[element_counter])->EstimatedSigma();
+                double mu = it->second.ElementalDistribution(element_order[element_counter])->EstimatedMu();
+                element_profile.AppendElement(element_order[element_counter], exp(mu+pow(sigma,2)/2));
+            }
+            profile_set->Append_Profile(it->first, element_profile);
+        }
+    }
+    result_item resitem;
+    resitem.name = "Infered mean of elemental contents";
+    resitem.type = result_type::elemental_profile_set;
+    resitem.result = profile_set;
+    return resitem;
+}
+
+result_item SourceSinkData::GetEstimatedElementSigma()
+{
+    Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            Elemental_Profile element_profile;
+            for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
+            {
+                element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->EstimatedSigma());
+            }
+            profile_set->Append_Profile(it->first, element_profile);
+        }
+    }
+    result_item resitem;
+    resitem.name = "Infered sigma elemental contents";
+    resitem.type = result_type::elemental_profile_set;
+    resitem.result = profile_set;
+    return resitem;
 }

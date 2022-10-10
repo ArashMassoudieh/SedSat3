@@ -23,7 +23,7 @@ double Distribution::EvalLog(const double &x)
     if (distribution==distribution_type::normal)
             out = -log(sqrt(2*pi)*parameters[1]) -pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]);
     if (distribution==distribution_type::lognormal)
-            out = -log(sqrt(2*pi)*parameters[1] * x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
+            out = -log(sqrt(2*pi)*parameters[1]*x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
 
     return out;
 }

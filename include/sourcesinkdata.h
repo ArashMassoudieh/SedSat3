@@ -135,6 +135,12 @@ public:
     result_item GetContribution();
     result_item GetPredictedElementalProfile();
     result_item GetObservedElementalProfile();
+    result_item GetCalculatedElementMeans();
+    result_item GetCalculatedElementStandardDev();
+    result_item GetCalculatedElementMu();
+    result_item GetEstimatedElementMu();
+    result_item GetEstimatedElementMean();
+    result_item GetEstimatedElementSigma();
 private:
     
     map<string,ConcentrationSet> element_distributions;

@@ -30,6 +30,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         result_item result_obs = GA->Model_out.GetObservedElementalProfile();
         results.Append(result_obs);
 
+        result_item result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
+        results.Append(result_calculated_means);
+
+        result_item result_estimated_means = GA->Model_out.GetEstimatedElementMean(); 
+        results.Append(result_estimated_means);
+
     }
     return true;
 }

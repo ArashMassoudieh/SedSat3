@@ -6,12 +6,13 @@
 #include <string>
 #include <vector>
 #include "concentrationset.h"
+#include "interface.h"
 
 using namespace std;
 
 
 
-class Elemental_Profile_Set: public map<string, Elemental_Profile>
+class Elemental_Profile_Set: public map<string, Elemental_Profile>, public Interface
 {
 public:
     Elemental_Profile_Set();
@@ -88,6 +89,18 @@ public:
             return nullptr;
 
     }
+
+    Distribution* GetFittedDistribution(const string& element_name)
+    {
+        if (element_distributions.count(element_name) > 0)
+            return element_distributions[element_name].FittedDistribution();
+        else
+            return nullptr;
+
+    }
+    string ToString() override;
+    vector<string> ElementNames();
+
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     double contribution = 0;
