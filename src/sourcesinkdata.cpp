@@ -436,13 +436,13 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     {
         int element_counter = (i-(numberofsourcesamplesets-1))/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1))%numberofsourcesamplesets;
-        GetElementDistribution(constituent_order[element_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
+        GetElementDistribution(element_order[element_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
     }
     else if (i<numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets)
     {
         int element_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)%numberofsourcesamplesets;
-        GetElementDistribution(constituent_order[element_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
+        GetElementDistribution(element_order[element_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
     }
     else if (i==numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets)
     {
