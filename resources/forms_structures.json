@@ -44,5 +44,11 @@
     			"type": "fileBrowser_Save",
     			"default": "GA_Output.txt"
     		}
+	},
+	"Levenberg-Marquardt": {
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		}
 	}
 }

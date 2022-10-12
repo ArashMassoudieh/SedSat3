@@ -266,7 +266,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
                     p.SetPriorDistribution(distribution_type::normal);
                     source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
-                    p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]*0.8, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]*1.2);
+                    p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
                     parameters.push_back(p);
                 }
             }
@@ -316,7 +316,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
 
 CVector SourceSinkData::GetSourceContributions()
 {
-    CVector contributions(size()-2);
+    CVector contributions(size()-1);
     for (unsigned long int i=0; i<size()-2; i++)
     {
         contributions[i] = parameter(i)->Value();
@@ -378,6 +378,37 @@ double SourceSinkData::LogLikelihoodModelvsMeasured()
     return LogLikelihood;
 }
 
+CVector_arma SourceSinkData::ResidualVector()
+{
+    CVector C = PredictTarget();
+    CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
+    CVector Residual = C.Log() - C_obs.Log();
+    
+    return Residual;
+}
+
+CMatrix_arma SourceSinkData::ResidualJacobian()
+{
+    CMatrix_arma Jacobian(SourceOrder().size(),element_order.size());
+    CVector_arma base_contribution = CVector_arma(GetSourceContributions().vec);
+    CVector_arma base_residual = ResidualVector();
+    for (unsigned int i = 0; i < SourceOrder().size(); i++)
+    {
+        double epsilon = (0.5 - base_contribution[i]) * 1e-6; 
+        SetContribution(i, base_contribution[i] + epsilon);
+        CVector_arma purturbed_residual = ResidualVector(); 
+        Jacobian.setcol(i,(purturbed_residual - base_residual) / epsilon);
+        SetContribution(i, base_contribution[i]);
+    }
+    return Jacobian;
+}
+
+bool SourceSinkData::OneStepLevenBerg_Marquardt()
+{
+    return false;
+}
+
+
 CVector SourceSinkData::PredictTarget()
 {
     CVector C = SourceMeanMatrix()*ContributionVector();
@@ -419,6 +450,11 @@ CVector SourceSinkData::ContributionVector()
         X[source_group_counter] = this_source_group->Contribution();
     }
     return X;
+}
+
+void SourceSinkData::SetContribution(int i, double value)
+{
+    sample_set(samplesetsorder[i])->SetContribution(value);
 }
 
 Parameter* SourceSinkData::ElementalContent_mu(int element_iterator, int source_iterator)

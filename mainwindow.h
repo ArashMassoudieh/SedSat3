@@ -56,6 +56,7 @@ private slots:
     void on_tool_executed(const QModelIndex&);
     void on_test_likelihood();
     void on_test_progress_window();
+    void on_TestLevenberg_Marquardt();
 
 
 };

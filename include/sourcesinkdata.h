@@ -120,6 +120,7 @@ public:
     CVector PredictTarget();
     CMatrix SourceMeanMatrix();
     CVector ContributionVector();
+    void SetContribution(int i, double value);
     CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
     double GetObjectiveFunctionValue();
     double LogLikelihood();
@@ -142,6 +143,9 @@ public:
     result_item GetEstimatedElementMu();
     result_item GetEstimatedElementMean();
     result_item GetEstimatedElementSigma();
+    CVector_arma ResidualVector();
+    CMatrix_arma ResidualJacobian();
+    bool OneStepLevenBerg_Marquardt(); 
 private:
     
     map<string,ConcentrationSet> element_distributions;

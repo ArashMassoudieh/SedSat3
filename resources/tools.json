@@ -9,6 +9,7 @@
   {
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
     "Positive Matrix Factorization": "PMF",
-    "Maximum likelihood unmixing": "GA"
+    "Maximum likelihood unmixing using Genetic Algorithm": "GA",
+	"Levenberg-Marquardt optimization": "Levenberg-Marquardt"
   }
 }

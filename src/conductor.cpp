@@ -37,5 +37,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(result_estimated_means);
 
     }
+    if (command == "Levenberg-Marquardt")
+    {
+        ProgressWindow* rtw = new ProgressWindow();
+        rtw->show();
+        Data()->InitializeParametersObservations(arguments["Sample"]);
+        CVector_arma V = Data()->ResidualVector();
+        CMatrix_arma M = Data()->ResidualJacobian();
+        qDebug() << "Matrix and Vector";
+    }
     return true;
 }

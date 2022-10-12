@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeViewtools->setModel(toolsmodel);
     ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
+    connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
@@ -554,5 +555,10 @@ void MainWindow::on_test_progress_window()
     prgwindow->AppendPoint(0.3, 0.25);
     prgwindow->SetXRange(0, 2);
     prgwindow->SetYRange(0, 2);
+
+}
+
+void MainWindow::on_TestLevenberg_Marquardt()
+{
 
 }
