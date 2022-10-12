@@ -46,6 +46,24 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     return *this;
 }
 
+void SourceSinkData::Clear()
+{
+    ElementInformation.clear();
+    element_distributions.clear();
+    numberofconstituents = 0;
+    numberofsourcesamplesets = 0;
+    observations.clear();
+    outputpath = "";
+    parameters.clear();
+    target_group = "";
+    samplesetsorder.clear();
+    constituent_order.clear();
+    element_order.clear();
+    isotope_order.clear();
+    size_om_order.clear();
+    selected_target_sample = "";
+}
+
 Elemental_Profile_Set* SourceSinkData::AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set)
 {
     if (count(name)==0)

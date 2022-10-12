@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "string"
+#include "results.h"
 
 using namespace std;
 
@@ -17,10 +18,14 @@ class ResultsWindow : public QDialog
 public:
     explicit ResultsWindow(QWidget *parent = nullptr);
     void AppendText(const string &text);
+    void AppendResult(const result_item &resultitem);
     ~ResultsWindow();
 
 private:
     Ui::ResultsWindow *ui;
+
+public slots:
+    void on_result_clicked();
 };
 
 #endif // RESULTSWINDOW_H

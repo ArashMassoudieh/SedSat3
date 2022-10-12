@@ -508,8 +508,7 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
     ResultsWindow *reswind = new ResultsWindow();
     for (map<string,result_item>::iterator it=conductor.GetResults().begin(); it!=conductor.GetResults().end(); it++)
     {
-        reswind->AppendText(it->second.name + ":");
-        reswind->AppendText(it->second.result->ToString());
+        reswind->AppendResult(it->second);
     }
     reswind->show();
 

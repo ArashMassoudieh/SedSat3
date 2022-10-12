@@ -26,6 +26,7 @@ SOURCES += \
     elementtabledelegate.cpp \
     filebrowserpushbuttom.cpp \
     formelementinformation.cpp \
+    generalchart.cpp \
     generalplotter.cpp \
     genericform.cpp \
     indicatesheetsdialog.cpp \
@@ -68,6 +69,7 @@ HEADERS += \
     elementtabledelegate.h \
     filebrowserpushbuttom.h \
     formelementinformation.h \
+    generalchart.h \
     generalplotter.h \
     genericform.h \
     include/GA/Binary.h \
@@ -106,6 +108,7 @@ LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 FORMS += \
     ProgressWindow.ui \
     formelementinformation.ui \
+    generalchart.ui \
     genericform.ui \
     indicatesheetsdialog.ui \
     mainwindow.ui \
