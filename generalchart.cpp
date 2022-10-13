@@ -7,8 +7,9 @@ GeneralChart::GeneralChart(QWidget *parent) :
     ui(new Ui::GeneralChart)
 {
     ui->setupUi(this);
-    chartView = new QtCharts::QChartView(chart);
     chart = new QtCharts::QChart();
+    chartView = new QtCharts::QChartView(chart);
+
 }
 
 GeneralChart::~GeneralChart()

@@ -3,6 +3,7 @@
 #include "QTextBrowser"
 #include "QDebug"
 #include "QPushButton"
+#include "generalchart.h"
 
 ResultsWindow::ResultsWindow(QWidget *parent) :
     QDialog(parent),
@@ -29,6 +30,8 @@ void ResultsWindow::AppendResult(const result_item &resultitem)
     textBrowser->setObjectName(QString::fromStdString(resultitem.name));
     //textBrowser->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     QPushButton *pushButton = new QPushButton(this);
+    QIcon iconGraph = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Graph.png");
+    pushButton->setIcon(iconGraph);
     //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
     pushButton->setMaximumWidth(20);
     pushButton->setObjectName(QString::fromStdString(resultitem.name));
@@ -47,7 +50,7 @@ void ResultsWindow::AppendResult(const result_item &resultitem)
     int ht = textBrowser->fontMetrics().height();
     textBrowser->setMaximumHeight(textBrowser->fontMetrics().height() * (count+3));
     textBrowser->setMinimumHeight(textBrowser->fontMetrics().height() * (count+2));
-    connect(textBrowser,SIGNAL(clicked()),this,SLOT(on_result_clicked()));
+    connect(pushButton,SIGNAL(clicked()),this,SLOT(on_result_clicked()));
 
 }
 
@@ -55,5 +58,7 @@ void ResultsWindow::AppendResult(const result_item &resultitem)
 void ResultsWindow::on_result_clicked()
 {
     qDebug()<<sender()->objectName();
-
+    GeneralChart *resultgraph = new GeneralChart(this);
+    resultgraph->setWindowTitle(sender()->objectName());
+    resultgraph->show();
 }
