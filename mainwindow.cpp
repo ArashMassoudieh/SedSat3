@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
+    conductor.SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 }
 
 MainWindow::~MainWindow()
@@ -69,7 +70,9 @@ void MainWindow::on_import_excel()
             tr("Open"), "",
             tr("Excel files (*.xlsx);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
 
-
+    QFileInfo fi(fileName);
+    
+    conductor.SetWorkingFolder(fi.absolutePath());
     if (fileName!="")
     {
         ReadExcel(fileName);
@@ -507,6 +510,7 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
     conductor.SetData(&DataCollection);
     bool outcome = conductor.Execute(command,arguments);
     ResultsWindow *reswind = new ResultsWindow();
+    reswind->SetResults(&conductor.GetResults());
     for (map<string,result_item>::iterator it=conductor.GetResults().begin(); it!=conductor.GetResults().end(); it++)
     {
         reswind->AppendResult(it->second);

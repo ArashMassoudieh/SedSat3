@@ -621,16 +621,38 @@ result_item SourceSinkData::GetPredictedElementalProfile()
     return result_modeled;
 }
 
+result_item SourceSinkData::GetObservedvsModeledElementalProfile()
+{
+    result_item result_obs;
+
+    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile().result);
+    Elemental_Profile* observed = static_cast<Elemental_Profile*>(GetObservedElementalProfile().result);
+    Elemental_Profile_Set* modeled_vs_observed = new Elemental_Profile_Set(); 
+    modeled_vs_observed->Append_Profile("Observed", *observed);
+    modeled_vs_observed->Append_Profile("Modeled", *predicted);
+    
+    result_obs.name = "Observed vs Modeled Elemental Profile";
+    result_obs.result = modeled_vs_observed;
+    result_obs.type = result_type::elemental_profile_set;
+    return result_obs;
+}
+
 result_item SourceSinkData::GetObservedElementalProfile()
 {
     result_item result_obs;
 
-    Elemental_Profile *obs_profile = new Elemental_Profile();
+    Elemental_Profile* obs_profile = new Elemental_Profile();
     CVector observed_profile = ObservedDataforSelectedSample(selected_target_sample);
     vector<string> element_names = ElementOrder();
-    for (int i=0; i<element_names.size(); i++)
+    for (int i = 0; i < element_names.size(); i++)
     {
-        obs_profile->AppendElement(element_names[i],observed_profile[i]);
+        obs_profile->AppendElement(element_names[i], observed_profile[i]);
+    }
+    CVector modeled_profile = ObservedDataforSelectedSample(selected_target_sample);
+    
+    for (int i = 0; i < element_names.size(); i++)
+    {
+        obs_profile->AppendElement(element_names[i], observed_profile[i]);
     }
     result_obs.name = "Observed Elemental Profile";
     result_obs.result = obs_profile;

@@ -18,6 +18,10 @@ public:
     bool AppendElement(const string &name,const double &val=0); //Append an element and it's value to the list of elements
     vector<double> Vals(); //Returns a vector containing the values of all emenents in the profile
     string ToString() override;
+    double max(); 
+    double min(); 
+    vector<string> ElementNames();
+    
 private:
     
 };

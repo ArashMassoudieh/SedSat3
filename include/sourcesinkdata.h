@@ -137,6 +137,7 @@ public:
     result_item GetContribution();
     result_item GetPredictedElementalProfile();
     result_item GetObservedElementalProfile();
+    result_item GetObservedvsModeledElementalProfile();
     result_item GetCalculatedElementMeans();
     result_item GetCalculatedElementStandardDev();
     result_item GetCalculatedElementMu();

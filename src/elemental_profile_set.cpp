@@ -144,3 +144,23 @@ vector<double> Elemental_Profile_Set::GetProfileForSample(const string &sample_n
 
     return Profile(sample_name)->Vals();
 }
+
+double Elemental_Profile_Set::max()
+{
+    double _max = -1e12;
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->second.max() > _max) _max = it->second.max(); 
+    }
+    return _max; 
+}
+
+double Elemental_Profile_Set::min()
+{
+    double _min = 1e12;
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->second.min() < _min) _min = it->second.min();
+    }
+    return _min;
+}

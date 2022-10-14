@@ -60,5 +60,6 @@ void ResultsWindow::on_result_clicked()
     qDebug()<<sender()->objectName();
     GeneralChart *resultgraph = new GeneralChart(this);
     resultgraph->setWindowTitle(sender()->objectName());
+    resultgraph->Plot(&results->operator[](sender()->objectName().toStdString()));
     resultgraph->show();
 }

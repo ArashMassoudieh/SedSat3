@@ -79,3 +79,32 @@ string Elemental_Profile::ToString()
     }
     return out;
 }
+
+double Elemental_Profile::max()
+{
+    double _max = -1e12; 
+    for (map<string, double>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->second > _max) _max = it->second; 
+    }
+    return _max; 
+}
+double Elemental_Profile::min()
+{
+    double _min = 1e12;
+    for (map<string, double>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->second < _min) _min = it->second;
+    }
+    return _min;
+}
+
+vector<string> Elemental_Profile::ElementNames()
+{
+    vector<string> out;
+    for (map<string, double>::iterator it = begin(); it != end(); it++)
+    {
+        out.push_back(it->first);
+    }
+    return out; 
+}

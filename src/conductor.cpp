@@ -17,6 +17,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->show();
         Data()->InitializeParametersObservations(arguments["Sample"]);
         GA = new CGA<SourceSinkData>(Data());
+        GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
         GA->SetProperties(arguments);
         GA->InitiatePopulation();
@@ -35,6 +36,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         result_item result_estimated_means = GA->Model_out.GetEstimatedElementMean(); 
         results.Append(result_estimated_means);
+
+        result_item result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile();
+        results.Append(result_modeled_vs_measured);
 
     }
     if (command == "Levenberg-Marquardt")

@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <qchartview.h>
 #include <qchart.h>
+#include "results.h"
 
 
 namespace Ui {
@@ -17,11 +18,12 @@ class GeneralChart : public QDialog
 public:
     explicit GeneralChart(QWidget *parent = nullptr);
     ~GeneralChart();
-
+    bool Plot(result_item* res);
 private:
     Ui::GeneralChart *ui;
     QtCharts::QChart* chart;
     QtCharts::QChartView *chartView;
 };
 
+int roundDownDivide(int a, int b);
 #endif // GENERALCHART_H

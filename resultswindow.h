@@ -20,9 +20,11 @@ public:
     void AppendText(const string &text);
     void AppendResult(const result_item &resultitem);
     ~ResultsWindow();
+    void SetResults(Results* res) { results = res;  }
 
 private:
     Ui::ResultsWindow *ui;
+    Results* results = nullptr; 
 
 public slots:
     void on_result_clicked();

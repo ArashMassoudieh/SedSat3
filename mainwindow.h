@@ -43,6 +43,7 @@ private:
     QJsonDocument formsstructure;
     QWidget *centralform = nullptr;
     Conductor conductor;
+    
 
 private slots:
     void on_import_excel();

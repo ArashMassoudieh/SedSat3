@@ -100,6 +100,8 @@ public:
     }
     string ToString() override;
     vector<string> ElementNames();
+    double max();
+    double min(); 
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
