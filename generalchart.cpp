@@ -50,8 +50,8 @@ bool GeneralChart::Plot(result_item* res)
         
 
         QLogValueAxis* axisY = new QLogValueAxis();
-        qDebug() << profile_sets->min()<<":"<< pow(10, roundDownDivide(log(profile_sets->min()) / log(10.0),10));
-        axisY->setRange(pow(10, roundDownDivide(log(profile_sets->min())/log(10.0),10)), pow(10, int(log(profile_sets->max()) / log(10.0))+1));
+        qDebug() << profile_sets->min()<<":"<< pow(10, roundDown(log(profile_sets->min()) / log(10.0)));
+        axisY->setRange(pow(10, roundDown(log(profile_sets->min())/log(10.0))), pow(10, int(log(profile_sets->max()) / log(10.0))+1));
         axisY->setLabelFormat("%g");
         axisY->setMinorTickCount(5);
         
@@ -93,7 +93,7 @@ bool GeneralChart::Plot(result_item* res)
 
 
         QLogValueAxis* axisY = new QLogValueAxis();
-        axisY->setRange(pow(10, roundDownDivide(log(profile_set->min()) / log(10.0),10)), pow(10, int(log(profile_set->max()) / log(10.0)) + 1));
+        axisY->setRange(pow(10, roundDown(log(profile_set->min()) / log(10.0))), pow(10, int(log(profile_set->max()) / log(10.0)) + 1));
         axisY->setLabelFormat("%g");
         axisY->setMinorTickCount(5);
 
@@ -124,7 +124,10 @@ bool GeneralChart::Plot(result_item* res)
     return false; 
 }
 
-int roundDownDivide(int a, int b) {
-    if (a >= 0) return a / b;
-    else return (a - b + 1) / b;
+double roundDown(double a) {
+    if (a >= 0)
+        return round(a);
+    else
+        return -round(-a+1);
+
 }

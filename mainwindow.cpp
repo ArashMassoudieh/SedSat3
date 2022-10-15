@@ -93,7 +93,7 @@ void MainWindow::on_import_excel()
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(preparetreeviewMenu(const QPoint &)));
-
+    on_constituent_properties_triggered();
 
 }
 

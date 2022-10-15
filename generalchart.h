@@ -25,5 +25,5 @@ private:
     QtCharts::QChartView *chartView;
 };
 
-int roundDownDivide(int a, int b);
+double roundDown(double a);
 #endif // GENERALCHART_H
