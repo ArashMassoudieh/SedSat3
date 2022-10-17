@@ -63,6 +63,7 @@ void ProgressWindow::SetYRange(const double &y0, const double &y1)
     yaxis->setMin(y0);
 	yaxis->setMax(y1);
     yaxis->setTitleText("Fitness");
+    chartView->update();
 	
 }
 
@@ -71,4 +72,5 @@ void ProgressWindow::SetXRange(const double &x0, const double &x1)
 	xaxis->setMin(x0);
 	xaxis->setMax(x1);
     xaxis->setTitleText("Generation");
+    chartView->update();
 }

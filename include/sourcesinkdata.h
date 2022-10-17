@@ -7,6 +7,7 @@
 #include "observation.h"
 #include "contribution.h"
 #include "results.h"
+#include "ProgressWindow.h"
 
 struct profiles_data
 {
@@ -122,6 +123,7 @@ public:
     CMatrix SourceMeanMatrix();
     CVector ContributionVector(bool full=true);
     void SetContribution(int i, double value);
+    void SetContribution(const CVector &X);
     CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
     double GetObjectiveFunctionValue();
     double LogLikelihood();
@@ -149,7 +151,9 @@ public:
     CVector_arma ResidualVector_arma();
     CMatrix ResidualJacobian();
     CMatrix_arma ResidualJacobian_arma();
-    bool OneStepLevenBerg_Marquardt(); 
+    CVector OneStepLevenBerg_Marquardt(double lambda = 0);
+    bool SolveLevenBerg_Marquardt();
+    void SetProgressWindow(ProgressWindow *_rtw) {rtw = _rtw;}
 private:
     
     map<string,ConcentrationSet> element_distributions;
@@ -176,6 +180,7 @@ private:
     vector<string> size_om_order;
     void populate_constituent_orders();
     double error_stdev = 0;
+    ProgressWindow *rtw = nullptr;
 
 
 

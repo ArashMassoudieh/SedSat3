@@ -443,8 +443,61 @@ CMatrix SourceSinkData::ResidualJacobian()
     return Jacobian;
 }
 
-bool SourceSinkData::OneStepLevenBerg_Marquardt()
+CVector SourceSinkData::OneStepLevenBerg_Marquardt(double lambda)
 {
+
+    CVector V = ResidualVector();
+    CMatrix M = ResidualJacobian();
+    CMatrix JTJ = M*Transpose(M);
+    JTJ.ScaleDiagonal(1+lambda);
+    CVector J_epsilon = M*V;
+
+    CVector dx = J_epsilon/JTJ;
+    return dx;
+}
+
+bool SourceSinkData::SolveLevenBerg_Marquardt()
+{
+    InitializeContributionsRandomly();
+    double err = 1000;
+    double err_p;
+    double tol = 1e-5;
+    double lambda = 1;
+    int counter = 0;
+    double err_0 = ResidualVector().norm2();
+    double err_x = 10000;
+    double err_x0 = 10000;
+    while (err>tol && err_x>tol)
+    {
+        CVector X0 = ContributionVector(false);
+        err_p = err;
+        CVector dx = OneStepLevenBerg_Marquardt(lambda);
+        err_x = dx.norm2();
+        if (counter==0) err_x0 = err_x;
+        CVector X = X0 - dx;
+        SetContribution(X);
+        CVector V = ResidualVector();
+        err = V.norm2();
+        if (err<err_p*0.8)
+        {
+            lambda*=1.2;
+        }
+        else if (err>err_p)
+        {
+            lambda/=1.2;
+            SetContribution(X0);
+            err = err_p;
+        }
+        if (rtw)
+        {
+            rtw->AppendPoint(counter,err);
+            rtw->SetXRange(0,counter);
+            rtw->SetProgress(1-err_x/err_x0);
+            QCoreApplication::processEvents();
+        }
+        counter++;
+    }
+
     return false;
 }
 
@@ -509,6 +562,15 @@ void SourceSinkData::SetContribution(int i, double value)
     sample_set(samplesetsorder[samplesetsorder.size()-1])->SetContribution(1-ContributionVector(false).sum());
 }
 
+void SourceSinkData::SetContribution(const CVector &X)
+{
+    for (int i=0; i<X.num; i++)
+    {
+        SetContribution(i,X.vec[i]);
+    }
+}
+
+
 Parameter* SourceSinkData::ElementalContent_mu(int element_iterator, int source_iterator)
 {
     return &parameters[size()-2+element_iterator*numberofsourcesamplesets +source_iterator];
@@ -536,7 +598,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     if (i<numberofsourcesamplesets-1)
     {
         sample_set(samplesetsorder[i])->SetContribution(value);
-        sample_set(samplesetsorder[numberofsourcesamplesets-1])->SetContribution(1-ContributionVector().sum());//+sample_set(samplesetsorder[numberofsourcesamplesets-1])->Contribution()
+        sample_set(samplesetsorder[numberofsourcesamplesets-1])->SetContribution(1-ContributionVector(false).sum());//+sample_set(samplesetsorder[numberofsourcesamplesets-1])->Contribution()
     }
     else if (i<numberofsourcesamplesets-1+numberofconstituents*numberofsourcesamplesets)
     {
