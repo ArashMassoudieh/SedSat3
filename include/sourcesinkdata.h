@@ -9,6 +9,8 @@
 #include "results.h"
 #include "ProgressWindow.h"
 
+enum class transformation {linear, softmax};
+
 struct profiles_data
 {
     vector<string> element_names;
@@ -118,12 +120,16 @@ public:
     string TargetGroup() {return target_group;}
     bool InitializeParametersObservations(const string &targetsamplename="");
     bool InitializeContributionsRandomly(); //initializes source contributions randomly
+    bool InitializeContributionsRandomly_softmax(); //initializes source contributions randomly for softmax transformation
     bool SetParameterValue(unsigned int i, double value);
     CVector PredictTarget();
     CMatrix SourceMeanMatrix();
     CVector ContributionVector(bool full=true);
+    CVector ContributionVector_softmax();
     void SetContribution(int i, double value);
+    void SetContribution_softmax(int i, double value);
     void SetContribution(const CVector &X);
+    void SetContribution_softmax(const CVector &X); //set source contribution softmax transforations
     CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
     double GetObjectiveFunctionValue();
     double LogLikelihood();
@@ -150,9 +156,11 @@ public:
     CVector ResidualVector();
     CVector_arma ResidualVector_arma();
     CMatrix ResidualJacobian();
+    CMatrix ResidualJacobian_softmax();
     CMatrix_arma ResidualJacobian_arma();
     CVector OneStepLevenBerg_Marquardt(double lambda = 0);
-    bool SolveLevenBerg_Marquardt();
+    CVector OneStepLevenBerg_Marquardt_softmax(double lambda);
+    bool SolveLevenBerg_Marquardt(transformation trans = transformation::linear );
     void SetProgressWindow(ProgressWindow *_rtw) {rtw = _rtw;}
 private:
     

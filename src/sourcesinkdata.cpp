@@ -1,5 +1,6 @@
 #include "sourcesinkdata.h"
 #include "iostream"
+#include "NormalDist.h"
 
 SourceSinkData::SourceSinkData():map<string, Elemental_Profile_Set>()
 {
@@ -231,6 +232,15 @@ bool SourceSinkData::InitializeContributionsRandomly()
     return true;
 }
 
+bool SourceSinkData::InitializeContributionsRandomly_softmax()
+{
+    sample_set(SourceOrder()[0])->SetContribution(1.2);
+    CVector X = getnormal(samplesetsorder.size(), 0, 1);
+    SetContribution_softmax(X);
+    return true;
+}
+
+
 bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
 {
    populate_constituent_orders();
@@ -395,9 +405,18 @@ double SourceSinkData::LogLikelihoodModelvsMeasured()
 CVector SourceSinkData::ResidualVector()
 {
     CVector C = PredictTarget();
+    if (!C.is_finite())
+    {
+        qDebug()<<"oops!";
+    }
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
     CVector Residual = C.Log() - C_obs.Log();
-    
+    if (!Residual.is_finite())
+    {
+        CVector X = ContributionVector();
+        CVector X_softmax = ContributionVector_softmax();
+        qDebug()<<"oops!";
+    }
     return Residual;
 }
 
@@ -443,6 +462,25 @@ CMatrix SourceSinkData::ResidualJacobian()
     return Jacobian;
 }
 
+CMatrix SourceSinkData::ResidualJacobian_softmax()
+{
+    CMatrix Jacobian(SourceOrder().size(),element_order.size());
+    CVector base_contribution = ContributionVector_softmax().vec;
+    CVector base_residual = ResidualVector();
+    for (unsigned int i = 0; i < SourceOrder().size(); i++)
+    {
+        double epsilon = -sgn(base_contribution[i]) * 1e-3;
+
+        CVector X = base_contribution;
+        X[i]+=epsilon;
+        SetContribution_softmax(X);
+        CVector purturbed_residual = ResidualVector();
+        Jacobian.setrow(i,(purturbed_residual - base_residual) / epsilon);
+        SetContribution_softmax(base_contribution);
+    }
+    return Jacobian;
+}
+
 CVector SourceSinkData::OneStepLevenBerg_Marquardt(double lambda)
 {
 
@@ -456,9 +494,32 @@ CVector SourceSinkData::OneStepLevenBerg_Marquardt(double lambda)
     return dx;
 }
 
-bool SourceSinkData::SolveLevenBerg_Marquardt()
+CVector SourceSinkData::OneStepLevenBerg_Marquardt_softmax(double lambda)
 {
-    InitializeContributionsRandomly();
+
+    CVector V = ResidualVector();
+    CMatrix M = ResidualJacobian_softmax();
+    CMatrix JTJ = M*Transpose(M);
+    JTJ.ScaleDiagonal(1+lambda);
+    CVector J_epsilon = M*V;
+
+    CVector dx = J_epsilon/JTJ;
+    if (!dx.is_finite())
+    {
+        CVector _X = ContributionVector();
+        CVector _V = ResidualVector();
+        qDebug()<<"oops!";
+    }
+    return dx;
+}
+
+
+bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
+{
+    if (trans == transformation::linear)
+        InitializeContributionsRandomly();
+    else if (trans == transformation::softmax)
+        InitializeContributionsRandomly_softmax();
     double err = 1000;
     double err_p;
     double tol = 1e-5;
@@ -467,15 +528,31 @@ bool SourceSinkData::SolveLevenBerg_Marquardt()
     double err_0 = ResidualVector().norm2();
     double err_x = 10000;
     double err_x0 = 10000;
-    while (err>tol && err_x>tol)
+    while (err>tol && err_x>tol && counter<1000)
     {
-        CVector X0 = ContributionVector(false);
+        CVector X0;
+        if (trans == transformation::linear)
+            X0 = ContributionVector(false);
+        else if (trans == transformation::softmax)
+            X0 = ContributionVector_softmax();
+
         err_p = err;
-        CVector dx = OneStepLevenBerg_Marquardt(lambda);
+        CVector dx;
+
+        if (trans == transformation::linear)
+            dx = OneStepLevenBerg_Marquardt(lambda);
+        else if (trans == transformation::softmax)
+            dx = OneStepLevenBerg_Marquardt_softmax(lambda);
+
+
         err_x = dx.norm2();
         if (counter==0) err_x0 = err_x;
         CVector X = X0 - dx;
-        SetContribution(X);
+        if (trans == transformation::linear)
+            SetContribution(X);
+        else if (trans == transformation::softmax)
+            SetContribution_softmax(X);
+
         CVector V = ResidualVector();
         err = V.norm2();
         if (err<err_p*0.8)
@@ -485,7 +562,10 @@ bool SourceSinkData::SolveLevenBerg_Marquardt()
         else if (err>err_p)
         {
             lambda/=1.2;
-            SetContribution(X0);
+            if (trans == transformation::linear)
+                SetContribution(X0);
+            else if (trans == transformation::softmax)
+                SetContribution_softmax(X0);
             err = err_p;
         }
         if (rtw)
@@ -556,10 +636,32 @@ CVector SourceSinkData::ContributionVector(bool full)
     }
 }
 
+CVector SourceSinkData::ContributionVector_softmax()
+{
+
+   CVector X(numberofsourcesamplesets);
+    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
+    {
+        Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
+        X[source_group_counter] = this_source_group->Contribution_softmax();
+    }
+    return X;
+
+}
+
+
+
+
+
 void SourceSinkData::SetContribution(int i, double value)
 {
     sample_set(samplesetsorder[i])->SetContribution(value);
     sample_set(samplesetsorder[samplesetsorder.size()-1])->SetContribution(1-ContributionVector(false).sum());
+}
+
+void SourceSinkData::SetContribution_softmax(int i, double value)
+{
+    sample_set(samplesetsorder[i])->SetContribution_softmax(value);
 }
 
 void SourceSinkData::SetContribution(const CVector &X)
@@ -567,6 +669,29 @@ void SourceSinkData::SetContribution(const CVector &X)
     for (int i=0; i<X.num; i++)
     {
         SetContribution(i,X.vec[i]);
+    }
+    if (X.min()<0)
+    {
+        qDebug()<<"oops!";
+    }
+}
+
+void SourceSinkData::SetContribution_softmax(const CVector &X)
+{
+    double denominator = 0;
+    for (int i=0; i<X.num; i++)
+    {
+        denominator += exp(X[i]);
+    }
+    for (int i=0; i<X.num; i++)
+    {
+        SetContribution_softmax(i,X.at(i));
+        SetContribution(i,exp(X.at(i))/denominator);
+    }
+    CVector XX = ContributionVector();
+    if (XX.min()<0)
+    {
+        qDebug()<<"oops!";
     }
 }
 

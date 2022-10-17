@@ -80,7 +80,14 @@ public:
         contribution = x;
         return true;
     }
+
+    bool SetContribution_softmax(const double &x)
+    {
+        contribution_softmax = x;
+        return true;
+    }
     double Contribution() {return contribution; }
+    double Contribution_softmax() {return contribution_softmax; }
     Distribution* GetEstimatedDistribution(const string &element_name )
     {
         if (element_distributions.count(element_name)>0)
@@ -106,6 +113,7 @@ public:
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     double contribution = 0;
+    double contribution_softmax = 0;
 
 };
 

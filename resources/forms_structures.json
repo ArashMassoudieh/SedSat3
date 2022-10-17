@@ -49,6 +49,10 @@
     		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
+    		},
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
     		}
 	}
 }

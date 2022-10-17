@@ -25,12 +25,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         result_item result_cont = GA->Model_out.GetContribution();
         results.Append(result_cont);
 
-        result_item result_modeled = GA->Model_out.GetPredictedElementalProfile();
-        results.Append(result_modeled);
-
-        result_item result_obs = GA->Model_out.GetObservedElementalProfile();
-        results.Append(result_obs);
-
         result_item result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
         results.Append(result_calculated_means);
 
@@ -47,7 +41,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->show();
         Data()->InitializeParametersObservations(arguments["Sample"]);
         Data()->SetProgressWindow(rtw);
-        Data()->SolveLevenBerg_Marquardt();
+        if (arguments["Softmax transformation"]=="true")
+            Data()->SolveLevenBerg_Marquardt(transformation::softmax);
+        else
+            Data()->SolveLevenBerg_Marquardt(transformation::linear);
+        result_item result_cont = Data()->GetContribution();
+        results.Append(result_cont);
+
+        result_item result_modeled = Data()->GetPredictedElementalProfile();
+        results.Append(result_modeled);
+
+        result_item result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();
+        results.Append(result_modeled_vs_measured);
+
     }
     return true;
 }
