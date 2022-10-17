@@ -218,6 +218,19 @@ string SourceSinkData::GetNameForParameterID(int i)
     return "";
 }
 
+bool SourceSinkData::InitializeContributionsRandomly()
+{
+    sample_set(SourceOrder()[0])->SetContribution(1.2);
+    while (ContributionVector(false).min()<0 || ContributionVector(false).sum()>1)
+    {
+        for (int i=0; i<samplesetsorder.size()-1; i++)
+        {
+            SetContribution(i,unitrandom());
+        }
+    }
+    return true;
+}
+
 bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
 {
    populate_constituent_orders();
@@ -267,6 +280,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     p.SetPriorDistribution(distribution_type::normal);
                     source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
                     p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
+                    *source_iterator->second.GetEstimatedDistribution(element_iterator->first) = *source_iterator->second.GetFittedDistribution(element_iterator->first);
                     parameters.push_back(p);
                 }
             }
@@ -378,7 +392,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured()
     return LogLikelihood;
 }
 
-CVector_arma SourceSinkData::ResidualVector()
+CVector SourceSinkData::ResidualVector()
 {
     CVector C = PredictTarget();
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
@@ -387,17 +401,43 @@ CVector_arma SourceSinkData::ResidualVector()
     return Residual;
 }
 
-CMatrix_arma SourceSinkData::ResidualJacobian()
+CVector_arma SourceSinkData::ResidualVector_arma()
 {
-    CMatrix_arma Jacobian(SourceOrder().size(),element_order.size());
-    CVector_arma base_contribution = CVector_arma(GetSourceContributions().vec);
-    CVector_arma base_residual = ResidualVector();
-    for (unsigned int i = 0; i < SourceOrder().size(); i++)
+    CVector_arma C = PredictTarget().vec;
+    CVector_arma C_obs = ObservedDataforSelectedSample(selected_target_sample).vec;
+    CVector_arma Residual = C.Log() - C_obs.Log();
+
+    return Residual;
+}
+
+CMatrix_arma SourceSinkData::ResidualJacobian_arma()
+{
+    CMatrix_arma Jacobian(SourceOrder().size()-1,element_order.size());
+    CVector_arma base_contribution = ContributionVector(false).vec;
+    CVector_arma base_residual = ResidualVector_arma();
+    for (unsigned int i = 0; i < SourceOrder().size()-1; i++)
     {
         double epsilon = (0.5 - base_contribution[i]) * 1e-6; 
         SetContribution(i, base_contribution[i] + epsilon);
-        CVector_arma purturbed_residual = ResidualVector(); 
+        CVector_arma purturbed_residual = ResidualVector_arma();
         Jacobian.setcol(i,(purturbed_residual - base_residual) / epsilon);
+        SetContribution(i, base_contribution[i]);
+    }
+    return Jacobian;
+}
+
+CMatrix SourceSinkData::ResidualJacobian()
+{
+    CMatrix Jacobian(SourceOrder().size()-1,element_order.size());
+    CVector base_contribution = ContributionVector(false).vec;
+    CVector base_residual = ResidualVector();
+    for (unsigned int i = 0; i < SourceOrder().size()-1; i++)
+    {
+        double epsilon = (0.5 - base_contribution[i]) * 1e-3;
+        SetContribution(i, base_contribution[i] + epsilon);
+        CVector X = ContributionVector();
+        CVector purturbed_residual = ResidualVector();
+        Jacobian.setrow(i,(purturbed_residual - base_residual) / epsilon);
         SetContribution(i, base_contribution[i]);
     }
     return Jacobian;
@@ -441,20 +481,32 @@ CMatrix SourceSinkData::SourceMeanMatrix()
     return Y;
 }
 
-CVector SourceSinkData::ContributionVector()
+CVector SourceSinkData::ContributionVector(bool full)
 {
-    CVector X(numberofsourcesamplesets);
-    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
-    {
-        Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
-        X[source_group_counter] = this_source_group->Contribution();
+    if (full)
+    {   CVector X(numberofsourcesamplesets);
+        for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
+        {
+            Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
+            X[source_group_counter] = this_source_group->Contribution();
+        }
+        return X;
     }
-    return X;
+    else
+    {   CVector X(numberofsourcesamplesets-1);
+        for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets-1; source_group_counter++)
+        {
+            Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
+            X[source_group_counter] = this_source_group->Contribution();
+        }
+        return X;
+    }
 }
 
 void SourceSinkData::SetContribution(int i, double value)
 {
     sample_set(samplesetsorder[i])->SetContribution(value);
+    sample_set(samplesetsorder[samplesetsorder.size()-1])->SetContribution(1-ContributionVector(false).sum());
 }
 
 Parameter* SourceSinkData::ElementalContent_mu(int element_iterator, int source_iterator)
@@ -484,7 +536,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     if (i<numberofsourcesamplesets-1)
     {
         sample_set(samplesetsorder[i])->SetContribution(value);
-        sample_set(samplesetsorder[numberofsourcesamplesets-1])->SetContribution(1-ContributionVector().sum()+sample_set(samplesetsorder[numberofsourcesamplesets-1])->Contribution());
+        sample_set(samplesetsorder[numberofsourcesamplesets-1])->SetContribution(1-ContributionVector().sum());//+sample_set(samplesetsorder[numberofsourcesamplesets-1])->Contribution()
     }
     else if (i<numberofsourcesamplesets-1+numberofconstituents*numberofsourcesamplesets)
     {

@@ -46,8 +46,17 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ProgressWindow* rtw = new ProgressWindow();
         rtw->show();
         Data()->InitializeParametersObservations(arguments["Sample"]);
-        CVector_arma V = Data()->ResidualVector();
-        CMatrix_arma M = Data()->ResidualJacobian();
+        Data()->InitializeContributionsRandomly();
+        qDebug()<<QString::fromStdString(Data()->ContributionVector().toString());
+        CVector V = Data()->ResidualVector();
+        qDebug()<<QString::fromStdString(V.toString());
+        CMatrix M = Data()->ResidualJacobian();
+        qDebug()<<QString::fromStdString(M.toString()[0]);
+        CMatrix JTJ = M*Transpose(M);
+        CVector J_epsilon = M*V;
+        qDebug()<<QString::fromStdString(J_epsilon.toString());
+        CVector dx = J_epsilon/JTJ;
+        qDebug()<<QString::fromStdString(dx.toString());
         qDebug() << "Matrix and Vector";
     }
     return true;

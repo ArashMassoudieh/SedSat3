@@ -116,10 +116,11 @@ public:
     }
     string TargetGroup() {return target_group;}
     bool InitializeParametersObservations(const string &targetsamplename="");
+    bool InitializeContributionsRandomly(); //initializes source contributions randomly
     bool SetParameterValue(unsigned int i, double value);
     CVector PredictTarget();
     CMatrix SourceMeanMatrix();
-    CVector ContributionVector();
+    CVector ContributionVector(bool full=true);
     void SetContribution(int i, double value);
     CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
     double GetObjectiveFunctionValue();
@@ -144,8 +145,10 @@ public:
     result_item GetEstimatedElementMu();
     result_item GetEstimatedElementMean();
     result_item GetEstimatedElementSigma();
-    CVector_arma ResidualVector();
-    CMatrix_arma ResidualJacobian();
+    CVector ResidualVector();
+    CVector_arma ResidualVector_arma();
+    CMatrix ResidualJacobian();
+    CMatrix_arma ResidualJacobian_arma();
     bool OneStepLevenBerg_Marquardt(); 
 private:
     
