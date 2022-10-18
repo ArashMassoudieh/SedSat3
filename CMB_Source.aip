@@ -43,6 +43,7 @@
     <ROW Component="Cancel.png" ComponentId="{CD3D714A-0F5F-48A9-AA45-1DF166ADDC4F}" Directory_="Icons_1_Dir" Attributes="0" KeyPath="Cancel.png" Type="0"/>
     <ROW Component="D36C9FE0826D4D2B9C2DDCCE2C83E860" ComponentId="{C5A82F84-796D-4BF3-AD8E-E6C550560CA8}" Directory_="APPDIR" Attributes="260" KeyPath="D36C9FE0826D4D2B9C2DDCCE2C83E860" Options="2"/>
     <ROW Component="D3Dcompiler_47.dll" ComponentId="{5D913DA8-EE60-46D7-A31D-F32E850F3D00}" Directory_="bin_1_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
+    <ROW Component="Graph.png" ComponentId="{C1383E62-A1C0-40B3-B309-D8E47334E323}" Directory_="Icons_1_Dir" Attributes="0" KeyPath="Graph.png" Type="0"/>
     <ROW Component="Icons" ComponentId="{69B09046-16CF-42EF-8159-81DE85D9D4DE}" Directory_="Icons_Dir" Attributes="0"/>
     <ROW Component="ProductInformation" ComponentId="{347A6828-995F-46BA-BBF7-59D742BA3475}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="QXlsx.dll" ComponentId="{71216427-4E02-4598-8C47-91B325B5B868}" Directory_="bin_1_Dir" Attributes="256" KeyPath="QXlsx.dll"/>
@@ -61,7 +62,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="B35B3203FEB4CFFA576A27CB835D3E6" Title="Visual C++ Redistributable for Visual Studio 2017 x86" Description="Visual C++ Redistributable for Visual Studio 2017 x86" Display="5" Level="1" Attributes="0" Components="B35B3203FEB4CFFA576A27CB835D3E6"/>
-    <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D36C9FE0826D4D2B9C2DDCCE2C83E860 D3Dcompiler_47.dll QXlsx.dll Qt5Charts.dll Qt5Core.dll Qt5Gui.dll Qt5Svg.dll Qt5Widgets.dll blas_win64_MT.dll lapack_win64_MT.dll libEGL.dll libGLESv2.dll opengl32sw.dll"/>
+    <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D36C9FE0826D4D2B9C2DDCCE2C83E860 D3Dcompiler_47.dll Graph.png QXlsx.dll Qt5Charts.dll Qt5Core.dll Qt5Gui.dll Qt5Svg.dll Qt5Widgets.dll blas_win64_MT.dll lapack_win64_MT.dll libEGL.dll libGLESv2.dll opengl32sw.dll"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="CMBSource CMBSource.exe_1 Cancel.png Icons ProductInformation forms_structures.json qwindows.dll"/>
     <ATTRIBUTE name="CurrentFeature" value="D36C9FE0826D4D2B9C2DDCCE2C83E860"/>
   </COMPONENT>
@@ -69,8 +70,9 @@
     <ROW File="CMBSource.exe_1" Component_="CMBSource.exe_1" FileName="CMBSOU~1.EXE|CMBSource.exe" Attributes="0" SourcePath="build\release\CMBSource.exe" SelfReg="false" NextFile="forms_structures.json" DigSign="true"/>
     <ROW File="Cancel.png" Component_="Cancel.png" FileName="Cancel.png" Attributes="0" SourcePath="resources\Icons\Cancel.png" SelfReg="false" NextFile="Proceed.png"/>
     <ROW File="D3Dcompiler_47.dll" Component_="D3Dcompiler_47.dll" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\D3Dcompiler_47.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
+    <ROW File="Graph.png" Component_="Graph.png" FileName="Graph.png" Attributes="0" SourcePath="resources\Icons\Graph.png" SelfReg="false"/>
     <ROW File="Proceed.png" Component_="Cancel.png" FileName="Proceed.png" Attributes="0" SourcePath="resources\Icons\Proceed.png" SelfReg="false" NextFile="tools.json"/>
-    <ROW File="QXlsx.dll" Component_="QXlsx.dll" FileName="QXlsx.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\QXlsx.dll" SelfReg="false"/>
+    <ROW File="QXlsx.dll" Component_="QXlsx.dll" FileName="QXlsx.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\QXlsx.dll" SelfReg="false" NextFile="Graph.png"/>
     <ROW File="Qt5Charts.dll" Component_="Qt5Charts.dll" FileName="QT5CHA~1.DLL|Qt5Charts.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Charts.dll" SelfReg="false" NextFile="Qt5Core.dll"/>
     <ROW File="Qt5Core.dll" Component_="Qt5Core.dll" FileName="Qt5Core.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Core.dll" SelfReg="false" NextFile="Qt5Gui.dll"/>
     <ROW File="Qt5Gui.dll" Component_="Qt5Gui.dll" FileName="Qt5Gui.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Gui.dll" SelfReg="false" NextFile="Qt5Svg.dll"/>

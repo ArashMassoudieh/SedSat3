@@ -503,12 +503,14 @@ CVector SourceSinkData::OneStepLevenBerg_Marquardt_softmax(double lambda)
     JTJ.ScaleDiagonal(1+lambda);
     CVector J_epsilon = M*V;
 
-    CVector dx = J_epsilon/JTJ;
-    if (!dx.is_finite())
+    CVector dx = J_epsilon / JTJ;
+    if (!dx.is_finite() || dx.num!=V.num )
     {
         CVector _X = ContributionVector();
         CVector _V = ResidualVector();
         qDebug()<<"oops!";
+        return CVector(); 
+
     }
     return dx;
 }
@@ -544,36 +546,41 @@ bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
         else if (trans == transformation::softmax)
             dx = OneStepLevenBerg_Marquardt_softmax(lambda);
 
-
-        err_x = dx.norm2();
-        if (counter==0) err_x0 = err_x;
-        CVector X = X0 - dx;
-        if (trans == transformation::linear)
-            SetContribution(X);
-        else if (trans == transformation::softmax)
-            SetContribution_softmax(X);
-
-        CVector V = ResidualVector();
-        err = V.norm2();
-        if (err<err_p*0.8)
+        if (dx.num == 0)
+           lambda *= 5; 
+        else
         {
-            lambda*=1.2;
-        }
-        else if (err>err_p)
-        {
-            lambda/=1.2;
+            err_x = dx.norm2();
+            if (counter == 0) err_x0 = err_x;
+            CVector X = X0 - dx;
             if (trans == transformation::linear)
-                SetContribution(X0);
+                SetContribution(X);
             else if (trans == transformation::softmax)
-                SetContribution_softmax(X0);
-            err = err_p;
-        }
-        if (rtw)
-        {
-            rtw->AppendPoint(counter,err);
-            rtw->SetXRange(0,counter);
-            rtw->SetProgress(1-err_x/err_x0);
-            QCoreApplication::processEvents();
+                SetContribution_softmax(X);
+
+            CVector V = ResidualVector();
+            err = V.norm2();
+            if (err < err_p * 0.8)
+            {
+                lambda /= 1.2;
+            }
+            else if (err > err_p)
+            {
+                lambda *= 1.2;
+                if (trans == transformation::linear)
+                    SetContribution(X0);
+                else if (trans == transformation::softmax)
+                    SetContribution_softmax(X0);
+                err = err_p;
+            }
+            if (rtw)
+            {
+                rtw->AppendPoint(counter, err);
+                rtw->SetXRange(0, counter);
+                rtw->SetProgress(1 - err_x / err_x0);
+                QCoreApplication::processEvents();
+            }
+            
         }
         counter++;
     }
