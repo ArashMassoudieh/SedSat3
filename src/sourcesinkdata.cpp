@@ -490,6 +490,11 @@ CVector SourceSinkData::OneStepLevenBerg_Marquardt(double lambda)
     JTJ.ScaleDiagonal(1+lambda);
     CVector J_epsilon = M*V;
 
+    if (det(JTJ)<=1e-6)
+    {
+        JTJ += lambda*CMatrix::Diag(JTJ.getnumcols());
+    }
+
     CVector dx = J_epsilon/JTJ;
     return dx;
 }
@@ -503,15 +508,12 @@ CVector SourceSinkData::OneStepLevenBerg_Marquardt_softmax(double lambda)
     JTJ.ScaleDiagonal(1+lambda);
     CVector J_epsilon = M*V;
 
-    CVector dx = J_epsilon / JTJ;
-    if (!dx.is_finite() || dx.num!=V.num )
+    if (det(JTJ)<=1e-6)
     {
-        CVector _X = ContributionVector();
-        CVector _V = ResidualVector();
-        qDebug()<<"oops!";
-        return CVector(); 
-
+        JTJ += lambda*CMatrix::Diag(JTJ.getnumcols());
     }
+    CVector dx = J_epsilon / JTJ;
+
     return dx;
 }
 
