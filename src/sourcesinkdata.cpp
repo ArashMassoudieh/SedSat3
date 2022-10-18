@@ -2,6 +2,8 @@
 #include "iostream"
 #include "NormalDist.h"
 
+
+
 SourceSinkData::SourceSinkData():map<string, Elemental_Profile_Set>()
 {
 
@@ -235,7 +237,7 @@ bool SourceSinkData::InitializeContributionsRandomly()
 bool SourceSinkData::InitializeContributionsRandomly_softmax()
 {
     sample_set(SourceOrder()[0])->SetContribution(1.2);
-    CVector X = getnormal(samplesetsorder.size(), 0, 1);
+    CVector X = getnormal(samplesetsorder.size(), 0, 1).vec;
     SetContribution_softmax(X);
     return true;
 }
