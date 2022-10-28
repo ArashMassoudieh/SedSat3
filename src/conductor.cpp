@@ -35,6 +35,27 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(result_modeled_vs_measured);
 
     }
+    if (command == "GA (fixed elemental contribution)")
+    {
+        if (GA!=nullptr) delete GA;
+        ProgressWindow *rtw = new ProgressWindow();
+        rtw->show();
+        Data()->InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
+        Data()->SetParameterEstimationMode(estimation_mode::only_contributions);
+        GA = new CGA<SourceSinkData>(Data());
+        GA->filenames.pathname = workingfolder.toStdString() + "/";
+        GA->SetRunTimeWindow(rtw);
+        GA->SetProperties(arguments);
+        GA->InitiatePopulation();
+        GA->optimize();
+        result_item result_cont = GA->Model_out.GetContribution();
+        results.Append(result_cont);
+
+        result_item result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile(parameter_mode::direct);
+        results.Append(result_modeled_vs_measured);
+
+    }
+
     if (command == "Levenberg-Marquardt")
     {
         ProgressWindow* rtw = new ProgressWindow();
@@ -48,7 +69,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         result_item result_cont = Data()->GetContribution();
         results.Append(result_cont);
 
-        result_item result_modeled = Data()->GetPredictedElementalProfile();
+        result_item result_modeled = Data()->GetPredictedElementalProfile(parameter_mode::direct);
         results.Append(result_modeled);
 
         result_item result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();

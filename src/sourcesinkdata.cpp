@@ -26,6 +26,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     element_order = mp.element_order;
     isotope_order = mp.isotope_order;
     size_om_order = mp.size_om_order;
+    parameter_estimation_mode = mp.parameter_estimation_mode;
 
 
 }
@@ -46,6 +47,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     isotope_order = mp.isotope_order;
     size_om_order = mp.size_om_order;
     selected_target_sample = mp.selected_target_sample;
+    parameter_estimation_mode = mp.parameter_estimation_mode;
     return *this;
 }
 
@@ -243,7 +245,7 @@ bool SourceSinkData::InitializeContributionsRandomly_softmax()
 }
 
 
-bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename)
+bool SourceSinkData::InitializeParametersObservations(const string &targetsamplename, estimation_mode est_mode)
 {
    populate_constituent_orders();
    selected_target_sample = targetsamplename;
@@ -277,46 +279,61 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
             numberofconstituents ++;
 
 
-// Source elemental profile geometrical mean for each element
-
+    // Copying Estimated Distribution from the Fitted Distribution
     for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
     {
         if (element_iterator->second.Role == element_information::role::element)
         {
-
             for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
             {
                 if (source_iterator->first!=target_group)
-                {   Parameter p;
-                    p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
-                    p.SetPriorDistribution(distribution_type::normal);
-                    source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
-                    p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
+                {
                     *source_iterator->second.GetEstimatedDistribution(element_iterator->first) = *source_iterator->second.GetFittedDistribution(element_iterator->first);
-                    parameters.push_back(p);
                 }
             }
         }
-
     }
-// Source elemental profile standard deviation for each element
-    for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
-    {
-        if (element_iterator->second.Role == element_information::role::element)
+
+
+    // Source elemental profile geometrical mean for each element
+    if (est_mode == estimation_mode::elemental_profile_and_contribution)
+    {   for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
+            if (element_iterator->second.Role == element_information::role::element)
             {
-                if (source_iterator->first!=target_group)
-                {   Parameter p;
-                    p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
-                    p.SetPriorDistribution(distribution_type::lognormal);
-                    p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
-                    parameters.push_back(p);
+
+                for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
+                {
+                    if (source_iterator->first!=target_group)
+                    {   Parameter p;
+                        p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
+                        p.SetPriorDistribution(distribution_type::normal);
+                        source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
+                        p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
+                        parameters.push_back(p);
+                    }
+                }
+            }
+
+        }
+    // Source elemental profile standard deviation for each element
+        for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        {
+            if (element_iterator->second.Role == element_information::role::element)
+            {
+                for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
+                {
+                    if (source_iterator->first!=target_group)
+                    {   Parameter p;
+                        p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
+                        p.SetPriorDistribution(distribution_type::lognormal);
+                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
+                        parameters.push_back(p);
+                    }
                 }
             }
         }
     }
-
 // Error Standard Deviation
     Parameter p;
     p.SetName("Error STDev");
@@ -355,7 +372,7 @@ CVector SourceSinkData::GetSourceContributions()
 double SourceSinkData::LogPriorContributions()
 {
     if (GetSourceContributions().min()<0)
-        return -100;
+        return -1000;
     else
         return 0;
 }
@@ -392,10 +409,14 @@ CVector SourceSinkData::ObservedDataforSelectedSample(const string &SelectedTarg
     return observed_data;
 }
 
-double SourceSinkData::LogLikelihoodModelvsMeasured()
+double SourceSinkData::LogLikelihoodModelvsMeasured(estimation_mode est_mode)
 {
     double LogLikelihood = 0;
-    CVector C = PredictTarget();
+    CVector C;
+    if (est_mode == estimation_mode::elemental_profile_and_contribution)
+        C = PredictTarget(parameter_mode::based_on_fitted_distribution);
+    else
+        C = PredictTarget(parameter_mode::direct);
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
     for (unsigned int i=0; i<numberofconstituents; i++)
     {
@@ -406,7 +427,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured()
 
 CVector SourceSinkData::ResidualVector()
 {
-    CVector C = PredictTarget();
+    CVector C = PredictTarget(parameter_mode::direct);
     if (!C.is_finite())
     {
         qDebug()<<"oops!";
@@ -528,7 +549,7 @@ bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
         InitializeContributionsRandomly_softmax();
     double err = 1000;
     double err_p;
-    double tol = 1e-5;
+    double tol = 1e-10;
     double lambda = 1;
     int counter = 0;
     double err_0 = ResidualVector().norm2();
@@ -593,25 +614,28 @@ bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
 }
 
 
-CVector SourceSinkData::PredictTarget()
+CVector SourceSinkData::PredictTarget(parameter_mode param_mode)
 {
-    CVector C = SourceMeanMatrix()*ContributionVector();
+    CVector C = SourceMeanMatrix(param_mode)*ContributionVector();
     return C;
 }
 
 double SourceSinkData::GetObjectiveFunctionValue()
 {
-    return -LogLikelihood();
+    return -LogLikelihood(parameter_estimation_mode);
 }
 
-double SourceSinkData::LogLikelihood()
+double SourceSinkData::LogLikelihood(estimation_mode est_mode)
 {
-    double YLogLikelihood = LogLikelihoodSourceElementalDistributions();
-    double CLogLikelihood = LogLikelihoodModelvsMeasured();
-    return YLogLikelihood + CLogLikelihood;
+    double YLogLikelihood = 0;
+    if (est_mode == estimation_mode::elemental_profile_and_contribution)
+        YLogLikelihood = LogLikelihoodSourceElementalDistributions();
+    double LogPrior = LogPriorContributions();
+    double CLogLikelihood = LogLikelihoodModelvsMeasured(est_mode);
+    return YLogLikelihood + CLogLikelihood + LogPrior;
 }
 
-CMatrix SourceSinkData::SourceMeanMatrix()
+CMatrix SourceSinkData::SourceMeanMatrix(parameter_mode param_mode)
 {
     CMatrix Y(element_order.size(),numberofsourcesamplesets);
     for (unsigned int element_counter=0; element_counter<element_order.size(); element_counter++)
@@ -619,7 +643,10 @@ CMatrix SourceSinkData::SourceMeanMatrix()
         for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
         {
             Elemental_Profile_Set *this_source_group = sample_set(samplesetsorder[source_group_counter]);
-            Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(element_order[element_counter])->Mean();
+            if (param_mode==parameter_mode::based_on_fitted_distribution)
+                Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(element_order[element_counter])->Mean();
+            else
+                Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(element_order[element_counter])->DataMean();
         }
     }
     return Y;
@@ -730,25 +757,28 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     if (i<0 || i>parameters.size())
         return false;
 
+    int est_mode_key=1;
+    if (parameter_estimation_mode==estimation_mode::only_contributions)
+        est_mode_key = 0;
     parameters[i].SetValue(value);
     if (i<numberofsourcesamplesets-1)
     {
         sample_set(samplesetsorder[i])->SetContribution(value);
         sample_set(samplesetsorder[numberofsourcesamplesets-1])->SetContribution(1-ContributionVector(false).sum());//+sample_set(samplesetsorder[numberofsourcesamplesets-1])->Contribution()
     }
-    else if (i<numberofsourcesamplesets-1+numberofconstituents*numberofsourcesamplesets)
+    else if (i<numberofsourcesamplesets-1+numberofconstituents*numberofsourcesamplesets && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
     {
         int element_counter = (i-(numberofsourcesamplesets-1))/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1))%numberofsourcesamplesets;
         GetElementDistribution(element_order[element_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
     }
-    else if (i<numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets)
+    else if (i<numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
     {
         int element_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)%numberofsourcesamplesets;
         GetElementDistribution(element_order[element_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
     }
-    else if (i==numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets)
+    else if (i==numberofsourcesamplesets-1+2*numberofconstituents*numberofsourcesamplesets*est_mode_key)
     {
         error_stdev = value;
     }
@@ -854,12 +884,12 @@ result_item SourceSinkData::GetContribution()
 
     return  result_cont;
 }
-result_item SourceSinkData::GetPredictedElementalProfile()
+result_item SourceSinkData::GetPredictedElementalProfile(parameter_mode param_mode)
 {
     result_item result_modeled;
 
     Elemental_Profile *modeled_profile = new Elemental_Profile();
-    CVector predicted_profile = PredictTarget();
+    CVector predicted_profile = PredictTarget(param_mode);
     vector<string> element_names = ElementOrder();
     for (int i=0; i<element_names.size(); i++)
     {
@@ -871,11 +901,11 @@ result_item SourceSinkData::GetPredictedElementalProfile()
     return result_modeled;
 }
 
-result_item SourceSinkData::GetObservedvsModeledElementalProfile()
+result_item SourceSinkData::GetObservedvsModeledElementalProfile(parameter_mode param_mode)
 {
     result_item result_obs;
 
-    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile().result);
+    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile(param_mode).result);
     Elemental_Profile* observed = static_cast<Elemental_Profile*>(GetObservedElementalProfile().result);
     Elemental_Profile_Set* modeled_vs_observed = new Elemental_Profile_Set(); 
     modeled_vs_observed->Append_Profile("Observed", *observed);

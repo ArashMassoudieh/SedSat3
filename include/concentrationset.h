@@ -36,6 +36,8 @@ public:
     }
     void SetEstimatedMu(const double &mu) {EstimatedDistribution.parameters[0] = mu;}
     void SetEstimatedSigma(const double &sigma) {EstimatedDistribution.parameters[1] = sigma;}
+    void SetEstimatedDataMean(const double &value) {EstimatedDistribution.SetDataMean(value);}
+    void SetEstimatedDataSTDev(const double &value) {EstimatedDistribution.SetDataSTDev(value);}
     double EstimatedMu() {return EstimatedDistribution.parameters[0];}
     double EstimatedSigma() {return EstimatedDistribution.parameters[1];}
     Distribution* GetEstimatedDistribution() {

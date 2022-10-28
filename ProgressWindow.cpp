@@ -50,6 +50,8 @@ ProgressWindow::~ProgressWindow()
 void ProgressWindow::AppendPoint(const double& x, const double& y)
 {
 	series->append(x, y);
+    if (y<yaxis->min())
+        yaxis->setMin(y);
 	chartView->update();
 }
 
