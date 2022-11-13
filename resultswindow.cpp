@@ -29,14 +29,23 @@ void ResultsWindow::AppendResult(const result_item &resultitem)
     QTextBrowser *textBrowser = new QTextBrowser(ui->scrollAreaWidgetContents);
     textBrowser->setObjectName(QString::fromStdString(resultitem.name));
     //textBrowser->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
-    QPushButton *pushButton = new QPushButton(this);
+    QPushButton *pushButtonGraph = new QPushButton(this);
     QIcon iconGraph = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Graph.png");
-    pushButton->setIcon(iconGraph);
+    pushButtonGraph->setIcon(iconGraph);
     //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
-    pushButton->setMaximumWidth(20);
-    pushButton->setObjectName(QString::fromStdString(resultitem.name));
+    pushButtonGraph->setMaximumWidth(20);
+    pushButtonGraph->setObjectName(QString::fromStdString(resultitem.name));
+
+    QPushButton *pushButtonExport = new QPushButton(this);
+    QIcon iconExport = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/export.png");
+    pushButtonExport->setIcon(iconExport);
+    //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
+    pushButtonExport->setMaximumWidth(20);
+    pushButtonExport->setObjectName(QString::fromStdString(resultitem.name));
+
     ui->gridLayout->addWidget(textBrowser,ui->gridLayout->rowCount(),0);
-    ui->gridLayout->addWidget(pushButton,ui->gridLayout->rowCount()-1,1);
+    ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1);
+    ui->gridLayout->addWidget(pushButtonExport,ui->gridLayout->rowCount()-1,2);
     textBrowser->setTextColor(Qt::red);
     textBrowser->append(QString::fromStdString(resultitem.name)+":");
     textBrowser->setTextColor(Qt::black);
@@ -47,15 +56,24 @@ void ResultsWindow::AppendResult(const result_item &resultitem)
     for(int i = 0;i < str.length();i++)
         if(str.at(i).cell() == '\n')
             count++;
-    int ht = textBrowser->fontMetrics().height();
     textBrowser->setMaximumHeight(textBrowser->fontMetrics().height() * (count+3));
     textBrowser->setMinimumHeight(textBrowser->fontMetrics().height() * (count+2));
-    connect(pushButton,SIGNAL(clicked()),this,SLOT(on_result_clicked()));
+    connect(pushButtonGraph,SIGNAL(clicked()),this,SLOT(on_result_graph_clicked()));
+    connect(pushButtonExport,SIGNAL(clicked()),this,SLOT(on_result_export_clicked()));
 
 }
 
 
-void ResultsWindow::on_result_clicked()
+void ResultsWindow::on_result_graph_clicked()
+{
+    qDebug()<<sender()->objectName();
+    GeneralChart *resultgraph = new GeneralChart(this);
+    resultgraph->setWindowTitle(sender()->objectName());
+    resultgraph->Plot(&results->operator[](sender()->objectName().toStdString()));
+    resultgraph->show();
+}
+
+void ResultsWindow::on_result_export_clicked()
 {
     qDebug()<<sender()->objectName();
     GeneralChart *resultgraph = new GeneralChart(this);

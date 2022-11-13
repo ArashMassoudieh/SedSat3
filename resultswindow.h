@@ -27,7 +27,8 @@ private:
     Results* results = nullptr; 
 
 public slots:
-    void on_result_clicked();
+    void on_result_graph_clicked();
+    void on_result_export_clicked();
 };
 
 #endif // RESULTSWINDOW_H

@@ -8,9 +8,9 @@
   "Analysis Tools":
   {
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
-    "Positive Matrix Factorization": "PMF",
     "Maximum likelihood unmixing using Genetic Algorithm": "GA",
     "Maximum likelihood unmixing using Genetic Algorithm - Fixed Source Elemental Profiles": "GA (fixed elemental contribution)",
-    "Levenberg-Marquardt optimization": "Levenberg-Marquardt"
+    "Levenberg-Marquardt optimization": "Levenberg-Marquardt",
+    "Estimate elemetal profile distribution parameters": "GA (disregarding targets)"
   }
 }

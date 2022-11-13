@@ -40,7 +40,7 @@ struct element_information
 
 };
 
-enum class estimation_mode {only_contributions, elemental_profile_and_contribution};
+enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};
 
 class SourceSinkData: public map<string, Elemental_Profile_Set>
 {

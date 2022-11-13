@@ -17,7 +17,7 @@ public:
     double EvalLog(const double &x);
     CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
     vector<double> parameters;
-    distribution_type distribution;
+    distribution_type distribution = distribution_type::lognormal;
     void SetType(const distribution_type &typ);
     double Mean(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     void SetDataMean(const double &val) {mean_val = val;}

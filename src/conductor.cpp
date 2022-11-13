@@ -55,7 +55,35 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(result_modeled_vs_measured);
 
     }
+    if (command == "GA (disregarding targets)")
+    {
+        if (GA!=nullptr) delete GA;
+        ProgressWindow *rtw = new ProgressWindow();
+        rtw->show();
+        Data()->InitializeParametersObservations(arguments["Sample"],estimation_mode::source_elemental_profiles_based_on_source_data);
+        Data()->SetParameterEstimationMode(estimation_mode::source_elemental_profiles_based_on_source_data);
+        GA = new CGA<SourceSinkData>(Data());
+        GA->filenames.pathname = workingfolder.toStdString() + "/";
+        GA->SetRunTimeWindow(rtw);
+        GA->SetProperties(arguments);
+        GA->InitiatePopulation();
+        GA->optimize();
 
+        result_item result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
+        results.Append(result_calculated_means);
+
+        result_item result_estimated_means = GA->Model_out.GetEstimatedElementMean();
+        results.Append(result_estimated_means);
+
+        result_item result_calculated_stds = GA->Model_out.GetCalculatedElementStandardDev();
+        results.Append(result_calculated_stds);
+
+        result_item result_estimated_stds = GA->Model_out.GetEstimatedElementSigma();
+        results.Append(result_estimated_stds);
+
+
+
+    }
     if (command == "Levenberg-Marquardt")
     {
         ProgressWindow* rtw = new ProgressWindow();
