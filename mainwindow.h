@@ -43,6 +43,7 @@ private:
     QJsonDocument formsstructure;
     QWidget *centralform = nullptr;
     Conductor conductor;
+    
 
 private slots:
     void on_import_excel();
@@ -55,6 +56,8 @@ private slots:
     void on_test_dialog_triggered();
     void on_tool_executed(const QModelIndex&);
     void on_test_likelihood();
+    void on_test_progress_window();
+    void on_TestLevenberg_Marquardt();
 
 
 };

@@ -4,12 +4,12 @@
 
 ConcentrationSet::ConcentrationSet():vector<double>()
 {
-
+    
 }
 
 ConcentrationSet::ConcentrationSet(const ConcentrationSet &cs):vector<double>(cs)
 {
-
+    EstimatedDistribution = cs.EstimatedDistribution;
 }
 
 ConcentrationSet::ConcentrationSet(int n):vector<double>(n)
@@ -20,6 +20,7 @@ ConcentrationSet::ConcentrationSet(int n):vector<double>(n)
 ConcentrationSet& ConcentrationSet::operator=(const ConcentrationSet &cs)
 {
     vector<double>::operator=(cs);
+    EstimatedDistribution = cs.EstimatedDistribution;
     return *this;
 }
 
@@ -34,12 +35,22 @@ double ConcentrationSet::mean()
 }
 double ConcentrationSet::stdev()
 {
-    return sqrt((norm(2)/double(size())-pow(mean(),2)));
+    double mean_value = mean();
+    double sum=0;
+    for (unsigned int i=0; i<size(); i++)
+        sum+= pow(at(i)-mean_value,2);
+
+    return sqrt(sum/double(size()));
 }
 
 double ConcentrationSet::stdevln()
 {
-    return sqrt(normln(2)/double(size())-pow(meanln(),2));
+    double mean_value = meanln();
+    double sum=0;
+    for (unsigned int i=0; i<size(); i++)
+        sum+= pow(log(at(i))-mean_value,2);
+
+    return sqrt(sum/double(size()));
 }
 
 double ConcentrationSet::meanln()
@@ -107,6 +118,8 @@ vector<double> ConcentrationSet::EstimateParameters(distribution_type disttype)
     vector<double> out;
     if (disttype==distribution_type::none)
         disttype = FittedDist.distribution;
+    FittedDist.SetDataMean(mean());
+    FittedDist.SetDataSTDev(stdev());
     if (disttype==distribution_type::normal)
     {
         out.push_back(mean());

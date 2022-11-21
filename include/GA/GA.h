@@ -14,7 +14,7 @@
 #include <vector>
 
 //GUI
-class RunTimeWindow;
+class ProgressWindow;
 
 struct GA_Twiking_parameters
 {
@@ -89,7 +89,7 @@ public:
     void InitiatePopulation();
     string last_error;
 #ifdef Q_version
-    void SetRunTimeWindow(RunTimeWindow *_rtw) {rtw=_rtw;}
+    void SetRunTimeWindow(ProgressWindow *_rtw) {rtw=_rtw;}
 #endif
 private:
     void Setminmax(int a, double minrange, double maxrange, int prec);
@@ -126,7 +126,7 @@ private:
 	// GUI
 
     #ifdef Q_version
-        RunTimeWindow *rtw=nullptr;
+        ProgressWindow *rtw=nullptr;
     #endif // QT_version
 
 

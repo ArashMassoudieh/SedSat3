@@ -84,3 +84,7 @@ x64/Release/
 /x64/Debug
 
 bin/Debug/
+
+*.txt
+
+Release/

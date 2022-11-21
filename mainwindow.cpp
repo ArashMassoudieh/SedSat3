@@ -23,6 +23,8 @@
 #include "GA.h"
 #include "genericform.h"
 #include "QMessageBox"
+#include "ProgressWindow.h"
+#include "resultswindow.h"
 //#include "MCMC.h"
 
 using namespace QXlsx;
@@ -37,18 +39,22 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->frame->setVisible(false);
+    qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
     QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
     formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
     ui->treeViewtools->setModel(toolsmodel);
     ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
+    connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
     connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
+    connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
+    conductor.SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 }
 
 MainWindow::~MainWindow()
@@ -64,7 +70,9 @@ void MainWindow::on_import_excel()
             tr("Open"), "",
             tr("Excel files (*.xlsx);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
 
-
+    QFileInfo fi(fileName);
+    
+    conductor.SetWorkingFolder(fi.absolutePath());
     if (fileName!="")
     {
         ReadExcel(fileName);
@@ -85,7 +93,7 @@ void MainWindow::on_import_excel()
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(preparetreeviewMenu(const QPoint &)));
-
+    on_constituent_properties_triggered();
 
 }
 
@@ -492,12 +500,25 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
         ui->verticalLayout_middle->addWidget(form);
         centralform = form;
     }
+
+
+
 }
 
 bool MainWindow::Execute(const string &command, map<string,string> arguments)
 {
     conductor.SetData(&DataCollection);
-    return conductor.Execute(command,arguments);
+    bool outcome = conductor.Execute(command,arguments);
+    ResultsWindow *reswind = new ResultsWindow();
+    reswind->SetResults(&conductor.GetResults());
+    for (map<string,result_item>::iterator it=conductor.GetResults().begin(); it!=conductor.GetResults().end(); it++)
+    {
+        reswind->AppendResult(it->second);
+    }
+    reswind->show();
+
+    return outcome;
+
 }
 
 void MainWindow::on_test_likelihood()
@@ -526,4 +547,22 @@ void MainWindow::on_test_likelihood()
     DataCollection.SetParameterValue(3+2*sources.size()*elements.size(),1);
     DataCollection.SetSelectedTargetSample("CTAIL3");
     cout<<DataCollection.LogLikelihood()<<std::endl;
+}
+
+void MainWindow::on_test_progress_window()
+{
+    ProgressWindow* prgwindow = new ProgressWindow(this);
+    prgwindow->show(); 
+    prgwindow->SetProgress(0.5);
+    prgwindow->AppendPoint(0.1, 0.1);
+    prgwindow->AppendPoint(0.2, 0.05);
+    prgwindow->AppendPoint(0.3, 0.25);
+    prgwindow->SetXRange(0, 2);
+    prgwindow->SetYRange(0, 2);
+
+}
+
+void MainWindow::on_TestLevenberg_Marquardt()
+{
+
 }

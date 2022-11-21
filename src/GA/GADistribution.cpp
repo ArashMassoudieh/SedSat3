@@ -69,7 +69,8 @@ int GADistribution::GetRand()
 
 }
 
-double GetRndUniF(double xmin, double xmax)
+
+double GADistribution::GetRndUniF(double xmin, double xmax)
 {
     double a = double(rand());
     double k = double(RAND_MAX);

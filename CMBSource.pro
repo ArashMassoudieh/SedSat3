@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport charts
 
 CONFIG += c++11
 
@@ -8,28 +8,33 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += _arma
+DEFINES += Q_version
 SOURCES += \
     ../Utilities/Distribution.cpp \
     ../Utilities/Matrix.cpp \
     ../Utilities/Matrix_arma.cpp \
     ../Utilities/Matrix_arma_sp.cpp \
-    ../Utilities/NormalDist.cpp \
     ../Utilities/QuickSort.cpp \
     ../Utilities/Utilities.cpp \
     ../Utilities/Vector.cpp \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
+    ProgressWindow.cpp \
+    contribution.cpp \
     customplotbar.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
     filebrowserpushbuttom.cpp \
     formelementinformation.cpp \
+    generalchart.cpp \
     generalplotter.cpp \
     genericform.cpp \
     indicatesheetsdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     plotwindow.cpp \
+    results.cpp \
+    resultswindow.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
@@ -52,17 +57,19 @@ HEADERS += \
     ../Utilities/Matrix.h \
     ../Utilities/Matrix_arma.h \
     ../Utilities/Matrix_arma_sp.h \
-    ../Utilities/NormalDist.h \
     ../Utilities/QuickSort.h \
     ../Utilities/Utilities.h \
     ../Utilities/Vector.h \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
+    ProgressWindow.h \
+    contribution.h \
     customplotbar.h \
     elementstablemodel.h \
     elementtabledelegate.h \
     filebrowserpushbuttom.h \
     formelementinformation.h \
+    generalchart.h \
     generalplotter.h \
     genericform.h \
     include/GA/Binary.h \
@@ -80,7 +87,9 @@ HEADERS += \
     include/sourcesinkdata.h \
     indicatesheetsdialog.h \
     mainwindow.h \
-    plotwindow.h
+    plotwindow.h \
+    results.h \
+    resultswindow.h
 
 
 
@@ -97,11 +106,14 @@ LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
 LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 
 FORMS += \
+    ProgressWindow.ui \
     formelementinformation.ui \
+    generalchart.ui \
     genericform.ui \
     indicatesheetsdialog.ui \
     mainwindow.ui \
-    plotwindow.ui
+    plotwindow.ui \
+    resultswindow.ui
 
 TRANSLATIONS += \
     CMBSource_en_US.ts
@@ -166,6 +178,12 @@ linux {
 
 macx {
     #sudo apt-get install libblas-dev liblapack-dev
+
      DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
-     LIBS += -llapack -lblas
+     LIBS += -lblas -llapack
+     LIBS += -L$$PWD/../Armadillo/ -larmadillo.11.2.3
+     INCLUDEPATH += $$PWD/../Armadillo/include/
+     DEPENDPATH += $$PWD/../Armadillo
+     INCLUDEPATH += /opt/homebrew/Cellar/gsl/2.7.1/include/
 }
+

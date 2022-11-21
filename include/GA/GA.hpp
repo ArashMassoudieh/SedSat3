@@ -11,7 +11,7 @@
 #include "parameter.h"
 
 #ifdef Q_version
-    #include "runtimewindow.h"
+    #include "ProgressWindow.h"
 #endif
 
 template<class T>
@@ -37,6 +37,7 @@ CGA<T>::CGA(string filename, const T &model)
 	GA_params.pcross = 1;
 	GA_params.N = 1;
 	GA_params.RCGA = false;
+	loged.clear(); 
     numberOfThreads = 20;
     filenames.pathname = Model->OutputPath();
 	vector<string> s;
@@ -63,14 +64,14 @@ CGA<T>::CGA(string filename, const T &model)
         GA_params.nParam++;
         params.push_back(i);
         if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")
-        {	minval.push_back(log10(Model->Parameters()[i]->GetVal("low")));
-            maxval.push_back(log10(Model->Parameters()[i]->GetVal("high")));
+        {	minval.push_back(log10(Model->Parameters()[i]->GetRange(_range::low)));
+            maxval.push_back(log10(Model->Parameters()[i]->GetRange(_range::high)));
 
         }
         else
         {
-            minval.push_back(Model->Parameters()[i]->GetVal("low"));
-            maxval.push_back(Model->Parameters()[i]->GetVal("high"));
+            minval.push_back(Model->Parameters()[i]->GetRange(_range::low));
+            maxval.push_back(Model->Parameters()[i]->GetRange(_range::high));
         }
         apply_to_all.push_back(false);
         if (Model->Parameters()[i]->GetPriorDistribution() == "lognormal")
@@ -112,6 +113,7 @@ CGA<T>::CGA(T *model)
 	GA_params.N = 1;
 	GA_params.RCGA = false;
     numberOfThreads = 20;
+	loged.clear();
     filenames.pathname = Model->OutputPath();
     GA_params.maxpop = max(1,GA_params.maxpop);
     for (unsigned int i=0; i<Model->Parameters().size(); i++)
@@ -142,7 +144,7 @@ CGA<T>::CGA(T *model)
 	Ind.resize(GA_params.maxpop);
 	Ind_old.resize(GA_params.maxpop);
 
-    fitdist = GADistribution(GA_params.nParam);
+    fitdist = GADistribution(GA_params.maxpop);
 	GA_params.cross_over_type = 1;
 
 	for (int i=0; i<GA_params.maxpop; i++)
@@ -162,9 +164,10 @@ CGA<T>::CGA(T *model)
 template<class T>
 void CGA<T>::InitiatePopulation()
 {
-    for (unsigned int i=0; i<Model->Parameters().size(); i++)
+	GA_params.nParam = Model->Parameters().size(); 
+	loged.clear(); 
+	for (unsigned int i=0; i<Model->Parameters().size(); i++)
     {
-        GA_params.nParam++;
         params.push_back(i);
         if (Model->parameter(i)->GetPriorDistribution().distribution == distribution_type::lognormal)
         {	minval.push_back(log10(Model->parameter(i)->GetVal("low")));
@@ -190,7 +193,7 @@ void CGA<T>::InitiatePopulation()
     Ind.resize(GA_params.maxpop);
     Ind_old.resize(GA_params.maxpop);
 
-    fitdist = GADistribution(GA_params.nParam);
+    fitdist = GADistribution(GA_params.maxpop);
     GA_params.cross_over_type = 1;
 
     for (int i=0; i<GA_params.maxpop; i++)
@@ -410,8 +413,8 @@ int counter=0;
                 if (omp_get_thread_num() == 0)
 #endif
 				{
-					rtw->SetProgress2(double(counter + 1) / GA_params.maxpop);
-					QCoreApplication::processEvents();
+//					rtw->SetProgress2(double(counter + 1) / GA_params.maxpop);
+//					QCoreApplication::processEvents();
 				}
 			}
 #endif
@@ -425,12 +428,12 @@ int counter=0;
 		}
     }
 	Model_out = Models[maxfitness()];
-#ifdef Q_Version
-    if (rtw != nullptr)
-    {
-        rtw->SetProgress2(1);
-        QCoreApplication::processEvents();
-    }
+#ifdef Q_version
+//    if (rtw != nullptr)
+//    {
+//        rtw->SetProgress(1);
+//        QCoreApplication::processEvents();
+//    }
 #endif
 	inp.clear();
 	assignfitness_rank(GA_params.N);
@@ -450,7 +453,7 @@ void CGA<T>::crossover()
         ////qDebug()<<"i = "<< i;
 		int j1 = fitdist.GetRand();
 		int j2 = fitdist.GetRand();
-		double x = GetRndUniF(0,1);
+        double x = fitdist.GetRndUniF(0,1);
 		if (x<GA_params.pcross)
 			if (GA_params.cross_over_type == 1)
 				cross(Ind_old[j1], Ind_old[j2], Ind[i], Ind[min(i+1,GA_params.maxpop-1)]);   //1 Breaking point
@@ -576,12 +579,13 @@ int CGA<T>::optimize()
 		fprintf(FileOut, "ID, ");
 		for (int k=0; k<Ind[0].nParams; k++)
 			fprintf(FileOut, "%s, ", paramname[k].c_str());
+
         //fprintf(FileOut, "%s, %s, %s, ", "likelihood", "Fitness", "Rank");
-        //for (unsigned int i=0; i<Model->ObservationsCount();i++)
-        //{
-        //    fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
-        //}
-        //fprintf(FileOut, "\n");
+        for (unsigned int i=0; i<Model->ObservationsCount();i++)
+        {
+            fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
+        }
+        fprintf(FileOut, "\n");
         write_to_detailed_GA("Generation: " + aquiutils::numbertostring(current_generation));
 		for (int j1=0; j1<GA_params.maxpop; j1++)
 		{
@@ -597,7 +601,7 @@ int CGA<T>::optimize()
             fprintf(FileOut, "%le, %le, %i, ", Ind[j1].actual_fitness, Ind[j1].fitness, Ind[j1].rank);
             for (unsigned int i=0; i<Model->ObservationsCount();i++)
             {
-                fprintf(FileOut, "%le, %le, %le", Ind[j1].fit_measures[i*3], Ind[j1].fit_measures[i*3+1], Ind[j1].fit_measures[i*3+2]);
+                fprintf(FileOut, ",%le, %le, %le", Ind[j1].fit_measures[i]);
             }
 			fprintf(FileOut, "\n");
 		}
@@ -609,10 +613,14 @@ int CGA<T>::optimize()
 
 #ifdef Q_version
     if (rtw)
-    {   if (current_generation==0) rtw->SetYRange(0,Ind[j].actual_fitness*1.1);
+    {   if (current_generation==0)
+        {
+            rtw->SetYRange(0,Ind[j].actual_fitness*1.1);
+            rtw->SetXRange(0,GA_params.nGen);
+        }
         rtw->SetProgress(double(current_generation)/double(GA_params.nGen));
-        rtw->AddDataPoint(current_generation+1,Ind[j].actual_fitness);
-        rtw->Replot();
+        rtw->AppendPoint(current_generation+1,Ind[j].actual_fitness);
+        //rtw->Replot();
         QCoreApplication::processEvents();
     }
 #endif
@@ -697,7 +705,7 @@ int CGA<T>::optimize()
 	}
     for (unsigned int i=0; i<Model->ObservationsCount();i++)
     {
-        fprintf(FileOut, "%le, %le, %le\n", Ind[j].fit_measures[i*3], Ind[j].fit_measures[i*3+1], Ind[j].fit_measures[i*3+2]);
+        fprintf(FileOut, ",%le, %le, %le\n", Ind[j].fit_measures[i]);
     }
     fclose(FileOut);
 

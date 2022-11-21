@@ -23,7 +23,7 @@ double Distribution::EvalLog(const double &x)
     if (distribution==distribution_type::normal)
             out = -log(sqrt(2*pi)*parameters[1]) -pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]);
     if (distribution==distribution_type::lognormal)
-            out = -log(sqrt(2*pi)*parameters[1] * x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
+            out = -log(sqrt(2*pi)*parameters[1]*x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
 
     return out;
 }
@@ -52,12 +52,18 @@ Distribution::Distribution(const Distribution &dist)
     pi = 4 * atan(1.0);
     parameters = dist.parameters;
     distribution = dist.distribution;
+    mean_val = dist.mean_val;
+    std_val = dist.std_val;
+    SetType(dist.distribution);
 }
 Distribution& Distribution::operator = (const Distribution &dist)
 {
     pi = 4 * atan(1.0);
     parameters = dist.parameters;
     distribution = dist.distribution;
+    mean_val = dist.mean_val;
+    std_val = dist.std_val;
+    SetType(dist.distribution);
     return *this;
 }
 
@@ -71,8 +77,10 @@ void Distribution::SetType(const distribution_type &typ)
 }
 
 
-double Distribution::Mean()
+double Distribution::Mean(parameter_mode param_mode)
 {
+    if (param_mode==parameter_mode::direct)
+        return mean_val;
 
     if (distribution == distribution_type::lognormal)
         return exp(parameters[0]+pow(parameters[1],2)/2);

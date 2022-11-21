@@ -5,6 +5,11 @@
 #include "vector"
 #include "parameter.h"
 #include "observation.h"
+#include "contribution.h"
+#include "results.h"
+#include "ProgressWindow.h"
+
+enum class transformation {linear, softmax};
 
 struct profiles_data
 {
@@ -35,12 +40,15 @@ struct element_information
 
 };
 
-class SourceSinkData
+enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};
+
+class SourceSinkData: public map<string, Elemental_Profile_Set>
 {
 public:
     SourceSinkData();
     SourceSinkData(const SourceSinkData& mp);
     SourceSinkData& operator=(const SourceSinkData &mp);
+    void Clear();
     Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
     Elemental_Profile_Set *sample_set(const string &name);
     vector<string> GroupNames();
@@ -53,10 +61,6 @@ public:
     void PopulateElementDistributions();
     void AssignAllDistributions();
     Distribution *FittedDistribution(const string &element_name);
-    map<string,Elemental_Profile_Set>::iterator begin() {return sample_sets.begin();}
-    map<string,Elemental_Profile_Set>::iterator end() {return sample_sets.end();}
-    map<string,Elemental_Profile_Set>::const_iterator cbegin() {return sample_sets.begin();}
-    map<string,Elemental_Profile_Set>::const_iterator cend() {return sample_sets.end();}
     element_information* GetElementInformation(const string &element_name)
     {
         if (ElementInformation.count(element_name))
@@ -116,21 +120,54 @@ public:
         return true; 
     }
     string TargetGroup() {return target_group;}
-    bool InitializeParametersObservations(const string &targetsamplename="");
-    bool SetParameterValue(unsigned int i, double value);
-    CVector PredictTarget();
-    CMatrix SourceMeanMatrix();
-    CVector ContributionVector();
+    bool InitializeParametersObservations(const string &targetsamplename="",estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
+    bool InitializeContributionsRandomly(); //initializes source contributions randomly
+    bool InitializeContributionsRandomly_softmax(); //initializes source contributions randomly for softmax transformation
+    bool SetParameterValue(unsigned int i, double value); //set the parameter values for estimation
+    CVector PredictTarget(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    CMatrix SourceMeanMatrix(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    CVector ContributionVector(bool full=true);
+    CVector ContributionVector_softmax();
+    void SetContribution(int i, double value);
+    void SetContribution_softmax(int i, double value);
+    void SetContribution(const CVector &X);
+    void SetContribution_softmax(const CVector &X); //set source contribution softmax transforations
     CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
     double GetObjectiveFunctionValue();
-    double LogLikelihood();
+    double LogLikelihood(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
     vector<string> ElementsToBeUsedInCMB();
     vector<string> SourceGroupNames();
     bool SetSelectedTargetSample(const string &sample_name);
     string SelectedTargetSample();
-
+    vector<string> SourceOrder() {return samplesetsorder;}
+    vector<string> SamplesetsOrder() {return samplesetsorder;}
+    vector<string> ConstituentOrder() {return constituent_order;}
+    vector<string> ElementOrder() {return element_order;}
+    vector<string> IsotopeOrder() {return isotope_order;}
+    vector<string> SizeOMOrder() {return size_om_order;}
+    result_item GetContribution();
+    result_item GetPredictedElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    result_item GetObservedElementalProfile();
+    result_item GetObservedvsModeledElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    result_item GetCalculatedElementMeans();
+    result_item GetCalculatedElementStandardDev();
+    result_item GetCalculatedElementMu();
+    result_item GetEstimatedElementMu();
+    result_item GetEstimatedElementMean();
+    result_item GetEstimatedElementSigma();
+    CVector ResidualVector();
+    CVector_arma ResidualVector_arma();
+    CMatrix ResidualJacobian();
+    CMatrix ResidualJacobian_softmax();
+    CMatrix_arma ResidualJacobian_arma();
+    CVector OneStepLevenBerg_Marquardt(double lambda = 0);
+    CVector OneStepLevenBerg_Marquardt_softmax(double lambda);
+    bool SolveLevenBerg_Marquardt(transformation trans = transformation::linear );
+    void SetProgressWindow(ProgressWindow *_rtw) {rtw = _rtw;}
+    void SetParameterEstimationMode(estimation_mode est_mode) {parameter_estimation_mode = est_mode;}
+    estimation_mode ParameterEstimationMode() {return parameter_estimation_mode;}
 private:
-    map<string,Elemental_Profile_Set> sample_sets;
+    
     map<string,ConcentrationSet> element_distributions;
     map<string, element_information> ElementInformation;
     string outputpath;
@@ -140,17 +177,24 @@ private:
     vector<Observation> observations;
     double LogPriorContributions();
     double LogLikelihoodSourceElementalDistributions();
-    double LogLikelihoodModelvsMeasured();
+    double LogLikelihoodModelvsMeasured(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
     CVector GetSourceContributions();
     Parameter* ElementalContent_mu(int element_iterator, int source_iterator);
     Parameter* ElementalContent_sigma(int element_iterator, int source_iterator);
     double ElementalContent_mu_value(int element_iterator, int source_iterator);
     double ElementalContent_sigma_value(int element_iterator, int source_iterator);
-    unsigned int numberofelements = 0;
+    unsigned int numberofconstituents = 0;
     unsigned int numberofsourcesamplesets = 0;
     vector<string> samplesetsorder;
-    vector<string> elementorder;
+    vector<string> constituent_order;
+    vector<string> element_order;
+    vector<string> isotope_order;
+    vector<string> size_om_order;
+    void populate_constituent_orders();
     double error_stdev = 0;
+    ProgressWindow *rtw = nullptr;
+    estimation_mode parameter_estimation_mode = estimation_mode::elemental_profile_and_contribution;
+
 
 
 };

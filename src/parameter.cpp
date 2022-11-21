@@ -7,7 +7,12 @@ Parameter::Parameter()
 
 double Parameter::GetVal(const string &quantity)
 {
-    return 0; 
+    if (quantity == "high")
+        return range[1];
+    else if (quantity == "low")
+        return range[0];
+    else
+        return 0;
 }
 
 void Parameter::SetRange(const vector<double> &rng)
@@ -46,6 +51,7 @@ void Parameter::SetRange(double low, double high)
         range.resize(2);
     range[0] = low;
     range[1] = high;
+    
     UpdatePriorDistribution();
 }
 
