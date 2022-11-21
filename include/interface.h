@@ -3,6 +3,8 @@
 
 #include <string>
 
+class QFile; 
+
 using namespace std;
 
 class Interface
@@ -12,6 +14,7 @@ public:
     Interface(const Interface &intf);
     Interface& operator=(const Interface &intf);
     virtual string ToString();
+    virtual bool writetofile(QFile* file);
 
 };
 

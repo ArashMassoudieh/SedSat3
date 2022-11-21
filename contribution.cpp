@@ -1,5 +1,6 @@
 #include "contribution.h"
 #include "Utilities.h"
+#include "qfile.h"
 
 Contribution::Contribution():map<string, double>(),Interface()
 {
@@ -25,4 +26,9 @@ string Contribution::ToString()
         out += it->first + ":" + aquiutils::numbertostring(it->second) + "\n";
     }
     return out;
+}
+
+bool Contribution::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
 }

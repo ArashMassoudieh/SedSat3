@@ -18,3 +18,8 @@ string Interface::ToString()
 {
     return "";
 }
+
+bool Interface::writetofile(QFile* file)
+{
+    return false;
+}

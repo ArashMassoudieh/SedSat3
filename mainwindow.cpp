@@ -25,8 +25,11 @@
 #include "QMessageBox"
 #include "ProgressWindow.h"
 #include "resultswindow.h"
+#include "aboutdialog.h"
 //#include "MCMC.h"
 
+
+#define version "0.0.4"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -52,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
     connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
     connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAboutTriggered()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
     conductor.SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
@@ -565,4 +569,11 @@ void MainWindow::on_test_progress_window()
 void MainWindow::on_TestLevenberg_Marquardt()
 {
 
+}
+
+void MainWindow::onAboutTriggered()
+{
+    AboutDialog* abtdlg = new AboutDialog(this);
+    abtdlg->AppendText(QString("CMBSource version ") + QString(version));
+    abtdlg->exec(); 
 }

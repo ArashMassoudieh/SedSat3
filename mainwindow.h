@@ -58,6 +58,7 @@ private slots:
     void on_test_likelihood();
     void on_test_progress_window();
     void on_TestLevenberg_Marquardt();
+    void onAboutTriggered();
 
 
 };

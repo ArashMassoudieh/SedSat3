@@ -76,8 +76,14 @@ void ResultsWindow::on_result_graph_clicked()
 void ResultsWindow::on_result_export_clicked()
 {
     qDebug()<<sender()->objectName();
-    GeneralChart *resultgraph = new GeneralChart(this);
-    resultgraph->setWindowTitle(sender()->objectName());
-    resultgraph->Plot(&results->operator[](sender()->objectName().toStdString()));
-    resultgraph->show();
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save"), "",
+        tr("script files (*.txt)"));
+
+    QFile file(filename);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    
+    
+    results->operator[](sender()->objectName().toStdString());
+    
 }
