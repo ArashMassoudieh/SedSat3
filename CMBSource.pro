@@ -20,6 +20,7 @@ SOURCES += \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
     ProgressWindow.cpp \
+    aboutdialog.cpp \
     contribution.cpp \
     customplotbar.cpp \
     elementstablemodel.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
     ProgressWindow.h \
+    aboutdialog.h \
     contribution.h \
     customplotbar.h \
     elementstablemodel.h \
@@ -107,6 +109,7 @@ LIBS += -L"/usr/local/lib/ -lsuperlu.so"
 
 FORMS += \
     ProgressWindow.ui \
+    aboutdialog.ui \
     formelementinformation.ui \
     generalchart.ui \
     genericform.ui \

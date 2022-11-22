@@ -21,6 +21,7 @@ public:
     double max(); 
     double min(); 
     vector<string> ElementNames();
+    bool writetofile(QFile* file) override;
     
 private:
     

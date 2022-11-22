@@ -109,6 +109,7 @@ public:
     vector<string> ElementNames();
     double max();
     double min(); 
+    bool writetofile(QFile*) override;
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element

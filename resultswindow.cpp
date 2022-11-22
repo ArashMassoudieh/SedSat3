@@ -5,6 +5,8 @@
 #include "QPushButton"
 #include "generalchart.h"
 
+#include <QFileDialog>
+
 ResultsWindow::ResultsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ResultsWindow)
@@ -78,12 +80,18 @@ void ResultsWindow::on_result_export_clicked()
     qDebug()<<sender()->objectName();
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save"), "",
-        tr("script files (*.txt)"));
+        tr("text file (*.txt)"));
 
-    QFile file(filename);
+    if (!fileName.contains("."))
+        fileName+=".txt";
+    QFile file(fileName);
+
     file.open(QIODevice::WriteOnly | QIODevice::Text);
+    if (!file.isOpen())
+        return;
     
-    
-    results->operator[](sender()->objectName().toStdString());
+    results->operator[](sender()->objectName().toStdString()).result->writetofile(&file);
+
+    file.close();
     
 }

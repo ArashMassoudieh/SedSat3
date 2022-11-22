@@ -74,6 +74,12 @@ string Elemental_Profile_Set::ToString()
     return out; 
 }
 
+bool Elemental_Profile_Set::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return 0;
+}
+
 vector<string> Elemental_Profile_Set::ElementNames()
 {
     vector<string> out; 

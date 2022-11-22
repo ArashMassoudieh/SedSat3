@@ -1,6 +1,7 @@
 #include "elemental_profile.h"
 #include "iostream"
 #include "Utilities.h"
+#include <QFile>
 
 using namespace std;
 
@@ -78,6 +79,12 @@ string Elemental_Profile::ToString()
         out += it->first + ":" + aquiutils::numbertostring(it->second) + "\n";
     }
     return out;
+}
+
+bool Elemental_Profile::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
 }
 
 double Elemental_Profile::max()

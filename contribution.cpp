@@ -31,4 +31,5 @@ string Contribution::ToString()
 bool Contribution::writetofile(QFile* file)
 {
     file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
 }
