@@ -386,7 +386,7 @@ CVector SourceSinkData::GetSourceContributions()
 double SourceSinkData::LogPriorContributions()
 {
     if (GetSourceContributions().min()<0)
-        return -1000;
+        return -1e10;
     else
         return 0;
 }
@@ -432,10 +432,12 @@ double SourceSinkData::LogLikelihoodModelvsMeasured(estimation_mode est_mode)
     else
         C = PredictTarget(parameter_mode::direct);
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
-    for (unsigned int i=0; i<numberofconstituents; i++)
-    {
+
+    if (C.min()>0)
         LogLikelihood -= log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
-    }
+    else
+        LogLikelihood -= 1e10;
+
     return LogLikelihood;
 }
 
