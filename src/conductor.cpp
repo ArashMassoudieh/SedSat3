@@ -22,6 +22,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         GA->SetProperties(arguments);
         GA->InitiatePopulation();
         GA->optimize();
+
+        results.SetName("GA " + arguments["Sample"]);
+
         result_item result_cont = GA->Model_out.GetContribution();
         results.Append(result_cont);
 
@@ -48,6 +51,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         GA->SetProperties(arguments);
         GA->InitiatePopulation();
         GA->optimize();
+        results.SetName("GA (fixed profile) " + arguments["Sample"]);
         result_item result_cont = GA->Model_out.GetContribution();
         results.Append(result_cont);
 
@@ -69,6 +73,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         GA->InitiatePopulation();
         GA->optimize();
 
+        results.SetName("GA (no targets) " + arguments["Sample"]);
         result_item result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
         results.Append(result_calculated_means);
 
@@ -94,6 +99,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             Data()->SolveLevenBerg_Marquardt(transformation::softmax);
         else
             Data()->SolveLevenBerg_Marquardt(transformation::linear);
+
+        results.SetName("LM " + arguments["Sample"]);
         result_item result_cont = Data()->GetContribution();
         results.Append(result_cont);
 

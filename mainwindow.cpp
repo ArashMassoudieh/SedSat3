@@ -26,6 +26,7 @@
 #include "ProgressWindow.h"
 #include "resultswindow.h"
 #include "aboutdialog.h"
+#include "resultsetitem.h"
 //#include "MCMC.h"
 
 
@@ -43,11 +44,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->frame->setVisible(false);
     qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
+    //tools
     QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
     formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
+    toolsmodel->setHorizontalHeaderLabels(QStringList()<<"Tools");
     ui->treeViewtools->setModel(toolsmodel);
     ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    //results
+    resultsviewmodel = new QStandardItemModel();
+    ui->TreeView_Results->setModel(resultsviewmodel);
+    resultsviewmodel->setHorizontalHeaderLabels(QStringList()<<"Results");
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
     connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
@@ -514,8 +522,12 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
     conductor.SetData(&DataCollection);
     bool outcome = conductor.Execute(command,arguments);
     ResultsWindow *reswind = new ResultsWindow();
-    reswind->SetResults(&conductor.GetResults());
-    for (map<string,result_item>::iterator it=conductor.GetResults().begin(); it!=conductor.GetResults().end(); it++)
+    reswind->SetResults(conductor.GetResults());
+    ResultSetItem *resultset = new ResultSetItem(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+    resultset->setToolTip(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+    resultset->result = conductor.GetResults();
+    resultsviewmodel->appendRow(resultset);
+    for (map<string,result_item>::iterator it=resultset->result->begin(); it!=resultset->result->end(); it++)
     {
         reswind->AppendResult(it->second);
     }

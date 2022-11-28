@@ -35,6 +35,7 @@ SOURCES += \
     mainwindow.cpp \
     plotwindow.cpp \
     results.cpp \
+    resultsetitem.cpp \
     resultswindow.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     mainwindow.h \
     plotwindow.h \
     results.h \
+    resultsetitem.h \
     resultswindow.h
 
 

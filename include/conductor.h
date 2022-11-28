@@ -19,9 +19,12 @@ public:
     {
 	    data = _data;
     }
-    Results &GetResults() {return results;}
+    Results *GetResults() {
+        return new Results(results);
+    }
     void SetWorkingFolder(const QString& wf) { workingfolder = wf; }
     QString WorkingFolder() { return workingfolder; }
+
 private:
     SourceSinkData *data;
     CGA<SourceSinkData> *GA = nullptr;

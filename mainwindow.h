@@ -35,6 +35,8 @@ private:
     QStandardItem* ToQStandardItem(const QString &key, const QJsonObject &json);
     QStandardItemModel* ToQStandardItemModel(const QJsonDocument &jsondocument);
     QStandardItemModel *columnviewmodel = nullptr;
+    QStandardItemModel *resultsviewmodel = nullptr;
+
     QJsonDocument loadJson(const QString &fileName);
     void saveJson(const QJsonDocument &document, const QString &fileName);
     QString SelectedTreeItemType = "None";

@@ -23,7 +23,10 @@ public:
     Results(const Results &rhs);
     Results& operator = (const Results &rhs);
     void Append(const result_item&);
+    void SetName(const string &_name) {name = _name;}
+    string GetName() {return name;}
 private:
+    string name;
 
 };
 
