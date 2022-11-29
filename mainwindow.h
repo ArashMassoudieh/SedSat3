@@ -57,6 +57,7 @@ private slots:
     void on_constituent_properties_triggered();
     void on_test_dialog_triggered();
     void on_tool_executed(const QModelIndex&);
+    void on_old_result_requested(const QModelIndex&);
     void on_test_likelihood();
     void on_test_progress_window();
     void on_TestLevenberg_Marquardt();

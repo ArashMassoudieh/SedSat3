@@ -61,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
+    connect(ui->TreeView_Results,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_old_result_requested(const QModelIndex&)));
     connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
     connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAboutTriggered()));
@@ -514,6 +515,19 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
     }
 
 
+
+}
+
+void MainWindow::on_old_result_requested(const QModelIndex& index)
+{
+    ResultsWindow *reswind = new ResultsWindow();
+    Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
+    reswind->SetResults(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result);
+    for (map<string,result_item>::iterator it=resultset->begin(); it!=resultset->end(); it++)
+    {
+        reswind->AppendResult(it->second);
+    }
+    reswind->show();
 
 }
 
