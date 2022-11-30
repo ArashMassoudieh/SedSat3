@@ -1100,3 +1100,39 @@ result_item SourceSinkData::GetEstimatedElementSigma()
     resitem.result = profile_set;
     return resitem;
 }
+
+bool SourceSinkData::WriteElementInformationToFile(QFile *file)
+{
+    file->write("***");
+    file->write("Element Information");
+    for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        file->write(QString::fromStdString(it->first).toUtf8()+ "\t" + Role(it->second.Role).toUtf8());
+    file->write("***");
+    return true;
+}
+
+QString SourceSinkData::Role(const element_information::role &rl)
+{
+    if (rl == element_information::role::do_not_include)
+        return "DoNotInclude";
+    else if (rl == element_information::role::element)
+        return "Element";
+    else if (rl == element_information::role::isotope)
+        return "Isotope";
+    else if (rl == element_information::role::particle_size)
+        return "ParticleSize";
+    return "DoNotInclude";
+}
+
+element_information::role SourceSinkData::Role(const QString &rl)
+{
+    if (rl == "DoNotInclude")
+        return element_information::role::do_not_include;
+    else if (rl == "Element")
+        return element_information::role::element;
+    else if (rl == "Isotope")
+        return element_information::role::isotope;
+    else if (rl == "ParticleSize")
+        return element_information::role::particle_size;
+    return element_information::role::do_not_include;
+}

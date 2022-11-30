@@ -33,3 +33,16 @@ bool Contribution::writetofile(QFile* file)
     file->write(QString::fromStdString(ToString()).toUtf8());
     return true;
 }
+
+bool Contribution::Read(const QStringList &strlist)
+{
+    clear();
+    for (int i=0; i<strlist.size();i++)
+    {
+        if (strlist[i].split(":").size()>1)
+        {
+            operator[](strlist[i].split(":")[0].toStdString()) = strlist[i].split(":")[1].toDouble();
+        }
+    }
+    return true;
+}

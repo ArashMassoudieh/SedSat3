@@ -23,3 +23,8 @@ bool Interface::writetofile(QFile* file)
 {
     return false;
 }
+
+bool Interface::Read(const QStringList &strlist)
+{
+    return false;
+}

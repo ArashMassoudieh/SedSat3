@@ -16,7 +16,8 @@ public:
     Contribution(const Contribution &rhs);
     Contribution& operator = (const Contribution &rhs);
     string ToString() override;
-    bool writetofile(QFile*);
+    bool writetofile(QFile*) override;
+    bool Read(const QStringList &strlist) override;
 };
 
 #endif // CONTRIBUTION_H

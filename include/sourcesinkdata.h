@@ -8,6 +8,7 @@
 #include "contribution.h"
 #include "results.h"
 #include "ProgressWindow.h"
+#include "fstream"
 
 enum class transformation {linear, softmax};
 
@@ -61,6 +62,8 @@ public:
     void PopulateElementDistributions();
     void AssignAllDistributions();
     Distribution *FittedDistribution(const string &element_name);
+    static QString Role(const element_information::role &rl);
+    static element_information::role Role(const QString &rl);
     element_information* GetElementInformation(const string &element_name)
     {
         if (ElementInformation.count(element_name))
@@ -166,6 +169,9 @@ public:
     void SetProgressWindow(ProgressWindow *_rtw) {rtw = _rtw;}
     void SetParameterEstimationMode(estimation_mode est_mode) {parameter_estimation_mode = est_mode;}
     estimation_mode ParameterEstimationMode() {return parameter_estimation_mode;}
+    bool WriteToFile(QFile *fil);
+    bool WriteElementInformationToFile(QFile *fil);
+    bool WriteDataToFile(QFile *file);
 private:
     
     map<string,ConcentrationSet> element_distributions;

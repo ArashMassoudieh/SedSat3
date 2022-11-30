@@ -81,6 +81,19 @@ string Elemental_Profile::ToString()
     return out;
 }
 
+bool Elemental_Profile::Read(const QStringList &strlist)
+{
+    clear();
+    for (int i=0; i<strlist.size(); i++)
+    {
+        if (strlist[i].split(":").size()>1)
+        {
+            AppendElement(strlist[i].split(":")[0].toStdString(), strlist[i].split(":")[1].toDouble());
+        }
+    }
+    return true;
+}
+
 bool Elemental_Profile::writetofile(QFile* file)
 {
     file->write(QString::fromStdString(ToString()).toUtf8());

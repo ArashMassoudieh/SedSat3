@@ -80,6 +80,13 @@ bool Elemental_Profile_Set::writetofile(QFile* file)
     return 0;
 }
 
+bool Elemental_Profile_Set::Read(const QStringList &strlist)
+{
+
+
+    return true;
+}
+
 vector<string> Elemental_Profile_Set::ElementNames()
 {
     vector<string> out; 

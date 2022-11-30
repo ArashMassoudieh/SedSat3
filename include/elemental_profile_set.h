@@ -110,6 +110,7 @@ public:
     double max();
     double min(); 
     bool writetofile(QFile*) override;
+    bool Read(const QStringList &strlist) override;
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element

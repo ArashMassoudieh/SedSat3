@@ -2,6 +2,7 @@
 #define INTERFACE_H
 
 #include <string>
+#include <QStringList>
 
 class QFile; 
 
@@ -15,6 +16,7 @@ public:
     Interface& operator=(const Interface &intf);
     virtual string ToString();
     virtual bool writetofile(QFile* file);
+    virtual bool Read(const QStringList &strlist);
 
 };
 
