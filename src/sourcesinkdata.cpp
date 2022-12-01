@@ -1103,11 +1103,30 @@ result_item SourceSinkData::GetEstimatedElementSigma()
 
 bool SourceSinkData::WriteElementInformationToFile(QFile *file)
 {
-    file->write("***");
-    file->write("Element Information");
+    file->write("***\n");
+    file->write("Element Information\n");
     for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-        file->write(QString::fromStdString(it->first).toUtf8()+ "\t" + Role(it->second.Role).toUtf8());
-    file->write("***");
+        file->write(QString::fromStdString(it->first).toUtf8()+ "\t" + Role(it->second.Role).toUtf8()+"\n");
+
+    return true;
+}
+
+bool SourceSinkData::WriteDataToFile(QFile *file)
+{
+    file->write("***\n");
+    file->write("Elemental Profiles\n");
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
+    {
+        file->write(QString::fromStdString(it->first+"\n").toUtf8());
+        it->second.writetofile(file);
+    }
+    return true;
+}
+
+bool SourceSinkData::WriteToFile(QFile *file)
+{
+    WriteElementInformationToFile(file);
+    WriteDataToFile(file);
     return true;
 }
 

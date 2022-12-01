@@ -65,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
     connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAboutTriggered()));
+    connect(ui->actionSave_Project,SIGNAL(triggered()),this,SLOT(onSaveProject()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
     conductor.SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
@@ -75,6 +76,19 @@ MainWindow::~MainWindow()
     if (centralform)
         delete centralform;
     delete ui;
+}
+
+void MainWindow::onSaveProject()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            tr("Save"), "",
+            tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+    if (fileName.left(4)!=".cmb" || fileName.left(4)!=".CMB")
+        fileName+=".cmb";
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+    Data()->WriteToFile(&file);
+    file.close();
 }
 
 void MainWindow::on_import_excel()
