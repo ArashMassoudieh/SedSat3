@@ -1117,6 +1117,7 @@ bool SourceSinkData::WriteDataToFile(QFile *file)
     file->write("Elemental Profiles\n");
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
     {
+        file->write("**\n");
         file->write(QString::fromStdString(it->first+"\n").toUtf8());
         it->second.writetofile(file);
     }
