@@ -341,7 +341,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
             {
                 vector<string> item;
                 item.push_back(indexes[i].data().toString().toStdString());
-                item.push_back(indexes[i].child(sample_counter,0).data().toString().toStdString());
+                item.push_back(ui->treeView->selectionModel()->model()->index(sample_counter,0, indexes[i]).data().toString().toStdString());
                 samples_selected.push_back(item);
             }
         }

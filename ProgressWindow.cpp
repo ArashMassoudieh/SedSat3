@@ -6,12 +6,12 @@ ProgressWindow::ProgressWindow(QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
-	series = new QtCharts::QLineSeries();
-	chart = new QtCharts::QChart();
+    series = new QLineSeries();
+    chart = new QChart();
 	chart->legend()->hide();
 	chart->setTitle("Optimization progress");
-	QtCharts::QAreaSeries* areaseries = new QtCharts::QAreaSeries(series);
-	chartView = new QtCharts::QChartView(chart);
+    QAreaSeries* areaseries = new QAreaSeries(series);
+    chartView = new QChartView(chart);
 	chartView->setRenderHint(QPainter::Antialiasing);
 	chart->addSeries(areaseries);
 	chart->addSeries(series);
@@ -27,8 +27,8 @@ ProgressWindow::ProgressWindow(QWidget *parent)
 	gradient.setColorAt(1.0, 0x26f626);
 	//gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
 	series->setBrush(gradient);
-    yaxis = new QtCharts::QValueAxis();
-    xaxis = new QtCharts::QValueAxis();
+    yaxis = new QValueAxis();
+    xaxis = new QValueAxis();
 
     chart->addAxis(xaxis,Qt::AlignBottom);
     chart->addAxis(yaxis,Qt::AlignLeft);

@@ -21,8 +21,8 @@ public:
     bool Plot(result_item* res);
 private:
     Ui::GeneralChart *ui;
-    QtCharts::QChart* chart;
-    QtCharts::QChartView *chartView;
+    QChart* chart;
+    QChartView *chartView;
 };
 
 double roundDown(double a);

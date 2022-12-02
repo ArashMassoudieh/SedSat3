@@ -22,9 +22,9 @@ public:
 
 private:
 	Ui::ProgressWindow ui;
-	QtCharts::QChart* chart;
-	QtCharts::QChartView *chartView;
-	QtCharts::QLineSeries* series = nullptr;
-    QtCharts::QValueAxis *yaxis = nullptr;
-    QtCharts::QValueAxis *xaxis = nullptr;
+    QChart* chart;
+    QChartView *chartView;
+    QLineSeries* series = nullptr;
+    QValueAxis *yaxis = nullptr;
+    QValueAxis *xaxis = nullptr;
 };

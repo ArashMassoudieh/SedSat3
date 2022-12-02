@@ -6,6 +6,12 @@
 #include "drand.h"
 #endif
 
+template<typename T>
+static inline QVector<T> fromStdVector(const std::vector<T> &vector)
+{
+   return QVector<T>(vector.begin(), vector.end());
+}
+
 QVector<QCPScatterStyle::ScatterShape> GeneralPlotter::shapes = Make_Shapes();
 
 GeneralPlotter::GeneralPlotter(QWidget * parent)
@@ -53,7 +59,7 @@ void GeneralPlotter::mouseMoveEvent(QMouseEvent * event)
 }
 void GeneralPlotter::wheelEvent(QWheelEvent *event)
 {
-    double scale = pow((double)2, event->delta() / 360.0);
+    double scale = pow((double)2, event->angleDelta().y() / 360.0);
     xAxis->scaleRange(scale, xAxis->range().center());
     yAxis->scaleRange(scale, yAxis->range().center());
     replot();
@@ -134,8 +140,8 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, con
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
-    QVector<double> xvals = QVector<double>::fromStdVector(x);
-    QVector<double> yvals = QVector<double>::fromStdVector(y);
+    QVector<double> xvals = fromStdVector<double>(x);
+    QVector<double> yvals = fromStdVector<double>(y);
 
     graph->setData(xvals, yvals);
     SetRange(x_max_min_range,Axis::x);
@@ -159,11 +165,11 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
-    QVector<double> yvals = QVector<double>::fromStdVector(y);
+    QVector<double> yvals = fromStdVector<double>(y);
 
     QVector<double> ticks;
     QVector<QString> labels;
-    QVector<double> qvals = QVector<double>::fromStdVector(y);
+    QVector<double> qvals = fromStdVector<double>(y);
     for (int i=0; i<y.size(); i++)
     {   ticks << i+1;
         labels << QString::fromStdString(x[i]);
@@ -224,8 +230,8 @@ bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, 
     graph->setPen(Pen);
     graph->setLineStyle(QCPGraph::lsLine);
 
-    QVector<double> yvals = QVector<double>::fromStdVector(y);
-    QVector<double> xvals = QVector<double>::fromStdVector(x);
+    QVector<double> yvals = fromStdVector<double>(y);
+    QVector<double> xvals = fromStdVector<double>(x);
 
     xAxis->setTickLabelRotation(60);
     xAxis->setSubTicks(false);

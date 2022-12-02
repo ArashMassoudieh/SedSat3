@@ -9,8 +9,8 @@ GeneralChart::GeneralChart(QWidget *parent) :
     ui(new Ui::GeneralChart)
 {
     ui->setupUi(this);
-    chart = new QtCharts::QChart();
-    chartView = new QtCharts::QChartView(chart);
+    chart = new QChart();
+    chartView = new QChartView(chart);
     ui->verticalLayout->addWidget(chartView);
 
 }
