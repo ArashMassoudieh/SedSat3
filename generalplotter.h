@@ -52,3 +52,17 @@ private:
 };
 
 QVector<QCPScatterStyle::ScatterShape> Make_Shapes();
+
+template <class T>
+static inline QVector<T> QVectorfromStdVector(const std::vector<T> &vector)
+{
+   return QVector<T>(vector.begin(), vector.end());
+}
+
+template <class T>
+static inline QList<T> QListfromStdVector(const std::vector<T> &vector)
+{
+   return QList<T>(vector.begin(), vector.end());
+}
+
+

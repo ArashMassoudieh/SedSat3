@@ -106,8 +106,7 @@ INCLUDEPATH += /usr/include/x86_64-linux-gnu/
 INCLUDEPATH += include/GA/
 INCLUDEPATH += include/MCMC/
 
-LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
-LIBS += -L"/usr/local/lib/ -lsuperlu.so"
+
 
 FORMS += \
     ProgressWindow.ui \
@@ -122,6 +121,24 @@ FORMS += \
 
 TRANSLATIONS += \
     CMBSource_en_US.ts
+
+macx: {
+    QMAKE_CXXFLAGS += -Xpreprocessor -fopenmp -lomp -Iusr/local/lib/
+    QMAKE_LFLAGS += -lomp
+    LIBS += -L /usr/local/lib /usr/local/lib/libomp.dylib
+    INCLUDEPATH += /usr/local/include/
+    DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
+    INCLUDEPATH += $$PWD/../Armadillo/include
+    DEPENDPATH += $$PWD/../Armadillo/include
+    INCLUDEPATH += $$PWD/../Armadillo
+    DEPENDPATH += $$PWD/../Armadillo
+    LIBS += -L$$PWD/../Armadillo/ -lblas.3.10.1
+    LIBS += -L$$PWD/../Armadillo/ -llapack.3.10.1
+    LIBS += -L$$PWD/../Armadillo/ -larmadillo.11.2.3
+    INCLUDEPATH += /opt/homebrew/Cellar/gsl/2.7.1/include/
+}
+
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -177,18 +194,11 @@ win32 {
 
 linux {
     #sudo apt-get install libblas-dev liblapack-dev
-     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
-     LIBS += -larmadillo -llapack -lblas
+    LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
+    LIBS += -L"/usr/local/lib/ -lsuperlu.so"
+    DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
+    LIBS += -larmadillo -llapack -lblas
 }
 
-macx {
-    #sudo apt-get install libblas-dev liblapack-dev
 
-     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
-     LIBS += -lblas -llapack
-     LIBS += -L$$PWD/../Armadillo/ -larmadillo.11.2.3
-     INCLUDEPATH += $$PWD/../Armadillo/include/
-     DEPENDPATH += $$PWD/../Armadillo
-     INCLUDEPATH += /opt/homebrew/Cellar/gsl/2.7.1/include/
-}
 

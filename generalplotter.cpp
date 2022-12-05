@@ -165,11 +165,11 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
-    QVector<double> yvals = fromStdVector<double>(y);
+    QVector<double> yvals = QVector<double>::fromStdVector(y);
 
     QVector<double> ticks;
     QVector<QString> labels;
-    QVector<double> qvals = fromStdVector<double>(y);
+    QVector<double> qvals = QVector<double>::fromStdVector(y);
     for (int i=0; i<y.size(); i++)
     {   ticks << i+1;
         labels << QString::fromStdString(x[i]);
@@ -230,8 +230,8 @@ bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, 
     graph->setPen(Pen);
     graph->setLineStyle(QCPGraph::lsLine);
 
-    QVector<double> yvals = fromStdVector<double>(y);
-    QVector<double> xvals = fromStdVector<double>(x);
+    QVector<double> yvals = QVector<double>::fromStdVector(y);
+    QVector<double> xvals = QVector<double>::fromStdVector(x);
 
     xAxis->setTickLabelRotation(60);
     xAxis->setSubTicks(false);
