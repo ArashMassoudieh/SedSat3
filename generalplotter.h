@@ -34,6 +34,8 @@ public:
     void SetRange(const vector<double> &range, const Axis &whichaxis);
     void SetLegend(bool onoff);
 
+
+
 private:
     vector<double> x_max_min_range;
     vector<double> y_max_min_range;
@@ -65,4 +67,6 @@ static inline QList<T> QListfromStdVector(const std::vector<T> &vector)
    return QList<T>(vector.begin(), vector.end());
 }
 
+template <class T>
+static inline QVector<T> fromStdVector(const std::vector<T> &vector);
 

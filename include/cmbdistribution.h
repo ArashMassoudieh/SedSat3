@@ -1,5 +1,5 @@
-#ifndef DISTRIBUTION_H
-#define DISTRIBUTION_H
+#ifndef CMBDISTRIBUTION_H
+#define CMBDISTRIBUTION_H
 
 #include <vector>
 #include "BTC.h"
@@ -30,4 +30,4 @@ private:
     double std_val=0;
 };
 
-#endif // DISTRIBUTION_H
+#endif // CMBDISTRIBUTION_H

@@ -42,9 +42,9 @@ SOURCES += \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
+    src/cmbdistribution.cpp \
     src/concentrationset.cpp \
     src/conductor.cpp \
-    src/distribution.cpp \
     src/elemental_profile.cpp \
     src/elemental_profile_set.cpp \
     src/interface.cpp \
@@ -82,6 +82,7 @@ HEADERS += \
     include/GA/GA.hpp \
     include/GA/GADistribution.h \
     include/GA/Individual.h \
+    include/cmbdistribution.h \
     include/concentrationset.h \
     include/conductor.h \
     include/elemental_profile.h \
@@ -201,6 +202,17 @@ linux {
     LIBS += -L"/usr/local/lib/ -lsuperlu.so"
     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
     LIBS += -larmadillo -llapack -lblas
+}
+
+macx {
+    #sudo apt-get install libblas-dev liblapack-dev
+    greaterThan(QT_MAJOR_VERSION, 5): LIBS += /Users/arash/Projects/QXlsx/install/debug/libQXlsx.a
+    DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
+    LIBS += -larmadillo -llapack -lblas
+    LIBS += -L$$PWD/../../../../opt/homebrew/Cellar/gsl/2.7.1/lib/ -lgsl
+    INCLUDEPATH += $$PWD/../../../../opt/homebrew/Cellar/gsl/2.7.1/include
+    DEPENDPATH += $$PWD/../../../../opt/homebrew/Cellar/gsl/2.7.1/include
+
 }
 
 
