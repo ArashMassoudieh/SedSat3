@@ -2,6 +2,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport charts
 
+greaterThan(QT_MAJOR_VERSION, 5): DEFINES += Qt6
+
 CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -194,7 +196,8 @@ win32 {
 
 linux {
     #sudo apt-get install libblas-dev liblapack-dev
-    LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
+    greaterThan(QT_MAJOR_VERSION, 5): LIBS += /home/arash/Projects/QXlsx/libQXlsx6.a
+    lessThan(QT_MAJOR_VERSION, 6): LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
     LIBS += -L"/usr/local/lib/ -lsuperlu.so"
     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
     LIBS += -larmadillo -llapack -lblas

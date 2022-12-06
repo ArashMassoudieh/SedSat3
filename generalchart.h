@@ -6,6 +6,9 @@
 #include <qchart.h>
 #include "results.h"
 
+#ifndef Qt6
+using namespace QtCharts;
+#endif
 
 namespace Ui {
 class GeneralChart;

@@ -8,6 +8,10 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
 
+#ifndef Qt6
+using namespace QtCharts;
+#endif
+
 class ProgressWindow : public QDialog
 {
 	Q_OBJECT
