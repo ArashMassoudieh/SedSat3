@@ -1,6 +1,7 @@
 #include "sourcesinkdata.h"
 #include "iostream"
 #include "NormalDist.h"
+#include "qjsondocument.h"
 
 
 
@@ -1111,6 +1112,27 @@ bool SourceSinkData::WriteElementInformationToFile(QFile *file)
     return true;
 }
 
+QJsonObject SourceSinkData::ElementInformationToJsonObject()
+{
+    QJsonObject json_object;
+    
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it != ElementInformation.end(); it++)
+        json_object[QString::fromStdString(it->first)] = Role(it->second.Role);
+
+    return json_object;
+}
+
+
+QJsonObject SourceSinkData::ElementDataToJsonObject()
+{
+    QJsonObject json_object;
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject();
+    }
+    return json_object;
+}
+
 bool SourceSinkData::WriteDataToFile(QFile *file)
 {
     file->write("***\n");
@@ -1126,8 +1148,12 @@ bool SourceSinkData::WriteDataToFile(QFile *file)
 
 bool SourceSinkData::WriteToFile(QFile *file)
 {
-    WriteElementInformationToFile(file);
-    WriteDataToFile(file);
+    QJsonObject outputjsonobject;
+    outputjsonobject["Element Information"] = ElementInformationToJsonObject();
+    outputjsonobject["Element Data"] = ElementDataToJsonObject(); 
+    QJsonDocument outputjsondocument(outputjsonobject);
+    
+    file->write(outputjsondocument.toJson());
     return true;
 }
 

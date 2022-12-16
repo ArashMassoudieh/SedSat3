@@ -19,6 +19,11 @@ string Interface::ToString()
     return "";
 }
 
+QJsonObject Interface::toJsonObject()
+{
+    return toJsonObject(); 
+}
+
 bool Interface::writetofile(QFile* file)
 {
     return false;

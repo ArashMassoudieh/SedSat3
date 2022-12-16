@@ -3,6 +3,7 @@
 
 #include <string>
 #include <QStringList>
+#include <qjsonobject.h>
 
 class QFile; 
 
@@ -15,6 +16,7 @@ public:
     Interface(const Interface &intf);
     Interface& operator=(const Interface &intf);
     virtual string ToString();
+    virtual QJsonObject toJsonObject();
     virtual bool writetofile(QFile* file);
     virtual bool Read(const QStringList &strlist);
 

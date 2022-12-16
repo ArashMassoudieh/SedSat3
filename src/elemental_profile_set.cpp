@@ -80,6 +80,19 @@ bool Elemental_Profile_Set::writetofile(QFile* file)
     return 0;
 }
 
+QJsonObject Elemental_Profile_Set::toJsonObject()
+{
+    string out;
+    QJsonObject json_object;
+    if (size() == 0) return QJsonObject();
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject(); 
+    }
+    return json_object;
+    
+}
+
 bool Elemental_Profile_Set::Read(const QStringList &strlist)
 {
 

@@ -19,6 +19,7 @@ public:
     vector<double> Vals(); //Returns a vector containing the values of all emenents in the profile
     string ToString() override;
     bool Read(const QStringList &strlist) override;
+    QJsonObject toJsonObject() override;
     double max(); 
     double min(); 
     vector<string> ElementNames();

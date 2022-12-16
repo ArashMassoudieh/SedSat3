@@ -9,6 +9,7 @@
 #include "results.h"
 #include "ProgressWindow.h"
 #include "fstream"
+#include "qjsonobject.h"
 
 enum class transformation {linear, softmax};
 
@@ -172,6 +173,8 @@ public:
     bool WriteToFile(QFile *fil);
     bool WriteElementInformationToFile(QFile *fil);
     bool WriteDataToFile(QFile *file);
+    QJsonObject ElementInformationToJsonObject();
+    QJsonObject ElementDataToJsonObject();
 private:
     
     map<string,ConcentrationSet> element_distributions;

@@ -30,7 +30,7 @@
 //#include "MCMC.h"
 
 
-#define version "0.0.4"
+#define version "0.0.5"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -83,12 +83,15 @@ void MainWindow::onSaveProject()
     QString fileName = QFileDialog::getSaveFileName(this,
             tr("Save"), "",
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
-    if (fileName.left(4)!=".cmb" || fileName.left(4)!=".CMB")
+    if (!fileName.toLower().contains(".cmb"))
         fileName+=".cmb";
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
     Data()->WriteToFile(&file);
     file.close();
+    
+    
+
 }
 
 void MainWindow::on_import_excel()

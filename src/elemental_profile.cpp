@@ -81,6 +81,16 @@ string Elemental_Profile::ToString()
     return out;
 }
 
+QJsonObject Elemental_Profile::toJsonObject()
+{
+    QJsonObject json_object; 
+    for (map<string, double>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second;
+    }
+    return json_object;
+}
+
 bool Elemental_Profile::Read(const QStringList &strlist)
 {
     clear();

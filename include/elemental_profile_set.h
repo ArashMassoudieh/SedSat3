@@ -110,6 +110,7 @@ public:
     double max();
     double min(); 
     bool writetofile(QFile*) override;
+    QJsonObject toJsonObject() override;
     bool Read(const QStringList &strlist) override;
 
 private:
