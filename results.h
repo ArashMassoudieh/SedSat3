@@ -6,6 +6,8 @@
 
 using namespace std;
 
+class QJsonObject;
+
 enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set};
 
 struct result_item
@@ -25,6 +27,7 @@ public:
     void Append(const result_item&);
     void SetName(const string &_name) {name = _name;}
     string GetName() {return name;}
+    QJsonObject toJsonObject();
 private:
     string name;
 

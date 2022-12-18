@@ -20,3 +20,9 @@ void Results::Append(const result_item &ritem)
 {
     operator[](ritem.name) = ritem;
 }
+
+QJsonObject Results::toJsonObject()
+{
+    QJsonObject out;
+
+}
