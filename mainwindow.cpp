@@ -103,7 +103,6 @@ void MainWindow::onOpenProject()
     file.open(QIODevice::ReadOnly);
     Data()->ReadFromFile(&file);
     file.close();
-    DataCollection.PopulateElementInformation();
     DataCollection.PopulateElementDistributions();
     DataCollection.AssignAllDistributions();
     InitiateTables();

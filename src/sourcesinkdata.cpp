@@ -1117,7 +1117,15 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject()
     QJsonObject json_object;
     
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it != ElementInformation.end(); it++)
-        json_object[QString::fromStdString(it->first)] = Role(it->second.Role);
+    {
+        QJsonObject elem_info_json_obj;
+        elem_info_json_obj["Role"] = Role(it->second.Role);
+        elem_info_json_obj["Standard Ratio"] = it->second.standard_ratio;
+        elem_info_json_obj["Base Element"] = QString::fromStdString(it->second.base_element);
+        json_object[QString::fromStdString(it->first)] = elem_info_json_obj;
+
+    }
+
 
     return json_object;
 }
@@ -1127,7 +1135,9 @@ bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jso
     ElementInformation.clear();
     for(QString key: jsonobject.keys() ) {
         element_information elem_info;
-        elem_info.Role = Role(jsonobject[key].toString());
+        elem_info.Role = Role(jsonobject[key].toObject()["Role"].toString());
+        elem_info.standard_ratio = jsonobject[key].toObject()["Standard Ratio"].toDouble();
+        elem_info.base_element = jsonobject[key].toObject()["Base Element"].toString().toStdString();
         ElementInformation[key.toStdString()] = elem_info;
     }
 
