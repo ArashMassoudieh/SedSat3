@@ -18,7 +18,7 @@ class ResultsWindow : public QDialog
 public:
     explicit ResultsWindow(QWidget *parent = nullptr);
     void AppendText(const string &text);
-    void AppendResult(const result_item &resultitem);
+    void AppendResult(const ResultItem &resultitem);
     ~ResultsWindow();
     void SetResults(Results* res) { results = res;  }
 

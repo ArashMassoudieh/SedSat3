@@ -99,7 +99,7 @@ bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject &jsonobject)
     for(QString key: jsonobject.keys() ) {
         Elemental_Profile elemental_profile;
         elemental_profile.ReadFromJsonObject(jsonobject[key].toObject());
-        operator[](key.toStdString()) = elemental_profile;
+        Append_Profile(key.toStdString(), elemental_profile);
     }
     return true;
 }

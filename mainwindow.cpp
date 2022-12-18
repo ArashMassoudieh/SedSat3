@@ -27,6 +27,7 @@
 #include "resultswindow.h"
 #include "aboutdialog.h"
 #include "resultsetitem.h"
+#include "resultitem.h"
 //#include "MCMC.h"
 
 
@@ -558,7 +559,7 @@ void MainWindow::on_old_result_requested(const QModelIndex& index)
     ResultsWindow *reswind = new ResultsWindow();
     Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
     reswind->SetResults(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result);
-    for (map<string,result_item>::iterator it=resultset->begin(); it!=resultset->end(); it++)
+    for (map<string,ResultItem>::iterator it=resultset->begin(); it!=resultset->end(); it++)
     {
         reswind->AppendResult(it->second);
     }
@@ -576,7 +577,7 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
     resultset->setToolTip(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
     resultset->result = conductor.GetResults();
     resultsviewmodel->appendRow(resultset);
-    for (map<string,result_item>::iterator it=resultset->result->begin(); it!=resultset->result->end(); it++)
+    for (map<string,ResultItem>::iterator it=resultset->result->begin(); it!=resultset->result->end(); it++)
     {
         reswind->AppendResult(it->second);
     }

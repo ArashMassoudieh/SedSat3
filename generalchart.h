@@ -21,7 +21,7 @@ class GeneralChart : public QDialog
 public:
     explicit GeneralChart(QWidget *parent = nullptr);
     ~GeneralChart();
-    bool Plot(result_item* res);
+    bool Plot(ResultItem* res);
 private:
     Ui::GeneralChart *ui;
     QChart* chart;

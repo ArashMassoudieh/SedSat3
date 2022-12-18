@@ -4,6 +4,7 @@
 #include "QDebug"
 #include "QPushButton"
 #include "generalchart.h"
+#include "resultitem.h"
 
 #include <QFileDialog>
 
@@ -25,34 +26,34 @@ ResultsWindow::~ResultsWindow()
 //    ui->textBrowser->append(QString::fromStdString(text));
 //}
 
-void ResultsWindow::AppendResult(const result_item &resultitem)
+void ResultsWindow::AppendResult(const ResultItem &resultitem)
 {
 
     QTextBrowser *textBrowser = new QTextBrowser(ui->scrollAreaWidgetContents);
-    textBrowser->setObjectName(QString::fromStdString(resultitem.name));
+    textBrowser->setObjectName(QString::fromStdString(resultitem.Name()));
     //textBrowser->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     QPushButton *pushButtonGraph = new QPushButton(this);
     QIcon iconGraph = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Graph.png");
     pushButtonGraph->setIcon(iconGraph);
     //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
     pushButtonGraph->setMaximumWidth(20);
-    pushButtonGraph->setObjectName(QString::fromStdString(resultitem.name));
+    pushButtonGraph->setObjectName(QString::fromStdString(resultitem.Name()));
 
     QPushButton *pushButtonExport = new QPushButton(this);
     QIcon iconExport = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/export.png");
     pushButtonExport->setIcon(iconExport);
     //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
     pushButtonExport->setMaximumWidth(20);
-    pushButtonExport->setObjectName(QString::fromStdString(resultitem.name));
+    pushButtonExport->setObjectName(QString::fromStdString(resultitem.Name()));
 
     ui->gridLayout->addWidget(textBrowser,ui->gridLayout->rowCount(),0);
     ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1);
     ui->gridLayout->addWidget(pushButtonExport,ui->gridLayout->rowCount()-1,2);
     textBrowser->setTextColor(Qt::red);
-    textBrowser->append(QString::fromStdString(resultitem.name)+":");
+    textBrowser->append(QString::fromStdString(resultitem.Name())+":");
     textBrowser->setTextColor(Qt::black);
     textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    QString str = QString::fromStdString(resultitem.result->ToString());
+    QString str = QString::fromStdString(resultitem.Result()->ToString());
     textBrowser->append(str);
     int count = 0;
     for(int i = 0;i < str.length();i++)
@@ -90,7 +91,7 @@ void ResultsWindow::on_result_export_clicked()
     if (!file.isOpen())
         return;
     
-    results->operator[](sender()->objectName().toStdString()).result->writetofile(&file);
+    results->operator[](sender()->objectName().toStdString()).Result()->writetofile(&file);
 
     file.close();
     

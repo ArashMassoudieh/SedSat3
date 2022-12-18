@@ -36,6 +36,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     plotwindow.cpp \
+    resultitem.cpp \
     results.cpp \
     resultsetitem.cpp \
     resultswindow.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     indicatesheetsdialog.h \
     mainwindow.h \
     plotwindow.h \
+    resultitem.h \
     results.h \
     resultsetitem.h \
     resultswindow.h

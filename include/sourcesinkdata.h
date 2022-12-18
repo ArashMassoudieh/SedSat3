@@ -149,16 +149,16 @@ public:
     vector<string> ElementOrder() {return element_order;}
     vector<string> IsotopeOrder() {return isotope_order;}
     vector<string> SizeOMOrder() {return size_om_order;}
-    result_item GetContribution();
-    result_item GetPredictedElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    result_item GetObservedElementalProfile();
-    result_item GetObservedvsModeledElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    result_item GetCalculatedElementMeans();
-    result_item GetCalculatedElementStandardDev();
-    result_item GetCalculatedElementMu();
-    result_item GetEstimatedElementMu();
-    result_item GetEstimatedElementMean();
-    result_item GetEstimatedElementSigma();
+    ResultItem GetContribution();
+    ResultItem GetPredictedElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    ResultItem GetObservedElementalProfile();
+    ResultItem GetObservedvsModeledElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    ResultItem GetCalculatedElementMeans();
+    ResultItem GetCalculatedElementStandardDev();
+    ResultItem GetCalculatedElementMu();
+    ResultItem GetEstimatedElementMu();
+    ResultItem GetEstimatedElementMean();
+    ResultItem GetEstimatedElementSigma();
     CVector ResidualVector();
     CVector_arma ResidualVector_arma();
     CMatrix ResidualJacobian();
