@@ -20,6 +20,7 @@ public:
     string ToString() override;
     bool Read(const QStringList &strlist) override;
     QJsonObject toJsonObject() override;
+    bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     double max(); 
     double min(); 
     vector<string> ElementNames();

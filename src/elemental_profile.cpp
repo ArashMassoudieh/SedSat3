@@ -91,6 +91,15 @@ QJsonObject Elemental_Profile::toJsonObject()
     return json_object;
 }
 
+bool Elemental_Profile::ReadFromJsonObject(const QJsonObject &jsonobject)
+{
+    clear();
+    for(QString key: jsonobject.keys() ) {
+        operator[](key.toStdString()) = jsonobject[key].toDouble();
+    }
+    return true;
+}
+
 bool Elemental_Profile::Read(const QStringList &strlist)
 {
     clear();

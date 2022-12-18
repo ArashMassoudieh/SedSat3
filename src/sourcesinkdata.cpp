@@ -1122,6 +1122,29 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject()
     return json_object;
 }
 
+bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jsonobject)
+{
+    ElementInformation.clear();
+    for(QString key: jsonobject.keys() ) {
+        element_information elem_info;
+        elem_info.Role = Role(jsonobject[key].toString());
+        ElementInformation[key.toStdString()] = elem_info;
+    }
+
+    return true;
+}
+
+bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject &jsonobject)
+{
+    clear();
+    for(QString key: jsonobject.keys() ) {
+        Elemental_Profile_Set elemental_profile_set;
+        elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject());
+        operator[](key.toStdString()) = elemental_profile_set;
+    }
+
+    return true;
+}
 
 QJsonObject SourceSinkData::ElementDataToJsonObject()
 {
@@ -1151,10 +1174,20 @@ bool SourceSinkData::WriteToFile(QFile *file)
     QJsonObject outputjsonobject;
     outputjsonobject["Element Information"] = ElementInformationToJsonObject();
     outputjsonobject["Element Data"] = ElementDataToJsonObject(); 
+    outputjsonobject["Target Group"] = QString::fromStdString(target_group);
     QJsonDocument outputjsondocument(outputjsonobject);
     
     file->write(outputjsondocument.toJson());
     return true;
+}
+
+bool SourceSinkData::ReadFromFile(QFile *fil)
+{
+    QJsonObject jsondoc = QJsonDocument().fromJson(fil->readAll()).object();
+    ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
+    ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
+    target_group = jsondoc["Target Group"].toString().toStdString();
+
 }
 
 QString SourceSinkData::Role(const element_information::role &rl)

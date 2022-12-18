@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAboutTriggered()));
     connect(ui->actionSave_Project,SIGNAL(triggered()),this,SLOT(onSaveProject()));
+    connect(ui->actionOpen_Project,SIGNAL(triggered()),this,SLOT(onOpenProject()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
     conductor.SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
@@ -89,9 +90,23 @@ void MainWindow::onSaveProject()
     file.open(QIODevice::WriteOnly);
     Data()->WriteToFile(&file);
     file.close();
-    
-    
 
+}
+
+void MainWindow::onOpenProject()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+            tr("Open"), "",
+            tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+
+    QFile file(fileName);
+    file.open(QIODevice::ReadOnly);
+    Data()->ReadFromFile(&file);
+    file.close();
+    DataCollection.PopulateElementInformation();
+    DataCollection.PopulateElementDistributions();
+    DataCollection.AssignAllDistributions();
+    InitiateTables();
 }
 
 void MainWindow::on_import_excel()
@@ -107,10 +122,16 @@ void MainWindow::on_import_excel()
     {
         ReadExcel(fileName);
     }
+
+    InitiateTables();
+    on_constituent_properties_triggered();
+
+}
+
+void MainWindow::InitiateTables()
+{
     QList<QStandardItem*> modelitems;
     QList<QStandardItem*> elementitems;
-
-
     if (columnviewmodel)
         delete columnviewmodel;
     columnviewmodel = new QStandardItemModel();
@@ -123,8 +144,6 @@ void MainWindow::on_import_excel()
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(preparetreeviewMenu(const QPoint &)));
-    on_constituent_properties_triggered();
-
 }
 
 void MainWindow::on_plot_raw_elemental_profiles()

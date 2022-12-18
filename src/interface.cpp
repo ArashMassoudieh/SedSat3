@@ -21,8 +21,14 @@ string Interface::ToString()
 
 QJsonObject Interface::toJsonObject()
 {
-    return toJsonObject(); 
+    return QJsonObject();
 }
+
+bool Interface::ReadFromJsonObject(const QJsonObject &jsonobject)
+{
+    return true;
+}
+
 
 bool Interface::writetofile(QFile* file)
 {

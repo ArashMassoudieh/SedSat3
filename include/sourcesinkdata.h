@@ -171,10 +171,13 @@ public:
     void SetParameterEstimationMode(estimation_mode est_mode) {parameter_estimation_mode = est_mode;}
     estimation_mode ParameterEstimationMode() {return parameter_estimation_mode;}
     bool WriteToFile(QFile *fil);
+    bool ReadFromFile(QFile *fil);
     bool WriteElementInformationToFile(QFile *fil);
     bool WriteDataToFile(QFile *file);
     QJsonObject ElementInformationToJsonObject();
     QJsonObject ElementDataToJsonObject();
+    bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
+    bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
 private:
     
     map<string,ConcentrationSet> element_distributions;

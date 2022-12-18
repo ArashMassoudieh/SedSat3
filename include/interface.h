@@ -17,6 +17,7 @@ public:
     Interface& operator=(const Interface &intf);
     virtual string ToString();
     virtual QJsonObject toJsonObject();
+    virtual bool ReadFromJsonObject(const QJsonObject &jsonobject);
     virtual bool writetofile(QFile* file);
     virtual bool Read(const QStringList &strlist);
 
