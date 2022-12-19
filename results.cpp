@@ -27,7 +27,7 @@ QJsonObject Results::toJsonObject()
     QJsonObject out;
     for (map<string,ResultItem>::iterator it = begin(); it!=end(); it++)
     {
-        out[QString::fromStdString(it->first)] = it->second.toJsonObject();
+        out[QString::fromStdString(it->first)] = it->second.Result()->toJsonObject();
     }
     return out;
 

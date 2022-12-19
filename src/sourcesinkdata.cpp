@@ -1167,6 +1167,7 @@ QJsonObject SourceSinkData::ElementDataToJsonObject()
     return json_object;
 }
 
+
 bool SourceSinkData::WriteDataToFile(QFile *file)
 {
     file->write("***\n");
@@ -1182,13 +1183,6 @@ bool SourceSinkData::WriteDataToFile(QFile *file)
 
 bool SourceSinkData::WriteToFile(QFile *file)
 {
-    QJsonObject outputjsonobject;
-    outputjsonobject["Element Information"] = ElementInformationToJsonObject();
-    outputjsonobject["Element Data"] = ElementDataToJsonObject(); 
-    outputjsonobject["Target Group"] = QString::fromStdString(target_group);
-    QJsonDocument outputjsondocument(outputjsonobject);
-    
-    file->write(outputjsondocument.toJson());
     return true;
 }
 

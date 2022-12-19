@@ -89,7 +89,22 @@ void MainWindow::onSaveProject()
         fileName+=".cmb";
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
-    Data()->WriteToFile(&file);
+    QJsonObject outputjsonobject;
+    outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
+    outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
+    outputjsonobject["Target Group"] = QString::fromStdString(Data()->TargetGroup());
+
+    QJsonObject resultsetjsonobject;
+    for (int i=0; i<resultsviewmodel->rowCount(); i++)
+    {
+        QModelIndex index = resultsviewmodel->index(i,0);
+        Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
+        resultsetjsonobject[QString::fromStdString(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result->GetName())] = resultset->toJsonObject();
+    }
+    outputjsonobject["Results"] = resultsetjsonobject;
+    QJsonDocument outputjsondocument(outputjsonobject);
+
+    file.write(outputjsondocument.toJson());
     file.close();
 
 }

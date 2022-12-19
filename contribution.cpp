@@ -46,3 +46,13 @@ bool Contribution::Read(const QStringList &strlist)
     }
     return true;
 }
+
+QJsonObject Contribution::toJsonObject()
+{
+    QJsonObject out;
+    for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++ )
+    {
+        out[QString::fromStdString(it->first)] = it->second;
+    }
+    return out;
+}
