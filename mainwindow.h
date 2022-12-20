@@ -7,6 +7,7 @@
 #include "formelementinformation.h"
 #include "conductor.h"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -35,6 +36,8 @@ private:
     QStandardItem* ToQStandardItem(const QString &key, const QJsonObject &json);
     QStandardItemModel* ToQStandardItemModel(const QJsonDocument &jsondocument);
     QStandardItemModel *columnviewmodel = nullptr;
+    QStandardItemModel *resultsviewmodel = nullptr;
+
     QJsonDocument loadJson(const QString &fileName);
     void saveJson(const QJsonDocument &document, const QString &fileName);
     QString SelectedTreeItemType = "None";
@@ -43,7 +46,7 @@ private:
     QJsonDocument formsstructure;
     QWidget *centralform = nullptr;
     Conductor conductor;
-    
+    void InitiateTables();
 
 private slots:
     void on_import_excel();
@@ -55,9 +58,13 @@ private slots:
     void on_constituent_properties_triggered();
     void on_test_dialog_triggered();
     void on_tool_executed(const QModelIndex&);
+    void on_old_result_requested(const QModelIndex&);
     void on_test_likelihood();
     void on_test_progress_window();
     void on_TestLevenberg_Marquardt();
+    void onAboutTriggered();
+    void onSaveProject();
+    void onOpenProject();
 
 
 };

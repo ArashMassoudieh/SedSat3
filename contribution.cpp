@@ -1,5 +1,6 @@
 #include "contribution.h"
 #include "Utilities.h"
+#include "qfile.h"
 
 Contribution::Contribution():map<string, double>(),Interface()
 {
@@ -25,4 +26,43 @@ string Contribution::ToString()
         out += it->first + ":" + aquiutils::numbertostring(it->second) + "\n";
     }
     return out;
+}
+
+bool Contribution::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
+}
+
+bool Contribution::Read(const QStringList &strlist)
+{
+    clear();
+    for (int i=0; i<strlist.size();i++)
+    {
+        if (strlist[i].split(":").size()>1)
+        {
+            operator[](strlist[i].split(":")[0].toStdString()) = strlist[i].split(":")[1].toDouble();
+        }
+    }
+    return true;
+}
+
+QJsonObject Contribution::toJsonObject()
+{
+    QJsonObject out;
+    for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++ )
+    {
+        out[QString::fromStdString(it->first)] = it->second;
+    }
+    return out;
+}
+
+bool Contribution::ReadFromJsonObject(const QJsonObject &jsonobject)
+{
+    clear();
+    for (QString key: jsonobject.keys())
+    {
+        operator[](key.toStdString()) = jsonobject[key].toDouble();
+    }
+    return true;
 }

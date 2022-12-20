@@ -1,6 +1,8 @@
 #include "sourcesinkdata.h"
 #include "iostream"
 #include "NormalDist.h"
+#include "qjsondocument.h"
+#include "resultitem.h"
 
 
 
@@ -386,7 +388,7 @@ CVector SourceSinkData::GetSourceContributions()
 double SourceSinkData::LogPriorContributions()
 {
     if (GetSourceContributions().min()<0)
-        return -1000;
+        return -1e10;
     else
         return 0;
 }
@@ -432,10 +434,12 @@ double SourceSinkData::LogLikelihoodModelvsMeasured(estimation_mode est_mode)
     else
         C = PredictTarget(parameter_mode::direct);
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
-    for (unsigned int i=0; i<numberofconstituents; i++)
-    {
+
+    if (C.min()>0)
         LogLikelihood -= log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
-    }
+    else
+        LogLikelihood -= 1e10;
+
     return LogLikelihood;
 }
 
@@ -894,23 +898,23 @@ Elemental_Profile *SourceSinkData::GetElementalProfile(const string sample_name)
     return nullptr;
 }
 
-result_item SourceSinkData::GetContribution()
+ResultItem SourceSinkData::GetContribution()
 {
-    result_item result_cont;
+    ResultItem result_cont;
     Contribution *contribution = new Contribution();
     for (int i=0; i<SourceOrder().size(); i++)
     {
         contribution->operator[](SourceOrder()[i]) = ContributionVector()[i];
     }
-    result_cont.name = "Contributions";
-    result_cont.result = contribution;
-    result_cont.type = result_type::contribution;
+    result_cont.SetName("Contributions");
+    result_cont.SetResult(contribution);
+    result_cont.SetType(result_type::contribution);
 
     return  result_cont;
 }
-result_item SourceSinkData::GetPredictedElementalProfile(parameter_mode param_mode)
+ResultItem SourceSinkData::GetPredictedElementalProfile(parameter_mode param_mode)
 {
-    result_item result_modeled;
+    ResultItem result_modeled;
 
     Elemental_Profile *modeled_profile = new Elemental_Profile();
     CVector predicted_profile = PredictTarget(param_mode);
@@ -919,31 +923,31 @@ result_item SourceSinkData::GetPredictedElementalProfile(parameter_mode param_mo
     {
         modeled_profile->AppendElement(element_names[i],predicted_profile[i]);
     }
-    result_modeled.name = "Modeled Elemental Profile";
-    result_modeled.result = modeled_profile;
-    result_modeled.type = result_type::predicted_concentration;
+    result_modeled.SetName("Modeled Elemental Profile");
+    result_modeled.SetResult(modeled_profile);
+    result_modeled.SetType(result_type::predicted_concentration);
     return result_modeled;
 }
 
-result_item SourceSinkData::GetObservedvsModeledElementalProfile(parameter_mode param_mode)
+ResultItem SourceSinkData::GetObservedvsModeledElementalProfile(parameter_mode param_mode)
 {
-    result_item result_obs;
+    ResultItem result_obs;
 
-    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile(param_mode).result);
-    Elemental_Profile* observed = static_cast<Elemental_Profile*>(GetObservedElementalProfile().result);
+    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile(param_mode).Result());
+    Elemental_Profile* observed = static_cast<Elemental_Profile*>(GetObservedElementalProfile().Result());
     Elemental_Profile_Set* modeled_vs_observed = new Elemental_Profile_Set(); 
     modeled_vs_observed->Append_Profile("Observed", *observed);
     modeled_vs_observed->Append_Profile("Modeled", *predicted);
     
-    result_obs.name = "Observed vs Modeled Elemental Profile";
-    result_obs.result = modeled_vs_observed;
-    result_obs.type = result_type::elemental_profile_set;
+    result_obs.SetName("Observed vs Modeled Elemental Profile");
+    result_obs.SetResult(modeled_vs_observed);
+    result_obs.SetType(result_type::elemental_profile_set);
     return result_obs;
 }
 
-result_item SourceSinkData::GetObservedElementalProfile()
+ResultItem SourceSinkData::GetObservedElementalProfile()
 {
-    result_item result_obs;
+    ResultItem result_obs;
 
     Elemental_Profile* obs_profile = new Elemental_Profile();
     CVector observed_profile = ObservedDataforSelectedSample(selected_target_sample);
@@ -958,13 +962,13 @@ result_item SourceSinkData::GetObservedElementalProfile()
     {
         obs_profile->AppendElement(element_names[i], observed_profile[i]);
     }
-    result_obs.name = "Observed Elemental Profile";
-    result_obs.result = obs_profile;
-    result_obs.type = result_type::predicted_concentration;
+    result_obs.SetName("Observed Elemental Profile");
+    result_obs.SetResult(obs_profile);
+    result_obs.SetType(result_type::predicted_concentration);
     return result_obs;
 }
 
-result_item SourceSinkData::GetCalculatedElementMeans()
+ResultItem SourceSinkData::GetCalculatedElementMeans()
 {
     Elemental_Profile_Set *profile_set = new Elemental_Profile_Set();
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
@@ -979,14 +983,14 @@ result_item SourceSinkData::GetCalculatedElementMeans()
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
-    result_item resitem;
-    resitem.name = "Calculated mean elemental contents";
-    resitem.type = result_type::elemental_profile_set;
-    resitem.result = profile_set;
+    ResultItem resitem;
+    resitem.SetName("Calculated mean elemental contents");
+    resitem.SetType(result_type::elemental_profile_set);
+    resitem.SetResult(profile_set);
     return resitem;
     
 }
-result_item SourceSinkData::GetCalculatedElementStandardDev()
+ResultItem SourceSinkData::GetCalculatedElementStandardDev()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
@@ -1004,13 +1008,13 @@ result_item SourceSinkData::GetCalculatedElementStandardDev()
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
-    result_item resitem;
-    resitem.name = "Calculated elemental contents standard deviations";
-    resitem.type = result_type::elemental_profile_set;
-    resitem.result = profile_set;
+    ResultItem resitem;
+    resitem.SetName("Calculated elemental contents standard deviations");
+    resitem.SetType(result_type::elemental_profile_set);
+    resitem.SetResult(profile_set);
     return resitem;
 }
-result_item SourceSinkData::GetCalculatedElementMu()
+ResultItem SourceSinkData::GetCalculatedElementMu()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
@@ -1025,13 +1029,13 @@ result_item SourceSinkData::GetCalculatedElementMu()
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
-    result_item resitem;
-    resitem.name = "Calculated geometrical mean of elemental contents";
-    resitem.type = result_type::elemental_profile_set;
-    resitem.result = profile_set;
+    ResultItem resitem;
+    resitem.SetName("Calculated geometrical mean of elemental contents");
+    resitem.SetType(result_type::elemental_profile_set);
+    resitem.SetResult(profile_set);
     return resitem;
 }
-result_item SourceSinkData::GetEstimatedElementMu()
+ResultItem SourceSinkData::GetEstimatedElementMu()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
@@ -1046,14 +1050,14 @@ result_item SourceSinkData::GetEstimatedElementMu()
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
-    result_item resitem;
-    resitem.name = "Infered geometrical mean of elemental contents";
-    resitem.type = result_type::elemental_profile_set;
-    resitem.result = profile_set;
+    ResultItem resitem;
+    resitem.SetName("Infered geometrical mean of elemental contents");
+    resitem.SetType(result_type::elemental_profile_set);
+    resitem.SetResult(profile_set);
     return resitem;
 }
 
-result_item SourceSinkData::GetEstimatedElementMean()
+ResultItem SourceSinkData::GetEstimatedElementMean()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
@@ -1070,14 +1074,14 @@ result_item SourceSinkData::GetEstimatedElementMean()
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
-    result_item resitem;
-    resitem.name = "Infered mean of elemental contents";
-    resitem.type = result_type::elemental_profile_set;
-    resitem.result = profile_set;
+    ResultItem resitem;
+    resitem.SetName("Infered mean of elemental contents");
+    resitem.SetType(result_type::elemental_profile_set);
+    resitem.SetResult(profile_set);
     return resitem;
 }
 
-result_item SourceSinkData::GetEstimatedElementSigma()
+ResultItem SourceSinkData::GetEstimatedElementSigma()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
@@ -1092,9 +1096,127 @@ result_item SourceSinkData::GetEstimatedElementSigma()
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
-    result_item resitem;
-    resitem.name = "Infered sigma elemental contents";
-    resitem.type = result_type::elemental_profile_set;
-    resitem.result = profile_set;
+    ResultItem resitem;
+    resitem.SetName("Infered sigma elemental contents");
+    resitem.SetType(result_type::elemental_profile_set);
+    resitem.SetResult(profile_set);
     return resitem;
+}
+
+bool SourceSinkData::WriteElementInformationToFile(QFile *file)
+{
+    file->write("***\n");
+    file->write("Element Information\n");
+    for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        file->write(QString::fromStdString(it->first).toUtf8()+ "\t" + Role(it->second.Role).toUtf8()+"\n");
+
+    return true;
+}
+
+QJsonObject SourceSinkData::ElementInformationToJsonObject()
+{
+    QJsonObject json_object;
+    
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it != ElementInformation.end(); it++)
+    {
+        QJsonObject elem_info_json_obj;
+        elem_info_json_obj["Role"] = Role(it->second.Role);
+        elem_info_json_obj["Standard Ratio"] = it->second.standard_ratio;
+        elem_info_json_obj["Base Element"] = QString::fromStdString(it->second.base_element);
+        json_object[QString::fromStdString(it->first)] = elem_info_json_obj;
+
+    }
+
+
+    return json_object;
+}
+
+bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jsonobject)
+{
+    ElementInformation.clear();
+    for(QString key: jsonobject.keys() ) {
+        element_information elem_info;
+        elem_info.Role = Role(jsonobject[key].toObject()["Role"].toString());
+        elem_info.standard_ratio = jsonobject[key].toObject()["Standard Ratio"].toDouble();
+        elem_info.base_element = jsonobject[key].toObject()["Base Element"].toString().toStdString();
+        ElementInformation[key.toStdString()] = elem_info;
+    }
+
+    return true;
+}
+
+bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject &jsonobject)
+{
+    clear();
+    for(QString key: jsonobject.keys() ) {
+        Elemental_Profile_Set elemental_profile_set;
+        elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject());
+        operator[](key.toStdString()) = elemental_profile_set;
+    }
+
+    return true;
+}
+
+QJsonObject SourceSinkData::ElementDataToJsonObject()
+{
+    QJsonObject json_object;
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject();
+    }
+    return json_object;
+}
+
+
+bool SourceSinkData::WriteDataToFile(QFile *file)
+{
+    file->write("***\n");
+    file->write("Elemental Profiles\n");
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
+    {
+        file->write("**\n");
+        file->write(QString::fromStdString(it->first+"\n").toUtf8());
+        it->second.writetofile(file);
+    }
+    return true;
+}
+
+bool SourceSinkData::WriteToFile(QFile *file)
+{
+    return true;
+}
+
+bool SourceSinkData::ReadFromFile(QFile *fil)
+{
+    QJsonObject jsondoc = QJsonDocument().fromJson(fil->readAll()).object();
+    ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
+    ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
+    target_group = jsondoc["Target Group"].toString().toStdString();
+
+}
+
+QString SourceSinkData::Role(const element_information::role &rl)
+{
+    if (rl == element_information::role::do_not_include)
+        return "DoNotInclude";
+    else if (rl == element_information::role::element)
+        return "Element";
+    else if (rl == element_information::role::isotope)
+        return "Isotope";
+    else if (rl == element_information::role::particle_size)
+        return "ParticleSize";
+    return "DoNotInclude";
+}
+
+element_information::role SourceSinkData::Role(const QString &rl)
+{
+    if (rl == "DoNotInclude")
+        return element_information::role::do_not_include;
+    else if (rl == "Element")
+        return element_information::role::element;
+    else if (rl == "Isotope")
+        return element_information::role::isotope;
+    else if (rl == "ParticleSize")
+        return element_information::role::particle_size;
+    return element_information::role::do_not_include;
 }

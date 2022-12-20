@@ -1,4 +1,4 @@
-#include "distribution.h"
+#include "cmbdistribution.h"
 #include "math.h"
 
 Distribution::Distribution()

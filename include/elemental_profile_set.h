@@ -109,6 +109,10 @@ public:
     vector<string> ElementNames();
     double max();
     double min(); 
+    bool writetofile(QFile*) override;
+    QJsonObject toJsonObject() override;
+    bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
+    bool Read(const QStringList &strlist) override;
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element

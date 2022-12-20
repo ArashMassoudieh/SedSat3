@@ -8,6 +8,10 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
 
+#ifndef Qt6
+using namespace QtCharts;
+#endif
+
 class ProgressWindow : public QDialog
 {
 	Q_OBJECT
@@ -22,9 +26,9 @@ public:
 
 private:
 	Ui::ProgressWindow ui;
-	QtCharts::QChart* chart;
-	QtCharts::QChartView *chartView;
-	QtCharts::QLineSeries* series = nullptr;
-    QtCharts::QValueAxis *yaxis = nullptr;
-    QtCharts::QValueAxis *xaxis = nullptr;
+    QChart* chart;
+    QChartView *chartView;
+    QLineSeries* series = nullptr;
+    QValueAxis *yaxis = nullptr;
+    QValueAxis *xaxis = nullptr;
 };

@@ -18,3 +18,24 @@ string Interface::ToString()
 {
     return "";
 }
+
+QJsonObject Interface::toJsonObject()
+{
+    return QJsonObject();
+}
+
+bool Interface::ReadFromJsonObject(const QJsonObject &jsonobject)
+{
+    return true;
+}
+
+
+bool Interface::writetofile(QFile* file)
+{
+    return false;
+}
+
+bool Interface::Read(const QStringList &strlist)
+{
+    return false;
+}

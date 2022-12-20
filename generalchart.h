@@ -6,6 +6,9 @@
 #include <qchart.h>
 #include "results.h"
 
+#ifndef Qt6
+using namespace QtCharts;
+#endif
 
 namespace Ui {
 class GeneralChart;
@@ -18,11 +21,11 @@ class GeneralChart : public QDialog
 public:
     explicit GeneralChart(QWidget *parent = nullptr);
     ~GeneralChart();
-    bool Plot(result_item* res);
+    bool Plot(ResultItem* res);
 private:
     Ui::GeneralChart *ui;
-    QtCharts::QChart* chart;
-    QtCharts::QChartView *chartView;
+    QChart* chart;
+    QChartView *chartView;
 };
 
 double roundDown(double a);

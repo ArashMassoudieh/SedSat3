@@ -1,6 +1,7 @@
 #include "elemental_profile.h"
 #include "iostream"
 #include "Utilities.h"
+#include <QFile>
 
 using namespace std;
 
@@ -78,6 +79,44 @@ string Elemental_Profile::ToString()
         out += it->first + ":" + aquiutils::numbertostring(it->second) + "\n";
     }
     return out;
+}
+
+QJsonObject Elemental_Profile::toJsonObject()
+{
+    QJsonObject json_object; 
+    for (map<string, double>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second;
+    }
+    return json_object;
+}
+
+bool Elemental_Profile::ReadFromJsonObject(const QJsonObject &jsonobject)
+{
+    clear();
+    for(QString key: jsonobject.keys() ) {
+        operator[](key.toStdString()) = jsonobject[key].toDouble();
+    }
+    return true;
+}
+
+bool Elemental_Profile::Read(const QStringList &strlist)
+{
+    clear();
+    for (int i=0; i<strlist.size(); i++)
+    {
+        if (strlist[i].split(":").size()>1)
+        {
+            AppendElement(strlist[i].split(":")[0].toStdString(), strlist[i].split(":")[1].toDouble());
+        }
+    }
+    return true;
+}
+
+bool Elemental_Profile::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
 }
 
 double Elemental_Profile::max()

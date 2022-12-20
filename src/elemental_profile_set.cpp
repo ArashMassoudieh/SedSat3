@@ -74,6 +74,43 @@ string Elemental_Profile_Set::ToString()
     return out; 
 }
 
+bool Elemental_Profile_Set::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return 0;
+}
+
+QJsonObject Elemental_Profile_Set::toJsonObject()
+{
+    string out;
+    QJsonObject json_object;
+    if (size() == 0) return QJsonObject();
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject(); 
+    }
+    return json_object;
+    
+}
+
+bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject &jsonobject)
+{
+    clear();
+    for(QString key: jsonobject.keys() ) {
+        Elemental_Profile elemental_profile;
+        elemental_profile.ReadFromJsonObject(jsonobject[key].toObject());
+        Append_Profile(key.toStdString(), elemental_profile);
+    }
+    return true;
+}
+
+bool Elemental_Profile_Set::Read(const QStringList &strlist)
+{
+
+
+    return true;
+}
+
 vector<string> Elemental_Profile_Set::ElementNames()
 {
     vector<string> out; 

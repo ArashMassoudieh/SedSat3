@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1047</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -38,6 +38,8 @@
      <string>File</string>
     </property>
     <addaction name="actionImport_Elemental_Profile_from_Excel"/>
+    <addaction name="actionSave_Project"/>
+    <addaction name="actionOpen_Project"/>
    </widget>
    <widget class="QMenu" name="menuPlot">
     <property name="title">
@@ -60,6 +62,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPlot"/>
@@ -237,6 +240,9 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QTreeView" name="TreeView_Results"/>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -278,6 +284,21 @@
   <action name="actionTestLevenberg_Marquardt">
    <property name="text">
     <string>TestLevenberg-Marquardt</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionSave_Project">
+   <property name="text">
+    <string>Save Project</string>
+   </property>
+  </action>
+  <action name="actionOpen_Project">
+   <property name="text">
+    <string>Open Project</string>
    </property>
   </action>
  </widget>

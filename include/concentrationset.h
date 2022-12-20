@@ -2,7 +2,7 @@
 #define CONCENTRATIONSET_H
 
 #include "vector"
-#include "distribution.h"
+#include "cmbdistribution.h"
 
 
 using namespace std;

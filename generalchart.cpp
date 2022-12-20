@@ -3,14 +3,15 @@
 #include <QtCharts>
 #include <contribution.h>
 #include <elemental_profile_set.h>
+#include "resultitem.h"
 
 GeneralChart::GeneralChart(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GeneralChart)
 {
     ui->setupUi(this);
-    chart = new QtCharts::QChart();
-    chartView = new QtCharts::QChartView(chart);
+    chart = new QChart();
+    chartView = new QChartView(chart);
     ui->verticalLayout->addWidget(chartView);
 
 }
@@ -20,26 +21,26 @@ GeneralChart::~GeneralChart()
     delete ui;
 }
 
-bool GeneralChart::Plot(result_item* res)
+bool GeneralChart::Plot(ResultItem* res)
 {
-    if (res->type == result_type::contribution)
+    if (res->Type() == result_type::contribution)
     {
         QPieSeries* series = new QPieSeries();
-        Contribution* contributions = static_cast<Contribution*>(res->result);
+        Contribution* contributions = static_cast<Contribution*>(res->Result());
         for (map<string, double>::iterator it = contributions->begin(); it != contributions->end(); it++)
         {
             series->append(QString::fromStdString(it->first), it->second * 100);
         }
         chart->addSeries(series);
-        chart->setTitle(QString::fromStdString(res->name));
+        chart->setTitle(QString::fromStdString(res->Name()));
         //chart->legend()->hide();
         chartView->setRenderHint(QPainter::Antialiasing);
         return true;
     }
-    if (res->type == result_type::elemental_profile_set)
+    if (res->Type() == result_type::elemental_profile_set)
     {
         
-        Elemental_Profile_Set* profile_sets = static_cast<Elemental_Profile_Set*>(res->result);
+        Elemental_Profile_Set* profile_sets = static_cast<Elemental_Profile_Set*>(res->Result());
         
         QCategoryAxis* axisX = new QCategoryAxis();
         
@@ -79,10 +80,10 @@ bool GeneralChart::Plot(result_item* res)
         return true; 
     }
 
-    if (res->type == result_type::predicted_concentration)
+    if (res->Type() == result_type::predicted_concentration)
     {
 
-        Elemental_Profile* profile_set = static_cast<Elemental_Profile*>(res->result);
+        Elemental_Profile* profile_set = static_cast<Elemental_Profile*>(res->Result());
 
         QCategoryAxis* axisX = new QCategoryAxis();
         qDebug() << profile_set->ElementNames().size();
@@ -103,7 +104,7 @@ bool GeneralChart::Plot(result_item* res)
         //QLineSeries* series = new QLineSeries();
         QScatterSeries* series = new QScatterSeries();
         chart->addSeries(series);
-        series->setName(QString::fromStdString(res->name));
+        series->setName(QString::fromStdString(res->Name()));
         series->attachAxis(axisX);
         series->attachAxis(axisY);
         series->setMarkerShape(QScatterSeries::MarkerShapeCircle);

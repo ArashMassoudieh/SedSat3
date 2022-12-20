@@ -2,6 +2,7 @@
 #include "ProgressWindow.h"
 #include "results.h"
 #include "contribution.h"
+#include "resultitem.h"
 
 Conductor::Conductor()
 {
@@ -22,16 +23,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         GA->SetProperties(arguments);
         GA->InitiatePopulation();
         GA->optimize();
-        result_item result_cont = GA->Model_out.GetContribution();
+
+        results.SetName("GA " + arguments["Sample"]);
+
+        ResultItem result_cont = GA->Model_out.GetContribution();
         results.Append(result_cont);
 
-        result_item result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
+        ResultItem result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
         results.Append(result_calculated_means);
 
-        result_item result_estimated_means = GA->Model_out.GetEstimatedElementMean(); 
+        ResultItem result_estimated_means = GA->Model_out.GetEstimatedElementMean();
         results.Append(result_estimated_means);
 
-        result_item result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile();
+        ResultItem result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile();
         results.Append(result_modeled_vs_measured);
 
     }
@@ -48,10 +52,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         GA->SetProperties(arguments);
         GA->InitiatePopulation();
         GA->optimize();
-        result_item result_cont = GA->Model_out.GetContribution();
+        results.SetName("GA (fixed profile) " + arguments["Sample"]);
+        ResultItem result_cont = GA->Model_out.GetContribution();
         results.Append(result_cont);
 
-        result_item result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile(parameter_mode::direct);
+        ResultItem result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile(parameter_mode::direct);
         results.Append(result_modeled_vs_measured);
 
     }
@@ -69,16 +74,17 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         GA->InitiatePopulation();
         GA->optimize();
 
-        result_item result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
+        results.SetName("GA (no targets) " + arguments["Sample"]);
+        ResultItem result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
         results.Append(result_calculated_means);
 
-        result_item result_estimated_means = GA->Model_out.GetEstimatedElementMean();
+        ResultItem result_estimated_means = GA->Model_out.GetEstimatedElementMean();
         results.Append(result_estimated_means);
 
-        result_item result_calculated_stds = GA->Model_out.GetCalculatedElementStandardDev();
+        ResultItem result_calculated_stds = GA->Model_out.GetCalculatedElementStandardDev();
         results.Append(result_calculated_stds);
 
-        result_item result_estimated_stds = GA->Model_out.GetEstimatedElementSigma();
+        ResultItem result_estimated_stds = GA->Model_out.GetEstimatedElementSigma();
         results.Append(result_estimated_stds);
 
 
@@ -94,13 +100,15 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             Data()->SolveLevenBerg_Marquardt(transformation::softmax);
         else
             Data()->SolveLevenBerg_Marquardt(transformation::linear);
-        result_item result_cont = Data()->GetContribution();
+
+        results.SetName("LM " + arguments["Sample"]);
+        ResultItem result_cont = Data()->GetContribution();
         results.Append(result_cont);
 
-        result_item result_modeled = Data()->GetPredictedElementalProfile(parameter_mode::direct);
+        ResultItem result_modeled = Data()->GetPredictedElementalProfile(parameter_mode::direct);
         results.Append(result_modeled);
 
-        result_item result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();
+        ResultItem result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();
         results.Append(result_modeled_vs_measured);
 
     }
