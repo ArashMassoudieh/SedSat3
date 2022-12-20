@@ -28,5 +28,5 @@ private:
     QChartView *chartView;
 };
 
-double roundDown(double a);
+double roundDown(double a, double rounding_number=1.0);
 #endif // GENERALCHART_H

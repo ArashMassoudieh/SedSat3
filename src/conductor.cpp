@@ -38,6 +38,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile();
         results.Append(result_modeled_vs_measured);
 
+        ResultItem result_modeled_vs_measured_isotope = GA->Model_out.GetObservedvsModeledElementalProfile_Isotope();
+        results.Append(result_modeled_vs_measured_isotope);
+
     }
     if (command == "GA (fixed elemental contribution)")
     {
@@ -58,6 +61,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         ResultItem result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile(parameter_mode::direct);
         results.Append(result_modeled_vs_measured);
+
+        ResultItem result_modeled_vs_measured_isotope = GA->Model_out.GetObservedvsModeledElementalProfile_Isotope(parameter_mode::direct);
+        results.Append(result_modeled_vs_measured_isotope);
 
     }
     if (command == "GA (disregarding targets)")
@@ -110,6 +116,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         ResultItem result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();
         results.Append(result_modeled_vs_measured);
+
+        ResultItem result_modeled_vs_measured_isotope = Data()->GetObservedvsModeledElementalProfile_Isotope(parameter_mode::direct);
+        results.Append(result_modeled_vs_measured_isotope);
 
     }
     return true;

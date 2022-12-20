@@ -129,7 +129,10 @@ public:
     bool InitializeContributionsRandomly_softmax(); //initializes source contributions randomly for softmax transformation
     bool SetParameterValue(unsigned int i, double value); //set the parameter values for estimation
     CVector PredictTarget(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    CVector PredictTarget_Isotope(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
+    CVector PredictTarget_Isotope_delta(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
     CMatrix SourceMeanMatrix(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    CMatrix SourceMeanMatrix_Isotopes(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     CVector ContributionVector(bool full=true);
     CVector ContributionVector_softmax();
     void SetContribution(int i, double value);
@@ -137,9 +140,12 @@ public:
     void SetContribution(const CVector &X);
     void SetContribution_softmax(const CVector &X); //set source contribution softmax transforations
     CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
+    CVector ObservedDataforSelectedSample_Isotope(const string &SelectedTargetSample="");//return observed isotopes transformed into isotope contents
+    CVector ObservedDataforSelectedSample_Isotope_delta(const string &SelectedTargetSample="");//return delta values of observed isotopes
     double GetObjectiveFunctionValue();
     double LogLikelihood(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
     vector<string> ElementsToBeUsedInCMB();
+    vector<string> IsotopesToBeUsedInCMB();
     vector<string> SourceGroupNames();
     bool SetSelectedTargetSample(const string &sample_name);
     string SelectedTargetSample();
@@ -151,8 +157,11 @@ public:
     vector<string> SizeOMOrder() {return size_om_order;}
     ResultItem GetContribution();
     ResultItem GetPredictedElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    ResultItem GetPredictedElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     ResultItem GetObservedElementalProfile();
+    ResultItem GetObservedElementalProfile_Isotope();
     ResultItem GetObservedvsModeledElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    ResultItem GetObservedvsModeledElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     ResultItem GetCalculatedElementMeans();
     ResultItem GetCalculatedElementStandardDev();
     ResultItem GetCalculatedElementMu();
@@ -190,12 +199,14 @@ private:
     double LogPriorContributions();
     double LogLikelihoodSourceElementalDistributions();
     double LogLikelihoodModelvsMeasured(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
+    double LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
     CVector GetSourceContributions();
     Parameter* ElementalContent_mu(int element_iterator, int source_iterator);
     Parameter* ElementalContent_sigma(int element_iterator, int source_iterator);
     double ElementalContent_mu_value(int element_iterator, int source_iterator);
     double ElementalContent_sigma_value(int element_iterator, int source_iterator);
     unsigned int numberofconstituents = 0;
+    unsigned int numberofisotopes = 0;
     unsigned int numberofsourcesamplesets = 0;
     vector<string> samplesetsorder;
     vector<string> constituent_order;
@@ -204,6 +215,7 @@ private:
     vector<string> size_om_order;
     void populate_constituent_orders();
     double error_stdev = 0;
+    double error_stdev_isotope = 0;
     ProgressWindow *rtw = nullptr;
     estimation_mode parameter_estimation_mode = estimation_mode::elemental_profile_and_contribution;
 

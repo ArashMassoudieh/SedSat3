@@ -615,6 +615,7 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
     {
         reswind->AppendResult(it->second);
     }
+    reswind->setWindowTitle(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
     reswind->show();
 
     return outcome;
