@@ -1,5 +1,6 @@
 #include "results.h"
 #include "resultitem.h"
+#include "contribution.h"
 
 Results::Results()
 {
@@ -30,5 +31,23 @@ QJsonObject Results::toJsonObject()
         out[QString::fromStdString(it->first)] = it->second.Result()->toJsonObject();
     }
     return out;
+
+}
+
+bool Results::ReadFromJson(const QJsonObject &jsonobject)
+{
+    for(QString key: jsonobject.keys() ) {
+
+        if (key=="Contributions")
+        {
+            Contribution *contribution = new Contribution();
+            contribution->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetType(result_type::contribution);
+            res_item.SetResult(contribution);
+            operator[](key.toStdString()) = res_item;
+        }
+     }
 
 }

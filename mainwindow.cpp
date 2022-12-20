@@ -89,6 +89,8 @@ void MainWindow::onSaveProject()
         fileName+=".cmb";
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
+
+
     QJsonObject outputjsonobject;
     outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
     outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
@@ -99,7 +101,7 @@ void MainWindow::onSaveProject()
     {
         QModelIndex index = resultsviewmodel->index(i,0);
         Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
-        resultsetjsonobject[QString::fromStdString(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result->GetName())] = resultset->toJsonObject();
+        resultsetjsonobject[static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text()] = resultset->toJsonObject();
     }
     outputjsonobject["Results"] = resultsetjsonobject;
     QJsonDocument outputjsondocument(outputjsonobject);
@@ -118,6 +120,22 @@ void MainWindow::onOpenProject()
     QFile file(fileName);
     file.open(QIODevice::ReadOnly);
     Data()->ReadFromFile(&file);
+    file.close();
+    QFile fileres(fileName);
+    fileres.open(QIODevice::ReadOnly);
+    QJsonObject jsondoc = QJsonDocument().fromJson(fileres.readAll()).object();
+    QJsonObject resultsjson = jsondoc["Results"].toObject();
+    resultsviewmodel->clear();
+    for(QString key: resultsjson.keys() ) {
+
+        ResultSetItem *resultset = new ResultSetItem(key);
+        resultset->setToolTip(key);
+        resultset->result = new Results();
+        resultset->result->ReadFromJson(resultsjson.value(key).toObject());
+        resultsviewmodel->appendRow(resultset);
+     }
+
+
     file.close();
     DataCollection.PopulateElementDistributions();
     DataCollection.AssignAllDistributions();
@@ -574,6 +592,7 @@ void MainWindow::on_old_result_requested(const QModelIndex& index)
     ResultsWindow *reswind = new ResultsWindow();
     Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
     reswind->SetResults(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result);
+    reswind->setWindowTitle(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text());
     for (map<string,ResultItem>::iterator it=resultset->begin(); it!=resultset->end(); it++)
     {
         reswind->AppendResult(it->second);

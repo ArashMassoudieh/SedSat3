@@ -18,6 +18,7 @@ public:
     Results& operator = (const Results &rhs);
     void Append(const ResultItem&);
     void SetName(const string &_name) {name = _name;}
+    bool ReadFromJson(const QJsonObject &jsonobject);
     string GetName() {return name;}
     QJsonObject toJsonObject();
 private:
