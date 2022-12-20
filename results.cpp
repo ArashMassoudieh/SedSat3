@@ -1,6 +1,7 @@
 #include "results.h"
 #include "resultitem.h"
 #include "contribution.h"
+#include "elemental_profile_set.h"
 
 Results::Results()
 {
@@ -48,6 +49,28 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(contribution);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key=="Modeled Elemental Profile")
+        {
+            Elemental_Profile *modeled = new Elemental_Profile();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetType(result_type::predicted_concentration);
+            res_item.SetResult(modeled);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key=="Observed vs Modeled Elemental Profile")
+        {
+            Elemental_Profile_Set *modeled_vs_measured = new Elemental_Profile_Set();
+            modeled_vs_measured->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetType(result_type::elemental_profile_set);
+            res_item.SetResult(modeled_vs_measured);
+            operator[](key.toStdString()) = res_item;
+        }
+
      }
+    return true;
 
 }
