@@ -118,28 +118,31 @@ void MainWindow::onOpenProject()
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
 
     QFile file(fileName);
-    file.open(QIODevice::ReadOnly);
-    Data()->ReadFromFile(&file);
-    file.close();
-    QFile fileres(fileName);
-    fileres.open(QIODevice::ReadOnly);
-    QJsonObject jsondoc = QJsonDocument().fromJson(fileres.readAll()).object();
-    QJsonObject resultsjson = jsondoc["Results"].toObject();
-    resultsviewmodel->clear();
-    for(QString key: resultsjson.keys() ) {
 
-        ResultSetItem *resultset = new ResultSetItem(key);
-        resultset->setToolTip(key);
-        resultset->result = new Results();
-        resultset->result->ReadFromJson(resultsjson.value(key).toObject());
-        resultsviewmodel->appendRow(resultset);
-     }
+    if (file.open(QIODevice::ReadOnly))
+    {
+        Data()->ReadFromFile(&file);
+        file.close();
+        QFile fileres(fileName);
+        fileres.open(QIODevice::ReadOnly);
+        QJsonObject jsondoc = QJsonDocument().fromJson(fileres.readAll()).object();
+        QJsonObject resultsjson = jsondoc["Results"].toObject();
+        resultsviewmodel->clear();
+        for(QString key: resultsjson.keys() ) {
+
+            ResultSetItem *resultset = new ResultSetItem(key);
+            resultset->setToolTip(key);
+            resultset->result = new Results();
+            resultset->result->ReadFromJson(resultsjson.value(key).toObject());
+            resultsviewmodel->appendRow(resultset);
+         }
 
 
-    file.close();
-    DataCollection.PopulateElementDistributions();
-    DataCollection.AssignAllDistributions();
-    InitiateTables();
+        file.close();
+        DataCollection.PopulateElementDistributions();
+        DataCollection.AssignAllDistributions();
+        InitiateTables();
+    }
 }
 
 void MainWindow::on_import_excel()

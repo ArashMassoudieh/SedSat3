@@ -573,12 +573,16 @@ double SourceSinkData::LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_
 CVector SourceSinkData::ResidualVector()
 {
     CVector C = PredictTarget(parameter_mode::direct);
+    CVector C_iso = PredictTarget_Isotope_delta(parameter_mode::direct);
     if (!C.is_finite())
     {
         qDebug()<<"oops!";
     }
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
+    CVector C_obs_iso = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample);
     CVector Residual = C.Log() - C_obs.Log();
+    CVector Residual_isotope = C_iso - C_obs_iso;
+    Residual.append(Residual_isotope);
     if (!Residual.is_finite())
     {
         CVector X = ContributionVector();
@@ -591,15 +595,19 @@ CVector SourceSinkData::ResidualVector()
 CVector_arma SourceSinkData::ResidualVector_arma()
 {
     CVector_arma C = PredictTarget().vec;
+    CVector_arma C_iso = PredictTarget_Isotope_delta().vec;
     CVector_arma C_obs = ObservedDataforSelectedSample(selected_target_sample).vec;
+    CVector_arma C_obs_iso = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample).vec;
     CVector_arma Residual = C.Log() - C_obs.Log();
+    CVector_arma Residual_iso = C_iso-C_obs;
+    Residual.append(Residual_iso);
 
     return Residual;
 }
 
 CMatrix_arma SourceSinkData::ResidualJacobian_arma()
 {
-    CMatrix_arma Jacobian(SourceOrder().size()-1,element_order.size());
+    CMatrix_arma Jacobian(SourceOrder().size()-1,element_order.size()+isotope_order.size());
     CVector_arma base_contribution = ContributionVector(false).vec;
     CVector_arma base_residual = ResidualVector_arma();
     for (unsigned int i = 0; i < SourceOrder().size()-1; i++)
@@ -615,7 +623,7 @@ CMatrix_arma SourceSinkData::ResidualJacobian_arma()
 
 CMatrix SourceSinkData::ResidualJacobian()
 {
-    CMatrix Jacobian(SourceOrder().size()-1,element_order.size());
+    CMatrix Jacobian(SourceOrder().size()-1,element_order.size()+isotope_order.size());
     CVector base_contribution = ContributionVector(false).vec;
     CVector base_residual = ResidualVector();
     for (unsigned int i = 0; i < SourceOrder().size()-1; i++)
@@ -632,7 +640,7 @@ CMatrix SourceSinkData::ResidualJacobian()
 
 CMatrix SourceSinkData::ResidualJacobian_softmax()
 {
-    CMatrix Jacobian(SourceOrder().size(),element_order.size());
+    CMatrix Jacobian(SourceOrder().size(),element_order.size()+isotope_order.size());
     CVector base_contribution = ContributionVector_softmax().vec;
     CVector base_residual = ResidualVector();
     for (unsigned int i = 0; i < SourceOrder().size(); i++)
