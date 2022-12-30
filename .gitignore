@@ -88,3 +88,7 @@ bin/Debug/
 *.txt
 
 Release/
+
+.qtc_clangd/.cache/clangd/index/
+
+.qtc_clangd/

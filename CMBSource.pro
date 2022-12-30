@@ -35,6 +35,7 @@ SOURCES += \
     indicatesheetsdialog.cpp \
     main.cpp \
     mainwindow.cpp \
+    multiplelinearregression.cpp \
     plotwindow.cpp \
     resultitem.cpp \
     results.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     include/sourcesinkdata.h \
     indicatesheetsdialog.h \
     mainwindow.h \
+    multiplelinearregression.h \
     plotwindow.h \
     resultitem.h \
     results.h \

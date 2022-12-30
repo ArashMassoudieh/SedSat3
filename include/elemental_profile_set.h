@@ -113,7 +113,7 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     bool Read(const QStringList &strlist) override;
-
+    bool ContainsElement(const string &elementname);
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     double contribution = 0;

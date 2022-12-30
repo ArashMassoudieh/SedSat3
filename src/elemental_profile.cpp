@@ -147,3 +147,8 @@ vector<string> Elemental_Profile::ElementNames()
     }
     return out; 
 }
+
+bool Elemental_Profile::contains(const string &element)
+{
+    return (map<string,double>::count(element)!=0);
+}

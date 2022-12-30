@@ -25,7 +25,7 @@ public:
     double min(); 
     vector<string> ElementNames();
     bool writetofile(QFile* file) override;
-
+    bool contains(const string &element);
     
 private:
     

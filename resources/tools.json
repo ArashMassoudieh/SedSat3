@@ -1,6 +1,7 @@
 {
   "Pre Analysis Tools":
   {
+    "Organic matter and particle size correction": "MLR",
     "Principal Component Analysis": "PCA",
     "Discriminatory Power Analysis": "DPA",
     "Distribution Fitting": "DF"

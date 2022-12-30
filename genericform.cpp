@@ -52,11 +52,19 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                     ui->formLayout->addRow(label,combobox);
                     parameter_prop.InputWidget = combobox;
                     {
+                        qDebug()<<object.value("source").toString();
                         if (object.value("source").toString()=="TargetSamplesList")
                         {
                             vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
                             for (unsigned int i=0; i<names.size(); i++)
                                 combobox->addItem(QString::fromStdString(names[i]));
+                        }
+                        else if (object.value("source").toString()=="ElementsList")
+                        {
+                            vector<string> names = mainwindow()->Data()->ElementNames();
+                            for (unsigned int i=0; i<names.size(); i++)
+                                combobox->addItem(QString::fromStdString(names[i]));
+
                         }
                     }
                 }

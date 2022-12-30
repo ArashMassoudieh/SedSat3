@@ -142,5 +142,15 @@
     			"type": "checkBox",
     			"default": "true"
     		}
+	},
+        "MLR": {
+    		"Organic Matter constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		},
+    		"Particla Size constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		}
 	}
 }

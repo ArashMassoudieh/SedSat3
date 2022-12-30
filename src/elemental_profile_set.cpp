@@ -111,6 +111,21 @@ bool Elemental_Profile_Set::Read(const QStringList &strlist)
     return true;
 }
 
+bool Elemental_Profile_Set::ContainsElement(const string &elementname)
+{
+    if (size()==0)
+        return false;
+
+    bool out=true;
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        out &= it->second.contains(elementname);
+
+    }
+    return out;
+
+}
+
 vector<string> Elemental_Profile_Set::ElementNames()
 {
     vector<string> out; 

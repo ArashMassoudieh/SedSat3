@@ -31,7 +31,7 @@
 //#include "MCMC.h"
 
 
-#define version "0.0.5"
+#define version "0.0.6"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->frame->setVisible(false);
     qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
     //tools
+    qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
     QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
     formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
     QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
