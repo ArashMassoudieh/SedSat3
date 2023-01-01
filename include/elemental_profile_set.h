@@ -7,6 +7,7 @@
 #include <vector>
 #include "concentrationset.h"
 #include "interface.h"
+#include "multiplelinearregression.h"
 
 using namespace std;
 
@@ -114,6 +115,7 @@ public:
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     bool Read(const QStringList &strlist) override;
     bool ContainsElement(const string &elementname);
+    map<string, MultipleLinearRegression> regress_vs_size_OM(const string &om, const string &d);
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     double contribution = 0;

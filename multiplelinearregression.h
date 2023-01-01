@@ -2,6 +2,7 @@
 #define MULTIPLELINEARREGRESSION_H
 
 #include "interface.h"
+#include "cmbmatrix.h"
 
 class MultipleLinearRegression: public Interface
 {
@@ -15,6 +16,8 @@ public:
     vector<double> CoefficientsIntercept();
 private:
     vector<double> coefficients_intercept_;
+    CMBMatrix correlation_matrix_;
+    double chisq;
 };
 
 #endif // MULTIPLELINEARREGRESSION_H

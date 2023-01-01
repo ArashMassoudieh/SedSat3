@@ -216,3 +216,8 @@ double Elemental_Profile_Set::min()
     }
     return _min;
 }
+
+map<string, MultipleLinearRegression> Elemental_Profile_Set::regress_vs_size_OM(const string &om, const string &d)
+{
+
+}

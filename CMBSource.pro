@@ -23,6 +23,7 @@ SOURCES += \
     ../qcustomplot6/qcustomplot.cpp \
     ProgressWindow.cpp \
     aboutdialog.cpp \
+    cmbmatrix.cpp \
     contribution.cpp \
     customplotbar.cpp \
     elementstablemodel.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     ../qcustomplot6/qcustomplot.h \
     ProgressWindow.h \
     aboutdialog.h \
+    cmbmatrix.h \
     contribution.h \
     customplotbar.h \
     elementstablemodel.h \

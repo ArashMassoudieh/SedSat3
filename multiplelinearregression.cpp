@@ -1,5 +1,7 @@
 #include "multiplelinearregression.h"
 #include <gsl/gsl_multifit.h>
+#include "Vector.h"
+
 
 MultipleLinearRegression::MultipleLinearRegression():Interface()
 {
@@ -43,15 +45,13 @@ bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent
         gsl_vector_set (w, i, 1.0);
     }
 
-      {
+    {
         gsl_multifit_linear_workspace * work
           = gsl_multifit_linear_alloc (number_of_data_points, number_of_variables+1);
         gsl_multifit_wlinear (X, w, y, c, cov,&chisq, work);
         gsl_multifit_linear_free (work);
-      }
+    }
 
-    #define C(i) (gsl_vector_get(c,(i)))
-    #define COV(i,j) (gsl_matrix_get(cov,(i),(j)))
 
     coefficients_intercept_.resize(number_of_variables+1);
     for (int i=0; i<number_of_variables+1; i++)
@@ -59,26 +59,19 @@ bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent
         coefficients_intercept_[i] = gsl_vector_get(c,i);
     }
 
-/*
-        printf ("# covariance matrix:\n");
-        printf ("[ %+.5e, %+.5e, %+.5e  \n",
-                   COV(0,0), COV(0,1), COV(0,2));
-        printf ("  %+.5e, %+.5e, %+.5e  \n",
-                   COV(1,0), COV(1,1), COV(1,2));
-        printf ("  %+.5e, %+.5e, %+.5e ]\n",
-                   COV(2,0), COV(2,1), COV(2,2));
-        printf ("# chisq = %g\n", chisq);
-*/
+    correlation_matrix_ = CMBMatrix(number_of_variables+1);
+    for (int i=0; i<number_of_variables+1; i++)
+        for (int j=0; j<number_of_variables+1; j++)
+            correlation_matrix_[i][j] = gsl_matrix_get(cov,i,j);
 
+    gsl_matrix_free (X);
+    gsl_vector_free (y);
+    gsl_vector_free (w);
+    gsl_vector_free (c);
+    gsl_matrix_free (cov);
 
-      gsl_matrix_free (X);
-      gsl_vector_free (y);
-      gsl_vector_free (w);
-      gsl_vector_free (c);
-      gsl_matrix_free (cov);
+    return true;
 
-      return true;
-    }
 }
 QJsonObject MultipleLinearRegression::toJsonObject()
 {
