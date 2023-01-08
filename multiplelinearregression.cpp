@@ -84,5 +84,10 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
 
 vector<double> MultipleLinearRegression::CoefficientsIntercept()
 {
+    return coefficients_intercept_;
+}
 
+string MultipleLinearRegression::ToString()
+{
+    return string();
 }

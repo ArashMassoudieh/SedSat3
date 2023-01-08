@@ -217,7 +217,29 @@ double Elemental_Profile_Set::min()
     return _min;
 }
 
-map<string, MultipleLinearRegression> Elemental_Profile_Set::regress_vs_size_OM(const string &om, const string &d)
+MultipleLinearRegressionSet Elemental_Profile_Set::regress_vs_size_OM(const string &om, const string &d)
 {
+    MultipleLinearRegressionSet out;
+    vector<string> elementnames = ElementNames();
+    for (unsigned int i=0; i<elementnames.size(); i++)
+    {
+        out[elementnames[i]] = regress_vs_size_OM(elementnames[i],om,d);
+    }
+    return out;
+}
 
+MultipleLinearRegression Elemental_Profile_Set::regress_vs_size_OM(const string &element, const string &om, const string &d)
+{
+    MultipleLinearRegression out;
+    vector<double> dependent = GetProfileForSample(element);
+    vector<vector<double>> independents;
+    independents.push_back(GetProfileForSample(om));
+    independents.push_back(GetProfileForSample(d));
+    out.Regress(independents,dependent);
+    return out;
+}
+
+void Elemental_Profile_Set::SetRegression(const string &om, const string &d)
+{
+    mlr_vs_om_size = regress_vs_size_OM(om,d);
 }

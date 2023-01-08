@@ -11,6 +11,7 @@
 #include "fstream"
 #include "qjsonobject.h"
 
+
 enum class transformation {linear, softmax};
 
 struct profiles_data
@@ -187,6 +188,7 @@ public:
     QJsonObject ElementDataToJsonObject();
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
+    bool Perform_Regression_vs_om_size(const string &om, const string &d);
 private:
     
     map<string,ConcentrationSet> element_distributions;

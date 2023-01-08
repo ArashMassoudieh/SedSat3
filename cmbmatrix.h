@@ -1,7 +1,7 @@
 #ifndef CMBMATRIX_H
 #define CMBMATRIX_H
 
-#include "matrix.h"
+#include "Matrix.h"
 #include "interface.h"
 
 class CMBMatrix : public CMatrix, Interface

@@ -12,6 +12,7 @@ public:
     MultipleLinearRegression& operator=(const MultipleLinearRegression &mp);
     bool Regress(const vector<vector<double>> &independent, const vector<double> dependent);
     QJsonObject toJsonObject() override;
+    string ToString() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     vector<double> CoefficientsIntercept();
 private:

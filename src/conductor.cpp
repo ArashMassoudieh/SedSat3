@@ -121,5 +121,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(result_modeled_vs_measured_isotope);
 
     }
+
+    if (command == "MLR")
+    {
+        results.SetName("MLR_vs_OM&Size ");
+        Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"]);
+    }
     return true;
 }

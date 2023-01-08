@@ -1497,3 +1497,12 @@ element_information::role SourceSinkData::Role(const QString &rl)
         return element_information::role::particle_size;
     return element_information::role::do_not_include;
 }
+
+bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d)
+{
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
+    {
+        it->second.SetRegression(om,d);
+    }
+    return true;
+}
