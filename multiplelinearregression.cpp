@@ -15,6 +15,7 @@ MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegressio
 MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLinearRegression &mp)
 {
     Interface::operator=(mp);
+    return *this; 
 }
 bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double> dependent)
 {
@@ -75,11 +76,11 @@ bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent
 }
 QJsonObject MultipleLinearRegression::toJsonObject()
 {
-
+    return QJsonObject(); 
 }
 bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
-
+    return true; 
 }
 
 vector<double> MultipleLinearRegression::CoefficientsIntercept()
