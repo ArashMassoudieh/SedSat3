@@ -10,17 +10,26 @@ MultipleLinearRegression::MultipleLinearRegression():Interface()
 
 MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegression& mp):Interface(mp)
 {
+    chisq = mp.chisq;
+    coefficients_intercept_ = mp.coefficients_intercept_;
+    correlation_matrix_ = mp.correlation_matrix_;
+    independent_variables_names = mp.independent_variables_names;
 
 }
 MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLinearRegression &mp)
 {
     Interface::operator=(mp);
-    return *this; 
+    chisq = mp.chisq;
+    coefficients_intercept_ = mp.coefficients_intercept_;
+    correlation_matrix_ = mp.correlation_matrix_;
+    independent_variables_names = mp.independent_variables_names;
+    return *this;
 }
-bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double> dependent)
+bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double> dependent, const vector<string> &indep_var_names)
 {
     if (independent.size()==0) return false;
     if (independent[0].size()!=dependent.size()) return false;
+    independent_variables_names = indep_var_names;
     int number_of_data_points = dependent.size();
     int number_of_variables = independent.size();
 
@@ -76,11 +85,26 @@ bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent
 }
 QJsonObject MultipleLinearRegression::toJsonObject()
 {
-    return QJsonObject(); 
+    QJsonObject out;
+    out["Intercept"] = coefficients_intercept_[0];
+    for (unsigned int i=1; i<coefficients_intercept_.size(); i++)
+    {
+        out[QString::fromStdString("Coefficient for " + independent_variables_names[i-1])] = coefficients_intercept_[i];
+    }
+    return out;
+
 }
 bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
-    return true; 
+    independent_variables_names.clear();
+    coefficients_intercept_[0] = jsonobject["Intercept"].toDouble();
+    int i=1;
+    for(QString key: jsonobject.keys() ) {
+        if (key.contains("Coefficient for "))
+        {   coefficients_intercept_[i] = jsonobject[key].toDouble();
+            independent_variables_names[i-1] = key.split("Coefficient for ")[0].toStdString();
+        }
+    }
 }
 
 vector<double> MultipleLinearRegression::CoefficientsIntercept()
@@ -90,5 +114,13 @@ vector<double> MultipleLinearRegression::CoefficientsIntercept()
 
 string MultipleLinearRegression::ToString()
 {
-    return string();
+    string out;
+    out += "Intercept: " + QString::number(coefficients_intercept_[0]).toStdString() + "\n";
+    for (unsigned int i=1; i<coefficients_intercept_.size(); i++)
+    {
+        out += "Coefficient for " + independent_variables_names[i-1] +":" + QString::number(coefficients_intercept_[i]).toStdString() + "\n";
+    }
+    return out;
 }
+
+

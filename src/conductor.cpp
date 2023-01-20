@@ -126,6 +126,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         results.SetName("MLR_vs_OM&Size ");
         Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"]);
+        vector<ResultItem> regression_result = Data()->GetMLRResults();
+        for (unsigned int i=0; i<regression_result.size(); i++)
+        {
+            results.Append(regression_result[i]);
+        }
     }
     return true;
 }

@@ -1188,6 +1188,18 @@ ResultItem SourceSinkData::GetObservedvsModeledElementalProfile(parameter_mode p
     return result_obs;
 }
 
+vector<ResultItem> SourceSinkData::GetMLRResults()
+{
+    vector<ResultItem> out;
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
+    {
+        ResultItem profile_result = it->second.GetRegressions();
+        profile_result.SetName(it->first);
+        out.push_back(profile_result);
+    }
+    return out;
+}
+
 ResultItem SourceSinkData::GetObservedvsModeledElementalProfile_Isotope(parameter_mode param_mode)
 {
     ResultItem result_obs;

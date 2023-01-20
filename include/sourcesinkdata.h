@@ -163,6 +163,7 @@ public:
     ResultItem GetObservedElementalProfile_Isotope();
     ResultItem GetObservedvsModeledElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     ResultItem GetObservedvsModeledElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    vector<ResultItem> GetMLRResults();
     ResultItem GetCalculatedElementMeans();
     ResultItem GetCalculatedElementStandardDev();
     ResultItem GetCalculatedElementMu();

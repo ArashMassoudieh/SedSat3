@@ -189,6 +189,22 @@ Elemental_Profile Elemental_Profile_Set::Profile(unsigned int i) const
 
 }
 
+
+vector<double> Elemental_Profile_Set::GetAllConcentrationsFor(const string &element_name)
+{
+    vector<double> out;
+    if (begin()->second.count(element_name)==0)
+    {
+        return out;
+    }
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        out.push_back(it->second.at(element_name));
+    }
+    return out;
+}
+
+
 vector<double> Elemental_Profile_Set::GetProfileForSample(const string &sample_name)
 {
     if (!Profile(sample_name))
@@ -231,11 +247,12 @@ MultipleLinearRegressionSet Elemental_Profile_Set::regress_vs_size_OM(const stri
 MultipleLinearRegression Elemental_Profile_Set::regress_vs_size_OM(const string &element, const string &om, const string &d)
 {
     MultipleLinearRegression out;
-    vector<double> dependent = GetProfileForSample(element);
+    vector<double> dependent = GetAllConcentrationsFor(element);
     vector<vector<double>> independents;
-    independents.push_back(GetProfileForSample(om));
-    independents.push_back(GetProfileForSample(d));
-    out.Regress(independents,dependent);
+    independents.push_back(GetAllConcentrationsFor(om));
+    independents.push_back(GetAllConcentrationsFor(d));
+    vector<string> independent_var_names = {om,d};
+    out.Regress(independents,dependent, independent_var_names);
     return out;
 }
 
@@ -243,3 +260,14 @@ void Elemental_Profile_Set::SetRegression(const string &om, const string &d)
 {
     mlr_vs_om_size = regress_vs_size_OM(om,d);
 }
+
+ResultItem Elemental_Profile_Set::GetRegressions()
+{
+    ResultItem out;
+    out.SetResult(&mlr_vs_om_size);
+    out.SetType(result_type::mlrset);
+
+    return out;
+}
+
+

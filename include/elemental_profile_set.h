@@ -8,6 +8,7 @@
 #include "concentrationset.h"
 #include "interface.h"
 #include "multiplelinearregressionset.h"
+#include "resultitem.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ public:
     Elemental_Profile Profile(unsigned int i) const;
     vector<double> GetAllConcentrationsFor(const string &element_name);
     vector<double> GetProfileForSample(const string &source_name);
+
     Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile());
    
     vector<string> SampleNames(); // Return the list of the name of samples
@@ -118,6 +120,7 @@ public:
     MultipleLinearRegressionSet regress_vs_size_OM(const string &om, const string &d);
     MultipleLinearRegression regress_vs_size_OM(const string &element, const string &om, const string &d);
     void SetRegression(const string &om, const string &d);
+    ResultItem GetRegressions();
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;
