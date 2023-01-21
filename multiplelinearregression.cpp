@@ -1,6 +1,7 @@
 #include "multiplelinearregression.h"
 #include <gsl/gsl_multifit.h>
 #include "Vector.h"
+#include <gsl/gsl_statistics_double.h>
 
 
 MultipleLinearRegression::MultipleLinearRegression():Interface()
@@ -11,6 +12,7 @@ MultipleLinearRegression::MultipleLinearRegression():Interface()
 MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegression& mp):Interface(mp)
 {
     chisq = mp.chisq;
+    R2 = mp.R2;
     coefficients_intercept_ = mp.coefficients_intercept_;
     correlation_matrix_ = mp.correlation_matrix_;
     independent_variables_names = mp.independent_variables_names;
@@ -20,12 +22,13 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
 {
     Interface::operator=(mp);
     chisq = mp.chisq;
+    R2 = mp.R2;
     coefficients_intercept_ = mp.coefficients_intercept_;
     correlation_matrix_ = mp.correlation_matrix_;
     independent_variables_names = mp.independent_variables_names;
     return *this;
 }
-bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double> dependent, const vector<string> &indep_var_names)
+double MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double> dependent, const vector<string> &indep_var_names)
 {
     if (independent.size()==0) return false;
     if (independent[0].size()!=dependent.size()) return false;
@@ -33,7 +36,6 @@ bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent
     int number_of_data_points = dependent.size();
     int number_of_variables = independent.size();
 
-    double chisq;
     gsl_matrix *X, *cov;
     gsl_vector *y, *w, *c;
 
@@ -74,13 +76,16 @@ bool MultipleLinearRegression::Regress(const vector<vector<double>> &independent
         for (int j=0; j<number_of_variables+1; j++)
             correlation_matrix_[i][j] = gsl_matrix_get(cov,i,j);
 
+    double var_y = gsl_stats_tss(y->data, y->stride, y->size);
+
+    R2 = 1-chisq/var_y;
     gsl_matrix_free (X);
     gsl_vector_free (y);
     gsl_vector_free (w);
     gsl_vector_free (c);
     gsl_matrix_free (cov);
 
-    return true;
+    return chisq;
 
 }
 QJsonObject MultipleLinearRegression::toJsonObject()
@@ -91,6 +96,10 @@ QJsonObject MultipleLinearRegression::toJsonObject()
     {
         out[QString::fromStdString("Coefficient for " + independent_variables_names[i-1])] = coefficients_intercept_[i];
     }
+
+    out["Chisq"] = chisq;
+    out["R2"] = R2;
+
     return out;
 
 }
@@ -105,6 +114,9 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
             independent_variables_names[i-1] = key.split("Coefficient for ")[0].toStdString();
         }
     }
+    R2 = jsonobject["R2"].toDouble();
+    chisq = jsonobject["Chisq"].toDouble();
+    return true;
 }
 
 vector<double> MultipleLinearRegression::CoefficientsIntercept()
@@ -120,6 +132,8 @@ string MultipleLinearRegression::ToString()
     {
         out += "Coefficient for " + independent_variables_names[i-1] +":" + QString::number(coefficients_intercept_[i]).toStdString() + "\n";
     }
+    out += "Chisq: " + QString::number(chisq).toStdString() + "\n";
+    out += "R2: " + QString::number(R2).toStdString() + "\n";
     return out;
 }
 
