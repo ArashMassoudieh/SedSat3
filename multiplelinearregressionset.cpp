@@ -51,6 +51,7 @@ string MultipleLinearRegressionSet::ToString()
     {
         out += it->first + ":\n";
         out += it->second.ToString();
+        out += "_______________________________________\n";
     }
     return out;
 }
