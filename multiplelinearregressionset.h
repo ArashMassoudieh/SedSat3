@@ -14,7 +14,10 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     bool Append(QString key, const MultipleLinearRegression &MLR);
+    void SetSource(const string& source) { Source = source; }
 
+private:
+    string Source; 
 };
 
 #endif // MULTIPLELINEARREGRESSIONSET_H

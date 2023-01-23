@@ -69,6 +69,16 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(modeled_vs_measured);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("OM & Size MLR for "))
+        {
+            MultipleLinearRegressionSet* mlrset = new MultipleLinearRegressionSet(); 
+            mlrset->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetType(result_type::elemental_profile_set);
+            res_item.SetResult(mlrset);
+            operator[](key.toStdString()) = res_item;
+        }
 
      }
     return true;

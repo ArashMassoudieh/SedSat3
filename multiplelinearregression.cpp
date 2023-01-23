@@ -172,14 +172,14 @@ QJsonObject MultipleLinearRegression::toJsonObject()
 bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
     independent_variables_names.clear();
-    coefficients_intercept_[0] = jsonobject["Intercept"].toDouble();
-    int i=1;
     coefficients_intercept_.clear();
     p_value.clear();
+    coefficients_intercept_.push_back(jsonobject["Intercept"].toDouble());
+    int i=1;
     for(QString key: jsonobject.keys() ) {
         if (key.contains("Coefficient for "))
         {   coefficients_intercept_.push_back(jsonobject[key].toDouble());
-            independent_variables_names[i-1] = key.split("Coefficient for ")[0].toStdString();
+            independent_variables_names.push_back(key.split("Coefficient for ")[0].toStdString());
         }
         if (key.contains("P-value for"))
         {

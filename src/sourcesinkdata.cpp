@@ -1194,7 +1194,7 @@ vector<ResultItem> SourceSinkData::GetMLRResults()
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
     {
         ResultItem profile_result = it->second.GetRegressions();
-        profile_result.SetName(it->first);
+        profile_result.SetName("OM & Size MLR for " + it->first);
         out.push_back(profile_result);
     }
     return out;
@@ -1481,7 +1481,7 @@ bool SourceSinkData::ReadFromFile(QFile *fil)
     ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
     ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
     target_group = jsondoc["Target Group"].toString().toStdString();
-
+    return true;
 }
 
 QString SourceSinkData::Role(const element_information::role &rl)

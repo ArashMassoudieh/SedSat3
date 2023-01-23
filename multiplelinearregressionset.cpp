@@ -7,12 +7,14 @@ MultipleLinearRegressionSet::MultipleLinearRegressionSet():map<string, MultipleL
 
 MultipleLinearRegressionSet::MultipleLinearRegressionSet(const MultipleLinearRegressionSet& mp):map<string, MultipleLinearRegression>(mp),Interface()
 {
-
+    Source = mp.Source; 
 }
 MultipleLinearRegressionSet& MultipleLinearRegressionSet::operator=(const MultipleLinearRegressionSet &mp)
 {
     map<string,MultipleLinearRegression>::operator=(mp);
     Interface::operator=(mp);
+    Source = mp.Source; 
+    return *this; 
 }
 QJsonObject MultipleLinearRegressionSet::toJsonObject()
 {
