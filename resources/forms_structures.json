@@ -152,5 +152,17 @@
     			"type": "comboBox",
     			"source": "ElementsList"
     		}
+	},
+	"CovMat": {
+		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
+	},
+	"CorMat": {
+		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
 	}
 }

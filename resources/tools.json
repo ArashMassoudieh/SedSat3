@@ -4,7 +4,9 @@
     "Organic matter and particle size correction": "MLR",
     "Principal Component Analysis": "PCA",
     "Discriminatory Power Analysis": "DPA",
-    "Distribution Fitting": "DF"
+    "Distribution Fitting": "DF",
+    "Elements' covariance matrix": "CovMat",
+    "Elements' correlation matrix": "CorMat"
   },
   "Analysis Tools":
   {

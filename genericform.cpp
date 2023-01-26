@@ -66,6 +66,13 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                                 combobox->addItem(QString::fromStdString(names[i]));
 
                         }
+                        else if (object.value("source").toString()=="SourceList")
+                        {
+                            vector<string> names = mainwindow()->Data()->SourceGroupNames();
+                            for (unsigned int i=0; i<names.size(); i++)
+                                combobox->addItem(QString::fromStdString(names[i]));
+
+                        }
                     }
                 }
                 if (object.value("type").toString()=="fileBrowser_Save")

@@ -1,5 +1,7 @@
 #include "elemental_profile_set.h"
 #include "iostream"
+#include <gsl/gsl_statistics_double.h>
+
 
 using namespace std;
 
@@ -269,5 +271,78 @@ ResultItem Elemental_Profile_Set::GetRegressions()
 
     return out;
 }
+
+CMBMatrix Elemental_Profile_Set::CovarianceMatrix()
+{
+    CMBMatrix out(ElementNames().size());
+    //double gsl_stats_covariance(const double data1[], const size_t stride1, const double data2[], const size_t stride2, const size_t n)
+
+    gsl_matrix *X = CopytoGSLMatrix();
+
+    vector<string> element_names = ElementNames();
+    for (int i = 0; i < X->size2; i++)
+    {
+        out.SetColumnLabel(i,element_names[i]);
+        out.SetRowLabel(i,element_names[i]);
+    }
+
+
+    for (int i = 0; i < X->size2; i++) {
+            for (int j = i; j < X->size2; j++) {
+              gsl_vector_view a = gsl_matrix_column (X, i);
+              gsl_vector_view b = gsl_matrix_column (X, j);
+              double cov = gsl_stats_covariance(a.vector.data, a.vector.stride,b.vector.data, b.vector.stride, a.vector.size);
+              out[i][j]=cov;
+              out[j][i]=cov;
+            }
+          }
+    return out;
+}
+
+CMBMatrix Elemental_Profile_Set::CorrelationMatrix()
+{
+    CMBMatrix out(ElementNames().size());
+    //double gsl_stats_covariance(const double data1[], const size_t stride1, const double data2[], const size_t stride2, const size_t n)
+
+    gsl_matrix *X = CopytoGSLMatrix();
+
+    vector<string> element_names = ElementNames();
+    for (int i = 0; i < X->size2; i++)
+    {
+        out.SetColumnLabel(i,element_names[i]);
+        out.SetRowLabel(i,element_names[i]);
+    }
+    for (int i = 0; i < X->size2; i++) {
+            for (int j = i; j < X->size2; j++) {
+              gsl_vector_view a = gsl_matrix_column (X, i);
+              gsl_vector_view b = gsl_matrix_column (X, j);
+              double cov = gsl_stats_correlation(a.vector.data, a.vector.stride,b.vector.data, b.vector.stride, a.vector.size);
+              out[i][j]=cov;
+              out[j][i]=cov;
+            }
+          }
+    return out;
+}
+
+
+gsl_matrix* Elemental_Profile_Set::CopytoGSLMatrix()
+{
+    gsl_matrix *out;
+    out = gsl_matrix_alloc (this->size(),ElementNames().size());
+    int i=0;
+    for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
+    {
+        int j=0;
+        for (map<string,double>::iterator element = it->second.begin(); element!=it->second.end(); element++)
+        {
+            gsl_matrix_set (out, i, j, element->second);
+            j++;
+        }
+        i++;
+    }
+    return out;
+
+}
+
 
 

@@ -11,6 +11,7 @@ Conductor::Conductor()
 
 bool Conductor::Execute(const string &command, map<string,string> arguments)
 {
+    results.clear();
     if (command == "GA")
     {
         if (GA!=nullptr) delete GA;
@@ -131,6 +132,30 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             results.Append(regression_result[i]);
         }
+    }
+    if (command == "CovMat")
+    {
+        results.SetName("Covariance Matrix for " + arguments["Source/Target group"] );
+        ResultItem covMatResItem;
+        covMatResItem.SetName("Covariance Matrix for " + arguments["Source/Target group"] );
+        covMatResItem.SetType(result_type::matrix);
+
+        CMBMatrix *covmatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CovarianceMatrix());
+        covMatResItem.SetResult(covmatr);
+        results.Append(covMatResItem);
+
+    }
+    if (command == "CorMat")
+    {
+        results.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
+        ResultItem corMatResItem;
+        corMatResItem.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
+        corMatResItem.SetType(result_type::matrix);
+
+        CMBMatrix *cormatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CorrelationMatrix());
+        corMatResItem.SetResult(cormatr);
+        results.Append(corMatResItem);
+
     }
     return true;
 }
