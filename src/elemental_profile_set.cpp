@@ -344,5 +344,17 @@ gsl_matrix* Elemental_Profile_Set::CopytoGSLMatrix()
 
 }
 
+CVector Elemental_Profile_Set::ElementMeans()
+{
+    vector<string> element_names = ElementNames();
+    CVector out(element_names.size());
+    for (int i=0; i<element_names.size(); i++)
+    {
+        out[i] = element_distributions[element_names[i]].mean();
+    }
+    return out;
+}
+
+
 
 

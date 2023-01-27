@@ -126,6 +126,7 @@ public:
     CMBMatrix CovarianceMatrix();
     CMBMatrix CorrelationMatrix();
     gsl_matrix *CopytoGSLMatrix();
+    CVector ElementMeans();
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
