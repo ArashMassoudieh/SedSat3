@@ -24,6 +24,7 @@ SOURCES += \
     ProgressWindow.cpp \
     aboutdialog.cpp \
     cmbmatrix.cpp \
+    cmbvector.cpp \
     contribution.cpp \
     customplotbar.cpp \
     elementstablemodel.cpp \
@@ -73,6 +74,7 @@ HEADERS += \
     ProgressWindow.h \
     aboutdialog.h \
     cmbmatrix.h \
+    cmbvector.h \
     contribution.h \
     customplotbar.h \
     elementstablemodel.h \

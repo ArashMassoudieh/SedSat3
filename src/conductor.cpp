@@ -157,5 +157,17 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(corMatResItem);
 
     }
+    if (command == "DFA")
+    {
+        results.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
+        ResultItem DFAResItem;
+        DFAResItem.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"]  );
+        DFAResItem.SetType(result_type::vector);
+
+        CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        DFAResItem.SetResult(dfaeigenvector);
+        results.Append(DFAResItem);
+
+    }
     return true;
 }

@@ -10,6 +10,7 @@
 #include "ProgressWindow.h"
 #include "fstream"
 #include "qjsonobject.h"
+#include "cmbvector.h"
 
 
 enum class transformation {linear, softmax};
@@ -190,7 +191,7 @@ public:
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d);
-    CVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
 private:
     
     map<string,ConcentrationSet> element_distributions;

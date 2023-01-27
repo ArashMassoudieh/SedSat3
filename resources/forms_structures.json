@@ -164,5 +164,15 @@
 			"type": "comboBox",
 			"source": "SourceList"
 		}
+	},
+	"DFA": {
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
 	}
 }

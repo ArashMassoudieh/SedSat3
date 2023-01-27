@@ -29,6 +29,7 @@ CMBMatrix& CMBMatrix::operator=(const CMBMatrix &mp)
     columnlabels = mp.columnlabels;
     rowlabels = mp.rowlabels;
     CMatrix::operator=(mp);
+    return *this;
 }
 QJsonObject CMBMatrix::toJsonObject()
 {

@@ -6,7 +6,8 @@
     "Discriminatory Power Analysis": "DPA",
     "Distribution Fitting": "DF",
     "Elements' covariance matrix": "CovMat",
-    "Elements' correlation matrix": "CorMat"
+    "Elements' correlation matrix": "CorMat",
+    "Discriminant function analysis": "DFA"
   },
   "Analysis Tools":
   {
