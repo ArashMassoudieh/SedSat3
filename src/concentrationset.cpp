@@ -170,3 +170,18 @@ distribution_type ConcentrationSet::SelectBestDistribution()
     if (loglikelihood_normal>loglikelihood_lognormal) return distribution_type::normal; else return distribution_type::lognormal;
 }
 
+CMBTimeSeries ConcentrationSet::DataCDF()
+{
+
+    vector<double> data = QSort(*this);
+    CMBTimeSeries out;
+    double dx = 1.0/double(data.size());
+
+    for (unsigned int i=0; i<data.size(); i++)
+    {
+        out.append(data[i],(double(i)+0.5)*dx);
+    }
+    return out;
+
+
+}
