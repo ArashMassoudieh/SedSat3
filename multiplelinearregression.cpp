@@ -222,4 +222,11 @@ string MultipleLinearRegression::ToString()
     return out;
 }
 
+vector<double> &MultipleLinearRegression::IndependentData(const string &var_name)
+{
+    for (int i=0; i<independent_variables_names.size(); i++)
+        if (var_name == independent_variables_names[i])
+            return independent_data[i];
+
+}
 

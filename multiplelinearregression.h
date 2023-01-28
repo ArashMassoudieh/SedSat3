@@ -16,6 +16,12 @@ public:
     string ToString() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     vector<double> CoefficientsIntercept();
+    vector<string> &GetIndependentVariableNames() {return independent_variables_names;}
+    vector<double> &IndependentData(const string &var_name);
+    vector<double> &DependentData()
+    {
+        return dependent_data;
+    }
 private:
     vector<double> coefficients_intercept_;
     vector<vector<double>> independent_data;

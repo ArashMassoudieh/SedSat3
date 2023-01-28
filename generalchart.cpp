@@ -23,6 +23,7 @@ GeneralChart::~GeneralChart()
 
 bool GeneralChart::Plot(ResultItem* res)
 {
+    result_item = res;
     if (res->Type() == result_type::contribution)
     {
 
@@ -258,10 +259,12 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
 }
 bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &title)
 {
-    QComboBox *element_combo = new QComboBox();
+    element_combo = new QComboBox();
     QLabel *element_label = new QLabel();
     element_label->setText("Constituent:");
-    QComboBox *independent_combo = new QComboBox();
+    independent_combo = new QComboBox();
+    connect(element_combo, SIGNAL(currentIndexChanged(const QString&)),this, SLOT(onElementChanged(const QString&)));
+    connect(independent_combo, SIGNAL(currentIndexChanged(const QString&)),this, SLOT(onIndependentChanged(const QString&)));
     for (map<std::string,MultipleLinearRegression>::iterator it = regressionset->begin(); it!=regressionset->end(); it++ )
     {
         element_combo->addItem(QString::fromStdString(it->first));
@@ -273,5 +276,69 @@ bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset,
     ui->horizontalLayout->addWidget(element_combo);
     ui->horizontalLayout->addWidget(independent_label);
     ui->horizontalLayout->addWidget(independent_combo);
+    onElementChanged(element_combo->currentText());
+    onIndependentChanged(independent_combo->currentText());
+    return true;
+}
+
+void GeneralChart::onElementChanged(const QString& constituent)
+{
+    MultipleLinearRegressionSet* mlrset = static_cast<MultipleLinearRegressionSet*>(result_item->Result());
+    independent_combo->clear();
+    for (unsigned int i=0; i<mlrset->at(constituent.toStdString()).GetIndependentVariableNames().size(); i++)
+    {
+        independent_combo->addItem(QString::fromStdString(mlrset->at(constituent.toStdString()).GetIndependentVariableNames()[i]));
+    }
+    if (!independent_combo->currentText().isEmpty() && !element_combo->currentText().isEmpty())
+    {
+        PlotRegression(&mlrset->at(constituent.toStdString()),independent_combo->currentText());
+    }
+
+}
+
+void GeneralChart::onIndependentChanged(const QString& constituent)
+{
+    MultipleLinearRegressionSet* mlrset = static_cast<MultipleLinearRegressionSet*>(result_item->Result());
+    if (!independent_combo->currentText().isEmpty() && !element_combo->currentText().isEmpty())
+    {
+        PlotRegression(&mlrset->at(element_combo->currentText().toStdString()),independent_combo->currentText());
+    }
+
+}
+
+bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& independent_var)
+{
+    qDebug()<<independent_var;
+    chart->removeAllSeries();
+    for (int i=0; i<chart->axes().size(); i++)
+        delete chart->axes()[i];
+
+    chart->axes().clear();
+    QValueAxis* axisX = new QValueAxis();
+    qDebug()<<"Xmaxmin: "<<CVector(mlr->IndependentData(independent_var.toStdString())).min()<<","<<CVector(mlr->IndependentData(independent_var.toStdString())).max();
+    axisX->setRange(CVector(mlr->IndependentData(independent_var.toStdString())).min(), CVector(mlr->IndependentData(independent_var.toStdString())).max());
+
+    QValueAxis* axisYNormal = new QValueAxis();
+    qDebug()<<"Ymaxmin: "<<CVector(mlr->DependentData()).min()<<","<<CVector(mlr->DependentData()).max();
+    axisYNormal->setRange(CVector(mlr->DependentData()).min(),CVector(mlr->DependentData()).max());
+    axisYNormal->setLabelFormat("%f");
+    axisYNormal->setMinorTickCount(5);
+
+    chart->addAxis(axisYNormal, Qt::AlignLeft);
+    chart->addAxis(axisX, Qt::AlignBottom);
+
+    QScatterSeries* series = new QScatterSeries();
+    chart->addSeries(series);
+    series->setName(QString::fromStdString(result_item->Name()));
+    series->attachAxis(axisX);
+    series->attachAxis(axisYNormal);
+    series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+    series->setMarkerSize(15.0);
+    qDebug()<<independent_var;
+    for (unsigned int i=0; i<mlr->IndependentData(independent_var.toStdString()).size(); i++)
+    {
+        qDebug()<<mlr->DependentData()[i] << ","<< mlr->IndependentData(independent_var.toStdString())[i];
+        series->append(mlr->DependentData()[i],mlr->IndependentData(independent_var.toStdString())[i]);
+    }
     return true;
 }

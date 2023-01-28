@@ -9,6 +9,7 @@
 #include <contribution.h>
 #include <elemental_profile_set.h>
 #include <multiplelinearregressionset.h>
+#include <QComboBox>
 
 #ifndef Qt6
 using namespace QtCharts;
@@ -35,6 +36,14 @@ private:
     Ui::GeneralChart *ui;
     QChart* chart;
     QChartView *chartView;
+    QComboBox *element_combo;
+    QComboBox *independent_combo;
+    bool PlotRegression(MultipleLinearRegression *mlr,const QString& independent_var);
+    ResultItem* result_item=nullptr;
+private slots:
+    void onIndependentChanged(const QString&);
+    void onElementChanged(const QString& constituent);
+
 };
 
 double roundDown(double a, double rounding_number=1.0);
