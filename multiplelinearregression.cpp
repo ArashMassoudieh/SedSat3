@@ -19,6 +19,8 @@ MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegressio
     coefficients_intercept_ = mp.coefficients_intercept_;
     correlation_matrix_ = mp.correlation_matrix_;
     independent_variables_names = mp.independent_variables_names;
+    dependent_data = mp.dependent_data;
+    independent_data = mp.independent_data;
 
 }
 MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLinearRegression &mp)
@@ -31,6 +33,8 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
     coefficients_intercept_ = mp.coefficients_intercept_;
     correlation_matrix_ = mp.correlation_matrix_;
     independent_variables_names = mp.independent_variables_names;
+    dependent_data = mp.dependent_data;
+    independent_data = mp.independent_data;
     return *this;
 }
 
@@ -95,14 +99,19 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
 
     c = gsl_vector_alloc (number_of_variables+1);
     cov = gsl_matrix_alloc (number_of_variables+1, number_of_variables+1);
-
+    independent_data = independent;
+    dependent_data = dependent;
     for (int i = 0; i < number_of_data_points; i++)
     {
+
         gsl_matrix_set (X, i, 0, 1.0);
+        vector<double> independent_column;
         for (int j=0; j<number_of_variables; j++)
         {
             gsl_matrix_set (X, i, j+1, independent[j][i]);
+
         }
+
         gsl_vector_set (y, i, dependent[i]);
         gsl_vector_set (w, i, 1.0);
     }

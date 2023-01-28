@@ -18,6 +18,8 @@ public:
     vector<double> CoefficientsIntercept();
 private:
     vector<double> coefficients_intercept_;
+    vector<vector<double>> independent_data;
+    vector<double> dependent_data;
     vector<string> independent_variables_names;
     CMBMatrix correlation_matrix_;
     double chisq, R2, R2_adj;

@@ -18,6 +18,7 @@ public:
     string ToString() override;
     double valueAt(int i);
     string Label(int i) {return labels[i];}
+    vector<string> Labels() {return labels;} const
     void SetLabel(int i, const string &label) {labels[i]=label;}
     void SetLabels(const vector<string> &label) {labels=label;}
 private:
