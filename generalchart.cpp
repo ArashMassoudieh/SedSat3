@@ -309,36 +309,107 @@ void GeneralChart::onIndependentChanged(const QString& constituent)
 bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& independent_var)
 {
     qDebug()<<independent_var;
+
+    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
+    {
+        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
+    }
+
+    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
+    {
+        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
+    }
+
+
     chart->removeAllSeries();
     for (int i=0; i<chart->axes().size(); i++)
-        delete chart->axes()[i];
+    {
+        chart->removeAxis(chart->axes()[i]);
+        //delete chart->axes()[i];
+    }
+
+    qDebug()<<"After:";
+    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
+    {
+        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
+        chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
+    }
+
+    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
+    {
+        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
+        chart->removeAxis(chart->axes(Qt::Vertical)[i]);
+    }
+
+    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
+    {
+        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
+    }
+
+    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
+    {
+        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
+    }
 
     chart->axes().clear();
     QValueAxis* axisX = new QValueAxis();
-    qDebug()<<"Xmaxmin: "<<CVector(mlr->IndependentData(independent_var.toStdString())).min()<<","<<CVector(mlr->IndependentData(independent_var.toStdString())).max();
-    axisX->setRange(CVector(mlr->IndependentData(independent_var.toStdString())).min(), CVector(mlr->IndependentData(independent_var.toStdString())).max());
-
     QValueAxis* axisYNormal = new QValueAxis();
-    qDebug()<<"Ymaxmin: "<<CVector(mlr->DependentData()).min()<<","<<CVector(mlr->DependentData()).max();
-    axisYNormal->setRange(CVector(mlr->DependentData()).min(),CVector(mlr->DependentData()).max());
-    axisYNormal->setLabelFormat("%f");
-    axisYNormal->setMinorTickCount(5);
+    axisX->setObjectName("axisX");
+    axisYNormal->setObjectName("axisY");
 
-    chart->addAxis(axisYNormal, Qt::AlignLeft);
-    chart->addAxis(axisX, Qt::AlignBottom);
+    QLineSeries *lineseries = new QLineSeries();
+    double x_min_val = CVector(mlr->IndependentData(independent_var.toStdString())).min();
+    double x_max_val = CVector(mlr->IndependentData(independent_var.toStdString())).max();
+    double y_min_val = mlr->CoefficientsIntercept()[0];
+    double y_max_val = mlr->CoefficientsIntercept()[0];
+    for (int i=0; i<mlr->GetIndependentVariableNames().size(); i++)
+    {
+        if (mlr->GetIndependentVariableNames()[i]!=independent_var.toStdString())
+        {
+            y_min_val += mlr->MeanIndependentVar(i)*mlr->CoefficientsIntercept()[i+1];
+            y_max_val += mlr->MeanIndependentVar(i)*mlr->CoefficientsIntercept()[i+1];
+        }
+        else
+        {
+            y_min_val += x_min_val*mlr->CoefficientsIntercept()[i+1];
+            y_max_val += x_max_val*mlr->CoefficientsIntercept()[i+1];
+        }
+    }
+
+    axisX->setRange(CVector(mlr->IndependentData(independent_var.toStdString())).min(), CVector(mlr->IndependentData(independent_var.toStdString())).max());
+    axisX->setTitleText(independent_var);
+
+    //axisYNormal->setLabelFormat("%f");
+    //axisYNormal->setMinorTickCount(5);
+    axisYNormal->setTitleText(QString::fromStdString("Measured " + mlr->DependentVariableName()));
+
 
     QScatterSeries* series = new QScatterSeries();
-    chart->addSeries(series);
-    series->setName(QString::fromStdString(result_item->Name()));
-    series->attachAxis(axisX);
-    series->attachAxis(axisYNormal);
+
+    series->setName(QString::fromStdString(mlr->DependentVariableName()));
     series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
     series->setMarkerSize(15.0);
     qDebug()<<independent_var;
     for (unsigned int i=0; i<mlr->IndependentData(independent_var.toStdString()).size(); i++)
     {
         qDebug()<<mlr->DependentData()[i] << ","<< mlr->IndependentData(independent_var.toStdString())[i];
-        series->append(mlr->DependentData()[i],mlr->IndependentData(independent_var.toStdString())[i]);
+        series->append(mlr->IndependentData(independent_var.toStdString())[i],mlr->DependentData()[i]);
     }
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisYNormal, Qt::AlignLeft);
+    chart->addSeries(series);
+    series->attachAxis(axisX);
+    series->attachAxis(axisYNormal);
+
+
+    lineseries->append(x_min_val,y_min_val);
+    lineseries->append(x_max_val,y_max_val);
+    chart->addSeries(lineseries);
+    lineseries->attachAxis(axisX);
+    lineseries->attachAxis(axisYNormal);
+    lineseries->setName("Regression");
+    axisYNormal->setRange(std::min(std::min(CVector(mlr->DependentData()).min(),y_min_val),y_max_val),std::max(std::max(CVector(mlr->DependentData()).max(),y_max_val),y_min_val));
+
     return true;
 }

@@ -242,6 +242,7 @@ MultipleLinearRegressionSet Elemental_Profile_Set::regress_vs_size_OM(const stri
     for (unsigned int i=0; i<elementnames.size(); i++)
     {
         out[elementnames[i]] = regress_vs_size_OM(elementnames[i],om,d);
+        out[elementnames[i]].SetDependentVariableName(elementnames[i]);
     }
     return out;
 }

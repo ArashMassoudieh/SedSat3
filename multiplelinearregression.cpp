@@ -20,6 +20,7 @@ MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegressio
     correlation_matrix_ = mp.correlation_matrix_;
     independent_variables_names = mp.independent_variables_names;
     dependent_data = mp.dependent_data;
+    dependent_variable_name = mp.dependent_variable_name;
     independent_data = mp.independent_data;
 
 }
@@ -35,6 +36,7 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
     independent_variables_names = mp.independent_variables_names;
     dependent_data = mp.dependent_data;
     independent_data = mp.independent_data;
+    dependent_variable_name = mp.dependent_variable_name;
     return *this;
 }
 
@@ -206,6 +208,11 @@ vector<double> MultipleLinearRegression::CoefficientsIntercept()
     return coefficients_intercept_;
 }
 
+
+double MultipleLinearRegression::MeanIndependentVar(int i)
+{
+    return CVector(independent_data[i]).mean();
+}
 string MultipleLinearRegression::ToString()
 {
     string out;
