@@ -201,6 +201,7 @@ bool GeneralChart::PlotContribution(Contribution* contributions, const QString &
     chart->setTitle(title);
 
     chartView->setRenderHint(QPainter::Antialiasing);
+    return true; 
 }
 bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, const QString &title)
 {

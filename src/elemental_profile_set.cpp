@@ -345,6 +345,18 @@ gsl_matrix* Elemental_Profile_Set::CopytoGSLMatrix()
 
 }
 
+CMBVector Elemental_Profile_Set::KolmogorovSmirnovStat(distribution_type dist_type)
+{
+    vector<string> element_names = ElementNames();
+    CMBVector out(element_names.size());
+    out.SetLabels(element_names);
+    for (int i = 0; i < element_names.size(); i++)
+    {
+        out[i] = ElementalDistribution(element_names[i])->KolmogorovSmirnovStat(dist_type);
+    }
+    return out; 
+}
+
 CVector Elemental_Profile_Set::ElementMeans()
 {
     vector<string> element_names = ElementNames();

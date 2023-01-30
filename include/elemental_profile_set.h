@@ -11,6 +11,7 @@
 #include "resultitem.h"
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
+#include "cmbvector.h"
 
 using namespace std;
 
@@ -125,6 +126,7 @@ public:
     ResultItem GetRegressions();
     CMBMatrix CovarianceMatrix();
     CMBMatrix CorrelationMatrix();
+    CMBVector KolmogorovSmirnovStat(distribution_type dist_type);
     gsl_matrix *CopytoGSLMatrix();
     CVector ElementMeans();
 

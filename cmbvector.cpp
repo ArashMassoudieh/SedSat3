@@ -36,6 +36,7 @@ CMBVector& CMBVector::operator=(const CVector &mp)
 {
     CVector::operator=(mp);
     labels.resize(getsize());
+    return *this; 
 }
 
 QJsonObject CMBVector::toJsonObject()

@@ -4,6 +4,7 @@
 #include "vector"
 #include "cmbdistribution.h"
 #include "cmbtimeseries.h"
+#include "cmbtimeseriesset.h"
 
 
 using namespace std;
@@ -45,6 +46,8 @@ public:
         return &EstimatedDistribution;
     }
     CMBTimeSeries DataCDF();
+    CMBTimeSeriesSet DataCDFnFitted(distribution_type dist_type);
+    double KolmogorovSmirnovStat(distribution_type dist_type);
 private:
     Distribution FittedDist; // Distribution fitted based on the sample data
     Distribution EstimatedDistribution; //Estimated distribution based on inverse modeling
