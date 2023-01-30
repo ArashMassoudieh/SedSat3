@@ -7,7 +7,9 @@
     "Distribution Fitting": "DF",
     "Elements' covariance matrix": "CovMat",
     "Elements' correlation matrix": "CorMat",
-    "Discriminant function analysis": "DFA"
+    "Discriminant function analysis": "DFA",
+    "Kolmogorov–Smirnov for individual group/element": "KS-individual",
+    "Kolmogorov–Smirnov for a group": "KS"
   },
   "Analysis Tools":
   {

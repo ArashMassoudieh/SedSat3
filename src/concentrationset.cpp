@@ -200,16 +200,19 @@ CMBTimeSeriesSet ConcentrationSet::DataCDFnFitted(distribution_type dist_type)
         }
         else if(dist_type == distribution_type::lognormal)
         {
-            fitted.append(x, gsl_cdf_lognormal_P(x, meanln(), stdevln()));
+            if (x>0)
+                fitted.append(x, gsl_cdf_lognormal_P(x, meanln(), stdevln()));
+            else
+                fitted.append(x, 0);
         }
-        out.append(fitted, "Fitted");
-        out.append(out[0] - out[1],"Error");
     }
+    out.append(fitted, "Fitted");
+    out.append(out[0] - out[1],"Error");
     return out; 
 }
 
 double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)
 {
     CMBTimeSeriesSet observed_fitted = DataCDFnFitted(dist_type);
-    return observed_fitted[2].maxC();
+    return std::max(fabs(observed_fitted[2].maxC()),fabs(observed_fitted[2].minC()));
 }

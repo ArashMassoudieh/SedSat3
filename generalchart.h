@@ -32,13 +32,14 @@ public:
     bool PlotContribution(Contribution* contributions, const QString &title);
     bool PlotPredictedConcentration(Elemental_Profile* elemental_profile, const QString &title);
     bool PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &title);
+    bool PlotTimeSeriesSet(CMBTimeSeriesSet *regressionset, const QString &title);
 private:
     Ui::GeneralChart *ui;
     QChart* chart;
     QChartView *chartView;
     QComboBox *element_combo;
     QComboBox *independent_combo;
-    bool PlotRegression(MultipleLinearRegression *mlr,const QString& independent_var);
+    bool PlotRegression(MultipleLinearRegression *timeseriesset,const QString& independent_var);
     ResultItem* result_item=nullptr;
 private slots:
     void onIndependentChanged(const QString&);

@@ -57,6 +57,11 @@ bool GeneralChart::Plot(ResultItem* res)
         MultipleLinearRegressionSet* mlrset = static_cast<MultipleLinearRegressionSet*>(res->Result());
         return PlotRegressionSet(mlrset, QString::fromStdString(res->Name()));
     }
+    if (res->Type() == result_type::timeseries_set)
+    {
+        CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
+        return PlotTimeSeriesSet(timeseriesset, QString::fromStdString(res->Name()));
+    }
 
     chartView->update();
     return false; 
@@ -85,8 +90,8 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
 
     QLogValueAxis* axisYLog;
     QValueAxis* axisYNormal;
-    bool _log = false;
-    if (profile->min()>0)
+    bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
+    if (profile->min()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
         axisYLog->setRange(pow(10, roundDown(log(profile->min())/log(10.0))), pow(10, int(log(profile->max()) / log(10.0))+1));
@@ -119,7 +124,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         series->attachAxis(axisYNormal);
 
     double counter = 0.5;
-    QBarSet *barset = new QBarSet("DFA Eigenvector");
+    QBarSet *barset = new QBarSet(QString::fromStdString(result_item->Name()));
     QPen pen;
     pen.setWidth(2);
     barset->setPen(pen);
@@ -309,7 +314,6 @@ void GeneralChart::onIndependentChanged(const QString& constituent)
 
 bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& independent_var)
 {
-    qDebug()<<independent_var;
 
     for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
     {
@@ -320,7 +324,6 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     {
         qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
     }
-
 
     chart->removeAllSeries();
     for (int i=0; i<chart->axes().size(); i++)
@@ -341,17 +344,6 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
         qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
         chart->removeAxis(chart->axes(Qt::Vertical)[i]);
     }
-
-    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
-    {
-        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
-    }
-
-    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
-    {
-        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
-    }
-
     chart->axes().clear();
     QValueAxis* axisX = new QValueAxis();
     QValueAxis* axisYNormal = new QValueAxis();
@@ -411,6 +403,44 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     lineseries->attachAxis(axisYNormal);
     lineseries->setName("Regression");
     axisYNormal->setRange(std::min(std::min(CVector(mlr->DependentData()).min(),y_min_val),y_max_val),std::max(std::max(CVector(mlr->DependentData()).max(),y_max_val),y_min_val));
+
+    return true;
+}
+
+bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QString &title)
+{
+    double x_min_val = timeseriesset->mintime();
+    double x_max_val = timeseriesset->maxtime();
+    double y_min_val = timeseriesset->minval();
+    double y_max_val = timeseriesset->maxval();
+    QValueAxis* axisX = new QValueAxis();
+    QValueAxis* axisY = new QValueAxis();
+    axisX->setObjectName("axisX");
+    axisY->setObjectName("axisY");
+    axisX->setTitleText("Value");
+    axisY->setTitleText("CDF");
+    axisX->setRange(x_min_val,x_max_val);
+    axisY->setRange(y_min_val,y_max_val);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    for (int i=0; i<timeseriesset->nvars; i++)
+    {
+        QLineSeries *lineseries = new QLineSeries();
+        chart->addSeries(lineseries);
+        lineseries->attachAxis(axisX);
+        lineseries->attachAxis(axisY);
+
+        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        {
+            lineseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+        }
+        QPen pen = lineseries->pen();
+        pen.setWidth(2);
+        pen.setBrush(QColor(drand48()*256, drand48()*256, drand48()*256));
+        lineseries->setPen(pen);
+        lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
+
+    }
 
     return true;
 }

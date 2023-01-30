@@ -163,11 +163,42 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem DFAResItem;
         DFAResItem.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"]  );
         DFAResItem.SetType(result_type::vector);
-
+        DFAResItem.SetYAxisMode(yaxis_mode::normal);
         CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(dfaeigenvector);
         results.Append(DFAResItem);
 
+    }
+    if (command == "KS")
+    {
+        results.SetName("Kolmogorov–Smirnov statististics for " + arguments["Source/Target group"] );
+        ResultItem KSItem;
+        KSItem.SetName("Kolmogorov–Smirnov statististics for " + arguments["Source/Target group"] );
+        KSItem.SetType(result_type::vector);
+        KSItem.SetYAxisMode(yaxis_mode::normal);
+        distribution_type dist;
+        if (arguments["Distribution"]=="Normal")
+            dist = distribution_type::normal;
+        else if (arguments["Distribution"]=="Lognormal")
+            dist = distribution_type::lognormal;
+        CMBVector *ksoutput = new CMBVector(Data()->at(arguments["Source/Target group"]).KolmogorovSmirnovStat(dist));
+        KSItem.SetResult(ksoutput);
+        results.Append(KSItem);
+    }
+    if (command == "KS-individual")
+    {
+        results.SetName("Kolmogorov–Smirnov statististics for constituent " +arguments["Constituent"] + " in group " + arguments["Source/Target group"]);
+        ResultItem KSItem;
+        KSItem.SetName("Kolmogorov–Smirnov statististics for constituent " +arguments["Constituent"] + " in group " + arguments["Source/Target group"]);
+        KSItem.SetType(result_type::timeseries_set);
+        distribution_type dist;
+        if (arguments["Distribution"]=="Normal")
+            dist = distribution_type::normal;
+        else if (arguments["Distribution"]=="Lognormal")
+            dist = distribution_type::lognormal;
+        CMBTimeSeriesSet *ksoutput = new CMBTimeSeriesSet(Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(dist));
+        KSItem.SetResult(ksoutput);
+        results.Append(KSItem);
     }
     return true;
 }

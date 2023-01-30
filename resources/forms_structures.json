@@ -174,5 +174,35 @@
 			"type": "comboBox",
 			"source": "SourceList"
 		}
+	},
+	"KS-individual": 
+	{
+ 		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		},
+    		"Distribution": 
+    		{
+			"type": "comboBox",
+    			"source": "Items:Normal,Lognormal"
+    		}
+	},
+	"KS": 
+	{
+ 		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Distribution": 
+    		{
+			"type": "comboBox",
+    			"source": "Items:Normal,Lognormal"
+    		}
 	}
+	
+	
 }

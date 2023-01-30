@@ -10,6 +10,9 @@ public:
     ResultSetItem();
     ResultSetItem(const QString &str);
     Results *result=nullptr;
+
+private:
+
 };
 
 #endif // RESULTSETITEM_H
