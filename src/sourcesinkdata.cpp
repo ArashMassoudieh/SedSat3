@@ -1518,3 +1518,15 @@ bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const strin
     }
     return true;
 }
+
+CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, const string &source2)
+{
+    CMBVector mean1 = at(source1).ElementMeans();
+    CMBVector mean2 = at(source2).ElementMeans();
+    CMBMatrix CovMatr1 = at(source1).CovarianceMatrix();
+    CMBMatrix CovMatr2 = at(source2).CovarianceMatrix();
+    CMBVector w = ((mean1-mean2)/(CovMatr1+CovMatr2));
+    w=w/w.norm2();
+    w.SetLabels(ElementNames());
+    return w;
+}

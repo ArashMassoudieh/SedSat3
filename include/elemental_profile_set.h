@@ -9,6 +9,8 @@
 #include "interface.h"
 #include "multiplelinearregressionset.h"
 #include "resultitem.h"
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_matrix.h>
 
 using namespace std;
 
@@ -121,6 +123,11 @@ public:
     MultipleLinearRegression regress_vs_size_OM(const string &element, const string &om, const string &d);
     void SetRegression(const string &om, const string &d);
     ResultItem GetRegressions();
+    CMBMatrix CovarianceMatrix();
+    CMBMatrix CorrelationMatrix();
+    gsl_matrix *CopytoGSLMatrix();
+    CVector ElementMeans();
+
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;
