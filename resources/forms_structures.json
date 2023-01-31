@@ -202,7 +202,21 @@
 			"type": "comboBox",
     			"source": "Items:Normal,Lognormal"
     		}
-	}
+	},
+	"CMB Bayesian":
+	{
+		"Number of chains": {
+			"type": "spinBox",
+			"default": "8",
+			"maximum": "64",
+			"minimum": "4"
+		},
+		"Number of samples": {
+			"type": "spinBox",
+			"default": "1000",
+			"maximum": "20000",
+			"minimum": "1000"
+		}
 	
-	
+	}	
 }

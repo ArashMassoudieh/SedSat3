@@ -93,6 +93,8 @@ HEADERS += \
     include/GA/GA.hpp \
     include/GA/GADistribution.h \
     include/GA/Individual.h \
+    include/MCMC/MCMC.h \
+    include/MCMC/MCMC.hpp \
     include/cmbdistribution.h \
     include/concentrationset.h \
     include/conductor.h \

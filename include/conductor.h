@@ -5,6 +5,7 @@
 #include <map>
 #include "sourcesinkdata.h"
 #include "GA.h"
+#include "MCMC.h"
 #include "results.h"
 
 using namespace std;

@@ -4,6 +4,7 @@
 #include "contribution.h"
 #include "resultitem.h"
 
+
 Conductor::Conductor()
 {
 

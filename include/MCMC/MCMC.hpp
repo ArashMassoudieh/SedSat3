@@ -8,9 +8,9 @@
 #include <omp.h>
 #endif
 #include "MCMC.h"
-#include "runtimewindow.h"
+#include "ProgressWindow.h"
 #include "Utilities.h"
-#include "Parameter_Set.h"
+
 
 
 using namespace std;
@@ -28,11 +28,13 @@ CMCMC<T>::~CMCMC(void)
 	logp.clear();
 }
 
+
 template<class T>
 Parameter* CMCMC<T>::parameter(int i)
 {
-    return (*parameters)[i];
+    return &parameters->at(i);
 }
+
 
 template <class T>
 Observation* CMCMC<T>::observation(int i)
@@ -60,15 +62,6 @@ CTimeSeriesSet<double> CMCMC<T>::model(vector<double> par)
 
     return G1.Outputs.ObservedOutputs;
 
-}
-
-template<class T>
-void CMCMC<T>::SetParameters(Object *obj)
-{
-    for (unordered_map<string,Quan>::iterator it=obj->GetVars()->begin(); it!=obj->GetVars()->end(); it++)
-    {
-        SetProperty(it->first,it->second.GetProperty());
-    }
 }
 
 template<class T>
@@ -370,7 +363,7 @@ vector<double> CMCMC<T>::purturb(int k)
 }
 
 template<class T>
-bool CMCMC<T>::step(int k, int nsamps, string filename, RunTimeWindow *rtw)
+bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
 {
 	FILE *file;
     if (MCMC_Settings.continue_mcmc == false)
@@ -398,8 +391,8 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, RunTimeWindow *rtw)
     for (unsigned int kk=k; kk<k+nsamps+MCMC_Settings.number_of_chains; kk+=MCMC_Settings.number_of_chains)
 	{
         QCoreApplication::processEvents(QEventLoop::AllEvents,10*1000);
-        if (rtw->stoptriggered)
-			break;
+        //if (rtw->stoptriggered)
+        //	break;
 
 #ifndef NO_OPENMP
         omp_set_num_threads(MCMC_Settings.numberOfThreads);
@@ -429,6 +422,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, RunTimeWindow *rtw)
             }
 
 
+/*
 #pragma omp critical
             {   if (rtw->detailson)
                 {   QString s;
@@ -443,7 +437,9 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, RunTimeWindow *rtw)
                     rtw->AppendtoDetails(" ");
                 }
             }
+        */
         }
+
         accepted_count += accepted.sum();
         total_count += accepted.num;
         QCoreApplication::processEvents(QEventLoop::AllEvents,100*1000);
@@ -491,12 +487,12 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, RunTimeWindow *rtw)
 		{
             double progress = double(kk) / double(nsamps);
             rtw->SetProgress(progress);
-            rtw->AddDataPoint(kk,double(accepted_count) / double(total_count));
-            if (rtw->plot2)
+            rtw->AppendPoint(kk,double(accepted_count) / double(total_count));
+            /*if (rtw->plot2)
             {
                 rtw->AddDataPoint(kk,double(pertcoeff[0] / MCMC_Settings.ini_purt_fact),1);
             }
-            rtw->Replot();
+            rtw->replot*/;
 		}
 	}
 
@@ -504,7 +500,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, RunTimeWindow *rtw)
 }
 
 template<class T>
-void CMCMC<T>::SetRunTimeWindow(RunTimeWindow *_rtw)
+void CMCMC<T>::SetRunTimeWindow(ProgressWindow *_rtw)
 {
     rtw = _rtw;
 }
@@ -544,72 +540,6 @@ CVector CMCMC<T>::sensitivity(double d, vector<double> par)
  	return X;
 }
 
-/*CMatrix CMCMC::sensitivity_mat(double d, vector<double> par)
-{
-
-    vector<CTimeSeriesSet<double>> base = model(par);
-	CMatrix X(n,base[0].nvars);
-	for (int i=0; i<n; i++)
-	{
-		vector<double> par1 = par;
-		par1[i]=par[i]*(1+d);
-        vector<CTimeSeriesSet<double>> base_1 = model(par1);
-
-		for (int j=0; j<1;j++)
-			X[i] = norm2dif(base[j],base_1[j])/d;
-	}
- 	return X;
-}*/
-/*
-template<class T>
-CMatrix CMCMC<T>::sensitivity_mat_lumped(double d, vector<double> par)
-{
-
-    vector<CTimeSeriesSet<double>> base = model_lumped(par);
-#ifdef GIFMOD
-	int ii = G.measured_quan.size();
-#endif
-#ifdef GWA
-	int ii = G.Medium[0].measured_quan.size();
-#endif
-
-	CMatrix X(n,ii);
-	for (int i=0; i<n; i++)
-	{
-		vector<double> par1 = par;
-		par1[i]=par[i]*(1+d);
-        vector<CTimeSeriesSet<double>> base_1 = model_lumped(par1);
-
-		for (int j=0; j<1;j++)
-			X[i] += norm2dif(base[j],base_1[j])/d;
-	}
- 	return X;
-}
-*/
-
-/*
-template<class T>
-CMatrix CMCMC<T>::sensitivity_mat_lumped(double d, vector<double> par, T &G) const
-
-{
-
-    vector<CTimeSeriesSet<double>> base = model_lumped(par, G);
-
-	int ii = G.measured_quan().size();
-
-	CMatrix X(n, ii);
-	for (int i = 0; i<n; i++)
-	{
-		vector<double> par1 = par;
-		par1[i] = par[i] * (1 + d);
-        vector<CTimeSeriesSet<double>> base_1 = model_lumped(par1, G);
-
-		for (int j = 0; j<1; j++)
-			X[i] += norm2dif(base[j], base_1[j]) / d;
-	}
-	return X;
-}
-*/
 
 template<class T>
 CVector CMCMC<T>::sensitivity_ln(double d, vector<double> par)
@@ -771,12 +701,12 @@ void CMCMC<T>::Perform()
     int mcmcstart = MCMC_Settings.number_of_chains;
     if (MCMC_Settings.continue_mcmc)
     {
-        if (rtw) rtw->AppendText("Reading samples from ... " + MCMC_Settings.continue_filename);
+        //if (rtw) rtw->AppendText("Reading samples from ... " + MCMC_Settings.continue_filename);
         mcmcstart = readfromfile(MCMC_Settings.continue_filename);
     }
-    if (rtw) rtw->AppendText(string("Generating samples ... "));
+    //if (rtw) rtw->AppendText(string("Generating samples ... "));
     step(mcmcstart, int((MCMC_Settings.total_number_of_samples - mcmcstart) / MCMC_Settings.number_of_chains)*MCMC_Settings.number_of_chains, FileInformation.outputfilename , rtw);
-    if (rtw) rtw->AppendText(string("Creating posterior distribution ..."));
+    //if (rtw) rtw->AppendText(string("Creating posterior distribution ..."));
     CTimeSeriesSet<double> all_posterior_distributions;
     CTimeSeriesSet<double> parameter_samples;
     for (unsigned int i=0; i<parameters->size(); i++)
@@ -795,7 +725,7 @@ void CMCMC<T>::Perform()
             all_samples.append(chain_values[i]);
         }
 
-        chain_values.name = parameter(i)->GetName();
+        //chain_values.name = parameter(i)->GetName();
         parameter(i)->SetMCMCSamples(chain_values);
 
         CTimeSeries<double> posterior_distribution = all_samples.distribution(all_samples.n/100,0);
@@ -806,6 +736,6 @@ void CMCMC<T>::Perform()
 
     }
     all_posterior_distributions.writetofile(FileInformation.outputpath + "Posterior_distributions.txt");
-    if (rtw) rtw->AppendText(string("Generating Realizations ..."));
+    //if (rtw) rtw->AppendText(string("Generating Realizations ..."));
     ProduceRealizations(parameter_samples);
 }

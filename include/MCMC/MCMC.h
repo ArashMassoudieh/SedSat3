@@ -7,6 +7,9 @@
 #include "Vector.h"
 #include "BTCSet.h"
 #include "observation.h"
+#include "parameter.h"
+
+class ProgressWindow;
 
 using namespace std;
 
@@ -54,9 +57,6 @@ struct _MCMC_settings
 
 };
 
-class RunTimeWindow;
-class Parameter_Set;
-class Parameter;
 
 template<class T>
 class CMCMC
@@ -68,7 +68,6 @@ public:
 	CMCMC(void);
 	CMCMC(int nn, int nn_chains);
     CMCMC(T *system);
-    void SetParameters(Object *obj);
     bool SetProperty(const string &varname, const string &value);
 	~CMCMC(void);
     _MCMC_settings MCMC_Settings;
@@ -82,7 +81,7 @@ public:
     void initialize(bool random=false);
     void initialize(vector<double> par);
     bool step(int k);
-    bool step(int k, int nsamps, string filename, RunTimeWindow* _rtw = 0);
+    bool step(int k, int nsamps, string filename, ProgressWindow* _rtw = 0);
 	vector<double> purturb(int k);
 	CNormalDist ND;
     void writeoutput(string filename);
@@ -91,18 +90,19 @@ public:
     _MCMC_file_names FileInformation;
     double posterior(vector<double> par, bool out=false);
     void model(T *Model1 , vector<double> par);
-    RunTimeWindow *rtw;
     int getparamno(int i,int ts)const;
     int get_act_paramno(int i);
     int get_time_series(int i);
 	vector<bool> apply_to_all;
-    Parameter_Set *parameters = nullptr;
+    vector<Parameter> *parameters = nullptr;
     vector<Observation> *observations = nullptr;
     Parameter* parameter(int i);
     Observation *observation(int i);
     CVector sensitivity(double d, vector<double> par);
     CVector sensitivity_ln(double d, vector<double> par);
-	//runtimeWindow * rtw = 0;
+#ifdef Q_version
+    ProgressWindow *rtw=nullptr;
+#endif // QT_version
     CMatrix sensitivity_mat_lumped(double d, vector<double> par);
     CTimeSeriesSet<double> prior_distribution(int n_bins);
 
@@ -119,7 +119,7 @@ public:
     void get_outputpercentiles(CTimeSeriesSet<double> &MCMCout);
 
 	vector<double> calc_output_percentiles;
-    void SetRunTimeWindow(RunTimeWindow *_rtw);
+    void SetRunTimeWindow(ProgressWindow *_rtw);
 	double accepted_count=0, total_count=0;
     string last_error;
     void Perform();
