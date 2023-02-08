@@ -29,6 +29,7 @@ public:
 private:
     SourceSinkData *data;
     CGA<SourceSinkData> *GA = nullptr;
+    CMCMC<SourceSinkData> *MCMC = nullptr;
     Results results;
     QString workingfolder;
 };

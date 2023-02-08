@@ -5,7 +5,7 @@
 #include "BTC.h"
 
 using namespace std;
-enum class distribution_type {normal, lognormal, dirichlet, none};
+enum class distribution_type {normal, lognormal, dirichlet, none, uniform};
 enum class parameter_mode {direct, based_on_fitted_distribution};
 class Distribution
 {
@@ -24,6 +24,7 @@ public:
     void SetDataSTDev(const double &val) {std_val = val;}
     double DataMean() {return  mean_val;}
     double DataSTDev() {return std_val;}
+    bool operator==(const string &dist_type);
 private:
     double pi;
     double mean_val=0;

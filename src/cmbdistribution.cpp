@@ -90,3 +90,16 @@ double Distribution::Mean(parameter_mode param_mode)
     return 0;
 }
 
+bool Distribution::operator==(const string &dist_type)
+{
+    if (distribution==distribution_type::normal && dist_type == "normal")
+        return true;
+    if (distribution==distribution_type::lognormal && dist_type == "log-normal")
+        return true;
+    if (distribution==distribution_type::uniform && dist_type == "uniform")
+        return true;
+
+    return false;
+
+}
+

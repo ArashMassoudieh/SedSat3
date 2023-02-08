@@ -86,3 +86,10 @@ void Parameter::UpdatePriorDistribution()
     }
 
 }
+
+double Parameter::CalcLogPriorProbability(const double x)
+{
+    return prior_distribution.Eval(x);
+}
+
+

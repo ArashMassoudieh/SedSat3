@@ -161,12 +161,8 @@ double CMCMC<T>::posterior(vector<double> par, bool out)
 	double sum = 0;
     for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
     {
-        Model1.SetSilent(true);
-        Model1.SetRecordResults(false);
-        Model1.SetNumThreads(1);
         for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
             Model1.SetParameterValue(i, par[i]);
-        Model1.ApplyParameters();
 
         sum+=parameter(i)->CalcLogPriorProbability(par[i]);
 	}
@@ -209,11 +205,11 @@ void CMCMC<T>::initialize(bool random)
     {
         if (parameter(j)->GetPriorDistribution()=="normal" || parameter(j)->GetPriorDistribution()=="uniform")
         {
-            pertcoeff[j] = MCMC_Settings.purturbation_factor*(-parameter(j)->GetRange().low + parameter(j)->GetRange().high);
+            pertcoeff[j] = MCMC_Settings.purturbation_factor*(-parameter(j)->GetRange(_range::low) + parameter(j)->GetRange(_range::high));
         }
         if (parameter(j)->GetPriorDistribution()=="log-normal")
         {
-            pertcoeff[j] = MCMC_Settings.purturbation_factor*(-log(parameter(j)->GetRange().low) + log(parameter(j)->GetRange().high));
+            pertcoeff[j] = MCMC_Settings.purturbation_factor*(-log(parameter(j)->GetRange(_range::low)) + log(parameter(j)->GetRange(_range::high)));
         }
     }
 
@@ -222,9 +218,9 @@ void CMCMC<T>::initialize(bool random)
         {
             for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
             {	if (parameter(i)->GetPriorDistribution()=="log-normal")
-                    Params[j][i] = exp(log(parameter(i)->GetRange().low)+(log(parameter(i)->GetRange().high)-log(parameter(i)->GetRange().low))*ND.unitrandom());
+                    Params[j][i] = exp(log(parameter(i)->GetRange(_range::low))+(log(parameter(i)->GetRange(_range::high))-log(parameter(i)->GetRange(_range::low)))*ND.unitrandom());
                 else
-                    Params[j][i] = parameter(i)->GetRange().low+(parameter(i)->GetRange().high-parameter(i)->GetRange().low)*ND.unitrandom();
+                    Params[j][i] = parameter(i)->GetRange(_range::low)+(parameter(i)->GetRange(_range::high)-parameter(i)->GetRange(_range::low))*ND.unitrandom();
                 if (parameter(i)->GetPriorDistribution()=="log-normal")
                     pp += log(Params[j][i]);
             }
@@ -299,7 +295,7 @@ void CMCMC<T>::initialize(vector<double> par)
                 pp+=log(par[i]);
             }
             if (parameter(i).Get_Distribution()=="uniform")
-                while ((Params[j][i]<parameter(i).GetRange().low) || (Params[j][i]>parameter(i).GetRange().high))
+                while ((Params[j][i]<parameter(i).GetRange().low) || (Params[j][i]>parameter(i).GetRange(_range::high)))
                     Params[j][i] = par[i] + alpha*ND.getnormalrand(0, pertcoeff[i]);
 
 		}

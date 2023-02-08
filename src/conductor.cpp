@@ -5,6 +5,7 @@
 #include "resultitem.h"
 
 
+
 Conductor::Conductor()
 {
 
@@ -200,6 +201,15 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         CMBTimeSeriesSet *ksoutput = new CMBTimeSeriesSet(Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(dist));
         KSItem.SetResult(ksoutput);
         results.Append(KSItem);
+    }
+    if (command == "CMB Bayesian")
+    {
+        if (MCMC!=nullptr) delete MCMC;
+        ProgressWindow *rtw = new ProgressWindow();
+        MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
+        MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
+        MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
+        MCMC->initialize(true);
     }
     return true;
 }

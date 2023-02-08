@@ -216,7 +216,12 @@
 			"default": "1000",
 			"maximum": "20000",
 			"minimum": "1000"
+		},
+		"Samples to be discarded (burnout)": {
+			"type": "spinBox",
+			"default": "100",
+			"maximum": "5000",
+			"minimum": "100"
 		}
-	
 	}	
 }

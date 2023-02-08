@@ -13,6 +13,7 @@ public:
     Parameter& operator=(const Parameter &param);
     void SetPriorDistribution(distribution_type dist_type) {prior_distribution.distribution = dist_type;}
     Distribution& GetPriorDistribution() {return prior_distribution;}
+    bool operator==(const string &dist_type);
     double GetVal(const string &quantity);
     void SetRange(const vector<double> &rng);
     void SetRange(double low, double high);
@@ -22,7 +23,9 @@ public:
     string Name() {return name;}
     double Value() {return value;}
     void SetValue(double val) {value = val;}
+    double GetValue() {return value;}
     void UpdatePriorDistribution();
+    double CalcLogPriorProbability(const double x);
 
 private:
     Distribution prior_distribution;
