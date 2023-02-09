@@ -374,7 +374,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
 		file = fopen(filename.c_str(),"a");
         fprintf(file,"%s, ", "no.");
         for (unsigned int i=0; i<MCMC_Settings.number_of_parameters; i++)
-            fprintf(file, "%s, ", parameter(i)->GetName().c_str());
+            fprintf(file, "%s, ", parameter(i)->Name().c_str());
 		fprintf(file,"%s, %s, %s,", "logp", "logp_1", "stuck_counter");
         for (unsigned int j=0; j<pertcoeff.size(); j++) fprintf(file,"%s,", string("purt_coeff_" + QString("%1").arg(j).toStdString()).c_str());
 		fprintf(file, "\n");
@@ -483,14 +483,13 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
 
 		if (rtw)
 		{
+            double average_log_p = CVector::Extract(logp,kk-100,kk).mean();
             double progress = double(kk) / double(nsamps);
             rtw->SetProgress(progress);
-            rtw->AppendPoint(kk,double(accepted_count) / double(total_count));
-            /*if (rtw->plot2)
-            {
-                rtw->AddDataPoint(kk,double(pertcoeff[0] / MCMC_Settings.ini_purt_fact),1);
-            }
-            rtw->replot*/;
+            rtw->AppendPoint(kk,double(accepted_count) / double(total_count),0);
+            rtw->AppendPoint(kk,double(pertcoeff[0] / MCMC_Settings.ini_purt_fact),1);
+            rtw->AppendPoint(kk,double(average_log_p),2);
+            QCoreApplication::processEvents();
 		}
 	}
 

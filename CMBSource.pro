@@ -21,6 +21,7 @@ SOURCES += \
     ../Utilities/Vector.cpp \
     ../Utilities/Vector_arma.cpp \
     ../qcustomplot6/qcustomplot.cpp \
+    FilePushButton.cpp \
     ProgressWindow.cpp \
     aboutdialog.cpp \
     cmbmatrix.cpp \
@@ -73,6 +74,7 @@ HEADERS += \
     ../Utilities/Vector.h \
     ../Utilities/Vector_arma.h \
     ../qcustomplot6/qcustomplot.h \
+    FilePushButton.h \
     ProgressWindow.h \
     aboutdialog.h \
     cmbmatrix.h \

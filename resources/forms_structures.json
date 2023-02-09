@@ -226,6 +226,10 @@
 			"default": "100",
 			"maximum": "5000",
 			"minimum": "100"
-		}
+		},
+		"samples_file_name": {
+    			"type": "fileBrowser_Save",
+    			"default": "MCMC_Output.txt"
+    		}
 	}	
 }

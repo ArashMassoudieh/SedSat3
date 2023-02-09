@@ -49,6 +49,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         if (GA!=nullptr) delete GA;
         ProgressWindow *rtw = new ProgressWindow();
+        rtw->SetTitle("Fitness",0);
+        rtw->SetYAxisTitle("Fitness",0);
+
         rtw->show();
         Data()->InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
         Data()->SetParameterEstimationMode(estimation_mode::only_contributions);
@@ -207,13 +210,21 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
         MCMC->Model = Data();
-        ProgressWindow *rtw = new ProgressWindow();
+        ProgressWindow *rtw = new ProgressWindow(nullptr,3);
+        rtw->SetTitle("Acceptance Rate",0);
+        rtw->SetTitle("Purturbation Factor",1);
+        rtw->SetTitle("Log posterior value",2);
+        rtw->SetYAxisTitle("Acceptance Rate",0);
+        rtw->SetYAxisTitle("Purturbation Factor",1);
+        rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
+
         Data()->InitializeParametersObservations(arguments["Sample"]);
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
         MCMC->initialize(true);
+        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), arguments["samples_file_name"], rtw);
     }
     return true;
 }

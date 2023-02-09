@@ -52,7 +52,7 @@ struct _MCMC_settings
     double dp_sens;
     bool noise_realization_writeout;
     unsigned int numberOfThreads = 8;
-    double acceptance_rate;
+    double acceptance_rate = 0.15;
     double purt_change_scale = 0.75;
 
 };
