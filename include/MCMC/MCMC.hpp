@@ -194,9 +194,12 @@ void CMCMC<T>::model(T *Model1, vector<double> par)
 template<class T>
 void CMCMC<T>::initialize(bool random)
 {
+    parameters = &Model->Parameters();
     Params.resize(MCMC_Settings.total_number_of_samples);
     logp.resize(MCMC_Settings.total_number_of_samples);
     logp1.resize(MCMC_Settings.total_number_of_samples);
+    pertcoeff.resize(parameters->size());
+    MCMC_Settings.number_of_parameters = Model->Parameters().size();
     for (unsigned int i=0; i<MCMC_Settings.total_number_of_samples; i++)
         Params[i].resize(MCMC_Settings.number_of_parameters);
     double pp=0;

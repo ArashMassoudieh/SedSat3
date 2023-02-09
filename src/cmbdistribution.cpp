@@ -98,6 +98,10 @@ bool Distribution::operator==(const string &dist_type)
         return true;
     if (distribution==distribution_type::uniform && dist_type == "uniform")
         return true;
+    if (distribution==distribution_type::dirichlet && dist_type == "uniform")
+        return true;
+    if (distribution==distribution_type::dirichlet && dist_type == "dirichlet")
+        return true;
 
     return false;
 
