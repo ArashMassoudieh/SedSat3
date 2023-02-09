@@ -205,6 +205,10 @@
 	},
 	"CMB Bayesian":
 	{
+		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
 		"Number of chains": {
 			"type": "spinBox",
 			"default": "8",

@@ -205,7 +205,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "CMB Bayesian")
     {
         if (MCMC!=nullptr) delete MCMC;
+        MCMC = new CMCMC<SourceSinkData>();
+        MCMC->Model = Data();
         ProgressWindow *rtw = new ProgressWindow();
+        rtw->show();
+        Data()->InitializeParametersObservations(arguments["Sample"]);
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);

@@ -83,7 +83,6 @@ public:
     bool step(int k);
     bool step(int k, int nsamps, string filename, ProgressWindow* _rtw = 0);
 	vector<double> purturb(int k);
-	CNormalDist ND;
     void writeoutput(string filename);
 	vector<int> params;
     CTimeSeriesSet<double> MData;
