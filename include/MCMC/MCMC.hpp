@@ -192,7 +192,7 @@ void CMCMC<T>::model(T *Model1, vector<double> par)
 }
 
 template<class T>
-void CMCMC<T>::initialize(bool random)
+void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
 {
     parameters = &Model->Parameters();
     Params.resize(MCMC_Settings.total_number_of_samples);
@@ -200,8 +200,12 @@ void CMCMC<T>::initialize(bool random)
     logp1.resize(MCMC_Settings.total_number_of_samples);
     pertcoeff.resize(parameters->size());
     MCMC_Settings.number_of_parameters = Model->Parameters().size();
+
     for (unsigned int i=0; i<MCMC_Settings.total_number_of_samples; i++)
         Params[i].resize(MCMC_Settings.number_of_parameters);
+
+    results->SetNumberofColumns(MCMC_Settings.number_of_parameters);
+
     double pp=0;
     for (int j = 0; j<MCMC_Settings.number_of_parameters; j++)
     {
@@ -226,6 +230,7 @@ void CMCMC<T>::initialize(bool random)
                 if (parameter(i)->GetPriorDistribution()=="log-normal")
                     pp += log(Params[j][i]);
             }
+            results->append(j,Params[j]);
             logp[j] = posterior(Params[j]);
             logp1[j] = logp[j]+pp;
         }
@@ -361,7 +366,7 @@ vector<double> CMCMC<T>::purturb(int k)
 }
 
 template<class T>
-bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
+bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *results, ProgressWindow *rtw)
 {
 	FILE *file;
     if (MCMC_Settings.continue_mcmc == false)
@@ -374,7 +379,9 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
 		file = fopen(filename.c_str(),"a");
         fprintf(file,"%s, ", "no.");
         for (unsigned int i=0; i<MCMC_Settings.number_of_parameters; i++)
-            fprintf(file, "%s, ", parameter(i)->Name().c_str());
+        {   fprintf(file, "%s, ", parameter(i)->Name().c_str());
+            results->setname(i,parameter(i)->Name());
+        }
 		fprintf(file,"%s, %s, %s,", "logp", "logp_1", "stuck_counter");
         for (unsigned int j=0; j<pertcoeff.size(); j++) fprintf(file,"%s,", string("purt_coeff_" + QString("%1").arg(j).toStdString()).c_str());
 		fprintf(file, "\n");
@@ -419,23 +426,6 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
                 accepted[jj-kk]=1;
             }
 
-
-/*
-#pragma omp critical
-            {   if (rtw->detailson)
-                {   QString s;
-                    s = s+"Sample no: "+QString::number(jj) + " Parameters: ";
-                    for (unsigned int i = 0; i < MCMC_Settings.number_of_parameters; i++)
-                        s+=QString::number(Params[jj][i],'e',2)+ ",";
-
-                    s+= " Stuck counter: " + QString::number(stuckcounter[jj-kk]);
-                    s+= " Log Likelihood: " + QString::number(logp[jj],'e',2);
-
-                    rtw->AppendtoDetails(s);
-                    rtw->AppendtoDetails(" ");
-                }
-            }
-        */
         }
 
         accepted_count += accepted.sum();
@@ -454,7 +444,9 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, ProgressWindow *rtw)
 
 					fprintf(file, "%i, ", jj);
                     for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
-						fprintf(file, "%le, ", Params[jj][i]);
+                        fprintf(file, "%le, ", Params[jj][i]);
+                    results->append(jj,Params[jj]);
+
                     fprintf(file, "%le, %le, %f,", logp[jj], logp1[jj], stuckcounter[jj%MCMC_Settings.number_of_chains]);
 					for (int j = 0; j < pertcoeff.size(); j++) fprintf(file, "%le,", pertcoeff[j]);
 					fprintf(file, "\n");

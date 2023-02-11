@@ -207,6 +207,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "CMB Bayesian")
     {
+        results.SetName("MCMC results for '" +arguments["Sample"] + "'");
+        ResultItem MCMC_samples;
+        MCMC_samples.SetType(result_type::timeseries_set);
+        MCMC_samples.SetName("MCMC samples for '" +arguments["Sample"] + "'");
+        CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
+
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
         MCMC->Model = Data();
@@ -223,8 +229,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
-        MCMC->initialize(true);
-        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), arguments["samples_file_name"], rtw);
+        MCMC->initialize(samples,true);
+        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), arguments["samples_file_name"], samples, rtw);
+        MCMC_samples.SetResult(samples);
+        results.Append(MCMC_samples);
     }
     return true;
 }

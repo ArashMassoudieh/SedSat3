@@ -8,6 +8,7 @@
 #include "BTCSet.h"
 #include "observation.h"
 #include "parameter.h"
+#include "cmbtimeseriesset.h"
 
 class ProgressWindow;
 
@@ -78,10 +79,10 @@ public:
 	vector<double> logp1;
 	vector<double> u;
     //double posterior(vector<double> par, int ID = -1);
-    void initialize(bool random=false);
+    void initialize(CMBTimeSeriesSet *results,bool random=false);
     void initialize(vector<double> par);
     bool step(int k);
-    bool step(int k, int nsamps, string filename, ProgressWindow* _rtw = 0);
+    bool step(int k, int nsamps, string filename, CMBTimeSeriesSet *results = nullptr, ProgressWindow* _rtw = 0);
 	vector<double> purturb(int k);
     void writeoutput(string filename);
 	vector<int> params;
