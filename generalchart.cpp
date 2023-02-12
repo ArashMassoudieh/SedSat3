@@ -289,8 +289,8 @@ bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset,
     ui->horizontalLayout->addWidget(element_combo);
     ui->horizontalLayout->addWidget(independent_label);
     ui->horizontalLayout->addWidget(independent_combo);
-    onElementChanged(element_combo->currentText());
-    onIndependentChanged(independent_combo->currentText());
+    onElementChanged(element_combo->currentIndex());
+    onIndependentChanged(independent_combo->currentIndex());
     return true;
 }
 
