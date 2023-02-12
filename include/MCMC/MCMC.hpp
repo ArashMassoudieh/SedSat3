@@ -369,12 +369,12 @@ template<class T>
 bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *results, ProgressWindow *rtw)
 {
 	FILE *file;
-    if (MCMC_Settings.continue_mcmc == false)
+    if (!MCMC_Settings.continue_mcmc)
 	{	file = fopen(filename.c_str(),"w");
 		fclose(file);
 	}
 
-    if (MCMC_Settings.continue_mcmc == false)
+    if (!MCMC_Settings.continue_mcmc)
 	{
 		file = fopen(filename.c_str(),"a");
         fprintf(file,"%s, ", "no.");

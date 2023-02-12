@@ -234,6 +234,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), arguments["samples_file_name"], samples, rtw);
         MCMC_samples.SetResult(samples);
         results.Append(MCMC_samples);
+        ResultItem distribution_res_item;
+        CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
+        *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        distribution_res_item.SetName("Posterior Distributions");
+        distribution_res_item.SetType(result_type::distribution);
+        distribution_res_item.SetResult(dists);
+        results.Append(distribution_res_item);
     }
     return true;
 }

@@ -68,6 +68,11 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
         return InitializeMCMCSamples(timeseriesset, QString::fromStdString(res->Name()));
     }
+    if (res->Type() == result_type::distribution)
+    {
+        CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
+        return InitializeDistributions(timeseriesset, QString::fromStdString(res->Name()));
+    }
 
     chartView->update();
     return false; 
@@ -314,6 +319,26 @@ bool GeneralChart:: InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const Q
     return true;
 }
 
+bool GeneralChart::InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &title)
+{
+    element_combo = new QComboBox();
+    QLabel *element_label = new QLabel();
+    element_label->setText("Variable:");
+    ui->horizontalLayout->addWidget(element_label);
+    ui->horizontalLayout->addWidget(element_combo);
+
+    for (int i = 0; i<distributions->nvars; i++ )
+    {
+        element_combo->addItem(QString::fromStdString(distributions->names[i]));
+    }
+    connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onDistributionsVariableChanged(int)));
+
+
+    onMCMCVariableChanged(element_combo->currentIndex());
+
+    return true;
+}
+
 
 void GeneralChart::onElementChanged(int i_element)
 {
@@ -338,6 +363,12 @@ void GeneralChart::onMCMCVariableChanged(int i)
     PlotMCMCSamples(&samplesset->operator[](variable.toStdString()),variable);
 }
 
+void GeneralChart::onDistributionsVariableChanged(int i)
+{
+    CMBTimeSeriesSet * samplesset = static_cast<CMBTimeSeriesSet*>(result_item->Result());
+    QString variable = element_combo->itemText(i);
+    PlotDistribution(&samplesset->operator[](variable.toStdString()),variable);
+}
 void GeneralChart::onIndependentChanged(int i_constituent)
 {
     MultipleLinearRegressionSet* mlrset = static_cast<MultipleLinearRegressionSet*>(result_item->Result());
@@ -454,16 +485,13 @@ bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& v
         //delete chart->axes()[i];
     }
 
-    qDebug()<<"After:";
     for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
     {
-        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
         chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
     }
 
     for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
     {
-        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
         chart->removeAxis(chart->axes(Qt::Vertical)[i]);
     }
     chart->axes().clear();
@@ -472,7 +500,6 @@ bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& v
     axisX->setObjectName("axisX");
     axisYNormal->setObjectName("axisY");
 
-    QLineSeries *lineseries = new QLineSeries();
     double x_min_val = samples->mint();
     double x_max_val = samples->maxt();
     double y_min_val = samples->minC();
@@ -487,11 +514,16 @@ bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& v
     axisYNormal->setTitleText(variable);
     axisYNormal->setRange(y_min_val, y_max_val);
 
+
     QScatterSeries* series = new QScatterSeries();
 
+    QPen marker_pen(QBrush(Qt::SolidPattern),1,Qt::PenStyle::SolidLine);
+
     series->setName(variable);
-    series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-    series->setMarkerSize(15.0);
+    series->setMarkerShape(QScatterSeries::MarkerShapeRectangle);
+    series->setMarkerSize(3.0);
+    series->setPen(marker_pen);
+
 
     for (int i=0; i<samples->n; i++)
     {
@@ -507,6 +539,67 @@ bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& v
     return true;
 }
 
+
+bool GeneralChart::PlotDistribution(CTimeSeries<double> *samples,const QString& variable)
+{
+    chart->removeAllSeries();
+    for (int i=0; i<chart->axes().size(); i++)
+    {
+        chart->removeAxis(chart->axes()[i]);
+        //delete chart->axes()[i];
+    }
+
+    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
+    {
+        chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
+    }
+
+    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
+    {
+        chart->removeAxis(chart->axes(Qt::Vertical)[i]);
+    }
+    chart->axes().clear();
+    QValueAxis* axisX = new QValueAxis();
+    QValueAxis* axisYNormal = new QValueAxis();
+    axisX->setObjectName("axisX");
+    axisYNormal->setObjectName("axisY");
+
+    double x_min_val = samples->mint();
+    double x_max_val = samples->maxt();
+    double y_min_val = samples->minC();
+    double y_max_val = samples->maxC();
+
+
+    axisX->setRange(x_min_val, x_max_val);
+    axisX->setTitleText("Sample number");
+    axisYNormal->setTitleText(variable);
+    axisYNormal->setRange(y_min_val, y_max_val);
+
+    QLineSeries *series = new QLineSeries();
+    QAreaSeries *areaseries = new QAreaSeries(series);
+
+
+    QPen marker_pen(QBrush(Qt::SolidPattern),1,Qt::PenStyle::SolidLine);
+
+    series->setName(variable);
+    series->setPen(marker_pen);
+
+    for (int i=0; i<samples->n; i++)
+    {
+        series-> append(samples->GetT(i),samples->GetC(i));
+    }
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisYNormal, Qt::AlignLeft);
+    chart->addSeries(series);
+    series->attachAxis(axisX);
+    series->attachAxis(axisYNormal);
+    chart->addSeries(areaseries);
+    areaseries->attachAxis(axisX);
+    areaseries->attachAxis(axisYNormal);
+
+    return true;
+}
 
 bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QString &title)
 {

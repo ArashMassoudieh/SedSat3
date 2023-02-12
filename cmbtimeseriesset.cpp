@@ -22,6 +22,17 @@ CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CMBTimeSeriesSet &mp)
     CTimeSeriesSet<double>::operator=(mp);
     return *this;
 }
+
+CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CTimeSeriesSet<double> &mp)
+{
+    CTimeSeriesSet<double>::operator=(mp);
+    return *this;
+}
+CMBTimeSeriesSet::CMBTimeSeriesSet(const CTimeSeriesSet<double>& mp):CTimeSeriesSet<double>(mp)
+{
+
+}
+
 QJsonObject CMBTimeSeriesSet::toJsonObject()
 {
     QJsonObject out;

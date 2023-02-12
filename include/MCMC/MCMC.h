@@ -48,7 +48,7 @@ struct _MCMC_settings
     bool noinipurt;
     bool sensbasedpurt;
     bool global_sensitivity;
-    bool continue_mcmc;
+    bool continue_mcmc = false;
     unsigned int number_of_post_estimate_realizations;
     double dp_sens;
     bool noise_realization_writeout;

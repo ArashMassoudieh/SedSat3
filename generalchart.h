@@ -34,7 +34,9 @@ public:
     bool PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &title);
     bool PlotTimeSeriesSet(CMBTimeSeriesSet *regressionset, const QString &title);
     bool InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const QString &title);
+    bool InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &title);
     bool PlotMCMCSamples(CTimeSeries<double> *mlr,const QString& variable);
+    bool PlotDistribution(CTimeSeries<double> *mlr,const QString& variable);
 private:
     Ui::GeneralChart *ui;
     QChart* chart;
@@ -47,6 +49,7 @@ private slots:
     void onIndependentChanged(int i_independent);
     void onElementChanged(int i_constituent);
     void onMCMCVariableChanged(int);
+    void onDistributionsVariableChanged(int);
 
 };
 
