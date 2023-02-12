@@ -209,7 +209,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         results.SetName("MCMC results for '" +arguments["Sample"] + "'");
         ResultItem MCMC_samples;
-        MCMC_samples.SetType(result_type::timeseries_set);
+        MCMC_samples.SetShowAsString(false);
+        MCMC_samples.SetType(result_type::mcmc_samples);
         MCMC_samples.SetName("MCMC samples for '" +arguments["Sample"] + "'");
         CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
 

@@ -53,7 +53,12 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
     textBrowser->append(QString::fromStdString(resultitem.Name())+":");
     textBrowser->setTextColor(Qt::black);
     textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    QString str = QString::fromStdString(resultitem.Result()->ToString());
+    QString str;
+    if (resultitem.ShowAsString())
+        str = QString::fromStdString(resultitem.Result()->ToString());
+    else
+        str = QString::fromStdString("Push the graph button");
+
     textBrowser->append(str);
     int count = 0;
     for(int i = 0;i < str.length();i++)

@@ -11,6 +11,7 @@ ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
     type = rhs.type;
     result = rhs.result;
     y_axis_mode = rhs.y_axis_mode;
+    showasstring = rhs.showasstring;
 }
 ResultItem& ResultItem::operator = (const ResultItem &rhs)
 {
@@ -19,5 +20,6 @@ ResultItem& ResultItem::operator = (const ResultItem &rhs)
     type = rhs.type;
     result = rhs.result;
     y_axis_mode = rhs.y_axis_mode;
+    showasstring = rhs.showasstring;
     return *this;
 }

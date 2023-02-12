@@ -33,6 +33,8 @@ public:
     bool PlotPredictedConcentration(Elemental_Profile* elemental_profile, const QString &title);
     bool PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &title);
     bool PlotTimeSeriesSet(CMBTimeSeriesSet *regressionset, const QString &title);
+    bool InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const QString &title);
+    bool PlotMCMCSamples(CTimeSeries<double> *mlr,const QString& variable);
 private:
     Ui::GeneralChart *ui;
     QChart* chart;
@@ -42,8 +44,9 @@ private:
     bool PlotRegression(MultipleLinearRegression *timeseriesset,const QString& independent_var);
     ResultItem* result_item=nullptr;
 private slots:
-    void onIndependentChanged(const QString&);
-    void onElementChanged(const QString& constituent);
+    void onIndependentChanged(int i_independent);
+    void onElementChanged(int i_constituent);
+    void onMCMCVariableChanged(int);
 
 };
 

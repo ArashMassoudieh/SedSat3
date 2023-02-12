@@ -2,7 +2,7 @@
 #define RESULTITEM_H
 #include <string>
 
-enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector};
+enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, mcmc_samples};
 enum class yaxis_mode {normal, log};
 #include "interface.h"
 
@@ -22,11 +22,14 @@ public:
     result_type Type() const {return type;}
     void SetYAxisMode(yaxis_mode mode) {y_axis_mode = mode;}
     yaxis_mode YAxisMode() {return y_axis_mode;}
+    void SetShowAsString(bool value) {showasstring = value; }
+    bool ShowAsString() const {return showasstring;}
 private:
     string name;
     result_type type;
     Interface *result;
     yaxis_mode y_axis_mode = yaxis_mode::log;
+    bool showasstring = true;
 
 };
 
