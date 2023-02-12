@@ -306,7 +306,7 @@ bool GeneralChart:: InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const Q
     {
         element_combo->addItem(QString::fromStdString(mcmcsamples->names[i]));
     }
-    connect(element_combo, SIGNAL(currentIndexChanged(int i)),this, SLOT(onMCMCVariableChanged(int i)));
+    connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onMCMCVariableChanged(int)));
 
 
     onMCMCVariableChanged(element_combo->currentIndex());
