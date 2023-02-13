@@ -238,6 +238,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
         *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         distribution_res_item.SetName("Posterior Distributions");
+        distribution_res_item.SetShowAsString(false);
         distribution_res_item.SetType(result_type::distribution);
         distribution_res_item.SetResult(dists);
         results.Append(distribution_res_item);

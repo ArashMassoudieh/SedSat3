@@ -17,6 +17,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     ElementInformation = mp.ElementInformation;
     element_distributions = mp.element_distributions;
     numberofconstituents = mp.numberofconstituents;
+    numberofisotopes = mp.numberofisotopes;
     numberofsourcesamplesets = mp.numberofsourcesamplesets;
     observations = mp.observations;
     outputpath = mp.outputpath;
@@ -38,6 +39,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     ElementInformation = mp.ElementInformation;
     element_distributions = mp.element_distributions;
     numberofconstituents = mp.numberofconstituents;
+    numberofisotopes = mp.numberofisotopes;
     numberofsourcesamplesets = mp.numberofsourcesamplesets;
     observations = mp.observations;
     outputpath = mp.outputpath;
@@ -292,7 +294,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
             numberofconstituents ++;
 
     // Count the number of isotopes to be used
-        numberofisotopes = 0;
+    numberofisotopes = 0;
         for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
             if (it->second.Role == element_information::role::isotope)
                 numberofisotopes ++;
@@ -348,106 +350,106 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     }
                 }
             }
+        }
 
-            for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        {
+            if (element_iterator->second.Role == element_information::role::isotope)
             {
-                if (element_iterator->second.Role == element_information::role::isotope)
-                {
 
-                    for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
-                    {
-                        if (source_iterator->first!=target_group)
-                        {   Parameter p;
-                            p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
-                            p.SetPriorDistribution(distribution_type::normal);
-                            source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
-                            p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
-                            parameters.push_back(p);
-                        }
+                for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
+                {
+                    if (source_iterator->first!=target_group)
+                    {   Parameter p;
+                        p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
+                        p.SetPriorDistribution(distribution_type::normal);
+                        source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
+                        p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
+                        parameters.push_back(p);
                     }
                 }
-
             }
+        }
         // Source elemental profile standard deviation for each element
-            for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        {
+            if (element_iterator->second.Role == element_information::role::element)
             {
-                if (element_iterator->second.Role == element_information::role::element)
+                for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
                 {
-                    for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
-                    {
-                        if (source_iterator->first!=target_group)
-                        {   Parameter p;
-                            p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
-                            p.SetPriorDistribution(distribution_type::lognormal);
-                            p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
-                            parameters.push_back(p);
-                        }
-                    }
-                }
-            }
-
-            // Source elemental profile standard deviation for each isotope
-            for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
-            {
-                if (element_iterator->second.Role == element_information::role::isotope)
-                {
-                    for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
-                    {
-                        if (source_iterator->first!=target_group)
-                        {   Parameter p;
-                            p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
-                            p.SetPriorDistribution(distribution_type::lognormal);
-                            p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
-                            parameters.push_back(p);
-                        }
+                    if (source_iterator->first!=target_group)
+                    {   Parameter p;
+                        p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
+                        p.SetPriorDistribution(distribution_type::lognormal);
+                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
+                        parameters.push_back(p);
                     }
                 }
             }
         }
+        // Source elemental profile standard deviation for each isotope
+        for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        {
+            if (element_iterator->second.Role == element_information::role::isotope)
+            {
+                for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
+                {
+                    if (source_iterator->first!=target_group)
+                    {   Parameter p;
+                        p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
+                        p.SetPriorDistribution(distribution_type::lognormal);
+                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
+                        parameters.push_back(p);
+                    }
+                }
+            }
+        }
+    }
+
+
 // Error Standard Deviation
-        if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
-        {   Parameter p;
-            p.SetName("Error STDev");
-            p.SetPriorDistribution(distribution_type::lognormal);
-            p.SetRange(1e-5, 1e5);
-            parameters.push_back(p);
+    if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
+    {   Parameter p;
+        p.SetName("Error STDev");
+        p.SetPriorDistribution(distribution_type::lognormal);
+        p.SetRange(1e-5, 1e5);
+        parameters.push_back(p);
 
 
-            // Observations
-            for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        // Observations
+        for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        {
+            if (element_iterator->second.Role == element_information::role::element)
             {
-                if (element_iterator->second.Role == element_information::role::element)
-                {
-                    Observation obs;
-                    obs.SetName(targetsamplename + "_" + element_iterator->first);
-                    obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
-                    observations.push_back(obs);
-                }
-
+                Observation obs;
+                obs.SetName(targetsamplename + "_" + element_iterator->first);
+                obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
+                observations.push_back(obs);
             }
+
         }
+    }
 
-        // Error Standard Deviation for isotopes
-        if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
-        {   Parameter p;
-            p.SetName("Error STDev for isotopes");
-            p.SetPriorDistribution(distribution_type::lognormal);
-            p.SetRange(1e-5, 1e5);
-            parameters.push_back(p);
+    // Error Standard Deviation for isotopes
+    if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
+    {   Parameter p;
+        p.SetName("Error STDev for isotopes");
+        p.SetPriorDistribution(distribution_type::lognormal);
+        p.SetRange(1e-5, 1e5);
+        parameters.push_back(p);
 
 
-            // Observations
-            for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        // Observations
+        for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
+        {
+            if (element_iterator->second.Role == element_information::role::isotope)
             {
-                if (element_iterator->second.Role == element_information::role::isotope)
-                {
-                    Observation obs;
-                    obs.SetName(targetsamplename + "_" + element_iterator->first);
-                    obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
-                    observations.push_back(obs);
-                }
-
+                Observation obs;
+                obs.SetName(targetsamplename + "_" + element_iterator->first);
+                obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
+                observations.push_back(obs);
             }
+
         }
     }
 
@@ -999,6 +1001,10 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     //Element standard deviations
     else if (i<est_mode_key_1*(numberofsourcesamplesets-1)+(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
     {
+        if (value<0)
+        {
+            cout<<"stop!"<<endl;
+        }
         int element_counter = (i-(numberofsourcesamplesets-1)-(numberofconstituents+numberofisotopes)*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-(numberofconstituents+numberofisotopes)*numberofsourcesamplesets)%numberofsourcesamplesets;
         GetElementDistribution(element_order[element_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
@@ -1007,6 +1013,10 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     //Isotope standard deviations
     else if (i<est_mode_key_1*(numberofsourcesamplesets-1)+(2*numberofconstituents+2*numberofisotopes)*numberofsourcesamplesets && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
     {
+        if (value<0)
+        {
+            cout<<"stop!"<<endl;
+        }
         int isotope_counter = (i-(numberofsourcesamplesets-1)-(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets)%numberofsourcesamplesets;
         GetElementDistribution(element_order[isotope_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);

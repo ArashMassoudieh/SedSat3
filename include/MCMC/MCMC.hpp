@@ -159,13 +159,13 @@ double CMCMC<T>::posterior(vector<double> par, bool out)
     T Model1 = *Model;
 
 	double sum = 0;
-    for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
-    {
-        for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
-            Model1.SetParameterValue(i, par[i]);
 
+    for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
+        Model1.SetParameterValue(i, par[i]);
+
+    for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
         sum+=parameter(i)->CalcLogPriorProbability(par[i]);
-	}
+
 
     sum+= -Model1.GetObjectiveFunctionValue();
 

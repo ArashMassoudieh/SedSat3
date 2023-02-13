@@ -13,7 +13,9 @@ double Distribution::Eval(const double &x)
             out = 1.0 / (sqrt(2*pi)*parameters[1])*exp(-pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]));
     if (distribution==distribution_type::lognormal)
             out = 1.0 / (sqrt(2*pi)*parameters[1] * x)*exp(-pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]));
-
+    if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+        if (x<0 || x>1)
+            out = 1e-32;
     return out;
 }
 
@@ -21,9 +23,12 @@ double Distribution::EvalLog(const double &x)
 {
     double out = 0;
     if (distribution==distribution_type::normal)
-            out = -log(sqrt(2*pi)*parameters[1]) -pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]);
+        out = -log(sqrt(2*pi)*parameters[1]) -pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]);
     if (distribution==distribution_type::lognormal)
-            out = -log(sqrt(2*pi)*parameters[1]*x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
+        out = -log(sqrt(2*pi)*parameters[1]*x) -pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]);
+    if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+        if (x<0 || x>1)
+            out = -1e6;
 
     return out;
 }
