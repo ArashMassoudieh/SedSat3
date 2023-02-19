@@ -287,7 +287,7 @@ void MainWindow::on_test_plot()
     for (int i=0; i<10; i++)
     {
         vector<double> y_val(i+1);
-        for (int j=0; j<y_val.size(); j++)
+        for (unsigned int j=0; j<y_val.size(); j++)
         {
             y_val[j]=i+0.2*j;
         }
@@ -316,6 +316,8 @@ QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsi
         for (map<string,Elemental_Profile>::iterator it= DataCollection.sample_set(group_names[i])->begin();it!=DataCollection.sample_set(group_names[i])->end(); it++)
         {
             QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
+            child->setData(QString::fromStdString(it->first), elementRole );
+            child->setData(QString::fromStdString(group_names[i]), groupRole );
             child->setData("Child",Qt::UserRole);
             group->appendRow(child);
         }
@@ -337,14 +339,17 @@ QStandardItem* MainWindow::ToQStandardItem(const QString &key, const SourceSinkD
     vector<string> group_names = DataCollection.GroupNames();
     for (int i=0; i<group_names.size(); i++)
     {
-        /* Create the phone groups as QStandardItems */
+
         QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
         group->setData("Group",Qt::UserRole);
-        /* Append to each group 5 person as children */
+
         for (map<string,Elemental_Profile>::iterator it= DataCollection.sample_set(group_names[i])->begin();it!=DataCollection.sample_set(group_names[i])->end(); it++)
         {
             QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
             child->setData("Sample",Qt::UserRole);
+            child->setData(QString::fromStdString(group_names[i]),groupRole);
+            child->setData(QString::fromStdString(it->first),sampleRole);
+
             group->appendRow(child);
         }
         /* append group as new row to the model. model takes the ownership of the item */
@@ -359,13 +364,16 @@ QStandardItem* MainWindow::ElementsToQStandardItem(const QString &key, const Sou
     columnviewitem->setData("RootItem",Qt::UserRole);
     vector<string> group_names = DataCollection.GroupNames();
     vector<string> element_names = DataCollection.ElementNames();
-    for (int elem_counter=0; elem_counter<element_names.size(); elem_counter++)
+    for (unsigned int elem_counter=0; elem_counter<element_names.size(); elem_counter++)
     {   QStandardItem *element_item=new QStandardItem(QString::fromStdString(element_names[elem_counter]));
         element_item->setData("Element",Qt::UserRole);
-        for (int group_counter=0; group_counter<group_names.size(); group_counter++)
+        for (unsigned int group_counter=0; group_counter<group_names.size(); group_counter++)
         {
             QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[group_counter]));
             group->setData("GroupInElements",Qt::UserRole);
+            group->setData(QString::fromStdString(element_names[elem_counter]),elementRole);
+            group->setData(QString::fromStdString(group_names[group_counter]),groupRole);
+
             element_item->appendRow(group);
         }
         columnviewitem->appendRow(element_item);
@@ -509,10 +517,17 @@ void MainWindow::preparetreeviewMenu(const QPoint &pos)
     QTreeView *tree = ui->treeView;
 
     QModelIndex index = tree->currentIndex();
+    qDebug()<<index.data(elementRole);
+    qDebug()<<index.data(groupRole);
+    qDebug()<<index.data(sampleRole);
     QAction* showdistributions = menu->addAction("Show fitted distributions");
-
-    QVariant v = QVariant::fromValue(QString::fromStdString("SFD;") + columnviewmodel->itemFromIndex(index)->text());
-    showdistributions->setData(v);
+    QStringList RoleData;
+    RoleData<< "Element=" + index.data(elementRole).toString();
+    RoleData<< "Group=" + index.data(groupRole).toString();
+    RoleData<<"Sample=" +  index.data(sampleRole).toString();
+    RoleData<<"Action=SFD";
+    showdistributions->setData(RoleData);
+    QVariant x;
 
     connect(showdistributions, SIGNAL(triggered()), this, SLOT(showdistributionsforelements()));
 
@@ -525,9 +540,18 @@ void MainWindow::preparetreeviewMenu(const QPoint &pos)
 void MainWindow::showdistributionsforelements()
 {
     QAction* act = qobject_cast<QAction*>(sender());
-    QStringList keys = act->data().toString().split(";");
-    QString key2 = keys[0];
-    QString item = keys[1];
+    QStringList keysStringList = act->data().toStringList();
+    QMap<QString,QString> keys;
+    for (unsigned int i=0; i<keysStringList.count(); i++)
+    {
+        keys[keysStringList[i].split("=")[0]] = keysStringList[i].split("=")[1];
+    }
+
+    QString Element = keys["Element"];
+    QString Group = keys["Group"];
+    QString Sample = keys["Sample"];
+    QString Action = keys["Action"];
+
     PlotWindow *plotwindow = new PlotWindow(this);
     CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(item.toStdString())->EvaluateAsTimeSeries();
     plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());

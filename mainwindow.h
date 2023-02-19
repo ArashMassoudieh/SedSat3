@@ -8,6 +8,8 @@
 #include "conductor.h"
 
 
+enum ItemDataRoles {elementRole = Qt::ItemDataRole::UserRole+1, groupRole = Qt::ItemDataRole::UserRole+2, sampleRole = Qt::ItemDataRole::UserRole+3};
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
