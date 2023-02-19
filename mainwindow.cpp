@@ -342,7 +342,7 @@ QStandardItem* MainWindow::ToQStandardItem(const QString &key, const SourceSinkD
 
         QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
         group->setData("Group",Qt::UserRole);
-
+        group->setData(QString::fromStdString(group_names[i]),groupRole);
         for (map<string,Elemental_Profile>::iterator it= DataCollection.sample_set(group_names[i])->begin();it!=DataCollection.sample_set(group_names[i])->end(); it++)
         {
             QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
@@ -367,6 +367,7 @@ QStandardItem* MainWindow::ElementsToQStandardItem(const QString &key, const Sou
     for (unsigned int elem_counter=0; elem_counter<element_names.size(); elem_counter++)
     {   QStandardItem *element_item=new QStandardItem(QString::fromStdString(element_names[elem_counter]));
         element_item->setData("Element",Qt::UserRole);
+        element_item->setData(QString::fromStdString(element_names[elem_counter]),elementRole);
         for (unsigned int group_counter=0; group_counter<group_names.size(); group_counter++)
         {
             QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[group_counter]));
@@ -520,16 +521,19 @@ void MainWindow::preparetreeviewMenu(const QPoint &pos)
     qDebug()<<index.data(elementRole);
     qDebug()<<index.data(groupRole);
     qDebug()<<index.data(sampleRole);
-    QAction* showdistributions = menu->addAction("Show fitted distributions");
-    QStringList RoleData;
-    RoleData<< "Element=" + index.data(elementRole).toString();
-    RoleData<< "Group=" + index.data(groupRole).toString();
-    RoleData<<"Sample=" +  index.data(sampleRole).toString();
-    RoleData<<"Action=SFD";
-    showdistributions->setData(RoleData);
-    QVariant x;
+    if (!index.data(elementRole).toString().isEmpty())
+    {   QAction* showdistributions = menu->addAction("Show fitted distributions");
+        QStringList RoleData;
 
-    connect(showdistributions, SIGNAL(triggered()), this, SLOT(showdistributionsforelements()));
+        RoleData<< "Element=" + index.data(elementRole).toString();
+        RoleData<< "Group=" + index.data(groupRole).toString();
+        RoleData<<"Sample=" +  index.data(sampleRole).toString();
+        RoleData<<"Action=SFD";
+        showdistributions->setData(RoleData);
+        connect(showdistributions, SIGNAL(triggered()), this, SLOT(showdistributionsforelements()));
+    }
+
+
 
     if (menu)
         menu->exec( tree->mapToGlobal(pos) );
@@ -553,17 +557,26 @@ void MainWindow::showdistributionsforelements()
     QString Action = keys["Action"];
 
     PlotWindow *plotwindow = new PlotWindow(this);
-    CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(item.toStdString())->EvaluateAsTimeSeries();
-    plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-    for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
+    if (Group=="")
     {
-        elem_dist = DataCollection.sample_set(it->first)->ElementalDistribution(item.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
-        plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+        CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
+        plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+        for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
+        {
+            elem_dist = DataCollection.sample_set(it->first)->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+            plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+        }
+
     }
-    plotwindow->setWindowTitle(item);
+    else
+    {
+        CTimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+        plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+    }
+
+    plotwindow->setWindowTitle(Element);
     plotwindow->Plotter()->SetLegend(true);
     plotwindow->show();
-
 }
 
 void MainWindow::on_constituent_properties_triggered()

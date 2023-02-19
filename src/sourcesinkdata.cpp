@@ -1026,12 +1026,20 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     //Observed standard deviation
     else if (i==est_mode_key_1*(numberofsourcesamplesets-1)+2*(numberofconstituents+numberofisotopes)*numberofsourcesamplesets*est_mode_key_2)
     {
+        if (value<0)
+        {
+            cout<<"stop!"<<endl;
+        }
         error_stdev = value;
         return true;
     }
     //Observed isotope standard deviation
     else if (i==est_mode_key_1*(numberofsourcesamplesets-1)+2*(numberofconstituents+numberofisotopes)*numberofsourcesamplesets*est_mode_key_2+1)
     {
+        if (value<0)
+        {
+            cout<<"stop!"<<endl;
+        }
         error_stdev_isotope = value;
         return true;
     }
