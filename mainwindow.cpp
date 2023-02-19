@@ -556,27 +556,31 @@ void MainWindow::showdistributionsforelements()
     QString Sample = keys["Sample"];
     QString Action = keys["Action"];
 
-    PlotWindow *plotwindow = new PlotWindow(this);
-    if (Group=="")
-    {
-        CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
-        plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-        for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
+
+    if (Action == "SFD")
+    {   PlotWindow *plotwindow = new PlotWindow(this);
+        if (Group=="")
         {
-            elem_dist = DataCollection.sample_set(it->first)->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
-            plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+            CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
+            plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+            for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
+            {
+                elem_dist = DataCollection.sample_set(it->first)->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+                plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+            }
+
         }
-
+        else
+        {
+            CTimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+            plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
+        }
+        plotwindow->setWindowTitle(Element);
+        plotwindow->Plotter()->SetLegend(true);
+        plotwindow->show();
     }
-    else
-    {
-        CTimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
-        plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-    }
 
-    plotwindow->setWindowTitle(Element);
-    plotwindow->Plotter()->SetLegend(true);
-    plotwindow->show();
+
 }
 
 void MainWindow::on_constituent_properties_triggered()
