@@ -243,5 +243,49 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         distribution_res_item.SetResult(dists);
         results.Append(distribution_res_item);
     }
+
+    if (command == "DF")
+    {
+        results.SetName("Distribution fitting results for '" +arguments["Constituent"] + "' in '" + arguments["Source/Target group"]);
+        CMBTimeSeriesSet distributions;
+        CMBTimeSeriesSet cummulative_distributions;
+        ResultItem distribution_item;
+        distribution_item.SetName("Fitted PDF for '" +arguments["Constituent"] + "' in '" + arguments["Source/Target group"]);
+        distribution_item.SetShowAsString(false);
+        distribution_item.SetType(result_type::timeseries_set_first_symbol);
+        distribution_item.SetYAxisMode(yaxis_mode::normal);
+        distribution_item.setXAxisTitle("Value");
+        distribution_item.setYAxisTitle("PDF");
+        ResultItem cummulative_distribution_item;
+        cummulative_distribution_item.SetName("Fitted CDF for '" +arguments["Constituent"] + "' in '" + arguments["Source/Target group"]);
+        cummulative_distribution_item.SetShowAsString(false);
+        cummulative_distribution_item.SetType(result_type::timeseries_set_first_symbol);
+        cummulative_distribution_item.SetYAxisMode(yaxis_mode::normal);
+        cummulative_distribution_item.setXAxisTitle("Value");
+        cummulative_distribution_item.setYAxisTitle("CDF");
+        CMBTimeSeriesSet fitted_normal = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::normal);
+        CMBTimeSeriesSet fitted_lognormal = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::lognormal);
+        CMBTimeSeriesSet observed_fitted_normal_CDF = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::normal);
+        CMBTimeSeriesSet observed_fitted_lognormal_CDF = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::lognormal);
+        CMBTimeSeriesSet *PDF = new CMBTimeSeriesSet();
+        PDF->append(fitted_normal["Observed"]);
+        PDF->append(fitted_normal["Fitted"]);
+        PDF->append(fitted_lognormal["Fitted"]);
+        PDF->setname(0,"Samples");
+        PDF->setname(1, "Normal");
+        PDF->setname(2,"Log-normal");
+        CMBTimeSeriesSet *CDF = new CMBTimeSeriesSet();
+        CDF->append(observed_fitted_normal_CDF["Observed"]);
+        CDF->append(observed_fitted_normal_CDF["Fitted"]);
+        CDF->append(observed_fitted_lognormal_CDF["Fitted"]);
+        CDF->setname(0,"Observed");
+        CDF->setname(1, "Normal");
+        CDF->setname(2,"Log-normal");
+        distribution_item.SetResult(PDF);
+        cummulative_distribution_item.SetResult(CDF);
+        results.Append(distribution_item);
+        results.Append(cummulative_distribution_item);
+
+    }
     return true;
 }

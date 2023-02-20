@@ -1,12 +1,27 @@
 #include "cmbdistribution.h"
 #include "math.h"
 
+double Distribution::pi = 4 * atan(1.0);
+
 Distribution::Distribution()
 {
-    pi = 4 * atan(1.0);
+
 }
 
 double Distribution::Eval(const double &x)
+{
+    double out = 0;
+    if (distribution==distribution_type::normal)
+            out = 1.0 / (sqrt(2*pi)*parameters[1])*exp(-pow(x - parameters[0], 2) / (2 * parameters[1]*parameters[1]));
+    if (distribution==distribution_type::lognormal)
+            out = 1.0 / (sqrt(2*pi)*parameters[1] * x)*exp(-pow(log(x) - parameters[0], 2) / (2 * parameters[1] * parameters[1]));
+    if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+        if (x<0 || x>1)
+            out = 1e-32;
+    return out;
+}
+
+double Distribution::Eval(const double &x, const vector<double> parameters, distribution_type distribution)
 {
     double out = 0;
     if (distribution==distribution_type::normal)
@@ -51,6 +66,26 @@ CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const
     }
     return out;
 }
+
+CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type)
+{
+    CTimeSeries<double> out;
+    double x;
+    for (int i=0; i<numberofpoints; i++)
+    {
+        if (dist_type == distribution_type::normal)
+        {
+            x = parameters[0] - stdcoeff*parameters[1] + i*2*stdcoeff*parameters[1]/(numberofpoints-1);
+        }
+        else if (dist_type == distribution_type::lognormal)
+        {
+            x = exp(parameters[0] - stdcoeff*parameters[1] + i*2*stdcoeff*parameters[1]/(numberofpoints-1));
+        }
+        out.append(x,Eval(x,parameters,dist_type));
+    }
+    return out;
+}
+
 
 Distribution::Distribution(const Distribution &dist)
 {

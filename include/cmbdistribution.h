@@ -14,8 +14,10 @@ public:
     Distribution(const Distribution &dist);
     Distribution& operator = (const Distribution &dist);
     double Eval(const double &x);
+    static double Eval(const double &x, const vector<double> parameters, distribution_type distribution);
     double EvalLog(const double &x);
     CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
+    static CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type);
     vector<double> parameters;
     distribution_type distribution = distribution_type::lognormal;
     void SetType(const distribution_type &typ);
@@ -26,7 +28,7 @@ public:
     double DataSTDev() {return std_val;}
     bool operator==(const string &dist_type);
 private:
-    double pi;
+    static double pi;
     double mean_val=0;
     double std_val=0;
 };

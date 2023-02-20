@@ -2,6 +2,7 @@
 #include "math.h"
 #include "Utilities.h"
 #include <gsl/gsl_cdf.h>
+#include <gsl/gsl_randist.h>
 
 ConcentrationSet::ConcentrationSet():vector<double>()
 {
@@ -209,6 +210,32 @@ CMBTimeSeriesSet ConcentrationSet::DataCDFnFitted(distribution_type dist_type)
     out.append(fitted, "Fitted");
     out.append(out[0] - out[1],"Error");
     return out; 
+}
+
+CMBTimeSeriesSet ConcentrationSet::DistFitted(distribution_type dist_type)
+{
+    CMBTimeSeriesSet out;
+    out.append(DataCDF(), "Observed");
+    CMBTimeSeries fitted;
+    vector<double> parameters;
+    if (dist_type == distribution_type::normal)
+    {
+        parameters.push_back(mean());
+        parameters.push_back(stdev());
+    }
+    else if (dist_type == distribution_type::lognormal)
+    {
+        parameters.push_back(meanln());
+        parameters.push_back(stdevln());
+    }
+    for (double x = out[0].mint(); x <= out[0].maxt(); x += (out[0].maxt() - out[0].mint()) / 50.0)
+    {
+        fitted.append(x, Distribution::Eval(x,parameters,dist_type));
+    }
+
+    out["Observed"] = fitted.maxC()/2;
+    out.append(fitted, "Fitted");
+    return out;
 }
 
 double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)

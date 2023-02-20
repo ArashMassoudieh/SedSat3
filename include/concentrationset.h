@@ -47,6 +47,7 @@ public:
     }
     CMBTimeSeries DataCDF();
     CMBTimeSeriesSet DataCDFnFitted(distribution_type dist_type);
+    CMBTimeSeriesSet DistFitted(distribution_type dist_type);
     double KolmogorovSmirnovStat(distribution_type dist_type);
 private:
     Distribution FittedDist; // Distribution fitted based on the sample data

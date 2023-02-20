@@ -231,5 +231,16 @@
     			"type": "fileBrowser_Save",
     			"default": "MCMC_Output.txt"
     		}
+	},
+	"DF": 
+	{
+		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		}
 	}	
 }

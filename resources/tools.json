@@ -2,8 +2,6 @@
   "Pre Analysis Tools":
   {
     "Organic matter and particle size correction": "MLR",
-    "Principal Component Analysis": "PCA",
-    "Discriminatory Power Analysis": "DPA",
     "Distribution Fitting": "DF",
     "Elements' covariance matrix": "CovMat",
     "Elements' correlation matrix": "CorMat",
@@ -16,7 +14,6 @@
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
     "Maximum likelihood unmixing using Genetic Algorithm": "GA",
     "Maximum likelihood unmixing using Genetic Algorithm - Fixed Source Elemental Profiles": "GA (fixed elemental contribution)",
-    "Levenberg-Marquardt optimization": "Levenberg-Marquardt",
-    "Estimate elemetal profile distribution parameters": "GA (disregarding targets)"
+    "Levenberg-Marquardt optimization": "Levenberg-Marquardt"
   }
 }

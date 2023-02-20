@@ -60,7 +60,13 @@ bool GeneralChart::Plot(ResultItem* res)
     if (res->Type() == result_type::timeseries_set)
     {
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
-        return PlotTimeSeriesSet(timeseriesset, QString::fromStdString(res->Name()));
+        return PlotTimeSeriesSet(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
+    }
+
+    if (res->Type() == result_type::timeseries_set_first_symbol)
+    {
+        CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
+        return PlotTimeSeriesSet_M(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
     }
 
     if (res->Type() == result_type::mcmc_samples)
@@ -601,7 +607,49 @@ bool GeneralChart::PlotDistribution(CTimeSeries<double> *samples,const QString& 
     return true;
 }
 
-bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QString &title)
+bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+{
+    double x_min_val = timeseriesset->mintime();
+    double x_max_val = timeseriesset->maxtime();
+    double y_min_val = timeseriesset->minval();
+    double y_max_val = timeseriesset->maxval();
+    QString xAxisTitle = x_axis_title;
+    QString yAxisTitle = y_axis_title;
+    if (x_axis_title.isEmpty()) xAxisTitle = "Value";
+    if (y_axis_title.isEmpty()) yAxisTitle = "CDF";
+    QValueAxis* axisX = new QValueAxis();
+    QValueAxis* axisY = new QValueAxis();
+    axisX->setObjectName("axisX");
+    axisY->setObjectName("axisY");
+    axisX->setTitleText(xAxisTitle);
+    axisY->setTitleText(yAxisTitle);
+    axisX->setRange(x_min_val,x_max_val);
+    axisY->setRange(y_min_val,y_max_val);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    for (int i=0; i<timeseriesset->nvars; i++)
+    {
+        QLineSeries *lineseries = new QLineSeries();
+        chart->addSeries(lineseries);
+        lineseries->attachAxis(axisX);
+        lineseries->attachAxis(axisY);
+
+        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        {
+            lineseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+        }
+        QPen pen = lineseries->pen();
+        pen.setWidth(2);
+        pen.setBrush(QColor(drand48()*256, drand48()*256, drand48()*256));
+        lineseries->setPen(pen);
+        lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
+
+    }
+
+    return true;
+}
+
+bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
 {
     double x_min_val = timeseriesset->mintime();
     double x_max_val = timeseriesset->maxtime();
@@ -609,15 +657,37 @@ bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QStr
     double y_max_val = timeseriesset->maxval();
     QValueAxis* axisX = new QValueAxis();
     QValueAxis* axisY = new QValueAxis();
+    QString xAxisTitle = x_axis_title;
+    QString yAxisTitle = y_axis_title;
+    if (x_axis_title.isEmpty()) xAxisTitle = "Value";
+    if (y_axis_title.isEmpty()) yAxisTitle = "CDF";
     axisX->setObjectName("axisX");
     axisY->setObjectName("axisY");
-    axisX->setTitleText("Value");
-    axisY->setTitleText("CDF");
+    axisX->setTitleText(xAxisTitle);
+    axisY->setTitleText(yAxisTitle);
     axisX->setRange(x_min_val,x_max_val);
     axisY->setRange(y_min_val,y_max_val);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
-    for (int i=0; i<timeseriesset->nvars; i++)
+    int i=0;
+    {
+        QScatterSeries* scatterseries = new QScatterSeries();
+        chart->addSeries(scatterseries);
+        scatterseries->attachAxis(axisX);
+        scatterseries->attachAxis(axisY);
+
+        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        {
+            scatterseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+        }
+        QPen pen = scatterseries->pen();
+        pen.setWidth(2);
+        pen.setBrush(QColor(drand48()*256, drand48()*256, drand48()*256));
+        scatterseries->setPen(pen);
+        scatterseries->setName(QString::fromStdString(timeseriesset->names[i]));
+
+    }
+    for (int i=1; i<timeseriesset->nvars; i++)
     {
         QLineSeries *lineseries = new QLineSeries();
         chart->addSeries(lineseries);
