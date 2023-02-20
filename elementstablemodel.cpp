@@ -10,7 +10,7 @@ int ElementTableModel::rowCount(const QModelIndex &index) const
 }
 int ElementTableModel::columnCount(const QModelIndex &index) const
 {
-    return 4;
+    return 5;
 }
 QVariant ElementTableModel::data(const QModelIndex &index, int role) const
 {
@@ -33,11 +33,33 @@ QVariant ElementTableModel::data(const QModelIndex &index, int role) const
         }
         if (index.column()==2)
         {
-            return QString::fromStdString(Data->GetElementInformation(Data->ElementNames()[index.row()])->base_element);
+            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
+                return QString::fromStdString(Data->GetElementInformation(Data->ElementNames()[index.row()])->base_element);
+            else
+                return "";
         }
         if (index.column()==3)
         {
-            return QString::number(Data->GetElementInformation(Data->ElementNames()[index.row()])->standard_ratio);
+            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
+                return QString::number(Data->GetElementInformation(Data->ElementNames()[index.row()])->standard_ratio);
+            else
+                return "";
+        }
+        if (index.column()==4)
+        {
+            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->include_in_analysis)
+                return "Yes";
+            else
+                return "No";
+        }
+    }
+    if (role == Qt::ItemIsEnabled)
+    {
+        if (index.column()==2 || index.column()==3)
+        {   if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
+                return true;
+            else
+                return false;
         }
     }
     return QVariant();
@@ -64,6 +86,10 @@ QVariant ElementTableModel::headerData(int section, Qt::Orientation orientation,
             {
                 return "Standard isotope ratio";
             }
+            if (section==4)
+            {
+                return "Include in analysis";
+            }
         }
     }
     return QVariant();
@@ -72,6 +98,7 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
 {
     if (role==Qt::EditRole)
     {
+
         string element = Data->ElementNames()[index.row()];
         if (index.column()==1)
         {
@@ -92,6 +119,13 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
         if (index.column()==3)
         {
             Data->GetElementInformation(element)->standard_ratio = value.toDouble();
+        }
+        if (index.column()==4)
+        {
+            if (value.toString()=="Yes" || value.toBool())
+                Data->GetElementInformation(element)->include_in_analysis = true;
+            else
+                Data->GetElementInformation(element)->include_in_analysis = false;
         }
 
     }

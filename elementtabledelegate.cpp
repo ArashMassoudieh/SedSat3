@@ -18,7 +18,7 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
     if (index.column()==1)
     {
         QComboBox *editor = new QComboBox(parent);
-        editor->addItem("Element");editor->addItem("Exclude"); editor->addItem("Isotope"); editor->addItem("Particle Size");
+        editor->addItem("Element"); editor->addItem("Isotope"); editor->addItem("Particle Size");
         string element_name = index.sibling(index.row(),0).data(Qt::DisplayRole).toString().toStdString();
         if (Data->GetElementInformation(element_name)->Role == element_information::role::do_not_include)
             editor->setCurrentText("Exclude");
@@ -35,6 +35,14 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
     {
         QComboBox *editor = new QComboBox(parent);
         vector<string> element_names = Data->ElementNames();
+        if (index.sibling(index.row(),1).data(Qt::DisplayRole)!="Isotope")
+        {   editor->setEnabled(false);
+            editor->setCurrentText("");
+        }
+        else
+            editor->setEnabled(true);
+
+
         for (unsigned int i=0; i<element_names.size(); i++)
             if (element_names[i]!=index.sibling(index.row(),0).data(Qt::DisplayRole).toString().toStdString())
                 editor->addItem(QString::fromStdString(element_names[i]));
@@ -44,10 +52,25 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
     if (index.column()==3)
     {
         QLineEdit *editor = new QLineEdit(parent);
+        if (index.sibling(index.row(),1).data(Qt::DisplayRole)!="Isotope")
+        {   editor->setEnabled(false);
+            editor->setText("");
+        }
+        else
+            editor->setEnabled(true);
+
         QString text = index.data(Qt::DisplayRole).toString();
+
         editor->setText(text);
         return editor;
     }
+    if (index.column()==4)
+    {
+        QCheckBox *editor = new QCheckBox(parent);
+        editor->setChecked(index.data(Qt::DisplayRole).toBool());
+        return editor;
+    }
+
     return nullptr;
 
 }
@@ -84,6 +107,14 @@ void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
         QLineEdit *lineedit = static_cast<QLineEdit*>(editor);
         lineedit->setText(var.toString());
     }
+    if (index.column()==4)
+    {
+        QCheckBox *chkbox = static_cast<QCheckBox*>(editor);
+        if (var.toString()=="No")
+            chkbox->setChecked(false);
+        else
+            chkbox->setChecked(true);
+    }
 }
 void ElementTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                   const QModelIndex &index) const
@@ -107,6 +138,16 @@ void ElementTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
     {
         QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
         model->setData(index,lineEdit->text());
+        return;
+    }
+    if (index.column() == 4)
+    {
+        QCheckBox *chkbox = static_cast<QCheckBox*>(editor);
+        qDebug()<<chkbox->checkState();
+        if (chkbox->checkState()==Qt::CheckState::Checked)
+            model->setData(index,true);
+        else
+            model->setData(index,false);
         return;
     }
 }

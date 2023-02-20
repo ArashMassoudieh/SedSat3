@@ -290,20 +290,20 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
 // Count the number of elements to be used
     numberofconstituents = 0;
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-        if (it->second.Role == element_information::role::element)
+        if (it->second.Role == element_information::role::element && it->second.include_in_analysis)
             numberofconstituents ++;
 
     // Count the number of isotopes to be used
     numberofisotopes = 0;
         for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-            if (it->second.Role == element_information::role::isotope)
+            if (it->second.Role == element_information::role::isotope && it->second.include_in_analysis)
                 numberofisotopes ++;
 
 
     // Copying Estimated Distribution from the Fitted Distribution for elements
     for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
     {
-        if (element_iterator->second.Role == element_information::role::element)
+        if (element_iterator->second.Role == element_information::role::element && element_iterator->second.include_in_analysis)
         {
             for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
             {
@@ -318,7 +318,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     // Copying Estimated Distribution from the Fitted Distribution for isotopes
     for (map<string, element_information>::iterator isotope_iterator = ElementInformation.begin(); isotope_iterator!=ElementInformation.end(); isotope_iterator++)
     {
-        if (isotope_iterator->second.Role == element_information::role::isotope)
+        if (isotope_iterator->second.Role == element_information::role::isotope && isotope_iterator->second.include_in_analysis)
         {
             for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
             {
@@ -335,7 +335,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     if (est_mode != estimation_mode::only_contributions)
     {   for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            if (element_iterator->second.Role == element_information::role::element)
+            if (element_iterator->second.Role == element_information::role::element && element_iterator->second.include_in_analysis)
             {
 
                 for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
@@ -354,7 +354,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
 
         for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            if (element_iterator->second.Role == element_information::role::isotope)
+            if (element_iterator->second.Role == element_information::role::isotope && element_iterator->second.include_in_analysis)
             {
 
                 for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
@@ -373,7 +373,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
         // Source elemental profile standard deviation for each element
         for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            if (element_iterator->second.Role == element_information::role::element)
+            if (element_iterator->second.Role == element_information::role::element && element_iterator->second.include_in_analysis)
             {
                 for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
                 {
@@ -390,7 +390,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
         // Source elemental profile standard deviation for each isotope
         for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            if (element_iterator->second.Role == element_information::role::isotope)
+            if (element_iterator->second.Role == element_information::role::isotope && element_iterator->second.include_in_analysis)
             {
                 for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
                 {
@@ -419,7 +419,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
         // Observations
         for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            if (element_iterator->second.Role == element_information::role::element)
+            if (element_iterator->second.Role == element_information::role::element && element_iterator->second.include_in_analysis)
             {
                 Observation obs;
                 obs.SetName(targetsamplename + "_" + element_iterator->first);
@@ -442,7 +442,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
         // Observations
         for (map<string, element_information>::iterator element_iterator = ElementInformation.begin(); element_iterator!=ElementInformation.end(); element_iterator++)
         {
-            if (element_iterator->second.Role == element_information::role::isotope)
+            if (element_iterator->second.Role == element_information::role::isotope && element_iterator->second.include_in_analysis)
             {
                 Observation obs;
                 obs.SetName(targetsamplename + "_" + element_iterator->first);
@@ -1068,7 +1068,7 @@ vector<string> SourceSinkData::IsotopesToBeUsedInCMB()
     isotope_order.clear();
 
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-        if (it->second.Role == element_information::role::isotope)
+        if (it->second.Role == element_information::role::isotope && it->second.include_in_analysis)
         {   numberofisotopes ++;
             isotope_order.push_back(it->first);
         }
@@ -1088,12 +1088,12 @@ void SourceSinkData::populate_constituent_orders()
             constituent_order.push_back(it->first);
         }
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-        if (it->second.Role == element_information::role::element)
+        if (it->second.Role == element_information::role::element && it->second.include_in_analysis)
         {
             element_order.push_back(it->first);
         }
     for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-        if (it->second.Role == element_information::role::isotope)
+        if (it->second.Role == element_information::role::isotope && it->second.include_in_analysis)
         {
             isotope_order.push_back(it->first);
         }
@@ -1430,6 +1430,7 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject()
         elem_info_json_obj["Role"] = Role(it->second.Role);
         elem_info_json_obj["Standard Ratio"] = it->second.standard_ratio;
         elem_info_json_obj["Base Element"] = QString::fromStdString(it->second.base_element);
+        elem_info_json_obj["Include"] = it->second.include_in_analysis;
         json_object[QString::fromStdString(it->first)] = elem_info_json_obj;
 
     }
@@ -1446,6 +1447,7 @@ bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jso
         elem_info.Role = Role(jsonobject[key].toObject()["Role"].toString());
         elem_info.standard_ratio = jsonobject[key].toObject()["Standard Ratio"].toDouble();
         elem_info.base_element = jsonobject[key].toObject()["Base Element"].toString().toStdString();
+        elem_info.include_in_analysis = jsonobject[key].toObject()["Include"].toBool();
         ElementInformation[key.toStdString()] = elem_info;
     }
 
