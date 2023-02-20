@@ -11,6 +11,7 @@
 #include <multiplelinearregressionset.h>
 #include <QComboBox>
 
+
 #ifndef Qt6
 using namespace QtCharts;
 #endif

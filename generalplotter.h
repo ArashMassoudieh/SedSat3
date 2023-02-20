@@ -9,6 +9,10 @@ class QMouseEvent;
 class QWidget;
 #include "vector"
 
+//#ifdef _WINDOWS
+//#include "drand.h"
+//#endif
+
 enum class AxisScale {normal, log};
 enum class Axis {x, y};
 

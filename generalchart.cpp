@@ -640,7 +640,7 @@ bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QStr
         }
         QPen pen = lineseries->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(drand48()*256, drand48()*256, drand48()*256));
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         lineseries->setPen(pen);
         lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
 

@@ -2,10 +2,6 @@
 #include "generalplotter.h"
 #include "Utilities.h"
 
-#ifdef _WINDOWS
-#include "drand.h"
-#endif
-
 template<typename T>
 static inline QVector<T> fromStdVector(const std::vector<T> &vector)
 {
@@ -136,7 +132,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<double> &x, con
     QCPGraph *graph = new QCPGraph(xAxis, yAxis);
 
     graph->setName(QString::fromStdString(name));
-    graph->setPen(QPen(QColor(drand48()*256, drand48()*256, drand48()*256)));
+    graph->setPen(QPen(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256))));
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
@@ -161,7 +157,7 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     QCPGraph *graph = new QCPGraph(xAxis, yAxis);
 
     graph->setName(QString::fromStdString(name));
-    graph->setPen(QPen(QColor(drand48()*256, drand48()*256, drand48()*256)));
+    graph->setPen(QPen(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)), 2));
     graph->setLineStyle(QCPGraph::lsNone);
     graph->setScatterStyle(symbol);
 
@@ -225,7 +221,7 @@ bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, 
     QCPGraph *graph = new QCPGraph(xAxis, yAxis);
 
     graph->setName(QString::fromStdString(name));
-    QPen Pen = QPen(QColor(drand48()*256, drand48()*256, drand48()*256));
+    QPen Pen = QPen(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
     Pen.setWidth(3);
     graph->setPen(Pen);
     graph->setLineStyle(QCPGraph::lsLine);
@@ -310,7 +306,7 @@ bool GeneralPlotter::AddNoneUniformScatter(const map<string,vector<double>> &dat
     QCPGraph *points = new QCPGraph(xAxis, yAxis);
     points->setLineStyle(QCPGraph::lsNone);
     points->setScatterStyle(shapes[shape_counter]);
-    points->setPen(QPen(QColor(drand48()*256, drand48()*256, drand48()*256),2));
+    points->setPen(QPen(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),2));
     int x_val=1;
     QMap<double,QString> ticks;
     for (map<string,vector<double>>::const_iterator set=data.begin(); set!=data.end(); set++ )
