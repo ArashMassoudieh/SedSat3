@@ -15,6 +15,7 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
+    bool writetofile(QFile* file) override;
     double valueAt(int i, int j);
     string ColumnLabel(int i) {return columnlabels[i];}
     string RowLabel(int i) {return rowlabels[i];}

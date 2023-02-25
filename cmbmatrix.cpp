@@ -1,6 +1,7 @@
 #include "cmbmatrix.h"
 #include "QJsonArray"
 #include "Vector.h"
+#include <QFile>
 
 CMBMatrix::CMBMatrix():CMatrix(),Interface()
 {
@@ -50,7 +51,11 @@ bool CMBMatrix::ReadFromJsonObject(const QJsonObject &jsonobject)
     return true;
 }
 
-
+bool CMBMatrix::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
+}
 string CMBMatrix::ToString()
 {
     string out;

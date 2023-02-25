@@ -35,8 +35,8 @@ void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
         QHBoxLayout *horizontalLayout = new QHBoxLayout(groupBox);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         QRadioButton* radioButton_mixture = new QRadioButton(groupBox);
-        radioButton_mixture->setObjectName(QString::fromUtf8("Sink"));
-        radioButton_mixture->setText("Sink");
+        radioButton_mixture->setObjectName(QString::fromUtf8("Target"));
+        radioButton_mixture->setText("Target");
         horizontalLayout->addWidget(radioButton_mixture);
         radio_buttons_sinks.append(radioButton_mixture);
         QRadioButton* radioButton_source = new QRadioButton(groupBox);

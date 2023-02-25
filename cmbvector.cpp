@@ -1,6 +1,7 @@
 #include "cmbvector.h"
 #include "QJsonArray"
 #include "Vector.h"
+#include <QFile>
 
 CMBVector::CMBVector():CVector(),Interface()
 {
@@ -65,6 +66,12 @@ string CMBVector::ToString()
     }
 
     return out;
+}
+
+bool CMBVector::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
 }
 
 double CMBVector::valueAt(int i)

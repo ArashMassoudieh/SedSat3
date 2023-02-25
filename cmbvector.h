@@ -16,6 +16,7 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
+    bool writetofile(QFile* file) override;
     double valueAt(int i);
     string Label(int i) {return labels[i];}
     vector<string> Labels() {return labels;} const
