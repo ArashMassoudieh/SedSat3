@@ -161,6 +161,7 @@ void MainWindow::on_import_excel()
     }
 
     InitiateTables();
+    QMessageBox::information(this,"Exclude Elements","To not include in analysis, double click, and uncheck box for the constituent", QMessageBox::Ok);
     on_constituent_properties_triggered();
 
 }
