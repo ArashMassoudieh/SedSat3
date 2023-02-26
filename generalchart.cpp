@@ -682,7 +682,8 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
         }
         QPen pen = scatterseries->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(drand48()*256, drand48()*256, drand48()*256));
+
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         scatterseries->setPen(pen);
         scatterseries->setName(QString::fromStdString(timeseriesset->names[i]));
 
@@ -700,7 +701,7 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
         }
         QPen pen = lineseries->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(drand48()*256, drand48()*256, drand48()*256));
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         lineseries->setPen(pen);
         lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
 

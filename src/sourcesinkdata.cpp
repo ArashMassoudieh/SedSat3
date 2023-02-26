@@ -1003,7 +1003,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     {
         if (value<0)
         {
-            cout<<"stop!"<<endl;
+            cout<<"stop!"<<std::endl;
         }
         int element_counter = (i-(numberofsourcesamplesets-1)-(numberofconstituents+numberofisotopes)*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-(numberofconstituents+numberofisotopes)*numberofsourcesamplesets)%numberofsourcesamplesets;
@@ -1015,7 +1015,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     {
         if (value<0)
         {
-            cout<<"stop!"<<endl;
+            cout<<"stop!"<<std::endl;
         }
         int isotope_counter = (i-(numberofsourcesamplesets-1)-(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets)%numberofsourcesamplesets;
@@ -1028,7 +1028,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     {
         if (value<0)
         {
-            cout<<"stop!"<<endl;
+            cout<<"stop!"<<std::endl;
         }
         error_stdev = value;
         return true;
@@ -1038,7 +1038,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     {
         if (value<0)
         {
-            cout<<"stop!"<<endl;
+            cout<<"stop!"<<std::endl;
         }
         error_stdev_isotope = value;
         return true;

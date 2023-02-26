@@ -9,10 +9,10 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="vectorstock_41689049.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{66C8E40F-F26F-471B-A687-2381B25AEADD} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{C32BB74A-CCCA-49E9-BD53-A1D8C446CE95} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="CMBSource"/>
-    <ROW Property="ProductVersion" Value="0.0.9" Type="32"/>
+    <ROW Property="ProductVersion" Value="0.0.10" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -83,9 +83,10 @@
     <ROW File="Qt5Svg.dll" Component_="Qt5Svg.dll" FileName="Qt5Svg.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Svg.dll" SelfReg="false" NextFile="Qt5Widgets.dll"/>
     <ROW File="Qt5Widgets.dll" Component_="Qt5Widgets.dll" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Widgets.dll" SelfReg="false" NextFile="QXlsx.dll"/>
     <ROW File="blas_win64_MT.dll" Component_="blas_win64_MT.dll" FileName="BLAS_W~1.DLL|blas_win64_MT.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\blas_win64_MT.dll" SelfReg="false" NextFile="D3Dcompiler_47.dll"/>
+    <ROW File="export.png" Component_="Graph.png" FileName="export.png" Attributes="0" SourcePath="resources\Icons\export.png" SelfReg="false"/>
     <ROW File="forms_structures.json" Component_="forms_structures.json" FileName="FORMS_~1.JSO|forms_structures.json" Attributes="0" SourcePath="resources\forms_structures.json" SelfReg="false" NextFile="Cancel.png"/>
     <ROW File="gsl.dll" Component_="gsl.dll" FileName="gsl.dll" Attributes="0" SourcePath="build\release\gsl.dll" SelfReg="false" NextFile="gslcblas.dll"/>
-    <ROW File="gslcblas.dll" Component_="gslcblas.dll" FileName="gslcblas.dll" Attributes="0" SourcePath="build\release\gslcblas.dll" SelfReg="false"/>
+    <ROW File="gslcblas.dll" Component_="gslcblas.dll" FileName="gslcblas.dll" Attributes="0" SourcePath="build\release\gslcblas.dll" SelfReg="false" NextFile="export.png"/>
     <ROW File="lapack_win64_MT.dll" Component_="lapack_win64_MT.dll" FileName="LAPACK~1.DLL|lapack_win64_MT.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\lapack_win64_MT.dll" SelfReg="false" NextFile="libEGL.dll"/>
     <ROW File="libEGL.dll" Component_="libEGL.dll" FileName="libEGL.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libEGL.dll" SelfReg="false" NextFile="libGLESv2.dll"/>
     <ROW File="libGLESv2.dll" Component_="libGLESv2.dll" FileName="LIBGLE~1.DLL|libGLESv2.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libGLESv2.dll" SelfReg="false" NextFile="opengl32sw.dll"/>
