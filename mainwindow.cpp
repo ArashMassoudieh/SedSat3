@@ -31,7 +31,7 @@
 //#include "MCMC.h"
 
 
-#define version "0.0.10"
+#define version "0.0.11"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -90,7 +90,8 @@ void MainWindow::onSaveProject()
         fileName+=".cmb";
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
-
+    QFileInfo fi(file);
+    conductor.SetWorkingFolder(fi.absolutePath());
 
     QJsonObject outputjsonobject;
     outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
@@ -109,7 +110,7 @@ void MainWindow::onSaveProject()
 
     file.write(outputjsondocument.toJson());
     file.close();
-
+    
 }
 
 void MainWindow::onOpenProject()
@@ -119,7 +120,8 @@ void MainWindow::onOpenProject()
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
 
     QFile file(fileName);
-
+    QFileInfo fi(file);
+    conductor.SetWorkingFolder(fi.absolutePath());
     if (file.open(QIODevice::ReadOnly))
     {
         Data()->ReadFromFile(&file);

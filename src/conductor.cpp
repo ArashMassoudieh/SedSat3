@@ -231,7 +231,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
         MCMC->initialize(samples,true);
-        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), arguments["samples_file_name"], samples, rtw);
+        string folderpath;
+        if (!QString::fromStdString(arguments["samples_file_name"]).contains("/"))
+            folderpath = workingfolder.toStdString()+"/";
+        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["samples_file_name"], samples, rtw);
         MCMC_samples.SetResult(samples);
         results.Append(MCMC_samples);
         ResultItem distribution_res_item;
