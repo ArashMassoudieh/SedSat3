@@ -55,4 +55,10 @@ string CMBTimeSeries::ToString()
     return out;
 }
 
+bool CMBTimeSeries::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
+}
+
 

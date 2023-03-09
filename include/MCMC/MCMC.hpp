@@ -205,7 +205,7 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
         Params[i].resize(MCMC_Settings.number_of_parameters);
 
     results->SetNumberofColumns(MCMC_Settings.number_of_parameters);
-
+    results->resize(MCMC_Settings.total_number_of_samples);
     double pp=0;
     for (int j = 0; j<MCMC_Settings.number_of_parameters; j++)
     {
@@ -222,17 +222,22 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
     if (random)
     {   for (int j=0; j<MCMC_Settings.number_of_chains; j++)
         {
-            for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
-            {	if (parameter(i)->GetPriorDistribution()=="log-normal")
-                    Params[j][i] = exp(log(parameter(i)->GetRange(_range::low))+(log(parameter(i)->GetRange(_range::high))-log(parameter(i)->GetRange(_range::low)))*unitrandom());
-                else
-                    Params[j][i] = parameter(i)->GetRange(_range::low)+(parameter(i)->GetRange(_range::high)-parameter(i)->GetRange(_range::low))*unitrandom();
-                if (parameter(i)->GetPriorDistribution()=="log-normal")
-                    pp += log(Params[j][i]);
+            double posterior_value = -2e6;
+            while (posterior_value<-1e6)
+            {   for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
+                {	if (parameter(i)->GetPriorDistribution()=="log-normal")
+                        Params[j][i] = exp(log(parameter(i)->GetRange(_range::low))+(log(parameter(i)->GetRange(_range::high))-log(parameter(i)->GetRange(_range::low)))*unitrandom());
+                    else
+                        Params[j][i] = parameter(i)->GetRange(_range::low)+(parameter(i)->GetRange(_range::high)-parameter(i)->GetRange(_range::low))*unitrandom();
+                    if (parameter(i)->GetPriorDistribution()=="log-normal")
+                        pp += log(Params[j][i]);
+                }
+                results->append(j,Params[j]);
+                logp[j] = posterior(Params[j]);
+                posterior_value = logp[j];
+                logp1[j] = logp[j]+pp;
             }
-            results->append(j,Params[j]);
-            logp[j] = posterior(Params[j]);
-            logp1[j] = logp[j]+pp;
+            cout<<"success!";
         }
     }
     else
@@ -445,7 +450,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 					fprintf(file, "%i, ", jj);
                     for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
                         fprintf(file, "%le, ", Params[jj][i]);
-                    results->append(jj,Params[jj]);
+                    results->SetRow(jj, jj,Params[jj]);
 
                     fprintf(file, "%le, %le, %f,", logp[jj], logp1[jj], stuckcounter[jj%MCMC_Settings.number_of_chains]);
 					for (int j = 0; j < pertcoeff.size(); j++) fprintf(file, "%le,", pertcoeff[j]);

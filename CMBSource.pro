@@ -58,7 +58,8 @@ SOURCES += \
     src/interface.cpp \
     src/observation.cpp \
     src/parameter.cpp \
-    src/sourcesinkdata.cpp
+    src/sourcesinkdata.cpp \
+    testmcmc.cpp
 
 HEADERS += \
     ../Utilities/BTC.h \
@@ -114,7 +115,8 @@ HEADERS += \
     resultitem.h \
     results.h \
     resultsetitem.h \
-    resultswindow.h
+    resultswindow.h \
+    testmcmc.h
 
 
 

@@ -86,3 +86,34 @@ string CMBTimeSeriesSet::ToString()
     return out;
 }
 
+bool CMBTimeSeriesSet::writetofile(QFile* file)
+{
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
+}
+
+void CMBTimeSeriesSet::AppendLastContribution(int colnumber, const string &name)
+{
+    CMBTimeSeriesSet out;
+    CTimeSeries<double> last_contribution;
+    for (int j=0; j<maxnumpoints(); j++)
+    {
+        double sum = 0;
+        for (int i=0; i<colnumber; i++)
+        {
+            sum+=BTC[i].GetC(j);
+        }
+        last_contribution.append(j,1-sum);
+    }
+    for (int i = 0; i<colnumber; i++)
+    {
+        out.append(BTC[i],names[i]);
+    }
+    out.append(last_contribution,name);
+    for (int i=colnumber; i<nvars; i++)
+    {
+        out.append(BTC[i],names[i]);
+    }
+    *this = out;
+
+}

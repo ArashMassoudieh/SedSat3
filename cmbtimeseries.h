@@ -14,6 +14,7 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
+    bool writetofile(QFile*) override;
 
 
 private:

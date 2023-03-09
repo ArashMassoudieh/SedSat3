@@ -412,7 +412,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     {   Parameter p;
         p.SetName("Error STDev");
         p.SetPriorDistribution(distribution_type::lognormal);
-        p.SetRange(1e-5, 1e5);
+        p.SetRange(0.01, 0.1);
         parameters.push_back(p);
 
 
@@ -435,7 +435,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
     {   Parameter p;
         p.SetName("Error STDev for isotopes");
         p.SetPriorDistribution(distribution_type::lognormal);
-        p.SetRange(1e-5, 1e5);
+        p.SetRange(0.01, 0.1);
         parameters.push_back(p);
 
 
@@ -546,7 +546,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured(estimation_mode est_mode)
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
 
     if (C.min()>0)
-        LogLikelihood -= log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
+        LogLikelihood -= C.num*log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
     else
         LogLikelihood -= 1e10;
 
@@ -564,7 +564,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_
     CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
 
     if (C.min()>0)
-        LogLikelihood -= log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
+        LogLikelihood -= C.num*log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
     else
         LogLikelihood -= 1e10;
 

@@ -17,6 +17,8 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
+    bool writetofile(QFile*) override;
+    void AppendLastContribution(int colnumber,const string &name);
 
 private:
 

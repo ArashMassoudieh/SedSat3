@@ -3,6 +3,7 @@
 #include "results.h"
 #include "contribution.h"
 #include "resultitem.h"
+#include "testmcmc.h"
 
 
 
@@ -235,7 +236,56 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!QString::fromStdString(arguments["samples_file_name"]).contains("/"))
             folderpath = workingfolder.toStdString()+"/";
         MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["samples_file_name"], samples, rtw);
+        vector<string> SourceGroupNames = Data()->SourceGroupNames();
+        samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
         MCMC_samples.SetResult(samples);
+
+        results.Append(MCMC_samples);
+        ResultItem distribution_res_item;
+        CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
+        *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        distribution_res_item.SetName("Posterior Distributions");
+        distribution_res_item.SetShowAsString(false);
+        distribution_res_item.SetType(result_type::distribution);
+        distribution_res_item.SetResult(dists);
+        results.Append(distribution_res_item);
+    }
+    if (command == "Test CMB Bayesian")
+    {
+        results.SetName("MCMC results for testing MCMC'");
+        ResultItem MCMC_samples;
+        MCMC_samples.SetShowAsString(false);
+        MCMC_samples.SetType(result_type::mcmc_samples);
+        MCMC_samples.SetName("MCMC samples for testing MCMC'");
+        CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
+        CMCMC<TestMCMC> *mcmcfortesting = new CMCMC<TestMCMC>();
+        if (MCMC!=nullptr) delete MCMC;
+        TestMCMC testingmodel;
+        mcmcfortesting->Model = &testingmodel;
+        ProgressWindow *rtw = new ProgressWindow(nullptr,3);
+        rtw->SetTitle("Acceptance Rate",0);
+        rtw->SetTitle("Purturbation Factor",1);
+        rtw->SetTitle("Log posterior value",2);
+        rtw->SetYAxisTitle("Acceptance Rate",0);
+        rtw->SetYAxisTitle("Purturbation Factor",1);
+        rtw->SetYAxisTitle("Log posterior value",2);
+        rtw->show();
+        vector<double> mins;
+        vector<double> maxs;
+        mins.push_back(0.1); mins.push_back(1);
+        maxs.push_back(1.0); maxs.push_back(10);
+        testingmodel.InitializeParametersObservations(mins,maxs);
+        mcmcfortesting->SetProperty("number_of_samples",arguments["Number of samples"]);
+        mcmcfortesting->SetProperty("number_of_chains",arguments["Number of chains"]);
+        mcmcfortesting->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
+        mcmcfortesting->initialize(samples,true);
+        string folderpath;
+        if (!QString::fromStdString(arguments["samples_file_name"]).contains("/"))
+            folderpath = workingfolder.toStdString()+"/";
+        mcmcfortesting->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["samples_file_name"], samples, rtw);
+
+        MCMC_samples.SetResult(samples);
+
         results.Append(MCMC_samples);
         ResultItem distribution_res_item;
         CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
