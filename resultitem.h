@@ -2,7 +2,7 @@
 #define RESULTITEM_H
 #include <string>
 
-enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, mcmc_samples, timeseries_set_first_symbol};
+enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, mcmc_samples, timeseries_set_first_symbol, distribution_with_observed};
 enum class yaxis_mode {normal, log};
 #include "interface.h"
 

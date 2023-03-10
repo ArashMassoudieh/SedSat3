@@ -239,8 +239,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<string> SourceGroupNames = Data()->SourceGroupNames();
         samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
         MCMC_samples.SetResult(samples);
-
         results.Append(MCMC_samples);
+
         ResultItem distribution_res_item;
         CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
         *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
@@ -249,6 +249,29 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         distribution_res_item.SetType(result_type::distribution);
         distribution_res_item.SetResult(dists);
         results.Append(distribution_res_item);
+
+        CMBTimeSeriesSet predicted_samples = MCMC->predicted;
+        ResultItem predicted_distribution_res_item;
+        CMBTimeSeriesSet *predicted_dists = new CMBTimeSeriesSet();
+
+        vector<string> ConstituentNames = Data()->ElementOrder();
+        vector<string> IsotopeNames = Data()->IsotopeOrder();
+
+        ConstituentNames.insert( ConstituentNames.end(), IsotopeNames.begin(), IsotopeNames.end() );
+        for (int i=0; i<predicted_samples.nvars; i++)
+            predicted_samples.setname(i,ConstituentNames[i]);
+
+
+        *predicted_dists = predicted_samples.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        for (int i=0; i<predicted_samples.nvars; i++)
+            predicted_dists->SetObservedValue(i,data->observation(i)->Value());
+
+        predicted_distribution_res_item.SetName("Posterior Predicted Constituents");
+        predicted_distribution_res_item.SetShowAsString(false);
+        predicted_distribution_res_item.SetType(result_type::distribution_with_observed);
+        predicted_distribution_res_item.SetResult(predicted_dists);
+        results.Append(predicted_distribution_res_item);
+
     }
     if (command == "Test CMB Bayesian")
     {
@@ -295,6 +318,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         distribution_res_item.SetType(result_type::distribution);
         distribution_res_item.SetResult(dists);
         results.Append(distribution_res_item);
+
+
     }
 
     if (command == "DF")

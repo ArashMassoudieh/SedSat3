@@ -14,6 +14,8 @@ public:
     vector<Parameter> &Parameters() {return parameters;}
     bool SetParameterValue(unsigned int i, double value); //set the parameter values for estimation
     double GetObjectiveFunctionValue();
+    CVector GetPredictedValues(); // copied the predicted constituents and isotopes from observations into a vector
+    size_t ObservationsCount() {return 0; }
 
 private:
     vector<Parameter> parameters;

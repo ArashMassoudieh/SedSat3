@@ -25,3 +25,8 @@ double TestMCMC::GetObjectiveFunctionValue()
 {
     return 0;
 }
+
+CVector TestMCMC::GetPredictedValues()
+{
+    return CVector();
+}

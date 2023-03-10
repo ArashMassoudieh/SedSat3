@@ -153,23 +153,20 @@ bool CMCMC<T>::SetProperty(const string &varname, const string &value)
 
 
 template<class T>
-double CMCMC<T>::posterior(vector<double> par, bool out)
+double CMCMC<T>::posterior(vector<double> par, int chain_counter)
 {
-
-    T Model1 = *Model;
-
 	double sum = 0;
 
     for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
-        Model1.SetParameterValue(i, par[i]);
+        CopiedModels[chain_counter].SetParameterValue(i, par[i]);
 
     for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
         sum+=parameter(i)->CalcLogPriorProbability(par[i]);
 
 
-    sum+= -Model1.GetObjectiveFunctionValue();
+    sum+= -CopiedModels[chain_counter].GetObjectiveFunctionValue();
+    temp_predicted[chain_counter] = CopiedModels[chain_counter].GetPredictedValues();
 
-    if (out) Model_out = Model1;
 	return sum;
 }
 
@@ -206,6 +203,14 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
 
     results->SetNumberofColumns(MCMC_Settings.number_of_parameters);
     results->resize(MCMC_Settings.total_number_of_samples);
+    predicted.SetNumberofColumns(Model->ObservationsCount());
+    predicted.resize(MCMC_Settings.total_number_of_samples);
+    temp_predicted.resize(MCMC_Settings.number_of_chains);
+    CopiedModels.resize(MCMC_Settings.number_of_chains);
+    for (unsigned int i=0; i<MCMC_Settings.number_of_chains; i++)
+    {
+        CopiedModels[i] = *Model;
+    }
     double pp=0;
     for (int j = 0; j<MCMC_Settings.number_of_parameters; j++)
     {
@@ -233,14 +238,17 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
                         pp += log(Params[j][i]);
                 }
 
-                logp[j] = posterior(Params[j]);
+                logp[j] = posterior(Params[j],j);
                 posterior_value = logp[j];
                 logp1[j] = logp[j]+pp;
             }
             results->SetRow(j,j,Params[j]);
             cout<<"success!";
+            predicted.SetRow(j,j,CopiedModels[j].GetPredictedValues().vec);
+            temp_predicted[j] = CopiedModels[j].GetPredictedValues();
         }
     }
+
     else
     {
         for (int j=0; j<MCMC_Settings.number_of_chains; j++)
@@ -249,7 +257,7 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
                 if (parameter(i)->GetPriorDistribution()=="log-normal")
                     pp += log(Params[j][i]);
             }
-            logp[j] = posterior(Params[j]);
+            logp[j] = posterior(Params[j],j);
             logp1[j] = logp[j]+pp;
         }
     }
@@ -318,7 +326,7 @@ void CMCMC<T>::initialize(vector<double> par)
 }
 
 template<class T>
-bool CMCMC<T>::step(int k)
+bool CMCMC<T>::step(int k, int chain_counter)
 {
 
     vector<double> X = purturb(k-MCMC_Settings.number_of_chains);
@@ -328,7 +336,7 @@ bool CMCMC<T>::step(int k)
         if (parameter(i)->GetPriorDistribution()=="log-normal")
             pp += log(X[i]);
     }
-    double logp_0 = posterior(X) + pp;
+    double logp_0 = posterior(X,chain_counter) + pp;
 
 
     double logp_1 = logp_0;
@@ -341,6 +349,8 @@ bool CMCMC<T>::step(int k)
 		Params[k] = X;
 		logp[k] = logp_0;
 		logp1[k] = logp_1;
+        predicted.SetRow(k,k,temp_predicted[chain_counter].vec);
+
         //accepted_count += 1;
 	}
 	else
@@ -349,7 +359,7 @@ bool CMCMC<T>::step(int k)
         Params[k] = Params[k-MCMC_Settings.number_of_chains];
         logp[k] = logp[k-MCMC_Settings.number_of_chains];
 		logp1[k] = logp_1;
-
+        predicted.SetRow(k,k,predicted.getrow(k-MCMC_Settings.number_of_chains));
 	}
     //total_count += 1;
 	return res;
@@ -421,7 +431,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
         for (int jj = kk; jj < min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples); jj++)
 		{
             //qDebug() << "Starting step: " + QString::number(jj);
-            bool stepstuck = !step(jj);
+            bool stepstuck = !step(jj,jj-kk);
             //qDebug() << "Step: " + QString::number(jj) + "Done!";
             if (stepstuck)
             {   stuckcounter[jj - kk]++;

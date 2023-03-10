@@ -261,6 +261,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
    numberofsourcesamplesets = size()-1;
 // Source contributions
     parameters.clear();
+    observations.clear();
     samplesetsorder.clear();
     if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
     {   for (map<string,Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
@@ -550,6 +551,7 @@ double SourceSinkData::LogLikelihoodModelvsMeasured(estimation_mode est_mode)
     else
         LogLikelihood -= 1e10;
 
+
     return LogLikelihood;
 }
 
@@ -772,6 +774,10 @@ bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
 CVector SourceSinkData::PredictTarget(parameter_mode param_mode)
 {
     CVector C = SourceMeanMatrix(param_mode)*ContributionVector();
+    for (unsigned int i=0; i<element_order.size(); i++)
+    {
+        observation(i)->SetPredictedValue(C[i]);
+    }
     return C;
 }
 
@@ -790,6 +796,10 @@ CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)
         string corresponding_element = ElementInformation[isotope_order[i]].base_element;
         double predicted_corresponding_element_concentration = C_elements[lookup(element_order,corresponding_element)];
         C[i] = (C[i]/predicted_corresponding_element_concentration/ElementInformation[isotope_order[i]].standard_ratio-1.0)*1000.0;
+    }
+    for (unsigned int i=element_order.size(); i<element_order.size()+isotope_order.size(); i++)
+    {
+        observation(i)->SetPredictedValue(C[i-element_order.size()]);
     }
     return C;
 }
@@ -1171,6 +1181,16 @@ ResultItem SourceSinkData::GetPredictedElementalProfile(parameter_mode param_mod
     result_modeled.SetResult(modeled_profile);
     result_modeled.SetType(result_type::predicted_concentration);
     return result_modeled;
+}
+
+CVector SourceSinkData::GetPredictedValues()
+{
+    CVector out(ObservationsCount());
+    for (unsigned int i=0; i<ObservationsCount(); i++)
+    {
+        out[i] = observation(i)->PredictedValue();
+    }
+    return out;
 }
 
 ResultItem SourceSinkData::GetPredictedElementalProfile_Isotope(parameter_mode param_mode)

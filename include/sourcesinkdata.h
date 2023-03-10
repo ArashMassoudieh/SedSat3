@@ -160,6 +160,7 @@ public:
     vector<string> SizeOMOrder() {return size_om_order;}
     ResultItem GetContribution();
     ResultItem GetPredictedElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    CVector GetPredictedValues(); // copied the predicted constituents and isotopes from observations into a vector
     ResultItem GetPredictedElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     ResultItem GetObservedElementalProfile();
     ResultItem GetObservedElementalProfile_Isotope();
@@ -194,7 +195,7 @@ public:
     bool Perform_Regression_vs_om_size(const string &om, const string &d);
     CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
 private:
-    
+
     map<string,ConcentrationSet> element_distributions;
     map<string, element_information> ElementInformation;
     string outputpath;

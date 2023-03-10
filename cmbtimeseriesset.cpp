@@ -9,28 +9,30 @@ CMBTimeSeriesSet::CMBTimeSeriesSet():CTimeSeriesSet<double>(),Interface()
 
 CMBTimeSeriesSet::CMBTimeSeriesSet(const CMBTimeSeriesSet& mp):CTimeSeriesSet<double>(mp)
 {
-
+     observed_value = mp.observed_value;
 }
 
 CMBTimeSeriesSet::CMBTimeSeriesSet(int n):CTimeSeriesSet<double>(n), Interface()
 {
-
+    observed_value.resize(n);
 }
 
 CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CMBTimeSeriesSet &mp)
 {
     CTimeSeriesSet<double>::operator=(mp);
+    observed_value = mp.observed_value;
     return *this;
 }
 
 CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CTimeSeriesSet<double> &mp)
 {
     CTimeSeriesSet<double>::operator=(mp);
+    observed_value.resize(nvars);
     return *this;
 }
 CMBTimeSeriesSet::CMBTimeSeriesSet(const CTimeSeriesSet<double>& mp):CTimeSeriesSet<double>(mp)
 {
-
+    observed_value.resize(nvars);
 }
 
 QJsonObject CMBTimeSeriesSet::toJsonObject()
@@ -51,12 +53,37 @@ QJsonObject CMBTimeSeriesSet::toJsonObject()
         timeseries["value"] = C_values;
         out[QString::fromStdString(names[i])] = timeseries;
     }
-
+    QJsonArray Jobserved_values;
+    for (unsigned int i=0; i<observed_value.size(); i++)
+        Jobserved_values.append(observed_value[i]);
+    out["Observed Values"] = Jobserved_values;
     return out;
 }
 bool CMBTimeSeriesSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
+    clear();
+    observed_value.clear();
+    for (QString key: jsonobject.keys())
+    {
+        if (key=="Observed Values")
+        {
+            QJsonArray observed_value_JArray = jsonobject[key].toArray();
+            for (int i=0; i<observed_value_JArray.count(); i++)
+                observed_value.push_back(observed_value_JArray[i].toDouble());
+        }
+        else
+        {
+            QString SeriesName = key;
+            QJsonArray TimeJArray = jsonobject[key].toObject()["time"].toArray();
+            QJsonArray ValueJArray = jsonobject[key].toObject()["value"].toArray();
+            CTimeSeries<double> this_series;
+            for (unsigned int i=0; i<TimeJArray.count(); i++)
+                this_series.append(TimeJArray[i].toDouble(), ValueJArray[i].toDouble());
+            append(this_series,SeriesName.toStdString());
+        }
+    }
     return true;
+
 }
 
 

@@ -19,9 +19,29 @@ public:
     string ToString() override;
     bool writetofile(QFile*) override;
     void AppendLastContribution(int colnumber,const string &name);
-
+    void SetObservedValue(int i, const double &value)
+    {
+        if (i<nvars)
+            observed_value[i] = value;
+    }
+    double ObservedValue(int i)
+    {
+        if (i<nvars)
+            return observed_value[i];
+        else
+            return 0;
+    }
+    double ObservedValue(string variable_name)
+    {
+        for (int i=0; i<nvars; i++)
+        {
+            if (names[i]==variable_name)
+                return observed_value[i];
+        }
+        return 0;
+    }
 private:
-
+    vector<double> observed_value;
 };
 
 #endif // CMBTimeSeriesSet_H

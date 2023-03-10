@@ -74,7 +74,7 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
         return InitializeMCMCSamples(timeseriesset, QString::fromStdString(res->Name()));
     }
-    if (res->Type() == result_type::distribution)
+    if (res->Type() == result_type::distribution || res->Type() == result_type::distribution_with_observed)
     {
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
         return InitializeDistributions(timeseriesset, QString::fromStdString(res->Name()));
@@ -340,7 +340,7 @@ bool GeneralChart::InitializeDistributions(CMBTimeSeriesSet *distributions, cons
     connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onDistributionsVariableChanged(int)));
 
 
-    onMCMCVariableChanged(element_combo->currentIndex());
+    onDistributionsVariableChanged(element_combo->currentIndex());
 
     return true;
 }
@@ -584,7 +584,6 @@ bool GeneralChart::PlotDistribution(CTimeSeries<double> *samples,const QString& 
     QLineSeries *series = new QLineSeries();
     QAreaSeries *areaseries = new QAreaSeries(series);
 
-
     QPen marker_pen(QBrush(Qt::SolidPattern),1,Qt::PenStyle::SolidLine);
 
     series->setName(variable);
@@ -597,13 +596,27 @@ bool GeneralChart::PlotDistribution(CTimeSeries<double> *samples,const QString& 
 
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisYNormal, Qt::AlignLeft);
+
     chart->addSeries(series);
     series->attachAxis(axisX);
     series->attachAxis(axisYNormal);
+
     chart->addSeries(areaseries);
     areaseries->attachAxis(axisX);
     areaseries->attachAxis(axisYNormal);
 
+    if (result_item->Type() == result_type::distribution_with_observed)
+    {
+        QLineSeries *observed_series = new QLineSeries;
+        QPen observed_pen(QBrush(Qt::DashLine),3,Qt::PenStyle::DashLine);
+        observed_pen.setColor(Qt::black);
+        observed_series->setPen(observed_pen);
+        observed_series->append(static_cast<CMBTimeSeriesSet*>(result_item->Result())->ObservedValue(variable.toStdString()),0);
+        observed_series->append(static_cast<CMBTimeSeriesSet*>(result_item->Result())->ObservedValue(variable.toStdString()),y_max_val);
+        chart->addSeries(observed_series);
+        observed_series->attachAxis(axisX);
+        observed_series->attachAxis(axisYNormal);
+    }
     return true;
 }
 
