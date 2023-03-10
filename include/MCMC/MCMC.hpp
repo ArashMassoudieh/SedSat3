@@ -232,11 +232,12 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
                     if (parameter(i)->GetPriorDistribution()=="log-normal")
                         pp += log(Params[j][i]);
                 }
-                results->append(j,Params[j]);
+
                 logp[j] = posterior(Params[j]);
                 posterior_value = logp[j];
                 logp1[j] = logp[j]+pp;
             }
+            results->SetRow(j,j,Params[j]);
             cout<<"success!";
         }
     }
@@ -450,7 +451,10 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 					fprintf(file, "%i, ", jj);
                     for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
                         fprintf(file, "%le, ", Params[jj][i]);
-                    results->SetRow(jj, jj,Params[jj]);
+                    if (!results->SetRow(jj, jj,Params[jj]))
+                    {
+                        cout<<"not enough room!";
+                    }
 
                     fprintf(file, "%le, %le, %f,", logp[jj], logp1[jj], stuckcounter[jj%MCMC_Settings.number_of_chains]);
 					for (int j = 0; j < pertcoeff.size(); j++) fprintf(file, "%le,", pertcoeff[j]);

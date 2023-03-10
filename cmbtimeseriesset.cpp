@@ -103,7 +103,11 @@ void CMBTimeSeriesSet::AppendLastContribution(int colnumber, const string &name)
         {
             sum+=BTC[i].GetC(j);
         }
-        last_contribution.append(j,1-sum);
+        if (1.0-sum<0)
+        {
+            cout<<"Negative contribution!";
+        }
+        last_contribution.append(j,1.0-sum);
     }
     for (int i = 0; i<colnumber; i++)
     {
