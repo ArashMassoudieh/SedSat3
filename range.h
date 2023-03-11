@@ -17,8 +17,11 @@ public:
     bool Read(const QStringList &strlist) override;
     void Set(_range lowhigh,const double &value);
     double Get(_range lowhigh);
+    void SetValue(const double value) {observed_value = value;}
+    double GetValue() {return observed_value; }
 private:
     vector<double> range;
+    double observed_value;
 };
 
 #endif // RANGE_H

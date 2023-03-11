@@ -62,6 +62,11 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
         return PlotTimeSeriesSet(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
     }
+    if (res->Type() == result_type::rangeset || res->Type() == result_type::rangeset_with_observed)
+    {
+        RangeSet* rangeset = static_cast<RangeSet*>(res->Result());
+        return PlotRangeSet(rangeset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
+    }
 
     if (res->Type() == result_type::timeseries_set_first_symbol)
     {
@@ -658,6 +663,102 @@ bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QStr
         lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
 
     }
+
+    return true;
+}
+
+bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+{
+    double y_min_val = rangeset->minval();
+    double y_max_val = rangeset->maxval();
+    QString xAxisTitle = x_axis_title;
+    QString yAxisTitle = y_axis_title;
+    if (x_axis_title.isEmpty()) xAxisTitle = "Constituent";
+    if (y_axis_title.isEmpty()) yAxisTitle = "95% CI";
+    QCategoryAxis* axisX = new QCategoryAxis();
+
+    QLogValueAxis* axisYLog = new QLogValueAxis();
+    QValueAxis* axisY = new QValueAxis();
+
+    axisX->setObjectName("axisX");
+    axisY->setObjectName("axisY");
+    axisYLog->setObjectName("axisYLog");
+    axisYLog->setMinorTickCount(10);
+
+    axisX->setTitleText(xAxisTitle);
+    if (result_item->YAxisMode()==yaxis_mode::log)
+    {   axisYLog->setTitleText(yAxisTitle);
+        axisYLog->setRange(y_min_val,y_max_val);
+    }
+    else
+    {   axisY->setTitleText(yAxisTitle);
+        axisY->setRange(y_min_val,y_max_val);
+    }
+    axisX->setRange(-0.5,rangeset->size()-0.5);
+
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    if (result_item->YAxisMode()==yaxis_mode::log)
+        chart->addAxis(axisYLog, Qt::AlignLeft);
+    else
+        chart->addAxis(axisY, Qt::AlignLeft);
+
+    double upperlimit = 0.5;
+    axisX->setStartValue(-0.5);
+    QBoxPlotSeries *boxWhiskSeries = new QBoxPlotSeries();
+
+    for (map<string, Range>::iterator it = rangeset->begin(); it!=rangeset->end(); it++)
+    {
+        axisX->append(QString::fromStdString(it->first),upperlimit);
+        upperlimit += 1;
+    }
+
+    if (result_item->Type() == result_type::rangeset_with_observed)
+    {   QScatterSeries* scatterseries = new QScatterSeries();
+        chart->addSeries(scatterseries);
+        scatterseries->attachAxis(axisX);
+        if (result_item->YAxisMode()==yaxis_mode::log)
+            scatterseries->attachAxis(axisYLog);
+        else
+            scatterseries->attachAxis(axisY);
+        int counter = 0;
+        for (map<string, Range>::iterator it = rangeset->begin(); it!=rangeset->end(); it++)
+        {
+            scatterseries->append(counter,it->second.GetValue());
+            counter++;
+        }
+        QPen pen = scatterseries->pen();
+        pen.setWidth(2);
+
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        scatterseries->setPen(pen);
+        scatterseries->setName(QString::fromStdString("Observed value"));
+    }
+
+    for (map<string, Range>::iterator it = rangeset->begin(); it!=rangeset->end(); it++)
+    {
+        QBoxSet *boxSet = new QBoxSet();
+        qDebug()<<it->second.Get(_range::low)<<","<<it->second.Get(_range::high)<<","<<it->second.GetValue();
+        boxSet->setValue(QBoxSet::LowerExtreme, it->second.Get(_range::low));
+        boxSet->setValue(QBoxSet::UpperExtreme, it->second.Get(_range::high));
+        boxSet->setValue(QBoxSet::LowerQuartile, it->second.Get(_range::low));
+        boxSet->setValue(QBoxSet::UpperQuartile, it->second.Get(_range::high));
+        boxSet->setValue(QBoxSet::Median, (it->second.Get(_range::high)+it->second.Get(_range::low))/2.0);
+        boxWhiskSeries->append(boxSet);
+
+
+    }
+    QPen brushcolor(QColor(0,200,0,126));
+    QBrush brush(QColor(0,200,0,126));
+    boxWhiskSeries->setBrush(brush);
+    boxWhiskSeries->setName("95% Credible Interval");
+
+    chart->addSeries(boxWhiskSeries);
+    if (result_item->YAxisMode()==yaxis_mode::log)
+        boxWhiskSeries->attachAxis(axisYLog);
+    else
+        boxWhiskSeries->attachAxis(axisY);
+    boxWhiskSeries->attachAxis(axisX);
 
     return true;
 }

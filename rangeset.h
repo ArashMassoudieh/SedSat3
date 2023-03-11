@@ -4,7 +4,7 @@
 #include "interface.h"
 #include "range.h"
 
-class RangeSet : public map<string,Range>,Interface
+class RangeSet : public Interface, public map<string,Range>
 {
 public:
     RangeSet();
@@ -15,6 +15,8 @@ public:
     string ToString() override;
     bool writetofile(QFile*) override;
     bool Read(const QStringList &strlist) override;
+    double maxval();
+    double minval();
 };
 
 #endif // RANGESET_H

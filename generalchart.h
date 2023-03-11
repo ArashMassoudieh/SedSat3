@@ -10,6 +10,7 @@
 #include <elemental_profile_set.h>
 #include <multiplelinearregressionset.h>
 #include <QComboBox>
+#include "rangeset.h"
 
 
 #ifndef Qt6
@@ -35,6 +36,7 @@ public:
     bool PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &title);
     bool PlotTimeSeriesSet(CMBTimeSeriesSet *regressionset, const QString &title, const QString &x_axis_title="", const QString &y_axis_title="");
     bool PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title="", const QString &y_axis_title="");
+    bool PlotRangeSet(RangeSet *rangeset, const QString &title, const QString &x_axis_title, const QString &y_axis_title);
     bool InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const QString &title);
     bool InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &title);
     bool PlotMCMCSamples(CTimeSeries<double> *mlr,const QString& variable);

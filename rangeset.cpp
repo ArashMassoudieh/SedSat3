@@ -54,3 +54,22 @@ bool RangeSet::Read(const QStringList &strlist)
 {
     return true;
 }
+
+double RangeSet::maxval()
+{
+    double out = -1e24;
+    for (map<string,Range>::iterator it=begin(); it!=end(); it++)
+    {
+        out = max(max(out,it->second.Get(_range::high)),it->second.GetValue());
+    }
+    return out;
+}
+double RangeSet::minval()
+{
+    double out = 1e24;
+    for (map<string,Range>::iterator it=begin(); it!=end(); it++)
+    {
+        out = min(min(out,it->second.Get(_range::low)),it->second.GetValue());
+    }
+    return out;
+}
