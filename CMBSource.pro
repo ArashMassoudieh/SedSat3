@@ -43,6 +43,8 @@ SOURCES += \
     multiplelinearregression.cpp \
     multiplelinearregressionset.cpp \
     plotwindow.cpp \
+    range.cpp \
+    rangeset.cpp \
     resultitem.cpp \
     results.cpp \
     resultsetitem.cpp \
@@ -112,6 +114,8 @@ HEADERS += \
     multiplelinearregression.h \
     multiplelinearregressionset.h \
     plotwindow.h \
+    range.h \
+    rangeset.h \
     resultitem.h \
     results.h \
     resultsetitem.h \
