@@ -671,6 +671,17 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
 {
     double y_min_val = rangeset->minval();
     double y_max_val = rangeset->maxval();
+
+    if (result_item->FixedYLimit() && result_item->YLimit(_range::high)!=0)
+    {
+        y_max_val = result_item->YLimit(_range::high);
+    }
+
+    if (result_item->FixedYLimit() && result_item->YLimit(_range::low)!=0)
+    {
+        y_min_val = result_item->YLimit(_range::low);
+    }
+
     QString xAxisTitle = x_axis_title;
     QString yAxisTitle = y_axis_title;
     if (x_axis_title.isEmpty()) xAxisTitle = "Constituent";
@@ -689,10 +700,12 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
     if (result_item->YAxisMode()==yaxis_mode::log)
     {   axisYLog->setTitleText(yAxisTitle);
         axisYLog->setRange(y_min_val,y_max_val);
+        axisYLog->setLabelFormat("%g");
     }
     else
     {   axisY->setTitleText(yAxisTitle);
         axisY->setRange(y_min_val,y_max_val);
+        axisYLog->setLabelFormat("%f");
     }
     axisX->setRange(-0.5,rangeset->size()-0.5);
 

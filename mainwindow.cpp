@@ -86,6 +86,10 @@ void MainWindow::onSaveProject()
     QString fileName = QFileDialog::getSaveFileName(this,
             tr("Save"), "",
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+
+    if (fileName.isEmpty())
+        return;
+
     if (!fileName.toLower().contains(".cmb"))
         fileName+=".cmb";
     QFile file(fileName);
@@ -119,6 +123,8 @@ void MainWindow::onOpenProject()
             tr("Open"), "",
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
 
+    if (fileName.isEmpty())
+        return;
     QFile file(fileName);
     QFileInfo fi(file);
     conductor.SetWorkingFolder(fi.absolutePath());

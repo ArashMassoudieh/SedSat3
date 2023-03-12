@@ -21,7 +21,7 @@ public:
     double GetValue() {return observed_value; }
 private:
     vector<double> range;
-    double observed_value;
+    double observed_value=0;
 };
 
 #endif // RANGE_H

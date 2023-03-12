@@ -1,6 +1,7 @@
 #ifndef RESULTITEM_H
 #define RESULTITEM_H
 #include <string>
+#include "parameter.h"
 
 enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, mcmc_samples, timeseries_set_first_symbol, distribution_with_observed,rangeset, rangeset_with_observed};
 enum class yaxis_mode {normal, log};
@@ -28,6 +29,25 @@ public:
     void setYAxisTitle(const string &title) {Y_Axis_Title = title;}
     string XAxisTitle() {return X_Axis_Title;}
     string YAxisTitle() {return Y_Axis_Title;}
+    double YLimit(_range highlow)
+    {
+        if (highlow == _range::high)
+            return YLimits[1];
+        else
+            return YLimits[0];
+    }
+    void SetYLimit(_range highlow,const double &value)
+    {
+        if (highlow == _range::high)
+            YLimits[1] = value;
+        else
+            YLimits[0] = value;
+        fixYlimit = true;
+    }
+    bool FixedYLimit()
+    {
+        return fixYlimit;
+    }
 private:
     string name;
     result_type type;
@@ -36,6 +56,8 @@ private:
     bool showasstring = true;
     string X_Axis_Title;
     string Y_Axis_Title;
+    vector<double> YLimits;
+    bool fixYlimit = false;
 
 };
 

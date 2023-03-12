@@ -2,7 +2,7 @@
 
 ResultItem::ResultItem():Interface()
 {
-
+    YLimits.resize(2);
 }
 
 ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
@@ -14,6 +14,8 @@ ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
     showasstring = rhs.showasstring;
     X_Axis_Title = rhs.X_Axis_Title;
     Y_Axis_Title = rhs.Y_Axis_Title;
+    fixYlimit = rhs.fixYlimit;
+    YLimits = rhs.YLimits;
 }
 ResultItem& ResultItem::operator = (const ResultItem &rhs)
 {
@@ -25,5 +27,7 @@ ResultItem& ResultItem::operator = (const ResultItem &rhs)
     showasstring = rhs.showasstring;
     X_Axis_Title = rhs.X_Axis_Title;
     Y_Axis_Title = rhs.Y_Axis_Title;
+    fixYlimit = rhs.fixYlimit;
+    YLimits = rhs.YLimits;
     return *this;
 }

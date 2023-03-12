@@ -250,6 +250,28 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         distribution_res_item.SetResult(dists);
         results.Append(distribution_res_item);
 
+//Posterior contribution 95% intervals
+        RangeSet *contribution_credible_intervals = new RangeSet();
+                for (unsigned int i=0; i<Data()->SourceOrder().size(); i++)
+        {
+            Range range;
+            double percentile_low = samples->BTC[i].percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+            double percentile_high = samples->BTC[i].percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+
+            range.Set(_range::low,percentile_low);
+            range.Set(_range::high,percentile_high);
+            contribution_credible_intervals->operator[](samples->names[i]) = range;
+        }
+        ResultItem contribution_credible_intervals_result_item;
+        contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
+        contribution_credible_intervals_result_item.SetShowAsString(true);
+        contribution_credible_intervals_result_item.SetType(result_type::rangeset);
+        contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
+        contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
+        contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
+        results.Append(contribution_credible_intervals_result_item);
+
+
         CMBTimeSeriesSet predicted_samples = MCMC->predicted;
         ResultItem predicted_distribution_res_item;
         CMBTimeSeriesSet *predicted_dists = new CMBTimeSeriesSet();
@@ -272,6 +294,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         predicted_distribution_res_item.SetResult(predicted_dists);
         results.Append(predicted_distribution_res_item);
 
+//predicted 95% credible intervals
+
         RangeSet *predicted_credible_intervals = new RangeSet();
         vector<double> percentile_low = predicted_samples.percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         vector<double> percentile_high = predicted_samples.percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
@@ -283,13 +307,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             predicted_credible_intervals->operator[](predicted_dists->names[i]) = range;
             predicted_credible_intervals->operator[](predicted_dists->names[i]).SetValue(data->observation(i)->Value());
         }
-        ResultItem credible_intervals_result_item;
-        credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
-        credible_intervals_result_item.SetShowAsString(true);
-        credible_intervals_result_item.SetType(result_type::rangeset_with_observed);
-        credible_intervals_result_item.SetResult(predicted_credible_intervals);
-        credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
-        results.Append(credible_intervals_result_item);
+        ResultItem predicted_credible_intervals_result_item;
+        predicted_credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
+        predicted_credible_intervals_result_item.SetShowAsString(true);
+        predicted_credible_intervals_result_item.SetType(result_type::rangeset_with_observed);
+        predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
+        predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
+        results.Append(predicted_credible_intervals_result_item);
     }
     if (command == "Test CMB Bayesian")
     {
