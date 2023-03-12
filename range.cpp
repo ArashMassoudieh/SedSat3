@@ -24,8 +24,8 @@ QJsonObject Range::toJsonObject()
 {
     QJsonObject out;
     QJsonArray array;
-    array[0] = range[0];
-    array[1] = range[1];
+    array.append(range[0]);
+    array.append(range[1]);
     out["range"]=array;
     out["value"]=observed_value;
     return out;

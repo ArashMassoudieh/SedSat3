@@ -31,7 +31,7 @@
 //#include "MCMC.h"
 
 
-#define version "0.0.11"
+#define version "0.0.12"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QIcon mainicon(qApp->applicationDirPath()+"/../../resources/Icons/CMBSource_Icon.png");
+
+    setWindowIcon(mainicon);
     connect(ui->actionImport_Elemental_Profile_from_Excel,SIGNAL(triggered()),this,SLOT(on_import_excel()));
     connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
     connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
