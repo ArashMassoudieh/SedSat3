@@ -2,6 +2,7 @@
 #include "resultitem.h"
 #include "contribution.h"
 #include "elemental_profile_set.h"
+#include "rangeset.h"
 
 Results::Results()
 {
@@ -77,6 +78,41 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetName(key.toStdString());
             res_item.SetType(result_type::elemental_profile_set);
             res_item.SetResult(mlrset);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("MCMC samples"))
+        {
+            CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
+            samples->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(false);
+            res_item.SetType(result_type::mcmc_samples);
+            res_item.SetResult(samples);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Posterior Distributions"))
+        {
+            CMBTimeSeriesSet* samples = new CMBTimeSeriesSet();
+            samples->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(false);
+            res_item.SetName(key.toStdString());
+            res_item.SetType(result_type::distribution);
+            res_item.SetResult(samples);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Source Contribution Credible Intervals"))
+        {
+            RangeSet* rangeset = new RangeSet(); 
+            rangeset->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetType(result_type::rangeset);
+            res_item.SetResult(rangeset);
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetYLimit(_range::high, 1.0);
+            res_item.SetResult(rangeset);
             operator[](key.toStdString()) = res_item;
         }
 

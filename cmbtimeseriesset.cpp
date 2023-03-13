@@ -39,15 +39,15 @@ QJsonObject CMBTimeSeriesSet::toJsonObject()
 {
     QJsonObject out;
 
-    for (int i=0; i<0; i<nvars)
+    for (int i=0; i<nvars; i++)
     {
         QJsonObject timeseries;
         QJsonArray t_values;
         QJsonArray C_values;
-        for (int i=0; i<BTC[i].n; i++)
+        for (int j=0; j<BTC[i].n; j++)
         {
-            t_values.append(BTC[i].GetT(i));
-            C_values.append(BTC[i].GetC(i));
+            t_values.append(BTC[i].GetT(j));
+            C_values.append(BTC[i].GetC(j));
         }
         timeseries["time"] = t_values;
         timeseries["value"] = C_values;

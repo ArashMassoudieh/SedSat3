@@ -30,7 +30,7 @@ bool RangeSet::ReadFromJsonObject(const QJsonObject &jsonobject)
     {
         Range range;
         range.ReadFromJsonObject(jsonobject[key].toObject());
-        this->at(key.toStdString()) = range;
+        this->operator[](key.toStdString()) = range;
     }
     return true;
 }

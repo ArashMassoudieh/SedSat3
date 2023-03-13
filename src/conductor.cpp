@@ -212,7 +212,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem MCMC_samples;
         MCMC_samples.SetShowAsString(false);
         MCMC_samples.SetType(result_type::mcmc_samples);
-        MCMC_samples.SetName("MCMC samples for '" +arguments["Sample"] + "'");
+        MCMC_samples.SetName("MCMC samples");
         CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
 
         if (MCMC!=nullptr) delete MCMC;
@@ -226,7 +226,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Purturbation Factor",1);
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
-
+// Samples
         Data()->InitializeParametersObservations(arguments["Sample"]);
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
@@ -240,7 +240,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
         MCMC_samples.SetResult(samples);
         results.Append(MCMC_samples);
-
+// Posterior distributions
         ResultItem distribution_res_item;
         CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
         *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
@@ -271,7 +271,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
         results.Append(contribution_credible_intervals_result_item);
 
-
+// Predicted 95% posterior distributions
         CMBTimeSeriesSet predicted_samples = MCMC->predicted;
         ResultItem predicted_distribution_res_item;
         CMBTimeSeriesSet *predicted_dists = new CMBTimeSeriesSet();

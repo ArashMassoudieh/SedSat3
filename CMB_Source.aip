@@ -7,12 +7,12 @@
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
-    <ROW Property="ARPPRODUCTICON" Value="vectorstock_41689049.exe" Type="8"/>
+    <ROW Property="ARPPRODUCTICON" Value="CMBSource_Icon.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{BEFFFAF7-E5D6-4A93-B46A-7E635DE109F5} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{F767AE2C-42EE-4C53-B896-35AB761DF6A6} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="CMBSource"/>
-    <ROW Property="ProductVersion" Value="0.0.11" Type="32"/>
+    <ROW Property="ProductVersion" Value="0.0.12" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -72,6 +72,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="CMBSource.exe_1" Component_="CMBSource.exe_1" FileName="CMBSOU~1.EXE|CMBSource.exe" Attributes="0" SourcePath="build\release\CMBSource.exe" SelfReg="false" NextFile="forms_structures.json" DigSign="true"/>
+    <ROW File="CMBSource_Icon.png" Component_="Graph.png" FileName="CMBSOU~1.PNG|CMBSource_Icon.png" Attributes="0" SourcePath="resources\Icons\CMBSource_Icon.png" SelfReg="false"/>
     <ROW File="Cancel.png" Component_="Cancel.png" FileName="Cancel.png" Attributes="0" SourcePath="resources\Icons\Cancel.png" SelfReg="false" NextFile="Proceed.png"/>
     <ROW File="D3Dcompiler_47.dll" Component_="D3Dcompiler_47.dll" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\D3Dcompiler_47.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
     <ROW File="Graph.png" Component_="Graph.png" FileName="Graph.png" Attributes="0" SourcePath="resources\Icons\Graph.png" SelfReg="false" NextFile="gsl.dll"/>
@@ -83,7 +84,7 @@
     <ROW File="Qt5Svg.dll" Component_="Qt5Svg.dll" FileName="Qt5Svg.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Svg.dll" SelfReg="false" NextFile="Qt5Widgets.dll"/>
     <ROW File="Qt5Widgets.dll" Component_="Qt5Widgets.dll" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Widgets.dll" SelfReg="false" NextFile="QXlsx.dll"/>
     <ROW File="blas_win64_MT.dll" Component_="blas_win64_MT.dll" FileName="BLAS_W~1.DLL|blas_win64_MT.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\blas_win64_MT.dll" SelfReg="false" NextFile="D3Dcompiler_47.dll"/>
-    <ROW File="export.png" Component_="Graph.png" FileName="export.png" Attributes="0" SourcePath="resources\Icons\export.png" SelfReg="false"/>
+    <ROW File="export.png" Component_="Graph.png" FileName="export.png" Attributes="0" SourcePath="resources\Icons\export.png" SelfReg="false" NextFile="CMBSource_Icon.png"/>
     <ROW File="forms_structures.json" Component_="forms_structures.json" FileName="FORMS_~1.JSO|forms_structures.json" Attributes="0" SourcePath="resources\forms_structures.json" SelfReg="false" NextFile="Cancel.png"/>
     <ROW File="gsl.dll" Component_="gsl.dll" FileName="gsl.dll" Attributes="0" SourcePath="build\release\gsl.dll" SelfReg="false" NextFile="gslcblas.dll"/>
     <ROW File="gslcblas.dll" Component_="gslcblas.dll" FileName="gslcblas.dll" Attributes="0" SourcePath="build\release\gslcblas.dll" SelfReg="false" NextFile="export.png"/>
@@ -180,8 +181,8 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="CMBSource_Icon.exe" SourcePath="resources\Icons\CMBSource_Icon.ico" Index="0"/>
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
-    <ROW Name="vectorstock_41689049.exe" SourcePath="C:\Users\Guest user\Downloads\vectorstock_41689049.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -218,7 +219,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="Uninstall" Directory_="GIFMod_Dir" Name="UNINST~1|Uninstall" Component_="qwindows.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
-    <ROW Shortcut="_CMBSource" Directory_="GIFMod_Dir" Name="CMBSOU~1|CMBSource" Component_="CMBSource.exe_1" Target="[#CMBSource.exe_1]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="_CMBSource" Directory_="StartMenuFolder" Name="CMBSOU~1|CMBSource" Component_="CMBSource.exe_1" Target="[#CMBSource.exe_1]" Hotkey="0" Icon_="CMBSource_Icon.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
