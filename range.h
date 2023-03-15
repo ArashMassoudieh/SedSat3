@@ -17,10 +17,16 @@ public:
     bool Read(const QStringList &strlist) override;
     void Set(_range lowhigh,const double &value);
     double Get(_range lowhigh);
+    double Mean() {return mean;}
+    void SetMean(const double &m) {mean = m;}
+    double Median() {return median;}
+    void SetMedian(const double &m) {median = m;}
     void SetValue(const double value) {observed_value = value;}
     double GetValue() {return observed_value; }
 private:
     vector<double> range;
+    double median = 0;
+    double mean = 0;
     double observed_value=0;
 };
 

@@ -682,6 +682,10 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
         y_min_val = result_item->YLimit(_range::low);
     }
 
+    if (result_item->YAxisMode()==yaxis_mode::log)
+    {
+        y_min_val = max(y_min_val,1e-8);
+    }
     QString xAxisTitle = x_axis_title;
     QString yAxisTitle = y_axis_title;
     if (x_axis_title.isEmpty()) xAxisTitle = "Constituent";
@@ -752,11 +756,11 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
     {
         QBoxSet *boxSet = new QBoxSet();
         qDebug()<<it->second.Get(_range::low)<<","<<it->second.Get(_range::high)<<","<<it->second.GetValue();
-        boxSet->setValue(QBoxSet::LowerExtreme, it->second.Get(_range::low));
+        boxSet->setValue(QBoxSet::LowerExtreme, max(it->second.Get(_range::low),y_min_val));
         boxSet->setValue(QBoxSet::UpperExtreme, it->second.Get(_range::high));
-        boxSet->setValue(QBoxSet::LowerQuartile, it->second.Get(_range::low));
+        boxSet->setValue(QBoxSet::LowerQuartile, max(it->second.Get(_range::low),y_min_val));
         boxSet->setValue(QBoxSet::UpperQuartile, it->second.Get(_range::high));
-        boxSet->setValue(QBoxSet::Median, (it->second.Get(_range::high)+it->second.Get(_range::low))/2.0);
+        boxSet->setValue(QBoxSet::Median, it->second.Median());
         boxWhiskSeries->append(boxSet);
 
 

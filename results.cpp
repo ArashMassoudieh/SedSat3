@@ -109,12 +109,36 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             ResultItem res_item;
             res_item.SetShowAsString(true);
             res_item.SetType(result_type::rangeset);
+            res_item.SetName(key.toStdString());
             res_item.SetResult(rangeset);
             res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetYLimit(_range::high, 1.0);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Posterior Predicted Constituents"))
+        {
+            CMBTimeSeriesSet* posterior_predicted_distribution = new CMBTimeSeriesSet();
+            posterior_predicted_distribution->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(false);
+            res_item.SetType(result_type::distribution_with_observed);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(posterior_predicted_distribution);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Predicted Samples Credible Intervals"))
+        {
+            RangeSet* rangeset = new RangeSet();
+            rangeset->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetType(result_type::rangeset_with_observed);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetResult(rangeset);
             operator[](key.toStdString()) = res_item;
         }
+
 
      }
     return true;

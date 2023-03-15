@@ -257,9 +257,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             Range range;
             double percentile_low = samples->BTC[i].percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
             double percentile_high = samples->BTC[i].percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-
+            double mean = samples->BTC[i].mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+            double median = samples->BTC[i].percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
             range.Set(_range::low,percentile_low);
             range.Set(_range::high,percentile_high);
+            range.SetMean(mean);
+            range.SetMedian(median);
             contribution_credible_intervals->operator[](samples->names[i]) = range;
         }
         ResultItem contribution_credible_intervals_result_item;
@@ -299,11 +302,15 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         RangeSet *predicted_credible_intervals = new RangeSet();
         vector<double> percentile_low = predicted_samples.percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         vector<double> percentile_high = predicted_samples.percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        vector<double> mean = predicted_samples.mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        vector<double> median = predicted_samples.percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         for (int i=0; i<predicted_dists->nvars; i++)
         {
             Range range;
             range.Set(_range::low,percentile_low[i]);
             range.Set(_range::high,percentile_high[i]);
+            range.SetMean(mean[i]);
+            range.SetMedian(median[i]);
             predicted_credible_intervals->operator[](predicted_dists->names[i]) = range;
             predicted_credible_intervals->operator[](predicted_dists->names[i]).SetValue(data->observation(i)->Value());
         }
