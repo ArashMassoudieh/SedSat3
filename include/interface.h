@@ -4,6 +4,7 @@
 #include <string>
 #include <QStringList>
 #include <qjsonobject.h>
+#include <qtablewidget.h>
 
 class QFile; 
 
@@ -20,6 +21,7 @@ public:
     virtual bool ReadFromJsonObject(const QJsonObject &jsonobject);
     virtual bool writetofile(QFile* file);
     virtual bool Read(const QStringList &strlist);
+    virtual QTableWidget *ToTable();
 
 };
 

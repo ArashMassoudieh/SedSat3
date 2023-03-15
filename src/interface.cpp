@@ -39,3 +39,9 @@ bool Interface::Read(const QStringList &strlist)
 {
     return false;
 }
+
+QTableWidget *Interface::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    return tablewidget;
+}

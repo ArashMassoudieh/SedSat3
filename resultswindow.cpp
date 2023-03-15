@@ -5,6 +5,7 @@
 #include "QPushButton"
 #include "generalchart.h"
 #include "resultitem.h"
+#include "resulttableviewer.h"
 
 #include <QFileDialog>
 
@@ -46,9 +47,17 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
     pushButtonExport->setMaximumWidth(20);
     pushButtonExport->setObjectName(QString::fromStdString(resultitem.Name()));
 
+    QPushButton *pushButtonTable = new QPushButton(this);
+    QIcon iconTable = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/table.png");
+    pushButtonTable->setIcon(iconTable);
+    //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
+    pushButtonTable->setMaximumWidth(20);
+    pushButtonTable->setObjectName(QString::fromStdString(resultitem.Name()));
+
     ui->gridLayout->addWidget(textBrowser,ui->gridLayout->rowCount(),0);
     ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1);
     ui->gridLayout->addWidget(pushButtonExport,ui->gridLayout->rowCount()-1,2);
+    ui->gridLayout->addWidget(pushButtonTable,ui->gridLayout->rowCount()-1,3);
     textBrowser->setTextColor(Qt::red);
     textBrowser->append(QString::fromStdString(resultitem.Name())+":");
     textBrowser->setTextColor(Qt::black);
@@ -68,6 +77,7 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
     textBrowser->setMinimumHeight(textBrowser->fontMetrics().height() * (count+2));
     connect(pushButtonGraph,SIGNAL(clicked()),this,SLOT(on_result_graph_clicked()));
     connect(pushButtonExport,SIGNAL(clicked()),this,SLOT(on_result_export_clicked()));
+    connect(pushButtonTable,SIGNAL(clicked()),this,SLOT(on_result_table_clicked()));
 
 }
 
@@ -79,6 +89,15 @@ void ResultsWindow::on_result_graph_clicked()
     resultgraph->setWindowTitle(sender()->objectName());
     resultgraph->Plot(&results->operator[](sender()->objectName().toStdString()));
     resultgraph->show();
+}
+
+
+void ResultsWindow::on_result_table_clicked()
+{
+    ResultTableViewer *tableviewer = new ResultTableViewer(this);
+    QTableWidget *tablewidget = results->operator[](sender()->objectName().toStdString()).Result()->ToTable();
+    tableviewer->SetTable(tablewidget);
+    tableviewer->show();
 }
 
 void ResultsWindow::on_result_export_clicked()

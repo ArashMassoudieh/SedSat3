@@ -49,6 +49,7 @@ SOURCES += \
     results.cpp \
     resultsetitem.cpp \
     resultswindow.cpp \
+    resulttableviewer.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
@@ -120,6 +121,7 @@ HEADERS += \
     results.h \
     resultsetitem.h \
     resultswindow.h \
+    resulttableviewer.h \
     testmcmc.h
 
 
@@ -144,7 +146,8 @@ FORMS += \
     indicatesheetsdialog.ui \
     mainwindow.ui \
     plotwindow.ui \
-    resultswindow.ui
+    resultswindow.ui \
+    resulttableviewer.ui
 
 TRANSLATIONS += \
     CMBSource_en_US.ts

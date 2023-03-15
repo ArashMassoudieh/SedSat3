@@ -66,3 +66,24 @@ bool Contribution::ReadFromJsonObject(const QJsonObject &jsonobject)
     }
     return true;
 }
+
+QTableWidget *Contribution::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(1);
+    tablewidget->setRowCount(size());
+    QStringList headers;
+    QStringList sources;
+    int i=0;
+    for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++ )
+    {
+        sources<<QString::fromStdString(it->first);
+        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(it->second)));
+        i++;
+    }
+    headers << "Contribution";
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(sources);
+    return tablewidget;
+}
