@@ -21,6 +21,7 @@ public:
     string RowLabel(int i) {return rowlabels[i];}
     void SetColumnLabel(int i, const string &label) {columnlabels[i]=label;}
     void SetRowLabel(int i, const string &label) {rowlabels[i]=label;}
+    QTableWidget *ToTable() override;
 private:
     vector<string> columnlabels;
     vector<string> rowlabels;

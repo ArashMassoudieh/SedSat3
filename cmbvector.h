@@ -16,12 +16,14 @@ public:
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
+    QTableWidget *ToTable() override;
     bool writetofile(QFile* file) override;
     double valueAt(int i);
     string Label(int i) {return labels[i];}
-    vector<string> Labels() {return labels;} const
+    vector<string> Labels() const {return labels;}
     void SetLabel(int i, const string &label) {labels[i]=label;}
     void SetLabels(const vector<string> &label) {labels=label;}
+
 private:
     vector<string> labels;
 

@@ -81,6 +81,27 @@ string Elemental_Profile::ToString()
     return out;
 }
 
+QTableWidget *Elemental_Profile::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(1);
+    tablewidget->setRowCount(size());
+    QStringList headers;
+    QStringList constituents;
+    int i=0;
+    for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++ )
+    {
+        constituents<<QString::fromStdString(it->first);
+        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(it->second)));
+        i++;
+    }
+    headers << "Value";
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(constituents);
+    return tablewidget;
+}
+
 QJsonObject Elemental_Profile::toJsonObject()
 {
     QJsonObject json_object; 

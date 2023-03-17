@@ -368,6 +368,31 @@ CVector Elemental_Profile_Set::ElementMeans()
     return out;
 }
 
+QTableWidget *Elemental_Profile_Set::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(size());
+    vector<string> element_names = ElementNames();
+    tablewidget->setRowCount(element_names.size());
+    QStringList headers;
+    QStringList constituents;
+    for (int j=0; j<element_names.size(); j++)
+        constituents<<QString::fromStdString(element_names[j]);
+    int i=0;
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++ )
+    {
+        for (int j=0; j<element_names.size(); j++)
+            tablewidget->setItem(j,i, new QTableWidgetItem(QString::number(it->second.Val(element_names[j]))));
+        i++;
+        headers << QString::fromStdString(it->first);
+    }
+
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(constituents);
+    return tablewidget;
+}
+
 
 
 

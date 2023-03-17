@@ -48,6 +48,10 @@ public:
     {
         return fixYlimit;
     }
+    void SetShowTable(bool state) {showTable = state;}
+    bool ShowTable() const {return showTable;}
+    void SetShowGraph(bool state) {showGraph = state;}
+    bool ShowGraph() const {return showGraph;}
 private:
     string name;
     result_type type;
@@ -58,7 +62,10 @@ private:
     string Y_Axis_Title;
     vector<double> YLimits;
     bool fixYlimit = false;
+    bool showTable = false;
+    bool showGraph = true;
 
 };
 
 #endif // RESULTITEM_H
+

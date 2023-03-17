@@ -78,3 +78,25 @@ double CMBVector::valueAt(int i)
 {
     return CVector::operator[](i);
 }
+
+QTableWidget *CMBVector::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(1);
+    tablewidget->setRowCount(getsize());
+    QStringList rowheaders;
+    QStringList colheaders;
+
+    colheaders << "Value";
+
+    for (int i=0; i<getsize(); i++)
+    {
+        rowheaders << QString::fromStdString(labels[i]);
+        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(valueAt(i))));
+    }
+
+    tablewidget->setHorizontalHeaderLabels(colheaders);
+    tablewidget->setVerticalHeaderLabels(rowheaders);
+    return tablewidget;
+}

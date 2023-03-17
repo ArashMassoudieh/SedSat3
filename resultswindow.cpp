@@ -33,31 +33,6 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
     QTextBrowser *textBrowser = new QTextBrowser(ui->scrollAreaWidgetContents);
     textBrowser->setObjectName(QString::fromStdString(resultitem.Name()));
     //textBrowser->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
-    QPushButton *pushButtonGraph = new QPushButton(this);
-    QIcon iconGraph = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Graph.png");
-    pushButtonGraph->setIcon(iconGraph);
-    //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
-    pushButtonGraph->setMaximumWidth(20);
-    pushButtonGraph->setObjectName(QString::fromStdString(resultitem.Name()));
-
-    QPushButton *pushButtonExport = new QPushButton(this);
-    QIcon iconExport = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/export.png");
-    pushButtonExport->setIcon(iconExport);
-    //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
-    pushButtonExport->setMaximumWidth(20);
-    pushButtonExport->setObjectName(QString::fromStdString(resultitem.Name()));
-
-    QPushButton *pushButtonTable = new QPushButton(this);
-    QIcon iconTable = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/table.png");
-    pushButtonTable->setIcon(iconTable);
-    //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
-    pushButtonTable->setMaximumWidth(20);
-    pushButtonTable->setObjectName(QString::fromStdString(resultitem.Name()));
-
-    ui->gridLayout->addWidget(textBrowser,ui->gridLayout->rowCount(),0);
-    ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1);
-    ui->gridLayout->addWidget(pushButtonExport,ui->gridLayout->rowCount()-1,2);
-    ui->gridLayout->addWidget(pushButtonTable,ui->gridLayout->rowCount()-1,3);
     textBrowser->setTextColor(Qt::red);
     textBrowser->append(QString::fromStdString(resultitem.Name())+":");
     textBrowser->setTextColor(Qt::black);
@@ -75,9 +50,39 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
             count++;
     textBrowser->setMaximumHeight(textBrowser->fontMetrics().height() * (count+3));
     textBrowser->setMinimumHeight(textBrowser->fontMetrics().height() * (count+2));
-    connect(pushButtonGraph,SIGNAL(clicked()),this,SLOT(on_result_graph_clicked()));
+    ui->gridLayout->addWidget(textBrowser,ui->gridLayout->rowCount(),0);
+    if (resultitem.ShowGraph())
+    {
+        QPushButton *pushButtonGraph = new QPushButton(this);
+        QIcon iconGraph = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Graph.png");
+        pushButtonGraph->setIcon(iconGraph);
+        //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
+        pushButtonGraph->setMaximumWidth(20);
+        pushButtonGraph->setObjectName(QString::fromStdString(resultitem.Name()));
+        ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1);
+        connect(pushButtonGraph,SIGNAL(clicked()),this,SLOT(on_result_graph_clicked()));
+    }
+
+    QPushButton *pushButtonExport = new QPushButton(this);
+    QIcon iconExport = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/export.png");
+    pushButtonExport->setIcon(iconExport);
+    //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
+    pushButtonExport->setMaximumWidth(20);
+    pushButtonExport->setObjectName(QString::fromStdString(resultitem.Name()));
+    ui->gridLayout->addWidget(pushButtonExport,ui->gridLayout->rowCount()-1,2);
     connect(pushButtonExport,SIGNAL(clicked()),this,SLOT(on_result_export_clicked()));
-    connect(pushButtonTable,SIGNAL(clicked()),this,SLOT(on_result_table_clicked()));
+
+
+    if (resultitem.ShowTable())
+    {   QPushButton *pushButtonTable = new QPushButton(this);
+        QIcon iconTable = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/table.png");
+        pushButtonTable->setIcon(iconTable);
+        //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
+        pushButtonTable->setMaximumWidth(20);
+        pushButtonTable->setObjectName(QString::fromStdString(resultitem.Name()));
+        ui->gridLayout->addWidget(pushButtonTable,ui->gridLayout->rowCount()-1,3);
+        connect(pushButtonTable,SIGNAL(clicked()),this,SLOT(on_result_table_clicked()));
+    }
 
 }
 
@@ -86,7 +91,7 @@ void ResultsWindow::on_result_graph_clicked()
 {
     qDebug()<<sender()->objectName();
     GeneralChart *resultgraph = new GeneralChart(this);
-    resultgraph->setWindowTitle(sender()->objectName());
+    resultgraph->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
     resultgraph->Plot(&results->operator[](sender()->objectName().toStdString()));
     resultgraph->show();
 }
@@ -96,6 +101,7 @@ void ResultsWindow::on_result_table_clicked()
 {
     ResultTableViewer *tableviewer = new ResultTableViewer(this);
     QTableWidget *tablewidget = results->operator[](sender()->objectName().toStdString()).Result()->ToTable();
+    tableviewer->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
     tableviewer->SetTable(tablewidget);
     tableviewer->show();
 }

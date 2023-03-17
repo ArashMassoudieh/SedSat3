@@ -16,6 +16,8 @@ ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
     Y_Axis_Title = rhs.Y_Axis_Title;
     fixYlimit = rhs.fixYlimit;
     YLimits = rhs.YLimits;
+    showTable = rhs.showTable;
+    showGraph = rhs.showGraph;
 }
 ResultItem& ResultItem::operator = (const ResultItem &rhs)
 {
@@ -29,5 +31,7 @@ ResultItem& ResultItem::operator = (const ResultItem &rhs)
     Y_Axis_Title = rhs.Y_Axis_Title;
     fixYlimit = rhs.fixYlimit;
     YLimits = rhs.YLimits;
+    showTable = rhs.showTable;
+    showGraph = rhs.showGraph;
     return *this;
 }

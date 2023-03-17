@@ -18,6 +18,7 @@ public:
     bool AppendElement(const string &name,const double &val=0); //Append an element and it's value to the list of elements
     vector<double> Vals(); //Returns a vector containing the values of all emenents in the profile
     string ToString() override;
+    QTableWidget *ToTable() override;
     bool Read(const QStringList &strlist) override;
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;

@@ -77,6 +77,29 @@ string CMBMatrix::ToString()
     }
     return out;
 }
+QTableWidget *CMBMatrix::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(getnumcols());
+    tablewidget->setRowCount(getnumrows());
+    QStringList rowheaders;
+    QStringList colheaders;
+
+    for (int j=0; j<getnumcols(); j++)
+        colheaders << QString::fromStdString(columnlabels[j]);
+
+    for (int i=0; i<getnumrows(); i++)
+    {
+        rowheaders << QString::fromStdString(rowlabels[i]);
+        for (int j=0; j<getnumcols(); j++)
+            tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(matr[i][j])));
+    }
+
+    tablewidget->setHorizontalHeaderLabels(colheaders);
+    tablewidget->setVerticalHeaderLabels(rowheaders);
+    return tablewidget;
+}
 
 double CMBMatrix::valueAt(int i, int j)
 {

@@ -129,6 +129,7 @@ public:
     CMBVector KolmogorovSmirnovStat(distribution_type dist_type);
     gsl_matrix *CopytoGSLMatrix();
     CVector ElementMeans();
+    QTableWidget *ToTable() override;
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element

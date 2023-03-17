@@ -116,15 +116,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         results.SetName("LM " + arguments["Sample"]);
         ResultItem result_cont = Data()->GetContribution();
+        result_cont.SetShowTable(true);
         results.Append(result_cont);
 
         ResultItem result_modeled = Data()->GetPredictedElementalProfile(parameter_mode::direct);
+        result_modeled.SetShowTable(true);
         results.Append(result_modeled);
 
         ResultItem result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();
+        result_modeled_vs_measured.SetShowTable(true);
         results.Append(result_modeled_vs_measured);
 
         ResultItem result_modeled_vs_measured_isotope = Data()->GetObservedvsModeledElementalProfile_Isotope(parameter_mode::direct);
+        result_modeled_vs_measured_isotope.SetShowTable(true);
         results.Append(result_modeled_vs_measured_isotope);
 
     }
@@ -144,9 +148,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.SetName("Covariance Matrix for " + arguments["Source/Target group"] );
         ResultItem covMatResItem;
         covMatResItem.SetName("Covariance Matrix for " + arguments["Source/Target group"] );
+        covMatResItem.SetShowTable(true);
         covMatResItem.SetType(result_type::matrix);
 
         CMBMatrix *covmatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CovarianceMatrix());
+        covMatResItem.SetShowGraph(false);
         covMatResItem.SetResult(covmatr);
         results.Append(covMatResItem);
 
@@ -156,8 +162,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
         ResultItem corMatResItem;
         corMatResItem.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
+        corMatResItem.SetShowTable(true);
         corMatResItem.SetType(result_type::matrix);
-
+        corMatResItem.SetShowGraph(false);
         CMBMatrix *cormatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CorrelationMatrix());
         corMatResItem.SetResult(cormatr);
         results.Append(corMatResItem);
@@ -169,6 +176,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem DFAResItem;
         DFAResItem.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"]  );
         DFAResItem.SetType(result_type::vector);
+        DFAResItem.SetShowTable(true);
         DFAResItem.SetYAxisMode(yaxis_mode::normal);
         CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(dfaeigenvector);
@@ -188,6 +196,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         else if (arguments["Distribution"]=="Lognormal")
             dist = distribution_type::lognormal;
         CMBVector *ksoutput = new CMBVector(Data()->at(arguments["Source/Target group"]).KolmogorovSmirnovStat(dist));
+        KSItem.SetShowTable(true);
         KSItem.SetResult(ksoutput);
         results.Append(KSItem);
     }
