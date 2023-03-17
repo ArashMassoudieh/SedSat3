@@ -50,6 +50,7 @@ SOURCES += \
     resultsetitem.cpp \
     resultswindow.cpp \
     resulttableviewer.cpp \
+    selectsamples.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
@@ -122,6 +123,7 @@ HEADERS += \
     resultsetitem.h \
     resultswindow.h \
     resulttableviewer.h \
+    selectsamples.h \
     testmcmc.h
 
 
@@ -147,7 +149,8 @@ FORMS += \
     mainwindow.ui \
     plotwindow.ui \
     resultswindow.ui \
-    resulttableviewer.ui
+    resulttableviewer.ui \
+    selectsamples.ui
 
 TRANSLATIONS += \
     CMBSource_en_US.ts

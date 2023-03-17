@@ -33,6 +33,28 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
 
 
 }
+
+SourceSinkData SourceSinkData::Corrected()
+{
+    SourceSinkData out;
+    out.ElementInformation = ElementInformation;
+    out.element_distributions = element_distributions;
+    out.numberofconstituents = numberofconstituents;
+    out.numberofisotopes = numberofisotopes;
+    out.numberofsourcesamplesets = numberofsourcesamplesets;
+    out.observations = observations;
+    out.outputpath = outputpath;
+    out.target_group = target_group;
+    out.samplesetsorder = samplesetsorder;
+    out.constituent_order = constituent_order;
+    out.selected_target_sample = selected_target_sample;
+    out.element_order = element_order;
+    out.isotope_order = isotope_order;
+    out.size_om_order = size_om_order;
+    out.parameter_estimation_mode = parameter_estimation_mode;
+    return out;
+}
+
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
 {
     map<string, Elemental_Profile_Set>::operator=(mp);
