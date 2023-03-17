@@ -51,6 +51,7 @@ SOURCES += \
     resultswindow.cpp \
     resulttableviewer.cpp \
     selectsamples.cpp \
+    selectsampletablemodel.cpp \
     src/GA/Binary.cpp \
     src/GA/GADistribution.cpp \
     src/GA/Individual.cpp \
@@ -124,6 +125,7 @@ HEADERS += \
     resultswindow.h \
     resulttableviewer.h \
     selectsamples.h \
+    selectsampletablemodel.h \
     testmcmc.h
 
 

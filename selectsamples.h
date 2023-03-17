@@ -20,6 +20,9 @@ public:
 private:
     Ui::SelectSamples *ui;
     SourceSinkData *data;
+
+public slots:
+    void comboChanged();
 };
 
 #endif // SELECTSAMPLES_H

@@ -28,6 +28,7 @@
 #include "aboutdialog.h"
 #include "resultsetitem.h"
 #include "resultitem.h"
+#include "selectsamples.h"
 //#include "MCMC.h"
 
 
@@ -64,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
     connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
+    connect(ui->actionInclude_Exclude_Samples,SIGNAL(triggered()),this,SLOT(onIncludeExcludeSample()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
     connect(ui->TreeView_Results,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_old_result_requested(const QModelIndex&)));
@@ -607,6 +609,17 @@ void MainWindow::on_constituent_properties_triggered()
     formelems->table()->setItemDelegate(elemDelegate);
     ui->verticalLayout_middle->addWidget(formelems);
     centralform = formelems;
+}
+
+void MainWindow::onIncludeExcludeSample()
+{
+    if (centralform)
+        delete centralform;
+    SelectSamples *include_exclude_samples = new SelectSamples(this);
+    include_exclude_samples->SetData(&DataCollection);
+    ui->verticalLayout_middle->addWidget(include_exclude_samples);
+    centralform = include_exclude_samples;
+
 }
 
 void MainWindow::on_test_dialog_triggered()

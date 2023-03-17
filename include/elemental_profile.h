@@ -26,9 +26,10 @@ public:
     vector<string> ElementNames();
     bool writetofile(QFile* file) override;
     bool contains(const string &element);
-    
+    bool IncludedInAnalysis() {return included_in_analysis;}
+    void SetIncluded(bool value) {included_in_analysis = value;}
 private:
-    
+    bool included_in_analysis = true;
 };
 
 #endif // ELEMENTAL_PROFILE_H

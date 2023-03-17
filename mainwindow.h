@@ -67,6 +67,7 @@ private slots:
     void onAboutTriggered();
     void onSaveProject();
     void onOpenProject();
+    void onIncludeExcludeSample();
 
 
 };

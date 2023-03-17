@@ -57,6 +57,7 @@
      <string>Settings</string>
     </property>
     <addaction name="actionConstituent_Properties"/>
+    <addaction name="actionInclude_Exclude_Samples"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -299,6 +300,11 @@
   <action name="actionOpen_Project">
    <property name="text">
     <string>Open Project</string>
+   </property>
+  </action>
+  <action name="actionInclude_Exclude_Samples">
+   <property name="text">
+    <string>Include/Exclude Samples</string>
    </property>
   </action>
  </widget>
