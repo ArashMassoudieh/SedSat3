@@ -213,6 +213,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             dist = distribution_type::lognormal;
         CMBTimeSeriesSet *ksoutput = new CMBTimeSeriesSet(Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(dist));
         KSItem.SetResult(ksoutput);
+        KSItem.SetShowTable(false);
         results.Append(KSItem);
     }
     if (command == "CMB Bayesian")
