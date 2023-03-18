@@ -50,6 +50,7 @@ SOURCES += \
     resultsetitem.cpp \
     resultswindow.cpp \
     resulttableviewer.cpp \
+    selectsampledelegate.cpp \
     selectsamples.cpp \
     selectsampletablemodel.cpp \
     src/GA/Binary.cpp \
@@ -124,6 +125,7 @@ HEADERS += \
     resultsetitem.h \
     resultswindow.h \
     resulttableviewer.h \
+    selectsampledelegate.h \
     selectsamples.h \
     selectsampletablemodel.h \
     testmcmc.h

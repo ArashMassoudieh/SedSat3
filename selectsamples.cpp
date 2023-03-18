@@ -1,6 +1,7 @@
 #include "selectsamples.h"
 #include "ui_selectsamples.h"
 #include "selectsampletablemodel.h"
+#include "selectsampledelegate.h"
 
 SelectSamples::SelectSamples(QWidget *parent) :
     QWidget(parent),
@@ -26,6 +27,9 @@ void SelectSamples::SetData(SourceSinkData *_data)
     SelectSampleTableModel *samplemodel = new SelectSampleTableModel(data);
     samplemodel->SetSelectedSource(ui->GroupComboBox->currentText().toStdString());
     ui->SamplestableView->setModel(samplemodel);
+    SelectSampleDelegate *samplesDelegate = new SelectSampleDelegate(data, this);
+    ui->SamplestableView->setItemDelegate(samplesDelegate);
+
 }
 
 void SelectSamples::comboChanged()

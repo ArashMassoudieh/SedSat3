@@ -135,8 +135,10 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
 }
 Qt::ItemFlags ElementTableModel::flags(const QModelIndex & index) const
 {
-    if (index.column()!=0)
+    if (index.column()!=0 && index.column()!=4)
         return Qt::ItemIsSelectable |  Qt::ItemIsEditable | Qt::ItemIsEnabled ;
+    else if (index.column()==4)
+        return Qt::ItemIsSelectable |  Qt::ItemFlag::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsEditable ;
     else
         return Qt::ItemIsSelectable |  Qt::ItemIsEnabled ;
 }
