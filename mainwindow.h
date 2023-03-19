@@ -68,6 +68,7 @@ private slots:
     void onSaveProject();
     void onOpenProject();
     void onIncludeExcludeSample();
+    void onOMSizeCorrection();
 
 
 };

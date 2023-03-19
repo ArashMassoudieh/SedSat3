@@ -25,6 +25,9 @@ public:
     double MeanIndependentVar(int i);
     string DependentVariableName() {return dependent_variable_name;}
     void SetDependentVariableName(const string name) {dependent_variable_name = name;}
+    vector<double> P_Value() {return p_value;}
+    void SetEffective(int i, bool eff) {make_effective[i] = eff;}
+    bool Effective(int i) {return make_effective[i];}
 private:
     vector<double> coefficients_intercept_;
     vector<vector<double>> independent_data;
@@ -34,6 +37,7 @@ private:
     CMBMatrix correlation_matrix_;
     double chisq, R2, R2_adj;
     vector<double> p_value;
+    vector<bool> make_effective;
 };
 
 #endif // MULTIPLELINEARREGRESSION_H

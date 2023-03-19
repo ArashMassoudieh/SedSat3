@@ -57,3 +57,16 @@ string MultipleLinearRegressionSet::ToString()
     }
     return out;
 }
+
+string MultipleLinearRegressionSet::Key(int i)
+{
+    string out;
+    int counter = 0;
+    for (map<string,MultipleLinearRegression>::iterator it = begin(); it!= end(); it++)
+    {
+        if (counter==i)
+            return it->first;
+        counter++;
+    }
+    return "";
+}

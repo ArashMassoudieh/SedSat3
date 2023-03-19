@@ -25,6 +25,16 @@ Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_
     return *this;
 }
 
+Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis()
+{
+    Elemental_Profile_Set out;
+    for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+        if (it->second.IncludedInAnalysis())
+            out[it->first] = it->second;
+
+    return out;
+}
+
 Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, const Elemental_Profile &profile)
 {
     if (count(name)>0)
@@ -273,6 +283,11 @@ ResultItem Elemental_Profile_Set::GetRegressions()
     return out;
 }
 
+MultipleLinearRegressionSet* Elemental_Profile_Set::GetExistingRegressionSet()
+{
+    return &mlr_vs_om_size;
+}
+
 CMBMatrix Elemental_Profile_Set::CovarianceMatrix()
 {
     CMBMatrix out(ElementNames().size());
@@ -393,6 +408,15 @@ QTableWidget *Elemental_Profile_Set::ToTable()
     return tablewidget;
 }
 
-
+Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const double &size, const double &om)
+{
+    Elemental_Profile_Set out = *this;
+    out.clear();
+    for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+    {
+        out[it->first] = it->second.OrganicandSizeCorrect(size,om,&mlr_vs_om_size);
+    }
+    return out;
+}
 
 

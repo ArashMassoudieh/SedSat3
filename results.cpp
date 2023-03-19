@@ -46,6 +46,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             contribution->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetType(result_type::contribution);
             res_item.SetResult(contribution);
             operator[](key.toStdString()) = res_item;
@@ -56,6 +58,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetType(result_type::predicted_concentration);
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
@@ -66,6 +70,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             modeled_vs_measured->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetType(result_type::elemental_profile_set);
             res_item.SetResult(modeled_vs_measured);
             operator[](key.toStdString()) = res_item;
@@ -76,6 +82,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             mlrset->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetType(result_type::elemental_profile_set);
             res_item.SetResult(mlrset);
             operator[](key.toStdString()) = res_item;
@@ -97,6 +105,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             samples->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetShowAsString(false);
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetName(key.toStdString());
             res_item.SetType(result_type::distribution);
             res_item.SetResult(samples);
@@ -110,6 +120,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetShowAsString(true);
             res_item.SetType(result_type::rangeset);
             res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetResult(rangeset);
             res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetYLimit(_range::high, 1.0);
@@ -132,6 +144,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             rangeset->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetShowAsString(true);
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
             res_item.SetType(result_type::rangeset_with_observed);
             res_item.SetName(key.toStdString());
             res_item.SetYAxisMode(yaxis_mode::log);

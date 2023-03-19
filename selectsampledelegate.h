@@ -5,6 +5,11 @@
 #include <QStyleOptionViewItem>
 #include <QStyledItemDelegate>
 #include "sourcesinkdata.h"
+#include "selectsampletablemodel.h"
+
+enum class mode {samples, regressions};
+enum class column_type {number, yesno, name};
+
 
 class SelectSampleDelegate: public QStyledItemDelegate
 {
@@ -24,12 +29,17 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
         const QModelIndex &index) const override;
-
+    void SetMode(mode _mode);
 
 public slots:
 
 private:
     SourceSinkData *Data;
+    mode Mode;
+    QVector<column_type> columnTypes;
+    int numberofcolumns;
+
+
 };
 
 #endif // SELECTSAMPLEDELEGATE_H

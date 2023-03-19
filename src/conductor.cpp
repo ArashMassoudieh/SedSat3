@@ -276,8 +276,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             contribution_credible_intervals->operator[](samples->names[i]) = range;
         }
         ResultItem contribution_credible_intervals_result_item;
+
         contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
         contribution_credible_intervals_result_item.SetShowAsString(true);
+        contribution_credible_intervals_result_item.SetShowTable(true);
         contribution_credible_intervals_result_item.SetType(result_type::rangeset);
         contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
         contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
@@ -327,6 +329,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem predicted_credible_intervals_result_item;
         predicted_credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
         predicted_credible_intervals_result_item.SetShowAsString(true);
+        predicted_credible_intervals_result_item.SetShowTable(true);
         predicted_credible_intervals_result_item.SetType(result_type::rangeset_with_observed);
         predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
         predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);

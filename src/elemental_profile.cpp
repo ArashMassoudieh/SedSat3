@@ -173,3 +173,25 @@ bool Elemental_Profile::contains(const string &element)
 {
     return (map<string,double>::count(element)!=0);
 }
+
+Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, const double &om, MultipleLinearRegressionSet *mlrset)
+{
+    Elemental_Profile out;
+    for (map<string,double>::iterator it=begin(); it!=end(); it++)
+    {
+        MultipleLinearRegression *mlr = &mlrset->operator[](it->first);
+        if (mlr->Effective(0))
+        {
+            out[it->first] = (this->at(mlr->GetIndependentVariableNames()[0])-om)*mlr->CoefficientsIntercept()[1]+it->second;
+        }
+        if (mlr->Effective(1))
+        {
+            out[it->first] += (this->at(mlr->GetIndependentVariableNames()[1])-size)*mlr->CoefficientsIntercept()[2];
+            if (out[it->first]<0)
+            {
+                cout<<"corrected value is negative!";
+            }
+        }
+    }
+    return out;
+}

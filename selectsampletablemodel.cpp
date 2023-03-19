@@ -69,7 +69,7 @@ bool SelectSampleTableModel::setData(const QModelIndex & index, const QVariant &
 
         if (index.column()==1)
         {
-            if (value.toString()=="Yes")
+            if (value.toString()=="Yes" || value.toBool())
                 GetProfileSet(index.row())->SetIncluded(true);
             else
                 GetProfileSet(index.row())->SetIncluded(false);

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "interface.h"
+#include "multiplelinearregressionset.h"
 
 using namespace std;
 class Elemental_Profile : public map<string,double>, public Interface
@@ -29,6 +30,7 @@ public:
     bool contains(const string &element);
     bool IncludedInAnalysis() {return included_in_analysis;}
     void SetIncluded(bool value) {included_in_analysis = value;}
+    Elemental_Profile OrganicandSizeCorrect(const double &size, const double &om, MultipleLinearRegressionSet *mlr);
 private:
     bool included_in_analysis = true;
 };

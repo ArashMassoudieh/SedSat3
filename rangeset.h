@@ -15,6 +15,7 @@ public:
     string ToString() override;
     bool writetofile(QFile*) override;
     bool Read(const QStringList &strlist) override;
+    QTableWidget *ToTable() override;
     double maxval();
     double minval();
 };

@@ -42,6 +42,7 @@ SOURCES += \
     mainwindow.cpp \
     multiplelinearregression.cpp \
     multiplelinearregressionset.cpp \
+    omsizecorrectiontablemodel.cpp \
     plotwindow.cpp \
     range.cpp \
     rangeset.cpp \
@@ -117,6 +118,7 @@ HEADERS += \
     mainwindow.h \
     multiplelinearregression.h \
     multiplelinearregressionset.h \
+    omsizecorrectiontablemodel.h \
     plotwindow.h \
     range.h \
     rangeset.h \

@@ -77,3 +77,28 @@ double RangeSet::minval()
     }
     return out;
 }
+
+QTableWidget *RangeSet::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(4);
+    tablewidget->setRowCount(size());
+    QStringList headers;
+    headers<<"Low"<<"High"<<"Median"<<"Mean";
+    QStringList constituents;
+    int row = 0;
+    for (map<string,Range>::iterator it=begin(); it!=end(); it++ )
+    {
+        tablewidget->setItem(row,0, new QTableWidgetItem(QString::number(it->second.Get(_range::low))));
+        tablewidget->setItem(row,1, new QTableWidgetItem(QString::number(it->second.Get(_range::high))));
+        tablewidget->setItem(row,2, new QTableWidgetItem(QString::number(it->second.Median())));
+        tablewidget->setItem(row,3, new QTableWidgetItem(QString::number(it->second.Mean())));
+        row++;
+        constituents << QString::fromStdString(it->first);
+    }
+
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(constituents);
+    return tablewidget;
+}

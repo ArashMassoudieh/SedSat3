@@ -1,7 +1,7 @@
 #include "selectsamples.h"
 #include "ui_selectsamples.h"
 #include "selectsampletablemodel.h"
-#include "selectsampledelegate.h"
+#include "omsizecorrectiontablemodel.h"
 
 SelectSamples::SelectSamples(QWidget *parent) :
     QWidget(parent),
@@ -24,11 +24,23 @@ void SelectSamples::SetData(SourceSinkData *_data)
     {
         ui->GroupComboBox->addItem(QString::fromStdString(it->first));
     }
-    SelectSampleTableModel *samplemodel = new SelectSampleTableModel(data);
-    samplemodel->SetSelectedSource(ui->GroupComboBox->currentText().toStdString());
-    ui->SamplestableView->setModel(samplemodel);
-    SelectSampleDelegate *samplesDelegate = new SelectSampleDelegate(data, this);
-    ui->SamplestableView->setItemDelegate(samplesDelegate);
+    if (Mode==mode::samples)
+    {   SelectSampleTableModel *samplemodel = new SelectSampleTableModel(data);
+        samplemodel->SetSelectedSource(ui->GroupComboBox->currentText().toStdString());
+        ui->SamplestableView->setModel(samplemodel);
+        SelectSampleDelegate *samplesDelegate = new SelectSampleDelegate(data, this);
+        samplesDelegate->SetMode(mode::samples);
+        ui->SamplestableView->setItemDelegate(samplesDelegate);
+    }
+    else if (Mode==mode::regressions)
+    {
+        OmSizeCorrectionTableModel *OMSizemodel = new OmSizeCorrectionTableModel(data->operator[](ui->GroupComboBox->currentText().toStdString()).GetExistingRegressionSet());
+        ui->SamplestableView->setModel(OMSizemodel);
+        SelectSampleDelegate *omsizecorrectionDelegate = new SelectSampleDelegate(data, this);
+        omsizecorrectionDelegate->SetMode(mode::regressions);
+        ui->SamplestableView->setItemDelegate(omsizecorrectionDelegate);
+    }
+
 
 }
 

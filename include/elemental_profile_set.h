@@ -123,6 +123,7 @@ public:
     MultipleLinearRegressionSet regress_vs_size_OM(const string &om, const string &d);
     MultipleLinearRegression regress_vs_size_OM(const string &element, const string &om, const string &d);
     void SetRegression(const string &om, const string &d);
+    MultipleLinearRegressionSet* GetExistingRegressionSet();
     ResultItem GetRegressions();
     CMBMatrix CovarianceMatrix();
     CMBMatrix CorrelationMatrix();
@@ -130,6 +131,8 @@ public:
     gsl_matrix *CopytoGSLMatrix();
     CVector ElementMeans();
     QTableWidget *ToTable() override;
+    Elemental_Profile_Set CopyIncludedinAnalysis();
+    Elemental_Profile_Set OrganicandSizeCorrect(const double &size, const double &om);
 
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element

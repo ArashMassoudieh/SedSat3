@@ -293,7 +293,7 @@ bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset,
     independent_combo = new QComboBox();
 
     connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onElementChanged(int)));
-    connect(independent_combo, SIGNAL(currentTextChanged(int)),this, SLOT(onIndependentChanged(int)));
+    connect(independent_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onIndependentChanged(int)));
     for (map<std::string,MultipleLinearRegression>::iterator it = regressionset->begin(); it!=regressionset->end(); it++ )
     {
         element_combo->addItem(QString::fromStdString(it->first));

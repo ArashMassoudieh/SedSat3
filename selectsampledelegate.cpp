@@ -10,11 +10,36 @@ SelectSampleDelegate::SelectSampleDelegate(SourceSinkData *_Data, QObject *paren
     Data=_Data;
 }
 
+void SelectSampleDelegate::SetMode(mode _mode)
+{
+    Mode = _mode;
+    if (Mode == mode::samples)
+    {
+        numberofcolumns = 2;
+        columnTypes.resize(numberofcolumns);
+        columnTypes[0] = column_type::name;
+        columnTypes[1] = column_type::yesno;
+    }
+    if (Mode == mode::regressions)
+    {
+        numberofcolumns = 8;
+        columnTypes.resize(numberofcolumns);
+        columnTypes[0] = column_type::name;
+        columnTypes[1] = column_type::number;
+        columnTypes[2] = column_type::number;
+        columnTypes[3] = column_type::number;
+        columnTypes[4] = column_type::yesno;
+        columnTypes[5] = column_type::number;
+        columnTypes[6] = column_type::number;
+        columnTypes[7] = column_type::yesno;
+    }
+}
+
 QWidget *SelectSampleDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                       const QModelIndex &index) const
 {
-    if (index.column() == 0) return QStyledItemDelegate::createEditor(parent, option, index);
-    if (index.column()==1)
+    if (columnTypes[index.column()] == column_type::name) return QStyledItemDelegate::createEditor(parent, option, index);
+    if (columnTypes[index.column()] == column_type::yesno)
     {
         QCheckBox *editor = new QCheckBox(parent);
         editor->setChecked(index.data(Qt::DisplayRole).toBool());
@@ -28,12 +53,12 @@ QWidget *SelectSampleDelegate::createEditor(QWidget *parent, const QStyleOptionV
 void SelectSampleDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     QVariant var = index.data(Qt::DisplayRole);
-    if (index.column()==0)
+    if (columnTypes[index.column()]==column_type::name)
     {
         QLabel *label = static_cast<QLabel*>(editor);
         label->setText(var.toString());
     }
-    if (index.column()==1)
+    if (columnTypes[index.column()]==column_type::yesno)
     {
         QCheckBox *chkbox = static_cast<QCheckBox*>(editor);
         if (var.toString()=="No")
@@ -45,13 +70,11 @@ void SelectSampleDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 void SelectSampleDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                   const QModelIndex &index) const
 {
-    if (index.column() == 0) QStyledItemDelegate::setModelData(editor, model, index);
-    QString element = model->data(index.sibling(index.row(), 0)).toString();
-
-    if (index.column() == 1)
+    if (columnTypes[index.column()] == column_type::name) QStyledItemDelegate::setModelData(editor, model, index);
+    if (columnTypes[index.column()] == column_type::yesno)
     {
         QCheckBox *chkbox = static_cast<QCheckBox*>(editor);
-        qDebug()<<chkbox->checkState();
+
         if (chkbox->checkState()==Qt::CheckState::Checked)
             model->setData(index,true);
         else

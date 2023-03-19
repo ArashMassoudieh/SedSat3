@@ -22,6 +22,7 @@ MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegressio
     dependent_data = mp.dependent_data;
     dependent_variable_name = mp.dependent_variable_name;
     independent_data = mp.independent_data;
+    make_effective = mp.make_effective;
 
 }
 MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLinearRegression &mp)
@@ -37,6 +38,7 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
     dependent_data = mp.dependent_data;
     independent_data = mp.independent_data;
     dependent_variable_name = mp.dependent_variable_name;
+    make_effective = mp.make_effective;
     return *this;
 }
 
@@ -142,14 +144,21 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
     R2 = 1-chisq/var_y;
     R2_adj = 1-(chisq/(number_of_data_points-(number_of_variables+1))/(var_y/(number_of_data_points-1)));
     p_value.clear();
+    make_effective.clear();
     for (unsigned int i=0; i<number_of_variables; i++)
     {
         double SSE_reduced = SSE_reduced_model(independent,dependent, i);
         double F = (SSE_reduced - chisq)/chisq*(number_of_data_points-number_of_variables-1);
         p_value.push_back(gsl_cdf_fdist_Q (F, number_of_variables-1, number_of_data_points-(number_of_variables+1)));
+        if (p_value[i]<0.05)
+            make_effective.push_back(true);
+        else
+            make_effective.push_back(false);
         qDebug()<<chisq<<","<<SSE_reduced<<","<<F<<","<<p_value[i];
 
     }
+
+
 
 
     gsl_matrix_free (X);

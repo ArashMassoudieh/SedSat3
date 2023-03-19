@@ -58,6 +58,7 @@
     </property>
     <addaction name="actionConstituent_Properties"/>
     <addaction name="actionInclude_Exclude_Samples"/>
+    <addaction name="actionOrganic_Matter_Size_correction"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -305,6 +306,11 @@
   <action name="actionInclude_Exclude_Samples">
    <property name="text">
     <string>Include/Exclude Samples</string>
+   </property>
+  </action>
+  <action name="actionOrganic_Matter_Size_correction">
+   <property name="text">
+    <string>Organic Matter/Size correction</string>
    </property>
   </action>
  </widget>

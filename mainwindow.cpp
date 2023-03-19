@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionInclude_Exclude_Samples,SIGNAL(triggered()),this,SLOT(onIncludeExcludeSample()));
+    connect(ui->actionOrganic_Matter_Size_correction,SIGNAL(triggered()),this,SLOT(onOMSizeCorrection()));
     connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
     connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
     connect(ui->TreeView_Results,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_old_result_requested(const QModelIndex&)));
@@ -616,11 +617,25 @@ void MainWindow::onIncludeExcludeSample()
     if (centralform)
         delete centralform;
     SelectSamples *include_exclude_samples = new SelectSamples(this);
+    include_exclude_samples->SetMode(mode::samples);
     include_exclude_samples->SetData(&DataCollection);
     ui->verticalLayout_middle->addWidget(include_exclude_samples);
     centralform = include_exclude_samples;
 
 }
+
+void MainWindow::onOMSizeCorrection()
+{
+    if (centralform)
+        delete centralform;
+    SelectSamples *include_exclude_samples = new SelectSamples(this);
+    include_exclude_samples->SetMode(mode::regressions);
+    include_exclude_samples->SetData(&DataCollection);
+    ui->verticalLayout_middle->addWidget(include_exclude_samples);
+    centralform = include_exclude_samples;
+
+}
+
 
 void MainWindow::on_test_dialog_triggered()
 {
