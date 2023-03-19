@@ -58,6 +58,35 @@ string MultipleLinearRegressionSet::ToString()
     return out;
 }
 
+QTableWidget *MultipleLinearRegressionSet::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(5);
+    tablewidget->setRowCount(size());
+    QStringList headers;
+    QStringList sources;
+    int i=0;
+    for (map<string,MultipleLinearRegression>::iterator it=begin(); it!=end(); it++ )
+    {
+        sources<<QString::fromStdString(it->first);
+        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[0])));
+        tablewidget->setItem(i,1, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[1])));
+        tablewidget->setItem(i,2, new QTableWidgetItem(QString::number(it->second.P_Value()[0])));
+        if (it->second.P_Value()[0]<0.05)
+            tablewidget->item(i, 2)->setForeground(Qt::red);
+        tablewidget->setItem(i,3, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[2])));
+        tablewidget->setItem(i,4, new QTableWidgetItem(QString::number(it->second.P_Value()[1])));
+        if (it->second.P_Value()[1]<0.05)
+            tablewidget->item(i, 4)->setForeground(Qt::red);
+        i++;
+    }
+    headers << "Intercept" << "OM coefficient" << "OM P-value" << "Size coefficient" << "Size P-value";
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(sources);
+    return tablewidget;
+}
+
 string MultipleLinearRegressionSet::Key(int i)
 {
     string out;

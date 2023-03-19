@@ -53,7 +53,7 @@ public:
     SourceSinkData();
     SourceSinkData(const SourceSinkData& mp);
     SourceSinkData& operator=(const SourceSinkData &mp);
-    SourceSinkData Corrected();
+    SourceSinkData Corrected(const string &target_sample);
     void Clear();
     Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
     Elemental_Profile_Set *sample_set(const string &name);
@@ -169,6 +169,7 @@ public:
     ResultItem GetObservedvsModeledElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     vector<ResultItem> GetMLRResults();
     ResultItem GetCalculatedElementMeans();
+    vector<ResultItem> GetSourceProfiles();
     ResultItem GetCalculatedElementStandardDev();
     ResultItem GetCalculatedElementMu();
     ResultItem GetEstimatedElementMu();

@@ -143,6 +143,13 @@
     			"default": "true"
     		}
 	},
+	"OM-Size Correct" : 
+	{
+		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		}
+	},
         "MLR": {
     		"Organic Matter constituent": {
     			"type": "comboBox",

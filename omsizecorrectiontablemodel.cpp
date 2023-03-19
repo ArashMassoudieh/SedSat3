@@ -63,7 +63,7 @@ QVariant OmSizeCorrectionTableModel::data(const QModelIndex &index, int role) co
             return false;
     }
 
-    if (role == Qt::TextColorRole)
+    if (role == Qt::ForegroundRole)
     {
         if (index.column()==3 && mlr->P_Value()[0]<0.05)
             return QVariant::fromValue(QColor(Qt::red));

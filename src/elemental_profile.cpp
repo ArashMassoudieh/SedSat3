@@ -179,19 +179,26 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, c
     Elemental_Profile out;
     for (map<string,double>::iterator it=begin(); it!=end(); it++)
     {
-        MultipleLinearRegression *mlr = &mlrset->operator[](it->first);
         out[it->first]=it->second;
-        if (mlr->Effective(0))
-        {
-            out[it->first] += (this->at(mlr->GetIndependentVariableNames()[0])-om)*mlr->CoefficientsIntercept()[1];
-        }
-        if (mlr->Effective(1))
-        {
-            out[it->first] += (this->at(mlr->GetIndependentVariableNames()[1])-size)*mlr->CoefficientsIntercept()[2];
-            if (out[it->first]<0)
+
+        if (mlrset->count(it->first)==1)
+        {   MultipleLinearRegression *mlr = &mlrset->operator[](it->first);
+
+            if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0]!=it->first)
             {
-                cout<<"corrected value is negative!";
+                qDebug()<<om<<","<<this->at(mlr->GetIndependentVariableNames()[0])<<","<<mlr->CoefficientsIntercept()[1];
+                out[it->first] += (om-this->at(mlr->GetIndependentVariableNames()[0]))*mlr->CoefficientsIntercept()[1];
             }
+            if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1]!=it->first)
+            {
+                qDebug()<<size<<","<<this->at(mlr->GetIndependentVariableNames()[1])<<","<<mlr->CoefficientsIntercept()[2];
+                out[it->first] += (size-this->at(mlr->GetIndependentVariableNames()[1]))*mlr->CoefficientsIntercept()[2];
+
+            }
+        }
+        if (out[it->first]<0)
+        {
+            cout<<"corrected value is negative!";
         }
     }
     return out;

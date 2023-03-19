@@ -107,32 +107,40 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         ProgressWindow* rtw = new ProgressWindow();
         rtw->show();
-        Data()->InitializeParametersObservations(arguments["Sample"]);
-        Data()->SetProgressWindow(rtw);
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"]);
+        correctedData.InitializeParametersObservations(arguments["Sample"]);
+        correctedData.SetProgressWindow(rtw);
         if (arguments["Softmax transformation"]=="true")
-            Data()->SolveLevenBerg_Marquardt(transformation::softmax);
+            correctedData.SolveLevenBerg_Marquardt(transformation::softmax);
         else
-            Data()->SolveLevenBerg_Marquardt(transformation::linear);
+            correctedData.SolveLevenBerg_Marquardt(transformation::linear);
 
         results.SetName("LM " + arguments["Sample"]);
-        ResultItem result_cont = Data()->GetContribution();
+        ResultItem result_cont = correctedData.GetContribution();
         result_cont.SetShowTable(true);
         results.Append(result_cont);
 
-        ResultItem result_modeled = Data()->GetPredictedElementalProfile(parameter_mode::direct);
+        ResultItem result_modeled = correctedData.GetPredictedElementalProfile(parameter_mode::direct);
         result_modeled.SetShowTable(true);
         results.Append(result_modeled);
 
-        ResultItem result_modeled_vs_measured = Data()->GetObservedvsModeledElementalProfile();
+        ResultItem result_modeled_vs_measured = correctedData.GetObservedvsModeledElementalProfile();
         result_modeled_vs_measured.SetShowTable(true);
         results.Append(result_modeled_vs_measured);
 
-        ResultItem result_modeled_vs_measured_isotope = Data()->GetObservedvsModeledElementalProfile_Isotope(parameter_mode::direct);
+        ResultItem result_modeled_vs_measured_isotope = correctedData.GetObservedvsModeledElementalProfile_Isotope(parameter_mode::direct);
         result_modeled_vs_measured_isotope.SetShowTable(true);
         results.Append(result_modeled_vs_measured_isotope);
 
     }
-
+    if (command == "OM-Size Correct")
+    {
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"]);
+        vector<ResultItem> resultitems = correctedData.GetSourceProfiles();
+        results.SetName("Corrected Elemental Profiles for Target" + arguments["Sample"]);
+        for (unsigned int i=0; i<resultitems.size(); i++)
+            results.Append(resultitems[i]);
+    }
     if (command == "MLR")
     {
         results.SetName("MLR_vs_OM&Size ");
@@ -140,6 +148,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<ResultItem> regression_result = Data()->GetMLRResults();
         for (unsigned int i=0; i<regression_result.size(); i++)
         {
+
             results.Append(regression_result[i]);
         }
     }

@@ -35,9 +35,10 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
 
 }
 
-SourceSinkData SourceSinkData::Corrected()
+SourceSinkData SourceSinkData::Corrected(const string &target)
 {
     SourceSinkData out;
+    selected_target_sample = target;
     for (map<string, Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
         if (it->first!=target_group)
@@ -46,6 +47,8 @@ SourceSinkData SourceSinkData::Corrected()
             double size = at(target_group)[selected_target_sample][sizeconsituent];
             out[it->first] = it->second.CopyIncludedinAnalysis(true,om,size);
         }
+        else
+            out[it->first] = it->second;
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
@@ -1270,6 +1273,7 @@ vector<ResultItem> SourceSinkData::GetMLRResults()
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
     {
         ResultItem profile_result = it->second.GetRegressions();
+        profile_result.SetShowTable(true);
         profile_result.SetName("OM & Size MLR for " + it->first);
         out.push_back(profile_result);
     }
@@ -1378,6 +1382,30 @@ ResultItem SourceSinkData::GetCalculatedElementStandardDev()
     resitem.SetType(result_type::elemental_profile_set);
     resitem.SetResult(profile_set);
     return resitem;
+}
+
+vector<ResultItem> SourceSinkData::GetSourceProfiles()
+{
+    vector<ResultItem> out;
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            ResultItem result_item;
+            result_item.SetName("Elemental Profiles for " + it->first);
+            result_item.SetShowAsString(true);
+            result_item.SetShowTable(true);
+            result_item.SetShowGraph(true);
+            result_item.SetType(result_type::elemental_profile_set);
+
+            Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+            *profile_set = it->second;
+            result_item.SetResult(profile_set);
+            out.push_back(result_item);
+
+        }
+    }
+    return out;
 }
 ResultItem SourceSinkData::GetCalculatedElementMu()
 {

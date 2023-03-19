@@ -7,7 +7,8 @@
     "Elements' correlation matrix": "CorMat",
     "Discriminant function analysis": "DFA",
     "Kolmogorov–Smirnov for individual group/element": "KS-individual",
-    "Kolmogorov–Smirnov for a group": "KS"
+    "Kolmogorov–Smirnov for a group": "KS",
+    "Correct based on size and organic matter": "OM-Size Correct"
   },
   "Analysis Tools":
   {
