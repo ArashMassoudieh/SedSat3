@@ -30,13 +30,26 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     isotope_order = mp.isotope_order;
     size_om_order = mp.size_om_order;
     parameter_estimation_mode = mp.parameter_estimation_mode;
-
+    omconstituent = mp.omconstituent;
+    sizeconsituent = mp.sizeconsituent;
 
 }
 
 SourceSinkData SourceSinkData::Corrected()
 {
     SourceSinkData out;
+    for (map<string, Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
+    {
+        if (it->first!=target_group)
+        {
+            double om = at(target_group)[selected_target_sample][omconstituent];
+            double size = at(target_group)[selected_target_sample][sizeconsituent];
+            out[it->first] = it->second.CopyIncludedinAnalysis(true,om,size);
+        }
+    }
+    out.omconstituent = omconstituent;
+    out.sizeconsituent = sizeconsituent;
+
     out.ElementInformation = ElementInformation;
     out.element_distributions = element_distributions;
     out.numberofconstituents = numberofconstituents;
@@ -74,6 +87,9 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     size_om_order = mp.size_om_order;
     selected_target_sample = mp.selected_target_sample;
     parameter_estimation_mode = mp.parameter_estimation_mode;
+    omconstituent = mp.omconstituent;
+    sizeconsituent = mp.sizeconsituent;
+
     return *this;
 }
 
@@ -1574,6 +1590,8 @@ element_information::role SourceSinkData::Role(const QString &rl)
 
 bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d)
 {
+    omconstituent = om;
+    sizeconsituent = d;
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
     {
         it->second.SetRegression(om,d);

@@ -131,7 +131,7 @@ public:
     gsl_matrix *CopytoGSLMatrix();
     CVector ElementMeans();
     QTableWidget *ToTable() override;
-    Elemental_Profile_Set CopyIncludedinAnalysis();
+    Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size);
     Elemental_Profile_Set OrganicandSizeCorrect(const double &size, const double &om);
 
 private:

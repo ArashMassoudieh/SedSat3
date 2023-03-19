@@ -180,9 +180,10 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, c
     for (map<string,double>::iterator it=begin(); it!=end(); it++)
     {
         MultipleLinearRegression *mlr = &mlrset->operator[](it->first);
+        out[it->first]=it->second;
         if (mlr->Effective(0))
         {
-            out[it->first] = (this->at(mlr->GetIndependentVariableNames()[0])-om)*mlr->CoefficientsIntercept()[1]+it->second;
+            out[it->first] += (this->at(mlr->GetIndependentVariableNames()[0])-om)*mlr->CoefficientsIntercept()[1];
         }
         if (mlr->Effective(1))
         {

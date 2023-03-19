@@ -226,6 +226,8 @@ private:
     double error_stdev_isotope = 0;
     ProgressWindow *rtw = nullptr;
     estimation_mode parameter_estimation_mode = estimation_mode::elemental_profile_and_contribution;
+    string omconstituent;
+    string sizeconsituent;
 
 
 
