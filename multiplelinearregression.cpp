@@ -23,6 +23,7 @@ MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegressio
     dependent_variable_name = mp.dependent_variable_name;
     independent_data = mp.independent_data;
     make_effective = mp.make_effective;
+    regressionEquation = mp.regressionEquation;
 
 }
 MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLinearRegression &mp)
@@ -39,6 +40,7 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
     independent_data = mp.independent_data;
     dependent_variable_name = mp.dependent_variable_name;
     make_effective = mp.make_effective;
+    regressionEquation = mp.regressionEquation;
     return *this;
 }
 
@@ -67,12 +69,23 @@ double MultipleLinearRegression::SSE_reduced_model(const vector<vector<double>> 
         for (int j=0; j<number_of_variables; j++)
         {
             if (j<eliminated_var)
-                gsl_matrix_set (X, i, j+1, independent[j][i]);
+            {   if (regressionEquation==regression_form::linear)
+                    gsl_matrix_set (X, i, j+1, independent[j][i]);
+                else
+                    gsl_matrix_set (X, i, j+1, log(independent[j][i]));
+            }
             else if (j>eliminated_var)
-                gsl_matrix_set (X, i, j, independent[j][i]);
+            {   if (regressionEquation==regression_form::linear)
+                    gsl_matrix_set (X, i, j, independent[j][i]);
+                else
+                    gsl_matrix_set (X, i, j, log(independent[j][i]));
+            }
+            if (regressionEquation==regression_form::linear)
+                gsl_vector_set (y, i, dependent[i]);
+            else
+                gsl_vector_set (y, i, log(dependent[i]));
+            gsl_vector_set (w, i, 1.0);
         }
-        gsl_vector_set (y, i, dependent[i]);
-        gsl_vector_set (w, i, 1.0);
     }
 
     {
@@ -112,11 +125,17 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
         vector<double> independent_column;
         for (int j=0; j<number_of_variables; j++)
         {
-            gsl_matrix_set (X, i, j+1, independent[j][i]);
+            if (regressionEquation==regression_form::linear)
+                gsl_matrix_set (X, i, j+1, independent[j][i]);
+            else
+                gsl_matrix_set (X, i, j+1, log(independent[j][i]));
 
         }
 
-        gsl_vector_set (y, i, dependent[i]);
+        if (regressionEquation==regression_form::linear)
+            gsl_vector_set (y, i, dependent[i]);
+        else
+            gsl_vector_set (y, i, log(dependent[i]));
         gsl_vector_set (w, i, 1.0);
     }
 
@@ -158,9 +177,6 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
 
     }
 
-
-
-
     gsl_matrix_free (X);
     gsl_vector_free (y);
     gsl_vector_free (w);
@@ -173,9 +189,14 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
 QJsonObject MultipleLinearRegression::toJsonObject()
 {
     QJsonObject out;
+    if (regressionEquation==regression_form::linear)
+        out["form"]="Linear";
+    else
+        out["form"]="Power";
     out["Intercept"] = coefficients_intercept_[0];
     for (unsigned int i=1; i<coefficients_intercept_.size(); i++)
     {
+
         out[QString::fromStdString("Coefficient for " + independent_variables_names[i-1])] = coefficients_intercept_[i];
         out[QString::fromStdString("P-value for " + independent_variables_names[i-1])] = p_value[i-1];
     }
@@ -194,6 +215,10 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
     independent_variables_names.clear();
     coefficients_intercept_.clear();
     p_value.clear();
+    if (jsonobject["form"]=="Power")
+        regressionEquation = regression_form::power;
+    else
+        regressionEquation = regression_form::linear;
     coefficients_intercept_.push_back(jsonobject["Intercept"].toDouble());
     int i=1;
     for(QString key: jsonobject.keys() ) {
@@ -222,13 +247,29 @@ double MultipleLinearRegression::MeanIndependentVar(int i)
 {
     return CVector(independent_data[i]).mean();
 }
+
+double MultipleLinearRegression::GeoMeanIndependentVar(int i)
+{
+    return exp(CVector(independent_data[i]).Log().mean());
+}
 string MultipleLinearRegression::ToString()
 {
     string out;
-    out += "Intercept: " + QString::number(coefficients_intercept_[0]).toStdString() + "\n";
+    if (regressionEquation == regression_form::linear)
+    {   out += "form: Linear\n";
+        out += "Coefficient: " + QString::number(coefficients_intercept_[0]).toStdString() + "\n";
+    }
+    else
+    {   out += "form: Power\n";
+        out += "Coefficient: " + QString::number(coefficients_intercept_[0]).toStdString() + "\n";
+    }
+
     for (unsigned int i=1; i<coefficients_intercept_.size(); i++)
     {
-        out += "Coefficient for " + independent_variables_names[i-1] +":" + QString::number(coefficients_intercept_[i]).toStdString() + "\n";
+        if (regressionEquation == regression_form::linear)
+            out += "Coefficient for " + independent_variables_names[i-1] +":" + QString::number(coefficients_intercept_[i]).toStdString() + "\n";
+        else
+            out += "Exponent for " + independent_variables_names[i-1] +":" + QString::number(coefficients_intercept_[i]).toStdString() + "\n";
         out += "P-value for " + independent_variables_names[i-1] +":" + QString::number(p_value[i-1]).toStdString() + "\n";
 
     }

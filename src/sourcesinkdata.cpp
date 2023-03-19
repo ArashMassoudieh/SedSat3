@@ -68,6 +68,10 @@ SourceSinkData SourceSinkData::Corrected(const string &target)
     out.isotope_order = isotope_order;
     out.size_om_order = size_om_order;
     out.parameter_estimation_mode = parameter_estimation_mode;
+
+    //out.PopulateElementInformation();
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
     return out;
 }
 
@@ -191,6 +195,7 @@ element_data SourceSinkData::ExtractElementData(const string &element, const str
 void SourceSinkData::PopulateElementDistributions()
 {
     vector<string> element_names = ElementNames();
+    element_distributions.clear();
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
         for (unsigned int i=0; i<element_names.size(); i++)
@@ -1616,13 +1621,13 @@ element_information::role SourceSinkData::Role(const QString &rl)
     return element_information::role::do_not_include;
 }
 
-bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d)
+bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form)
 {
     omconstituent = om;
     sizeconsituent = d;
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
     {
-        it->second.SetRegression(om,d);
+        it->second.SetRegression(om,d,form);
     }
     return true;
 }

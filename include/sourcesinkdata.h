@@ -194,7 +194,7 @@ public:
     QJsonObject ElementDataToJsonObject();
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
-    bool Perform_Regression_vs_om_size(const string &om, const string &d);
+    bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
     CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
 private:
 

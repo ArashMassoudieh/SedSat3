@@ -19,6 +19,9 @@ public:
 
 private:
     Ui::ResultTableViewer *ui;
+    QTableWidget *tablewidget;
+public slots:
+    void on_ExportToCSV();
 };
 
 #endif // RESULTTABLEVIEWER_H

@@ -18,6 +18,7 @@ public:
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
     bool writetofile(QFile*) override;
+    QTableWidget *ToTable() override;
     void AppendLastContribution(int colnumber,const string &name);
     void SetObservedValue(int i, const double &value)
     {

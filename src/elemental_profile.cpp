@@ -187,12 +187,18 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, c
             if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0]!=it->first)
             {
                 qDebug()<<om<<","<<this->at(mlr->GetIndependentVariableNames()[0])<<","<<mlr->CoefficientsIntercept()[1];
-                out[it->first] += (om-this->at(mlr->GetIndependentVariableNames()[0]))*mlr->CoefficientsIntercept()[1];
+                if (mlr->Equation()==regression_form::linear)
+                    out[it->first] += (om-this->at(mlr->GetIndependentVariableNames()[0]))*mlr->CoefficientsIntercept()[1];
+                else
+                    out[it->first] *= pow(om/this->at(mlr->GetIndependentVariableNames()[0]),mlr->CoefficientsIntercept()[1]);
             }
             if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1]!=it->first)
             {
                 qDebug()<<size<<","<<this->at(mlr->GetIndependentVariableNames()[1])<<","<<mlr->CoefficientsIntercept()[2];
-                out[it->first] += (size-this->at(mlr->GetIndependentVariableNames()[1]))*mlr->CoefficientsIntercept()[2];
+                if (mlr->Equation()==regression_form::linear)
+                    out[it->first] += (size-this->at(mlr->GetIndependentVariableNames()[1]))*mlr->CoefficientsIntercept()[2];
+                else
+                    out[it->first] += pow(size/this->at(mlr->GetIndependentVariableNames()[1]),mlr->CoefficientsIntercept()[2]);
 
             }
         }

@@ -431,19 +431,33 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     QLineSeries *lineseries = new QLineSeries();
     double x_min_val = CVector(mlr->IndependentData(independent_var.toStdString())).min();
     double x_max_val = CVector(mlr->IndependentData(independent_var.toStdString())).max();
-    double y_min_val = mlr->CoefficientsIntercept()[0];
-    double y_max_val = mlr->CoefficientsIntercept()[0];
+    double y_min_val = exp(mlr->CoefficientsIntercept()[0]);
+    double y_max_val = exp(mlr->CoefficientsIntercept()[0]);
     for (int i=0; i<mlr->GetIndependentVariableNames().size(); i++)
     {
         if (mlr->GetIndependentVariableNames()[i]!=independent_var.toStdString())
         {
-            y_min_val += mlr->MeanIndependentVar(i)*mlr->CoefficientsIntercept()[i+1];
-            y_max_val += mlr->MeanIndependentVar(i)*mlr->CoefficientsIntercept()[i+1];
+            if (mlr->Equation()==regression_form::linear)
+            {   y_min_val += mlr->MeanIndependentVar(i)*mlr->CoefficientsIntercept()[i+1];
+                y_max_val += mlr->MeanIndependentVar(i)*mlr->CoefficientsIntercept()[i+1];
+            }
+            else
+            {
+                y_min_val *= exp(log(mlr->GeoMeanIndependentVar(i))*mlr->CoefficientsIntercept()[i+1]);
+                y_max_val *= exp(log(mlr->GeoMeanIndependentVar(i))*mlr->CoefficientsIntercept()[i+1]);
+            }
         }
         else
         {
-            y_min_val += x_min_val*mlr->CoefficientsIntercept()[i+1];
-            y_max_val += x_max_val*mlr->CoefficientsIntercept()[i+1];
+            if (mlr->Equation()==regression_form::linear)
+            {   y_min_val += x_min_val*mlr->CoefficientsIntercept()[i+1];
+                y_max_val += x_max_val*mlr->CoefficientsIntercept()[i+1];
+            }
+            else
+            {
+                y_min_val *= exp(log(x_min_val)*mlr->CoefficientsIntercept()[i+1]);
+                y_max_val *= exp(log(x_max_val)*mlr->CoefficientsIntercept()[i+1]);
+            }
         }
     }
 
@@ -473,9 +487,23 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     series->attachAxis(axisX);
     series->attachAxis(axisYNormal);
 
-
-    lineseries->append(x_min_val,y_min_val);
-    lineseries->append(x_max_val,y_max_val);
+    if (mlr->Equation()==regression_form::linear)
+    {   lineseries->append(x_min_val,y_min_val);
+        lineseries->append(x_max_val,y_max_val);
+    }
+    else
+    {
+        for (double x = x_min_val; x<=x_max_val; x+=(x_max_val-x_min_val)/20.0)
+        {
+            double y = exp(mlr->CoefficientsIntercept()[0]);
+            for (unsigned int i=0; i<mlr->GetIndependentVariableNames().size(); i++)
+                if (mlr->GetIndependentVariableNames()[i]!=independent_var.toStdString())
+                    y *= exp(log(mlr->GeoMeanIndependentVar(i))*mlr->CoefficientsIntercept()[i+1]);
+                else
+                    y *= exp(log(x)*mlr->CoefficientsIntercept()[i+1]);
+            lineseries->append(x,y);
+        }
+    }
     chart->addSeries(lineseries);
     lineseries->attachAxis(axisX);
     lineseries->attachAxis(axisYNormal);

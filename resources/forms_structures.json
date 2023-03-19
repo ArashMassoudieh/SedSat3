@@ -158,6 +158,10 @@
     		"Particla Size constituent": {
     			"type": "comboBox",
     			"source": "ElementsList"
+    		},
+    		"Equation": {
+    			"type": "comboBox",
+    			"source": "Items:Linear,Power"
     		}
 	},
 	"CovMat": {

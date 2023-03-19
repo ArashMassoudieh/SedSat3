@@ -15,7 +15,7 @@ public:
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     string ToString() override;
     bool writetofile(QFile*) override;
-
+    QTableWidget *ToTable() override;
 
 private:
 

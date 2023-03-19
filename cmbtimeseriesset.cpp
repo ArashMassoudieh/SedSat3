@@ -148,3 +148,27 @@ void CMBTimeSeriesSet::AppendLastContribution(int colnumber, const string &name)
     *this = out;
 
 }
+
+QTableWidget *CMBTimeSeriesSet::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(nvars*2);
+    tablewidget->setRowCount(maxnumpoints());
+    QStringList headers;
+    QStringList rowlabels;
+
+    for (int j=0; j<nvars; j++)
+    {   headers << QString::fromStdString(names[j]) + "-x-value" << QString::fromStdString(names[j]) + "-y-value";
+        for (int i=0; i<BTC[j].n; i++)
+        {
+            if (j==0) rowlabels<<QString::number(i);
+            tablewidget->setItem(i,j*2, new QTableWidgetItem(QString::number(BTC[j].GetT(i))));
+            tablewidget->setItem(i,j*2+1, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
+        }
+    }
+
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(rowlabels);
+    return tablewidget;
+}

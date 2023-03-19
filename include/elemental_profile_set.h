@@ -120,9 +120,9 @@ public:
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     bool Read(const QStringList &strlist) override;
     bool ContainsElement(const string &elementname);
-    MultipleLinearRegressionSet regress_vs_size_OM(const string &om, const string &d);
-    MultipleLinearRegression regress_vs_size_OM(const string &element, const string &om, const string &d);
-    void SetRegression(const string &om, const string &d);
+    MultipleLinearRegressionSet regress_vs_size_OM(const string &om, const string &d,regression_form form=regression_form::linear);
+    MultipleLinearRegression regress_vs_size_OM(const string &element, const string &om, const string &d, regression_form form=regression_form::linear);
+    void SetRegression(const string &om, const string &d, regression_form form = regression_form::linear);
     MultipleLinearRegressionSet* GetExistingRegressionSet();
     ResultItem GetRegressions();
     CMBMatrix CovarianceMatrix();

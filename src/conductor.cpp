@@ -144,7 +144,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "MLR")
     {
         results.SetName("MLR_vs_OM&Size ");
-        Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"]);
+
+        if (arguments["Equation"]=="Linear")
+            Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::linear);
+        else
+            Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::power);
         vector<ResultItem> regression_result = Data()->GetMLRResults();
         for (unsigned int i=0; i<regression_result.size(); i++)
         {
@@ -265,6 +269,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         distribution_res_item.SetName("Posterior Distributions");
         distribution_res_item.SetShowAsString(false);
+        distribution_res_item.SetShowTable(true);
         distribution_res_item.SetType(result_type::distribution);
         distribution_res_item.SetResult(dists);
         results.Append(distribution_res_item);
@@ -314,6 +319,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         predicted_distribution_res_item.SetName("Posterior Predicted Constituents");
         predicted_distribution_res_item.SetShowAsString(false);
+        predicted_distribution_res_item.SetShowTable(true);
         predicted_distribution_res_item.SetType(result_type::distribution_with_observed);
         predicted_distribution_res_item.SetResult(predicted_dists);
         results.Append(predicted_distribution_res_item);

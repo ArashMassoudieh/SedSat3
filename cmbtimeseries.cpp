@@ -61,4 +61,24 @@ bool CMBTimeSeries::writetofile(QFile* file)
     return true;
 }
 
+QTableWidget *CMBTimeSeries::ToTable()
+{
+    QTableWidget *tablewidget = new QTableWidget();
+    tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablewidget->setColumnCount(1);
+    tablewidget->setRowCount(n);
+    QStringList headers;
+    QStringList rowlabels;
+
+    for (int i=0; i<n; i++)
+    {
+        rowlabels<<QString::number(GetT(i));
+        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(GetC(i))));
+    }
+    headers << "Value";
+    tablewidget->setHorizontalHeaderLabels(headers);
+    tablewidget->setVerticalHeaderLabels(rowlabels);
+    return tablewidget;
+}
+
 
