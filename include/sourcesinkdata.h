@@ -196,6 +196,7 @@ public:
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
     CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    CMBVector BracketTest(const string &target_sample);
 private:
 
     map<string,ConcentrationSet> element_distributions;

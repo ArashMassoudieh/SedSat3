@@ -11,6 +11,7 @@ CMBVector::CMBVector():CVector(),Interface()
 CMBVector::CMBVector(const CMBVector& mp):CVector(mp)
 {
     labels = mp.labels;
+    boolean_values = mp.boolean_values;
 
 }
 
@@ -28,6 +29,7 @@ CMBVector::CMBVector(int n):CVector(n), Interface()
 CMBVector& CMBVector::operator=(const CMBVector &mp)
 {
     labels = mp.labels;
+    boolean_values = mp.boolean_values;
     CVector::operator=(mp);
     return *this;
 
@@ -60,9 +62,20 @@ bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
 string CMBVector::ToString()
 {
     string out;
-    for (int j=0; j<getsize(); j++)
-    {
-        out += labels[j] + "," + QString::number(valueAt(j)).toStdString()+"\n";
+    if (!boolean_values)
+    {   for (int j=0; j<getsize(); j++)
+        {
+            out += labels[j] + "," + QString::number(valueAt(j)).toStdString()+"\n";
+        }
+    }
+    else
+    {   for (int j=0; j<getsize(); j++)
+        {
+            if (valueAt(j)==1)
+                out += labels[j] + ", + True \n";
+            else
+                out += labels[j] + ", + False \n";
+        }
     }
 
     return out;
@@ -93,7 +106,16 @@ QTableWidget *CMBVector::ToTable()
     for (int i=0; i<getsize(); i++)
     {
         rowheaders << QString::fromStdString(labels[i]);
-        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(valueAt(i))));
+        if (!boolean_values)
+            tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(valueAt(i))));
+        else
+        {
+            if (valueAt(i)==1)
+                tablewidget->setItem(i,0, new QTableWidgetItem("Yes"));
+            else
+                tablewidget->setItem(i,0, new QTableWidgetItem("No"));
+
+        }
     }
 
     tablewidget->setHorizontalHeaderLabels(colheaders);

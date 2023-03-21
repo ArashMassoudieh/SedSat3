@@ -1643,3 +1643,35 @@ CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, co
     w.SetLabels(ElementNames());
     return w;
 }
+
+CMBVector SourceSinkData::BracketTest(const string &target_sample)
+{
+
+    vector<string> element_names = ElementNames();
+    CMBVector out(element_names.size());
+    CVector maxs(element_names.size());
+    CVector mins(element_names.size());
+    maxs.SetAllValues(1.0);
+    mins.SetAllValues(1.0);
+    for (map<string,Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
+    {
+        for (unsigned int i=0; i<element_names.size(); i++)
+        {   if (at(target_group).Profile(target_sample)->at(element_names[i])<it->second.ElementalDistribution(element_names[i])->max())
+            {
+                    maxs[i]=0;
+                    out.SetLabel(i,element_names[i]);
+            }
+            if (at(target_group).Profile(target_sample)->at(element_names[i])>it->second.ElementalDistribution(element_names[i])->min())
+            {
+                    mins[i]=0;
+            }
+
+        }
+    }
+
+    for (unsigned int i=0; i<element_names.size(); i++)
+    {
+        out[i] = max(maxs[i],mins[i]);
+    }
+    return out;
+}

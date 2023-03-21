@@ -23,9 +23,10 @@ public:
     vector<string> Labels() const {return labels;}
     void SetLabel(int i, const string &label) {labels[i]=label;}
     void SetLabels(const vector<string> &label) {labels=label;}
-
+    void SetBooleanValue(bool val) {boolean_values = val;}
 private:
     vector<string> labels;
+    bool boolean_values = false;
 
 };
 
