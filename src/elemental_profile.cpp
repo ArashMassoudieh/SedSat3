@@ -28,7 +28,7 @@ double Elemental_Profile::Val(const string &name) const
 {
     if (count(name)==0)
     {
-        cout<<"Element '" + name + "' does not exist!"<<endl;
+        cout<<"Element '" + name + "' does not exist!"<<std::endl;
         return -1;
     }
     else
@@ -40,7 +40,7 @@ bool Elemental_Profile::SetVal(const string &name, const double &val)
 {
     if (count(name)==0)
     {
-        cout<<"Element '" + name + "' does not exist!"<<endl;
+        cout<<"Element '" + name + "' does not exist!"<<std::endl;
         return false;
     }
     else

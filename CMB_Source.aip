@@ -9,10 +9,10 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="CMBSource_Icon.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{F767AE2C-42EE-4C53-B896-35AB761DF6A6} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{F487F38F-D5A6-4E67-88A7-1834C309A46A} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="CMBSource"/>
-    <ROW Property="ProductVersion" Value="0.0.12" Type="32"/>
+    <ROW Property="ProductVersion" Value="0.0.13" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -72,7 +72,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="CMBSource.exe_1" Component_="CMBSource.exe_1" FileName="CMBSOU~1.EXE|CMBSource.exe" Attributes="0" SourcePath="build\release\CMBSource.exe" SelfReg="false" NextFile="forms_structures.json" DigSign="true"/>
-    <ROW File="CMBSource_Icon.png" Component_="Graph.png" FileName="CMBSOU~1.PNG|CMBSource_Icon.png" Attributes="0" SourcePath="resources\Icons\CMBSource_Icon.png" SelfReg="false"/>
+    <ROW File="CMBSource_Icon.png" Component_="Graph.png" FileName="CMBSOU~1.PNG|CMBSource_Icon.png" Attributes="0" SourcePath="resources\Icons\CMBSource_Icon.png" SelfReg="false" NextFile="table.png"/>
     <ROW File="Cancel.png" Component_="Cancel.png" FileName="Cancel.png" Attributes="0" SourcePath="resources\Icons\Cancel.png" SelfReg="false" NextFile="Proceed.png"/>
     <ROW File="D3Dcompiler_47.dll" Component_="D3Dcompiler_47.dll" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\D3Dcompiler_47.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
     <ROW File="Graph.png" Component_="Graph.png" FileName="Graph.png" Attributes="0" SourcePath="resources\Icons\Graph.png" SelfReg="false" NextFile="gsl.dll"/>
@@ -93,6 +93,7 @@
     <ROW File="libGLESv2.dll" Component_="libGLESv2.dll" FileName="LIBGLE~1.DLL|libGLESv2.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libGLESv2.dll" SelfReg="false" NextFile="opengl32sw.dll"/>
     <ROW File="opengl32sw.dll" Component_="opengl32sw.dll" FileName="OPENGL~1.DLL|opengl32sw.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\opengl32sw.dll" SelfReg="false" NextFile="Qt5Charts.dll"/>
     <ROW File="qwindows.dll" Component_="qwindows.dll" FileName="qwindows.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2015_64\plugins\platforms\qwindows.dll" SelfReg="false" NextFile="CMBSource.exe_1"/>
+    <ROW File="table.png" Component_="Graph.png" FileName="table.png" Attributes="0" SourcePath="resources\Icons\table.png" SelfReg="false"/>
     <ROW File="tools.json" Component_="forms_structures.json" FileName="TOOLS~1.JSO|tools.json" Attributes="0" SourcePath="resources\tools.json" SelfReg="false" NextFile="blas_win64_MT.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
