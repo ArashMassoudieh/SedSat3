@@ -146,6 +146,14 @@ bool CMCMC<T>::SetProperty(const string &varname, const string &value)
         MCMC_Settings.purt_change_scale = aquiutils::atof(value);
         return true;
     }
+    if (aquiutils::tolower(varname) == "dissolve_chains")
+    {
+        if (aquiutils::tolower(value)=="true")
+            MCMC_Settings.dissolve_chains = true;
+        else
+            MCMC_Settings.dissolve_chains = false;
+        return true;
+    }
 
     last_error = "Property '" + varname + "' was not found!";
     return false;
@@ -451,6 +459,17 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
         if ((kk-k_0) % (50 * MCMC_Settings.number_of_chains) == 0 || kk == k + nsamps + MCMC_Settings.number_of_chains - 1)
 		{
 
+            if (MCMC_Settings.dissolve_chains)
+            {   int_value_pair minchain = Min(logp,min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples),MCMC_Settings.number_of_chains);
+                int_value_pair maxchain = Max(logp,min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples),MCMC_Settings.number_of_chains);
+                double ratio = maxchain.value-minchain.value;
+                if (ratio>10)
+                {
+                    Params[minchain.counter] = Params[maxchain.counter];
+                    logp[minchain.counter] = logp[maxchain.counter];
+                    logp1[minchain.counter] = logp1[maxchain.counter];
+                }
+            }
             file = fopen(filename.c_str(), "a");
             for (int jj = max(int(min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples) - 50 * MCMC_Settings.number_of_chains), k_0); jj < min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples); jj++)
 			{
@@ -747,3 +766,36 @@ void CMCMC<T>::Perform()
     //if (rtw) rtw->AppendText(string("Generating Realizations ..."));
     ProduceRealizations(parameter_samples);
 }
+
+template<class T>
+int_value_pair CMCMC<T>::Min(const vector<double> &vec, int current_counter, int n_chains)
+{
+    int_value_pair out;
+    out.value = 1e12;
+    for (unsigned int i=max(current_counter-n_chains,0); i<current_counter; i++)
+    {
+        if (vec[i]<out.value)
+        {
+            out.value = vec[i];
+            out.counter = i;
+        }
+    }
+    return out;
+}
+
+template<class T>
+int_value_pair CMCMC<T>::Max(const vector<double> &vec, int current_counter, int n_chains)
+{
+    int_value_pair out;
+    out.value = -1e12;
+    for (unsigned int i=max(current_counter-n_chains,0); i<current_counter; i++)
+    {
+        if (vec[i]>out.value)
+        {
+            out.value = vec[i];
+            out.counter = i;
+        }
+    }
+    return out;
+}
+

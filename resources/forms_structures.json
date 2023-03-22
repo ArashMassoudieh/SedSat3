@@ -241,6 +241,10 @@
 		"samples_file_name": {
     			"type": "fileBrowser_Save",
     			"default": "MCMC_Output.txt"
+    		},
+    		"Dissolve Chains": {
+   			"type": "checkBox",
+			"default": "true"
     		}
 	},
 	"Test CMB Bayesian":
@@ -278,5 +282,12 @@
     			"type": "comboBox",
     			"source": "ElementsList"
     		}
-	}	
+	},
+	"Bracketing Analysis":
+	{
+		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		}
+    	}	
 }

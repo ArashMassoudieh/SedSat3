@@ -55,7 +55,13 @@ struct _MCMC_settings
     unsigned int numberOfThreads = 8;
     double acceptance_rate = 0.15;
     double purt_change_scale = 0.75;
+    bool dissolve_chains=false;
+};
 
+struct int_value_pair
+{
+    int counter;
+    double value;
 };
 
 
@@ -126,6 +132,10 @@ public:
 	double accepted_count=0, total_count=0;
     string last_error;
     void Perform();
+private:
+    int_value_pair Min(const vector<double> &vec, int current_counter, int n_chains);
+    int_value_pair Max(const vector<double> &vec, int current_counter, int n_chains);
+
 };
 
 #include "MCMC.hpp"

@@ -254,6 +254,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
+        MCMC->SetProperty("dissolve_chains",arguments["Dissolve Chains"]);
         MCMC->initialize(samples,true);
         string folderpath;
         if (!QString::fromStdString(arguments["samples_file_name"]).contains("/"))
