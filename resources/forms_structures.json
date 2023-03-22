@@ -235,7 +235,7 @@
 		"Samples to be discarded (burnout)": {
 			"type": "spinBox",
 			"default": "100",
-			"maximum": "20000",
+			"maximum": "50000",
 			"minimum": "100"
 		},
 		"samples_file_name": {

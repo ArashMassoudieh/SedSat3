@@ -463,6 +463,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
             {   int_value_pair minchain = Min(logp,min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples),MCMC_Settings.number_of_chains);
                 int_value_pair maxchain = Max(logp,min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples),MCMC_Settings.number_of_chains);
                 double ratio = maxchain.value-minchain.value;
+                qDebug()<<"Ratio:"<<ratio;
                 if (ratio>5)
                 {
                     Params[minchain.counter] = Params[maxchain.counter];

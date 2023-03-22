@@ -1656,10 +1656,10 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     for (map<string,Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
     {
         for (unsigned int i=0; i<element_names.size(); i++)
-        {   if (at(target_group).Profile(target_sample)->at(element_names[i])<it->second.ElementalDistribution(element_names[i])->max())
+        {   out.SetLabel(i,element_names[i]);
+            if (at(target_group).Profile(target_sample)->at(element_names[i])<it->second.ElementalDistribution(element_names[i])->max())
             {
                     maxs[i]=0;
-                    out.SetLabel(i,element_names[i]);
             }
             if (at(target_group).Profile(target_sample)->at(element_names[i])>it->second.ElementalDistribution(element_names[i])->min())
             {

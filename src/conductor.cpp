@@ -444,5 +444,20 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(cummulative_distribution_item);
 
     }
+
+    if (command == "Bracketing Analysis")
+    {
+        results.SetName("Bracketing analysis for sample '" + arguments["Sample"] + "'");
+        ResultItem BracketingResItem;
+        BracketingResItem.SetName("Bracketing results");
+        BracketingResItem.SetType(result_type::vector);
+        BracketingResItem.SetShowTable(true);
+        BracketingResItem.SetShowGraph(false);
+        CMBVector *bracketingresult = new CMBVector(Data()->BracketTest(arguments["Sample"]));
+        bracketingresult->SetBooleanValue(true);
+        BracketingResItem.SetResult(bracketingresult);
+        results.Append(BracketingResItem);
+
+    }
     return true;
 }

@@ -152,6 +152,35 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(rangeset);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("DFA coefficients"))
+        {
+            CMBVector* dfaresults = new CMBVector();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Bracketing results"))
+        {
+            CMBVector* bracketingresults = new CMBVector();
+            bracketingresults->ReadFromJsonObject(jsonobject[key].toObject());
+            bracketingresults->SetBooleanValue(true);
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(bracketingresults);
+            operator[](key.toStdString()) = res_item;
+        }
 
 
      }
