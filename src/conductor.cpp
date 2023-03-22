@@ -350,6 +350,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
         predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
         results.Append(predicted_credible_intervals_result_item);
+        rtw->SetProgress(1);
     }
     if (command == "Test CMB Bayesian")
     {

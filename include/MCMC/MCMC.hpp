@@ -514,7 +514,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 		if (rtw)
 		{
             double average_log_p = CVector::Extract(logp,kk-100,kk).mean();
-            double progress = double(kk) / double(nsamps);
+            double progress = double(kk) / double(nsamps)*0.98;
             rtw->SetProgress(progress);
             rtw->AppendPoint(kk,double(accepted_count) / double(total_count),0);
             rtw->AppendPoint(kk,double(pertcoeff[0] / MCMC_Settings.ini_purt_fact),1);
