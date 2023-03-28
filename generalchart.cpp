@@ -431,8 +431,17 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     QLineSeries *lineseries = new QLineSeries();
     double x_min_val = CVector(mlr->IndependentData(independent_var.toStdString())).min();
     double x_max_val = CVector(mlr->IndependentData(independent_var.toStdString())).max();
-    double y_min_val = exp(mlr->CoefficientsIntercept()[0]);
-    double y_max_val = exp(mlr->CoefficientsIntercept()[0]);
+    double y_min_val, y_max_val;
+
+    if (mlr->Equation()==regression_form::linear)
+    {   y_min_val = mlr->CoefficientsIntercept()[0];
+        y_max_val = mlr->CoefficientsIntercept()[0];
+    }
+    else
+    {
+        y_min_val = exp(mlr->CoefficientsIntercept()[0]);
+        y_max_val = exp(mlr->CoefficientsIntercept()[0]);
+    }
     for (int i=0; i<mlr->GetIndependentVariableNames().size(); i++)
     {
         if (mlr->GetIndependentVariableNames()[i]!=independent_var.toStdString())
@@ -488,7 +497,8 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     series->attachAxis(axisYNormal);
 
     if (mlr->Equation()==regression_form::linear)
-    {   lineseries->append(x_min_val,y_min_val);
+    {
+        lineseries->append(x_min_val,y_min_val);
         lineseries->append(x_max_val,y_max_val);
     }
     else
