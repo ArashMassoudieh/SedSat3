@@ -289,5 +289,16 @@
     			"type": "comboBox",
     			"source": "TargetSamplesList"
     		}
+    	},
+    	"BoxCox":
+    	{
+    		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		}
     	}	
 }

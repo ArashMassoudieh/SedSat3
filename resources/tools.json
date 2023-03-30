@@ -9,7 +9,8 @@
     "Kolmogorov–Smirnov for individual group/element": "KS-individual",
     "Kolmogorov–Smirnov for a group": "KS",
     "Correct based on size and organic matter": "OM-Size Correct",
-    "Bracketing Analysis": "Bracketing Analysis"
+    "Bracketing Analysis": "Bracketing Analysis",
+    "Optimal BoxCox parameters": "BoxCox"
   },
   "Analysis Tools":
   {

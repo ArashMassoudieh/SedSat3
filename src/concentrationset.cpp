@@ -243,3 +243,32 @@ double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)
     CMBTimeSeriesSet observed_fitted = DataCDFnFitted(dist_type);
     return std::max(fabs(observed_fitted[2].maxC()),fabs(observed_fitted[2].minC()));
 }
+
+ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
+{
+    ConcentrationSet transformed(size());
+    if (min()<0)
+        return transformed;
+
+    for (unsigned int i=0; i<size(); i++)
+    {
+        if (lambda!=0)
+            transformed[i] = (pow(at(i),lambda)-1.0)/lambda;
+        else
+            transformed[i] = log(at(i));
+    }
+    return transformed;
+}
+
+double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2, int n_intervals)
+{
+    vector<double> vals;
+    if (fabs(x_1-x_2)<1e-6)
+        return (x_1+x_2)/2.0;
+    double d_lambda = (x_2-x_1)/double(n_intervals);
+    for (double lambda = x_1; lambda<=x_2; lambda+=d_lambda )
+    {
+        vals.push_back(BoxCoxTransform(lambda).KolmogorovSmirnovStat(distribution_type::normal));
+    }
+    return OptimalBoxCoxParam(x_1 + std::max(aquiutils::MinElement(vals)-1,0)*d_lambda,x_1+std::min(aquiutils::MinElement(vals)+1,int(vals.size()-1))*d_lambda,n_intervals);
+}

@@ -459,5 +459,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(BracketingResItem);
 
     }
+    if (command == "BoxCox")
+    {
+        double lambda = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->OptimalBoxCoxParam(-5,5,10);
+    }
     return true;
 }
