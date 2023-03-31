@@ -12,12 +12,13 @@ Elemental_Profile::Elemental_Profile() :map<string, double>(), Interface()
 
 Elemental_Profile::Elemental_Profile(const Elemental_Profile& mp):map<string,double>(mp),Interface()
 {
-    
+    marked = mp.marked;
 }
 
 Elemental_Profile& Elemental_Profile::operator=(const Elemental_Profile &mp)
 {
     Interface::operator=(mp);
+    marked = mp.marked;
     map<string,double>::operator=(mp);
     return *this;
 }
@@ -49,11 +50,38 @@ bool Elemental_Profile::SetVal(const string &name, const double &val)
     }
 }
 
+bool Elemental_Profile::SetMark(const string &name, bool val)
+{
+    if (count(name)==0)
+    {
+        cout<<"Element '" + name + "' does not exist!"<<std::endl;
+        return false;
+    }
+    else
+    {   marked[name]=val;
+        return true;
+    }
+}
+
+bool Elemental_Profile::Mark(const string &name)
+{
+    if (count(name)==0)
+    {
+        cout<<"Element '" + name + "' does not exist!"<<std::endl;
+        return false;
+    }
+    else
+    {   return marked[name];
+
+    }
+}
+
 bool Elemental_Profile::AppendElement(const string &name,const double &val)
 {
     if (count(name)==0)
     {
         operator[](name) =val;
+        marked[name] = false;
         return true;
     }
     else

@@ -133,7 +133,7 @@ public:
     QTableWidget *ToTable() override;
     Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size);
     Elemental_Profile_Set OrganicandSizeCorrect(const double &size, const double &om);
-
+    CMBVector BoxCoxParameters();
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;

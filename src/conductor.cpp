@@ -461,7 +461,17 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "BoxCox")
     {
-        double lambda = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->OptimalBoxCoxParam(-5,5,10);
+        results.SetName("Box-Cox parameter for '" + arguments["Source/Target group"] + "'");
+        ResultItem BoxCoxResItem;
+        BoxCoxResItem.SetName("Box-Cox parameters");
+        BoxCoxResItem.SetType(result_type::vector);
+        BoxCoxResItem.SetShowTable(true);
+        BoxCoxResItem.SetShowGraph(true);
+        BoxCoxResItem.SetYAxisMode(yaxis_mode::normal);
+        CMBVector *boxcoxparams = new CMBVector(Data()->at(arguments["Source/Target group"]).BoxCoxParameters());
+        BoxCoxResItem.SetResult(boxcoxparams);
+        results.Append(BoxCoxResItem);
+
     }
     return true;
 }

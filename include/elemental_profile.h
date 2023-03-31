@@ -16,6 +16,8 @@ public:
     Elemental_Profile& operator=(const Elemental_Profile &mp);
     double Val(const string &name) const; // returns the value of elemental content for a specific element/constituent
     bool SetVal(const string &name, const double &val); //Sets the value of elemental content for a specific element/constituent
+    bool SetMark(const string &name, bool val); //mark specific element/constituent
+    bool Mark(const string &name);
     bool AppendElement(const string &name,const double &val=0); //Append an element and it's value to the list of elements
     vector<double> Vals(); //Returns a vector containing the values of all emenents in the profile
     string ToString() override;
@@ -33,6 +35,7 @@ public:
     Elemental_Profile OrganicandSizeCorrect(const double &size, const double &om, MultipleLinearRegressionSet *mlr);
 private:
     bool included_in_analysis = true;
+    map<string,bool> marked;
 };
 
 #endif // ELEMENTAL_PROFILE_H

@@ -427,4 +427,17 @@ Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const double 
     return out;
 }
 
+CMBVector Elemental_Profile_Set::BoxCoxParameters()
+{
+    CMBVector out(element_distributions.size());
+    int i=0;
+    for (map<string, ConcentrationSet>::iterator it=element_distributions.begin(); it!=element_distributions.end(); it++)
+    {
+        out[i] = it->second.OptimalBoxCoxParam(-5,5,10);
+        out.SetLabel(i,it->first);
+        i++;
+    }
+    return out;
+}
+
 

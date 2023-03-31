@@ -295,10 +295,6 @@
     		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		},
-		"Constituent": {
-    			"type": "comboBox",
-    			"source": "ElementsList"
-    		}
+		}
     	}	
 }

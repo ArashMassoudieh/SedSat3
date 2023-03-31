@@ -252,7 +252,7 @@ ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
 
     for (unsigned int i=0; i<size(); i++)
     {
-        if (lambda!=0)
+        if (fabs(lambda)>1e-5)
             transformed[i] = (pow(at(i),lambda)-1.0)/lambda;
         else
             transformed[i] = log(at(i));
@@ -262,6 +262,8 @@ ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
 
 double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2, int n_intervals)
 {
+    if (min()<0)
+        return 1;
     vector<double> vals;
     if (fabs(x_1-x_2)<1e-6)
         return (x_1+x_2)/2.0;
