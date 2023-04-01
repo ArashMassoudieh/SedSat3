@@ -12,6 +12,9 @@ CMBMatrix::CMBMatrix(const CMBMatrix& mp):CMatrix(mp)
 {
     columnlabels = mp.columnlabels;
     rowlabels = mp.rowlabels;
+    lowlimit = mp.lowlimit;
+    highlimit = mp.highlimit;
+    highlightoutsideoflimit = mp.highlightoutsideoflimit;
 }
 
 CMBMatrix::CMBMatrix(int n):CMatrix(n), Interface()
@@ -21,14 +24,17 @@ CMBMatrix::CMBMatrix(int n):CMatrix(n), Interface()
 }
 CMBMatrix::CMBMatrix(int n, int m):CMatrix(m,n), Interface()
 {
-    rowlabels.resize(n);
-    columnlabels.resize(m);
+    rowlabels.resize(m);
+    columnlabels.resize(n);
 }
 
 CMBMatrix& CMBMatrix::operator=(const CMBMatrix &mp)
 {
     columnlabels = mp.columnlabels;
     rowlabels = mp.rowlabels;
+    lowlimit = mp.lowlimit;
+    highlimit = mp.highlimit;
+    highlightoutsideoflimit = mp.highlightoutsideoflimit;
     CMatrix::operator=(mp);
     return *this;
 }
@@ -93,7 +99,15 @@ QTableWidget *CMBMatrix::ToTable()
     {
         rowheaders << QString::fromStdString(rowlabels[i]);
         for (int j=0; j<getnumcols(); j++)
-            tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(matr[i][j])));
+        {   tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(matr[i][j])));
+            if (highlightoutsideoflimit)
+            {
+                if (matr[i][j]>highlimit || matr[i][j]<lowlimit)
+                {
+                    tablewidget->item(i,j)->setForeground(QColor(Qt::red));
+                }
+            }
+        }
     }
 
     tablewidget->setHorizontalHeaderLabels(colheaders);

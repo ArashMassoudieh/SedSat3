@@ -3,6 +3,7 @@
 
 #include "Matrix.h"
 #include "interface.h"
+#include "range.h"
 
 class CMBMatrix : public CMatrix, public Interface
 {
@@ -22,9 +23,19 @@ public:
     void SetColumnLabel(int i, const string &label) {columnlabels[i]=label;}
     void SetRowLabel(int i, const string &label) {rowlabels[i]=label;}
     QTableWidget *ToTable() override;
+    void SetLimit(_range lowhigh, const double &value)
+    {
+        if (lowhigh == _range::high)
+            highlimit = value;
+        else
+            lowlimit = value;
+        highlightoutsideoflimit = true;
+    }
 private:
     vector<string> columnlabels;
     vector<string> rowlabels;
+    double lowlimit,highlimit;
+    bool highlightoutsideoflimit=false;
 };
 
 #endif // CMBMATRIX_H

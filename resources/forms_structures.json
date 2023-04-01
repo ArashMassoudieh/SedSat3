@@ -296,5 +296,12 @@
 			"type": "comboBox",
 			"source": "SourceList"
 		}
+    	},
+    	"Outlier":
+    	{
+    		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
     	}	
 }

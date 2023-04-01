@@ -473,5 +473,22 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(BoxCoxResItem);
 
     }
+    if (command == "Outlier")
+    {
+        results.SetName("Outlier analysis for '" + arguments["Source/Target group"] + "'");
+        ResultItem OutlierResItem;
+        OutlierResItem.SetName("Outlier Analysis");
+        OutlierResItem.SetType(result_type::matrix);
+        OutlierResItem.SetShowAsString(false);
+        OutlierResItem.SetShowTable(true);
+        OutlierResItem.SetShowGraph(false);
+
+        CMBMatrix *outliermatrix = new CMBMatrix(Data()->at(arguments["Source/Target group"]).Outlier());
+        outliermatrix->SetLimit(_range::high,3);
+        outliermatrix->SetLimit(_range::low,-3);
+        OutlierResItem.SetResult(outliermatrix);
+        results.Append(OutlierResItem);
+
+    }
     return true;
 }

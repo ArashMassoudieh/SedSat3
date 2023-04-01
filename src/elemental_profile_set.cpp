@@ -440,4 +440,35 @@ CMBVector Elemental_Profile_Set::BoxCoxParameters()
     return out;
 }
 
+CMBMatrix Elemental_Profile_Set::Outlier()
+{
+    CMBVector lambdas = BoxCoxParameters();
+    CMBMatrix outliermagnitude(begin()->second.size(),this->size());
+    vector<double> means;
+    vector<double> stds;
+    int i=0;
+    for (map<string, ConcentrationSet>::iterator it=element_distributions.begin(); it!=element_distributions.end(); it++)
+    {
+        means.push_back(it->second.BoxCoxTransform(lambdas[i]).mean());
+        stds.push_back(it->second.BoxCoxTransform(lambdas[i]).stdev());
+        i++;
+    }
+
+    i=0;
+    for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+    {
+        int j=0;
+        outliermagnitude.SetRowLabel(i,it->first);
+        for (map<string,double>::iterator element = it->second.begin(); element!=it->second.end(); element++)
+        {
+            outliermagnitude.SetColumnLabel(j,element->first);
+            qDebug() << element->second << "," << (pow(element->second,lambdas[j])-1.0)/lambdas[j] << "," << means[j] << "," <<stds[j];
+            outliermagnitude[i][j] = ((pow(element->second,lambdas[j])-1.0)/lambdas[j]-means[j])/stds[j];
+            j++;
+        }
+        i++;
+    }
+    return outliermagnitude;
+}
+
 
