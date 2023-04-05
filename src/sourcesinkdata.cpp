@@ -35,7 +35,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
 
 }
 
-SourceSinkData SourceSinkData::Corrected(const string &target)
+SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorrect)
 {
     SourceSinkData out;
     selected_target_sample = target;
@@ -45,14 +45,13 @@ SourceSinkData SourceSinkData::Corrected(const string &target)
         {
             double om = at(target_group)[selected_target_sample][omconstituent];
             double size = at(target_group)[selected_target_sample][sizeconsituent];
-            out[it->first] = it->second.CopyIncludedinAnalysis(true,om,size);
+            out[it->first] = it->second.CopyIncludedinAnalysis(omnsizecorrect,om,size);
         }
         else
             out[it->first] = it->second;
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
-
     out.ElementInformation = ElementInformation;
     out.element_distributions = element_distributions;
     out.numberofconstituents = numberofconstituents;

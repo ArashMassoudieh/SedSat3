@@ -141,7 +141,12 @@
     		"Softmax transformation": {
     			"type": "checkBox",
     			"default": "true"
-    		}
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		} 
 	},
 	"OM-Size Correct" : 
 	{

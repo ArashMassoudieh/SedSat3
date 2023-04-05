@@ -53,7 +53,7 @@ public:
     SourceSinkData();
     SourceSinkData(const SourceSinkData& mp);
     SourceSinkData& operator=(const SourceSinkData &mp);
-    SourceSinkData Corrected(const string &target_sample);
+    SourceSinkData Corrected(const string &target_sample, bool omnsizecorrect=true);
     void Clear();
     Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
     Elemental_Profile_Set *sample_set(const string &name);

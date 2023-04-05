@@ -33,9 +33,11 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
         out = OrganicandSizeCorrect(om,size);
     }
     else
-    {   for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+    {
+        Elemental_Profile profile;
+        for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
             if (it->second.IncludedInAnalysis())
-                out[it->first] = it->second;
+                out.Append_Profile(it->first, it->second);
     }
 
     return out;
@@ -422,7 +424,8 @@ Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const double 
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
         if (it->second.IncludedInAnalysis())
-            out[it->first] = it->second.OrganicandSizeCorrect(size,om,&mlr_vs_om_size);
+            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(size,om,&mlr_vs_om_size));
+
     }
     return out;
 }
