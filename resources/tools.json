@@ -18,7 +18,6 @@
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
     "Maximum likelihood unmixing using Genetic Algorithm": "GA",
     "Maximum likelihood unmixing using Genetic Algorithm - Fixed Source Elemental Profiles": "GA (fixed elemental contribution)",
-    "Levenberg-Marquardt optimization": "Levenberg-Marquardt",
-    "Test Bayesian method": "Test CMB Bayesian"
+    "Levenberg-Marquardt optimization": "Levenberg-Marquardt"
   }
 }

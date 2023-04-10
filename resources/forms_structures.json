@@ -43,6 +43,11 @@
     		"GA output file": {
     			"type": "fileBrowser_Save",
     			"default": "GA_Output.txt"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
     		}
 	},
 	"GA (disregarding targets)": {
@@ -131,7 +136,12 @@
     		"GA output file": {
     			"type": "fileBrowser_Save",
     			"default": "GA_Output.txt"
-    		}
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
+    		} 
 	},
 	"Levenberg-Marquardt": {
     		"Sample": {
@@ -250,6 +260,11 @@
     		"Dissolve Chains": {
    			"type": "checkBox",
 			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
     		}
 	},
 	"Test CMB Bayesian":

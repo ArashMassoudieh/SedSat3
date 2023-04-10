@@ -52,11 +52,17 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ProgressWindow *rtw = new ProgressWindow();
         rtw->SetTitle("Fitness",0);
         rtw->SetYAxisTitle("Fitness",0);
+        bool organicnsizecorrection;
+        if (arguments["Apply size and organic matter correction"]=="true")
+            organicnsizecorrection = true;
+        else
+            organicnsizecorrection = false;
 
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
         rtw->show();
-        Data()->InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
-        Data()->SetParameterEstimationMode(estimation_mode::only_contributions);
-        GA = new CGA<SourceSinkData>(Data());
+        correctedData.InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
+        correctedData.SetParameterEstimationMode(estimation_mode::only_contributions);
+        GA = new CGA<SourceSinkData>(&correctedData);
         GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
         GA->SetProperties(arguments);
@@ -244,9 +250,17 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         MCMC_samples.SetName("MCMC samples");
         CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
 
+        bool organicnsizecorrection;
+        if (arguments["Apply size and organic matter correction"]=="true")
+            organicnsizecorrection = true;
+        else
+            organicnsizecorrection = false;
+
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
+
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
-        MCMC->Model = Data();
+        MCMC->Model = &correctedData;
         ProgressWindow *rtw = new ProgressWindow(nullptr,3);
         rtw->SetTitle("Acceptance Rate",0);
         rtw->SetTitle("Purturbation Factor",1);
@@ -256,7 +270,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
 // Samples
-        Data()->InitializeParametersObservations(arguments["Sample"]);
+        correctedData.InitializeParametersObservations(arguments["Sample"]);
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
@@ -266,7 +280,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!QString::fromStdString(arguments["samples_file_name"]).contains("/"))
             folderpath = workingfolder.toStdString()+"/";
         MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["samples_file_name"], samples, rtw);
-        vector<string> SourceGroupNames = Data()->SourceGroupNames();
+        vector<string> SourceGroupNames = correctedData.SourceGroupNames();
         samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
         MCMC_samples.SetResult(samples);
         results.Append(MCMC_samples);
@@ -283,7 +297,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
 //Posterior contribution 95% intervals
         RangeSet *contribution_credible_intervals = new RangeSet();
-                for (unsigned int i=0; i<Data()->SourceOrder().size(); i++)
+                for (unsigned int i=0; i<correctedData.SourceOrder().size(); i++)
         {
             Range range;
             double percentile_low = samples->BTC[i].percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
@@ -312,8 +326,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem predicted_distribution_res_item;
         CMBTimeSeriesSet *predicted_dists = new CMBTimeSeriesSet();
 
-        vector<string> ConstituentNames = Data()->ElementOrder();
-        vector<string> IsotopeNames = Data()->IsotopeOrder();
+        vector<string> ConstituentNames = correctedData.ElementOrder();
+        vector<string> IsotopeNames = correctedData.IsotopeOrder();
 
         ConstituentNames.insert( ConstituentNames.end(), IsotopeNames.begin(), IsotopeNames.end() );
         for (int i=0; i<predicted_samples.nvars; i++)
@@ -322,7 +336,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         *predicted_dists = predicted_samples.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         for (int i=0; i<predicted_samples.nvars; i++)
-            predicted_dists->SetObservedValue(i,data->observation(i)->Value());
+            predicted_dists->SetObservedValue(i,correctedData.observation(i)->Value());
 
         predicted_distribution_res_item.SetName("Posterior Predicted Constituents");
         predicted_distribution_res_item.SetShowAsString(false);
@@ -346,7 +360,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             range.SetMean(mean[i]);
             range.SetMedian(median[i]);
             predicted_credible_intervals->operator[](predicted_dists->names[i]) = range;
-            predicted_credible_intervals->operator[](predicted_dists->names[i]).SetValue(data->observation(i)->Value());
+            predicted_credible_intervals->operator[](predicted_dists->names[i]).SetValue(correctedData.observation(i)->Value());
         }
         ResultItem predicted_credible_intervals_result_item;
         predicted_credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
