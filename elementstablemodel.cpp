@@ -29,6 +29,8 @@ QVariant ElementTableModel::data(const QModelIndex &index, int role) const
                 return "Isotope";
             if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::particle_size)
                 return "Particle Size";
+            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::orgainc_carbon)
+                return "Organic Carbon";
 
         }
         if (index.column()==2)
@@ -76,7 +78,7 @@ QVariant ElementTableModel::headerData(int section, Qt::Orientation orientation,
             }
             if (section==1)
             {
-                return "Isotope";
+                return "Constituent Type";
             }
             if (section==2)
             {
@@ -110,6 +112,8 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
                 Data->GetElementInformation(element)->Role = element_information::role::do_not_include;
             if (value.toString()=="Particle Size")
                 Data->GetElementInformation(element)->Role = element_information::role::particle_size;
+            if (value.toString()=="Organic Carbon")
+                Data->GetElementInformation(element)->Role = element_information::role::orgainc_carbon;
 
         }
         if (index.column()==2)

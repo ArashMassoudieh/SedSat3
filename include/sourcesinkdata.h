@@ -38,7 +38,7 @@ struct element_data_groups
 
 struct element_information
 {
-    enum class role {do_not_include, isotope, particle_size, element} Role = role::element;
+    enum class role {do_not_include, isotope, particle_size, element, orgainc_carbon} Role = role::element;
     double standard_ratio;
     string base_element;
     bool include_in_analysis = true;

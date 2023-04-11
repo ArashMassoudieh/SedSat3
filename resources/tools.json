@@ -1,17 +1,12 @@
 {
-  "Pre Analysis Tools":
+  "Pre-Analysis Tools":
   {
-    "Organic matter and particle size correction": "MLR",
-    "Distribution Fitting": "DF",
-    "Elements' covariance matrix": "CovMat",
-    "Elements' correlation matrix": "CorMat",
-    "Discriminant function analysis": "DFA",
-    "Kolmogorov–Smirnov for individual group/element": "KS-individual",
-    "Kolmogorov–Smirnov for a group": "KS",
-    "Correct based on size and organic matter": "OM-Size Correct",
-    "Bracketing Analysis": "Bracketing Analysis",
-    "Optimal BoxCox parameters": "BoxCox",
-    "Outlier Analysis": "Outlier"
+    "3-Organic matter and particle size correction": "MLR",
+    "1-Elements' correlation matrix": "CorMat",
+    "6-Discriminant function analysis": "DFA",
+    "4-Correct based on size and organic matter": "OM-Size Correct",
+    "5-Bracketing Analysis": "Bracketing Analysis",
+    "2-Outlier Analysis": "Outlier"
   },
   "Analysis Tools":
   {
@@ -19,5 +14,14 @@
     "Maximum likelihood unmixing using Genetic Algorithm": "GA",
     "Maximum likelihood unmixing using Genetic Algorithm - Fixed Source Elemental Profiles": "GA (fixed elemental contribution)",
     "Levenberg-Marquardt optimization": "Levenberg-Marquardt"
+  },
+  "Miscellaneous Analysis":
+  {
+    "Distribution Fitting": "DF",
+    "Elements' covariance matrix": "CovMat",
+    "Kolmogorov–Smirnov for individual group/element": "KS-individual",
+    "Kolmogorov–Smirnov for a group": "KS",
+    "Optimal BoxCox parameters": "BoxCox"
   }
+  
 }

@@ -189,7 +189,11 @@
 		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Threshold": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    		}
 	},
 	"DFA": {
 		"Source/Target group I" : {
@@ -322,6 +326,10 @@
     		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Threshold": {
+   			"type": "lineEdit",
+			"default": "3"
+    		}
     	}	
 }

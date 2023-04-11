@@ -190,7 +190,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         corMatResItem.SetShowTable(true);
         corMatResItem.SetType(result_type::matrix);
         corMatResItem.SetShowGraph(false);
+        double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
         CMBMatrix *cormatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CorrelationMatrix());
+        cormatr->SetLimit(_range::high,threshold);
+        cormatr->SetLimit(_range::low,-threshold);
         corMatResItem.SetResult(cormatr);
         results.Append(corMatResItem);
 
@@ -502,10 +505,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         OutlierResItem.SetShowAsString(false);
         OutlierResItem.SetShowTable(true);
         OutlierResItem.SetShowGraph(false);
-
+        double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
         CMBMatrix *outliermatrix = new CMBMatrix(Data()->at(arguments["Source/Target group"]).Outlier());
-        outliermatrix->SetLimit(_range::high,3);
-        outliermatrix->SetLimit(_range::low,-3);
+        outliermatrix->SetLimit(_range::high,threshold);
+        outliermatrix->SetLimit(_range::low,-threshold);
         OutlierResItem.SetResult(outliermatrix);
         results.Append(OutlierResItem);
 
