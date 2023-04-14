@@ -205,6 +205,12 @@
 			"source": "SourceList"
 		}
 	},
+	"DFAM": {
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
+	},
 	"KS-individual": 
 	{
  		"Source/Target group" : {

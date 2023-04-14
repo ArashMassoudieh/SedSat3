@@ -211,6 +211,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(DFAResItem);
 
     }
+    if (command == "DFAM")
+    {
+        results.SetName("DFA coefficients for " + arguments["Source/Target group I"] );
+        ResultItem DFAResItem;
+        DFAResItem.SetName("DFA coefficients for " + arguments["Source/Target group I"]  );
+        DFAResItem.SetType(result_type::vector);
+        DFAResItem.SetShowTable(true);
+        DFAResItem.SetYAxisMode(yaxis_mode::normal);
+        CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"]));
+        DFAResItem.SetResult(dfaeigenvector);
+        results.Append(DFAResItem);
+
+    }
     if (command == "KS")
     {
         results.SetName("Kolmogorov–Smirnov statististics for " + arguments["Source/Target group"] );

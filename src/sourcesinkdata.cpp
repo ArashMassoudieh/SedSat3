@@ -1631,7 +1631,7 @@ bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const strin
     return true;
 }
 
-CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, const string &source2)
+CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1,const string &source2)
 {
     CMBVector mean1 = at(source1).ElementMeans();
     CMBVector mean2 = at(source2).ElementMeans();
@@ -1642,6 +1642,34 @@ CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, co
     w.SetLabels(ElementNames());
     return w;
 }
+
+CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
+{
+    CMBVector mean1 = at(source1).ElementMeans();
+    Elemental_Profile_Set rest = TheRest(source1);
+    CMBVector mean2 = rest.ElementMeans();
+    CMBMatrix CovMatr1 = at(source1).CovarianceMatrix();
+    CMBMatrix CovMatr2 = rest.CovarianceMatrix();
+    CMBVector w = ((mean1-mean2)/(CovMatr1+CovMatr2));
+    w=w/w.norm2();
+    w.SetLabels(ElementNames());
+    return w;
+}
+
+Elemental_Profile_Set SourceSinkData::TheRest(const string &source)
+{
+    Elemental_Profile_Set out;
+    for (map<string,Elemental_Profile_Set>::iterator profile_set = begin(); profile_set!=end(); profile_set++)
+    {
+        if (profile_set->first!=source && profile_set->first!=target_group)
+            for (map<string, Elemental_Profile>::iterator profile=profile_set->second.begin(); profile!=profile_set->second.end(); profile++ )
+            {
+                out.Append_Profile(profile->first, profile->second);
+            }
+    }
+    return out;
+}
+
 
 CMBVector SourceSinkData::BracketTest(const string &target_sample)
 {
