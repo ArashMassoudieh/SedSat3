@@ -1656,6 +1656,25 @@ CMBVector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
     return w;
 }
 
+CMBMatrix SourceSinkData::DiscriminantFunctionAnalysis()
+{
+    CMBMatrix out(ElementNames().size(),this->size()-1);
+    int i=0;
+    for (map<string,Elemental_Profile_Set>::iterator source = begin(); source != end(); source++)
+    {
+        if (source->first!=target_group)
+        {   CMBVector w = DiscriminantFunctionAnalysis(source->first);
+            CMBMatrix elem_profile_set = source->second.toMatrix();
+            string temp = elem_profile_set.ToString();
+            out.matr[i] = w;
+            out.SetRowLabel(i,source->first);
+            i++;
+        }
+    }
+    out.SetColumnLabels(ElementNames());
+    return out;
+}
+
 Elemental_Profile_Set SourceSinkData::TheRest(const string &source)
 {
     Elemental_Profile_Set out;
@@ -1665,6 +1684,7 @@ Elemental_Profile_Set SourceSinkData::TheRest(const string &source)
             for (map<string, Elemental_Profile>::iterator profile=profile_set->second.begin(); profile!=profile_set->second.end(); profile++ )
             {
                 out.Append_Profile(profile->first, profile->second);
+
             }
     }
     return out;

@@ -22,6 +22,8 @@ public:
     string RowLabel(int i) {return rowlabels[i];}
     void SetColumnLabel(int i, const string &label) {columnlabels[i]=label;}
     void SetRowLabel(int i, const string &label) {rowlabels[i]=label;}
+    void SetColumnLabels(const vector<string> &label) {columnlabels=label;}
+    void SetRowLabels(const vector<string> &label) {rowlabels=label;}
     QTableWidget *ToTable() override;
     void SetLimit(_range lowhigh, const double &value)
     {

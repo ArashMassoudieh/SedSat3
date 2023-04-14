@@ -135,6 +135,7 @@ public:
     Elemental_Profile_Set OrganicandSizeCorrect(const double &size, const double &om);
     CMBVector BoxCoxParameters();
     CMBMatrix Outlier();
+    CMBMatrix toMatrix();
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;

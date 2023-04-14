@@ -206,10 +206,10 @@
 		}
 	},
 	"DFAM": {
-		"Source/Target group I" : {
-			"type": "comboBox",
-			"source": "SourceList"
-		}
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
 	},
 	"KS-individual": 
 	{

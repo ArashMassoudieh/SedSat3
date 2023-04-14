@@ -474,4 +474,23 @@ CMBMatrix Elemental_Profile_Set::Outlier()
     return outliermagnitude;
 }
 
+CMBMatrix Elemental_Profile_Set::toMatrix()
+{
+    vector<string> element_names = ElementNames();
+    CMBMatrix out(element_names.size(),size());
+    int i=0;
 
+    for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+    {
+        int j=0;
+        out.SetRowLabel(i,it->first);
+        for (map<string,double>::iterator element = it->second.begin(); element!=it->second.end(); element++)
+        {
+            out[i][j] = element->second;
+            out.SetColumnLabel(j,element->first);
+            j++;
+        }
+        i++;
+    }
+    return out;
+}

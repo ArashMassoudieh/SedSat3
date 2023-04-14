@@ -213,14 +213,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFAM")
     {
-        results.SetName("DFA coefficients for " + arguments["Source/Target group I"] );
+        results.SetName("DFA coefficients" );
         ResultItem DFAResItem;
-        DFAResItem.SetName("DFA coefficients for " + arguments["Source/Target group I"]  );
-        DFAResItem.SetType(result_type::vector);
+        DFAResItem.SetName("DFA coefficients");
+        DFAResItem.SetType(result_type::matrix);
         DFAResItem.SetShowTable(true);
-        DFAResItem.SetYAxisMode(yaxis_mode::normal);
-        CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"]));
-        DFAResItem.SetResult(dfaeigenvector);
+        DFAResItem.SetShowGraph(false);
+        CMBMatrix *dfaeigenmatrix = new CMBMatrix(Data()->DiscriminantFunctionAnalysis());
+        DFAResItem.SetResult(dfaeigenmatrix);
         results.Append(DFAResItem);
 
     }
