@@ -39,6 +39,7 @@ public:
     vector<string> ColumnLabels() const {return columnlabels;}
     CMBVector GetRow(const string &rowlabel);
     CMBVector GetColumn(const string &rowlabel);
+    QStringList RowLabelCategories();
 private:
     vector<string> columnlabels;
     vector<string> rowlabels;

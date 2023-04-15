@@ -18,6 +18,7 @@ ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
     YLimits = rhs.YLimits;
     showTable = rhs.showTable;
     showGraph = rhs.showGraph;
+    showabsvalue = rhs.showabsvalue;
 }
 ResultItem& ResultItem::operator = (const ResultItem &rhs)
 {
@@ -33,5 +34,6 @@ ResultItem& ResultItem::operator = (const ResultItem &rhs)
     YLimits = rhs.YLimits;
     showTable = rhs.showTable;
     showGraph = rhs.showGraph;
+    showabsvalue = rhs.showabsvalue;
     return *this;
 }

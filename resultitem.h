@@ -29,6 +29,8 @@ public:
     void setYAxisTitle(const string &title) {Y_Axis_Title = title;}
     string XAxisTitle() {return X_Axis_Title;}
     string YAxisTitle() {return Y_Axis_Title;}
+    void SetAbsoluteValue(bool val) {showabsvalue = val;}
+    bool AbsValue() {return showabsvalue;}
     double YLimit(_range highlow)
     {
         if (highlow == _range::high)
@@ -57,6 +59,7 @@ private:
     result_type type;
     Interface *result;
     yaxis_mode y_axis_mode = yaxis_mode::log;
+    bool showabsvalue = false;
     bool showasstring = true;
     string X_Axis_Title;
     string Y_Axis_Title;

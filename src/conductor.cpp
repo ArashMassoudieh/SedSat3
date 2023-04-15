@@ -205,7 +205,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"]  );
         DFAResItem.SetType(result_type::vector);
         DFAResItem.SetShowTable(true);
-        DFAResItem.SetYAxisMode(yaxis_mode::normal);
+        DFAResItem.SetAbsoluteValue(true);
+        DFAResItem.SetYAxisMode(yaxis_mode::log);
         CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(dfaeigenvector);
         results.Append(DFAResItem);
@@ -218,10 +219,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetName("DFA coefficients");
         DFAResItem.SetType(result_type::matrix);
         DFAResItem.SetShowTable(true);
-        DFAResItem.SetShowGraph(false);
+        DFAResItem.SetShowGraph(true);
+        DFAResItem.SetAbsoluteValue(true);
+        DFAResItem.SetYAxisMode(yaxis_mode::log);
         CMBMatrix *dfaeigenmatrix = new CMBMatrix(Data()->DiscriminantFunctionAnalysis());
-
-
         DFAResItem.SetResult(dfaeigenmatrix);
         results.Append(DFAResItem);
 
@@ -233,7 +234,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetName("DFA transformed");
         DFAResItem.SetType(result_type::matrix1vs1);
         DFAResItem.SetShowTable(true);
-        DFAResItem.SetShowGraph(false);
+        DFAResItem.SetShowGraph(true);
         CMBMatrix dfaeigenmatrix = Data()->DiscriminantFunctionAnalysis();
         CMBVector weighted11 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
         CMBVector weighted12 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
@@ -252,6 +253,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             weighted_results->matr[i+weighted11.getsize()][1] = weighted22[i];
             weighted_results->SetRowLabel(i+weighted11.getsize(),arguments["Source/Target group II"]);
         }
+        weighted_results->SetColumnLabel(0,"WB_" + arguments["Source/Target group I"]);
+        weighted_results->SetColumnLabel(1,"WB_" + arguments["Source/Target group II"]);
         DFAResItem.SetResult(weighted_results);
         results.Append(DFAResItem);
 

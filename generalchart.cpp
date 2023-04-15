@@ -52,6 +52,13 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBVector* profile = static_cast<CMBVector*>(res->Result());
         return PlotVector(profile, QString::fromStdString(res->Name()));
     }
+    if (res->Type() == result_type::matrix)
+    {
+        CMBMatrix* matrix = static_cast<CMBMatrix*>(res->Result());
+        return PlotMatrix(matrix, QString::fromStdString(res->Name()));
+    }
+
+
     if (res->Type() == result_type::mlrset)
     {
         MultipleLinearRegressionSet* mlrset = static_cast<MultipleLinearRegressionSet*>(res->Result());
@@ -84,6 +91,11 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
         return InitializeDistributions(timeseriesset, QString::fromStdString(res->Name()));
     }
+    if (res->Type() == result_type::matrix1vs1)
+    {
+        CMBMatrix* matrix = static_cast<CMBMatrix*>(res->Result());
+        return PlotScatter(matrix);
+    }
 
     chartView->update();
     return false; 
@@ -113,10 +125,18 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
     QLogValueAxis* axisYLog;
     QValueAxis* axisYNormal;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
+    double profile_min;
+    if (result_item->AbsValue())
+        profile_min = profile->abs().min();
+    else
+        profile_min = profile->min();
     if (profile->min()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
-        axisYLog->setRange(pow(10, roundDown(log(profile->min())/log(10.0))), pow(10, int(log(profile->max()) / log(10.0))+1));
+        if (result_item->AbsValue())
+            axisYLog->setRange(pow(10, roundDown(log(profile->abs().min())/log(10.0))), pow(10, int(log(profile->abs().max()) / log(10.0))+1));
+        else
+            axisYLog->setRange(pow(10, roundDown(log(profile->min())/log(10.0))), pow(10, int(log(profile->max()) / log(10.0))+1));
         axisYLog->setLabelFormat("%g");
         axisYLog->setMinorTickCount(5);
         chart->addAxis(axisYLog, Qt::AlignLeft);
@@ -125,7 +145,10 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
     else
     {
         axisYNormal = new QValueAxis();
-        axisYNormal->setRange(roundDown(profile->min()*10.0)/10, roundDown((profile->max()+0.1)*10.0)/10);
+        if (result_item->AbsValue())
+            axisYNormal->setRange(roundDown(profile->abs().min()*10.0)/10, roundDown((profile->abs().max()+0.1)*10.0)/10);
+        else
+            axisYNormal->setRange(roundDown(profile->min()*10.0)/10, roundDown((profile->max()+0.1)*10.0)/10);
         axisYNormal->setLabelFormat("%f");
         axisYNormal->setMinorTickCount(5);
         chart->addAxis(axisYNormal, Qt::AlignLeft);
@@ -153,13 +176,95 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
 
     for (int i=0; i<profile->num; i++)
     {
-        barset->append(profile->at(i));
+        if (result_item->AbsValue())
+            barset->append(fabs(profile->at(i)));
+        else
+            barset->append(profile->at(i));
         counter++;
     }
     series->append(barset);
     return true;
 
 }
+
+
+bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &title)
+{
+    QStringList categories;
+
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+
+    vector<string> element_names = matrix->ColumnLabels();
+    for (unsigned int i = 0; i < element_names.size(); i++)
+        categories << QString::fromStdString(element_names[i]);
+
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+
+    QLogValueAxis* axisYLog;
+    QValueAxis* axisYNormal;
+    bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
+    double matrix_min;
+    if (result_item->AbsValue())
+        matrix_min = matrix->abs().min();
+    else
+        matrix_min = matrix->min();
+
+
+    if (matrix_min>0 && _log)
+    {
+        axisYLog = new QLogValueAxis();
+        axisYLog->setRange(pow(10, roundDown(log(matrix_min)/log(10.0))), pow(10, int(log(matrix->max()) / log(10.0))+1));
+        axisYLog->setLabelFormat("%g");
+        axisYLog->setMinorTickCount(5);
+        chart->addAxis(axisYLog, Qt::AlignLeft);
+        _log = true;
+    }
+    else
+    {
+        axisYNormal = new QValueAxis();
+        axisYNormal->setRange(roundDown(matrix_min*10.0)/10, roundDown((matrix->max()+0.1)*10.0)/10);
+        axisYNormal->setLabelFormat("%f");
+        axisYNormal->setMinorTickCount(5);
+        chart->addAxis(axisYNormal, Qt::AlignLeft);
+    }
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+
+
+    for (int i=0; i<matrix->getnumrows(); i++)
+    {   QBarSeries* series = new QBarSeries();
+
+        chart->addSeries(series);
+        series->setName(QString::fromStdString(matrix->RowLabel(i)));
+        series->attachAxis(axisX);
+        if (_log)
+            series->attachAxis(axisYLog);
+        else
+            series->attachAxis(axisYNormal);
+
+        double counter = 0.5;
+        QBarSet *barset = new QBarSet(QString::fromStdString(matrix->RowLabel(i)));
+        QPen pen;
+        pen.setWidth(2);
+        barset->setPen(pen);
+
+        for (int j=0; j<matrix->getnumcols(); j++)
+        {
+            if (result_item->AbsValue())
+                barset->append(fabs(matrix->matr[i][j]));
+            else
+                barset->append(matrix->matr[i][j]);
+            counter++;
+        }
+        series->append(barset);
+    }
+    return true;
+
+
+}
+
+
 bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QString &title)
 {
     QCategoryAxis* axisX = new QCategoryAxis();
@@ -522,6 +627,58 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
 
     return true;
 }
+
+bool GeneralChart::PlotScatter(CMBMatrix *matrix)
+{
+
+    QValueAxis* axisX = new QValueAxis();
+    QValueAxis* axisYNormal = new QValueAxis();
+    axisX->setObjectName("axisX");
+    axisYNormal->setObjectName("axisY");
+
+    CMBVector vec1 = matrix->GetColumn(matrix->ColumnLabel(0));
+    CMBVector vec2 = matrix->GetColumn(matrix->ColumnLabel(1));
+
+    double x_min_val = matrix->GetColumn(matrix->ColumnLabel(0)).min();
+    double x_max_val = matrix->GetColumn(matrix->ColumnLabel(0)).max();
+    double y_min_val = matrix->GetColumn(matrix->ColumnLabel(1)).min();
+    double y_max_val = matrix->GetColumn(matrix->ColumnLabel(1)).max();
+
+
+    axisX->setRange(x_min_val,x_max_val);
+    axisX->setTitleText(QString::fromStdString(matrix->ColumnLabel(0)));
+    axisYNormal->setRange(y_min_val,y_max_val);
+    axisYNormal->setTitleText(QString::fromStdString(matrix->ColumnLabel(1)));
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisYNormal, Qt::AlignLeft);
+
+    QStringList rowcategories = matrix->RowLabelCategories();
+    for (int i=0; i<rowcategories.size();i++)
+    {
+        QScatterSeries* series = new QScatterSeries();
+        qDebug()<<rowcategories[i];
+        for (int j=0; j<matrix->getnumrows(); j++)
+            if (QString::fromStdString(matrix->RowLabel(j))==rowcategories[i])
+                series->append(matrix->matr[j][0],matrix->matr[j][1]);
+
+        QPen pen = series->pen();
+        pen.setWidth(2);
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        series->setPen(pen);
+
+        series->setName(rowcategories[i]);
+        series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+        series->setMarkerSize(15.0);
+        chart->addSeries(series);
+        series->attachAxis(axisX);
+        series->attachAxis(axisYNormal);
+
+    }
+
+    return true;
+}
+
 
 
 bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& variable)

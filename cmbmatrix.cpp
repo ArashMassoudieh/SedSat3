@@ -154,12 +154,23 @@ CMBVector CMBMatrix::GetColumn(const string &columnlabel)
     CMBVector out(getnumrows());
     for (unsigned int i=0; i<columnlabels.size(); i++)
     {
-        if (rowlabels[i]==columnlabel)
+        if (columnlabels[i]==columnlabel)
         {
             for (unsigned int j=0; j<getnumrows(); j++)
                 out[j] = matr[j][i];
         }
     }
     out.SetLabels(RowLabels());
+    return out;
+}
+
+QStringList CMBMatrix::RowLabelCategories()
+{
+    QStringList out;
+    for (unsigned int i=0; i<rowlabels.size(); i++)
+    {
+        if (!out.contains(QString::fromStdString(rowlabels[i])))
+            out<<QString::fromStdString(rowlabels[i]);
+    }
     return out;
 }
