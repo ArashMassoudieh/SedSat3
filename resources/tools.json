@@ -22,7 +22,8 @@
     "Elements' covariance matrix": "CovMat",
     "Kolmogorov–Smirnov for individual group/element": "KS-individual",
     "Kolmogorov–Smirnov for a group": "KS",
-    "Optimal BoxCox parameters": "BoxCox"
+    "Optimal BoxCox parameters": "BoxCox",
+    "Discriminant function analysis - Weighted Plots": "DFA-Transformed"
   }
   
 }

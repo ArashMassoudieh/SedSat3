@@ -1675,6 +1675,20 @@ CMBMatrix SourceSinkData::DiscriminantFunctionAnalysis()
     return out;
 }
 
+CMBVector SourceSinkData::DFATransformed(const CMBVector &eigenvector, const string &sourcegroup)
+{
+    CMBVector out(operator[](sourcegroup).size());
+    int i=0;
+    for (map<string,Elemental_Profile>::iterator sample = operator[](sourcegroup).begin(); sample != operator[](sourcegroup).end(); sample++)
+    {
+        out[i] = sample->second.DotProduct(eigenvector);
+        out.SetLabel(i,sample->first);
+        i++;
+    }
+
+    return out;
+}
+
 Elemental_Profile_Set SourceSinkData::TheRest(const string &source)
 {
     Elemental_Profile_Set out;

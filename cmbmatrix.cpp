@@ -119,3 +119,47 @@ double CMBMatrix::valueAt(int i, int j)
 {
     return CMatrix::operator[](i).at(j);
 }
+
+CMBVector operator*(const CMBMatrix &M, const CMBVector&V)
+{
+    CMBVector out = M.toMatrix()*V.toVector();
+    out.SetLabels(M.RowLabels());
+    return out;
+
+}
+
+CMatrix CMBMatrix::toMatrix() const
+{
+    CMatrix out(getnumrows(), getnumcols());
+    out.matr = matr;
+    return out;
+}
+
+CMBVector CMBMatrix::GetRow(const string &rowlabel)
+{
+    CMBVector out(getnumcols());
+    for (unsigned int i=0; i<rowlabels.size(); i++)
+    {
+        if (rowlabels[i]==rowlabel)
+        {
+            for (unsigned int j=0; j<getnumcols(); j++)
+                out[j] = matr[i][j];
+        }
+    }
+    out.SetLabels(ColumnLabels());
+    return out;
+}
+CMBVector CMBMatrix::GetColumn(const string &columnlabel)
+{
+    CMBVector out(getnumrows());
+    for (unsigned int i=0; i<columnlabels.size(); i++)
+    {
+        if (rowlabels[i]==columnlabel)
+        {
+            for (unsigned int j=0; j<getnumrows(); j++)
+                out[j] = matr[j][i];
+        }
+    }
+    out.SetLabels(RowLabels());
+    return out;
+}

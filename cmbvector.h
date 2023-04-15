@@ -24,6 +24,7 @@ public:
     void SetLabel(int i, const string &label) {labels[i]=label;}
     void SetLabels(const vector<string> &label) {labels=label;}
     void SetBooleanValue(bool val) {boolean_values = val;}
+    CVector toVector() const;
 private:
     vector<string> labels;
     bool boolean_values = false;

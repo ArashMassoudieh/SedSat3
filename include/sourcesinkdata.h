@@ -198,6 +198,7 @@ public:
     CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
     CMBVector DiscriminantFunctionAnalysis(const string &source1);
     CMBMatrix DiscriminantFunctionAnalysis();
+    CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample);
 private:

@@ -122,3 +122,10 @@ QTableWidget *CMBVector::ToTable()
     tablewidget->setVerticalHeaderLabels(rowheaders);
     return tablewidget;
 }
+
+CVector CMBVector::toVector() const
+{
+    CVector out(num);
+    out.vec = vec;
+    return out;
+}

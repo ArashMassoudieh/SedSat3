@@ -4,6 +4,7 @@
 #include "Matrix.h"
 #include "interface.h"
 #include "range.h"
+#include "cmbvector.h"
 
 class CMBMatrix : public CMatrix, public Interface
 {
@@ -12,6 +13,7 @@ public:
     CMBMatrix(int n);
     CMBMatrix(int n, int m);
     CMBMatrix(const CMBMatrix& mp);
+    CMatrix toMatrix() const;
     CMBMatrix& operator=(const CMBMatrix &mp);
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
@@ -33,11 +35,18 @@ public:
             lowlimit = value;
         highlightoutsideoflimit = true;
     }
+    vector<string> RowLabels() const {return rowlabels;}
+    vector<string> ColumnLabels() const {return columnlabels;}
+    CMBVector GetRow(const string &rowlabel);
+    CMBVector GetColumn(const string &rowlabel);
 private:
     vector<string> columnlabels;
     vector<string> rowlabels;
     double lowlimit,highlimit;
     bool highlightoutsideoflimit=false;
+
 };
+
+CMBVector operator*(const CMBMatrix &M, const CMBVector&V);
 
 #endif // CMBMATRIX_H

@@ -220,7 +220,39 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetShowTable(true);
         DFAResItem.SetShowGraph(false);
         CMBMatrix *dfaeigenmatrix = new CMBMatrix(Data()->DiscriminantFunctionAnalysis());
+
+
         DFAResItem.SetResult(dfaeigenmatrix);
+        results.Append(DFAResItem);
+
+    }
+    if (command == "DFA-Transformed")
+    {
+        results.SetName("DFA transformed" );
+        ResultItem DFAResItem;
+        DFAResItem.SetName("DFA transformed");
+        DFAResItem.SetType(result_type::matrix1vs1);
+        DFAResItem.SetShowTable(true);
+        DFAResItem.SetShowGraph(false);
+        CMBMatrix dfaeigenmatrix = Data()->DiscriminantFunctionAnalysis();
+        CMBVector weighted11 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
+        CMBVector weighted12 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
+        CMBVector weighted21 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
+        CMBVector weighted22 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
+        CMBMatrix *weighted_results = new CMBMatrix(2,weighted11.getsize()+weighted21.getsize());
+        for (unsigned int i=0; i<weighted11.getsize(); i++)
+        {
+            weighted_results->matr[i][0] = weighted11[i];
+            weighted_results->matr[i][1] = weighted12[i];
+            weighted_results->SetRowLabel(i,arguments["Source/Target group I"]);
+        }
+        for (unsigned int i=0; i<weighted21.getsize(); i++)
+        {
+            weighted_results->matr[i+weighted11.getsize()][0] = weighted21[i];
+            weighted_results->matr[i+weighted11.getsize()][1] = weighted22[i];
+            weighted_results->SetRowLabel(i+weighted11.getsize(),arguments["Source/Target group II"]);
+        }
+        DFAResItem.SetResult(weighted_results);
         results.Append(DFAResItem);
 
     }

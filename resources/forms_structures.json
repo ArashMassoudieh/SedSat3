@@ -211,6 +211,16 @@
 			"default": "false"
     		}
 	},
+	"DFA-Transformed": {
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
+	},
 	"KS-individual": 
 	{
  		"Source/Target group" : {
