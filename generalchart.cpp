@@ -130,7 +130,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         profile_min = profile->abs().min();
     else
         profile_min = profile->min();
-    if (profile->min()>0 && _log)
+    if (profile_min>0 && _log)
     {
         axisYLog = new QLogValueAxis();
         if (result_item->AbsValue())

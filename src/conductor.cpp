@@ -214,9 +214,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFAM")
     {
-        results.SetName("DFA coefficients" );
+        results.SetName("Multigroup DFA Analysis" );
         ResultItem DFAResItem;
-        DFAResItem.SetName("DFA coefficients");
+        DFAResItem.SetName("Multigroup DFA Analysis");
         DFAResItem.SetType(result_type::matrix);
         DFAResItem.SetShowTable(true);
         DFAResItem.SetShowGraph(true);
