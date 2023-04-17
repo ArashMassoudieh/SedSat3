@@ -246,6 +246,12 @@ double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)
 
 ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
 {
+    ConcentrationSet Scaled(size());
+    double std_dev = stdev();
+    for (unsigned int i = 0; i < size(); i++)
+    {
+        Scaled[i] = at(i) / std_dev; 
+    }
     ConcentrationSet transformed(size());
     if (min()<0)
         return transformed;
@@ -253,9 +259,9 @@ ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
     for (unsigned int i=0; i<size(); i++)
     {
         if (fabs(lambda)>1e-5)
-            transformed[i] = (pow(at(i),lambda)-1.0)/lambda;
+            transformed[i] = (pow(Scaled.at(i),lambda)-1.0)/lambda;
         else
-            transformed[i] = log(at(i));
+            transformed[i] = log(Scaled.at(i));
     }
     return transformed;
 }

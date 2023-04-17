@@ -449,11 +449,13 @@ CMBMatrix Elemental_Profile_Set::Outlier()
     CMBMatrix outliermagnitude(begin()->second.size(),this->size());
     vector<double> means;
     vector<double> stds;
+    vector<double> std_orig; 
     int i=0;
     for (map<string, ConcentrationSet>::iterator it=element_distributions.begin(); it!=element_distributions.end(); it++)
     {
         means.push_back(it->second.BoxCoxTransform(lambdas[i]).mean());
         stds.push_back(it->second.BoxCoxTransform(lambdas[i]).stdev());
+        std_orig.push_back(it->second.stdev());
         i++;
     }
 
@@ -466,7 +468,7 @@ CMBMatrix Elemental_Profile_Set::Outlier()
         {
             outliermagnitude.SetColumnLabel(j,element->first);
             qDebug() << element->second << "," << (pow(element->second,lambdas[j])-1.0)/lambdas[j] << "," << means[j] << "," <<stds[j];
-            outliermagnitude[i][j] = ((pow(element->second,lambdas[j])-1.0)/lambdas[j]-means[j])/stds[j];
+            outliermagnitude[i][j] = ((pow(element->second/std_orig[j], lambdas[j]) - 1.0) / lambdas[j] - means[j]) / stds[j];
             j++;
         }
         i++;

@@ -9,10 +9,10 @@
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="CMBSource_Icon.exe" Type="8"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{F487F38F-D5A6-4E67-88A7-1834C309A46A} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{25F7B1FF-D7D6-4C7D-80B0-69A17B4FF0E5} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="CMBSource"/>
-    <ROW Property="ProductVersion" Value="0.0.13" Type="32"/>
+    <ROW Property="ProductVersion" Value="0.0.16" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
