@@ -41,17 +41,6 @@
     <addaction name="actionSave_Project"/>
     <addaction name="actionOpen_Project"/>
    </widget>
-   <widget class="QMenu" name="menuPlot">
-    <property name="title">
-     <string>Plot</string>
-    </property>
-    <addaction name="actionRaw_Elemental_Profiles"/>
-    <addaction name="actionTestGraphs"/>
-    <addaction name="actionTestDialog"/>
-    <addaction name="actionTestLikelihoods"/>
-    <addaction name="actionTestProgressGraph"/>
-    <addaction name="actionTestLevenberg_Marquardt"/>
-   </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>Settings</string>
@@ -67,7 +56,6 @@
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuPlot"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -178,7 +166,7 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>Data</string>
+    <string/>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -214,27 +202,13 @@
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
-    <string>Tools</string>
+    <string/>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4">
     <layout class="QVBoxLayout" name="verticalLayout_4">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Find</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="lineEdit"/>
-       </item>
-      </layout>
-     </item>
      <item>
       <widget class="QTreeView" name="treeViewtools">
        <property name="animated">

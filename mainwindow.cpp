@@ -32,7 +32,7 @@
 //#include "MCMC.h"
 
 
-#define version "0.0.16"
+#define version "0.0.17"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -62,7 +62,15 @@ MainWindow::MainWindow(QWidget *parent)
     resultsviewmodel = new QStandardItemModel();
     ui->TreeView_Results->setModel(resultsviewmodel);
     resultsviewmodel->setHorizontalHeaderLabels(QStringList()<<"Results");
-    connect(ui->treeView,SIGNAL(triggered()),this,SLOT(on_tree_view_triggered()));
+
+    DeleteAction = new QAction("Delete",ResultscontextMenu);
+    ResultscontextMenu = new QMenu(ui->TreeView_Results);
+    ResultscontextMenu->addAction(DeleteAction);
+    connect(DeleteAction, SIGNAL(triggered()), this, SLOT(DeleteResults()));
+
+
+    ui->TreeView_Results->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->TreeView_Results, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
     connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
     connect(ui->actionInclude_Exclude_Samples,SIGNAL(triggered()),this,SLOT(onIncludeExcludeSample()));
@@ -143,6 +151,7 @@ void MainWindow::onOpenProject()
         QJsonObject jsondoc = QJsonDocument().fromJson(fileres.readAll()).object();
         QJsonObject resultsjson = jsondoc["Results"].toObject();
         resultsviewmodel->clear();
+        resultsviewmodel->setHorizontalHeaderLabels(QStringList()<<"Results");
         for(QString key: resultsjson.keys() ) {
 
             ResultSetItem *resultset = new ResultSetItem(key);
@@ -192,6 +201,7 @@ void MainWindow::InitiateTables()
     columnviewmodel->appendRow(modelitems);
     elementitems.append(ElementsToQStandardItem("Elements",&DataCollection));
     columnviewmodel->appendRow(elementitems);
+    columnviewmodel->setHorizontalHeaderLabels(QStringList()<<"Data");
     ui->treeView->setModel(columnviewmodel);
     connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -761,3 +771,16 @@ void MainWindow::onAboutTriggered()
     abtdlg->AppendText(QString("CMBSource version ") + QString(version));
     abtdlg->exec(); 
 }
+
+void MainWindow::onCustomContextMenu(const QPoint &point)
+{
+    QModelIndex index = ui->TreeView_Results->indexAt(point);
+        if (index.isValid()) {
+            ResultscontextMenu->exec(ui->TreeView_Results->viewport()->mapToGlobal(point));
+        }
+}
+void MainWindow::DeleteResults()
+{
+    qDebug()<<"Delete";
+}
+

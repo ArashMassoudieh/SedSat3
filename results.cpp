@@ -64,6 +64,18 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Elemental Profiles"))
+        {
+            Elemental_Profile_Set *modeled = new Elemental_Profile_Set();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetType(result_type::elemental_profile_set);
+            res_item.SetResult(modeled);
+            operator[](key.toStdString()) = res_item;
+        }
         else if (key=="Observed vs Modeled Elemental Profile")
         {
             Elemental_Profile_Set *modeled_vs_measured = new Elemental_Profile_Set();
@@ -167,6 +179,20 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(dfaresults);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Box-Cox parameters"))
+        {
+            CMBVector* dfaresults = new CMBVector();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
         else if (key.contains("Multigroup DFA Analysis"))
         {
             CMBMatrix* dfaresults = new CMBMatrix();
@@ -208,7 +234,18 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(dfaresults);
             operator[](key.toStdString()) = res_item;
         }
-
+        else if (key.contains("Covariance Matrix"))
+        {   CMBMatrix* dfaresults = new CMBMatrix();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetType(result_type::matrix);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
         else if (key.contains("Bracketing results"))
         {
             CMBVector* bracketingresults = new CMBVector();
@@ -222,6 +259,51 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetName(key.toStdString());
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.SetResult(bracketingresults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Outlier Analysis"))
+        {
+            CMBMatrix *outliermatrix = new CMBMatrix();
+            outliermatrix->ReadFromJsonObject(jsonobject[key].toObject());
+            outliermatrix->SetLimit(_range::high,3);
+            outliermatrix->SetLimit(_range::low,-3);
+
+            ResultItem res_item;
+            res_item.SetShowAsString(false);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetType(result_type::matrix);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(outliermatrix);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Kolmogorov–Smirnov statististics for constituent"))
+        {
+            CMBTimeSeriesSet *KSResults = new CMBTimeSeriesSet();
+            KSResults->ReadFromJsonObject(jsonobject[key].toObject());
+
+            ResultItem res_item;
+            res_item.SetShowAsString(false);
+            res_item.SetShowTable(false);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::timeseries_set);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(KSResults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Kolmogorov–Smirnov statististics"))
+        {
+            CMBVector *KSResults = new CMBVector();
+            KSResults->ReadFromJsonObject(jsonobject[key].toObject());
+
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(KSResults);
             operator[](key.toStdString()) = res_item;
         }
 

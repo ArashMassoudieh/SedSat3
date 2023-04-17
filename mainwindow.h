@@ -39,7 +39,8 @@ private:
     QStandardItemModel* ToQStandardItemModel(const QJsonDocument &jsondocument);
     QStandardItemModel *columnviewmodel = nullptr;
     QStandardItemModel *resultsviewmodel = nullptr;
-
+    QMenu* ResultscontextMenu = nullptr;
+    QAction* DeleteAction;
     QJsonDocument loadJson(const QString &fileName);
     void saveJson(const QJsonDocument &document, const QString &fileName);
     QString SelectedTreeItemType = "None";
@@ -69,6 +70,8 @@ private slots:
     void onOpenProject();
     void onIncludeExcludeSample();
     void onOMSizeCorrection();
+    void onCustomContextMenu(const QPoint &);
+    void DeleteResults();
 
 
 };
