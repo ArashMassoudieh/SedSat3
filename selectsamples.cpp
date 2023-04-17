@@ -46,8 +46,19 @@ void SelectSamples::SetData(SourceSinkData *_data)
 
 void SelectSamples::comboChanged()
 {
-    SelectSampleTableModel *samplemodel = new SelectSampleTableModel(data);
-    samplemodel->SetSelectedSource(ui->GroupComboBox->currentText().toStdString());
-    ui->SamplestableView->setModel(samplemodel);
+    if (Mode==mode::samples)
+    {   SelectSampleTableModel *samplemodel = new SelectSampleTableModel(data);
+        samplemodel->SetSelectedSource(ui->GroupComboBox->currentText().toStdString());
+        ui->SamplestableView->setModel(samplemodel);
+    }
+    else if (Mode==mode::regressions)
+    {
+        OmSizeCorrectionTableModel *OMSizemodel = new OmSizeCorrectionTableModel(data->operator[](ui->GroupComboBox->currentText().toStdString()).GetExistingRegressionSet());
+        ui->SamplestableView->setModel(OMSizemodel);
+        SelectSampleDelegate *omsizecorrectionDelegate = new SelectSampleDelegate(data, this);
+        omsizecorrectionDelegate->SetMode(mode::regressions);
+        ui->SamplestableView->setItemDelegate(omsizecorrectionDelegate);
+    }
+
 
 }

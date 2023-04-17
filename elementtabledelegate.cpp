@@ -18,7 +18,7 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
     if (index.column()==1)
     {
         QComboBox *editor = new QComboBox(parent);
-        editor->addItem("Element"); editor->addItem("Isotope"); editor->addItem("Particle Size");
+        editor->addItem("Element"); editor->addItem("Isotope"); editor->addItem("Particle Size");editor->addItem("Organic Carbon");editor->addItem("Exclude");
         string element_name = index.sibling(index.row(),0).data(Qt::DisplayRole).toString().toStdString();
         if (Data->GetElementInformation(element_name)->Role == element_information::role::do_not_include)
             editor->setCurrentText("Exclude");
@@ -28,6 +28,9 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
             editor->setCurrentText("Isotope");
         if (Data->GetElementInformation(element_name)->Role == element_information::role::particle_size)
             editor->setCurrentText("Particle Size");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::orgainc_carbon)
+            editor->setCurrentText("Organic Carbon");
+
 
         return editor;
     }
@@ -95,6 +98,9 @@ void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
             combo->setCurrentText("Isotope");
         if (Data->GetElementInformation(element_name)->Role == element_information::role::particle_size)
             combo->setCurrentText("Particle Size");
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::orgainc_carbon)
+            combo->setCurrentText("Organic Carbon");
+
         return;
     }
     if (index.column()==2)

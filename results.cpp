@@ -84,7 +84,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetName(key.toStdString());
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
-            res_item.SetType(result_type::elemental_profile_set);
+            res_item.SetType(result_type::mlrset);
             res_item.SetResult(mlrset);
             operator[](key.toStdString()) = res_item;
         }
@@ -160,12 +160,55 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
             res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
             res_item.SetType(result_type::vector);
             res_item.SetName(key.toStdString());
-            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetResult(dfaresults);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Multigroup DFA Analysis"))
+        {
+            CMBMatrix* dfaresults = new CMBMatrix();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::matrix);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("DFA transformed"))
+        {   CMBMatrix* dfaresults = new CMBMatrix();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::matrix1vs1);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Correlation Matrix"))
+        {   CMBMatrix* dfaresults = new CMBMatrix();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            dfaresults->SetLimit(_range::low,-0.75);
+            dfaresults->SetLimit(_range::high,0.75);
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetType(result_type::matrix);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
+
         else if (key.contains("Bracketing results"))
         {
             CMBVector* bracketingresults = new CMBVector();

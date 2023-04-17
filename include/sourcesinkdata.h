@@ -38,7 +38,7 @@ struct element_data_groups
 
 struct element_information
 {
-    enum class role {do_not_include, isotope, particle_size, element} Role = role::element;
+    enum class role {do_not_include, isotope, particle_size, element, orgainc_carbon} Role = role::element;
     double standard_ratio;
     string base_element;
     bool include_in_analysis = true;
@@ -196,6 +196,10 @@ public:
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
     CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    CMBVector DiscriminantFunctionAnalysis(const string &source1);
+    CMBMatrix DiscriminantFunctionAnalysis();
+    CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
+    Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample);
 private:
 

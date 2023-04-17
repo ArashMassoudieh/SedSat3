@@ -189,9 +189,29 @@
 		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Threshold": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    		}
 	},
 	"DFA": {
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		}
+	},
+	"DFAM": {
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
+	},
+	"DFA-Transformed": {
 		"Source/Target group I" : {
 			"type": "comboBox",
 			"source": "SourceList"
@@ -322,6 +342,10 @@
     		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Threshold": {
+   			"type": "lineEdit",
+			"default": "3"
+    		}
     	}	
 }

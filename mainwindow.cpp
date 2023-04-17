@@ -499,11 +499,13 @@ QStandardItem* MainWindow::ToQStandardItem(const QString &key, const QJsonObject
         if (json[json.keys()[i]].isObject())
         {
             standarditem->appendRow(ToQStandardItem(json.keys()[i],json[json.keys()[i]].toObject()));
+            standarditem->setToolTip(json.keys()[i]);
         }
         else
         {
             QStandardItem *subitem = new QStandardItem(json.keys()[i]);
             subitem->setData(json.value(json.keys()[i]).toString(),Qt::UserRole);
+            subitem->setToolTip(json.keys()[i]);
             standarditem->appendRow(subitem);
         }
     }

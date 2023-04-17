@@ -46,15 +46,29 @@ QJsonObject CMBVector::toJsonObject()
 {
     QJsonObject out;
     QJsonArray vector;
-    for (int i=0; i<0; i<getsize())
+    QJsonArray elementlabels;
+    for (int i=0; i<getsize(); i++)
     {
         vector.append(valueAt(i));
+        elementlabels.append(QString::fromStdString(labels[i]));
     }
     out["Vector"] = vector;
+    out["Labels"] = elementlabels;
     return out;
 }
 bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
+    QJsonArray array = jsonobject["Vector"].toArray();
+    QJsonArray elementlabels = jsonobject["Labels"].toArray();
+    vec.resize(array.size());
+    num = array.size();
+    labels.resize(array.size());
+    for (unsigned int i=0; i<array.size(); i++)
+    {
+        vec[i]=array[i].toDouble();
+        labels[i]=elementlabels[i].toString().toStdString();
+    }
+
     return true;
 }
 
@@ -121,4 +135,11 @@ QTableWidget *CMBVector::ToTable()
     tablewidget->setHorizontalHeaderLabels(colheaders);
     tablewidget->setVerticalHeaderLabels(rowheaders);
     return tablewidget;
+}
+
+CVector CMBVector::toVector() const
+{
+    CVector out(num);
+    out.vec = vec;
+    return out;
 }

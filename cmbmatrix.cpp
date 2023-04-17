@@ -42,18 +42,54 @@ QJsonObject CMBMatrix::toJsonObject()
 {
     QJsonObject out;
     QJsonArray matrix;
-    for (int i=0; i<0; i<getnumrows())
+    for (int i=0; i<getnumrows(); i++)
     {
         QJsonArray row;
-        for (int j=0; j<0; j<getnumcols())
+        for (int j=0; j<getnumcols(); j++)
             row.append(valueAt(i,j));
         matrix.append(row);
     }
+    QJsonArray Row_Labels;
+    for (unsigned int i=0; i<rowlabels.size(); i++)
+    {
+        Row_Labels.append(QString::fromStdString(rowlabels[i]));
+    }
+    QJsonArray Column_Labels;
+    for (unsigned int i=0; i<columnlabels.size(); i++)
+    {
+        Column_Labels.append(QString::fromStdString(columnlabels[i]));
+    }
     out["Matrix"] = matrix;
+    out["RowLabels"] = Row_Labels;
+    out["ColumnLabels"] = Column_Labels;
     return out;
 }
 bool CMBMatrix::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
+    QJsonArray array = jsonobject["Matrix"].toArray();
+    QJsonArray Row_Labels = jsonobject["RowLabels"].toArray();
+    QJsonArray Column_Labels = jsonobject["ColumnLabels"].toArray();
+
+    if (array.size()==0)
+        return false;
+    Resize(array.size(), array[0].toArray().size());
+    rowlabels.resize(Row_Labels.size());
+    columnlabels.resize(Column_Labels.size());
+
+    for (unsigned int i=0; i<array.size(); i++)
+    {
+        for (unsigned int j=0; j<array[i].toArray().size(); j++)
+        {
+            matr[i][j] = array[i].toArray()[j].toDouble();
+        }
+    }
+
+    for (unsigned int i=0; i<Row_Labels.size(); i++)
+        rowlabels[i] = Row_Labels[i].toString().toStdString();
+
+    for (unsigned int i=0; i<Column_Labels.size(); i++)
+        columnlabels[i] = Column_Labels[i].toString().toStdString();
+
     return true;
 }
 
@@ -118,4 +154,59 @@ QTableWidget *CMBMatrix::ToTable()
 double CMBMatrix::valueAt(int i, int j)
 {
     return CMatrix::operator[](i).at(j);
+}
+
+CMBVector operator*(const CMBMatrix &M, const CMBVector&V)
+{
+    CMBVector out = M.toMatrix()*V.toVector();
+    out.SetLabels(M.RowLabels());
+    return out;
+
+}
+
+CMatrix CMBMatrix::toMatrix() const
+{
+    CMatrix out(getnumrows(), getnumcols());
+    out.matr = matr;
+    return out;
+}
+
+CMBVector CMBMatrix::GetRow(const string &rowlabel)
+{
+    CMBVector out(getnumcols());
+    for (unsigned int i=0; i<rowlabels.size(); i++)
+    {
+        if (rowlabels[i]==rowlabel)
+        {
+            for (unsigned int j=0; j<getnumcols(); j++)
+                out[j] = matr[i][j];
+        }
+    }
+    out.SetLabels(ColumnLabels());
+    return out;
+}
+CMBVector CMBMatrix::GetColumn(const string &columnlabel)
+{
+    CMBVector out(getnumrows());
+    for (unsigned int i=0; i<columnlabels.size(); i++)
+    {
+        if (columnlabels[i]==columnlabel)
+        {
+            for (unsigned int j=0; j<getnumrows(); j++)
+                out[j] = matr[j][i];
+        }
+    }
+    out.SetLabels(RowLabels());
+    return out;
+}
+
+QStringList CMBMatrix::RowLabelCategories()
+{
+    QStringList out;
+    for (unsigned int i=0; i<rowlabels.size(); i++)
+    {
+        if (!out.contains(QString::fromStdString(rowlabels[i])))
+            out<<QString::fromStdString(rowlabels[i]);
+    }
+    return out;
 }

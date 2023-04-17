@@ -30,6 +30,7 @@ public:
     ~GeneralChart();
     bool Plot(ResultItem* res);
     bool PlotVector(CMBVector *profile, const QString &title);
+    bool PlotMatrix(CMBMatrix *matrix, const QString &title);
     bool PlotProfileSet(Elemental_Profile_Set *elementalprofileset, const QString &title);
     bool PlotContribution(Contribution* contributions, const QString &title);
     bool PlotPredictedConcentration(Elemental_Profile* elemental_profile, const QString &title);
@@ -41,6 +42,7 @@ public:
     bool InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &title);
     bool PlotMCMCSamples(CTimeSeries<double> *mlr,const QString& variable);
     bool PlotDistribution(CTimeSeries<double> *mlr,const QString& variable);
+    bool PlotScatter(CMBMatrix *matrix);
 private:
     Ui::GeneralChart *ui;
     QChart* chart;

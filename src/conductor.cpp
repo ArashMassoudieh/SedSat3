@@ -186,11 +186,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         results.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
         ResultItem corMatResItem;
-        corMatResItem.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
+        corMatResItem.SetName("Correlation Matrix" );
         corMatResItem.SetShowTable(true);
         corMatResItem.SetType(result_type::matrix);
         corMatResItem.SetShowGraph(false);
+        double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
         CMBMatrix *cormatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CorrelationMatrix());
+        cormatr->SetLimit(_range::high,threshold);
+        cormatr->SetLimit(_range::low,-threshold);
         corMatResItem.SetResult(cormatr);
         results.Append(corMatResItem);
 
@@ -199,12 +202,60 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         results.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFAResItem;
-        DFAResItem.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"]  );
+        DFAResItem.SetName("DFA coefficients");
         DFAResItem.SetType(result_type::vector);
         DFAResItem.SetShowTable(true);
-        DFAResItem.SetYAxisMode(yaxis_mode::normal);
+        DFAResItem.SetAbsoluteValue(true);
+        DFAResItem.SetYAxisMode(yaxis_mode::log);
         CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(dfaeigenvector);
+        results.Append(DFAResItem);
+
+    }
+    if (command == "DFAM")
+    {
+        results.SetName("Multigroup DFA Analysis" );
+        ResultItem DFAResItem;
+        DFAResItem.SetName("Multigroup DFA Analysis");
+        DFAResItem.SetType(result_type::matrix);
+        DFAResItem.SetShowTable(true);
+        DFAResItem.SetShowGraph(true);
+        DFAResItem.SetAbsoluteValue(true);
+        DFAResItem.SetYAxisMode(yaxis_mode::log);
+        CMBMatrix *dfaeigenmatrix = new CMBMatrix(Data()->DiscriminantFunctionAnalysis());
+        DFAResItem.SetResult(dfaeigenmatrix);
+        results.Append(DFAResItem);
+
+    }
+    if (command == "DFA-Transformed")
+    {
+        results.SetName("DFA transformed between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
+        ResultItem DFAResItem;
+        DFAResItem.SetName("DFA transformed");
+        DFAResItem.SetType(result_type::matrix1vs1);
+        DFAResItem.SetShowTable(true);
+        DFAResItem.SetShowGraph(true);
+        CMBMatrix dfaeigenmatrix = Data()->DiscriminantFunctionAnalysis();
+        CMBVector weighted11 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
+        CMBVector weighted12 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
+        CMBVector weighted21 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
+        CMBVector weighted22 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
+        CMBMatrix *weighted_results = new CMBMatrix(2,weighted11.getsize()+weighted21.getsize());
+        for (unsigned int i=0; i<weighted11.getsize(); i++)
+        {
+            weighted_results->matr[i][0] = weighted11[i];
+            weighted_results->matr[i][1] = weighted12[i];
+            weighted_results->SetRowLabel(i,arguments["Source/Target group I"]);
+        }
+        for (unsigned int i=0; i<weighted21.getsize(); i++)
+        {
+            weighted_results->matr[i+weighted11.getsize()][0] = weighted21[i];
+            weighted_results->matr[i+weighted11.getsize()][1] = weighted22[i];
+            weighted_results->SetRowLabel(i+weighted11.getsize(),arguments["Source/Target group II"]);
+        }
+        weighted_results->SetColumnLabel(0,"WB_" + arguments["Source/Target group I"]);
+        weighted_results->SetColumnLabel(1,"WB_" + arguments["Source/Target group II"]);
+        DFAResItem.SetResult(weighted_results);
         results.Append(DFAResItem);
 
     }
@@ -502,10 +553,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         OutlierResItem.SetShowAsString(false);
         OutlierResItem.SetShowTable(true);
         OutlierResItem.SetShowGraph(false);
-
+        double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
         CMBMatrix *outliermatrix = new CMBMatrix(Data()->at(arguments["Source/Target group"]).Outlier());
-        outliermatrix->SetLimit(_range::high,3);
-        outliermatrix->SetLimit(_range::low,-3);
+        outliermatrix->SetLimit(_range::high,threshold);
+        outliermatrix->SetLimit(_range::low,-threshold);
         OutlierResItem.SetResult(outliermatrix);
         results.Append(OutlierResItem);
 

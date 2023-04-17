@@ -33,9 +33,11 @@ public:
     bool IncludedInAnalysis() {return included_in_analysis;}
     void SetIncluded(bool value) {included_in_analysis = value;}
     Elemental_Profile OrganicandSizeCorrect(const double &size, const double &om, MultipleLinearRegressionSet *mlr);
+    double DotProduct(const CMBVector &vector);
 private:
     bool included_in_analysis = true;
     map<string,bool> marked;
 };
+
 
 #endif // ELEMENTAL_PROFILE_H

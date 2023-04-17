@@ -237,3 +237,19 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, c
     }
     return out;
 }
+
+double Elemental_Profile::DotProduct(const CMBVector &weightvector)
+{
+    if (this->size()!=weightvector.getsize())
+    {
+        return -999;
+    }
+    double sum = 0;
+    int i=0;
+    for (map<string,double>::iterator it=begin(); it!=end(); it++)
+    {
+        sum+=it->second*weightvector[i];
+        i++;
+    }
+    return sum;
+}
