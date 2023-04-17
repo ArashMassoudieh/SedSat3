@@ -186,7 +186,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         results.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
         ResultItem corMatResItem;
-        corMatResItem.SetName("Correlation Matrix for " + arguments["Source/Target group"] );
+        corMatResItem.SetName("Correlation Matrix" );
         corMatResItem.SetShowTable(true);
         corMatResItem.SetType(result_type::matrix);
         corMatResItem.SetShowGraph(false);
@@ -202,7 +202,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         results.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFAResItem;
-        DFAResItem.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"]  );
+        DFAResItem.SetName("DFA coefficients");
         DFAResItem.SetType(result_type::vector);
         DFAResItem.SetShowTable(true);
         DFAResItem.SetAbsoluteValue(true);
@@ -229,7 +229,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFA-Transformed")
     {
-        results.SetName("DFA transformed" );
+        results.SetName("DFA transformed between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFAResItem;
         DFAResItem.SetName("DFA transformed");
         DFAResItem.SetType(result_type::matrix1vs1);
