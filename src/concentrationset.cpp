@@ -42,7 +42,8 @@ double ConcentrationSet::stdev()
     for (unsigned int i=0; i<size(); i++)
         sum+= pow(at(i)-mean_value,2);
 
-    return sqrt(sum/double(size()));
+    //cout<<sqrt(sum/(double(size())-1.0));
+    return sqrt(sum/double(size()-1));
 }
 
 double ConcentrationSet::stdevln()
@@ -52,7 +53,8 @@ double ConcentrationSet::stdevln()
     for (unsigned int i=0; i<size(); i++)
         sum+= pow(log(at(i))-mean_value,2);
 
-    return sqrt(sum/double(size()));
+
+    return sqrt(sum/double(size()-1));
 }
 
 double ConcentrationSet::meanln()
@@ -273,6 +275,10 @@ double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2,
 {
     if (min()<0)
         return 1;
+    if (!(min()==min()))
+    {
+        cout<<"Nan!";
+    }
     vector<double> vals;
     if (fabs(x_1-x_2)<1e-6)
         return (x_1+x_2)/2.0;

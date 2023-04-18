@@ -237,7 +237,7 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
     return true;
 }
 
-vector<double> MultipleLinearRegression::CoefficientsIntercept()
+vector<double> MultipleLinearRegression::CoefficientsIntercept() const
 {
     return coefficients_intercept_;
 }

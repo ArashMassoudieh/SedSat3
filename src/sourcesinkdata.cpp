@@ -86,6 +86,33 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     return out;
 }
 
+SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const string &target) const
+{
+    SourceSinkData out;
+    out.target_group = target_group;
+    if (target!="")
+        out.selected_target_sample = target;
+    double om,psize;
+    if (omnsizecorrect)
+    {
+        om = at(target_group).at(selected_target_sample).at(omconstituent);
+        psize = at(target_group).at(selected_target_sample).at(sizeconsituent);
+    }
+    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        if (it->first!=target_group)
+        {
+            out[it->first] = it->second.CopyandCorrect(false,exclude_elements,false, om, psize, &ElementInformation);
+        }
+        else
+            out[it->first] = it->second.CopyandCorrect(exclude_samples,exclude_elements,omnsizecorrect,om,psize,&ElementInformation);
+    }
+    out.PopulateElementInformation();
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
+    return out;
+}
+
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
 {
     map<string, Elemental_Profile_Set>::operator=(mp);

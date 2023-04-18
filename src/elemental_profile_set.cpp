@@ -25,6 +25,22 @@ Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_
     return *this;
 }
 
+Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const map<string, element_information> *elementinfo) const
+{
+    Elemental_Profile_Set out;
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        if (it->second.IncludedInAnalysis() || !exclude_elements)
+        {
+            if ((mlr_vs_om_size.size()!=0))
+                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,omnsizecorrect,om,psize,&mlr_vs_om_size,elementinfo));
+            else
+                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,false,om,psize,nullptr,elementinfo));
+        }
+    }
+    return out;
+}
+
 Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size, map<string, element_information> *elementinfo)
 {
     Elemental_Profile_Set out;
@@ -285,10 +301,15 @@ void Elemental_Profile_Set::SetRegression(const string &om, const string &d, reg
     mlr_vs_om_size = regress_vs_size_OM(om,d,form);
 }
 
+void Elemental_Profile_Set::SetRegression(const MultipleLinearRegressionSet *mlrset)
+{
+    mlr_vs_om_size = *mlrset;
+}
+
 ResultItem Elemental_Profile_Set::GetRegressions()
 {
     ResultItem out;
-    out.SetResult(&mlr_vs_om_size);
+    out.SetResult(new MultipleLinearRegressionSet(mlr_vs_om_size));
     out.SetType(result_type::mlrset);
 
     return out;

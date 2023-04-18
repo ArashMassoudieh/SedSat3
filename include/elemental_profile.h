@@ -25,6 +25,7 @@ public:
     Elemental_Profile(const Elemental_Profile& mp);
     Elemental_Profile& operator=(const Elemental_Profile &mp);
     Elemental_Profile CopyIncluded(map<string,element_information> *elementinfo=nullptr) const;
+    Elemental_Profile CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const MultipleLinearRegressionSet *mlr=nullptr, const map<string, element_information> *elementinfo=nullptr) const;
     double Val(const string &name) const; // returns the value of elemental content for a specific element/constituent
     bool SetVal(const string &name, const double &val); //Sets the value of elemental content for a specific element/constituent
     bool SetMark(const string &name, bool val); //mark specific element/constituent
@@ -41,9 +42,9 @@ public:
     vector<string> ElementNames();
     bool writetofile(QFile* file) override;
     bool contains(const string &element);
-    bool IncludedInAnalysis() {return included_in_analysis;}
+    bool IncludedInAnalysis() const {return included_in_analysis;}
     void SetIncluded(bool value) {included_in_analysis = value;}
-    Elemental_Profile OrganicandSizeCorrect(const double &size, const double &om, MultipleLinearRegressionSet *mlr);
+    Elemental_Profile OrganicandSizeCorrect(const double &size, const double &om, const MultipleLinearRegressionSet *mlr) const;
     double DotProduct(const CMBVector &vector);
 private:
     bool included_in_analysis = true;

@@ -160,12 +160,24 @@
 	},
 	"OM-Size Correct" : 
 	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
     		}
 	},
         "MLR": {
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
     		"Organic Matter constituent": {
     			"type": "comboBox",
     			"source": "ElementsList"
@@ -186,6 +198,14 @@
 		}
 	},
 	"CorMat": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
@@ -196,6 +216,14 @@
     		}
 	},
 	"DFA": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Source/Target group I" : {
 			"type": "comboBox",
 			"source": "SourceList"
@@ -206,12 +234,28 @@
 		}
 	},
 	"DFAM": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
     		}
 	},
 	"DFA-Transformed": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Source/Target group I" : {
 			"type": "comboBox",
 			"source": "SourceList"
@@ -314,6 +358,14 @@
 	},
 	"DF": 
 	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
@@ -325,6 +377,14 @@
 	},
 	"Bracketing Analysis":
 	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
@@ -332,6 +392,14 @@
     	},
     	"BoxCox":
     	{
+    		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
     		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
@@ -339,6 +407,14 @@
     	},
     	"Outlier":
     	{
+    		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
     		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"

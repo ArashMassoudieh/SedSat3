@@ -82,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
     connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAboutTriggered()));
     connect(ui->actionSave_Project,SIGNAL(triggered()),this,SLOT(onSaveProject()));
+    connect(ui->actionSave_As,SIGNAL(triggered()),this,SLOT(onSaveProjectAs()));
     connect(ui->actionOpen_Project,SIGNAL(triggered()),this,SLOT(onOpenProject()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
@@ -97,7 +98,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::onSaveProject()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
+    QString fileName;
+    if (!ProjectFileName.isEmpty())
+        fileName = ProjectFileName;
+    else
+        fileName = QFileDialog::getSaveFileName(this,
             tr("Save"), "",
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
 
@@ -131,6 +136,47 @@ void MainWindow::onSaveProject()
     
 }
 
+void MainWindow::onSaveProjectAs()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            tr("Save"), "",
+            tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+
+    if (fileName.isEmpty())
+        return;
+
+
+    if (!fileName.toLower().contains(".cmb"))
+        fileName+=".cmb";
+
+    ProjectFileName = fileName;
+    this->setWindowTitle("SetSat3:" + ProjectFileName);
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+    QFileInfo fi(file);
+    conductor.SetWorkingFolder(fi.absolutePath());
+
+    QJsonObject outputjsonobject;
+    outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
+    outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
+    outputjsonobject["Target Group"] = QString::fromStdString(Data()->TargetGroup());
+
+    QJsonObject resultsetjsonobject;
+    for (int i=0; i<resultsviewmodel->rowCount(); i++)
+    {
+        QModelIndex index = resultsviewmodel->index(i,0);
+        Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
+        resultsetjsonobject[static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text()] = resultset->toJsonObject();
+    }
+    outputjsonobject["Results"] = resultsetjsonobject;
+    QJsonDocument outputjsondocument(outputjsonobject);
+
+    file.write(outputjsondocument.toJson());
+    file.close();
+
+}
+
+
 void MainWindow::onOpenProject()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -139,6 +185,10 @@ void MainWindow::onOpenProject()
 
     if (fileName.isEmpty())
         return;
+
+    ProjectFileName = fileName;
+
+    this->setWindowTitle("SetSat3:" + ProjectFileName);
     QFile file(fileName);
     QFileInfo fi(file);
     conductor.SetWorkingFolder(fi.absolutePath());

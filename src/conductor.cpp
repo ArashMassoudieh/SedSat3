@@ -147,8 +147,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "OM-Size Correct")
     {
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"]);
-        vector<ResultItem> resultitems = correctedData.GetSourceProfiles();
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        vector<ResultItem> resultitems = TransformedData.GetSourceProfiles();
         results.SetName("Corrected Elemental Profiles for Target" + arguments["Sample"]);
         for (unsigned int i=0; i<resultitems.size(); i++)
             results.Append(resultitems[i]);
@@ -156,15 +158,22 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "MLR")
     {
         results.SetName("MLR_vs_OM&Size ");
-
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
         if (arguments["Equation"]=="Linear")
-            Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::linear);
+            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::linear);
         else
-            Data()->Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::power);
-        vector<ResultItem> regression_result = Data()->GetMLRResults();
+            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::power);
+
+        for (map<string,Elemental_Profile_Set>::iterator it=Data()->begin(); it!=Data()->end(); it++)
+        {
+            if (it->first != Data()->TargetGroup())
+            it->second.SetRegression(TransformedData[it->first].GetExistingRegressionSet());
+
+        }
+        vector<ResultItem> regression_result = TransformedData.GetMLRResults();
         for (unsigned int i=0; i<regression_result.size(); i++)
         {
-
             results.Append(regression_result[i]);
         }
     }
@@ -191,7 +200,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         corMatResItem.SetType(result_type::matrix);
         corMatResItem.SetShowGraph(false);
         double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
-        CMBMatrix *cormatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CorrelationMatrix());
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        CMBMatrix *cormatr = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).CorrelationMatrix());
         cormatr->SetLimit(_range::high,threshold);
         cormatr->SetLimit(_range::low,-threshold);
         corMatResItem.SetResult(cormatr);
@@ -207,7 +219,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetShowTable(true);
         DFAResItem.SetAbsoluteValue(true);
         DFAResItem.SetYAxisMode(yaxis_mode::log);
-        CMBVector *dfaeigenvector = new CMBVector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        CMBVector *dfaeigenvector = new CMBVector(TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(dfaeigenvector);
         results.Append(DFAResItem);
 
@@ -222,7 +237,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetShowGraph(true);
         DFAResItem.SetAbsoluteValue(true);
         DFAResItem.SetYAxisMode(yaxis_mode::log);
-        CMBMatrix *dfaeigenmatrix = new CMBMatrix(Data()->DiscriminantFunctionAnalysis());
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        CMBMatrix *dfaeigenmatrix = new CMBMatrix(TransformedData.DiscriminantFunctionAnalysis());
         DFAResItem.SetResult(dfaeigenmatrix);
         results.Append(DFAResItem);
 
@@ -235,11 +253,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetType(result_type::matrix1vs1);
         DFAResItem.SetShowTable(true);
         DFAResItem.SetShowGraph(true);
-        CMBMatrix dfaeigenmatrix = Data()->DiscriminantFunctionAnalysis();
-        CMBVector weighted11 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
-        CMBVector weighted12 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
-        CMBVector weighted21 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
-        CMBVector weighted22 = Data()->DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        CMBMatrix dfaeigenmatrix = TransformedData.DiscriminantFunctionAnalysis();
+        CMBVector weighted11 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
+        CMBVector weighted12 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
+        CMBVector weighted21 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
+        CMBVector weighted22 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
         CMBMatrix *weighted_results = new CMBMatrix(2,weighted11.getsize()+weighted21.getsize());
         for (unsigned int i=0; i<weighted11.getsize(); i++)
         {
@@ -524,7 +545,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         BracketingResItem.SetType(result_type::vector);
         BracketingResItem.SetShowTable(true);
         BracketingResItem.SetShowGraph(false);
-        CMBVector *bracketingresult = new CMBVector(Data()->BracketTest(arguments["Sample"]));
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        CMBVector *bracketingresult = new CMBVector(TransformedData.BracketTest(arguments["Sample"]));
         bracketingresult->SetBooleanValue(true);
         BracketingResItem.SetResult(bracketingresult);
         results.Append(BracketingResItem);

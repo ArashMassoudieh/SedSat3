@@ -17,8 +17,9 @@ public:
     QJsonObject toJsonObject() override;
     string ToString() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    vector<double> CoefficientsIntercept();
+    vector<double> CoefficientsIntercept() const;
     vector<string> &GetIndependentVariableNames() {return independent_variables_names;}
+    vector<string> GetIndependentVariableNames() const {return independent_variables_names;}
     vector<double> &IndependentData(const string &var_name);
     vector<double> &DependentData()
     {
@@ -30,8 +31,8 @@ public:
     void SetDependentVariableName(const string name) {dependent_variable_name = name;}
     vector<double> P_Value() {return p_value;}
     void SetEffective(int i, bool eff) {make_effective[i] = eff;}
-    bool Effective(int i) {return make_effective[i];}
-    regression_form Equation() {return regressionEquation;}
+    bool Effective(int i) const {return make_effective[i];}
+    regression_form Equation() const {return regressionEquation;}
     void SetEquation(regression_form form) {
         regressionEquation = form;
     }

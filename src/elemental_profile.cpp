@@ -13,12 +13,14 @@ Elemental_Profile::Elemental_Profile() :map<string, double>(), Interface()
 Elemental_Profile::Elemental_Profile(const Elemental_Profile& mp):map<string,double>(mp),Interface()
 {
     marked = mp.marked;
+    included_in_analysis = mp.included_in_analysis;
 }
 
 Elemental_Profile& Elemental_Profile::operator=(const Elemental_Profile &mp)
 {
     Interface::operator=(mp);
     marked = mp.marked;
+    included_in_analysis = mp.included_in_analysis;
     map<string,double>::operator=(mp);
     return *this;
 }
@@ -38,6 +40,34 @@ Elemental_Profile Elemental_Profile::CopyIncluded(map<string,element_information
     return out;
 }
 
+Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const MultipleLinearRegressionSet *mlr, const map<string, element_information> *elementinfo) const
+{
+    Elemental_Profile out;
+    for (map<string,double>::const_iterator element = cbegin(); element!=cend(); element++)
+    {
+
+        Elemental_Profile omnsizecorrected;
+        if (mlr && omnsizecorrect)
+        {
+            omnsizecorrected = OrganicandSizeCorrect(psize,om,mlr);
+        }
+        else
+        {
+            omnsizecorrected = *this;
+        }
+
+        if (elementinfo || !exclude_elements)
+        {   if (elementinfo->at(element->first).include_in_analysis && elementinfo->at(element->first).Role!=element_information::role::do_not_include)
+            {
+                out[element->first] = omnsizecorrected[element->first];
+            }
+        }
+        else
+            out[element->first] = omnsizecorrected[element->first];
+    }
+    return out;
+
+}
 
 
 double Elemental_Profile::Val(const string &name) const
@@ -148,18 +178,31 @@ QTableWidget *Elemental_Profile::ToTable()
 QJsonObject Elemental_Profile::toJsonObject()
 {
     QJsonObject json_object; 
+    QJsonObject element_contents;
+
+    json_object["Include"] = IncludedInAnalysis();
     for (map<string, double>::iterator it = begin(); it != end(); it++)
     {
-        json_object[QString::fromStdString(it->first)] = it->second;
+        element_contents[QString::fromStdString(it->first)] = it->second;
     }
+    json_object["Element Contents"] = element_contents;
     return json_object;
 }
 
 bool Elemental_Profile::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
     clear();
-    for(QString key: jsonobject.keys() ) {
-        operator[](key.toStdString()) = jsonobject[key].toDouble();
+    if (jsonobject.contains("Include"))
+    {   SetIncluded(jsonobject["Include"].toBool());
+        for(QString key: jsonobject["Element Contents"].toObject().keys() ) {
+            operator[](key.toStdString()) = jsonobject["Element Contents"].toObject()[key].toDouble();
+        }
+    }
+    else
+    {
+        for(QString key: jsonobject.keys() ) {
+            operator[](key.toStdString()) = jsonobject[key].toDouble();
+        }
     }
     return true;
 }
@@ -217,15 +260,15 @@ bool Elemental_Profile::contains(const string &element)
     return (map<string,double>::count(element)!=0);
 }
 
-Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, const double &om, MultipleLinearRegressionSet *mlrset)
+Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, const double &om, const MultipleLinearRegressionSet *mlrset) const
 {
     Elemental_Profile out;
-    for (map<string,double>::iterator it=begin(); it!=end(); it++)
+    for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
     {
         out[it->first]=it->second;
 
         if (mlrset->count(it->first)==1)
-        {   MultipleLinearRegression *mlr = &mlrset->operator[](it->first);
+        {   const MultipleLinearRegression *mlr = &mlrset->at(it->first);
 
             if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0]!=it->first)
             {

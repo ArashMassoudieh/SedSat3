@@ -51,6 +51,7 @@ private:
     Conductor conductor;
     QModelIndex indexresultselected;
     void InitiateTables();
+    QString ProjectFileName;
 
 private slots:
     void on_import_excel();
@@ -68,6 +69,7 @@ private slots:
     void on_TestLevenberg_Marquardt();
     void onAboutTriggered();
     void onSaveProject();
+    void onSaveProjectAs();
     void onOpenProject();
     void onIncludeExcludeSample();
     void onOMSizeCorrection();

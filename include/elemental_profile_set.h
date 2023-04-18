@@ -23,7 +23,7 @@ public:
     Elemental_Profile_Set();
     Elemental_Profile_Set(const Elemental_Profile_Set& mp);
     Elemental_Profile_Set& operator=(const Elemental_Profile_Set &mp);
-    Elemental_Profile_Set CopyIncludedElements(map<string, element_information> *elementinfo=nullptr);
+    Elemental_Profile_Set CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const map<string, element_information> *elementinfo=nullptr) const;
     Elemental_Profile *Profile(const string &name);
     Elemental_Profile Profile(const string &name) const;
     Elemental_Profile *Profile(unsigned int i);
@@ -124,6 +124,7 @@ public:
     MultipleLinearRegressionSet regress_vs_size_OM(const string &om, const string &d,regression_form form=regression_form::linear);
     MultipleLinearRegression regress_vs_size_OM(const string &element, const string &om, const string &d, regression_form form=regression_form::linear);
     void SetRegression(const string &om, const string &d, regression_form form = regression_form::linear);
+    void SetRegression(const MultipleLinearRegressionSet *mlrset);
     MultipleLinearRegressionSet* GetExistingRegressionSet();
     ResultItem GetRegressions();
     CMBMatrix CovarianceMatrix();

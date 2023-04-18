@@ -645,9 +645,9 @@ bool GeneralChart::PlotScatter(CMBMatrix *matrix)
     double y_max_val = matrix->GetColumn(matrix->ColumnLabel(1)).max();
 
 
-    axisX->setRange(x_min_val,x_max_val);
+    axisX->setRange(x_min_val-(x_max_val-x_min_val)*0.05,x_max_val+(x_max_val-x_min_val)*0.05);
     axisX->setTitleText(QString::fromStdString(matrix->ColumnLabel(0)));
-    axisYNormal->setRange(y_min_val,y_max_val);
+    axisYNormal->setRange(y_min_val-(y_max_val-y_min_val)*0.05,y_max_val+(y_max_val-y_min_val)*0.05);
     axisYNormal->setTitleText(QString::fromStdString(matrix->ColumnLabel(1)));
 
     chart->addAxis(axisX, Qt::AlignBottom);
