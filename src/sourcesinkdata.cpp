@@ -35,7 +35,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
 
 }
 
-SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorrect)
+SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorrect, map<string, element_information> *elementinfo)
 {
     SourceSinkData out;
     selected_target_sample = target;
@@ -52,8 +52,20 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
-    out.ElementInformation = ElementInformation;
-    out.element_distributions = element_distributions;
+    if (elementinfo)
+    for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+    {
+        if (it->second.include_in_analysis && it->second.Role!=element_information::role::do_not_include)
+        {
+            out.ElementInformation[it->first] = ElementInformation[it->first];
+            out.element_distributions[it->first] = element_distributions[it->first];
+        }
+    }
+    else
+    {
+        out.ElementInformation = ElementInformation;
+        out.element_distributions = element_distributions;
+    }
     out.numberofconstituents = numberofconstituents;
     out.numberofisotopes = numberofisotopes;
     out.numberofsourcesamplesets = numberofsourcesamplesets;

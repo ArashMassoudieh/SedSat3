@@ -49,6 +49,7 @@ private:
     QJsonDocument formsstructure;
     QWidget *centralform = nullptr;
     Conductor conductor;
+    QModelIndex indexresultselected;
     void InitiateTables();
 
 private slots:

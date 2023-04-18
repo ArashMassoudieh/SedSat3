@@ -23,6 +23,21 @@ Elemental_Profile& Elemental_Profile::operator=(const Elemental_Profile &mp)
     return *this;
 }
 
+Elemental_Profile Elemental_Profile::CopyIncluded(map<string,element_information> *elementinfo) const
+{
+    Elemental_Profile out;
+    out.marked = marked;
+    if (elementinfo)
+        for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
+        {
+            if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role!=element_information::role::do_not_include)
+                out[it->first] = it->second;
+        }
+    else
+        out = *this;
+    return out;
+}
+
 
 
 double Elemental_Profile::Val(const string &name) const

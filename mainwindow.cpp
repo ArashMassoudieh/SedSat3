@@ -774,13 +774,13 @@ void MainWindow::onAboutTriggered()
 
 void MainWindow::onCustomContextMenu(const QPoint &point)
 {
-    QModelIndex index = ui->TreeView_Results->indexAt(point);
-        if (index.isValid()) {
+    indexresultselected = ui->TreeView_Results->indexAt(point);
+        if (indexresultselected.isValid()) {
             ResultscontextMenu->exec(ui->TreeView_Results->viewport()->mapToGlobal(point));
         }
 }
 void MainWindow::DeleteResults()
 {
-    qDebug()<<"Delete";
+    resultsviewmodel->removeRow(indexresultselected.row());
 }
 

@@ -25,7 +25,7 @@ Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_
     return *this;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size)
+Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size, map<string, element_information> *elementinfo)
 {
     Elemental_Profile_Set out;
     if (applyomsizecorrection)
@@ -34,7 +34,6 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     }
     else
     {
-        Elemental_Profile profile;
         for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
             if (it->second.IncludedInAnalysis())
                 out.Append_Profile(it->first, it->second);
@@ -43,7 +42,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     return out;
 }
 
-Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, const Elemental_Profile &profile)
+Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, const Elemental_Profile &profile, map<string, element_information> *elementinfo)
 {
     if (count(name)>0)
     {
@@ -52,11 +51,14 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
     }
     else
     {
-        operator[](name) = profile;
+        operator[](name) = profile.CopyIncluded(elementinfo);
     }
     for (map<string,double>::const_iterator it=profile.begin(); it!=profile.end(); it++)
     {
-        element_distributions[it->first].push_back(it->second);
+        if (elementinfo==nullptr)
+            element_distributions[it->first].push_back(it->second);
+        else if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role != element_information::role::do_not_include)
+            element_distributions[it->first].push_back(it->second);
     }
     return &operator[](name);
 }

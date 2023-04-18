@@ -36,14 +36,6 @@ struct element_data_groups
     vector<vector<double>> values;
 };
 
-struct element_information
-{
-    enum class role {do_not_include, isotope, particle_size, element, orgainc_carbon} Role = role::element;
-    double standard_ratio;
-    string base_element;
-    bool include_in_analysis = true;
-
-};
 
 enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};
 
@@ -53,7 +45,7 @@ public:
     SourceSinkData();
     SourceSinkData(const SourceSinkData& mp);
     SourceSinkData& operator=(const SourceSinkData &mp);
-    SourceSinkData Corrected(const string &target_sample, bool omnsizecorrect=true);
+    SourceSinkData Corrected(const string &target_sample, bool omnsizecorrect=true, map<string, element_information> *elementinfo=nullptr);
     void Clear();
     Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
     Elemental_Profile_Set *sample_set(const string &name);

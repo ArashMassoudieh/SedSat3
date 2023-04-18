@@ -23,6 +23,7 @@ public:
     Elemental_Profile_Set();
     Elemental_Profile_Set(const Elemental_Profile_Set& mp);
     Elemental_Profile_Set& operator=(const Elemental_Profile_Set &mp);
+    Elemental_Profile_Set CopyIncludedElements(map<string, element_information> *elementinfo=nullptr);
     Elemental_Profile *Profile(const string &name);
     Elemental_Profile Profile(const string &name) const;
     Elemental_Profile *Profile(unsigned int i);
@@ -30,7 +31,7 @@ public:
     vector<double> GetAllConcentrationsFor(const string &element_name);
     vector<double> GetProfileForSample(const string &source_name);
 
-    Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile());
+    Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile(), map<string,element_information> *elementinfo=nullptr);
    
     vector<string> SampleNames(); // Return the list of the name of samples
     ConcentrationSet *ElementalDistribution(const string &element_name)
@@ -131,7 +132,7 @@ public:
     gsl_matrix *CopytoGSLMatrix();
     CVector ElementMeans();
     QTableWidget *ToTable() override;
-    Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size);
+    Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size, map<string, element_information> *elementinfo=nullptr);
     Elemental_Profile_Set OrganicandSizeCorrect(const double &size, const double &om);
     CMBVector BoxCoxParameters();
     CMBMatrix Outlier();
