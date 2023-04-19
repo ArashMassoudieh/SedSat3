@@ -32,7 +32,7 @@
 //#include "MCMC.h"
 
 
-#define version "0.0.17"
+#define version "0.0.18"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)

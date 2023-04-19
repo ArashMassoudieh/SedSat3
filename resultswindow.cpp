@@ -41,7 +41,15 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
     if (resultitem.ShowAsString())
         str = QString::fromStdString(resultitem.Result()->ToString());
     else
-        str = QString::fromStdString("Push the graph button");
+    {
+        if (resultitem.ShowGraph() && resultitem.ShowTable())
+            str = QString::fromStdString("Push the graph or table button");
+        else if (resultitem.ShowGraph())
+            str = QString::fromStdString("Push the graph button");
+        else if (resultitem.ShowTable())
+            str = QString::fromStdString("Push the table button");
+
+    }
 
     textBrowser->append(str);
     int count = 0;
