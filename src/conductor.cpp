@@ -6,10 +6,11 @@
 #include "testmcmc.h"
 #include "rangeset.h"
 
+#include "mainwindow.h"
 
-Conductor::Conductor()
+Conductor::Conductor(MainWindow* _mainwindow)
 {
-
+    mainwindow = _mainwindow;
 }
 
 bool Conductor::Execute(const string &command, map<string,string> arguments)
@@ -18,7 +19,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "GA")
     {
         if (GA!=nullptr) delete GA;
-        ProgressWindow *rtw = new ProgressWindow();
+        ProgressWindow *rtw = new ProgressWindow(mainwindow);
         rtw->show();
         Data()->InitializeParametersObservations(arguments["Sample"]);
         GA = new CGA<SourceSinkData>(Data());
@@ -49,7 +50,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "GA (fixed elemental contribution)")
     {
         if (GA!=nullptr) delete GA;
-        ProgressWindow *rtw = new ProgressWindow();
+        ProgressWindow *rtw = new ProgressWindow(mainwindow);
         rtw->SetTitle("Fitness",0);
         rtw->SetYAxisTitle("Fitness",0);
         bool organicnsizecorrection;
@@ -82,7 +83,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "GA (disregarding targets)")
     {
         if (GA!=nullptr) delete GA;
-        ProgressWindow *rtw = new ProgressWindow();
+        ProgressWindow *rtw = new ProgressWindow(mainwindow);
         rtw->show();
         Data()->InitializeParametersObservations(arguments["Sample"],estimation_mode::source_elemental_profiles_based_on_source_data);
         Data()->SetParameterEstimationMode(estimation_mode::source_elemental_profiles_based_on_source_data);
@@ -111,7 +112,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "Levenberg-Marquardt")
     {
-        ProgressWindow* rtw = new ProgressWindow();
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
         rtw->show();
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
@@ -333,7 +334,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
         MCMC->Model = &correctedData;
-        ProgressWindow *rtw = new ProgressWindow(nullptr,3);
+        ProgressWindow *rtw = new ProgressWindow(mainwindow,3);
         rtw->SetTitle("Acceptance Rate",0);
         rtw->SetTitle("Purturbation Factor",1);
         rtw->SetTitle("Log posterior value",2);
@@ -456,7 +457,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (MCMC!=nullptr) delete MCMC;
         TestMCMC testingmodel;
         mcmcfortesting->Model = &testingmodel;
-        ProgressWindow *rtw = new ProgressWindow(nullptr,3);
+        ProgressWindow *rtw = new ProgressWindow(mainwindow,3);
         rtw->SetTitle("Acceptance Rate",0);
         rtw->SetTitle("Purturbation Factor",1);
         rtw->SetTitle("Log posterior value",2);

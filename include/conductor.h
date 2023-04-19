@@ -10,10 +10,13 @@
 
 using namespace std;
 
+class MainWindow;
+
 class Conductor
 {
 public:
-    Conductor();
+    Conductor(MainWindow *mainwindow);
+
     bool Execute(const string &command, map<string,string> arguments);
     SourceSinkData *Data() {return data;}
     void SetData(SourceSinkData *_data)
@@ -32,6 +35,7 @@ private:
     CMCMC<SourceSinkData> *MCMC = nullptr;
     Results results;
     QString workingfolder;
+    MainWindow *mainwindow;
 };
 
 #endif // CONDUCTOR_H

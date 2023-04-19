@@ -32,6 +32,13 @@
 //#include "MCMC.h"
 
 
+#define RECENT "recentFiles.txt"
+
+#ifndef max_num_recent_files
+#define max_num_recent_files 15
+#endif
+
+
 #define version "0.0.18"
 using namespace QXlsx;
 
@@ -41,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     QIcon mainicon(qApp->applicationDirPath()+"/../../resources/Icons/CMBSource_Icon.png");
-
+    conductor = new Conductor(this);
     setWindowIcon(mainicon);
     connect(ui->actionImport_Elemental_Profile_from_Excel,SIGNAL(triggered()),this,SLOT(on_import_excel()));
     connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
@@ -86,7 +93,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen_Project,SIGNAL(triggered()),this,SLOT(onOpenProject()));
     CGA<SourceSinkData> GA;
     centralform = ui->textBrowser;
-    conductor.SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    conductor->SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    readRecentFilesList();
 }
 
 MainWindow::~MainWindow()
@@ -102,9 +110,11 @@ void MainWindow::onSaveProject()
     if (!ProjectFileName.isEmpty())
         fileName = ProjectFileName;
     else
-        fileName = QFileDialog::getSaveFileName(this,
+    {   fileName = QFileDialog::getSaveFileName(this,
             tr("Save"), "",
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+        addToRecentFiles(fileName,true);
+    }
 
     if (fileName.isEmpty())
         return;
@@ -114,7 +124,7 @@ void MainWindow::onSaveProject()
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
     QFileInfo fi(file);
-    conductor.SetWorkingFolder(fi.absolutePath());
+    conductor->SetWorkingFolder(fi.absolutePath());
 
     QJsonObject outputjsonobject;
     outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
@@ -148,13 +158,13 @@ void MainWindow::onSaveProjectAs()
 
     if (!fileName.toLower().contains(".cmb"))
         fileName+=".cmb";
-
+    addToRecentFiles(fileName,true);
     ProjectFileName = fileName;
     this->setWindowTitle("SetSat3:" + ProjectFileName);
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
     QFileInfo fi(file);
-    conductor.SetWorkingFolder(fi.absolutePath());
+    conductor->SetWorkingFolder(fi.absolutePath());
 
     QJsonObject outputjsonobject;
     outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
@@ -186,12 +196,19 @@ void MainWindow::onOpenProject()
     if (fileName.isEmpty())
         return;
 
+
+    if (LoadModel(fileName))
+        addToRecentFiles(fileName,true);
+}
+
+bool MainWindow::LoadModel(const QString &fileName)
+{
     ProjectFileName = fileName;
 
     this->setWindowTitle("SetSat3:" + ProjectFileName);
     QFile file(fileName);
     QFileInfo fi(file);
-    conductor.SetWorkingFolder(fi.absolutePath());
+    conductor->SetWorkingFolder(fi.absolutePath());
     if (file.open(QIODevice::ReadOnly))
     {
         Data()->ReadFromFile(&file);
@@ -216,7 +233,9 @@ void MainWindow::onOpenProject()
         DataCollection.PopulateElementDistributions();
         DataCollection.AssignAllDistributions();
         InitiateTables();
+        return true;
     }
+    return false;
 }
 
 void MainWindow::on_import_excel()
@@ -227,7 +246,7 @@ void MainWindow::on_import_excel()
 
     QFileInfo fi(fileName);
     
-    conductor.SetWorkingFolder(fi.absolutePath());
+    conductor->SetWorkingFolder(fi.absolutePath());
     if (fileName!="")
     {
         ReadExcel(fileName);
@@ -736,7 +755,7 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
 
 void MainWindow::on_old_result_requested(const QModelIndex& index)
 {
-    ResultsWindow *reswind = new ResultsWindow();
+    ResultsWindow *reswind = new ResultsWindow(this);
     Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
     reswind->SetResults(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result);
     reswind->setWindowTitle(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text());
@@ -750,19 +769,19 @@ void MainWindow::on_old_result_requested(const QModelIndex& index)
 
 bool MainWindow::Execute(const string &command, map<string,string> arguments)
 {
-    conductor.SetData(&DataCollection);
-    bool outcome = conductor.Execute(command,arguments);
-    ResultsWindow *reswind = new ResultsWindow();
-    reswind->SetResults(conductor.GetResults());
-    ResultSetItem *resultset = new ResultSetItem(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
-    resultset->setToolTip(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
-    resultset->result = conductor.GetResults();
+    conductor->SetData(&DataCollection);
+    bool outcome = conductor->Execute(command,arguments);
+    ResultsWindow *reswind = new ResultsWindow(this);
+    reswind->SetResults(conductor->GetResults());
+    ResultSetItem *resultset = new ResultSetItem(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+    resultset->setToolTip(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+    resultset->result = conductor->GetResults();
     resultsviewmodel->appendRow(resultset);
     for (map<string,ResultItem>::iterator it=resultset->result->begin(); it!=resultset->result->end(); it++)
     {
         reswind->AppendResult(it->second);
     }
-    reswind->setWindowTitle(QString::fromStdString(conductor.GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+    reswind->setWindowTitle(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
     reswind->show();
 
     return outcome;
@@ -833,4 +852,139 @@ void MainWindow::DeleteResults()
 {
     resultsviewmodel->removeRow(indexresultselected.row());
 }
+
+void MainWindow::readRecentFilesList()
+{
+//	//qDebug() << localAppFolderAddress();
+//	QString add = localAppFolderAddress();
+    ifstream file(localAppFolderAddress().toStdString()+RECENT);
+    int count = 0;
+    if (file.good())
+    {
+        string line;
+        while (!file.eof())
+        {
+            getline(file, line);
+            count++;
+        }
+        file.close();
+    }
+
+    file.open(localAppFolderAddress().toStdString() + RECENT);
+    int n = 0;
+    if (file.good())
+    {
+        string line;
+        while (!file.eof())
+        {
+            getline(file, line);
+            n++;
+            QString fileName = QString::fromStdString(line);
+            //qDebug() << fileName; QString::fromStdString(line);
+            if (n>count-max_num_recent_files)
+                addToRecentFiles(fileName, false);
+
+        }
+        file.close();
+
+    }
+}
+void MainWindow::addToRecentFiles(QString fileName, bool addToFile)
+{
+    bool rewriteFile = false;
+    if (recentFiles.contains(fileName) && fileName.trimmed() != "")
+        if (recentFiles.indexOf(fileName) != recentFiles.count()-1)
+        {
+            ui->menuRecent->removeAction(ui->menuRecent->actions()[recentFiles.size() - 1 - recentFiles.indexOf(fileName)]);
+            recentFiles.removeOne(fileName);
+            addToFile = false;
+            rewriteFile = true;
+        }
+
+    if (!recentFiles.contains(fileName) && fileName.trimmed() != "")
+    {
+        recentFiles.append(fileName);
+        //		QAction * a = ui->menuRecent->addAction(fileName);// , this, SLOT(recentItem()));
+        QAction * fileNameAction = new QAction(fileName, nullptr);
+        if (ui->menuRecent->actions().size())
+            ui->menuRecent->insertAction(ui->menuRecent->actions()[0], fileNameAction);
+        else
+            ui->menuRecent->addAction(fileNameAction);
+        QObject::connect(fileNameAction, SIGNAL(triggered()), this, SLOT(on_actionRecent_triggered()));
+
+        if (addToFile)
+        {
+            CreateFileIfDoesNotExist(localAppFolderAddress() + RECENT);
+            ofstream file(localAppFolderAddress().toStdString() + RECENT, fstream::app);
+            if (file.good())
+                file << fileName.toStdString() << std::endl;
+            file.close();
+        }
+        if (rewriteFile)
+            writeRecentFilesList();
+    }
+}
+
+void MainWindow::writeRecentFilesList()
+{
+    ofstream file(localAppFolderAddress().toStdString() + RECENT);
+    if (file.good())
+    {
+        foreach (QString fileName , recentFiles)
+            file << fileName.toStdString() << std::endl;
+    }
+    file.close();
+}
+
+QString localAppFolderAddress() {
+    #ifdef _WIN32
+    TCHAR szPath[MAX_PATH];
+
+    if (SUCCEEDED(SHGetFolderPath(NULL,
+        CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
+        NULL,
+        0,
+        szPath)))
+    {
+        return QString("%1/").arg(QString::fromStdWString(szPath));
+        //PathAppend(szPath, TEXT("New Doc.txt"));
+        //HANDLE hFile = CreateFile(szPath, ...);
+    }
+#else
+    return QString();
+#endif
+}
+
+void MainWindow::on_actionRecent_triggered()
+{
+    QAction* a = static_cast<QAction*> (QObject::sender());
+    QString fileName = a->text();
+    if (LoadModel(fileName))
+    {
+        addToRecentFiles(fileName, false);
+    }
+
+}
+
+void MainWindow::removeFromRecentList(QAction* selectedFileAction)
+{
+    recentFiles.removeAll(selectedFileAction->text());
+    ui->menuRecent->removeAction(selectedFileAction);
+    writeRecentFilesList();
+}
+
+bool MainWindow::CreateFileIfDoesNotExist(QString fileName)
+{
+    QFileInfo check_file(fileName);
+    bool success = false;
+    if (!check_file.exists())
+    {
+        QFile filetobecreated(fileName);
+        success = filetobecreated.open(QIODevice::WriteOnly);
+        filetobecreated.close();
+    }
+    return success;
+}
+
+
 

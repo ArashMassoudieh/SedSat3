@@ -37,10 +37,18 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuRecent">
+     <property name="title">
+      <string>Recent Projects</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="separator"/>
+    </widget>
     <addaction name="actionImport_Elemental_Profile_from_Excel"/>
     <addaction name="actionSave_Project"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionOpen_Project"/>
+    <addaction name="menuRecent"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">

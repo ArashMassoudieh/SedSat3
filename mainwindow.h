@@ -48,11 +48,17 @@ private:
     std::unique_ptr<QMenu> menu;
     QJsonDocument formsstructure;
     QWidget *centralform = nullptr;
-    Conductor conductor;
+    Conductor *conductor=nullptr;
     QModelIndex indexresultselected;
     void InitiateTables();
     QString ProjectFileName;
-
+    void readRecentFilesList();
+    void addToRecentFiles(QString fileName, bool addToFile);
+    void writeRecentFilesList();
+    void removeFromRecentList(QAction* selectedFileAction);
+    QStringList recentFiles;
+    bool CreateFileIfDoesNotExist(QString fileName);
+    bool LoadModel(const QString &fileName);
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
@@ -74,8 +80,11 @@ private slots:
     void onIncludeExcludeSample();
     void onOMSizeCorrection();
     void onCustomContextMenu(const QPoint &);
+    void on_actionRecent_triggered();
     void DeleteResults();
 
 
 };
+
+QString localAppFolderAddress();
 #endif // MAINWINDOW_H
