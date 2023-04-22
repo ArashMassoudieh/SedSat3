@@ -231,7 +231,11 @@
 		"Source/Target group II" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
 	},
 	"DFAM": {
 		"Use only selected elements": {
@@ -263,7 +267,11 @@
 		"Source/Target group II" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
 	},
 	"KS-individual": 
 	{

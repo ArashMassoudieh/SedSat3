@@ -58,6 +58,18 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     return out;
 }
 
+void Elemental_Profile_Set::UpdateElementalDistribution()
+{
+    element_distributions.clear();
+    for (map<string,Elemental_Profile>::iterator profile=begin(); profile!=end();profile++)
+    {
+        for (map<string,double>::const_iterator it=profile->second.begin(); it!=profile->second.end(); it++)
+        {
+            element_distributions[it->first].push_back(it->second);
+        }
+    }
+}
+
 Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, const Elemental_Profile &profile, map<string, element_information> *elementinfo)
 {
     if (count(name)>0)
@@ -498,6 +510,28 @@ CMBMatrix Elemental_Profile_Set::Outlier()
     }
     return outliermagnitude;
 }
+
+Elemental_Profile_Set Elemental_Profile_Set::BocCoxTransformed()
+{
+    CMBVector lambdas = BoxCoxParameters();
+    Elemental_Profile_Set out(*this);
+
+
+    int i=0;
+
+    for (map<string,ConcentrationSet>::iterator it=element_distributions.begin(); it!=element_distributions.end(); it++)
+    {
+        ConcentrationSet boxcoxtransformed = it->second.BoxCoxTransform(lambdas[i]);
+        int j=0;
+        for (map<string,Elemental_Profile>::iterator profile=out.begin();profile!=out.end(); profile++)
+        {   profile->second[it->first] = boxcoxtransformed[j];
+            j++;
+        }
+        i++;
+    }
+    return out;
+}
+
 
 CMBMatrix Elemental_Profile_Set::toMatrix()
 {

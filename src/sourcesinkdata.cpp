@@ -236,6 +236,7 @@ void SourceSinkData::PopulateElementDistributions()
     element_distributions.clear();
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
+        it->second.UpdateElementalDistribution();
         for (unsigned int i=0; i<element_names.size(); i++)
         {
             element_distributions[element_names[i]].Append(it->second.ElementalDistribution(element_names[i]));
@@ -1773,5 +1774,22 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     {
         out[i] = max(maxs[i],mins[i]);
     }
+    return out;
+}
+
+
+SourceSinkData SourceSinkData::BoxCoxTransformed()
+{
+    SourceSinkData out(*this);
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
+    {
+        if (it->first!=target_group)
+        {
+            out[it->first] = it->second.BocCoxTransformed();
+        }
+    }
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
+
     return out;
 }

@@ -32,7 +32,7 @@ public:
     vector<double> GetProfileForSample(const string &source_name);
 
     Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile(), map<string,element_information> *elementinfo=nullptr);
-   
+    void UpdateElementalDistribution();
     vector<string> SampleNames(); // Return the list of the name of samples
     ConcentrationSet *ElementalDistribution(const string &element_name)
     {
@@ -138,6 +138,7 @@ public:
     CMBVector BoxCoxParameters();
     CMBMatrix Outlier();
     CMBMatrix toMatrix();
+    Elemental_Profile_Set BocCoxTransformed();
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;
