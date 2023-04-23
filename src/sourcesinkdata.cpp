@@ -1778,18 +1778,57 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
 }
 
 
-SourceSinkData SourceSinkData::BoxCoxTransformed()
+SourceSinkData SourceSinkData::BoxCoxTransformed(bool calculateeigenvectors)
 {
+    CMBVector lambda_vals=OptimalBoxCoxParameters();
     SourceSinkData out(*this);
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
         if (it->first!=target_group)
         {
-            out[it->first] = it->second.BocCoxTransformed();
+            if (calculateeigenvectors)
+                out[it->first] = it->second.BocCoxTransformed(&lambda_vals);
+            else
+                out[it->first] = it->second.BocCoxTransformed();
         }
     }
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
 
+    return out;
+}
+
+map<string,ConcentrationSet> SourceSinkData::ExtractConcentrationSet()
+{
+    map<string,ConcentrationSet> out;
+    vector<string> element_names=ElementNames();
+    for (unsigned int i=0; i<element_names.size();i++)
+    {   ConcentrationSet concset;
+        for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
+        {
+            if (it->first!=target_group)
+            {
+                for (map<string,Elemental_Profile>::iterator sample=it->second.begin(); sample!=it->second.end(); sample++)
+                    concset.Append(sample->second[element_names[i]]);
+            }
+        }
+        out[element_names[i]]=concset;
+
+    }
+
+    return out;
+}
+
+CMBVector SourceSinkData::OptimalBoxCoxParameters()
+{
+    map<string,ConcentrationSet> concset = ExtractConcentrationSet();
+    vector<string> element_names=ElementNames();
+    CMBVector out(element_names.size());
+    for (unsigned int i=0; i<element_names.size();i++)
+    {
+        out[i] = concset[element_names[i]].OptimalBoxCoxParam(-5,5,10);
+
+    }
+    out.SetLabels(element_names);
     return out;
 }

@@ -511,9 +511,15 @@ CMBMatrix Elemental_Profile_Set::Outlier()
     return outliermagnitude;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::BocCoxTransformed()
+Elemental_Profile_Set Elemental_Profile_Set::BocCoxTransformed(CMBVector *lambda_vals)
 {
-    CMBVector lambdas = BoxCoxParameters();
+    CMBVector lambdas;
+    if (lambda_vals==nullptr)
+        lambdas = BoxCoxParameters();
+    else
+    {
+        lambdas = *lambda_vals;
+    }
     Elemental_Profile_Set out(*this);
 
 

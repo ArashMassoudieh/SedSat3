@@ -138,7 +138,7 @@ public:
     CMBVector BoxCoxParameters();
     CMBMatrix Outlier();
     CMBMatrix toMatrix();
-    Elemental_Profile_Set BocCoxTransformed();
+    Elemental_Profile_Set BocCoxTransformed(CMBVector *lambda_vals=nullptr);
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;
