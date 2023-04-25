@@ -13,6 +13,7 @@ GeneralChart::GeneralChart(QWidget *parent) :
     chart = new QChart();
     chartView = new QChartView(chart);
     ui->verticalLayout->addWidget(chartView);
+    connect(ui->Exporttppng,SIGNAL(clicked()),this,SLOT(on_Exporttopng()));
 
 }
 
@@ -1034,4 +1035,18 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
     }
 
     return true;
+}
+
+void GeneralChart::on_Exporttopng()
+{
+    QRect rect = QDialog::frameGeometry();
+    this->resize(2000, 2000);
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save"), "",
+        tr("png file (*.png)"));
+
+    if (!fileName.contains("."))
+        fileName+=".png";
+    chartView->grab().save(fileName);
+    this->resize(rect.size());
 }

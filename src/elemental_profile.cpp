@@ -56,7 +56,7 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
             omnsizecorrected = *this;
         }
 
-        if (elementinfo || !exclude_elements)
+        if (elementinfo && exclude_elements)
         {   if (elementinfo->at(element->first).include_in_analysis && elementinfo->at(element->first).Role!=element_information::role::do_not_include)
             {
                 out[element->first] = omnsizecorrected[element->first];

@@ -30,7 +30,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples
     Elemental_Profile_Set out;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        if (it->second.IncludedInAnalysis() || !exclude_elements)
+        if (it->second.IncludedInAnalysis() || !exclude_samples)
         {
             if ((mlr_vs_om_size.size()!=0))
                 out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,omnsizecorrect,om,psize,&mlr_vs_om_size,elementinfo));

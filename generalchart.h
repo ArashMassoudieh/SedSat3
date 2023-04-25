@@ -56,6 +56,7 @@ private slots:
     void onElementChanged(int i_constituent);
     void onMCMCVariableChanged(int);
     void onDistributionsVariableChanged(int);
+    void on_Exporttopng();
 
 };
 
