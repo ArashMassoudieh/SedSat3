@@ -233,7 +233,7 @@
   </widget>
   <action name="actionImport_Elemental_Profile_from_Excel">
    <property name="text">
-    <string>Import Elemental Profile from Excel</string>
+    <string>Import Data from Excel</string>
    </property>
   </action>
   <action name="actionRaw_Elemental_Profiles">

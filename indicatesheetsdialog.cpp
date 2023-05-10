@@ -72,7 +72,7 @@ void IndicateSheetsDialog::accept()
 
 void IndicateSheetsDialog::on_radio_button_changed()
 {
-    if (dynamic_cast<QRadioButton*>(sender())->text()=="Sink" && dynamic_cast<QRadioButton*>(sender())->isChecked())
+    if (dynamic_cast<QRadioButton*>(sender())->text()=="Target" && dynamic_cast<QRadioButton*>(sender())->isChecked())
     {
         for (int i=0; i<radio_buttons_sinks.count(); i++)
         {
