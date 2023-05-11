@@ -143,3 +143,55 @@ CVector CMBVector::toVector() const
     out.vec = vec;
     return out;
 }
+
+CMBVector CMBVector::Sort()
+{
+
+}
+CMBVector CMBVector::AbsSort()
+{
+
+}
+string CMBVector::MaxElement()
+{
+    double val = -1e24;
+    string out;
+    for (int i=0; i<getsize(); i++)
+    {
+        if (val<valueAt(i))
+        {   val = valueAt(i);
+            out = Label(i);
+        }
+    }
+    return out;
+}
+string CMBVector::MaxAbsElement()
+{
+    double val = -1e24;
+    string out;
+    for (int i=0; i<getsize(); i++)
+    {
+        if (val<fabs(valueAt(i)))
+        {   val = fabs(valueAt(i));
+            out = Label(i);
+        }
+    }
+    return out;
+}
+CMBVector CMBVector::Eliminate(const string &element)
+{
+    CMBVector out;
+    for (int i=0; i<getsize(); i++)
+    {
+        if (Label(i)!=element)
+            out.append(Label(i),valueAt(i));
+    }
+    return out;
+}
+
+void CMBVector::append(const string &label, const double &val)
+{
+    vec.push_back(val);
+    labels.push_back(label);
+
+}

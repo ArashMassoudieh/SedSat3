@@ -25,6 +25,12 @@ public:
     void SetLabels(const vector<string> &label) {labels=label;}
     void SetBooleanValue(bool val) {boolean_values = val;}
     CVector toVector() const;
+    CMBVector Sort();
+    CMBVector AbsSort();
+    string MaxElement();
+    string MaxAbsElement();
+    CMBVector Eliminate(const string &element);
+    void append(const string &label, const double &val);
 private:
     vector<string> labels;
     bool boolean_values = false;
