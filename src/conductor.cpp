@@ -226,8 +226,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        CMBVector *dfaeigenvector = new CMBVector(TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
-        DFAResItem.SetResult(dfaeigenvector);
+        DFA_result_vector *dfaeigenvector = new DFA_result_vector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        DFAResItem.SetResult(&dfaeigenvector->eigen_vector);
         results.Append(DFAResItem);
 
     }
@@ -246,8 +246,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
-        CMBMatrix *dfaeigenmatrix = new CMBMatrix(TransformedData.DiscriminantFunctionAnalysis());
-        DFAResItem.SetResult(dfaeigenmatrix);
+        DFA_result_matrix *dfaeigenmatrix = new DFA_result_matrix(Data()->DiscriminantFunctionAnalysis());
+        DFAResItem.SetResult(&dfaeigenmatrix->eigen_matrix);
         results.Append(DFAResItem);
 
     }
@@ -259,17 +259,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetType(result_type::matrix1vs1);
         DFAResItem.SetShowTable(true);
         DFAResItem.SetShowGraph(true);
-        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
-        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
-        if (arguments["Box-cox transformation"]=="true")
-            TransformedData = TransformedData.BoxCoxTransformed(true);
-
-        CMBMatrix dfaeigenmatrix = TransformedData.DiscriminantFunctionAnalysis();
-        CMBVector weighted11 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
-        CMBVector weighted12 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
-        CMBVector weighted21 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
-        CMBVector weighted22 = TransformedData.DFATransformed(dfaeigenmatrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
+        DFA_result_matrix dfaeigenmatrix = Data()->DiscriminantFunctionAnalysis();
+        CMBVector weighted11 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
+        CMBVector weighted12 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
+        CMBVector weighted21 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
+        CMBVector weighted22 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
         CMBMatrix *weighted_results = new CMBMatrix(2,weighted11.getsize()+weighted21.getsize());
         for (unsigned int i=0; i<weighted11.getsize(); i++)
         {

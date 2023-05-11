@@ -12,7 +12,6 @@
 #include "qjsonobject.h"
 #include "cmbvector.h"
 
-
 enum class transformation {linear, softmax};
 
 struct profiles_data
@@ -36,6 +35,18 @@ struct element_data_groups
     vector<vector<double>> values;
 };
 
+
+struct DFA_result_vector
+{
+    CMBVector eigen_vector;
+    double S_value;
+};
+
+struct DFA_result_matrix
+{
+    CMBMatrix eigen_matrix;
+    vector<double> S_values;
+};
 
 enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};
 
@@ -188,9 +199,9 @@ public:
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
-    CMBVector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
-    CMBVector DiscriminantFunctionAnalysis(const string &source1);
-    CMBMatrix DiscriminantFunctionAnalysis();
+    DFA_result_vector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    DFA_result_vector DiscriminantFunctionAnalysis(const string &source1);
+    DFA_result_matrix DiscriminantFunctionAnalysis();
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample);
