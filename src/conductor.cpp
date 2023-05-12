@@ -228,6 +228,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         DFA_result_vector *dfaeigenvector = new DFA_result_vector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(&dfaeigenvector->eigen_vector);
+        CMBVector sorted = dfaeigenvector->eigen_vector.AbsSort();
         results.Append(DFAResItem);
 
     }

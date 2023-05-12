@@ -101,9 +101,17 @@ bool CMBVector::writetofile(QFile* file)
     return true;
 }
 
-double CMBVector::valueAt(int i)
+double CMBVector::valueAt(int i) const
 {
     return CVector::operator[](i);
+}
+
+double CMBVector::valueAt(const string &label ) const
+{
+    for (int i=0; i<getsize(); i++)
+        if (labels[i]==label)
+            return valueAt(i);
+    return -999;
 }
 
 QTableWidget *CMBVector::ToTable()
@@ -144,15 +152,31 @@ CVector CMBVector::toVector() const
     return out;
 }
 
-CMBVector CMBVector::Sort()
+CMBVector CMBVector::Sort() const
 {
-
+    CMBVector eliminated = *this;
+    CMBVector out;
+    for (int i=0; i<getsize(); i++)
+    {
+        string max_element = eliminated.MaxElement();
+        out.append(max_element,eliminated.valueAt(max_element));
+        eliminated = eliminated.Eliminate(max_element);
+    }
+    return out;
 }
-CMBVector CMBVector::AbsSort()
+CMBVector CMBVector::AbsSort() const
 {
-
+    CMBVector eliminated = *this;
+    CMBVector out;
+    for (int i=0; i<getsize(); i++)
+    {
+        string max_element = eliminated.MaxAbsElement();
+        out.append(max_element,eliminated.valueAt(max_element));
+        eliminated = eliminated.Eliminate(max_element);
+    }
+    return out;
 }
-string CMBVector::MaxElement()
+string CMBVector::MaxElement() const
 {
     double val = -1e24;
     string out;
@@ -165,7 +189,7 @@ string CMBVector::MaxElement()
     }
     return out;
 }
-string CMBVector::MaxAbsElement()
+string CMBVector::MaxAbsElement() const
 {
     double val = -1e24;
     string out;
@@ -178,7 +202,7 @@ string CMBVector::MaxAbsElement()
     }
     return out;
 }
-CMBVector CMBVector::Eliminate(const string &element)
+CMBVector CMBVector::Eliminate(const string &element) const
 {
     CMBVector out;
     for (int i=0; i<getsize(); i++)
@@ -193,5 +217,18 @@ void CMBVector::append(const string &label, const double &val)
 {
     vec.push_back(val);
     labels.push_back(label);
+    num = vec.size();
 
 }
+
+CMBVector CMBVector::Extract(int start, int end) const
+{
+    CMBVector out;
+    for (int i=start; i<=end; i++)
+    {
+        out.append(Label(i),valueAt(i));
+    }
+    return out;
+}
+
+

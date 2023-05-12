@@ -18,19 +18,21 @@ public:
     string ToString() override;
     QTableWidget *ToTable() override;
     bool writetofile(QFile* file) override;
-    double valueAt(int i);
-    string Label(int i) {return labels[i];}
+    double valueAt(int i) const;
+    string Label(int i) const {return labels[i];}
+    double valueAt(const string &label ) const;
     vector<string> Labels() const {return labels;}
     void SetLabel(int i, const string &label) {labels[i]=label;}
     void SetLabels(const vector<string> &label) {labels=label;}
     void SetBooleanValue(bool val) {boolean_values = val;}
     CVector toVector() const;
-    CMBVector Sort();
-    CMBVector AbsSort();
-    string MaxElement();
-    string MaxAbsElement();
-    CMBVector Eliminate(const string &element);
+    CMBVector Sort() const;
+    CMBVector AbsSort() const;
+    string MaxElement() const;
+    string MaxAbsElement()const ;
+    CMBVector Eliminate(const string &element) const;
     void append(const string &label, const double &val);
+    CMBVector Extract(int start, int end) const;
 private:
     vector<string> labels;
     bool boolean_values = false;
