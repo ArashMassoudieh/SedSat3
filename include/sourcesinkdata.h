@@ -58,6 +58,7 @@ public:
     SourceSinkData& operator=(const SourceSinkData &mp);
     SourceSinkData Corrected(const string &target_sample, bool omnsizecorrect=true, map<string, element_information> *elementinfo=nullptr);
     SourceSinkData CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const string &target_sample="") const;
+    SourceSinkData Extract(const vector<string> &element_list) const;
     void Clear();
     Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
     Elemental_Profile_Set *sample_set(const string &name);

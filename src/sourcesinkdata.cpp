@@ -113,6 +113,23 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     return out;
 }
 
+SourceSinkData SourceSinkData::Extract(const vector<string> &element_list) const
+{
+    SourceSinkData out;
+
+    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        if (it->first!=target_group)
+        {
+            out[it->first] = it->second.Extract(element_list);
+        }
+    }
+    out.PopulateElementInformation();
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
+    return out;
+}
+
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
 {
     map<string, Elemental_Profile_Set>::operator=(mp);

@@ -24,6 +24,7 @@ public:
     Elemental_Profile_Set(const Elemental_Profile_Set& mp);
     Elemental_Profile_Set& operator=(const Elemental_Profile_Set &mp);
     Elemental_Profile_Set CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const map<string, element_information> *elementinfo=nullptr) const;
+    Elemental_Profile_Set Extract(const vector<string> &element_list) const;
     Elemental_Profile *Profile(const string &name);
     Elemental_Profile Profile(const string &name) const;
     Elemental_Profile *Profile(unsigned int i);

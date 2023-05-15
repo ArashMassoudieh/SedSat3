@@ -69,6 +69,20 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
 
 }
 
+Elemental_Profile Elemental_Profile::Extract(const vector<string> &element_list) const
+{
+
+    Elemental_Profile out;
+    for (unsigned int i=0; i<element_list.size(); i++)
+    {
+        if (count(element_list[i])>0)
+        {
+            out[element_list[i]] = at(element_list[i]);
+        }
+    }
+    return out;
+}
+
 
 double Elemental_Profile::Val(const string &name) const
 {

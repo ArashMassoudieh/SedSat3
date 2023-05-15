@@ -26,6 +26,7 @@ public:
     Elemental_Profile& operator=(const Elemental_Profile &mp);
     Elemental_Profile CopyIncluded(map<string,element_information> *elementinfo=nullptr) const;
     Elemental_Profile CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const MultipleLinearRegressionSet *mlr=nullptr, const map<string, element_information> *elementinfo=nullptr) const;
+    Elemental_Profile Extract(const vector<string> &element_list) const; //extract the elements included in the element_list
     double Val(const string &name) const; // returns the value of elemental content for a specific element/constituent
     bool SetVal(const string &name, const double &val); //Sets the value of elemental content for a specific element/constituent
     bool SetMark(const string &name, bool val); //mark specific element/constituent
