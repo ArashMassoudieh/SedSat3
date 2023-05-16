@@ -39,12 +39,15 @@ struct element_data_groups
 struct DFA_result_vector
 {
     CMBVector eigen_vector;
+    CMBVector significance_vector;
+    CMBVector significance_vector_2;
     double S_value;
 };
 
 struct DFA_result_matrix
 {
     CMBMatrix eigen_matrix;
+    CMBMatrix significance_matrix;
     vector<double> S_values;
 };
 

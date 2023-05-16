@@ -1696,8 +1696,12 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
     CMBMatrix CovMatr1 = at(source1).CovarianceMatrix();
     CMBMatrix CovMatr2 = at(source2).CovarianceMatrix();
     out.eigen_vector = ((mean1-mean2)/(CovMatr1+CovMatr2));
+    out.significance_vector = out.eigen_vector*(mean1+mean2);
     out.eigen_vector=out.eigen_vector/out.eigen_vector.norm2();
     out.eigen_vector.SetLabels(ElementNames());
+    out.significance_vector_2 = ((mean1+mean2)*(mean1+mean2))/(CovMatr1+CovMatr2);
+    out.significance_vector.SetLabels(ElementNames());
+    out.significance_vector_2.SetLabels(ElementNames());
     double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
     CVector term1 = (CovMatr1+CovMatr2)*out.eigen_vector;
     CVector term2 = term1*out.eigen_vector;
@@ -1709,15 +1713,19 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
 CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2)
 {
     DFA_result_vector DFA_vector_full = DiscriminantFunctionAnalysis(source1,source2);
-    vector<string> all_labels = DFA_vector_full.eigen_vector.AbsSort().Labels();
+    vector<string> all_labels = DFA_vector_full.eigen_vector.AbsSort(DFA_vector_full.significance_vector).Labels();
     vector<string> selected_labels;
     CMBVector out;
+    CMBVector Significance_increment;
+    double S_value_past = 0;
     for (int i=0; i<DFA_vector_full.eigen_vector.getsize(); i++)
     {
         selected_labels.push_back(all_labels[i]);
         SourceSinkData tobeanalysed = Extract(selected_labels);
         DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
         out.append(selected_labels[i],thisDFAresults.S_value);
+        Significance_increment.append(selected_labels[i], thisDFAresults.S_value-S_value_past);
+        S_value_past = thisDFAresults.S_value;
     }
     return out;
 }
@@ -1732,8 +1740,12 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
     CMBMatrix CovMatr1 = at(source1).CovarianceMatrix();
     CMBMatrix CovMatr2 = rest.CovarianceMatrix();
     out.eigen_vector = ((mean1-mean2)/(CovMatr1+CovMatr2));
+    out.significance_vector = out.eigen_vector*(mean1+mean2);
+    out.significance_vector_2 = ((mean1+mean2)*(mean1+mean2))/(CovMatr1+CovMatr2);
     out.eigen_vector=out.eigen_vector/out.eigen_vector.norm2();
     out.eigen_vector.SetLabels(ElementNames());
+    out.significance_vector.SetLabels(ElementNames());
+    out.significance_vector_2.SetLabels(ElementNames());
     double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
     double denuminator = (((CovMatr1+CovMatr2)*out.eigen_vector)*out.eigen_vector).sum();
     out.S_value = numerator/denuminator;
@@ -1752,12 +1764,15 @@ DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
             CMBMatrix elem_profile_set = source->second.toMatrix();
             string temp = elem_profile_set.ToString();
             out.eigen_matrix.matr[i] = w.eigen_vector;
+            out.significance_matrix.matr[i] = w.significance_vector;
             out.eigen_matrix.SetRowLabel(i,source->first);
+            out.significance_matrix.SetRowLabel(i,source->first);
             out.S_values.push_back(w.S_value);
             i++;
         }
     }
     out.eigen_matrix.SetColumnLabels(ElementNames());
+    out.significance_matrix.SetColumnLabels(ElementNames());
     return out;
 }
 

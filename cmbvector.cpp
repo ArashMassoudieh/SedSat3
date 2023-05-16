@@ -152,26 +152,34 @@ CVector CMBVector::toVector() const
     return out;
 }
 
-CMBVector CMBVector::Sort() const
+CMBVector CMBVector::Sort(const CMBVector &sortvector) const
 {
-    CMBVector eliminated = *this;
+    CMBVector eliminated;
+    if (sortvector.getsize()==0)
+        eliminated = *this;
+    else
+        eliminated = sortvector;
     CMBVector out;
     for (int i=0; i<getsize(); i++)
     {
         string max_element = eliminated.MaxElement();
-        out.append(max_element,eliminated.valueAt(max_element));
+        out.append(max_element,valueAt(max_element));
         eliminated = eliminated.Eliminate(max_element);
     }
     return out;
 }
-CMBVector CMBVector::AbsSort() const
+CMBVector CMBVector::AbsSort(const CMBVector &sortvector) const
 {
-    CMBVector eliminated = *this;
+    CMBVector eliminated;
+    if (sortvector.getsize()==0)
+        eliminated = *this;
+    else
+        eliminated = sortvector;
     CMBVector out;
     for (int i=0; i<getsize(); i++)
     {
         string max_element = eliminated.MaxAbsElement();
-        out.append(max_element,eliminated.valueAt(max_element));
+        out.append(max_element,valueAt(max_element));
         eliminated = eliminated.Eliminate(max_element);
     }
     return out;

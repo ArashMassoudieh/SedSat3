@@ -26,8 +26,8 @@ public:
     void SetLabels(const vector<string> &label) {labels=label;}
     void SetBooleanValue(bool val) {boolean_values = val;}
     CVector toVector() const;
-    CMBVector Sort() const;
-    CMBVector AbsSort() const;
+    CMBVector Sort(const CMBVector &sortvector=CMBVector()) const;
+    CMBVector AbsSort(const CMBVector &sortvector=CMBVector()) const;
     string MaxElement() const;
     string MaxAbsElement()const ;
     CMBVector Eliminate(const string &element) const;
