@@ -237,6 +237,28 @@
 			"default": "false"
     		}
 	},
+	"SDFA": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
+	},
 	"DFAM": {
 		"Use only selected elements": {
    			"type": "checkBox",

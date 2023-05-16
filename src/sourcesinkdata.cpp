@@ -1699,10 +1699,29 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
     out.eigen_vector=out.eigen_vector/out.eigen_vector.norm2();
     out.eigen_vector.SetLabels(ElementNames());
     double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
-    double denuminator = (((CovMatr1+CovMatr2)*out.eigen_vector)*out.eigen_vector).sum();
+    CVector term1 = (CovMatr1+CovMatr2)*out.eigen_vector;
+    CVector term2 = term1*out.eigen_vector;
+    double denuminator = term2.sum();
     out.S_value = numerator/denuminator;
     return out;
 }
+
+CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2)
+{
+    DFA_result_vector DFA_vector_full = DiscriminantFunctionAnalysis(source1,source2);
+    vector<string> all_labels = DFA_vector_full.eigen_vector.AbsSort().Labels();
+    vector<string> selected_labels;
+    CMBVector out;
+    for (int i=0; i<DFA_vector_full.eigen_vector.getsize(); i++)
+    {
+        selected_labels.push_back(all_labels[i]);
+        SourceSinkData tobeanalysed = Extract(selected_labels);
+        DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
+        out.append(selected_labels[i],thisDFAresults.S_value);
+    }
+    return out;
+}
+
 
 DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
 {

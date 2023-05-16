@@ -201,6 +201,7 @@ public:
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
     DFA_result_vector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2);
     DFA_result_vector DiscriminantFunctionAnalysis(const string &source1);
     DFA_result_matrix DiscriminantFunctionAnalysis();
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);

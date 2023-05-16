@@ -164,7 +164,22 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(rangeset);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key.contains("DFA coefficients"))
+        else if (key.contains("Stepwise DFA"))
+        {
+            CMBVector* dfaresults = new CMBVector();
+            dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("DFA "))
         {
             CMBVector* dfaresults = new CMBVector();
             dfaresults->ReadFromJsonObject(jsonobject[key].toObject());

@@ -213,7 +213,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFA")
     {
-        results.SetName("DFA coefficients between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
+        results.SetName("DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFAResItem;
         DFAResItem.SetName("DFA coefficients");
         DFAResItem.SetType(result_type::vector);
@@ -228,8 +228,27 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         DFA_result_vector *dfaeigenvector = new DFA_result_vector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(&dfaeigenvector->eigen_vector);
-        CMBVector sorted = dfaeigenvector->eigen_vector.AbsSort();
         results.Append(DFAResItem);
+
+    }
+    if (command == "SDFA")
+    {
+        results.SetName("Stepwise DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
+        ResultItem DFASValues;
+        DFASValues.SetName("S-Values");
+        DFASValues.SetType(result_type::vector);
+        DFASValues.SetShowTable(true);
+        DFASValues.SetAbsoluteValue(true);
+        DFASValues.SetYAxisMode(yaxis_mode::log);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+
+        CMBVector *SVector = new CMBVector(Data()->StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        DFASValues.SetResult(SVector);
+        results.Append(DFASValues);
 
     }
     if (command == "DFAM")
