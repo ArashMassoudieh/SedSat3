@@ -14,6 +14,7 @@ Elemental_Profile_Set::Elemental_Profile_Set(const Elemental_Profile_Set& mp) :m
 {
     element_distributions = mp.element_distributions;
     contribution = mp.contribution;
+    outlierdone = mp.outlierdone;
 }
 
 Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_Set &mp)
@@ -22,6 +23,7 @@ Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_
     Interface::operator=(mp);
     contribution = mp.contribution;
     element_distributions = mp.element_distributions;
+    outlierdone = mp.outlierdone;
     return *this;
 }
 
@@ -526,6 +528,7 @@ CMBMatrix Elemental_Profile_Set::Outlier(const double &lowerlimit, const double 
         }
         i++;
     }
+    outlierdone = true;
     return outliermagnitude;
 }
 

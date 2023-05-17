@@ -1730,6 +1730,12 @@ CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &sou
     return out;
 }
 
+void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
+{
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
+        if (it->first!=target_group && !it->second.OutlierAnalysisDone())
+            it->second.Outlier(lowerthreshold,upperthreshold);
+}
 
 DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
 {

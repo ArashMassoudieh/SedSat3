@@ -697,6 +697,8 @@ void MainWindow::onIncludeExcludeSample()
 {
     if (centralform)
         delete centralform;
+    Data()->OutlierAnalysisForAll(-3,3);
+
     SelectSamples *include_exclude_samples = new SelectSamples(this);
     include_exclude_samples->SetMode(mode::samples);
     include_exclude_samples->SetData(&DataCollection);

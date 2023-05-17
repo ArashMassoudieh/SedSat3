@@ -140,11 +140,15 @@ public:
     CMBMatrix Outlier(const double &lowlimit=0, const double &upperlimit=0);
     CMBMatrix toMatrix();
     Elemental_Profile_Set BocCoxTransformed(CMBVector *lambda_vals=nullptr);
+    bool OutlierAnalysisDone() {
+        return outlierdone;
+    }
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;
     double contribution = 0;
     double contribution_softmax = 0;
+    bool outlierdone = false;
 
 };
 
