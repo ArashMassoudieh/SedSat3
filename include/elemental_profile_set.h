@@ -137,7 +137,7 @@ public:
     Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size, map<string, element_information> *elementinfo=nullptr);
     Elemental_Profile_Set OrganicandSizeCorrect(const double &size, const double &om);
     CMBVector BoxCoxParameters();
-    CMBMatrix Outlier();
+    CMBMatrix Outlier(const double &lowlimit=0, const double &upperlimit=0);
     CMBMatrix toMatrix();
     Elemental_Profile_Set BocCoxTransformed(CMBVector *lambda_vals=nullptr);
 private:

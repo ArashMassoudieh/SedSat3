@@ -601,7 +601,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         OutlierResItem.SetShowTable(true);
         OutlierResItem.SetShowGraph(false);
         double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
-        CMBMatrix *outliermatrix = new CMBMatrix(Data()->at(arguments["Source/Target group"]).Outlier());
+        CMBMatrix *outliermatrix = new CMBMatrix(Data()->at(arguments["Source/Target group"]).Outlier(-threshold,threshold));
         outliermatrix->SetLimit(_range::high,threshold);
         outliermatrix->SetLimit(_range::low,-threshold);
         OutlierResItem.SetResult(outliermatrix);

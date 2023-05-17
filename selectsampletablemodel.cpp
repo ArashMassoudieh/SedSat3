@@ -10,7 +10,7 @@ int SelectSampleTableModel::rowCount(const QModelIndex &index) const
 }
 int SelectSampleTableModel::columnCount(const QModelIndex &index) const
 {
-    return 2;
+    return 3;
 }
 QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
 {
@@ -25,10 +25,19 @@ QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
                 return "Yes";
             else
                 return "No";
-
-
+        }
+        if (index.column()==2)
+        {
+            return QString::fromStdString(GetProfileSet(index.row())->GetNotes());
         }
 
+    }
+    if (role == Qt::ForegroundRole)
+    {
+        if (GetProfileSet(index.row())->GetNotes()!="")
+            return QVariant::fromValue(QColor(Qt::red));
+        else
+            return QVariant::fromValue(QColor(Qt::black));
     }
 
     return QVariant();
@@ -57,7 +66,10 @@ QVariant SelectSampleTableModel::headerData(int section, Qt::Orientation orienta
             {
                 return "Include";
             }
-
+            if (section==2)
+            {
+                return "Notes";
+            }
         }
     }
     return QVariant();

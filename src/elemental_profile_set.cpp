@@ -488,7 +488,7 @@ CMBVector Elemental_Profile_Set::BoxCoxParameters()
     return out;
 }
 
-CMBMatrix Elemental_Profile_Set::Outlier()
+CMBMatrix Elemental_Profile_Set::Outlier(const double &lowerlimit, const double &upperlimit)
 {
     CMBVector lambdas = BoxCoxParameters();
     CMBMatrix outliermagnitude(begin()->second.size(),this->size());
@@ -507,6 +507,7 @@ CMBMatrix Elemental_Profile_Set::Outlier()
     i=0;
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
+        it->second.ClearNotes();
         int j=0;
         outliermagnitude.SetRowLabel(i,it->first);
         for (map<string,double>::iterator element = it->second.begin(); element!=it->second.end(); element++)
@@ -514,6 +515,13 @@ CMBMatrix Elemental_Profile_Set::Outlier()
             outliermagnitude.SetColumnLabel(j,element->first);
             qDebug() << element->second << "," << (pow(element->second,lambdas[j])-1.0)/lambdas[j] << "," << means[j] << "," <<stds[j];
             outliermagnitude[i][j] = ((pow(element->second/std_orig[j], lambdas[j]) - 1.0) / lambdas[j] - means[j]) / stds[j];
+            if (upperlimit!=lowerlimit)
+            {
+                if (outliermagnitude[i][j]>upperlimit || outliermagnitude[i][j]<lowerlimit)
+                {
+                    it->second.AppendtoNotes(element->first + " was detected as outlier");
+                }
+            }
             j++;
         }
         i++;
