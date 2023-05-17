@@ -1756,6 +1756,7 @@ DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
 {
     DFA_result_matrix out;
     out.eigen_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
+    out.significance_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
     int i=0;
     for (map<string,Elemental_Profile_Set>::iterator source = begin(); source != end(); source++)
     {
