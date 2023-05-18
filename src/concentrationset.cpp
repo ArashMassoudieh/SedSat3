@@ -275,7 +275,7 @@ ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
 
 double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2, int n_intervals)
 {
-    if (min()<0)
+    if (min()<0 || min()==max())
         return 1;
     if (!(min()==min()))
     {

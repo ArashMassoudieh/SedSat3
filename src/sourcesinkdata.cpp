@@ -1826,11 +1826,11 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     {
         for (unsigned int i=0; i<element_names.size(); i++)
         {   out.SetLabel(i,element_names[i]);
-            if (at(target_group).Profile(target_sample)->at(element_names[i])<it->second.ElementalDistribution(element_names[i])->max())
+            if (at(target_group).Profile(target_sample)->at(element_names[i])<=it->second.ElementalDistribution(element_names[i])->max())
             {
                     maxs[i]=0;
             }
-            if (at(target_group).Profile(target_sample)->at(element_names[i])>it->second.ElementalDistribution(element_names[i])->min())
+            if (at(target_group).Profile(target_sample)->at(element_names[i])>=it->second.ElementalDistribution(element_names[i])->min())
             {
                     mins[i]=0;
             }
@@ -1842,9 +1842,9 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     {
         out[i] = max(maxs[i],mins[i]);
         if (maxs[i]>0.5)
-            at(target_group).Profile(target_sample)->AppendtoNotes(element_names[i] + "value is higher than the maximum of the sources");
+            at(target_group).Profile(target_sample)->AppendtoNotes(element_names[i] + " value is higher than the maximum of the sources");
         else if (mins[i]>0.5)
-            at(target_group).Profile(target_sample)->AppendtoNotes(element_names[i] + "value is lower than the minimum of the sources");
+            at(target_group).Profile(target_sample)->AppendtoNotes(element_names[i] + " value is lower than the minimum of the sources");
     }
     return out;
 }

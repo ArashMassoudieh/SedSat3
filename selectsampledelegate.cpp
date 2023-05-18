@@ -15,10 +15,11 @@ void SelectSampleDelegate::SetMode(mode _mode)
     Mode = _mode;
     if (Mode == mode::samples)
     {
-        numberofcolumns = 2;
+        numberofcolumns = 3;
         columnTypes.resize(numberofcolumns);
         columnTypes[0] = column_type::name;
         columnTypes[1] = column_type::yesno;
+        columnTypes[2] = column_type::string;
     }
     if (Mode == mode::regressions)
     {

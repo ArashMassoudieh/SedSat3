@@ -8,7 +8,7 @@
 #include "selectsampletablemodel.h"
 
 enum class mode {samples, regressions};
-enum class column_type {number, yesno, name};
+enum class column_type {number, yesno, name, string};
 
 
 class SelectSampleDelegate: public QStyledItemDelegate
