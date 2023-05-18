@@ -1841,9 +1841,20 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     for (unsigned int i=0; i<element_names.size(); i++)
     {
         out[i] = max(maxs[i],mins[i]);
+        if (maxs[i]>0.5)
+            at(target_group).Profile(target_sample)->AppendtoNotes(element_names[i] + "value is higher than the maximum of the sources");
+        else if (mins[i]>0.5)
+            at(target_group).Profile(target_sample)->AppendtoNotes(element_names[i] + "value is lower than the minimum of the sources");
     }
     return out;
 }
+
+void SourceSinkData::BracketTest()
+{
+    for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample != at(target_group).end(); sample++)
+        BracketTest(sample->first);
+}
+
 
 
 SourceSinkData SourceSinkData::BoxCoxTransformed(bool calculateeigenvectors)
