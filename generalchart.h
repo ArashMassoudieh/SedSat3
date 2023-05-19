@@ -11,7 +11,8 @@
 #include <multiplelinearregressionset.h>
 #include <QComboBox>
 #include "rangeset.h"
-
+#include <chart.h>
+#include <chartview.h>
 
 #ifndef Qt6
 using namespace QtCharts;
@@ -45,8 +46,8 @@ public:
     bool PlotScatter(CMBMatrix *matrix);
 private:
     Ui::GeneralChart *ui;
-    QChart* chart;
-    QChartView *chartView;
+    Chart* chart;
+    ChartView *chartView;
     QComboBox *element_combo;
     QComboBox *independent_combo;
     bool PlotRegression(MultipleLinearRegression *timeseriesset,const QString& independent_var);

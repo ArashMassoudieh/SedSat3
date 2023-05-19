@@ -24,6 +24,8 @@ SOURCES += \
     FilePushButton.cpp \
     ProgressWindow.cpp \
     aboutdialog.cpp \
+    chart.cpp \
+    chartview.cpp \
     cmbmatrix.cpp \
     cmbtimeseries.cpp \
     cmbtimeseriesset.cpp \
@@ -85,6 +87,8 @@ HEADERS += \
     FilePushButton.h \
     ProgressWindow.h \
     aboutdialog.h \
+    chart.h \
+    chartview.h \
     cmbmatrix.h \
     cmbtimeseries.h \
     cmbtimeseriesset.h \

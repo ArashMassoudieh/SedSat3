@@ -1,6 +1,5 @@
 #include "generalchart.h"
 #include "ui_generalchart.h"
-#include <QtCharts>
 #include "resultitem.h"
 #include <string>
 
@@ -10,8 +9,8 @@ GeneralChart::GeneralChart(QWidget *parent) :
     ui(new Ui::GeneralChart)
 {
     ui->setupUi(this);
-    chart = new QChart();
-    chartView = new QChartView(chart);
+    chart = new Chart();
+    chartView = new ChartView(chart);
     ui->verticalLayout->addWidget(chartView);
     connect(ui->Exporttppng,SIGNAL(clicked()),this,SLOT(on_Exporttopng()));
 
