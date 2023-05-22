@@ -180,11 +180,11 @@
     		},
     		"Organic Matter constituent": {
     			"type": "comboBox",
-    			"source": "ElementsList"
+    			"source": "ElementsList+Blank"
     		},
     		"Particla Size constituent": {
     			"type": "comboBox",
-    			"source": "ElementsList"
+    			"source": "ElementsList+Blank"
     		},
     		"Equation": {
     			"type": "comboBox",
