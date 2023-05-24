@@ -10,7 +10,10 @@ int OmSizeCorrectionTableModel::rowCount(const QModelIndex &index) const
 }
 int OmSizeCorrectionTableModel::columnCount(const QModelIndex &index) const
 {
-    return 8;
+    if (MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames().size()==2)
+        return 8;
+    else if (MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames().size()==1)
+        return 5;
 }
 QVariant OmSizeCorrectionTableModel::data(const QModelIndex &index, int role) const
 {
@@ -26,7 +29,7 @@ QVariant OmSizeCorrectionTableModel::data(const QModelIndex &index, int role) co
         }
         if (index.column()==2)
         {
-            return mlr->CoefficientsIntercept()[1];
+             return mlr->CoefficientsIntercept()[1];
         }
         if (index.column()==3)
         {
@@ -91,27 +94,27 @@ QVariant OmSizeCorrectionTableModel::headerData(int section, Qt::Orientation ori
             }
             if (section==2)
             {
-                return "Coefficient for OM";
+                return "Coefficient for " + QString::fromStdString(MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames()[0]);
             }
             if (section==3)
             {
-                return "P-value for OM";
+                return "P-value for " + QString::fromStdString(MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames()[0]);
             }
             if (section==4)
             {
-                return "Correct based on OM";
+                return "Correct based on " + QString::fromStdString(MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames()[0]);
             }
             if (section==5)
             {
-                return "Coefficient for size";
+                return "Coefficient for " + QString::fromStdString(MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames()[1]);
             }
             if (section==6)
             {
-                return "P-value for size";
+                return "P-value for " + QString::fromStdString(MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames()[1]);
             }
             if (section==7)
             {
-                return "Correct based on size";
+                return "Correct based on " + QString::fromStdString(MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames()[1]);
             }
         }
     }

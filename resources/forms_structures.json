@@ -347,7 +347,7 @@
 			"maximum": "50000",
 			"minimum": "100"
 		},
-		"samples_file_name": {
+		"Samples File Name": {
     			"type": "fileBrowser_Save",
     			"default": "MCMC_Output.txt"
     		},

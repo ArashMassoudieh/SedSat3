@@ -150,7 +150,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        Data()->SetSelectedTargetSample(arguments["Sample"]);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,true,arguments["Sample"]);
         vector<ResultItem> resultitems = TransformedData.GetSourceProfiles();
         results.SetName("Corrected Elemental Profiles for Target" + arguments["Sample"]);
         for (unsigned int i=0; i<resultitems.size(); i++)
@@ -166,6 +167,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         else
             TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::power);
 
+        Data()->SetOMandSizeConstituents(arguments["Organic Matter constituent"],arguments["Particla Size constituent"]);
         for (map<string,Elemental_Profile_Set>::iterator it=Data()->begin(); it!=Data()->end(); it++)
         {
             if (it->first != Data()->TargetGroup())
@@ -352,7 +354,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
         SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
-
+        qDebug()<<1;
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
         MCMC->Model = &correctedData;
@@ -365,16 +367,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
 // Samples
+        qDebug()<<2;
         correctedData.InitializeParametersObservations(arguments["Sample"]);
         MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
         MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
         MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
         MCMC->SetProperty("dissolve_chains",arguments["Dissolve Chains"]);
+        qDebug()<<3;
         MCMC->initialize(samples,true);
         string folderpath;
-        if (!QString::fromStdString(arguments["samples_file_name"]).contains("/"))
+        if (!QString::fromStdString(arguments["Samples File Name"]).contains("/"))
             folderpath = workingfolder.toStdString()+"/";
-        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["samples_file_name"], samples, rtw);
+        qDebug()<<4;
+        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["Samples File Name"], samples, rtw);
         vector<string> SourceGroupNames = correctedData.SourceGroupNames();
         samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
         MCMC_samples.SetResult(samples);

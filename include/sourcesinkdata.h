@@ -214,7 +214,13 @@ public:
     SourceSinkData BoxCoxTransformed(bool calculateeigenvectorforallgroups=false);
     map<string,ConcentrationSet> ExtractConcentrationSet();
     CMBVector OptimalBoxCoxParameters();
+    void SetOMandSizeConstituents(const string &_omconstituent, const string &_sizeconsituent)
+    {
+        omconstituent = _omconstituent;
+        sizeconsituent = _sizeconsituent;
+    }
     void OutlierAnalysisForAll(const double &lowerthreshold=-3, const double &upperthreshold=3);
+
 private:
 
     map<string,ConcentrationSet> element_distributions;

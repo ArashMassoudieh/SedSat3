@@ -56,6 +56,15 @@ double MultipleLinearRegression::SSE_reduced_model(const vector<vector<double>> 
 
     double SSE=0;
 
+    if (number_of_variables==1)
+    {
+        if (regressionEquation == regression_form::linear)
+            SSE = pow(CVector(dependent).stdev(),2)*(dependent.size()-1);
+        else
+            SSE = pow(CVector(dependent).Log().stdev(),2)*(dependent.size()-1);
+        return SSE;
+    }
+
     X = gsl_matrix_alloc (number_of_data_points, number_of_variables);
     y = gsl_vector_alloc (number_of_data_points);
     w = gsl_vector_alloc (number_of_data_points);
@@ -168,7 +177,7 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
     {
         double SSE_reduced = SSE_reduced_model(independent,dependent, i);
         double F = (SSE_reduced - chisq)/chisq*(number_of_data_points-number_of_variables-1);
-        p_value.push_back(gsl_cdf_fdist_Q (F, number_of_variables-1, number_of_data_points-(number_of_variables+1)));
+        p_value.push_back(gsl_cdf_fdist_Q (F, number_of_variables, number_of_data_points-(number_of_variables)));
         if (p_value[i]<0.05)
             make_effective.push_back(true);
         else

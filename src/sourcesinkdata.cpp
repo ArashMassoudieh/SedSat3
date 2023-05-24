@@ -43,9 +43,12 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     {
         if (it->first!=target_group)
         {
-            double om = at(target_group)[selected_target_sample][omconstituent];
-            double size = at(target_group)[selected_target_sample][sizeconsituent];
-            out[it->first] = it->second.CopyIncludedinAnalysis(omnsizecorrect,om,size);
+            vector<double> om_size;
+            if (omconstituent!="")
+                om_size.push_back(at(target_group)[selected_target_sample][omconstituent]);
+            if (sizeconsituent!="")
+                om_size.push_back(at(target_group)[selected_target_sample][sizeconsituent]);
+            out[it->first] = it->second.CopyIncludedinAnalysis(omnsizecorrect,om_size);
         }
         else
             out[it->first] = it->second;
@@ -92,21 +95,25 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     out.target_group = target_group;
     if (target!="")
         out.selected_target_sample = target;
-    double om,psize;
+    vector<double> om_size;
     if (omnsizecorrect)
     {
-        om = at(target_group).at(selected_target_sample).at(omconstituent);
-        psize = at(target_group).at(selected_target_sample).at(sizeconsituent);
+        if (omconstituent!="")
+            om_size.push_back(at(target_group).at(out.selected_target_sample).at(omconstituent));
+        if (sizeconsituent!="")
+            om_size.push_back(at(target_group).at(out.selected_target_sample).at(sizeconsituent));
     }
     for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        if (it->first!=target_group)
+        if (it->first==target_group)
         {
-            out[it->first] = it->second.CopyandCorrect(false,exclude_elements,false, om, psize, &ElementInformation);
+            out[it->first] = it->second.CopyandCorrect(false,exclude_elements,false, om_size, &ElementInformation);
         }
         else
-            out[it->first] = it->second.CopyandCorrect(exclude_samples,exclude_elements,omnsizecorrect,om,psize,&ElementInformation);
+            out[it->first] = it->second.CopyandCorrect(exclude_samples,exclude_elements,omnsizecorrect,om_size,&ElementInformation);
     }
+    out.omconstituent = omconstituent;
+    out.sizeconsituent = sizeconsituent;
     out.PopulateElementInformation();
     out.PopulateElementDistributions();
     out.AssignAllDistributions();

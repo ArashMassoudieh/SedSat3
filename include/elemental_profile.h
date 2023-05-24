@@ -25,7 +25,7 @@ public:
     Elemental_Profile(const Elemental_Profile& mp);
     Elemental_Profile& operator=(const Elemental_Profile &mp);
     Elemental_Profile CopyIncluded(map<string,element_information> *elementinfo=nullptr) const;
-    Elemental_Profile CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const MultipleLinearRegressionSet *mlr=nullptr, const map<string, element_information> *elementinfo=nullptr) const;
+    Elemental_Profile CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const vector<double> &om_size, const MultipleLinearRegressionSet *mlr=nullptr, const map<string, element_information> *elementinfo=nullptr) const;
     Elemental_Profile Extract(const vector<string> &element_list) const; //extract the elements included in the element_list
     double Val(const string &name) const; // returns the value of elemental content for a specific element/constituent
     bool SetVal(const string &name, const double &val); //Sets the value of elemental content for a specific element/constituent
@@ -45,7 +45,7 @@ public:
     bool contains(const string &element);
     bool IncludedInAnalysis() const {return included_in_analysis;}
     void SetIncluded(bool value) {included_in_analysis = value;}
-    Elemental_Profile OrganicandSizeCorrect(const double &size, const double &om, const MultipleLinearRegressionSet *mlr) const;
+    Elemental_Profile OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlr) const;
     double DotProduct(const CMBVector &vector);
 
 private:

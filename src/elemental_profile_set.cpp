@@ -27,7 +27,7 @@ Elemental_Profile_Set& Elemental_Profile_Set::operator=(const Elemental_Profile_
     return *this;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const map<string, element_information> *elementinfo) const
+Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const vector<double> &om_size, const map<string, element_information> *elementinfo) const
 {
     Elemental_Profile_Set out;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
@@ -35,11 +35,12 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples
         if (it->second.IncludedInAnalysis() || !exclude_samples)
         {
             if ((mlr_vs_om_size.size()!=0))
-                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,omnsizecorrect,om,psize,&mlr_vs_om_size,elementinfo));
+                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,omnsizecorrect,om_size,&mlr_vs_om_size,elementinfo));
             else
-                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,false,om,psize,nullptr,elementinfo));
+                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,false,om_size,nullptr,elementinfo));
         }
     }
+    out.SetRegression(&mlr_vs_om_size);
     return out;
 }
 
@@ -53,12 +54,12 @@ Elemental_Profile_Set Elemental_Profile_Set::Extract(const vector<string> &eleme
     return out;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyomsizecorrection, const double &om, const double &size, map<string, element_information> *elementinfo)
+Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyomsizecorrection, const vector<double> &om_size, map<string, element_information> *elementinfo)
 {
     Elemental_Profile_Set out;
     if (applyomsizecorrection)
     {
-        out = OrganicandSizeCorrect(om,size);
+        out = OrganicandSizeCorrect(om_size);
     }
     else
     {
@@ -66,7 +67,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
             if (it->second.IncludedInAnalysis())
                 out.Append_Profile(it->first, it->second);
     }
-
+    out.SetRegression(&mlr_vs_om_size);
     return out;
 }
 
@@ -312,9 +313,17 @@ MultipleLinearRegression Elemental_Profile_Set::regress_vs_size_OM(const string 
     MultipleLinearRegression out;
     vector<double> dependent = GetAllConcentrationsFor(element);
     vector<vector<double>> independents;
-    independents.push_back(GetAllConcentrationsFor(om));
-    independents.push_back(GetAllConcentrationsFor(d));
-    vector<string> independent_var_names = {om,d};
+    if (om!="")
+        independents.push_back(GetAllConcentrationsFor(om));
+    if (d!="")
+        independents.push_back(GetAllConcentrationsFor(d));
+    vector<string> independent_var_names;
+    if (om!="" && d!="")
+        independent_var_names = {om,d};
+    else if (om=="")
+        independent_var_names = {d};
+    else if (d=="")
+        independent_var_names = {om};
     out.SetEquation(form);
     out.Regress(independents,dependent, independent_var_names);
     return out;
@@ -464,14 +473,14 @@ QTableWidget *Elemental_Profile_Set::ToTable()
     return tablewidget;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const double &size, const double &om)
+Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const vector<double> &om_size)
 {
     Elemental_Profile_Set out = *this;
     out.clear();
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
         if (it->second.IncludedInAnalysis())
-            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(size,om,&mlr_vs_om_size));
+            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size));
 
     }
     return out;

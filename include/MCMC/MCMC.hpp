@@ -397,7 +397,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 	{	file = fopen(filename.c_str(),"w");
 		fclose(file);
 	}
-
+    qDebug()<<5;
     if (!MCMC_Settings.continue_mcmc)
 	{
 		file = fopen(filename.c_str(),"a");
@@ -417,11 +417,10 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 
     MCMC_Settings.ini_purt_fact = pertcoeff[0];
 	int k_0 = k;
+    qDebug()<<6;
     for (unsigned int kk=k; kk<k+nsamps+MCMC_Settings.number_of_chains; kk+=MCMC_Settings.number_of_chains)
 	{
         QCoreApplication::processEvents(QEventLoop::AllEvents,10*1000);
-        //if (rtw->stoptriggered)
-        //	break;
 
 #ifndef NO_OPENMP
         omp_set_num_threads(MCMC_Settings.numberOfThreads);
@@ -434,13 +433,13 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 			srand(int(time(NULL)) ^ omp_get_thread_num() + kk);
 		}
 #endif
-
+qDebug()<<7;
 #pragma omp parallel for
         for (int jj = kk; jj < min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples); jj++)
 		{
-            //qDebug() << "Starting step: " + QString::number(jj);
+            qDebug() << "Starting step: " + QString::number(jj);
             bool stepstuck = !step(jj,jj-kk);
-            //qDebug() << "Step: " + QString::number(jj) + "Done!";
+            qDebug() << "Step: " + QString::number(jj) + "Done!";
             if (stepstuck)
             {   stuckcounter[jj - kk]++;
                 accepted[jj-kk]=0;

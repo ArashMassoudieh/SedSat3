@@ -40,7 +40,7 @@ Elemental_Profile Elemental_Profile::CopyIncluded(map<string,element_information
     return out;
 }
 
-Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const double &om, const double &psize, const MultipleLinearRegressionSet *mlr, const map<string, element_information> *elementinfo) const
+Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool omnsizecorrect, const vector<double> &om_size, const MultipleLinearRegressionSet *mlr, const map<string, element_information> *elementinfo) const
 {
     Elemental_Profile out;
     for (map<string,double>::const_iterator element = cbegin(); element!=cend(); element++)
@@ -49,7 +49,7 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
         Elemental_Profile omnsizecorrected;
         if (mlr && omnsizecorrect)
         {
-            omnsizecorrected = OrganicandSizeCorrect(psize,om,mlr);
+            omnsizecorrected = OrganicandSizeCorrect(om_size,mlr);
         }
         else
         {
@@ -274,7 +274,7 @@ bool Elemental_Profile::contains(const string &element)
     return (map<string,double>::count(element)!=0);
 }
 
-Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, const double &om, const MultipleLinearRegressionSet *mlrset) const
+Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlrset) const
 {
     Elemental_Profile out;
     for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
@@ -286,20 +286,22 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const double &size, c
 
             if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0]!=it->first)
             {
-                qDebug()<<om<<","<<this->at(mlr->GetIndependentVariableNames()[0])<<","<<mlr->CoefficientsIntercept()[1];
+                qDebug()<<om_size[0]<<","<<this->at(mlr->GetIndependentVariableNames()[0])<<","<<mlr->CoefficientsIntercept()[1];
                 if (mlr->Equation()==regression_form::linear)
-                    out[it->first] += (om-this->at(mlr->GetIndependentVariableNames()[0]))*mlr->CoefficientsIntercept()[1];
+                    out[it->first] += (om_size[0]-this->at(mlr->GetIndependentVariableNames()[0]))*mlr->CoefficientsIntercept()[1];
                 else
-                    out[it->first] *= pow(om/this->at(mlr->GetIndependentVariableNames()[0]),mlr->CoefficientsIntercept()[1]);
+                    out[it->first] *= pow(om_size[0]/this->at(mlr->GetIndependentVariableNames()[0]),mlr->CoefficientsIntercept()[1]);
             }
-            if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1]!=it->first)
-            {
-                qDebug()<<size<<","<<this->at(mlr->GetIndependentVariableNames()[1])<<","<<mlr->CoefficientsIntercept()[2];
-                if (mlr->Equation()==regression_form::linear)
-                    out[it->first] += (size-this->at(mlr->GetIndependentVariableNames()[1]))*mlr->CoefficientsIntercept()[2];
-                else
-                    out[it->first] += pow(size/this->at(mlr->GetIndependentVariableNames()[1]),mlr->CoefficientsIntercept()[2]);
+            if (mlr->GetIndependentVariableNames().size()>1)
+            {   if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1]!=it->first)
+                {
+                    qDebug()<<om_size[1]<<","<<this->at(mlr->GetIndependentVariableNames()[1])<<","<<mlr->CoefficientsIntercept()[2];
+                    if (mlr->Equation()==regression_form::linear)
+                        out[it->first] += (om_size[1]-this->at(mlr->GetIndependentVariableNames()[1]))*mlr->CoefficientsIntercept()[2];
+                    else
+                        out[it->first] += pow(om_size[1]/this->at(mlr->GetIndependentVariableNames()[1]),mlr->CoefficientsIntercept()[2]);
 
+                }
             }
         }
         if (out[it->first]<0)
