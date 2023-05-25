@@ -92,3 +92,13 @@ void ChartView::keyPressEvent(QKeyEvent *event)
         break;
     }
 }
+
+void ChartView::mouseDoubleClickEvent( QMouseEvent * e )
+{
+    if ( e->button() == Qt::LeftButton )
+    {
+        chart()->zoomReset();
+    }
+
+    QGraphicsView::mouseDoubleClickEvent( e );
+}

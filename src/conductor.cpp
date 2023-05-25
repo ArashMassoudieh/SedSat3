@@ -5,6 +5,7 @@
 #include "resultitem.h"
 #include "testmcmc.h"
 #include "rangeset.h"
+#include <QMessageBox>
 
 #include "mainwindow.h"
 
@@ -159,6 +160,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "MLR")
     {
+        if (arguments["Organic Matter constituent"]=="" && arguments["Particle Size constituent"]=="")
+        {   QMessageBox::information(mainwindow,"Exclude Elements","At least one of Organic Matter constituent and Particle Size constituent must be selected", QMessageBox::Ok);
+            return false;
+        }
+
         results.SetName("MLR_vs_OM&Size ");
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);

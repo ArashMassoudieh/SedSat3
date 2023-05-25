@@ -20,7 +20,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
-
+    void mouseDoubleClickEvent( QMouseEvent * e );
 
 private:
     bool m_isTouching;

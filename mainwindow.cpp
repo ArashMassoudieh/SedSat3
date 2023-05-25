@@ -773,19 +773,20 @@ bool MainWindow::Execute(const string &command, map<string,string> arguments)
 {
     conductor->SetData(&DataCollection);
     bool outcome = conductor->Execute(command,arguments);
-    ResultsWindow *reswind = new ResultsWindow(this);
-    reswind->SetResults(conductor->GetResults());
-    ResultSetItem *resultset = new ResultSetItem(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
-    resultset->setToolTip(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
-    resultset->result = conductor->GetResults();
-    resultsviewmodel->appendRow(resultset);
-    for (map<string,ResultItem>::iterator it=resultset->result->begin(); it!=resultset->result->end(); it++)
-    {
-        reswind->AppendResult(it->second);
+    if (outcome)
+    {   ResultsWindow *reswind = new ResultsWindow(this);
+        reswind->SetResults(conductor->GetResults());
+        ResultSetItem *resultset = new ResultSetItem(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+        resultset->setToolTip(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+        resultset->result = conductor->GetResults();
+        resultsviewmodel->appendRow(resultset);
+        for (map<string,ResultItem>::iterator it=resultset->result->begin(); it!=resultset->result->end(); it++)
+        {
+            reswind->AppendResult(it->second);
+        }
+        reswind->setWindowTitle(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
+        reswind->show();
     }
-    reswind->setWindowTitle(QString::fromStdString(conductor->GetResults()->GetName()) + "_" + QDateTime::currentDateTime().toString(Qt::TextDate));
-    reswind->show();
-
     return outcome;
 
 }
