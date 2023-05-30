@@ -345,7 +345,7 @@ bool MainWindow::ReadExcel(const QString &filename)
             elemental_profile_set = DataCollection.AppendSampleSet(sheetnames[sheetnumber].toStdString());
         }
 
-        while (xlsxR.cellAt(row,1))
+        while (xlsxR.cellAt(row,1) && xlsxR.cellAt(row,1)->readValue().toString()!="")
         {
             QString sample_name=xlsxR.cellAt(row,1)->readValue().toString();
             Elemental_Profile elemental_profile;

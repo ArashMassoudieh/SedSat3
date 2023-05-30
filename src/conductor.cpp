@@ -287,11 +287,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetType(result_type::matrix1vs1);
         DFAResItem.SetShowTable(true);
         DFAResItem.SetShowGraph(true);
-        DFA_result_matrix dfaeigenmatrix = Data()->DiscriminantFunctionAnalysis();
-        CMBVector weighted11 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
-        CMBVector weighted12 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
-        CMBVector weighted21 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
-        CMBVector weighted22 = Data()->DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        DFA_result_matrix dfaeigenmatrix = TransformedData.DiscriminantFunctionAnalysis();
+        CMBVector weighted11 = TransformedData.DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
+        CMBVector weighted12 = TransformedData.DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group I"]);
+        CMBVector weighted21 = TransformedData.DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group II"]);
+        CMBVector weighted22 = TransformedData.DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group II"]), arguments["Source/Target group II"]);
         CMBMatrix *weighted_results = new CMBMatrix(2,weighted11.getsize()+weighted21.getsize());
         for (unsigned int i=0; i<weighted11.getsize(); i++)
         {
