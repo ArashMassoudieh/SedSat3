@@ -1737,6 +1737,37 @@ CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &sou
     return out;
 }
 
+CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis(const string &source1,const string &source2)
+{
+    CMBVector out;
+    vector<string> elemnames = ElementNames();
+    vector<string> selected_labels;
+    for (unsigned int i=0; i<elemnames.size(); i++)
+    {
+        double max_S = 0;
+        string highestimproved;
+        for (unsigned int j=0; j<elemnames.size(); j++)
+        {
+            vector<string> selected_labels_temp = selected_labels;
+            if (lookup(selected_labels,elemnames[j])==-1)
+            {
+                selected_labels_temp.push_back(elemnames[j]);
+                SourceSinkData tobeanalysed = Extract(selected_labels_temp);
+                DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
+                if (thisDFAresults.S_value>max_S)
+                {
+                    highestimproved = elemnames[j];
+                    max_S = thisDFAresults.S_value;
+                }
+            }
+        }
+        out.append(highestimproved,max_S);
+        selected_labels.push_back(highestimproved);
+
+    }
+    return out;
+}
+
 void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
 {
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)

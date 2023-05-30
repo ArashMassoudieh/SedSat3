@@ -254,7 +254,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        CMBVector *SVector = new CMBVector(Data()->StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        CMBVector *SVector = new CMBVector(Data()->Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
 
