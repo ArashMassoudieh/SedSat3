@@ -153,7 +153,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         axisYNormal->setMinorTickCount(5);
         chart->addAxis(axisYNormal, Qt::AlignLeft);
     }
-
+    axisX->setLabelsAngle(-90);
     chart->addAxis(axisX, Qt::AlignBottom);
 
 

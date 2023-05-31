@@ -259,6 +259,20 @@
 			"default": "false"
     		}
 	},
+	"SDFAM": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
+	},
 	"DFAM": {
 		"Use only selected elements": {
    			"type": "checkBox",

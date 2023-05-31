@@ -1768,6 +1768,53 @@ CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis(const string &so
     return out;
 }
 
+CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis()
+{
+    CMBVector out;
+    vector<string> elemnames = ElementNames();
+    vector<string> selected_labels;
+    for (unsigned int i=0; i<elemnames.size(); i++)
+    {
+        double max_S = 0;
+        string highestimproved;
+        string max_sourcegroup1, max_sourcegroup2;
+        for (map<string,Elemental_Profile_Set>::iterator sourcegroup1 = begin(); sourcegroup1!=end(); sourcegroup1++)
+        {
+            for (map<string,Elemental_Profile_Set>::iterator sourcegroup2 = std::next(sourcegroup1,1); sourcegroup2!=end(); sourcegroup2++)
+            {
+                if (sourcegroup1->first!=target_group && sourcegroup2->first!=target_group)
+                {
+                    for (unsigned int j=0; j<elemnames.size(); j++)
+                    {
+
+                        vector<string> selected_labels_temp = selected_labels;
+                        if (lookup(selected_labels,elemnames[j])==-1)
+                        {
+                            selected_labels_temp.push_back(elemnames[j]);
+                            SourceSinkData tobeanalysed = Extract(selected_labels_temp);
+                            DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(sourcegroup1->first,sourcegroup2->first);
+                            if (thisDFAresults.S_value>max_S)
+                            {
+                                highestimproved = elemnames[j];
+                                max_S = thisDFAresults.S_value;
+                                max_sourcegroup1 = sourcegroup1->first;
+                                max_sourcegroup2 = sourcegroup2->first;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+        out.append(highestimproved + " between " + max_sourcegroup1 + " and " + max_sourcegroup2,max_S);
+        selected_labels.push_back(highestimproved);
+    }
+
+
+    return out;
+}
+
 void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
 {
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)

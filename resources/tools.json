@@ -3,9 +3,10 @@
   {
     "3-Organic matter and particle size correction": "MLR",
     "1-Elements' correlation matrix": "CorMat",
-    "6-Discriminant function analysis (Two-way)": "DFA",
-    "7-Discriminant function analysis (Multiple way)": "DFAM",
-    "8-Stepwise discriminant function analysis": "SDFA",
+    "8-Discriminant function analysis (Two-way)": "DFA",
+    "9-Discriminant function analysis (Multiple-way)": "DFAM",
+    "6-Stepwise discriminant function analysis (Two-way)": "SDFA",
+    "7-Stepwise discriminant function analysis (Multiple-way)": "SDFAM",
     "4-Correct based on size and organic matter": "OM-Size Correct",
     "5-Bracketing Analysis": "Bracketing Analysis",
     "2-Outlier Analysis": "Outlier"

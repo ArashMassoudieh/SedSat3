@@ -259,6 +259,26 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(DFASValues);
 
     }
+    if (command == "SDFAM")
+    {
+        results.SetName("Stepwise DFA");
+        ResultItem DFASValues;
+        DFASValues.SetName("S-Values");
+        DFASValues.SetType(result_type::vector);
+        DFASValues.SetShowTable(true);
+        DFASValues.SetAbsoluteValue(true);
+        DFASValues.SetYAxisMode(yaxis_mode::log);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+
+        CMBVector *SVector = new CMBVector(Data()->Stepwise_DiscriminantFunctionAnalysis());
+        DFASValues.SetResult(SVector);
+        results.Append(DFASValues);
+
+    }
     if (command == "DFAM")
     {
         results.SetName("Multigroup DFA Analysis" );
