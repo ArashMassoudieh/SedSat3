@@ -238,6 +238,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetResult(&dfaeigenvector->eigen_vector);
         results.Append(DFAResItem);
 
+
+
     }
     if (command == "SDFA")
     {
@@ -254,7 +256,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        CMBVector *SVector = new CMBVector(Data()->Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
 
@@ -274,16 +276,18 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        CMBVector *SVector = new CMBVector(Data()->Stepwise_DiscriminantFunctionAnalysis());
+        CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis());
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
+
+
 
     }
     if (command == "DFAM")
     {
         results.SetName("Multigroup DFA Analysis" );
         ResultItem DFAResItem;
-        DFAResItem.SetName("Multigroup DFA Analysis");
+        DFAResItem.SetName("Normal to the discriminant hyperplane vector");
         DFAResItem.SetType(result_type::matrix);
         DFAResItem.SetShowTable(true);
         DFAResItem.SetShowGraph(true);
@@ -294,9 +298,44 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
-        DFA_result_matrix *dfaeigenmatrix = new DFA_result_matrix(Data()->DiscriminantFunctionAnalysis());
+        DFA_result_matrix *dfaeigenmatrix = new DFA_result_matrix(TransformedData.DiscriminantFunctionAnalysis());
         DFAResItem.SetResult(&dfaeigenmatrix->eigen_matrix);
         results.Append(DFAResItem);
+
+        for (map<string,Elemental_Profile_Set>::iterator source1 = TransformedData.begin(); source1 != TransformedData.end(); source1++)
+        {   for (map<string,Elemental_Profile_Set>::iterator source2 = std::next(source1,1); source2 != TransformedData.end(); source2++)
+            {
+                if (source1->first!=TransformedData.TargetGroup() && source2->first!=TransformedData.TargetGroup())
+                {   ResultItem DFAResItemWeighted;
+                    DFAResItemWeighted.SetName("DFA transformed between " + source1->first + " and " + source2->first);
+                    DFAResItemWeighted.SetType(result_type::matrix1vs1);
+                    DFAResItemWeighted.SetShowTable(true);
+                    DFAResItemWeighted.SetShowGraph(true);
+                    CMBVector weighted11 = TransformedData.DFATransformed(dfaeigenmatrix->eigen_matrix.GetRow(source1->first), source1->first);
+                    CMBVector weighted12 = TransformedData.DFATransformed(dfaeigenmatrix->eigen_matrix.GetRow(source2->first), source1->first);
+                    CMBVector weighted21 = TransformedData.DFATransformed(dfaeigenmatrix->eigen_matrix.GetRow(source1->first), source2->first);
+                    CMBVector weighted22 = TransformedData.DFATransformed(dfaeigenmatrix->eigen_matrix.GetRow(source2->first), source2->first);
+                    CMBMatrix *weighted_results = new CMBMatrix(2,weighted11.getsize()+weighted21.getsize());
+                    for (unsigned int i=0; i<weighted11.getsize(); i++)
+                    {
+                        weighted_results->matr[i][0] = weighted11[i];
+                        weighted_results->matr[i][1] = weighted12[i];
+                        weighted_results->SetRowLabel(i,source1->first);
+                    }
+                    for (unsigned int i=0; i<weighted21.getsize(); i++)
+                    {
+                        weighted_results->matr[i+weighted11.getsize()][0] = weighted21[i];
+                        weighted_results->matr[i+weighted11.getsize()][1] = weighted22[i];
+                        weighted_results->SetRowLabel(i+weighted11.getsize(),source2->first);
+                    }
+                    weighted_results->SetColumnLabel(0,"WB_" + source1->first);
+                    weighted_results->SetColumnLabel(1,"WB_" + source2->first);
+                    DFAResItemWeighted.SetResult(weighted_results);
+                    results.Append(DFAResItemWeighted);
+                }
+            }
+        }
+
 
     }
     if (command == "DFA-Transformed")
