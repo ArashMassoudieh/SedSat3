@@ -737,10 +737,9 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
     QJsonObject mainjsonobject = formsstructure.object();
     if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
     {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
-        GenericForm *form = new GenericForm(&GA_object,this, this);
-        form->SetCommand(index.data(Qt::UserRole).toString());
-        ui->verticalLayout_middle->addWidget(form);
-        centralform.reset(form);
+        centralform.reset(new GenericForm(&GA_object,this, this));
+        static_cast<GenericForm*>(centralform.get())->SetCommand(index.data(Qt::UserRole).toString());
+        ui->verticalLayout_middle->addWidget(centralform.get());
     }
 
 
