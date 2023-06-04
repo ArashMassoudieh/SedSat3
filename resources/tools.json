@@ -10,7 +10,7 @@
     "5-Bracketing Analysis": "Bracketing Analysis",
     "2-Outlier Analysis": "Outlier"
   },
-  "Analysis Tools":
+  "Fingerprinting Tools":
   {
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
     "Maximum likelihood unmixing using Genetic Algorithm": "GA",

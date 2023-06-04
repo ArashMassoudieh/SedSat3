@@ -92,15 +92,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_As,SIGNAL(triggered()),this,SLOT(onSaveProjectAs()));
     connect(ui->actionOpen_Project,SIGNAL(triggered()),this,SLOT(onOpenProject()));
     CGA<SourceSinkData> GA;
-    centralform = ui->textBrowser;
+    centralform.reset(ui->textBrowser);
     conductor->SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
     readRecentFilesList();
 }
 
 MainWindow::~MainWindow()
 {
-    if (centralform)
-        delete centralform;
     delete ui;
 }
 
@@ -682,53 +680,51 @@ void MainWindow::showdistributionsforelements()
 void MainWindow::on_constituent_properties_triggered()
 {
 
-    if (centralform)
-        delete centralform;
     FormElementInformation *formelems = new FormElementInformation(this);
     ElementTableModel *elementtablemodel = new ElementTableModel(&DataCollection,this);
     formelems->table()->setModel(elementtablemodel);
     ElementTableDelegate *elemDelegate = new ElementTableDelegate(&DataCollection, this);
     formelems->table()->setItemDelegate(elemDelegate);
     ui->verticalLayout_middle->addWidget(formelems);
-    centralform = formelems;
+    centralform.reset(formelems);
 }
 
 void MainWindow::onIncludeExcludeSample()
 {
-    if (centralform)
-        delete centralform;
     Data()->OutlierAnalysisForAll(-3,3);
     Data()->BracketTest();
     SelectSamples *include_exclude_samples = new SelectSamples(this);
     include_exclude_samples->SetMode(mode::samples);
     include_exclude_samples->SetData(&DataCollection);
     ui->verticalLayout_middle->addWidget(include_exclude_samples);
-    centralform = include_exclude_samples;
+    centralform.reset(include_exclude_samples);
 
 }
 
 void MainWindow::onOMSizeCorrection()
 {
-    if (centralform)
-        delete centralform;
+    if (DataCollection.OMandSizeConstituents()[0]=="" && DataCollection.OMandSizeConstituents()[1]=="")
+    {
+        QMessageBox::warning(this, "OpenHydroQual",tr("Perform Organic Matter and Size Correction first!\n"), QMessageBox::Ok);
+            return;
+    }
     SelectSamples *include_exclude_samples = new SelectSamples(this);
     include_exclude_samples->SetMode(mode::regressions);
     include_exclude_samples->SetData(&DataCollection);
     ui->verticalLayout_middle->addWidget(include_exclude_samples);
-    centralform = include_exclude_samples;
+    centralform.reset(include_exclude_samples);
 
 }
 
 
 void MainWindow::on_test_dialog_triggered()
 {
-    if (centralform)
-        delete centralform;
+
     QJsonObject mainjsonobject = formsstructure.object();
     QJsonObject GA_object = mainjsonobject.value("GA").toObject();
     GenericForm *form = new GenericForm(&GA_object,this,this);
     ui->verticalLayout_middle->addWidget(form);
-    centralform = form;
+    centralform.reset(form);
 }
 
 void MainWindow::on_tool_executed(const QModelIndex &index)
@@ -738,17 +734,13 @@ void MainWindow::on_tool_executed(const QModelIndex &index)
     {   QMessageBox::warning(this, "OpenHydroQual",tr("No data has been loaded!\n"), QMessageBox::Ok);
         return;
     }
-    if (centralform)
-    {   delete centralform;
-        centralform = nullptr;
-    }
     QJsonObject mainjsonobject = formsstructure.object();
     if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
     {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
         GenericForm *form = new GenericForm(&GA_object,this, this);
         form->SetCommand(index.data(Qt::UserRole).toString());
         ui->verticalLayout_middle->addWidget(form);
-        centralform = form;
+        centralform.reset(form);
     }
 
 

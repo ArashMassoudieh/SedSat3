@@ -221,6 +221,13 @@ public:
         omconstituent = _omconstituent;
         sizeconsituent = _sizeconsituent;
     }
+    vector<string> OMandSizeConstituents()
+    {
+        vector<string> out;
+        out.push_back(omconstituent);
+        out.push_back(sizeconsituent);
+        return out;
+    }
     void OutlierAnalysisForAll(const double &lowerthreshold=-3, const double &upperthreshold=3);
 
 private:

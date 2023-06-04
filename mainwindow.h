@@ -47,7 +47,7 @@ private:
     bool treeitemchangedprogramatically = false;
     std::unique_ptr<QMenu> menu;
     QJsonDocument formsstructure;
-    QWidget *centralform = nullptr;
+    std::unique_ptr<QWidget> centralform = nullptr;
     Conductor *conductor=nullptr;
     QModelIndex indexresultselected;
     void InitiateTables();

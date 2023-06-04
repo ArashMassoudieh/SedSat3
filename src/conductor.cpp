@@ -21,9 +21,24 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         if (GA!=nullptr) delete GA;
         ProgressWindow *rtw = new ProgressWindow(mainwindow);
+
+        bool organicnsizecorrection;
+        if (arguments["Apply size and organic matter correction"]=="true")
+        {   organicnsizecorrection = true;
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
+        else
+            organicnsizecorrection = false;
+
+
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
         rtw->show();
-        Data()->InitializeParametersObservations(arguments["Sample"]);
-        GA = new CGA<SourceSinkData>(Data());
+        correctedData.InitializeParametersObservations(arguments["Sample"]);
+        GA = new CGA<SourceSinkData>(&correctedData);
         GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
         GA->SetProperties(arguments);
@@ -56,7 +71,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Fitness",0);
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
-            organicnsizecorrection = true;
+        {   organicnsizecorrection = true;
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
         else
             organicnsizecorrection = false;
 
@@ -114,13 +135,20 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "Levenberg-Marquardt")
     {
         ProgressWindow* rtw = new ProgressWindow(mainwindow);
-        rtw->show();
+
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
-            organicnsizecorrection = true;
+        {   organicnsizecorrection = true;
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
         else
             organicnsizecorrection = false;
 
+        rtw->show();
         SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
         correctedData.InitializeParametersObservations(arguments["Sample"]);
         correctedData.SetProgressWindow(rtw);
@@ -417,7 +445,15 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
+        {
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
             organicnsizecorrection = true;
+
+        }
         else
             organicnsizecorrection = false;
 
