@@ -1,6 +1,7 @@
 #ifndef RESULTS_H
 #define RESULTS_H
 #include <map>
+#include <unordered_map>
 #include <interface.h>
 #include <string>
 

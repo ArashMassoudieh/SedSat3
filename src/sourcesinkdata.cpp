@@ -491,7 +491,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     {   Parameter p;
                         p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
                         p.SetPriorDistribution(distribution_type::lognormal);
-                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
+                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.8,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] / 0.8,2.0));
                         parameters.push_back(p);
                     }
                 }
@@ -1427,7 +1427,7 @@ ResultItem SourceSinkData::GetCalculatedElementMeans()
     return resitem;
     
 }
-ResultItem SourceSinkData::GetCalculatedElementStandardDev()
+ResultItem SourceSinkData::GetCalculatedElementSigma()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
@@ -1491,7 +1491,7 @@ ResultItem SourceSinkData::GetCalculatedElementMu()
         }
     }
     ResultItem resitem;
-    resitem.SetName("Calculated geometrical mean of elemental contents");
+    resitem.SetName("Calculated mu parameter of elemental contents");
     resitem.SetType(result_type::elemental_profile_set);
     resitem.SetResult(profile_set);
     return resitem;
@@ -1512,7 +1512,7 @@ ResultItem SourceSinkData::GetEstimatedElementMu()
         }
     }
     ResultItem resitem;
-    resitem.SetName("Infered geometrical mean of elemental contents");
+    resitem.SetName("Infered mu parameter elemental contents");
     resitem.SetType(result_type::elemental_profile_set);
     resitem.SetResult(profile_set);
     return resitem;
@@ -1552,17 +1552,19 @@ ResultItem SourceSinkData::GetEstimatedElementSigma()
             Elemental_Profile element_profile;
             for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
             {
-                element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->EstimatedSigma());
+                double sigma = it->second.ElementalDistribution(element_order[element_counter])->EstimatedSigma();
+                element_profile.AppendElement(element_order[element_counter], sigma);
             }
             profile_set->Append_Profile(it->first, element_profile);
         }
     }
     ResultItem resitem;
-    resitem.SetName("Infered sigma elemental contents");
+    resitem.SetName("Infered sigma parameter");
     resitem.SetType(result_type::elemental_profile_set);
     resitem.SetResult(profile_set);
     return resitem;
 }
+
 
 bool SourceSinkData::WriteElementInformationToFile(QFile *file)
 {

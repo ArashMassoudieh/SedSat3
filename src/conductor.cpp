@@ -48,19 +48,51 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.SetName("GA " + arguments["Sample"]);
 
         ResultItem result_cont = GA->Model_out.GetContribution();
+        result_cont.SetShowTable(true);
+        result_cont.SetType(result_type::contribution);
+        result_cont.SetShowGraph(true);
         results.Append(result_cont);
 
-        ResultItem result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
-        results.Append(result_calculated_means);
-
-        ResultItem result_estimated_means = GA->Model_out.GetEstimatedElementMean();
-        results.Append(result_estimated_means);
-
         ResultItem result_modeled_vs_measured = GA->Model_out.GetObservedvsModeledElementalProfile();
+        result_modeled_vs_measured.SetShowGraph(true);
+        result_modeled_vs_measured.SetShowTable(true);
         results.Append(result_modeled_vs_measured);
 
         ResultItem result_modeled_vs_measured_isotope = GA->Model_out.GetObservedvsModeledElementalProfile_Isotope();
+        result_modeled_vs_measured_isotope.SetShowGraph(true);
+        result_modeled_vs_measured_isotope.SetShowTable(true);
         results.Append(result_modeled_vs_measured_isotope);
+
+        ResultItem result_calculated_means = GA->Model_out.GetCalculatedElementMeans();
+        result_calculated_means.SetShowTable(true);
+        result_calculated_means.SetShowGraph(false);
+        results.Append(result_calculated_means);
+
+        ResultItem result_estimated_means = GA->Model_out.GetEstimatedElementMean();
+        result_estimated_means.SetShowTable(true);
+        result_calculated_means.SetShowGraph(false);
+        results.Append(result_estimated_means);
+
+        ResultItem result_calculated_mu = GA->Model_out.GetCalculatedElementMu();
+        result_calculated_mu.SetShowTable(true);
+        result_calculated_mu.SetShowGraph(false);
+        results.Append(result_calculated_mu);
+
+        ResultItem result_estimated_mu = GA->Model_out.GetEstimatedElementMu();
+        result_estimated_mu.SetShowTable(true);
+        result_calculated_mu.SetShowGraph(false);
+        results.Append(result_estimated_mu);
+
+        ResultItem result_calculated_sigma = GA->Model_out.GetCalculatedElementSigma();
+        result_calculated_sigma.SetShowTable(true);
+        result_calculated_sigma.SetShowGraph(false);
+        results.Append(result_calculated_sigma);
+
+        ResultItem result_estimated_sigma = GA->Model_out.GetEstimatedElementSigma();
+        result_estimated_sigma.SetShowTable(true);
+        result_estimated_sigma.SetShowGraph(false);
+        results.Append(result_estimated_sigma);
+
 
     }
     if (command == "GA (fixed elemental contribution)")
@@ -123,7 +155,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem result_estimated_means = GA->Model_out.GetEstimatedElementMean();
         results.Append(result_estimated_means);
 
-        ResultItem result_calculated_stds = GA->Model_out.GetCalculatedElementStandardDev();
+        ResultItem result_calculated_stds = GA->Model_out.GetCalculatedElementSigma();
         results.Append(result_calculated_stds);
 
         ResultItem result_estimated_stds = GA->Model_out.GetEstimatedElementSigma();

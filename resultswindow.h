@@ -25,6 +25,7 @@ public:
 private:
     Ui::ResultsWindow *ui;
     Results* results = nullptr; 
+    int result_item_counter = 0;
 
 public slots:
     void on_result_graph_clicked();

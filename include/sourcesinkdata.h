@@ -178,7 +178,7 @@ public:
     vector<ResultItem> GetMLRResults();
     ResultItem GetCalculatedElementMeans();
     vector<ResultItem> GetSourceProfiles();
-    ResultItem GetCalculatedElementStandardDev();
+    ResultItem GetCalculatedElementSigma();
     ResultItem GetCalculatedElementMu();
     ResultItem GetEstimatedElementMu();
     ResultItem GetEstimatedElementMean();

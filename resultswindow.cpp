@@ -9,6 +9,7 @@
 
 #include <QFileDialog>
 
+
 ResultsWindow::ResultsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ResultsWindow)
@@ -30,8 +31,9 @@ ResultsWindow::~ResultsWindow()
 void ResultsWindow::AppendResult(const ResultItem &resultitem)
 {
 
+    result_item_counter++;
     QTextBrowser *textBrowser = new QTextBrowser(ui->scrollAreaWidgetContents);
-    textBrowser->setObjectName(QString::fromStdString(resultitem.Name()));
+    textBrowser->setObjectName(QString::number(result_item_counter)+":"+QString::fromStdString(resultitem.Name()));
     //textBrowser->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     textBrowser->setTextColor(Qt::red);
     textBrowser->append(QString::fromStdString(resultitem.Name())+":");
@@ -67,7 +69,8 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
         pushButtonGraph->setIcon(iconGraph);
         //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
         pushButtonGraph->setMaximumWidth(20);
-        pushButtonGraph->setObjectName(QString::fromStdString(resultitem.Name()));
+
+        pushButtonGraph->setObjectName(QString::number(result_item_counter)+":"+QString::fromStdString(resultitem.Name()));
         ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1,1,1,Qt::AlignTop);
         connect(pushButtonGraph,SIGNAL(clicked()),this,SLOT(on_result_graph_clicked()));
     }
@@ -77,7 +80,7 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
     pushButtonExport->setIcon(iconExport);
     //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
     pushButtonExport->setMaximumWidth(20);
-    pushButtonExport->setObjectName(QString::fromStdString(resultitem.Name()));
+    pushButtonExport->setObjectName(QString::number(result_item_counter)+":"+QString::fromStdString(resultitem.Name()));
     ui->gridLayout->addWidget(pushButtonExport,ui->gridLayout->rowCount()-1,2,1,1,Qt::AlignTop);
     connect(pushButtonExport,SIGNAL(clicked()),this,SLOT(on_result_export_clicked()));
 
@@ -88,7 +91,7 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
         pushButtonTable->setIcon(iconTable);
         //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
         pushButtonTable->setMaximumWidth(20);
-        pushButtonTable->setObjectName(QString::fromStdString(resultitem.Name()));
+        pushButtonTable->setObjectName(QString::number(result_item_counter)+":"+QString::fromStdString(resultitem.Name()));
         ui->gridLayout->addWidget(pushButtonTable,ui->gridLayout->rowCount()-1,3,1,1,Qt::AlignTop);
         connect(pushButtonTable,SIGNAL(clicked()),this,SLOT(on_result_table_clicked()));
     }
@@ -108,6 +111,7 @@ void ResultsWindow::on_result_graph_clicked()
 
 void ResultsWindow::on_result_table_clicked()
 {
+    qDebug()<<sender()->objectName();
     ResultTableViewer *tableviewer = new ResultTableViewer(this);
     QTableWidget *tablewidget = results->operator[](sender()->objectName().toStdString()).Result()->ToTable();
     tableviewer->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));

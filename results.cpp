@@ -22,7 +22,7 @@ Results& Results::operator = (const Results &rhs)
 
 void Results::Append(const ResultItem &ritem)
 {
-    operator[](ritem.Name()) = ritem;
+    operator[](aquiutils::numbertostring(int(size())+1)+":"+ ritem.Name()) = ritem;
 }
 
 QJsonObject Results::toJsonObject()
