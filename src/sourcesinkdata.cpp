@@ -898,13 +898,17 @@ CVector SourceSinkData::PredictTarget_Isotope(parameter_mode param_mode)
 
 CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)
 {
+    CMatrix SourceMeanMat = SourceMeanMatrix(param_mode);
+    CMatrix SourceMeanMat_Iso = SourceMeanMatrix_Isotopes(param_mode);
     CVector C_elements = SourceMeanMatrix(param_mode)*ContributionVector();
     CVector C = SourceMeanMatrix_Isotopes(param_mode)*ContributionVector();
     for (unsigned int i=0; i<numberofisotopes; i++)
     {
         string corresponding_element = ElementInformation[isotope_order[i]].base_element;
         double predicted_corresponding_element_concentration = C_elements[lookup(element_order,corresponding_element)];
-        C[i] = (C[i]/predicted_corresponding_element_concentration/ElementInformation[isotope_order[i]].standard_ratio-1.0)*1000.0;
+        double ratio = C[i]/predicted_corresponding_element_concentration;
+        double standard_ratio = ElementInformation[isotope_order[i]].standard_ratio;
+        C[i] = (ratio/standard_ratio-1.0)*1000.0;
     }
     for (unsigned int i=element_order.size(); i<element_order.size()+isotope_order.size(); i++)
     {
