@@ -12,6 +12,7 @@ ConcentrationSet::ConcentrationSet():vector<double>()
 ConcentrationSet::ConcentrationSet(const ConcentrationSet &cs):vector<double>(cs)
 {
     EstimatedDistribution = cs.EstimatedDistribution;
+
 }
 
 ConcentrationSet::ConcentrationSet(int n):vector<double>(n)
@@ -122,6 +123,10 @@ vector<double> ConcentrationSet::EstimateParameters(distribution_type disttype)
     vector<double> out;
     if (disttype==distribution_type::none)
         disttype = FittedDist.distribution;
+    else
+    {   FittedDist.SetType(disttype);
+        EstimatedDistribution.SetType(disttype);
+    }
     FittedDist.SetDataMean(mean());
     FittedDist.SetDataSTDev(stdev());
     if (disttype==distribution_type::normal)
