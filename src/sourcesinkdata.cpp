@@ -770,6 +770,7 @@ CMatrix SourceSinkData::ResidualJacobian_softmax()
     return Jacobian;
 }
 
+
 CVector SourceSinkData::OneStepLevenBerg_Marquardt(double lambda)
 {
 
@@ -1168,6 +1169,33 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     }
 
     return false;
+}
+
+bool SourceSinkData::SetParameterValue(const CVector &value)
+{
+    bool out = true;
+    for (int i=0; i<value.num; i++)
+    {
+        out &=SetParameterValue(i,value[i]);
+    }
+    return out;
+}
+
+CVector SourceSinkData::Gradient(const CVector &value, const estimation_mode estmode)
+{
+
+    CVector out(value.num);
+    CVector base_vector = value;
+    SetParameterValue(value);
+    double baseValue = LogLikelihood(estmode);
+    for (int i=0; i<value.num; i++)
+    {
+        base_vector[i]+=epsilon;
+        SetParameterValue(base_vector);
+        double loglikehood = LogLikelihood(estmode);
+        out[i] = (loglikehood-baseValue)/epsilon;
+    }
+    return out;
 }
 
 
