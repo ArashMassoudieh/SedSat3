@@ -19,7 +19,7 @@ public:
     CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
     static CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type);
     vector<double> parameters;
-    distribution_type distribution = distribution_type::lognormal;
+    distribution_type distribution = distribution_type::none;
     void SetType(const distribution_type &typ);
     double Mean(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     void SetDataMean(const double &val) {mean_val = val;}

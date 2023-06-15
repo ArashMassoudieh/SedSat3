@@ -31,15 +31,20 @@
 #include "selectsamples.h"
 //#include "MCMC.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#include <ShlObj.h>
+#pragma comment(lib "shell32.lib")
+#endif
 
-#define RECENT "recentFiles.txt"
+#define RECENT "SedSatrecentFiles.txt"
 
 #ifndef max_num_recent_files
 #define max_num_recent_files 15
 #endif
 
 
-#define version "0.0.18"
+#define version "1.0.1"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -328,7 +333,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         element_names.append(elem_names);
 
     }
-
+    DataCollection.Clear();
     for (int sheetnumber=0; sheetnumber<sheetnames.count(); sheetnumber++)
     {
         xlsxR.selectSheet(sheetnames[sheetnumber]);

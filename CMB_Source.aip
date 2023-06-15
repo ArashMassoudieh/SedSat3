@@ -8,11 +8,13 @@
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="CMBSource_Icon.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="www.SedSat.org"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="www.SedSat.org/download"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{8347BB10-C399-402A-9A36-E959B92819FA} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{EEFDBFDE-4837-4710-813B-DA2768987315} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="CMBSource"/>
-    <ROW Property="ProductVersion" Value="0.0.18" Type="32"/>
+    <ROW Property="ProductName" Value="SedSat3"/>
+    <ROW Property="ProductVersion" Value="1.0.1" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -26,7 +28,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
-    <ROW Directory="GIFMod_Dir" Directory_Parent="StartMenuFolder" DefaultDir="CMBSOU~1|CMBSource"/>
+    <ROW Directory="GIFMod_Dir" Directory_Parent="StartMenuFolder" DefaultDir="SedSat3"/>
     <ROW Directory="Icons_1_Dir" Directory_Parent="resources_Dir" DefaultDir="Icons"/>
     <ROW Directory="Icons_Dir" Directory_Parent="APPDIR" DefaultDir="Icons"/>
     <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
@@ -41,7 +43,6 @@
     <ROW Component="APPDIR" ComponentId="{D2079C08-FD01-46B6-B092-B19378EB97DE}" Directory_="APPDIR" Attributes="0"/>
     <ROW Component="B35B3203FEB4CFFA576A27CB835D3E6" ComponentId="{2A192B35-8CAC-4893-8E21-6D47204E01B2}" Directory_="APPDIR" Attributes="260" KeyPath="B35B3203FEB4CFFA576A27CB835D3E6" Options="2"/>
     <ROW Component="CMBSource" ComponentId="{11759CBC-CFA1-4DA3-8F24-870E0686A44E}" Directory_="GIFMod_Dir" Attributes="0"/>
-    <ROW Component="CMBSource.exe_1" ComponentId="{85792D1A-11D9-4557-9C63-37D389461DE4}" Directory_="bin_1_Dir" Attributes="256" KeyPath="CMBSource.exe_1"/>
     <ROW Component="Cancel.png" ComponentId="{CD3D714A-0F5F-48A9-AA45-1DF166ADDC4F}" Directory_="Icons_1_Dir" Attributes="0" KeyPath="Cancel.png" Type="0"/>
     <ROW Component="D36C9FE0826D4D2B9C2DDCCE2C83E860" ComponentId="{C5A82F84-796D-4BF3-AD8E-E6C550560CA8}" Directory_="APPDIR" Attributes="260" KeyPath="D36C9FE0826D4D2B9C2DDCCE2C83E860" Options="2"/>
     <ROW Component="D3Dcompiler_47.dll" ComponentId="{5D913DA8-EE60-46D7-A31D-F32E850F3D00}" Directory_="bin_1_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
@@ -54,6 +55,7 @@
     <ROW Component="Qt5Gui.dll" ComponentId="{383831FE-7FD9-4B89-BD35-F3677DD35579}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Gui.dll"/>
     <ROW Component="Qt5Svg.dll" ComponentId="{BADEA9A3-59E3-4507-82CE-C4EDD6002D1B}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Svg.dll"/>
     <ROW Component="Qt5Widgets.dll" ComponentId="{7F054B70-1424-4888-ADD4-6A95A761020B}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Widgets.dll"/>
+    <ROW Component="SedSat.exe" ComponentId="{44D040ED-2F28-4D64-9BD3-A55BA025AC5B}" Directory_="bin_1_Dir" Attributes="256" KeyPath="SedSat.exe"/>
     <ROW Component="blas_win64_MT.dll" ComponentId="{5D21FC1A-EA6D-4901-BFE4-87C9C5BF5293}" Directory_="bin_1_Dir" Attributes="256" KeyPath="blas_win64_MT.dll"/>
     <ROW Component="forms_structures.json" ComponentId="{F7CD0256-1D74-4E44-8BF5-27699EEFAB10}" Directory_="resources_Dir" Attributes="0" KeyPath="forms_structures.json" Type="0"/>
     <ROW Component="gsl.dll" ComponentId="{D817CB68-4394-4154-98EC-14E2402EE257}" Directory_="bin_1_Dir" Attributes="256" KeyPath="gsl.dll"/>
@@ -66,12 +68,11 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="B35B3203FEB4CFFA576A27CB835D3E6" Title="Visual C++ Redistributable for Visual Studio 2017 x86" Description="Visual C++ Redistributable for Visual Studio 2017 x86" Display="5" Level="1" Attributes="0" Components="B35B3203FEB4CFFA576A27CB835D3E6"/>
-    <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D36C9FE0826D4D2B9C2DDCCE2C83E860 D3Dcompiler_47.dll Graph.png QXlsx.dll Qt5Charts.dll Qt5Core.dll Qt5Gui.dll Qt5Svg.dll Qt5Widgets.dll blas_win64_MT.dll gsl.dll gslcblas.dll lapack_win64_MT.dll libEGL.dll libGLESv2.dll opengl32sw.dll"/>
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="APPDIR CMBSource CMBSource.exe_1 Cancel.png Icons ProductInformation forms_structures.json qwindows.dll"/>
+    <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D36C9FE0826D4D2B9C2DDCCE2C83E860 D3Dcompiler_47.dll Graph.png QXlsx.dll Qt5Charts.dll Qt5Core.dll Qt5Gui.dll Qt5Svg.dll Qt5Widgets.dll SedSat.exe blas_win64_MT.dll gsl.dll gslcblas.dll lapack_win64_MT.dll libEGL.dll libGLESv2.dll opengl32sw.dll"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="APPDIR CMBSource Cancel.png Icons ProductInformation forms_structures.json qwindows.dll"/>
     <ATTRIBUTE name="CurrentFeature" value="D36C9FE0826D4D2B9C2DDCCE2C83E860"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="CMBSource.exe_1" Component_="CMBSource.exe_1" FileName="CMBSOU~1.EXE|CMBSource.exe" Attributes="0" SourcePath="build\release\CMBSource.exe" SelfReg="false" NextFile="forms_structures.json" DigSign="true"/>
     <ROW File="CMBSource_Icon.png" Component_="Graph.png" FileName="CMBSOU~1.PNG|CMBSource_Icon.png" Attributes="0" SourcePath="resources\Icons\CMBSource_Icon.png" SelfReg="false" NextFile="table.png"/>
     <ROW File="Cancel.png" Component_="Cancel.png" FileName="Cancel.png" Attributes="0" SourcePath="resources\Icons\Cancel.png" SelfReg="false" NextFile="Proceed.png"/>
     <ROW File="D3Dcompiler_47.dll" Component_="D3Dcompiler_47.dll" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\D3Dcompiler_47.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
@@ -83,6 +84,7 @@
     <ROW File="Qt5Gui.dll" Component_="Qt5Gui.dll" FileName="Qt5Gui.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Gui.dll" SelfReg="false" NextFile="Qt5Svg.dll"/>
     <ROW File="Qt5Svg.dll" Component_="Qt5Svg.dll" FileName="Qt5Svg.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Svg.dll" SelfReg="false" NextFile="Qt5Widgets.dll"/>
     <ROW File="Qt5Widgets.dll" Component_="Qt5Widgets.dll" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Widgets.dll" SelfReg="false" NextFile="QXlsx.dll"/>
+    <ROW File="SedSat.exe" Component_="SedSat.exe" FileName="SedSat.exe" Attributes="0" SourcePath="build\release\SedSat.exe" SelfReg="false" DigSign="true"/>
     <ROW File="blas_win64_MT.dll" Component_="blas_win64_MT.dll" FileName="BLAS_W~1.DLL|blas_win64_MT.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\blas_win64_MT.dll" SelfReg="false" NextFile="D3Dcompiler_47.dll"/>
     <ROW File="export.png" Component_="Graph.png" FileName="export.png" Attributes="0" SourcePath="resources\Icons\export.png" SelfReg="false" NextFile="CMBSource_Icon.png"/>
     <ROW File="forms_structures.json" Component_="forms_structures.json" FileName="FORMS_~1.JSO|forms_structures.json" Attributes="0" SourcePath="resources\forms_structures.json" SelfReg="false" NextFile="Cancel.png"/>
@@ -92,12 +94,12 @@
     <ROW File="libEGL.dll" Component_="libEGL.dll" FileName="libEGL.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libEGL.dll" SelfReg="false" NextFile="libGLESv2.dll"/>
     <ROW File="libGLESv2.dll" Component_="libGLESv2.dll" FileName="LIBGLE~1.DLL|libGLESv2.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libGLESv2.dll" SelfReg="false" NextFile="opengl32sw.dll"/>
     <ROW File="opengl32sw.dll" Component_="opengl32sw.dll" FileName="OPENGL~1.DLL|opengl32sw.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\opengl32sw.dll" SelfReg="false" NextFile="Qt5Charts.dll"/>
-    <ROW File="qwindows.dll" Component_="qwindows.dll" FileName="qwindows.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2015_64\plugins\platforms\qwindows.dll" SelfReg="false" NextFile="CMBSource.exe_1"/>
-    <ROW File="table.png" Component_="Graph.png" FileName="table.png" Attributes="0" SourcePath="resources\Icons\table.png" SelfReg="false"/>
+    <ROW File="qwindows.dll" Component_="qwindows.dll" FileName="qwindows.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2015_64\plugins\platforms\qwindows.dll" SelfReg="false" NextFile="forms_structures.json"/>
+    <ROW File="table.png" Component_="Graph.png" FileName="table.png" Attributes="0" SourcePath="resources\Icons\table.png" SelfReg="false" NextFile="SedSat.exe"/>
     <ROW File="tools.json" Component_="forms_structures.json" FileName="TOOLS~1.JSO|tools.json" Attributes="0" SourcePath="resources\tools.json" SelfReg="false" NextFile="blas_win64_MT.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="x64_Release" BuildName="x64_Release" BuildOrder="1" BuildType="0" PackageFolder="..\CMB_Source_setup" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="x64_Release" BuildName="x64_Release" BuildOrder="1" BuildType="0" PackageFolder="..\..\Dropbox\SourceIDDataForCMBSource" PackageFileName="SedSat_Setup" Languages="en" InstallationType="4" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -219,8 +221,8 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="SedSat" Directory_="GIFMod_Dir" Name="SedSat" Component_="SedSat.exe" Target="[#SedSat.exe]" Hotkey="0" Icon_="CMBSource_Icon.exe" IconIndex="0" ShowCmd="3" WkDir="bin_1_Dir"/>
     <ROW Shortcut="Uninstall" Directory_="GIFMod_Dir" Name="UNINST~1|Uninstall" Component_="qwindows.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
-    <ROW Shortcut="_CMBSource" Directory_="StartMenuFolder" Name="CMBSOU~1|CMBSource" Component_="CMBSource.exe_1" Target="[#CMBSource.exe_1]" Hotkey="0" Icon_="CMBSource_Icon.exe" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>

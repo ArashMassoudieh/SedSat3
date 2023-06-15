@@ -178,6 +178,7 @@ void SourceSinkData::Clear()
     isotope_order.clear();
     size_om_order.clear();
     selected_target_sample = "";
+    clear(); 
 }
 
 Elemental_Profile_Set* SourceSinkData::AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set)
@@ -288,7 +289,11 @@ void SourceSinkData::AssignAllDistributions()
         for (map<string, Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
         {
             it->second.ElementalDistribution(element_names[i])->FittedDistribution()->distribution = FittedDistribution(element_names[i])->distribution;
-            it->second.ElementalDistribution(element_names[i])->FittedDistribution()->parameters = it->second.ElementalDistribution(element_names[i])->EstimateParameters(FittedDistribution(element_names[i])->distribution);
+            if (ElementInformation[element_names[i]].Role!=element_information::role::isotope )
+                it->second.ElementalDistribution(element_names[i])->FittedDistribution()->parameters = it->second.ElementalDistribution(element_names[i])->EstimateParameters(FittedDistribution(element_names[i])->distribution);
+            else
+                it->second.ElementalDistribution(element_names[i])->FittedDistribution()->parameters = it->second.ElementalDistribution(element_names[i])->EstimateParameters(distribution_type::normal);
+
         }
     }
 }
@@ -473,7 +478,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     {   Parameter p;
                         p.SetName(source_iterator->first + "_" + element_iterator->first + "_mu");
                         p.SetPriorDistribution(distribution_type::normal);
-                        source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::lognormal);
+                        source_iterator->second.GetEstimatedDistribution(element_iterator->first)->SetType(distribution_type::normal);
                         p.SetRange(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]-0.2, source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[0]+0.2);
                         parameters.push_back(p);
                     }
@@ -508,7 +513,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
                     {   Parameter p;
                         p.SetName(source_iterator->first + "_" + element_iterator->first + "_sigma");
                         p.SetPriorDistribution(distribution_type::lognormal);
-                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.5,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 2,2.0));
+                        p.SetRange(max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] * 0.8,0.001), max(source_iterator->second.GetFittedDistribution(element_iterator->first)->parameters[1] / 0.8,2.0));
                         parameters.push_back(p);
                     }
                 }
@@ -669,15 +674,13 @@ double SourceSinkData::LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_
     double LogLikelihood = 0;
     CVector C;
     if (est_mode == estimation_mode::elemental_profile_and_contribution)
-        C = PredictTarget_Isotope(parameter_mode::based_on_fitted_distribution);
+        C = PredictTarget_Isotope_delta(parameter_mode::based_on_fitted_distribution);
     else
-        C = PredictTarget_Isotope(parameter_mode::direct);
-    CVector C_obs = ObservedDataforSelectedSample(selected_target_sample);
+        C = PredictTarget_Isotope_delta(parameter_mode::direct);
+    CVector C_obs = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample);
 
-    if (C.min()>0)
-        LogLikelihood -= C.num*log(error_stdev) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev,2));
-    else
-        LogLikelihood -= 1e10;
+
+        LogLikelihood -= C.num*log(error_stdev_isotope) + pow((C-C_obs).norm2(),2)/(2*pow(error_stdev_isotope,2));
 
     return LogLikelihood;
 }
@@ -893,7 +896,10 @@ CVector SourceSinkData::PredictTarget(parameter_mode param_mode)
 
 CVector SourceSinkData::PredictTarget_Isotope(parameter_mode param_mode)
 {
-    CVector C = SourceMeanMatrix_Isotopes(param_mode)*ContributionVector();
+    CMatrix srcMatrixIso = SourceMeanMatrix_Isotopes(param_mode);
+    CVector contribVect = ContributionVector();
+    CVector C = srcMatrixIso*contribVect;
+
     return C;
 }
 
@@ -901,8 +907,8 @@ CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)
 {
     CMatrix SourceMeanMat = SourceMeanMatrix(param_mode);
     CMatrix SourceMeanMat_Iso = SourceMeanMatrix_Isotopes(param_mode);
-    CVector C_elements = SourceMeanMatrix(param_mode)*ContributionVector();
-    CVector C = SourceMeanMatrix_Isotopes(param_mode)*ContributionVector();
+    CVector C_elements = SourceMeanMat*ContributionVector();
+    CVector C = SourceMeanMat_Iso*ContributionVector();
     for (unsigned int i=0; i<numberofisotopes; i++)
     {
         string corresponding_element = ElementInformation[isotope_order[i]].base_element;
@@ -928,12 +934,15 @@ double SourceSinkData::LogLikelihood(estimation_mode est_mode)
 {
     double YLogLikelihood = 0;
     double CLogLikelihood = 0;
+    double CLogLikelihood_Isotope = 0;
     if (est_mode != estimation_mode::only_contributions)
         YLogLikelihood = LogLikelihoodSourceElementalDistributions();
     double LogPrior = LogPriorContributions();
     if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
-        CLogLikelihood = LogLikelihoodModelvsMeasured(est_mode);
-    return YLogLikelihood + CLogLikelihood + LogPrior;
+    {   CLogLikelihood = LogLikelihoodModelvsMeasured(est_mode);
+        CLogLikelihood_Isotope = LogLikelihoodModelvsMeasured_Isotope(est_mode);
+    }
+    return YLogLikelihood + CLogLikelihood + CLogLikelihood_Isotope + LogPrior;
 }
 
 CMatrix SourceSinkData::SourceMeanMatrix(parameter_mode param_mode)
@@ -1118,7 +1127,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     {
         int isotope_counter = (i-(numberofsourcesamplesets-1)-numberofconstituents*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1-numberofconstituents*numberofsourcesamplesets))%numberofsourcesamplesets;
-        GetElementDistribution(element_order[isotope_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
+        GetElementDistribution(isotope_order[isotope_counter],samplesetsorder[group_counter])->SetEstimatedMu(value);
         return true;
     }
 
@@ -1143,7 +1152,7 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
         }
         int isotope_counter = (i-(numberofsourcesamplesets-1)-(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets)/numberofsourcesamplesets;
         int group_counter = (i-(numberofsourcesamplesets-1)-(2*numberofconstituents+numberofisotopes)*numberofsourcesamplesets)%numberofsourcesamplesets;
-        GetElementDistribution(element_order[isotope_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
+        GetElementDistribution(isotope_order[isotope_counter],samplesetsorder[group_counter])->SetEstimatedSigma(value);
         return true;
     }
 
