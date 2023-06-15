@@ -1039,13 +1039,14 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
 void GeneralChart::on_Exporttopng()
 {
     QRect rect = QDialog::frameGeometry();
-    this->resize(2000, 2000);
+    
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save"), "",
         tr("png file (*.png)"));
 
     if (!fileName.contains("."))
         fileName+=".png";
+    this->resize(rect.width() * 2, rect.height() * 2);
     chartView->grab().save(fileName);
     this->resize(rect.size());
 }
