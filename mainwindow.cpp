@@ -333,7 +333,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         element_names.append(elem_names);
 
     }
-
+    DataCollection.Clear();
     for (int sheetnumber=0; sheetnumber<sheetnames.count(); sheetnumber++)
     {
         xlsxR.selectSheet(sheetnames[sheetnumber]);

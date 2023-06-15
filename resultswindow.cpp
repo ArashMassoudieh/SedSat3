@@ -103,6 +103,7 @@ void ResultsWindow::on_result_graph_clicked()
 {
     qDebug()<<sender()->objectName();
     GeneralChart *resultgraph = new GeneralChart(this);
+    resultgraph->setWindowFlag(Qt::WindowMinMaxButtonsHint);
     resultgraph->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
     resultgraph->Plot(&results->operator[](sender()->objectName().toStdString()));
     resultgraph->show();
@@ -113,6 +114,7 @@ void ResultsWindow::on_result_table_clicked()
 {
     qDebug()<<sender()->objectName();
     ResultTableViewer *tableviewer = new ResultTableViewer(this);
+    tableviewer->setWindowFlag(Qt::WindowMinMaxButtonsHint);
     QTableWidget *tablewidget = results->operator[](sender()->objectName().toStdString()).Result()->ToTable();
     tableviewer->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
     tableviewer->SetTable(tablewidget);

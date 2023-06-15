@@ -178,6 +178,7 @@ void SourceSinkData::Clear()
     isotope_order.clear();
     size_om_order.clear();
     selected_target_sample = "";
+    clear(); 
 }
 
 Elemental_Profile_Set* SourceSinkData::AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set)
