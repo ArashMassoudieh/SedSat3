@@ -141,7 +141,10 @@ public:
     bool InitializeContributionsRandomly_softmax(); //initializes source contributions randomly for softmax transformation
     bool SetParameterValue(unsigned int i, double value); //set the parameter values for estimation
     bool SetParameterValue(const CVector &value); //set the parameter values for estimation
+    CVector GetParameterValue(); // return the vector of all the parameter values
+    double GetParameterValue(unsigned int i); // return the value of parameter i
     CVector Gradient(const CVector &value, const estimation_mode estmode); //calculates the gradient of likelihood function
+    CVector GradientUpdate(const estimation_mode estmode = estimation_mode::elemental_profile_and_contribution); //Improve the estimate by one step using the gradient descent method
     CVector PredictTarget(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     CVector PredictTarget_Isotope(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
     CVector PredictTarget_Isotope_delta(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
@@ -266,6 +269,7 @@ private:
     string omconstituent;
     string sizeconsituent;
     const double epsilon = 1e-6;
+    double distance_coeff = 1;
 
 
 

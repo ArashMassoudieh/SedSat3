@@ -28,6 +28,7 @@ struct GA_Twiking_parameters
     bool sens_out = false;
     bool RCGA = false;
     bool readfromgafile;
+    bool Steepest_Descent = false;
     double N;
     double pcross=1;
     double pmute=0.02;
@@ -115,6 +116,7 @@ private:
     void getfromfile(char filename[]);
     void fillfitdist();
     double assignfitnesses(vector<double> inp);
+    double Gradient_Descent(vector<double> inp);
     int getparamno(int i, int ts);
     int get_act_paramno(int i);
     int get_time_series(int i);

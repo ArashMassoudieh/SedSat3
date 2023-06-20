@@ -48,6 +48,11 @@
     		{
     			"type": "checkBox",
     			"default": "false"
+    		},
+    		"Steepest Descent":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
     		}
 	},
 	"GA (disregarding targets)": {

@@ -32,6 +32,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     parameter_estimation_mode = mp.parameter_estimation_mode;
     omconstituent = mp.omconstituent;
     sizeconsituent = mp.sizeconsituent;
+    distance_coeff = mp.distance_coeff;
 
 }
 
@@ -158,6 +159,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     parameter_estimation_mode = mp.parameter_estimation_mode;
     omconstituent = mp.omconstituent;
     sizeconsituent = mp.sizeconsituent;
+    distance_coeff = mp.distance_coeff;
 
     return *this;
 }
@@ -1180,12 +1182,28 @@ bool SourceSinkData::SetParameterValue(unsigned int i, double value)
     return false;
 }
 
+double SourceSinkData::GetParameterValue(unsigned int i)
+{
+    return parameters[i].Value();
+}
+
+
 bool SourceSinkData::SetParameterValue(const CVector &value)
 {
     bool out = true;
     for (int i=0; i<value.num; i++)
     {
         out &=SetParameterValue(i,value[i]);
+    }
+    return out;
+}
+
+CVector SourceSinkData::GetParameterValue()
+{
+    CVector out(parameters.size());
+    for (unsigned int i=0; i<parameters.size(); i++)
+    {
+        out[i]=parameters[i].Value();
     }
     return out;
 }
@@ -1204,8 +1222,58 @@ CVector SourceSinkData::Gradient(const CVector &value, const estimation_mode est
         double loglikehood = LogLikelihood(estmode);
         out[i] = (loglikehood-baseValue)/epsilon;
     }
-    return out;
+    return out/out.norm2();
 }
+
+CVector SourceSinkData::GradientUpdate(const estimation_mode estmode)
+{
+    CVector X = GetParameterValue();
+    double baseLikelihood = LogLikelihood(estmode);
+    CVector dx = Gradient(X,estmode);
+    CVector X_new1 = X+distance_coeff*dx;
+    SetParameterValue(X_new1);
+    double newLikelihood1 = LogLikelihood(estmode);
+    CVector X_new2 = X+2*distance_coeff*dx;
+    SetParameterValue(X_new2);
+    double newLikelihood2 = LogLikelihood(estmode);
+    qDebug()<<"Distance Coeff:" << distance_coeff;
+    if (distance_coeff<10e-6)
+        distance_coeff=1;
+    if (newLikelihood2>newLikelihood1 && newLikelihood2>baseLikelihood)
+    {
+        distance_coeff*=2;
+        return X_new2;
+    }
+    else if (newLikelihood1>newLikelihood2 && newLikelihood1>baseLikelihood)
+    {
+        SetParameterValue(X_new1);
+        return X_new1;
+    }
+    else
+    {
+        int counter = 0;
+        while (baseLikelihood>newLikelihood1 || counter<5)
+        {
+            distance_coeff*=0.5;
+            X_new1 = X+distance_coeff*dx;
+            SetParameterValue(X_new1);
+            newLikelihood1 = LogLikelihood(estmode);
+            counter++;
+        }
+        if (counter<5)
+        {   SetParameterValue(X_new1);
+            return X_new1;
+        }
+        else
+        {
+            SetParameterValue(X);
+            return X;
+        }
+    }
+
+}
+
+
 
 
 vector<string> SourceSinkData::ElementsToBeUsedInCMB()

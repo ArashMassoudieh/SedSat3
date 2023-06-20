@@ -340,8 +340,8 @@ void CGA<T>::assignfitnesses()
 	vector<double> time_(GA_params.maxpop);
 	vector<int> epochs(GA_params.maxpop);
 	clock_t t0,t1;
-    Models.clear();
-    Models.resize(GA_params.maxpop);
+    //Models.clear();
+
 	for (int k = 0; k < GA_params.maxpop; k++)
 	{
 		for (int i = 0; i < GA_params.nParam; i++)
@@ -358,7 +358,7 @@ void CGA<T>::assignfitnesses()
 
         Ind[k].actual_fitness = 0;
 
-        Models[k] = *Model;
+        //Models[k] = *Model;
         //Models[k].SetSilent(true);
 		//Models[k].SetRecordResults(false);
         //Models[k].SetNumThreads(1);
@@ -377,7 +377,34 @@ int counter=0;
 		for (int k=0; k<GA_params.maxpop; k++)
 		{
 
-			FILE *FileOut;
+            if (GA_params.Steepest_Descent && k<min(GA_params.maxpop/10,1))
+            {
+                    if (k==0)
+                        qDebug()<<"Prior Likelihood: " <<Models[k].GetObjectiveFunctionValue();
+                    CVector updated_params;
+                    for (int j=0; j<5; j++)
+                        updated_params = Models[k].GradientUpdate();
+                    for (int i = 0; i < GA_params.nParam; i++)
+                    {
+                        if (loged[i] != 1)
+                        {
+                            inp[k][i] = updated_params[i];
+                            Ind[k].x[i] = updated_params[i];
+
+                        }
+                        else
+                        {
+                            inp[k][i] = updated_params[i];
+                            Ind[k].x[i] = log10(updated_params[i]);
+                        }
+                    }
+
+                    if (k==0)
+                        qDebug()<<"Posterior Likelihood: " <<Models[k].GetObjectiveFunctionValue();
+
+            }
+
+            FILE *FileOut;
 #pragma omp critical
             {
                 FileOut = fopen((filenames.pathname+"detail_GA.txt").c_str(),"a");
@@ -506,6 +533,14 @@ bool CGA<T>::SetProperty(const string &varname, const string &value)
     if (aquiutils::tolower(varname) == "getfromfilename") {filenames.getfromfilename = value.c_str(); return true;}
     if (aquiutils::tolower(varname) == "initial_population") {filenames.initialpopfilemame = value; return true;}
     if (aquiutils::tolower(varname) == "numthreads"  || varname == "Number of threads to be used") {numberOfThreads = aquiutils::atoi(value.c_str()); return true;}
+    if (aquiutils::tolower(varname) == "steepest descent") {
+
+        if (aquiutils::tolower(value) == "true")
+            GA_params.Steepest_Descent = true;
+        else
+            GA_params.Steepest_Descent = false;
+        return true;
+    }
     last_error = "Property '" + varname + "' was not found!";
     return false;
 }
@@ -564,12 +599,15 @@ int CGA<T>::optimize()
 
 	CMatrix Fitness(GA_params.nGen, 3);
 
+    Models.clear();
+    Models.resize(GA_params.maxpop);
+    for (int k=0; k<GA_params.maxpop; k++)
+        Models[k] = *Model;
     for (current_generation=0; current_generation<GA_params.nGen; current_generation++)
 	{
 
 		write_to_detailed_GA("Assigning fitnesses ...");
-        Models.clear();
-        Models.resize(GA_params.maxpop);
+
         assignfitnesses();
 
 		write_to_detailed_GA("Assigning fitnesses done!");
@@ -684,8 +722,7 @@ int CGA<T>::optimize()
 
 
 	}
-    Models.clear();
-    Models.resize(GA_params.maxpop);
+
     assignfitnesses();
 	FileOut = fopen(RunFileName.c_str(), "a");
 	fprintf(FileOut, "Final Enhancements\n");
@@ -744,6 +781,7 @@ double CGA<T>::assignfitnesses(vector<double> inp)
 	return likelihood;
 
 }
+
 /*
 template<class T>
 vector<T>& CGA<T>::assignfitnesses_p(vector<double> inp) //Generates an instance of the model with the provided parameters
