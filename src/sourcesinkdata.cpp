@@ -1546,9 +1546,9 @@ ResultItem SourceSinkData::GetCalculatedElementSigma()
             Elemental_Profile element_profile;
             for (unsigned int element_counter = 0; element_counter < element_order.size(); element_counter++)
             {
-                if (it->second.ElementalDistribution(element_order[element_counter])->FittedDistribution()->distribution == distribution_type::normal)
+                if (it->second.ElementalDistribution(element_order[element_counter])->GetEstimatedDistribution()->distribution == distribution_type::normal)
                     element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->stdev());
-                else if (it->second.ElementalDistribution(element_order[element_counter])->FittedDistribution()->distribution == distribution_type::lognormal)
+                else if (it->second.ElementalDistribution(element_order[element_counter])->GetEstimatedDistribution()->distribution == distribution_type::lognormal)
                     element_profile.AppendElement(element_order[element_counter], it->second.ElementalDistribution(element_order[element_counter])->stdevln());
             }
             profile_set->Append_Profile(it->first, element_profile);
