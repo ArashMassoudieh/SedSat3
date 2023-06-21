@@ -29,6 +29,7 @@
 #include "resultsetitem.h"
 #include "resultitem.h"
 #include "selectsamples.h"
+#include "dialogchooseexcelsheets.h"
 //#include "MCMC.h"
 
 #ifdef _WIN32
@@ -289,16 +290,30 @@ void MainWindow::on_plot_raw_elemental_profiles()
 bool MainWindow::ReadExcel(const QString &filename)
 {
     Document xlsxR(filename);
-    QStringList sheetnames;
+    QStringList sheetnamesall;
     if ( xlsxR.load() ) // load excel file
     {
         qDebug() << "[debug] success to load xlsx file.";
-        sheetnames = xlsxR.sheetNames();
+        sheetnamesall = xlsxR.sheetNames();
+    }
+    QStringList *sheetstobeincluded = nullptr;
+    DialogChooseExcelSheets *chooseExcelSheetsDlg = new DialogChooseExcelSheets(this,&sheetstobeincluded);
+
+    for (int i=0; i<sheetnamesall.count(); i++)
+    {
+        chooseExcelSheetsDlg->AddItem(sheetnamesall[i]);
+        qDebug() << sheetnamesall[i];
     }
 
-    for (int i=0; i<sheetnames.count(); i++)
+    chooseExcelSheetsDlg->exec();
+    QStringList sheetnames;
+    if (!sheetstobeincluded) return false;
+    for (int i=0; i<sheetnamesall.count(); i++)
     {
-        qDebug() << sheetnames[i];
+        if (sheetstobeincluded->contains(sheetnamesall[i]))
+        {
+            sheetnames<<sheetnamesall[i];
+        }
     }
 
     IndicateSheetsDialog *indicatesheetdialog = new IndicateSheetsDialog(this);

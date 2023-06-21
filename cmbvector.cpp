@@ -86,7 +86,7 @@ string CMBVector::ToString()
     {   for (int j=0; j<getsize(); j++)
         {
             if (valueAt(j)==1)
-                out += labels[j] + ", Did't pass \n";
+                out += labels[j] + ", Fail \n";
             else
                 out += labels[j] + ", Pass \n";
         }
@@ -133,7 +133,7 @@ QTableWidget *CMBVector::ToTable()
         else
         {
             if (valueAt(i)==1)
-                tablewidget->setItem(i,0, new QTableWidgetItem("Did not pass"));
+                tablewidget->setItem(i,0, new QTableWidgetItem("Fail"));
             else
                 tablewidget->setItem(i,0, new QTableWidgetItem("Pass"));
 

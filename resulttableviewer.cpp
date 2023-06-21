@@ -7,6 +7,11 @@ ResultTableViewer::ResultTableViewer(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ResultTableViewer)
 {
+
+    Qt::WindowFlags flags = Qt::Window | Qt::WindowSystemMenuHint
+                                | Qt::WindowMinMaxButtonsHint
+                                | Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
     ui->setupUi(this);
     connect(ui->ExporttoCSV, SIGNAL(clicked()),this,SLOT(on_ExportToCSV()));
 }

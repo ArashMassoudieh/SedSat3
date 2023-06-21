@@ -32,6 +32,7 @@ SOURCES += \
     cmbvector.cpp \
     contribution.cpp \
     customplotbar.cpp \
+    dialogchooseexcelsheets.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
     filebrowserpushbuttom.cpp \
@@ -95,6 +96,7 @@ HEADERS += \
     cmbvector.h \
     contribution.h \
     customplotbar.h \
+    dialogchooseexcelsheets.h \
     elementstablemodel.h \
     elementtabledelegate.h \
     filebrowserpushbuttom.h \
@@ -152,6 +154,7 @@ INCLUDEPATH += include/MCMC/
 FORMS += \
     ProgressWindow.ui \
     aboutdialog.ui \
+    dialogchooseexcelsheets.ui \
     formelementinformation.ui \
     generalchart.ui \
     genericform.ui \
