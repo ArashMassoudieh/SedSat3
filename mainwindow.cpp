@@ -45,7 +45,7 @@
 #endif
 
 
-#define version "1.0.1"
+#define version "1.0.2"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -297,7 +297,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         sheetnamesall = xlsxR.sheetNames();
     }
     QStringList *sheetstobeincluded = nullptr;
-    DialogChooseExcelSheets *chooseExcelSheetsDlg = new DialogChooseExcelSheets(this,&sheetstobeincluded);
+    std::unique_ptr<DialogChooseExcelSheets> chooseExcelSheetsDlg(new DialogChooseExcelSheets(this,&sheetstobeincluded));
 
     for (int i=0; i<sheetnamesall.count(); i++)
     {
@@ -315,8 +315,9 @@ bool MainWindow::ReadExcel(const QString &filename)
             sheetnames<<sheetnamesall[i];
         }
     }
-
-    IndicateSheetsDialog *indicatesheetdialog = new IndicateSheetsDialog(this);
+    if (sheetstobeincluded)
+        delete sheetstobeincluded;
+    std::unique_ptr<IndicateSheetsDialog> indicatesheetdialog(new IndicateSheetsDialog(this));
     indicatesheetdialog->Populate_Table(sheetnames);
     indicatesheetdialog->exec();
     indicatesheetdialog->close();
