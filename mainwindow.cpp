@@ -296,6 +296,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         qDebug() << "[debug] success to load xlsx file.";
         sheetnamesall = xlsxR.sheetNames();
     }
+    DataCollection.Clear();
     QStringList *sheetstobeincluded = nullptr;
     std::unique_ptr<DialogChooseExcelSheets> chooseExcelSheetsDlg(new DialogChooseExcelSheets(this,&sheetstobeincluded));
 
@@ -349,7 +350,7 @@ bool MainWindow::ReadExcel(const QString &filename)
         element_names.append(elem_names);
 
     }
-    DataCollection.Clear();
+
     for (int sheetnumber=0; sheetnumber<sheetnames.count(); sheetnumber++)
     {
         xlsxR.selectSheet(sheetnames[sheetnumber]);
