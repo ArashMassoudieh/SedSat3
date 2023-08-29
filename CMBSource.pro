@@ -196,7 +196,7 @@ CONFIG(debug, debug|release) {
     message(Building in debug mode)
     #QMAKE_CXXFLAGS+= -fopenmp
     #QMAKE_LFLAGS +=  -fopenmp
-    ! macx: LIBS += -lgomp -lpthread -lgsl -larmadillo
+    ! macx: LIBS += -lgomp -lpthread -larmadillo
     macx: LIBS += -lpthread
     DEFINES += NO_OPENMP DEBUG
 
@@ -209,7 +209,7 @@ CONFIG(debug, debug|release) {
     # QMAKE_LFLAGS+=-pg
     DEFINES += ARMA_USE_OPENMP
     macx: DEFINES += NO_OPENMP
-    ! macx: LIBS += -lgomp -lpthread -lgsl -larmadillo
+    ! macx: LIBS += -lgomp -lpthread -larmadillo
     macx: LIBS += -lpthread
 }
 
@@ -244,7 +244,7 @@ linux {
     lessThan(QT_MAJOR_VERSION, 6): LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
     LIBS += -L"/usr/local/lib/ -lsuperlu.so"
     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
-    LIBS += -larmadillo -llapack -lblas
+    LIBS += -larmadillo -llapack -lblas -lgsl
 }
 
 macx {
