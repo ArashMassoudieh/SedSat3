@@ -12,6 +12,7 @@ ConcentrationSet::ConcentrationSet():vector<double>()
 ConcentrationSet::ConcentrationSet(const ConcentrationSet &cs):vector<double>(cs)
 {
     EstimatedDistribution = cs.EstimatedDistribution;
+    FittedDist = cs.FittedDist;
 
 }
 
@@ -24,6 +25,7 @@ ConcentrationSet& ConcentrationSet::operator=(const ConcentrationSet &cs)
 {
     vector<double>::operator=(cs);
     EstimatedDistribution = cs.EstimatedDistribution;
+    FittedDist = cs.FittedDist;
     return *this;
 }
 

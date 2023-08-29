@@ -45,7 +45,7 @@
 #endif
 
 
-#define version "1.0.2"
+#define version "1.0.3"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -253,12 +253,13 @@ void MainWindow::on_import_excel()
     conductor->SetWorkingFolder(fi.absolutePath());
     if (fileName!="")
     {
-        ReadExcel(fileName);
+        if (ReadExcel(fileName))
+        {
+            InitiateTables();
+            QMessageBox::information(this, "Exclude Elements", "To not include in analysis, double click, and uncheck box for the constituent", QMessageBox::Ok);
+            on_constituent_properties_triggered();
+        }
     }
-
-    InitiateTables();
-    QMessageBox::information(this,"Exclude Elements","To not include in analysis, double click, and uncheck box for the constituent", QMessageBox::Ok);
-    on_constituent_properties_triggered();
 
 }
 
@@ -371,8 +372,19 @@ bool MainWindow::ReadExcel(const QString &filename)
             Elemental_Profile elemental_profile;
             for (int col=0; col<element_names[0].count(); col++)
             {
-                double value = xlsxR.cellAt(row,col+2)->readValue().toDouble();
-                elemental_profile.AppendElement(element_names[0][col].toStdString(),value);
+                bool isnumber = false; 
+                if (xlsxR.cellAt(row, col + 2)->readValue().toString().toDouble(&isnumber));
+                if (isnumber)
+                {
+                    double value = xlsxR.cellAt(row, col + 2)->readValue().toDouble();
+                    elemental_profile.AppendElement(element_names[0][col].toStdString(), value);
+                }
+                else
+                {
+                    QMessageBox::warning(this, "Non numerical values identified!", "In sheet " + sheetnames[sheetnumber] + ", row " + QString::number(row) + " and column " + QString::number(col+2) + " the cell content is '" + xlsxR.cellAt(row, col + 2)->readValue().toString() + "'", QMessageBox::Ok);
+                    DataCollection.Clear();
+                    return false; 
+                }
             }
             row++;
             elemental_profile_set->Append_Profile(sample_name.toStdString(),elemental_profile);
