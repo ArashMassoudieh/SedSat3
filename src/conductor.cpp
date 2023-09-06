@@ -229,11 +229,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
         if (arguments["Equation"]=="Linear")
-            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::linear);
+            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::linear);
         else
-            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particla Size constituent"],regression_form::power);
+            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::power);
 
-        Data()->SetOMandSizeConstituents(arguments["Organic Matter constituent"],arguments["Particla Size constituent"]);
+        Data()->SetOMandSizeConstituents(arguments["Organic Matter constituent"],arguments["Particle Size constituent"]);
         for (map<string,Elemental_Profile_Set>::iterator it=Data()->begin(); it!=Data()->end(); it++)
         {
             if (it->first != Data()->TargetGroup())
@@ -789,6 +789,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "Outlier")
     {
+        bool exclude_samples = (arguments["Use only selected samples"] == "true" ? true : false);
+        bool exclude_elements = (arguments["Use only selected elements"] == "true" ? true : false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
         results.SetName("Outlier analysis for '" + arguments["Source/Target group"] + "'");
         ResultItem OutlierResItem;
         OutlierResItem.SetName("Outlier Analysis");
@@ -797,7 +800,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         OutlierResItem.SetShowTable(true);
         OutlierResItem.SetShowGraph(false);
         double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
-        CMBMatrix *outliermatrix = new CMBMatrix(Data()->at(arguments["Source/Target group"]).Outlier(-threshold,threshold));
+        CMBMatrix *outliermatrix = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).Outlier(-threshold,threshold));
         outliermatrix->SetLimit(_range::high,threshold);
         outliermatrix->SetLimit(_range::low,-threshold);
         OutlierResItem.SetResult(outliermatrix);

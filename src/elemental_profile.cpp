@@ -57,7 +57,7 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
         }
 
         if (elementinfo && exclude_elements)
-        {   if (elementinfo->at(element->first).include_in_analysis && elementinfo->at(element->first).Role!=element_information::role::do_not_include)
+        {   if (elementinfo->at(element->first).include_in_analysis && elementinfo->at(element->first).Role!=element_information::role::do_not_include && elementinfo->at(element->first).Role != element_information::role::particle_size && elementinfo->at(element->first).Role != element_information::role::orgainc_carbon)
             {
                 out[element->first] = omnsizecorrected[element->first];
             }

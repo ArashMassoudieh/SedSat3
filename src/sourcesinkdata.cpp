@@ -59,7 +59,7 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     if (elementinfo)
     for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
     {
-        if (it->second.include_in_analysis && it->second.Role!=element_information::role::do_not_include)
+        if (it->second.include_in_analysis && it->second.Role!=element_information::role::do_not_include && it->second.Role!=element_information::role::orgainc_carbon && it->second.Role != element_information::role::particle_size)
         {
             out.ElementInformation[it->first] = ElementInformation[it->first];
             out.element_distributions[it->first] = element_distributions[it->first];

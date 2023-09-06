@@ -62,7 +62,11 @@ QTableWidget *MultipleLinearRegressionSet::ToTable()
 {
     QTableWidget *tablewidget = new QTableWidget();
     tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tablewidget->setColumnCount(5);
+    if (begin()->second.CoefficientsIntercept().size()>2)
+        tablewidget->setColumnCount(5);
+    else
+        tablewidget->setColumnCount(3);
+
     tablewidget->setRowCount(size());
     QStringList headers;
     QStringList sources;
@@ -75,13 +79,19 @@ QTableWidget *MultipleLinearRegressionSet::ToTable()
         tablewidget->setItem(i,2, new QTableWidgetItem(QString::number(it->second.P_Value()[0])));
         if (it->second.P_Value()[0]<0.05)
             tablewidget->item(i, 2)->setForeground(Qt::red);
-        tablewidget->setItem(i,3, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[2])));
-        tablewidget->setItem(i,4, new QTableWidgetItem(QString::number(it->second.P_Value()[1])));
-        if (it->second.P_Value()[1]<0.05)
-            tablewidget->item(i, 4)->setForeground(Qt::red);
+        if (it->second.CoefficientsIntercept().size() > 2)
+        {
+            tablewidget->setItem(i, 3, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[2])));
+            tablewidget->setItem(i, 4, new QTableWidgetItem(QString::number(it->second.P_Value()[1])));
+            if (it->second.P_Value()[1] < 0.05)
+                tablewidget->item(i, 4)->setForeground(Qt::red);
+        }
         i++;
     }
-    headers << "Intercept" << "OM coefficient" << "OM P-value" << "Size coefficient" << "Size P-value";
+    if (begin()->second.CoefficientsIntercept().size() > 2)
+        headers << "Intercept" << QString::fromStdString(begin()->second.GetIndependentVariableNames()[0]) + " coefficient" << QString::fromStdString(begin()->second.GetIndependentVariableNames()[0]) + " P-value" << QString::fromStdString(begin()->second.GetIndependentVariableNames()[1]) + " coefficient" << QString::fromStdString(begin()->second.GetIndependentVariableNames()[1]) + " P-value";
+    else
+        headers << "Intercept" << QString::fromStdString(begin()->second.GetIndependentVariableNames()[0]) + " coefficient" << QString::fromStdString(begin()->second.GetIndependentVariableNames()[0]) + " P-value" << "Size coefficient" << "Size P-value";
     tablewidget->setHorizontalHeaderLabels(headers);
     tablewidget->setVerticalHeaderLabels(sources);
     return tablewidget;

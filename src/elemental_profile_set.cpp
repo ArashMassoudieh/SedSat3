@@ -64,7 +64,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     else
     {
         for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
-            if (it->second.IncludedInAnalysis())
+            if (it->second.IncludedInAnalysis() && elementinfo->at(it->first).Role!=element_information::role::particle_size && elementinfo->at(it->first).Role != element_information::role::orgainc_carbon)
                 out.Append_Profile(it->first, it->second);
     }
     out.SetRegression(&mlr_vs_om_size);
