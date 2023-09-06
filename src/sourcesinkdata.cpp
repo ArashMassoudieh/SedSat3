@@ -875,7 +875,7 @@ bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
                 rtw->AppendPoint(counter, err);
                 rtw->SetXRange(0, counter);
                 rtw->SetProgress(1 - err_x / err_x0);
-                QCoreApplication::processEvents();
+                
             }
             
         }
@@ -1825,6 +1825,8 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
     CVector term2 = term1*out.eigen_vector;
     double denuminator = term2.sum();
     out.S_value = numerator/denuminator;
+    if (rtw)
+        rtw->SetProgress(1);
     return out;
 }
 
@@ -1855,6 +1857,8 @@ CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis(const string &so
     vector<string> selected_labels;
     for (unsigned int i=0; i<elemnames.size(); i++)
     {
+        if (rtw)
+            rtw->SetProgress(double(i + 1) / double(elemnames.size()));
         double max_S = 0;
         string highestimproved;
         for (unsigned int j=0; j<elemnames.size(); j++)
@@ -1886,6 +1890,8 @@ CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis()
     vector<string> selected_labels;
     for (unsigned int i=0; i<elemnames.size(); i++)
     {
+        if (rtw)
+            rtw->SetProgress(double(i + 1) / double(elemnames.size()));
         double max_S = 0;
         string highestimproved;
         string max_sourcegroup1, max_sourcegroup2;

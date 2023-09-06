@@ -281,6 +281,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFA")
     {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        rtw->show();
         results.SetName("DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFAResItem;
         DFAResItem.SetName("DFA coefficients");
@@ -291,6 +293,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
@@ -303,6 +306,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "SDFA")
     {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        rtw->show();
         results.SetName("Stepwise DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFASValues;
         DFASValues.SetName("S-Values");
@@ -315,7 +320,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
-
+        TransformedData.SetProgressWindow(rtw);
         CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
@@ -323,6 +328,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "SDFAM")
     {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        rtw->show();
         results.SetName("Stepwise DFA");
         ResultItem DFASValues;
         DFASValues.SetName("S-Values");
@@ -333,6 +340,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 

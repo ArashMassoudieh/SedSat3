@@ -77,6 +77,7 @@ void ProgressWindow::AppendPoint(const double& x, const double& y, int chart)
 void ProgressWindow::SetProgress(const double& prog)
 {
 	ui.progressBar->setValue(prog * 100);
+    QCoreApplication::processEvents();
 }
 
 void ProgressWindow::SetYRange(const double &y0, const double &y1, int chart)

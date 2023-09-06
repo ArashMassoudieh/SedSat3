@@ -117,15 +117,14 @@ void MainWindow::onSaveProject()
     {   fileName = QFileDialog::getSaveFileName(this,
             tr("Save"), "",
             tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
-        if (fileName.isEmpty())
-            return;
-
-        if (!fileName.toLower().contains(".cmb"))
-            fileName += ".cmb";
         addToRecentFiles(fileName,true);
     }
 
-   
+    if (fileName.isEmpty())
+        return;
+
+    if (!fileName.toLower().contains(".cmb"))
+        fileName+=".cmb";
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
     QFileInfo fi(file);
