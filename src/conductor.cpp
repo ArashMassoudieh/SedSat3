@@ -292,7 +292,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetYAxisMode(yaxis_mode::log);
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
+        if (arguments["Correct Based on target sample"] != "")
+            TransformedData = TransformedData.Corrected(arguments["Correct Based on target sample"], true);
+        
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
@@ -318,6 +322,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["Correct Based on target sample"] != "")
+            TransformedData = TransformedData.Corrected(arguments["Correct Based on target sample"], true);
+
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
@@ -340,6 +347,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["Correct Based on target sample"] != "")
+            TransformedData = TransformedData.Corrected(arguments["Correct Based on target sample"], true);
+        
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
@@ -364,6 +374,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["Correct Based on target sample"] != "")
+            TransformedData = TransformedData.Corrected(arguments["Correct Based on target sample"], true);
+
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
         DFA_result_matrix *dfaeigenmatrix = new DFA_result_matrix(TransformedData.DiscriminantFunctionAnalysis());

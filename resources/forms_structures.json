@@ -240,7 +240,11 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    	},
+		"Correct Based on target sample": {
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
 	},
 	"SDFA": {
 		"Use only selected elements": {
@@ -262,7 +266,11 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+   		},
+		"Correct Based on target sample": {
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
 	},
 	"SDFAM": {
 		"Use only selected elements": {
@@ -276,21 +284,29 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+		"Correct Based on target sample": {
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
 	},
 	"DFAM": {
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
-    		},
-    		"Use only selected samples": {
+    	},
+    	"Use only selected samples": {
    			"type": "checkBox",
 			"default": "false"
-    		},
+    	},
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+		},
+		"Correct Based on target sample": {
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
 	},
 	"DFA-Transformed": {
 		"Use only selected elements": {

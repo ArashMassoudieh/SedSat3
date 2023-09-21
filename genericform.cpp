@@ -59,6 +59,13 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                             for (unsigned int i=0; i<names.size(); i++)
                                 combobox->addItem(QString::fromStdString(names[i]));
                         }
+                        else if (object.value("source").toString() == "TargetSamplesList+Blank")
+                        {
+                            vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
+                            combobox->addItem("");
+                            for (unsigned int i = 0; i < names.size(); i++)
+                                combobox->addItem(QString::fromStdString(names[i]));
+                        }
                         else if (object.value("source").toString()=="ElementsList")
                         {
                             vector<string> names = mainwindow()->Data()->ElementNames();
@@ -72,7 +79,6 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                             combobox->addItem("");
                             for (unsigned int i=0; i<names.size(); i++)
                                 combobox->addItem(QString::fromStdString(names[i]));
-
 
                         }
                         else if (object.value("source").toString()=="SourceList")

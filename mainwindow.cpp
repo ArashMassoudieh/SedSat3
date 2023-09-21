@@ -45,7 +45,7 @@
 #endif
 
 
-#define version "1.0.3"
+#define version "1.0.4"
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
