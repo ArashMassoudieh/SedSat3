@@ -59,13 +59,13 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     Elemental_Profile_Set out;
     if (applyomsizecorrection)
     {
-        out = OrganicandSizeCorrect(om_size);
+        out = OrganicandSizeCorrect(om_size,elementinfo);
     }
     else
     {
         for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
-            if (it->second.IncludedInAnalysis() && elementinfo->at(it->first).Role!=element_information::role::particle_size && elementinfo->at(it->first).Role != element_information::role::orgainc_carbon)
-                out.Append_Profile(it->first, it->second);
+            if (it->second.IncludedInAnalysis())
+                out.Append_Profile(it->first, it->second, elementinfo);
     }
     out.SetRegression(&mlr_vs_om_size);
     return out;
@@ -98,7 +98,7 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
     {
         if (elementinfo==nullptr)
             element_distributions[it->first].push_back(it->second);
-        else if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role != element_information::role::do_not_include)
+        else if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role != element_information::role::do_not_include && elementinfo->at(it->first).Role != element_information::role::particle_size && elementinfo->at(it->first).Role != element_information::role::orgainc_carbon)
             element_distributions[it->first].push_back(it->second);
     }
     return &operator[](name);
@@ -473,14 +473,14 @@ QTableWidget *Elemental_Profile_Set::ToTable()
     return tablewidget;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const vector<double> &om_size)
+Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const vector<double> &om_size, map<string, element_information> * elementinfo)
 {
     Elemental_Profile_Set out = *this;
     out.clear();
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
         if (it->second.IncludedInAnalysis())
-            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size));
+            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size,elementinfo));
 
     }
     return out;

@@ -49,7 +49,7 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
                 om_size.push_back(at(target_group)[selected_target_sample][omconstituent]);
             if (sizeconsituent!="")
                 om_size.push_back(at(target_group)[selected_target_sample][sizeconsituent]);
-            out[it->first] = it->second.CopyIncludedinAnalysis(omnsizecorrect,om_size);
+            out[it->first] = it->second.CopyIncludedinAnalysis(omnsizecorrect,om_size,elementinfo);
         }
         else
             out[it->first] = it->second;

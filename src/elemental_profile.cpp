@@ -274,33 +274,37 @@ bool Elemental_Profile::contains(const string &element)
     return (map<string,double>::count(element)!=0);
 }
 
-Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlrset) const
+Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlrset, map<string, element_information>* elementinfo) const
 {
     Elemental_Profile out;
     for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        out[it->first]=it->second;
+        if (elementinfo->at(it->first).Role!=element_information::role::orgainc_carbon && elementinfo->at(it->first).Role != element_information::role::particle_size)
+        {   out[it->first]=it->second;
 
-        if (mlrset->count(it->first)==1)
-        {   const MultipleLinearRegression *mlr = &mlrset->at(it->first);
-
-            if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0]!=it->first)
+            if (mlrset->count(it->first) == 1)
             {
-                qDebug()<<om_size[0]<<","<<this->at(mlr->GetIndependentVariableNames()[0])<<","<<mlr->CoefficientsIntercept()[1];
-                if (mlr->Equation()==regression_form::linear)
-                    out[it->first] += (om_size[0]-this->at(mlr->GetIndependentVariableNames()[0]))*mlr->CoefficientsIntercept()[1];
-                else
-                    out[it->first] *= pow(om_size[0]/this->at(mlr->GetIndependentVariableNames()[0]),mlr->CoefficientsIntercept()[1]);
-            }
-            if (mlr->GetIndependentVariableNames().size()>1)
-            {   if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1]!=it->first)
-                {
-                    qDebug()<<om_size[1]<<","<<this->at(mlr->GetIndependentVariableNames()[1])<<","<<mlr->CoefficientsIntercept()[2];
-                    if (mlr->Equation()==regression_form::linear)
-                        out[it->first] += (om_size[1]-this->at(mlr->GetIndependentVariableNames()[1]))*mlr->CoefficientsIntercept()[2];
-                    else
-                        out[it->first] += pow(om_size[1]/this->at(mlr->GetIndependentVariableNames()[1]),mlr->CoefficientsIntercept()[2]);
+                const MultipleLinearRegression* mlr = &mlrset->at(it->first);
 
+                if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0] != it->first)
+                {
+                    qDebug() << om_size[0] << "," << this->at(mlr->GetIndependentVariableNames()[0]) << "," << mlr->CoefficientsIntercept()[1];
+                    if (mlr->Equation() == regression_form::linear)
+                        out[it->first] += (om_size[0] - this->at(mlr->GetIndependentVariableNames()[0])) * mlr->CoefficientsIntercept()[1];
+                    else
+                        out[it->first] *= pow(om_size[0] / this->at(mlr->GetIndependentVariableNames()[0]), mlr->CoefficientsIntercept()[1]);
+                }
+                if (mlr->GetIndependentVariableNames().size() > 1)
+                {
+                    if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1] != it->first)
+                    {
+                        qDebug() << om_size[1] << "," << this->at(mlr->GetIndependentVariableNames()[1]) << "," << mlr->CoefficientsIntercept()[2];
+                        if (mlr->Equation() == regression_form::linear)
+                            out[it->first] += (om_size[1] - this->at(mlr->GetIndependentVariableNames()[1])) * mlr->CoefficientsIntercept()[2];
+                        else
+                            out[it->first] += pow(om_size[1] / this->at(mlr->GetIndependentVariableNames()[1]), mlr->CoefficientsIntercept()[2]);
+
+                    }
                 }
             }
         }

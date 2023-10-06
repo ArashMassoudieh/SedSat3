@@ -181,7 +181,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
         rtw->show();
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         correctedData.InitializeParametersObservations(arguments["Sample"]);
         correctedData.SetProgressWindow(rtw);
         if (arguments["Softmax transformation"]=="true")

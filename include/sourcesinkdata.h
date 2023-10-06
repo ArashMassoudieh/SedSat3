@@ -84,6 +84,10 @@ public:
         else
             return nullptr;
     }
+    map<string,element_information>* GetElementInformation()
+    {
+        return &ElementInformation;
+    }
     ConcentrationSet* GetElementDistribution(const string &element_name)
     {
         if (element_distributions.count(element_name))
