@@ -480,9 +480,10 @@ Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const vector<
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
         if (it->second.IncludedInAnalysis())
-            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size,elementinfo));
+            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size,elementinfo),elementinfo);
 
     }
+
     return out;
 }
 
