@@ -35,7 +35,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         rtw->show();
         correctedData.InitializeParametersObservations(arguments["Sample"]);
         GA = new CGA<SourceSinkData>(&correctedData);
@@ -113,7 +113,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         else
             organicnsizecorrection = false;
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         rtw->show();
         correctedData.InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
         correctedData.SetParameterEstimationMode(estimation_mode::only_contributions);
@@ -510,7 +510,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         else
             organicnsizecorrection = false;
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection);
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection, Data()->GetElementInformation());
         qDebug()<<1;
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
