@@ -49,7 +49,7 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
         Elemental_Profile omnsizecorrected;
         if (mlr && omnsizecorrect)
         {
-            omnsizecorrected = OrganicandSizeCorrect(om_size,mlr);
+            omnsizecorrected = OrganicandSizeCorrect(om_size,mlr, elementinfo);
         }
         else
         {
@@ -274,7 +274,7 @@ bool Elemental_Profile::contains(const string &element)
     return (map<string,double>::count(element)!=0);
 }
 
-Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlrset, map<string, element_information>* elementinfo) const
+Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlrset, const map<string, element_information>* elementinfo) const
 {
     Elemental_Profile out;
     for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)

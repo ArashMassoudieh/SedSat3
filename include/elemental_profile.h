@@ -45,7 +45,7 @@ public:
     bool contains(const string &element);
     bool IncludedInAnalysis() const {return included_in_analysis;}
     void SetIncluded(bool value) {included_in_analysis = value;}
-    Elemental_Profile OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlr, map<string, element_information> *elementinfo=nullptr) const;
+    Elemental_Profile OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlr, const map<string, element_information> *elementinfo=nullptr) const;
     double DotProduct(const CMBVector &vector);
 
 private:

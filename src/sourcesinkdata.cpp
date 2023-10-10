@@ -115,6 +115,7 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
+    
     out.PopulateElementInformation();
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
