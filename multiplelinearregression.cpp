@@ -208,6 +208,7 @@ QJsonObject MultipleLinearRegression::toJsonObject()
 
         out[QString::fromStdString("Coefficient for;" + aquiutils::numbertostring(i)+";" + independent_variables_names[i-1])] = coefficients_intercept_[i];
         out[QString::fromStdString("P-value for;" + aquiutils::numbertostring(i)+";" + independent_variables_names[i-1])] = p_value[i-1];
+        out[QString::fromStdString("Effective for;" + aquiutils::numbertostring(i)+";" + independent_variables_names[i-1])] = Effective(i-1);
     }
 
 
@@ -234,10 +235,15 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
         if (key.contains("Coefficient for"))
         {   coefficients_intercept_.push_back(jsonobject[key].toDouble());
             independent_variables_names.push_back(key.split(";")[2].toStdString());
+
         }
         if (key.contains("P-value for"))
         {
             p_value.push_back(jsonobject[key].toDouble());
+        }
+        if (key.contains("Effective for"))
+        {
+            make_effective.push_back(jsonobject[key].toBool());
         }
     }
     R2 = jsonobject["R2"].toDouble();

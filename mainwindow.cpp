@@ -230,6 +230,16 @@ bool MainWindow::LoadModel(const QString &fileName)
             resultset->setToolTip(key);
             resultset->result = new Results();
             resultset->result->ReadFromJson(resultsjson.value(key).toObject());
+            for (map<string, ResultItem>::iterator it = resultset->result->begin(); it!=resultset->result->end(); it++)
+            {
+                if (it->second.Type()==result_type::mlrset)
+                {
+                    string source = QString::fromStdString(it->first).split("OM & Size MLR for ")[1].toStdString();
+                    if (Data()->count(source)>0)
+                        Data()->at(source).SetRegression(static_cast<MultipleLinearRegressionSet*>(it->second.Result()));
+                    Data()->SetOMandSizeConstituents(Data()->at(source).GetExistingRegressionSet()->begin()->second.GetIndependentVariableNames()[0],Data()->at(source).GetExistingRegressionSet()->begin()->second.GetIndependentVariableNames()[1]);
+                }
+            }
             resultsviewmodel->appendRow(resultset);
          }
 
