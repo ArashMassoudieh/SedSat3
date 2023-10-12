@@ -18,8 +18,13 @@ public:
     string ToString() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     vector<double> CoefficientsIntercept() const;
-    vector<string> &GetIndependentVariableNames() {return independent_variables_names;}
-    vector<string> GetIndependentVariableNames() const {return independent_variables_names;}
+    vector<string> &GetIndependentVariableNames() {
+        return independent_variables_names;
+    }
+    vector<string> GetIndependentVariableNames() const
+    {
+        return independent_variables_names;
+    }
     vector<double> &IndependentData(const string &var_name);
     vector<double> &DependentData()
     {

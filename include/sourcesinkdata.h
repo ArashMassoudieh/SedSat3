@@ -230,6 +230,19 @@ public:
         omconstituent = _omconstituent;
         sizeconsituent = _sizeconsituent;
     }
+    void SetOMandSizeConstituents(const vector<string> &_omsizeconstituents)
+    {
+        if (_omsizeconstituents.size()==0)
+            return;
+        else if (_omsizeconstituents.size()==1)
+            omconstituent = _omsizeconstituents[0];
+        else if (_omsizeconstituents.size()==2)
+        {
+            omconstituent = _omsizeconstituents[0];
+            sizeconsituent = _omsizeconstituents[1];
+        }
+
+    }
     vector<string> OMandSizeConstituents()
     {
         vector<string> out;

@@ -237,7 +237,7 @@ bool MainWindow::LoadModel(const QString &fileName)
                     string source = QString::fromStdString(it->first).split("OM & Size MLR for ")[1].toStdString();
                     if (Data()->count(source)>0)
                         Data()->at(source).SetRegression(static_cast<MultipleLinearRegressionSet*>(it->second.Result()));
-                    Data()->SetOMandSizeConstituents(Data()->at(source).GetExistingRegressionSet()->begin()->second.GetIndependentVariableNames()[0],Data()->at(source).GetExistingRegressionSet()->begin()->second.GetIndependentVariableNames()[1]);
+                    Data()->SetOMandSizeConstituents(Data()->at(source).GetExistingRegressionSet()->begin()->second.GetIndependentVariableNames());
                 }
             }
             resultsviewmodel->appendRow(resultset);
