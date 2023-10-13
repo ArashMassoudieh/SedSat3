@@ -269,7 +269,23 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
     }
 
 // Read dependent and independent data here
+    QJsonArray json_dependent_data = jsonobject["Dependent Data"].toArray();
+    for (unsigned int i = 0; i < json_dependent_data.size(); i++)
+    {
+        dependent_data.push_back(json_dependent_data[i].toDouble());
+    }
 
+    QJsonArray json_independent_data = jsonobject["Independent Data"].toArray();
+    for (unsigned int i = 0; i < json_independent_data.size(); i++)
+    {
+        vector<double> independent_data_item; 
+        QJsonArray json_independent_data_item = json_independent_data[i].toArray();
+        for (unsigned int j = 0; j < json_independent_data_item.size(); j++)
+        {
+            independent_data_item.push_back(json_independent_data_item[j].toDouble());
+        }
+        independent_data.push_back(independent_data_item);
+    }
 
     R2 = jsonobject["R2"].toDouble();
     R2_adj = jsonobject["R2_adjusted"].toDouble();
