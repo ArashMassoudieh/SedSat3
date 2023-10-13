@@ -70,7 +70,11 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
         //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
         pushButtonGraph->setMaximumWidth(20);
 
-        pushButtonGraph->setObjectName(QString::number(result_item_counter)+":"+QString::fromStdString(resultitem.Name()));
+        if (QString::fromStdString(resultitem.Name()).contains(":"))
+            pushButtonGraph->setObjectName(QString::fromStdString(resultitem.Name()));
+        else
+            pushButtonGraph->setObjectName(QString::number(result_item_counter) + ":" + QString::fromStdString(resultitem.Name()));
+
         ui->gridLayout->addWidget(pushButtonGraph,ui->gridLayout->rowCount()-1,1,1,1,Qt::AlignTop);
         connect(pushButtonGraph,SIGNAL(clicked()),this,SLOT(on_result_graph_clicked()));
     }
@@ -91,7 +95,10 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
         pushButtonTable->setIcon(iconTable);
         //pushButton->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);
         pushButtonTable->setMaximumWidth(20);
-        pushButtonTable->setObjectName(QString::number(result_item_counter)+":"+QString::fromStdString(resultitem.Name()));
+        if (QString::fromStdString(resultitem.Name()).contains(":"))
+            pushButtonTable->setObjectName(QString::fromStdString(resultitem.Name()));
+        else
+            pushButtonTable->setObjectName(QString::number(result_item_counter) + ":" + QString::fromStdString(resultitem.Name()));
         ui->gridLayout->addWidget(pushButtonTable,ui->gridLayout->rowCount()-1,3,1,1,Qt::AlignTop);
         connect(pushButtonTable,SIGNAL(clicked()),this,SLOT(on_result_table_clicked()));
     }

@@ -3,6 +3,7 @@
 #include "Vector.h"
 #include <gsl/gsl_statistics_double.h>
 #include <gsl/gsl_cdf.h>
+#include <qjsonarray.h>
 
 
 MultipleLinearRegression::MultipleLinearRegression():Interface()
@@ -203,6 +204,26 @@ QJsonObject MultipleLinearRegression::toJsonObject()
     else
         out["form"]="Power";
     out["Intercept"] = coefficients_intercept_[0];
+    QJsonArray json_dependent_data;
+    for (unsigned int i = 0; i < dependent_data.size(); i++)
+        json_dependent_data << dependent_data[i];
+
+    out["Dependent Data"] = json_dependent_data;
+
+
+    QJsonArray json_independent_data;
+    for (unsigned int j = 0; j < independent_data.size(); j++)
+    {
+        QJsonArray json_independent_data_item;
+        for (unsigned int i = 0; i < independent_data.size(); i++)
+            json_independent_data_item << independent_data[j][i];
+
+        json_independent_data << json_independent_data_item;
+    }
+
+    out["Independent Data"] = json_independent_data;
+
+
     for (unsigned int i=1; i<coefficients_intercept_.size(); i++)
     {
 
@@ -246,6 +267,10 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
             make_effective.push_back(jsonobject[key].toBool());
         }
     }
+
+// Read dependent and independent data here
+
+
     R2 = jsonobject["R2"].toDouble();
     R2_adj = jsonobject["R2_adjusted"].toDouble();
     chisq = jsonobject["Chisq"].toDouble();
