@@ -215,10 +215,10 @@ QJsonObject MultipleLinearRegression::toJsonObject()
     for (unsigned int j = 0; j < independent_data.size(); j++)
     {
         QJsonArray json_independent_data_item;
-        for (unsigned int i = 0; i < independent_data.size(); i++)
-            json_independent_data_item << independent_data[j][i];
+        for (unsigned int i = 0; i < independent_data[j].size(); i++)
+            json_independent_data_item.append(independent_data[j][i]);
 
-        json_independent_data << json_independent_data_item;
+        json_independent_data.append(json_independent_data_item);
     }
 
     out["Independent Data"] = json_independent_data;
