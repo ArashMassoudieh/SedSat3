@@ -2206,3 +2206,18 @@ Elemental_Profile_Set SourceSinkData::DifferentiationPower_Percentage(bool inclu
     return out;
 
 }
+
+vector<string> SourceSinkData::NegativeValueCheck()
+{
+    vector<string> out;
+    populate_constituent_orders();
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    {
+        vector<string> NegativeItems = it->second.NegativeValueCheck(element_order);
+        for (unsigned int i=0; i<NegativeItems.size(); i++ )
+        {
+            out.push_back("There are zero or negative values for element '" + NegativeItems[i] + "' in sample group '" + it->first +"'");
+        }
+    }
+    return out;
+}

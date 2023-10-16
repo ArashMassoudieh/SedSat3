@@ -17,6 +17,9 @@ Conductor::Conductor(MainWindow* _mainwindow)
 bool Conductor::Execute(const string &command, map<string,string> arguments)
 {
     results.clear();
+    if (!CheckNegativeElements(Data()))
+        return false;
+
     if (command == "GA")
     {
         if (GA!=nullptr) delete GA;
@@ -38,6 +41,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         rtw->show();
         correctedData.InitializeParametersObservations(arguments["Sample"]);
+        if (!CheckNegativeElements(&correctedData))
+            return false;
         GA = new CGA<SourceSinkData>(&correctedData);
         GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
@@ -114,6 +119,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
         SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        if (!CheckNegativeElements(&correctedData))
+            return false;
+
         rtw->show();
         correctedData.InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
         correctedData.SetParameterEstimationMode(estimation_mode::only_contributions);
@@ -182,6 +190,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         rtw->show();
         SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        if (!CheckNegativeElements(&correctedData))
+            return false;
+
         correctedData.InitializeParametersObservations(arguments["Sample"]);
         correctedData.SetProgressWindow(rtw);
         if (arguments["Softmax transformation"]=="true")
@@ -294,6 +305,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
@@ -329,6 +343,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
@@ -370,6 +387,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
+
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
         
         
         TransformedData.SetProgressWindow(rtw);
@@ -406,6 +427,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
 
+        if (!CheckNegativeElements(&TransformedData))
+                return false;
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
         DFA_result_matrix *dfaeigenmatrix = new DFA_result_matrix(TransformedData.DiscriminantFunctionAnalysis());
@@ -468,7 +491,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
-
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
 
         DFA_result_matrix dfaeigenmatrix = TransformedData.DiscriminantFunctionAnalysis();
         CMBVector weighted11 = TransformedData.DFATransformed(dfaeigenmatrix.eigen_matrix.GetRow(arguments["Source/Target group I"]), arguments["Source/Target group I"]);
@@ -551,7 +575,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
         SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection, Data()->GetElementInformation());
-        qDebug()<<1;
+        if (!CheckNegativeElements(&correctedData))
+            return false;
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
         MCMC->Model = &correctedData;
@@ -828,6 +853,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
         CMBVector *bracketingresult = new CMBVector(TransformedData.BracketTest(arguments["Sample"]));
         bracketingresult->SetBooleanValue(true);
         BracketingResItem.SetResult(bracketingresult);
@@ -853,6 +880,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"] == "true" ? true : false);
         bool exclude_elements = (arguments["Use only selected elements"] == "true" ? true : false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
         results.SetName("Outlier analysis for '" + arguments["Source/Target group"] + "'");
         ResultItem OutlierResItem;
         OutlierResItem.SetName("Outlier Analysis");
@@ -930,4 +959,24 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(EDPresultPercent);
     }
     return true;
+}
+
+bool Conductor::CheckNegativeElements(SourceSinkData *_data)
+{
+    if (_data==nullptr)
+        _data = Data();
+    vector<string> NegativeCheckResults =_data->NegativeValueCheck();
+
+    if (NegativeCheckResults.size()>0)
+    {
+        QString message;
+        for (unsigned int i=0; i<NegativeCheckResults.size(); i++)
+        {
+            message += QString::fromStdString(NegativeCheckResults[i]+"\n");
+        }
+        QMessageBox::warning(mainwindow, "OpenHydroQual",message, QMessageBox::Ok);
+        return false;
+    }
+    return true;
+
 }

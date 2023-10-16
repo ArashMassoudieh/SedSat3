@@ -28,7 +28,7 @@ public:
     }
     void SetWorkingFolder(const QString& wf) { workingfolder = wf; }
     QString WorkingFolder() { return workingfolder; }
-
+    bool CheckNegativeElements(SourceSinkData *data=nullptr);
 private:
     SourceSinkData *data;
     CGA<SourceSinkData> *GA = nullptr;

@@ -592,3 +592,15 @@ CMBMatrix Elemental_Profile_Set::toMatrix()
     }
     return out;
 }
+
+vector<string> Elemental_Profile_Set::NegativeValueCheck(const vector<string> &element_names)
+{
+    vector<string> elements_with_negative_value;
+
+    for (unsigned int i=0; i<element_names.size(); i++)
+    {
+        if (ElementalDistribution(element_names[i])->min()<=0)
+            elements_with_negative_value.push_back(element_names[i]);
+    }
+    return elements_with_negative_value;
+}

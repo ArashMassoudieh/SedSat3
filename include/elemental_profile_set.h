@@ -143,6 +143,7 @@ public:
     bool OutlierAnalysisDone() {
         return outlierdone;
     }
+    vector<string> NegativeValueCheck(const vector<string> &element_names);
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;
