@@ -61,6 +61,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
             res_item.SetType(result_type::predicted_concentration);
+            res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
@@ -319,6 +320,35 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetType(result_type::vector);
             res_item.SetName(key.toStdString());
             res_item.SetResult(KSResults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key=="Discreminant difference to standard deviation ratio")
+        {
+            Elemental_Profile *modeled = new Elemental_Profile();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetType(result_type::predicted_concentration);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(modeled);
+            res_item.setYAxisTitle("Discrimination power");
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key=="Discriminat fraction")
+        {
+            Elemental_Profile *modeled = new Elemental_Profile();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetType(result_type::predicted_concentration);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.setYAxisTitle("Percentage discriminated");
+            res_item.SetYLimit(_range::high,1);
+            res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
 
