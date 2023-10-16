@@ -322,7 +322,36 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(KSResults);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Discreminant difference to standard deviation ratio")
+        else if (key=="Multi-way element discriminant power")
+        {
+            Elemental_Profile_Set *modeled = new Elemental_Profile_Set();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetType(result_type::elemental_profile_set);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(modeled);
+            res_item.setYAxisTitle("Discrimination power");
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key=="Multi-way discriminat fraction")
+        {
+            Elemental_Profile_Set *modeled = new Elemental_Profile_Set();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetType(result_type::elemental_profile_set);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.setYAxisTitle("Percentage discriminated");
+            res_item.SetYLimit(_range::high,1);
+            res_item.SetResult(modeled);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key=="Two-way element discriminant power")
         {
             Elemental_Profile *modeled = new Elemental_Profile();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());

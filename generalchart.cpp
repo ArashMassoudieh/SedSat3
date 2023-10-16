@@ -277,8 +277,8 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
 
     QLogValueAxis* axisYLog;
     QValueAxis* axisYNormal;
-    bool _log = false;
-    if (profile_sets->min()>0)
+    bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
+    if (profile_sets->min()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
         axisYLog->setRange(pow(10, roundDown(log(profile_sets->min())/log(10.0))), pow(10, int(log(profile_sets->max()) / log(10.0))+1));
@@ -290,7 +290,10 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
     else
     {
         axisYNormal = new QValueAxis();
-        axisYNormal->setRange(roundDown(profile_sets->min()), roundDown(profile_sets->max()+1));
+        if (result_item->YLimit(_range::high)==0)
+            axisYNormal->setRange(roundDown(profile_sets->min()), roundDown(profile_sets->max()+1));
+        else
+            axisYNormal->setRange(roundDown(profile_sets->min()), result_item->YLimit(_range::high));
         axisYNormal->setLabelFormat("%g");
         axisYNormal->setMinorTickCount(5);
         chart->addAxis(axisYNormal, Qt::AlignLeft);

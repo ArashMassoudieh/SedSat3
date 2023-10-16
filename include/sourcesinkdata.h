@@ -227,6 +227,8 @@ public:
     CMBVector OptimalBoxCoxParameters();
     Elemental_Profile DifferentiationPower(const string &source1, const string &source2, bool log);
     Elemental_Profile DifferentiationPower_Percentage(const string &source1, const string &source2);
+    Elemental_Profile_Set DifferentiationPower(bool log, bool include_target);
+    Elemental_Profile_Set DifferentiationPower_Percentage(bool include_target);
     void SetOMandSizeConstituents(const string &_omconstituent, const string &_sizeconsituent)
     {
         omconstituent = _omconstituent;

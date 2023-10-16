@@ -507,5 +507,17 @@
    			"type": "checkBox",
 			"default": "false"
     		}
- 	}   		
+ 	},
+    	"EDPM": 
+    	{
+		"Include target samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Log Transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
+ 	}
+ 	
 }

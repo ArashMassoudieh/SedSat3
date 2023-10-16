@@ -26,7 +26,8 @@
     "Optimal BoxCox parameters": "BoxCox",
     "Discriminant function analysis - Weighted Plots": "DFA-Transformed",
     "Normal to discriminant hyperplane vector": "DFA",
-    "Elements' discriminant power (Two-way)": "EDP"
+    "Elements' discriminant power (Two-way)": "EDP",
+    "Elements' discriminant power (Multiple-way)": "EDPM"
   }
   
 }

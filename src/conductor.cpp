@@ -870,6 +870,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "EDP")
     {
         bool log = (arguments["Log Transformation"] == "true" ? true : false);
+
         results.SetName("Two-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
         ResultItem EDPresultStd;
         EDPresultStd.SetName("Discreminant difference to standard deviation ratio");
@@ -896,9 +897,37 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.SetYLimit(_range::high,1);
         EDPresultPercent.SetResult(EDPProfileSetPercent);
         results.Append(EDPresultPercent);
+    }
+    if (command == "EDPM")
+    {
+        bool log = (arguments["Log Transformation"] == "true" ? true : false);
+        bool include_target = (arguments["Include target samples"] == "true" ? true : false);
+        results.SetName("Multi-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
+        ResultItem EDPresultStd;
+        EDPresultStd.SetName("Multi-way discreminant difference to standard deviation ratio");
+        EDPresultStd.SetType(result_type::elemental_profile_set);
+        EDPresultStd.SetShowAsString(true);
+        EDPresultStd.SetShowTable(true);
+        EDPresultStd.SetShowGraph(true);
+        Elemental_Profile_Set *EDPProfileSet = new Elemental_Profile_Set(Data()->DifferentiationPower(log,include_target));
+        EDPresultStd.SetYAxisMode(yaxis_mode::normal);
+        EDPresultStd.setYAxisTitle("Discrimination power");
+        EDPresultStd.SetResult(EDPProfileSet);
 
+        results.Append(EDPresultStd);
 
-
+        ResultItem EDPresultPercent;
+        EDPresultPercent.SetName("Multi-way discriminat fraction");
+        EDPresultPercent.SetType(result_type::elemental_profile_set);
+        EDPresultPercent.SetShowAsString(true);
+        EDPresultPercent.setYAxisTitle("Percentage discriminated");
+        EDPresultPercent.SetShowTable(true);
+        EDPresultPercent.SetShowGraph(true);
+        Elemental_Profile_Set *EDPProfileSetPercent = new Elemental_Profile_Set(Data()->DifferentiationPower_Percentage(include_target));
+        EDPresultPercent.SetYAxisMode(yaxis_mode::normal);
+        EDPresultPercent.SetYLimit(_range::high,1);
+        EDPresultPercent.SetResult(EDPProfileSetPercent);
+        results.Append(EDPresultPercent);
     }
     return true;
 }
