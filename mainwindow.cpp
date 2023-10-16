@@ -45,7 +45,9 @@
 #endif
 
 
-#define version "1.0.4"
+#define version "1.0.5"
+#define date_compiled "10/14/23"
+
 using namespace QXlsx;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -884,7 +886,8 @@ void MainWindow::on_TestLevenberg_Marquardt()
 void MainWindow::onAboutTriggered()
 {
     AboutDialog* abtdlg = new AboutDialog(this);
-    abtdlg->AppendText(QString("CMBSource version ") + QString(version));
+    abtdlg->AppendText(QString("SedSat3 version ") + QString(version));
+    abtdlg->AppendText(QString("Date generated: ") + QString(date_compiled));
     abtdlg->exec(); 
 }
 
