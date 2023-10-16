@@ -30,6 +30,7 @@ public:
     void Append(const double &x);
     void Append(const ConcentrationSet &x);
     void Append(ConcentrationSet *x);
+    vector<unsigned int> Rank();
     vector<double> EstimateParameters(distribution_type disttype=distribution_type::none);
     double LogLikelihood(const vector<double> &params=vector<double>(),distribution_type disttype=distribution_type::none);
     distribution_type SelectBestDistribution();

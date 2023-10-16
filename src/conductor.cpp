@@ -866,6 +866,20 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         outliermatrix->SetLimit(_range::low,-threshold);
         OutlierResItem.SetResult(outliermatrix);
         results.Append(OutlierResItem);
+    }
+    if (command == "EDP")
+    {
+        bool log = (arguments["Log Transformation"] == "true" ? true : false);
+        results.SetName("Two-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
+        ResultItem EDPresult;
+        EDPresult.SetName("Elemental Profile");
+        EDPresult.SetType(result_type::predicted_concentration);
+        EDPresult.SetShowAsString(false);
+        EDPresult.SetShowTable(true);
+        EDPresult.SetShowGraph(true);
+        Elemental_Profile *EDPProfileSet = new Elemental_Profile(Data()->DifferentiationPower(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
+        EDPresult.SetResult(EDPProfileSet);
+        results.Append(EDPresult);
 
     }
     return true;

@@ -298,3 +298,9 @@ double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2,
     }
     return OptimalBoxCoxParam(x_1 + std::max(aquiutils::MinElement(vals)-1,0)*d_lambda,x_1+std::min(aquiutils::MinElement(vals)+1,int(vals.size()-1))*d_lambda,n_intervals);
 }
+
+vector<unsigned int> ConcentrationSet::Rank()
+{
+    return aquiutils::Rank(*this);
+
+}

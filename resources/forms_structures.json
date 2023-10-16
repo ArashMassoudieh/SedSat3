@@ -492,5 +492,20 @@
    			"type": "lineEdit",
 			"default": "3"
     		}
-    	}	
+    	},
+    	"EDP": 
+    	{
+    		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Log Transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
+ 	}   		
 }

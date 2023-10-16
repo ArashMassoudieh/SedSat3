@@ -225,6 +225,8 @@ public:
     SourceSinkData BoxCoxTransformed(bool calculateeigenvectorforallgroups=false);
     map<string,ConcentrationSet> ExtractConcentrationSet();
     CMBVector OptimalBoxCoxParameters();
+    Elemental_Profile DifferentiationPower(const string &source1, const string &source2, bool log);
+    Elemental_Profile DifferentiationPower_Percentage(const string &source1, const string &source2);
     void SetOMandSizeConstituents(const string &_omconstituent, const string &_sizeconsituent)
     {
         omconstituent = _omconstituent;

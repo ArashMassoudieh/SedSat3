@@ -2114,3 +2114,58 @@ CMBVector SourceSinkData::OptimalBoxCoxParameters()
     out.SetLabels(element_names);
     return out;
 }
+
+Elemental_Profile SourceSinkData::DifferentiationPower(const string &source1, const string &source2, bool log)
+{
+    vector<string> element_names=ElementNames();
+    Elemental_Profile elemental_profile_item;
+    for (unsigned int i=0; i<element_names.size();i++)
+    {
+        ConcentrationSet ConcentrationSet1 = *at(source1).ElementalDistribution(element_names[i]);
+        ConcentrationSet ConcentrationSet2 = *at(source2).ElementalDistribution(element_names[i]);
+        double std1, std2;
+        double mean1, mean2;
+        if (!log)
+        {
+            std1 = ConcentrationSet1.stdev();
+            std2 = ConcentrationSet2.stdev();
+            mean1 = ConcentrationSet1.mean();
+            mean2 = ConcentrationSet2.mean();
+        }
+        else
+        {
+            std1 = ConcentrationSet1.stdevln();
+            std2 = ConcentrationSet2.stdevln();
+            mean1 = ConcentrationSet1.meanln();
+            mean2 = ConcentrationSet2.meanln();
+        }
+        elemental_profile_item.AppendElement(element_names[i],2*(fabs(mean1-mean2)/(std1+std2)));
+    }
+    return elemental_profile_item;
+
+}
+
+Elemental_Profile SourceSinkData::DifferentiationPower_Percentage(const string &source1, const string &source2)
+{
+    vector<string> element_names=ElementNames();
+    Elemental_Profile elemental_profile_item;
+    for (unsigned int i=0; i<element_names.size();i++)
+    {
+        ConcentrationSet ConcentrationSet1 = *at(source1).ElementalDistribution(element_names[i]);
+        ConcentrationSet ConcentrationSet2 = *at(source2).ElementalDistribution(element_names[i]);
+        ConcentrationSet ConcentrationSetAll = ConcentrationSet1;
+        ConcentrationSetAll.Append(ConcentrationSet2);
+        vector<unsigned int> Rank = ConcentrationSetAll.Rank();
+        int Set1BelowLimitCount = aquiutils::CountLessThanEq(Rank,ConcentrationSet1.size(),ConcentrationSet1.size());
+        int Set2BelowLimitCount = aquiutils::CountLessThanEq(Rank,ConcentrationSet2.size(),ConcentrationSet1.size());
+        int Set1AboveLimitCount = aquiutils::CountGreaterThan(Rank,ConcentrationSet1.size(),ConcentrationSet1.size());
+        int Set2AboveLimitCount = aquiutils::CountGreaterThan(Rank,ConcentrationSet2.size(),ConcentrationSet1.size());
+        double set1fraction = max(double(Set1BelowLimitCount)/double(ConcentrationSet1.size()),double(Set1AboveLimitCount)/double(ConcentrationSet1.size()));
+        double set2fraction = max(double(Set2BelowLimitCount)/double(ConcentrationSet2.size()),double(Set2AboveLimitCount)/double(ConcentrationSet2.size()));
+        elemental_profile_item.AppendElement(element_names[i],min(set1fraction,set2fraction));
+
+
+    }
+    return elemental_profile_item;
+
+}
