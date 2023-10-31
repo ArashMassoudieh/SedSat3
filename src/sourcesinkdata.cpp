@@ -1825,7 +1825,7 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
     CVector term1 = (CovMatr1+CovMatr2)*out.eigen_vector;
     CVector term2 = term1*out.eigen_vector;
     double denuminator = term2.sum();
-    out.S_value = numerator/denuminator;
+    out.S_value = fabs(numerator/denuminator);
     if (rtw)
         rtw->SetProgress(1);
     return out;

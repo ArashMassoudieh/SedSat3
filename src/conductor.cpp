@@ -322,7 +322,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        DFA_result_vector *dfaeigenvector = new DFA_result_vector(Data()->DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        DFA_result_vector *dfaeigenvector = new DFA_result_vector(TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFAResItem.SetResult(&dfaeigenvector->eigen_vector);
         results.Append(DFAResItem);
 
