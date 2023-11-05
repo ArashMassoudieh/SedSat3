@@ -18,6 +18,9 @@ public:
     QTableView *table();
 private:
     Ui::FormElementInformation *ui;
+
+private slots:
+    void on_Include_Exclude_Change();
 };
 
 #endif // FORMELEMENTINFORMATION_H

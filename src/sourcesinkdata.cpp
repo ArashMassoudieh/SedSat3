@@ -2221,3 +2221,11 @@ vector<string> SourceSinkData::NegativeValueCheck()
     }
     return out;
 }
+
+void SourceSinkData::IncludeExcludeAllElements(bool value)
+{
+    for(map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+    {
+        it->second.include_in_analysis = value;
+    }
+}

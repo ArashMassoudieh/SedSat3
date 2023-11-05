@@ -230,6 +230,7 @@ public:
     Elemental_Profile_Set DifferentiationPower(bool log, bool include_target);
     Elemental_Profile_Set DifferentiationPower_Percentage(bool include_target);
     vector<string> NegativeValueCheck();
+    void IncludeExcludeAllElements(bool value);
     void SetOMandSizeConstituents(const string &_omconstituent, const string &_sizeconsituent)
     {
         omconstituent = _omconstituent;
