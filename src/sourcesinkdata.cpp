@@ -1884,6 +1884,34 @@ CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis(const string &so
     return out;
 }
 
+Elemental_Profile_Set SourceSinkData::Stepwise_DiscriminantFunctionAnalysis_MoreInfo()
+{
+    CMBMatrix out(size(),ElementNames().size());
+
+    int counter=0;
+    for (map<string,Elemental_Profile_Set>::iterator sourcegroup1 = begin(); sourcegroup1!=end(); sourcegroup1++)
+    {
+        if (rtw)
+            rtw->SetProgress(double(counter) / double(size()));
+
+        for (map<string,Elemental_Profile_Set>::iterator sourcegroup2 = std::next(sourcegroup1,1); sourcegroup2!=end(); sourcegroup2++)
+        {
+            CMBVector v=StepwiseDiscriminantFunctionAnalysis(sourcegroup1->first,sourcegroup2->first);
+            for (int i=0)
+
+            out.SetColumnLabel()
+            out.setrow(counter,v);
+        }
+        counter++;
+    }
+    out.append(highestimproved + " between " + max_sourcegroup1 + " and " + max_sourcegroup2,max_S);
+    selected_labels.push_back(highestimproved);
+
+
+
+    return out;
+}
+
 CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis()
 {
     CMBVector out;
@@ -1932,6 +1960,7 @@ CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis()
 
     return out;
 }
+
 
 void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
 {

@@ -30,6 +30,7 @@ SOURCES += \
     cmbtimeseries.cpp \
     cmbtimeseriesset.cpp \
     cmbvector.cpp \
+    cmbvectorset.cpp \
     contribution.cpp \
     customplotbar.cpp \
     dialogchooseexcelsheets.cpp \
@@ -94,6 +95,7 @@ HEADERS += \
     cmbtimeseries.h \
     cmbtimeseriesset.h \
     cmbvector.h \
+    cmbvectorset.h \
     contribution.h \
     customplotbar.h \
     dialogchooseexcelsheets.h \
