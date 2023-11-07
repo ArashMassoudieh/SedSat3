@@ -51,6 +51,16 @@ struct DFA_result_matrix
     vector<double> S_values;
 };
 
+struct ANOVA_info
+{
+    double F;
+    double SST;
+    double SSB;
+    double SSW;
+    double MSB;
+    double MSW;
+};
+
 enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};
 
 class SourceSinkData: public map<string, Elemental_Profile_Set>
@@ -231,6 +241,8 @@ public:
     Elemental_Profile_Set DifferentiationPower(bool log, bool include_target);
     Elemental_Profile_Set DifferentiationPower_Percentage(bool include_target);
     vector<string> NegativeValueCheck();
+    double GrandMean(const string &element, bool logtransformed);
+    Elemental_Profile_Set LumpAllProfileSets();
     void IncludeExcludeAllElements(bool value);
     void SetOMandSizeConstituents(const string &_omconstituent, const string &_sizeconsituent)
     {
@@ -258,7 +270,7 @@ public:
         return out;
     }
     void OutlierAnalysisForAll(const double &lowerthreshold=-3, const double &upperthreshold=3);
-
+    ANOVA_info ANOVA(const string &element, bool logtransformed);
 private:
 
     map<string,ConcentrationSet> element_distributions;

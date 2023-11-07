@@ -2258,3 +2258,58 @@ void SourceSinkData::IncludeExcludeAllElements(bool value)
         it->second.include_in_analysis = value;
     }
 }
+
+double SourceSinkData::GrandMean(const string &element, bool logtransformed)
+{
+    double sum=0;
+    double count=0;
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    {
+        if (it->first!=target_group)
+        {   if (!logtransformed)
+            {   sum+=it->second.ElementalDistribution(element)->mean()*it->second.ElementalDistribution(element)->size();
+                count += it->second.ElementalDistribution(element)->size();
+            }
+            else
+            {   sum+=it->second.ElementalDistribution(element)->meanln()*it->second.ElementalDistribution(element)->size();
+                count += it->second.ElementalDistribution(element)->size();
+            }
+        }
+    }
+    return sum/count;
+}
+
+Elemental_Profile_Set SourceSinkData::LumpAllProfileSets()
+{
+    Elemental_Profile_Set out;
+    for (map<string,Elemental_Profile_Set>::const_iterator it=begin(); it!=prev(end()); it++)
+    {
+        if (it->first!=target_group)
+        {
+            out.Append_Profiles(it->second,&ElementInformation);
+        }
+    }
+}
+
+ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
+{
+    ANOVA_info anova;
+    Elemental_Profile_Set All_ProfileSets = LumpAllProfileSets();
+    if (!logtransformed)
+    {   anova.SST = pow(All_ProfileSets.ElementalDistribution(element)->stdev(),2)*(All_ProfileSets.ElementalDistribution(element)->size()-1);
+        double sum=0;
+        for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
+        {
+            if ()
+            sum += pow(at())
+        }
+    }
+    else
+    {   anova.SST = pow(All_ProfileSets.ElementalDistribution(element)->stdevln(),2)*(All_ProfileSets.ElementalDistribution(element)->size()-1);
+        anova.SSB = at(source_group).size()*at(source_group).ElementalDistribution(element)->stdevln()*(at(source_group).ElementalDistribution(element)->size()-1);
+    }
+
+
+
+}
+

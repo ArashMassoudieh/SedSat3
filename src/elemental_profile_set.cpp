@@ -106,6 +106,15 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
     return &operator[](name);
 }
 
+void Elemental_Profile_Set::Append_Profiles(const Elemental_Profile_Set &profiles, map<string, element_information> *elementinfo)
+{
+    for (map<string, Elemental_Profile>::const_iterator it = profiles.begin(); it!=profiles.end(); it++)
+    {
+        Append_Profile(it->first,it->second,elementinfo);
+    }
+    UpdateElementalDistribution();
+}
+
 vector<string> Elemental_Profile_Set::SampleNames()
 {
     vector<string> out;
