@@ -53,12 +53,13 @@ struct DFA_result_matrix
 
 struct ANOVA_info
 {
-    double F;
-    double SST;
-    double SSB;
-    double SSW;
-    double MSB;
-    double MSW;
+    double F = 0;
+    double SST = 0;
+    double SSB = 0;
+    double SSW = 0;
+    double MSB = 0;
+    double MSW = 0;
+    double p_value = 0;
 };
 
 enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};

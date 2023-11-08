@@ -19,8 +19,10 @@ public:
     ConcentrationSet(int n);
     ConcentrationSet& operator=(const ConcentrationSet &cs);
     double mean();
-    double stdev();
-    double stdevln();
+    double stdev(const double &mean=-999);
+    double stdevln(const double &mean=-999);
+    double SSE(const double &m = -999);
+    double SSE_ln(const double &m = -999);
     double meanln();
     double norm(const double &x);
     double normln(const double &x);
