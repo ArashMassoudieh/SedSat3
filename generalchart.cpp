@@ -4,6 +4,7 @@
 #include <string>
 
 
+
 GeneralChart::GeneralChart(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GeneralChart)
@@ -51,6 +52,11 @@ bool GeneralChart::Plot(ResultItem* res)
     {
         CMBVector* profile = static_cast<CMBVector*>(res->Result());
         return PlotVector(profile, QString::fromStdString(res->Name()));
+    }
+    if (res->Type() == result_type::vectorset)
+    {
+        CMBVectorSet* profile = static_cast<CMBVectorSet*>(res->Result());
+        return PlotVectorSet(profile, QString::fromStdString(res->Name()));
     }
     if (res->Type() == result_type::matrix)
     {
@@ -107,6 +113,24 @@ double roundDown(double a, double rounding_value) {
     else
         return -round(-a/rounding_value+1)*rounding_value;
 
+}
+
+bool GeneralChart::PlotVectorSet(CMBVectorSet *profile, const QString &title)
+{
+    element_combo = new QComboBox();
+    QLabel *element_label = new QLabel();
+    element_label->setText("Source group pair:");
+
+    connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onPairChanged(int)));
+
+    for (map<std::string,CMBVector>::iterator it = profile->begin(); it!=profile->end(); it++ )
+    {
+        element_combo->addItem(QString::fromStdString(it->first));
+    }
+    ui->horizontalLayout->addWidget(element_label);
+    ui->horizontalLayout->addWidget(element_combo);
+    onPairChanged(element_combo->currentIndex());
+    return true;
 }
 
 bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
@@ -475,6 +499,27 @@ void GeneralChart::onElementChanged(int i_element)
     {
         PlotRegression(&mlrset->at(constituent.toStdString()),independent_combo->currentText());
     }
+
+}
+
+void GeneralChart::onPairChanged(int pair_id)
+{
+    chart->removeAllSeries();
+    for (int i=0; i<chart->axes().size(); i++)
+        chart->removeAxis(chart->axes()[i]);
+
+    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
+    {
+        chart->removeAxis(chart->axes(Qt::Vertical)[i]);
+    }
+
+    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
+    {
+        chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
+    }
+    CMBVectorSet* vectorset = static_cast<CMBVectorSet*>(result_item->Result());
+    QString pair = element_combo->itemText(pair_id);
+    PlotVector(&vectorset->at(pair.toStdString()),"DFA S value between '" + pair + "'");
 
 }
 

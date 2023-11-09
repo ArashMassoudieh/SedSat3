@@ -5,7 +5,7 @@
 #include "cmbvector.h"
 #include <map>
 
-class CMBVectorSet: public Interface,  map<string,CMBVector>
+class CMBVectorSet: public Interface,  public map<string,CMBVector>
 {
 public:
     CMBVectorSet();
@@ -16,7 +16,6 @@ public:
     string ToString() override;
     QTableWidget *ToTable() override;
     bool writetofile(QFile* file) override;
-    double valueAt(int i) const;
     string Label(string column,int j) const;
     double valueAt(const string &columnlabel, int j ) const;
     CMBVector &GetColumn(const string columnlabel);

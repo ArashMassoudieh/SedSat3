@@ -1,4 +1,5 @@
 #include "cmbvectorset.h"
+#include <QFile>
 
 CMBVectorSet::CMBVectorSet():Interface(),map<string, CMBVector>()
 {
@@ -37,7 +38,8 @@ string CMBVectorSet::ToString()
     string s;
     for (map<string,CMBVector>::iterator it = begin(); it!=end();it++)
     {
-        s+=it->first;
+        s+= "\n";
+        s+=it->first + ":\n";
         s+=it->second.ToString()+="\n";
     }
     return s;
@@ -58,53 +60,51 @@ QTableWidget *CMBVectorSet::ToTable()
 {
     QTableWidget *tablewidget = new QTableWidget();
     tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tablewidget->setColumnCount(size());
+    tablewidget->setColumnCount(size()*2);
     tablewidget->setRowCount(MaxSize());
     QStringList rowheaders;
     QStringList colheaders;
-
-    colheaders << "Value";
-
-    for (int i=0; i<getsize(); i++)
+    int colno = 0;
+    for (map<string,CMBVector>::iterator column=begin(); column!=end(); column++)
     {
-        rowheaders << QString::fromStdString(labels[i]);
-        if (!boolean_values)
-            tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(valueAt(i))));
-        else
+        colheaders<<QString::fromStdString(column->first)<<QString::fromStdString(column->first)+"-Value";
+        for (int i=0; i<column->second.getsize(); i++)
         {
-            if (valueAt(i)==1)
-                tablewidget->setItem(i,0, new QTableWidgetItem("Fail"));
-            else
-                tablewidget->setItem(i,0, new QTableWidgetItem("Pass"));
-
+            tablewidget->setItem(i,colno*2,new QTableWidgetItem(QString::fromStdString(column->second.Label(i))));
+            tablewidget->setItem(i,colno*2+1,new QTableWidgetItem(QString::number(column->second[i])));
         }
+        colno++;
     }
 
     tablewidget->setHorizontalHeaderLabels(colheaders);
-    tablewidget->setVerticalHeaderLabels(rowheaders);
+    //tablewidget->setVerticalHeaderLabels(rowheaders);
     return tablewidget;
 }
 bool CMBVectorSet::writetofile(QFile* file)
 {
-
+    file->write(QString::fromStdString(ToString()).toUtf8());
+    return true;
 }
-double CMBVectorSet::valueAt(int i) const
-{
 
-}
 string CMBVectorSet::Label(string column,int j) const
 {
-
+    if (count(column)!=0)
+        return (at(column).Label(j));
+    else
+        return "";
 }
 double CMBVectorSet::valueAt(const string &columnlabel, int j ) const
 {
-
+    if (count(columnlabel)!=0)
+        return (at(columnlabel).valueAt(j));
+    else
+        return 0;
 }
 CMBVector &CMBVectorSet::GetColumn(const string columnlabel)
 {
-
+    return at(columnlabel);
 }
-void CMBVectorSet::Append(const string &columnlabel,const CMBVector &vectorset)
+void CMBVectorSet::Append(const string &columnlabel,const CMBVector &vector)
 {
-
+    this->operator[](columnlabel) = vector;
 }

@@ -6,6 +6,7 @@
 #include <qchart.h>
 #include "results.h"
 #include "cmbvector.h"
+#include "cmbvectorset.h"
 #include <contribution.h>
 #include <elemental_profile_set.h>
 #include <multiplelinearregressionset.h>
@@ -31,6 +32,7 @@ public:
     ~GeneralChart();
     bool Plot(ResultItem* res);
     bool PlotVector(CMBVector *profile, const QString &title);
+    bool PlotVectorSet(CMBVectorSet *profile, const QString &title);
     bool PlotMatrix(CMBMatrix *matrix, const QString &title);
     bool PlotProfileSet(Elemental_Profile_Set *elementalprofileset, const QString &title);
     bool PlotContribution(Contribution* contributions, const QString &title);
@@ -55,6 +57,7 @@ private:
 private slots:
     void onIndependentChanged(int i_independent);
     void onElementChanged(int i_constituent);
+    void onPairChanged(int pair_id);
     void onMCMCVariableChanged(int);
     void onDistributionsVariableChanged(int);
     void on_Exporttopng();

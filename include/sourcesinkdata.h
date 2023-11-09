@@ -11,6 +11,7 @@
 #include "fstream"
 #include "qjsonobject.h"
 #include "cmbvector.h"
+#include "cmbvectorset.h"
 
 enum class transformation {linear, softmax};
 
@@ -216,7 +217,7 @@ public:
     CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2);
     CMBVector Stepwise_DiscriminantFunctionAnalysis(const string &source1,const string &source2);
     CMBVector Stepwise_DiscriminantFunctionAnalysis();
-    CMBMatrix Stepwise_DiscriminantFunctionAnalysis_MoreInfo();
+    CMBVectorSet Stepwise_DiscriminantFunctionAnalysis_MoreInfo();
     DFA_result_vector DiscriminantFunctionAnalysis(const string &source1);
     DFA_result_matrix DiscriminantFunctionAnalysis();
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);

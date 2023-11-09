@@ -5,7 +5,7 @@
     "1-Elements' correlation matrix": "CorMat",
     "8-Discriminant power evaluation": "DFAM",
     "6-Stepwise discriminant function analysis (Two-way)": "SDFA",
-    "7-Stepwise discriminant function analysis (Multiple-way)": "SDFAM",
+    "7-Stepwise discriminant function analysis (Multiple-way)": "SDFAM-2",
     "4-Correct based on size and organic matter": "OM-Size Correct",
     "5-Bracketing Analysis": "Bracketing Analysis",
     "2-Outlier Analysis": "Outlier"

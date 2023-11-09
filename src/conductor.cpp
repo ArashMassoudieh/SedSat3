@@ -400,8 +400,41 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis());
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
+    }
+    if (command == "SDFAM-2")
+    {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        rtw->show();
+        results.SetName("Multi-group Stepwise DFA");
+        ResultItem DFASValues;
+        DFASValues.SetName("S-Values");
+        DFASValues.SetType(result_type::vectorset);
+        DFASValues.SetShowTable(true);
+        DFASValues.SetAbsoluteValue(true);
+        DFASValues.SetYAxisMode(yaxis_mode::log);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+        }
 
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
 
+        TransformedData.SetProgressWindow(rtw);
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+
+        CMBVectorSet *SVector = new CMBVectorSet(TransformedData.Stepwise_DiscriminantFunctionAnalysis_MoreInfo());
+        DFASValues.SetResult(SVector);
+        results.Append(DFASValues);
 
     }
     if (command == "DFAM")

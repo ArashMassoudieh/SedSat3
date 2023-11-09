@@ -272,15 +272,15 @@
 			"default": "false"
    		}
 	},
-	"SDFAM": {
+	"SDFAM-2": {
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
-    	},
-    	"Use only selected samples": {
+    		},
+    		"Use only selected samples": {
    			"type": "checkBox",
 			"default": "false"
-    	},
+    		},
 		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
@@ -288,7 +288,7 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    	}
+    		}
 	},
 	"DFAM": {
 		"Use only selected elements": {
