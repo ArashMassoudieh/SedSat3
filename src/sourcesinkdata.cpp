@@ -3,6 +3,7 @@
 #include "NormalDist.h"
 #include "qjsondocument.h"
 #include "resultitem.h"
+#include <gsl/gsl_cdf.h>
 
 
 
@@ -2256,3 +2257,76 @@ void SourceSinkData::IncludeExcludeAllElements(bool value)
         it->second.include_in_analysis = value;
     }
 }
+
+double SourceSinkData::GrandMean(const string &element, bool logtransformed)
+{
+    double sum=0;
+    double count=0;
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    {
+        if (it->first!=target_group)
+        {   if (!logtransformed)
+            {   sum+=it->second.ElementalDistribution(element)->mean()*it->second.ElementalDistribution(element)->size();
+                count += it->second.ElementalDistribution(element)->size();
+            }
+            else
+            {   sum+=it->second.ElementalDistribution(element)->meanln()*it->second.ElementalDistribution(element)->size();
+                count += it->second.ElementalDistribution(element)->size();
+            }
+        }
+    }
+    return sum/count;
+}
+
+Elemental_Profile_Set SourceSinkData::LumpAllProfileSets()
+{
+    Elemental_Profile_Set out;
+    for (map<string,Elemental_Profile_Set>::const_iterator it=begin(); it!=prev(end()); it++)
+    {
+        if (it->first!=target_group)
+        {
+            out.Append_Profiles(it->second,&ElementInformation);
+        }
+    }
+}
+
+ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
+{
+    ANOVA_info anova;
+    Elemental_Profile_Set All_ProfileSets = LumpAllProfileSets();
+    if (!logtransformed)
+    {   anova.SST = All_ProfileSets.ElementalDistribution(element)->SSE();
+        double sum=0;
+        double sum_w=0;
+        for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
+        {
+            if (source_group->first != target_group)
+            {   sum += source_group->second.ElementalDistribution(element)->SSE(All_ProfileSets.ElementalDistribution(element)->mean())*source_group->second.ElementalDistribution(element)->size();
+                sum_w += source_group->second.ElementalDistribution(element)->SSE();
+            }
+        }
+        anova.SSB = sum;
+        anova.SSW = sum_w;
+    }
+    else
+    {   anova.SST = pow(All_ProfileSets.ElementalDistribution(element)->stdevln(),2)*(All_ProfileSets.ElementalDistribution(element)->size()-1);
+        double sum=0;
+        double sum_w=0;
+        for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
+        {
+            if (source_group->first != target_group)
+            {   sum += source_group->second.ElementalDistribution(element)->SSE_ln(All_ProfileSets.ElementalDistribution(element)->meanln())*source_group->second.ElementalDistribution(element)->size();
+                sum_w += source_group->second.ElementalDistribution(element)->SSE_ln();
+            }
+        }
+        anova.SSB = sum;
+        anova.SSW = sum_w;
+    }
+    anova.MSB = anova.SSB/(double(this->size()-2.0));
+    anova.MSW = anova.SSW/(double(All_ProfileSets.ElementalDistribution(element)->size())-(this->size()-1));
+    anova.F = anova.MSB/anova.MSW;
+    anova.p_value = gsl_cdf_fdist_Q (anova.F, this->size()-2, All_ProfileSets.size());
+    return anova;
+
+}
+

@@ -38,9 +38,11 @@ double ConcentrationSet::mean()
     }
     return sum/double(size());
 }
-double ConcentrationSet::stdev()
+double ConcentrationSet::stdev(const double &m)
 {
     double mean_value = mean();
+    if (m!=-999)
+        mean_value = m;
     double sum=0;
     for (unsigned int i=0; i<size(); i++)
         sum+= pow(at(i)-mean_value,2);
@@ -49,15 +51,43 @@ double ConcentrationSet::stdev()
     return sqrt(sum/double(size()-1));
 }
 
-double ConcentrationSet::stdevln()
+double ConcentrationSet::stdevln(const double &m)
 {
     double mean_value = meanln();
+    if (m!=-999)
+        mean_value = m;
     double sum=0;
     for (unsigned int i=0; i<size(); i++)
         sum+= pow(log(at(i))-mean_value,2);
 
 
     return sqrt(sum/double(size()-1));
+}
+
+double ConcentrationSet::SSE(const double &m)
+{
+    double mean_value = mean();
+    if (m!=-999)
+        mean_value = m;
+    double sum=0;
+    for (unsigned int i=0; i<size(); i++)
+        sum+= pow(at(i)-mean_value,2);
+
+    //cout<<sqrt(sum/(double(size())-1.0));
+    return sum;
+}
+
+double ConcentrationSet::SSE_ln(const double &m)
+{
+    double mean_value = meanln();
+    if (m!=-999)
+        mean_value = m;
+    double sum=0;
+    for (unsigned int i=0; i<size(); i++)
+        sum+= pow(log(at(i))-mean_value,2);
+
+
+    return sum;
 }
 
 double ConcentrationSet::meanln()

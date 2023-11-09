@@ -33,6 +33,7 @@ public:
     vector<double> GetProfileForSample(const string &source_name);
 
     Elemental_Profile *Append_Profile(const string &name, const Elemental_Profile &profile=Elemental_Profile(), map<string,element_information> *elementinfo=nullptr);
+    void Append_Profiles(const Elemental_Profile_Set &profiles, map<string, element_information> *elementinfo);
     void UpdateElementalDistribution();
     vector<string> SampleNames(); // Return the list of the name of samples
     ConcentrationSet *ElementalDistribution(const string &element_name)
