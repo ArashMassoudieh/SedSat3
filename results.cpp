@@ -380,6 +380,23 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("ANOVA"))
+        {
+            CMBVector *modeled = new CMBVector();
+            modeled->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.setYAxisTitle("P-Value");
+            res_item.SetYLimit(_range::high,1);
+            res_item.SetResult(modeled);
+            operator[](key.toStdString()) = res_item;
+        }
+
 
 
      }

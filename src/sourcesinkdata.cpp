@@ -2285,9 +2285,24 @@ Elemental_Profile_Set SourceSinkData::LumpAllProfileSets()
     {
         if (it->first!=target_group)
         {
-            out.Append_Profiles(it->second,&ElementInformation);
+            out.Append_Profiles(it->second,nullptr);
         }
     }
+    out.UpdateElementalDistribution();
+    return out;
+}
+
+CMBVector SourceSinkData::ANOVA(bool logtransformed)
+{
+    vector<string> element_names = ElementNames();
+    CMBVector p_values(element_names.size());
+    p_values.SetLabels(element_names);
+    for (unsigned int i=0; i<element_names.size(); i++)
+    {
+        ANOVA_info anova = ANOVA(element_names[i],logtransformed);
+        p_values[i] = anova.p_value;
+    }
+    return p_values;
 }
 
 ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
@@ -2301,7 +2316,7 @@ ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
         for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
         {
             if (source_group->first != target_group)
-            {   sum += source_group->second.ElementalDistribution(element)->SSE(All_ProfileSets.ElementalDistribution(element)->mean())*source_group->second.ElementalDistribution(element)->size();
+            {   sum += pow(source_group->second.ElementalDistribution(element)->mean()-All_ProfileSets.ElementalDistribution(element)->mean(),2)*source_group->second.ElementalDistribution(element)->size();
                 sum_w += source_group->second.ElementalDistribution(element)->SSE();
             }
         }
@@ -2315,7 +2330,7 @@ ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
         for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
         {
             if (source_group->first != target_group)
-            {   sum += source_group->second.ElementalDistribution(element)->SSE_ln(All_ProfileSets.ElementalDistribution(element)->meanln())*source_group->second.ElementalDistribution(element)->size();
+            {   sum += pow(source_group->second.ElementalDistribution(element)->meanln()-All_ProfileSets.ElementalDistribution(element)->meanln(),2)*source_group->second.ElementalDistribution(element)->size();
                 sum_w += source_group->second.ElementalDistribution(element)->SSE_ln();
             }
         }

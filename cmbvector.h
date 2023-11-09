@@ -33,6 +33,7 @@ public:
     CMBVector Eliminate(const string &element) const;
     void append(const string &label, const double &val);
     CMBVector Extract(int start, int end) const;
+    int size() {return num;}
 private:
     vector<string> labels;
     bool boolean_values = false;

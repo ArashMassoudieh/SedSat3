@@ -991,6 +991,25 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.SetResult(EDPProfileSetPercent);
         results.Append(EDPresultPercent);
     }
+    if (command == "ANOVA")
+    {
+        bool log = (arguments["Log Transformation"] == "true" ? true : false);
+
+        results.SetName("ANOVA analysis");
+        ResultItem Anovaresults;
+        Anovaresults.SetName("ANOVA");
+        Anovaresults.SetType(result_type::vector);
+        Anovaresults.SetShowAsString(true);
+        Anovaresults.SetShowTable(true);
+        Anovaresults.SetShowGraph(true);
+        CMBVector *PValues = new CMBVector(Data()->ANOVA(log));
+        Anovaresults.SetYAxisMode(yaxis_mode::normal);
+        Anovaresults.setYAxisTitle("P-value");
+        Anovaresults.SetResult(PValues);
+
+        results.Append(Anovaresults);
+
+    }
     return true;
 }
 

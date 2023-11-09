@@ -273,6 +273,7 @@ public:
     }
     void OutlierAnalysisForAll(const double &lowerthreshold=-3, const double &upperthreshold=3);
     ANOVA_info ANOVA(const string &element, bool logtransformed);
+    CMBVector ANOVA(bool logtransformed);
 private:
 
     map<string,ConcentrationSet> element_distributions;

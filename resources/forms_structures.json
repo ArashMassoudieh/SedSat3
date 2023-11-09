@@ -518,6 +518,13 @@
    			"type": "checkBox",
 			"default": "false"
     		}
+ 	},
+ 	"ANOVA": 
+    	{
+		"Log Transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
  	}
  	
 }
