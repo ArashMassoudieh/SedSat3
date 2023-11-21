@@ -12,6 +12,9 @@ CMBVector::CMBVector(const CMBVector& mp):CVector(mp)
 {
     labels = mp.labels;
     boolean_values = mp.boolean_values;
+    highlimit = mp.highlimit;
+    lowlimit = mp.lowlimit;
+    highlightoutsideoflimit = mp.highlightoutsideoflimit;
 
 }
 
@@ -30,6 +33,9 @@ CMBVector& CMBVector::operator=(const CMBVector &mp)
 {
     labels = mp.labels;
     boolean_values = mp.boolean_values;
+    highlimit = mp.highlimit;
+    lowlimit = mp.lowlimit;
+    highlightoutsideoflimit = mp.highlightoutsideoflimit;
     CVector::operator=(mp);
     return *this;
 
@@ -129,7 +135,15 @@ QTableWidget *CMBVector::ToTable()
     {
         rowheaders << QString::fromStdString(labels[i]);
         if (!boolean_values)
-            tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(valueAt(i))));
+        {   tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(valueAt(i))));
+            if (highlightoutsideoflimit)
+            {
+                if (valueAt(i)>highlimit || valueAt(i)<lowlimit)
+                {
+                    tablewidget->item(i,0)->setForeground(QColor(Qt::red));
+                }
+            }
+        }
         else
         {
             if (valueAt(i)==1)

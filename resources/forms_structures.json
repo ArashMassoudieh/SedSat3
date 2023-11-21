@@ -524,6 +524,14 @@
 		"Log Transformation": {
    			"type": "checkBox",
 			"default": "false"
+    		},
+    		"P-value threshold": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Modify the included elements based on the results": {
+   			"type": "checkBox",
+			"default": "false"
     		}
  	}
  	

@@ -1003,6 +1003,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         Anovaresults.SetShowTable(true);
         Anovaresults.SetShowGraph(true);
         CMBVector *PValues = new CMBVector(Data()->ANOVA(log));
+
+        PValues->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
+        PValues->SetLimit(_range::low, 0);
         Anovaresults.SetYAxisMode(yaxis_mode::normal);
         Anovaresults.setYAxisTitle("P-value");
         Anovaresults.SetResult(PValues);
