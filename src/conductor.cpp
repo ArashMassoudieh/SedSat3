@@ -959,6 +959,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.SetYLimit(_range::high,1);
         EDPresultPercent.SetResult(EDPProfileSetPercent);
         results.Append(EDPresultPercent);
+
+        ResultItem EDPresult_pValue;
+        EDPresult_pValue.SetName("Discriminat p-value");
+        EDPresult_pValue.SetType(result_type::predicted_concentration);
+        EDPresult_pValue.SetShowAsString(false);
+        EDPresult_pValue.setYAxisTitle("p-Value");
+        EDPresult_pValue.SetShowTable(true);
+        EDPresult_pValue.SetShowGraph(true);
+        Elemental_Profile *EDPProfileSet_pValue = new Elemental_Profile(Data()->t_TestPValue(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
+        EDPresult_pValue.SetYAxisMode(yaxis_mode::normal);
+        EDPresult_pValue.SetYLimit(_range::high,1);
+        EDPresult_pValue.SetResult(EDPProfileSet_pValue);
+        results.Append(EDPresult_pValue);
     }
     if (command == "EDPM")
     {
@@ -995,7 +1008,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDP_pValue.SetName("Multi-way discriminat p-value");
         EDP_pValue.SetType(result_type::elemental_profile_set);
         EDP_pValue.SetShowAsString(true);
-        EDP_pValue.setYAxisTitle("Percentage discriminated");
+        EDP_pValue.setYAxisTitle("p-Value");
         EDP_pValue.SetShowTable(true);
         EDP_pValue.SetShowGraph(true);
         Elemental_Profile_Set *EDPProfileSetPValue = new Elemental_Profile_Set(Data()->DifferentiationPower_P_value(include_target));
