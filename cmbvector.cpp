@@ -243,6 +243,17 @@ void CMBVector::append(const string &label, const double &val)
 
 }
 
+CMBVector CMBVector::ExtractWithinRange(const double &lowval, const double &highval) const
+{
+    CMBVector out;
+    for (int i=0; i<size(); i++)
+    {
+        if (valueAt(i)<highval && valueAt(i)>lowval)
+            out.append(labels[i],valueAt(i));
+    }
+    return out;
+}
+
 CMBVector CMBVector::Extract(int start, int end) const
 {
     CMBVector out;

@@ -990,6 +990,20 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.SetYLimit(_range::high,1);
         EDPresultPercent.SetResult(EDPProfileSetPercent);
         results.Append(EDPresultPercent);
+
+        ResultItem EDP_pValue;
+        EDP_pValue.SetName("Multi-way discriminat p-value");
+        EDP_pValue.SetType(result_type::elemental_profile_set);
+        EDP_pValue.SetShowAsString(true);
+        EDP_pValue.setYAxisTitle("Percentage discriminated");
+        EDP_pValue.SetShowTable(true);
+        EDP_pValue.SetShowGraph(true);
+        Elemental_Profile_Set *EDPProfileSetPValue = new Elemental_Profile_Set(Data()->DifferentiationPower_P_value(include_target));
+        EDP_pValue.SetYAxisMode(yaxis_mode::normal);
+        EDP_pValue.SetYLimit(_range::high,1);
+        EDP_pValue.SetResult(EDPProfileSetPValue);
+        results.Append(EDP_pValue);
+
     }
     if (command == "ANOVA")
     {
@@ -1009,6 +1023,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         Anovaresults.SetYAxisMode(yaxis_mode::normal);
         Anovaresults.setYAxisTitle("P-value");
         Anovaresults.SetResult(PValues);
+
+        if (arguments["Modify the included elements based on the results"] == "true")
+        {
+            vector<string> selected = PValues->ExtractWithinRange(0,aquiutils::atof(arguments["P-value threshold"])).Labels();
+            Data()->IncludeExcludeElementsBasedOn(selected);
+        }
 
         results.Append(Anovaresults);
 

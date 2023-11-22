@@ -240,8 +240,10 @@ public:
     CMBVector OptimalBoxCoxParameters();
     Elemental_Profile DifferentiationPower(const string &source1, const string &source2, bool log);
     Elemental_Profile DifferentiationPower_Percentage(const string &source1, const string &source2);
+    Elemental_Profile t_TestPValue(const string &source1, const string &source2, bool log);
     Elemental_Profile_Set DifferentiationPower(bool log, bool include_target);
     Elemental_Profile_Set DifferentiationPower_Percentage(bool include_target);
+    Elemental_Profile_Set DifferentiationPower_P_value(bool include_target);
     vector<string> NegativeValueCheck();
     double GrandMean(const string &element, bool logtransformed);
     Elemental_Profile_Set LumpAllProfileSets();
@@ -274,6 +276,7 @@ public:
     void OutlierAnalysisForAll(const double &lowerthreshold=-3, const double &upperthreshold=3);
     ANOVA_info ANOVA(const string &element, bool logtransformed);
     CMBVector ANOVA(bool logtransformed);
+    void IncludeExcludeElementsBasedOn(const vector<string> elements);
 private:
 
     map<string,ConcentrationSet> element_distributions;

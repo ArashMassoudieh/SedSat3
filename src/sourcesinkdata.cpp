@@ -2143,6 +2143,41 @@ CMBVector SourceSinkData::OptimalBoxCoxParameters()
     return out;
 }
 
+Elemental_Profile SourceSinkData::t_TestPValue(const string &source1, const string &source2, bool log)
+{
+    vector<string> element_names=ElementNames();
+    Elemental_Profile elemental_profile_item;
+    for (unsigned int i=0; i<element_names.size();i++)
+    {
+        ConcentrationSet ConcentrationSet1 = *at(source1).ElementalDistribution(element_names[i]);
+        ConcentrationSet ConcentrationSet2 = *at(source2).ElementalDistribution(element_names[i]);
+        double std1, std2;
+        double mean1, mean2;
+        if (!log)
+        {
+            std1 = ConcentrationSet1.stdev();
+            std2 = ConcentrationSet2.stdev();
+            mean1 = ConcentrationSet1.mean();
+            mean2 = ConcentrationSet2.mean();
+        }
+        else
+        {
+            std1 = ConcentrationSet1.stdevln();
+            std2 = ConcentrationSet2.stdevln();
+            mean1 = ConcentrationSet1.meanln();
+            mean2 = ConcentrationSet2.meanln();
+        }
+        double t = (mean1-mean2)/sqrt(pow(std1,2)/ConcentrationSet1.size() + pow(std2,2)/ConcentrationSet2.size());
+        double pvalueQ = gsl_cdf_tdist_Q (t, ConcentrationSet1.size() + ConcentrationSet2.size() - 2);
+        pvalueQ = min(pvalueQ, 1.0-pvalueQ);
+        double pvalueP = gsl_cdf_tdist_P (t, ConcentrationSet1.size() + ConcentrationSet2.size() - 2);
+        pvalueP = min(pvalueP, 1.0-pvalueP);
+        elemental_profile_item.AppendElement(element_names[i],pvalueQ+pvalueP);
+    }
+    return elemental_profile_item;
+
+}
+
 Elemental_Profile SourceSinkData::DifferentiationPower(const string &source1, const string &source2, bool log)
 {
     vector<string> element_names=ElementNames();
@@ -2173,6 +2208,7 @@ Elemental_Profile SourceSinkData::DifferentiationPower(const string &source1, co
 
 }
 
+
 Elemental_Profile_Set SourceSinkData::DifferentiationPower(bool log, bool include_target)
 {
 
@@ -2182,7 +2218,7 @@ Elemental_Profile_Set SourceSinkData::DifferentiationPower(bool log, bool includ
         if (include_target || it->first!=target_group)
         for (map<string,Elemental_Profile_Set>::iterator it2=next(it); it2!=end(); it2++)
         {
-            if (include_target || it->first!=target_group)
+            if (include_target || it2->first!=target_group)
             {   Elemental_Profile elem_prof = DifferentiationPower(it->first, it2->first, log);
                 out.Append_Profile(it->first + " and " + it2->first, elem_prof);
             }
@@ -2225,8 +2261,27 @@ Elemental_Profile_Set SourceSinkData::DifferentiationPower_Percentage(bool inclu
         if (include_target || it->first!=target_group)
         for (map<string,Elemental_Profile_Set>::iterator it2=next(it); it2!=end(); it2++)
         {
-            if (include_target || it->first!=target_group)
+            if (include_target || it2->first!=target_group)
             {   Elemental_Profile elem_prof = DifferentiationPower_Percentage(it->first, it2->first);
+                out.Append_Profile(it->first + " and " + it2->first, elem_prof);
+            }
+        }
+    }
+    return out;
+
+}
+
+Elemental_Profile_Set SourceSinkData::DifferentiationPower_P_value(bool include_target)
+{
+    Elemental_Profile_Set out;
+
+    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    {
+        if (include_target || it->first!=target_group)
+        for (map<string,Elemental_Profile_Set>::iterator it2=next(it); it2!=end(); it2++)
+        {
+            if (include_target || it2->first!=target_group)
+            {   Elemental_Profile elem_prof = t_TestPValue(it->first, it2->first,false);
                 out.Append_Profile(it->first + " and " + it2->first, elem_prof);
             }
         }
@@ -2343,5 +2398,18 @@ ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
     anova.p_value = gsl_cdf_fdist_Q (anova.F, this->size()-2, All_ProfileSets.size());
     return anova;
 
+}
+
+void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string> elements)
+{
+
+    for (map<string,element_information>::iterator element = ElementInformation.begin(); element!=ElementInformation.end(); element++)
+    {
+        element->second.include_in_analysis=false;
+    }
+    for (unsigned int i=0; i<elements.size(); i++)
+    {
+        ElementInformation[elements[i]].include_in_analysis=true;
+    }
 }
 

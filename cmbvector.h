@@ -34,7 +34,7 @@ public:
     CMBVector Eliminate(const string &element) const;
     void append(const string &label, const double &val);
     CMBVector Extract(int start, int end) const;
-    int size() {return num;}
+    int size() const {return num;}
     void SetLimit(_range lowhigh, const double &value)
     {
         if (lowhigh == _range::high)
@@ -43,6 +43,7 @@ public:
             lowlimit = value;
         highlightoutsideoflimit = true;
     }
+    CMBVector ExtractWithinRange(const double &lowval, const double &highval) const;
 private:
     vector<string> labels;
     bool boolean_values = false;
