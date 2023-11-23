@@ -27,14 +27,6 @@ public:
     void SetColumnLabels(const vector<string> &label) {columnlabels=label;}
     void SetRowLabels(const vector<string> &label) {rowlabels=label;}
     QTableWidget *ToTable() override;
-    void SetLimit(_range lowhigh, const double &value)
-    {
-        if (lowhigh == _range::high)
-            highlimit = value;
-        else
-            lowlimit = value;
-        highlightoutsideoflimit = true;
-    }
     vector<string> RowLabels() const {return rowlabels;}
     vector<string> ColumnLabels() const {return columnlabels;}
     CMBVector GetRow(const string &rowlabel);
@@ -43,8 +35,7 @@ public:
 private:
     vector<string> columnlabels;
     vector<string> rowlabels;
-    double lowlimit,highlimit;
-    bool highlightoutsideoflimit=false;
+
 
 };
 

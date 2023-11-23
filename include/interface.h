@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <qjsonobject.h>
 #include <qtablewidget.h>
+#include "parameter.h"
 
 class QFile; 
 
@@ -34,6 +35,16 @@ public:
             Notes += "; " + note;
     }
     void ClearNotes() {Notes = "";}
+    double lowlimit,highlimit;
+    bool highlightoutsideoflimit = false;
+    void SetLimit(_range lowhigh, const double &value)
+    {
+        if (lowhigh == _range::high)
+            highlimit = value;
+        else
+            lowlimit = value;
+        highlightoutsideoflimit = true;
+    }
 private:
     string Notes;
 

@@ -971,6 +971,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresult_pValue.SetYAxisMode(yaxis_mode::normal);
         EDPresult_pValue.SetYLimit(_range::high,1);
         EDPresult_pValue.SetResult(EDPProfileSet_pValue);
+        EDPProfileSet_pValue->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
+        EDPProfileSet_pValue->SetLimit(_range::low, 0);
         results.Append(EDPresult_pValue);
     }
     if (command == "EDPM")
@@ -1015,6 +1017,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDP_pValue.SetYAxisMode(yaxis_mode::normal);
         EDP_pValue.SetYLimit(_range::high,1);
         EDP_pValue.SetResult(EDPProfileSetPValue);
+        EDPProfileSetPValue->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
+        EDPProfileSetPValue->SetLimit(_range::low, 0);
         results.Append(EDP_pValue);
 
     }

@@ -506,6 +506,10 @@
 		"Log Transformation": {
    			"type": "checkBox",
 			"default": "false"
+    		},
+    		"P-value threshold": {
+   			"type": "lineEdit",
+			"default": "0.05"
     		}
  	},
     	"EDPM": 
@@ -517,6 +521,10 @@
 		"Log Transformation": {
    			"type": "checkBox",
 			"default": "false"
+    		},
+    		"P-value threshold": {
+   			"type": "lineEdit",
+			"default": "0.05"
     		}
  	},
  	"ANOVA": 

@@ -73,6 +73,13 @@ QTableWidget *CMBTimeSeries::ToTable()
     for (int i=0; i<n; i++)
     {
         rowlabels<<QString::number(GetT(i));
+        if (highlightoutsideoflimit)
+        {
+            if (GetC(i)>highlimit || GetC(i)<lowlimit)
+            {
+                tablewidget->item(i,0)->setForeground(QColor(Qt::red));
+            }
+        }
         tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(GetC(i))));
     }
     headers << "Value";

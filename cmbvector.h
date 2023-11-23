@@ -35,20 +35,11 @@ public:
     void append(const string &label, const double &val);
     CMBVector Extract(int start, int end) const;
     int size() const {return num;}
-    void SetLimit(_range lowhigh, const double &value)
-    {
-        if (lowhigh == _range::high)
-            highlimit = value;
-        else
-            lowlimit = value;
-        highlightoutsideoflimit = true;
-    }
     CMBVector ExtractWithinRange(const double &lowval, const double &highval) const;
 private:
     vector<string> labels;
     bool boolean_values = false;
-    double lowlimit,highlimit;
-    bool highlightoutsideoflimit = false;
+
 
 };
 

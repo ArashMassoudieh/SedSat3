@@ -181,6 +181,13 @@ QTableWidget *Elemental_Profile::ToTable()
     {
         constituents<<QString::fromStdString(it->first);
         tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(it->second)));
+        if (highlightoutsideoflimit)
+        {
+            if (it->second>highlimit || it->second<lowlimit)
+            {
+                tablewidget->item(i,0)->setForeground(QColor(Qt::red));
+            }
+        }
         i++;
     }
     headers << "Value";

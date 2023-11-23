@@ -474,7 +474,16 @@ QTableWidget *Elemental_Profile_Set::ToTable()
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++ )
     {
         for (int j=0; j<element_names.size(); j++)
+        {
             tablewidget->setItem(j,i, new QTableWidgetItem(QString::number(it->second.Val(element_names[j]))));
+            if (highlightoutsideoflimit)
+            {
+                if (it->second.Val(element_names[j])>highlimit || it->second.Val(element_names[j])<lowlimit)
+                {
+                    tablewidget->item(j,i)->setForeground(QColor(Qt::red));
+                }
+            }
+        }
         i++;
         headers << QString::fromStdString(it->first);
     }
