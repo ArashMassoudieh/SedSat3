@@ -2417,14 +2417,15 @@ void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string> elements
 SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double &percentage)
 {
     SourceSinkData out;
+    vector<string> samplestobeeliminated = RandomlypickSamples(percentage/100.0);
     for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        if (it->first==target_group)
+        if (it->first!=target_group)
         {
-            out[it->first] = it->second.CopyandCorrect(false,exclude_elements,false, om_size, &ElementInformation);
+            out[it->first] = it->second.EliminateSamples(samplestobeeliminated,&ElementInformation);
         }
         else
-            out[it->first] = it->second.CopyandCorrect(exclude_samples,exclude_elements,omnsizecorrect,om_size,&ElementInformation);
+            out[it->first] = it->second;
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
@@ -2442,7 +2443,7 @@ vector<string> SourceSinkData::AllSourceSampleNames() const
     {
         if (profile_set->first!=target_group)
         {
-            for (map<string,Elemental_Profile>::const_iterator profile = profile_set->second.begin(); profile!=profile_set.second.end(); profile++)
+            for (map<string,Elemental_Profile>::const_iterator profile = profile_set->second.cbegin(); profile!=profile_set->second.cend(); profile++)
                 out.push_back(profile->first);
         }
     }

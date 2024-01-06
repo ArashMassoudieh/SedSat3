@@ -541,6 +541,14 @@
    			"type": "checkBox",
 			"default": "false"
     		}
+ 	},
+ 	"Error_Analysis":
+ 	{
+ 		"Pecentage eliminated": {
+   			"type": "spinBox",
+			"default": "20",
+			"maximum": "90",
+			"minimum": "5"
+    		}
  	}
- 	
 }

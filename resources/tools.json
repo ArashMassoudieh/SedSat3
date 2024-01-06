@@ -28,6 +28,7 @@
     "Normal to discriminant hyperplane vector": "DFA",
     "Elements' discriminant power (Two-way)": "EDP",
     "Elements' discriminant power (Multiple-way)": "EDPM",
-    "Analysis of Variance": "ANOVA"
+    "Analysis of Variance": "ANOVA",
+    "Error Analysis": "Error_Analysis"
   }
 }

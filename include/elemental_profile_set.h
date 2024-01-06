@@ -136,7 +136,7 @@ public:
     CVector ElementMeans();
     QTableWidget *ToTable() override;
     Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const vector<double> &om_size, map<string, element_information> *elementinfo=nullptr);
-    Elemental_Profile_Set EliminateSamples(vector<string> sampplestobeeliminated, map<string, element_information> *elementinfo);
+    Elemental_Profile_Set EliminateSamples(vector<string> sampplestobeeliminated, map<string, element_information> *elementinfo) const;
     Elemental_Profile_Set OrganicandSizeCorrect(const vector<double> &om_size, map<string, element_information>* elementinfo = nullptr);
     CMBVector BoxCoxParameters();
     CMBMatrix Outlier(const double &lowlimit=0, const double &upperlimit=0);

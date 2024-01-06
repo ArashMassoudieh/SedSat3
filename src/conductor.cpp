@@ -1050,6 +1050,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(Anovaresults);
 
     }
+    if (command == "Error_Analysis")
+    {
+        SourceSinkData Bootstrapped_Data = Data()->RandomlyEliminateSourceSamples(aquiutils::atof(arguments["Pecentage eliminated"]));
+
+    }
     return true;
 }
 

@@ -73,11 +73,11 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     return out;
 }
 
-Elemental_Profile_Set Elemental_Profile_Set::EliminateSamples(vector<string> samplestobeeliminated, map<string, element_information> *elementinfo)
+Elemental_Profile_Set Elemental_Profile_Set::EliminateSamples(vector<string> samplestobeeliminated, map<string, element_information> *elementinfo) const
 {
     Elemental_Profile_Set out;
 
-    for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
         if (it->second.IncludedInAnalysis() && lookup(samplestobeeliminated, it->first)==-1)
             out.Append_Profile(it->first, it->second, elementinfo);
 
