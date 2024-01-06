@@ -73,6 +73,18 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     return out;
 }
 
+Elemental_Profile_Set Elemental_Profile_Set::EliminateSamples(vector<string> samplestobeeliminated, map<string, element_information> *elementinfo)
+{
+    Elemental_Profile_Set out;
+
+    for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
+        if (it->second.IncludedInAnalysis() && lookup(samplestobeeliminated, it->first)==-1)
+            out.Append_Profile(it->first, it->second, elementinfo);
+
+    out.SetRegression(&mlr_vs_om_size);
+    return out;
+}
+
 void Elemental_Profile_Set::UpdateElementalDistribution()
 {
     element_distributions.clear();

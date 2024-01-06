@@ -4,6 +4,7 @@
 #include "qjsondocument.h"
 #include "resultitem.h"
 #include <gsl/gsl_cdf.h>
+#include "GADistribution.h"
 
 
 
@@ -2411,5 +2412,55 @@ void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string> elements
     {
         ElementInformation[elements[i]].include_in_analysis=true;
     }
+}
+
+SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double &percentage)
+{
+    SourceSinkData out;
+    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        if (it->first==target_group)
+        {
+            out[it->first] = it->second.CopyandCorrect(false,exclude_elements,false, om_size, &ElementInformation);
+        }
+        else
+            out[it->first] = it->second.CopyandCorrect(exclude_samples,exclude_elements,omnsizecorrect,om_size,&ElementInformation);
+    }
+    out.omconstituent = omconstituent;
+    out.sizeconsituent = sizeconsituent;
+
+    out.PopulateElementInformation();
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
+    return out;
+}
+
+vector<string> SourceSinkData::AllSourceSampleNames() const
+{
+    vector<string> out;
+    for (map<string, Elemental_Profile_Set>::const_iterator profile_set=cbegin(); profile_set!=cend(); profile_set++)
+    {
+        if (profile_set->first!=target_group)
+        {
+            for (map<string,Elemental_Profile>::const_iterator profile = profile_set->second.begin(); profile!=profile_set.second.end(); profile++)
+                out.push_back(profile->first);
+        }
+    }
+    return out;
+
+
+}
+vector<string> SourceSinkData::RandomlypickSamples(const double &percentage) const
+{
+    vector<string> allsamples = AllSourceSampleNames();
+    vector<string> out;
+    for (unsigned int i=0; i<allsamples.size(); i++)
+    {
+        if (GADistribution::GetRndUniF(0,1)<percentage)
+        {
+            out.push_back(allsamples[i]);
+        }
+    }
+    return out;
 }
 

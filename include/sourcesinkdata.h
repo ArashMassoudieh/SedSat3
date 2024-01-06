@@ -277,6 +277,9 @@ public:
     ANOVA_info ANOVA(const string &element, bool logtransformed);
     CMBVector ANOVA(bool logtransformed);
     void IncludeExcludeElementsBasedOn(const vector<string> elements);
+    SourceSinkData RandomlyEliminateSourceSamples(const double &percentage);
+    vector<string> AllSourceSampleNames() const;
+    vector<string> RandomlypickSamples(const double &percentage) const;
 private:
 
     map<string,ConcentrationSet> element_distributions;
