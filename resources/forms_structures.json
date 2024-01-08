@@ -549,6 +549,25 @@
 			"default": "20",
 			"maximum": "90",
 			"minimum": "5"
-    		}
+    		},
+    		"Number of realizations": {
+   			"type": "spinBox",
+			"default": "10",
+			"maximum": "100",
+			"minimum": "5"
+    		},
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		} 
  	}
 }

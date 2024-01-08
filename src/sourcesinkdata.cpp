@@ -2429,11 +2429,34 @@ SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double &perc
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
-
+    out.target_group = target_group;
     out.PopulateElementInformation();
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
     return out;
+}
+
+CMBTimeSeriesSet SourceSinkData::BootStrap(const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation)
+{
+    CMBTimeSeriesSet result(numberofsourcesamplesets);
+
+    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
+        result.setname(source_group_counter, samplesetsorder[source_group_counter]);
+    for (unsigned int i=0; i<number_of_samples; i++)
+    {
+        SourceSinkData bootstrappeddata = RandomlyEliminateSourceSamples(percentage);
+        bootstrappeddata.InitializeParametersObservations(target_sample);
+        if (rtw)
+            rtw->SetProgress(double(i)/double(number_of_samples));
+
+        if (softmax_transformation)
+            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+        else
+            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+
+        result.append(i,bootstrappeddata.ContributionVector().vec);
+    }
+    return result;
 }
 
 vector<string> SourceSinkData::AllSourceSampleNames() const

@@ -1052,7 +1052,43 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "Error_Analysis")
     {
-        SourceSinkData Bootstrapped_Data = Data()->RandomlyEliminateSourceSamples(aquiutils::atof(arguments["Pecentage eliminated"]));
+
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+
+        bool organicnsizecorrection;
+        if (arguments["Apply size and organic matter correction"]=="true")
+        {   organicnsizecorrection = true;
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
+        else
+            organicnsizecorrection = false;
+
+        rtw->show();
+
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        correctedData.SetProgressWindow(rtw);
+        if (!CheckNegativeElements(&correctedData))
+            return false;
+
+        bool softmax = false;
+        if (arguments["Softmax transformation"] == "true")
+            softmax = true;
+
+        correctedData.InitializeParametersObservations(arguments["Sample"]);
+        CMBTimeSeriesSet *contributions = new CMBTimeSeriesSet(correctedData.BootStrap(aquiutils::atof(arguments["Pecentage eliminated"]),aquiutils::atoi(arguments["Number of realizations"]),arguments["Sample"],softmax));
+        ResultItem contributions_result_item;
+        contributions_result_item.SetName("Error Analysis");
+        contributions_result_item.SetResult(contributions);
+        contributions_result_item.SetType(result_type::timeseries_set_all_symbol);
+        contributions_result_item.SetShowAsString(true);
+        contributions_result_item.SetShowTable(true);
+        contributions_result_item.SetShowGraph(true);
+        contributions_result_item.SetShowTable(true);
+        results.Append(contributions_result_item);
 
     }
     return true;
