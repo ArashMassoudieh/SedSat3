@@ -5,6 +5,7 @@
 
 enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, vectorset, mcmc_samples, timeseries_set_first_symbol, timeseries_set_all_symbol, distribution_with_observed,rangeset, rangeset_with_observed, matrix1vs1};
 enum class yaxis_mode {normal, log};
+enum class xaxis_mode {real, counter};
 #include "interface.h"
 
 using namespace std;
@@ -22,7 +23,9 @@ public:
     void SetType(const result_type &_type) {type = _type;}
     result_type Type() const {return type;}
     void SetYAxisMode(yaxis_mode mode) {y_axis_mode = mode;}
+    void SetXAxisMode(xaxis_mode mode) {x_axis_mode = mode; }
     yaxis_mode YAxisMode() {return y_axis_mode;}
+    xaxis_mode XAxisMode() {return x_axis_mode; }
     void SetShowAsString(bool value) {showasstring = value; }
     bool ShowAsString() const {return showasstring;}
     void setXAxisTitle(const string &title) {X_Axis_Title = title;}
@@ -59,6 +62,7 @@ private:
     result_type type;
     Interface *result;
     yaxis_mode y_axis_mode = yaxis_mode::log;
+    xaxis_mode x_axis_mode = xaxis_mode::real;
     bool showabsvalue = false;
     bool showasstring = true;
     string X_Axis_Title;

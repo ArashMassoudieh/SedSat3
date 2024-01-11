@@ -1098,9 +1098,9 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
 {
     double x_min_val = timeseriesset->mintime();
     double x_max_val = timeseriesset->maxtime();
-    double y_min_val = timeseriesset->minval();
-    double y_max_val = timeseriesset->maxval();
-    QValueAxis* axisX = new QValueAxis();
+    double y_min_val = result_item->YLimit(_range::low);
+    double y_max_val = result_item->YLimit(_range::high);
+    QCategoryAxis* axisX = new QCategoryAxis();
     QValueAxis* axisY = new QValueAxis();
     QString xAxisTitle = x_axis_title;
     QString yAxisTitle = y_axis_title;
@@ -1111,6 +1111,7 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
     axisX->setTitleText(xAxisTitle);
     axisY->setTitleText(yAxisTitle);
     axisX->setRange(x_min_val,x_max_val);
+    QStringList XAxisLabels; 
     axisY->setRange(y_min_val,y_max_val);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
@@ -1124,7 +1125,9 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
         for (int j=0; j<timeseriesset->BTC[i].n; j++)
         {
             scatterseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+            axisX->append(QString::number(j + 1),j+1);
         }
+        
         QPen pen = scatterseries->pen();
         pen.setWidth(2);
 

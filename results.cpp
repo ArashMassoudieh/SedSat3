@@ -38,11 +38,11 @@ QJsonObject Results::toJsonObject()
 
 bool Results::ReadFromJson(const QJsonObject &jsonobject)
 {
-    for(QString key: jsonobject.keys() ) {
+    for (QString key : jsonobject.keys()) {
 
-        if (key=="Contributions")
+        if (key == "Contributions")
         {
-            Contribution *contribution = new Contribution();
+            Contribution* contribution = new Contribution();
             contribution->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -52,9 +52,9 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(contribution);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Modeled Elemental Profile")
+        else if (key == "Modeled Elemental Profile")
         {
-            Elemental_Profile *modeled = new Elemental_Profile();
+            Elemental_Profile* modeled = new Elemental_Profile();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -67,7 +67,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("Elemental Profiles"))
         {
-            Elemental_Profile_Set *modeled = new Elemental_Profile_Set();
+            Elemental_Profile_Set* modeled = new Elemental_Profile_Set();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -77,9 +77,9 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Observed vs Modeled Elemental Profile")
+        else if (key == "Observed vs Modeled Elemental Profile")
         {
-            Elemental_Profile_Set *modeled_vs_measured = new Elemental_Profile_Set();
+            Elemental_Profile_Set* modeled_vs_measured = new Elemental_Profile_Set();
             modeled_vs_measured->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -91,7 +91,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("OM & Size MLR for "))
         {
-            MultipleLinearRegressionSet* mlrset = new MultipleLinearRegressionSet(); 
+            MultipleLinearRegressionSet* mlrset = new MultipleLinearRegressionSet();
             mlrset->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -103,7 +103,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("MCMC samples"))
         {
-            CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
+            CMBTimeSeriesSet* samples = new CMBTimeSeriesSet();
             samples->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -127,7 +127,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("Source Contribution Credible Intervals"))
         {
-            RangeSet* rangeset = new RangeSet(); 
+            RangeSet* rangeset = new RangeSet();
             rangeset->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetShowAsString(true);
@@ -225,7 +225,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             operator[](key.toStdString()) = res_item;
         }
         else if (key.contains("DFA transformed"))
-        {   CMBMatrix* dfaresults = new CMBMatrix();
+        {
+            CMBMatrix* dfaresults = new CMBMatrix();
             dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetShowAsString(true);
@@ -237,10 +238,11 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             operator[](key.toStdString()) = res_item;
         }
         else if (key.contains("Correlation Matrix"))
-        {   CMBMatrix* dfaresults = new CMBMatrix();
+        {
+            CMBMatrix* dfaresults = new CMBMatrix();
             dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
-            dfaresults->SetLimit(_range::low,-0.75);
-            dfaresults->SetLimit(_range::high,0.75);
+            dfaresults->SetLimit(_range::low, -0.75);
+            dfaresults->SetLimit(_range::high, 0.75);
             ResultItem res_item;
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
@@ -251,7 +253,8 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             operator[](key.toStdString()) = res_item;
         }
         else if (key.contains("Covariance Matrix"))
-        {   CMBMatrix* dfaresults = new CMBMatrix();
+        {
+            CMBMatrix* dfaresults = new CMBMatrix();
             dfaresults->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetShowAsString(true);
@@ -279,10 +282,10 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("Outlier Analysis"))
         {
-            CMBMatrix *outliermatrix = new CMBMatrix();
+            CMBMatrix* outliermatrix = new CMBMatrix();
             outliermatrix->ReadFromJsonObject(jsonobject[key].toObject());
-            outliermatrix->SetLimit(_range::high,3);
-            outliermatrix->SetLimit(_range::low,-3);
+            outliermatrix->SetLimit(_range::high, 3);
+            outliermatrix->SetLimit(_range::low, -3);
 
             ResultItem res_item;
             res_item.SetShowAsString(false);
@@ -295,7 +298,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("Kolmogorov–Smirnov statististics for constituent"))
         {
-            CMBTimeSeriesSet *KSResults = new CMBTimeSeriesSet();
+            CMBTimeSeriesSet* KSResults = new CMBTimeSeriesSet();
             KSResults->ReadFromJsonObject(jsonobject[key].toObject());
 
             ResultItem res_item;
@@ -309,7 +312,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("Kolmogorov–Smirnov statististics"))
         {
-            CMBVector *KSResults = new CMBVector();
+            CMBVector* KSResults = new CMBVector();
             KSResults->ReadFromJsonObject(jsonobject[key].toObject());
 
             ResultItem res_item;
@@ -322,9 +325,9 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(KSResults);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Multi-way element discriminant power")
+        else if (key == "Multi-way element discriminant power")
         {
-            Elemental_Profile_Set *modeled = new Elemental_Profile_Set();
+            Elemental_Profile_Set* modeled = new Elemental_Profile_Set();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -336,9 +339,9 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.setYAxisTitle("Discrimination power");
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Multi-way discriminat fraction")
+        else if (key == "Multi-way discriminat fraction")
         {
-            Elemental_Profile_Set *modeled = new Elemental_Profile_Set();
+            Elemental_Profile_Set* modeled = new Elemental_Profile_Set();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -347,13 +350,13 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetType(result_type::elemental_profile_set);
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.setYAxisTitle("Percentage discriminated");
-            res_item.SetYLimit(_range::high,1);
+            res_item.SetYLimit(_range::high, 1);
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Two-way element discriminant power")
+        else if (key == "Two-way element discriminant power")
         {
-            Elemental_Profile *modeled = new Elemental_Profile();
+            Elemental_Profile* modeled = new Elemental_Profile();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -365,9 +368,9 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.setYAxisTitle("Discrimination power");
             operator[](key.toStdString()) = res_item;
         }
-        else if (key=="Discriminat fraction")
+        else if (key == "Discriminat fraction")
         {
-            Elemental_Profile *modeled = new Elemental_Profile();
+            Elemental_Profile* modeled = new Elemental_Profile();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -376,13 +379,13 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetType(result_type::predicted_concentration);
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.setYAxisTitle("Percentage discriminated");
-            res_item.SetYLimit(_range::high,1);
+            res_item.SetYLimit(_range::high, 1);
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
         else if (key.contains("ANOVA"))
         {
-            CMBVector *modeled = new CMBVector();
+            CMBVector* modeled = new CMBVector();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
             ResultItem res_item;
             res_item.SetName(key.toStdString());
@@ -392,14 +395,30 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetType(result_type::vector);
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.setYAxisTitle("P-Value");
-            res_item.SetYLimit(_range::high,1);
+            res_item.SetYLimit(_range::high, 1);
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
-
-
-
-     }
+        else if (key.contains("Error Analysis"))
+        {
+            CMBTimeSeriesSet* contributions = new CMBTimeSeriesSet();
+            contributions->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::timeseries_set_all_symbol);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.setYAxisTitle("Contribution");
+            res_item.setXAxisTitle("Sample");
+            res_item.SetYLimit(_range::high, 1);
+            res_item.SetYLimit(_range::low, 0);
+            res_item.SetXAxisMode(xaxis_mode::counter);
+            res_item.SetResult(contributions);
+            operator[](key.toStdString()) = res_item;
+        }
+    }
     return true;
 
 }
