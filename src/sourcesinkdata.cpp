@@ -44,17 +44,17 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     selected_target_sample = target;
     for (map<string, Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
     {
+        vector<double> om_size;
+        if (omconstituent!="")
+            om_size.push_back(at(target_group)[selected_target_sample][omconstituent]);
+        if (sizeconsituent!="")
+            om_size.push_back(at(target_group)[selected_target_sample][sizeconsituent]);
         if (it->first!=target_group)
         {
-            vector<double> om_size;
-            if (omconstituent!="")
-                om_size.push_back(at(target_group)[selected_target_sample][omconstituent]);
-            if (sizeconsituent!="")
-                om_size.push_back(at(target_group)[selected_target_sample][sizeconsituent]);
             out[it->first] = it->second.CopyIncludedinAnalysis(omnsizecorrect,om_size,elementinfo);
         }
         else
-            out[it->first] = it->second;
+            out[it->first] = it->second.CopyIncludedinAnalysis(false,om_size,elementinfo);
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
