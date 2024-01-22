@@ -7,10 +7,11 @@ Interface::Interface()
 
 Interface::Interface(const Interface &intf)
 {
-
+    Options = intf.Options;
 }
 Interface& Interface::operator=(const Interface &intf)
 {
+    Options = intf.Options;
     return *this;
 }
 

@@ -11,6 +11,14 @@ class QFile;
 
 using namespace std;
 
+enum class options_key {x_column_mode};
+
+
+struct options
+{
+    bool single_column_x = false;
+};
+
 class Interface
 {
 public:
@@ -45,8 +53,15 @@ public:
             lowlimit = value;
         highlightoutsideoflimit = true;
     }
+    void SetOption(options_key opt, bool val)
+    {
+        if (opt == options_key::x_column_mode)
+            Options.single_column_x = val;
+    }
 private:
     string Notes;
+    options Options;
+
 
 };
 
