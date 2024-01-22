@@ -1052,6 +1052,8 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
     axisY->setRange(y_min_val,y_max_val);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
+    //axisX->setStartValue(x_min_val);
+    QStringList x_Labels;
     int i=0;
     {
         QScatterSeries* scatterseries = new QScatterSeries();
@@ -1061,6 +1063,8 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
 
         for (int j=0; j<timeseriesset->BTC[i].n; j++)
         {
+            x_Labels.append(QString::fromStdString(timeseriesset->Label(j)));
+            //axisX->append(QString::fromStdString(timeseriesset->Label(j)),j+1);
             scatterseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
         }
         QPen pen = scatterseries->pen();
@@ -1125,7 +1129,8 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
         for (int j=0; j<timeseriesset->BTC[i].n; j++)
         {
             scatterseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
-            axisX->append(QString::number(j + 1),j+1);
+            if (i==0)
+                axisX->append(QString::fromStdString(timeseriesset->Label(j)),j+0.5);
         }
         
         QPen pen = scatterseries->pen();

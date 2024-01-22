@@ -10,6 +10,7 @@ CMBTimeSeriesSet::CMBTimeSeriesSet():CTimeSeriesSet<double>(),Interface()
 CMBTimeSeriesSet::CMBTimeSeriesSet(const CMBTimeSeriesSet& mp):CTimeSeriesSet<double>(mp)
 {
      observed_value = mp.observed_value;
+     labels = mp.labels;
 }
 
 CMBTimeSeriesSet::CMBTimeSeriesSet(int n):CTimeSeriesSet<double>(n), Interface()
@@ -21,6 +22,7 @@ CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CMBTimeSeriesSet &mp)
 {
     CTimeSeriesSet<double>::operator=(mp);
     observed_value = mp.observed_value;
+    labels = mp.labels;
     return *this;
 }
 
@@ -163,7 +165,7 @@ QTableWidget *CMBTimeSeriesSet::ToTable()
         for (int i=0; i<BTC[j].n; i++)
         {
             if (j==0) rowlabels<<QString::number(i);
-            tablewidget->setItem(i,j*2, new QTableWidgetItem(QString::number(BTC[j].GetT(i))));
+            tablewidget->setItem(i,j*2, new QTableWidgetItem(QString::fromStdString(Label(i,j))));
             tablewidget->setItem(i,j*2+1, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
         }
     }

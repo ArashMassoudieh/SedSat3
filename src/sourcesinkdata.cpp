@@ -2436,6 +2436,35 @@ SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double &perc
     return out;
 }
 
+
+Elemental_Profile SourceSinkData::Sample(const string &samplename) const
+{
+    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        if (it->second.count(samplename)==1)
+        {
+            return it->second.at(samplename);
+        }
+    }
+    return Elemental_Profile();
+}
+
+SourceSinkData SourceSinkData::ReplaceSourceAsTarget(const string &sourcesamplename) const
+{
+    SourceSinkData out = *this;
+    Elemental_Profile target = Sample(sourcesamplename);
+    Elemental_Profile_Set targetgroup = Elemental_Profile_Set();
+    targetgroup.Append_Profile(sourcesamplename,target);
+    out[target_group] = targetgroup;
+    out.omconstituent = omconstituent;
+    out.sizeconsituent = sizeconsituent;
+    out.target_group = target_group;
+    out.PopulateElementInformation();
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
+    return out;
+}
+
 CMBTimeSeriesSet SourceSinkData::BootStrap(const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation)
 {
     CMBTimeSeriesSet result(numberofsourcesamplesets);
@@ -2458,6 +2487,37 @@ CMBTimeSeriesSet SourceSinkData::BootStrap(const double &percentage, unsigned in
     }
     return result;
 }
+
+CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool softmax_transformation)
+{
+    InitializeParametersObservations(sample_set(target_group)->begin()->first);
+    CMBTimeSeriesSet result(numberofsourcesamplesets);
+
+    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
+        result.setname(source_group_counter, samplesetsorder[source_group_counter]);
+    int counter = 0;
+    for (map<string,Elemental_Profile>::iterator sample = at(sourcegroup).begin(); sample!=at(sourcegroup).end(); sample++)
+    {
+
+        SourceSinkData bootstrappeddata = ReplaceSourceAsTarget(sample->first);
+        bootstrappeddata.InitializeParametersObservations(sample->first);
+        if (rtw)
+            rtw->SetProgress(double(counter)/double(at(sourcegroup).size()));
+
+        if (softmax_transformation)
+            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+        else
+            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+
+        result.append(counter,bootstrappeddata.ContributionVector().vec);
+        result.SetLabel(counter,sample->first);
+        counter++;
+
+    }
+    return result;
+}
+
+
 
 vector<string> SourceSinkData::AllSourceSampleNames() const
 {

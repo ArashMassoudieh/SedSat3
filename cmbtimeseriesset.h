@@ -41,8 +41,36 @@ public:
         }
         return 0;
     }
+    string Label(unsigned int i)
+    {
+        if (i<labels.size())
+            return labels[i];
+        else if (i<maxnumpoints())
+            return aquiutils::numbertostring(BTC[0].GetT(i));
+        else
+            return "";
+    }
+    string Label(unsigned int i, unsigned int j)
+    {
+        if (i<labels.size())
+            return labels[i];
+        else if (i<maxnumpoints())
+            return aquiutils::numbertostring(BTC[j].GetT(i));
+        else
+            return "";
+    }
+    void SetLabel(unsigned int i, const string &label)
+    {
+        if (i<maxnumpoints())
+        {   labels.resize(maxnumpoints());
+            labels[i] = label;
+        }
+        else
+            return;
+    }
 private:
     vector<double> observed_value;
+    vector<string> labels;
 };
 
 #endif // CMBTimeSeriesSet_H

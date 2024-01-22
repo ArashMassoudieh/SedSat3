@@ -159,6 +159,7 @@ public:
     bool SetParameterValue(const CVector &value); //set the parameter values for estimation
     CVector GetParameterValue(); // return the vector of all the parameter values
     double GetParameterValue(unsigned int i); // return the value of parameter i
+    Elemental_Profile Sample(const string &samplename) const; //extract a single sample
     CVector Gradient(const CVector &value, const estimation_mode estmode); //calculates the gradient of likelihood function
     CVector GradientUpdate(const estimation_mode estmode = estimation_mode::elemental_profile_and_contribution); //Improve the estimate by one step using the gradient descent method
     CVector PredictTarget(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
@@ -281,6 +282,8 @@ public:
     CMBTimeSeriesSet BootStrap(const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation);
     vector<string> AllSourceSampleNames() const;
     vector<string> RandomlypickSamples(const double &percentage) const;
+    SourceSinkData ReplaceSourceAsTarget(const string &sourcesamplename) const;
+    CMBTimeSeriesSet VerifySource(const string &sourcegroup, bool softmax_transformation);
 private:
 
     map<string,ConcentrationSet> element_distributions;

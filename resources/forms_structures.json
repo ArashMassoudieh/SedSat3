@@ -553,7 +553,7 @@
     		"Number of realizations": {
    			"type": "spinBox",
 			"default": "10",
-			"maximum": "100",
+			"maximum": "1000",
 			"minimum": "5"
     		},
     		"Sample": {
@@ -569,5 +569,20 @@
     			"type": "checkBox",
     			"default": "true"
     		} 
+ 	},
+ 	"Source_Verify": {
+ 		"Source Group": {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		}
  	}
 }

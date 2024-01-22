@@ -1096,6 +1096,51 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(contributions_result_item);
 
     }
+    if (command == "Source_Verify")
+    {
+
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+
+        bool organicnsizecorrection;
+        if (arguments["Apply size and organic matter correction"]=="true")
+        {   organicnsizecorrection = true;
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
+        else
+            organicnsizecorrection = false;
+
+        rtw->show();
+
+        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        correctedData.SetProgressWindow(rtw);
+        if (!CheckNegativeElements(&correctedData))
+            return false;
+
+        bool softmax = false;
+        if (arguments["Softmax transformation"] == "true")
+            softmax = true;
+
+        CMBTimeSeriesSet *contributions = new CMBTimeSeriesSet(correctedData.VerifySource(arguments["Source Group"],softmax));
+        ResultItem contributions_result_item;
+        results.SetName("Source verification for source'" + arguments["Source Group"] +"'");
+        contributions_result_item.SetName("Source Verification");
+        contributions_result_item.SetResult(contributions);
+        contributions_result_item.SetType(result_type::timeseries_set_all_symbol);
+        contributions_result_item.SetShowAsString(true);
+        contributions_result_item.SetShowTable(true);
+        contributions_result_item.SetShowGraph(true);
+        contributions_result_item.SetYLimit(_range::high, 1);
+        contributions_result_item.SetXAxisMode(xaxis_mode::counter);
+        contributions_result_item.setYAxisTitle("Contribution");
+        contributions_result_item.setXAxisTitle("Source Sample");
+        contributions_result_item.SetYLimit(_range::low, 0);
+        results.Append(contributions_result_item);
+
+    }
     return true;
 }
 
