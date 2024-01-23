@@ -1127,6 +1127,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         CMBTimeSeriesSet *contributions = new CMBTimeSeriesSet(correctedData.VerifySource(arguments["Source Group"],softmax));
         ResultItem contributions_result_item;
         results.SetName("Source verification for source'" + arguments["Source Group"] +"'");
+        contributions->GetOptions().X_suffix = "";
+        contributions->GetOptions().Y_suffix = "";
+        contributions->SetOption(options_key::single_column_x, true);
         contributions_result_item.SetName("Source Verification");
         contributions_result_item.SetResult(contributions);
         contributions_result_item.SetType(result_type::timeseries_set_all_symbol);

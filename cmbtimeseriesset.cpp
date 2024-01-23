@@ -40,7 +40,12 @@ CMBTimeSeriesSet::CMBTimeSeriesSet(const CTimeSeriesSet<double>& mp):CTimeSeries
 QJsonObject CMBTimeSeriesSet::toJsonObject()
 {
     QJsonObject out;
-
+    QJsonArray labels;
+    {
+        for (int j=0; j<maxnumpoints(); j++)
+            labels.append(QString::fromStdString(Label(j)));
+    }
+    out["labels"] = labels;
     for (int i=0; i<nvars; i++)
     {
         QJsonObject timeseries;
@@ -50,6 +55,7 @@ QJsonObject CMBTimeSeriesSet::toJsonObject()
         {
             t_values.append(BTC[i].GetT(j));
             C_values.append(BTC[i].GetC(j));
+
         }
         timeseries["time"] = t_values;
         timeseries["value"] = C_values;
@@ -72,6 +78,12 @@ bool CMBTimeSeriesSet::ReadFromJsonObject(const QJsonObject &jsonobject)
             QJsonArray observed_value_JArray = jsonobject[key].toArray();
             for (int i=0; i<observed_value_JArray.count(); i++)
                 observed_value.push_back(observed_value_JArray[i].toDouble());
+        }
+        else if (key=="labels")
+        {
+            QJsonArray labels_JArray = jsonobject[key].toArray();
+            for (int i=0; i<labels_JArray.count(); i++)
+                labels.push_back(labels_JArray[i].toString().toStdString());
         }
         else
         {
@@ -104,7 +116,7 @@ string CMBTimeSeriesSet::ToString()
                 if (i>0)
                     out += ", ";
                 if (j<BTC[i].n)
-                    out+= QString::number(BTC[i].GetT(j)).toStdString() + "," + QString::number(BTC[i].GetC(j)).toStdString();
+                    out+= Label(j,i) + "," + QString::number(BTC[i].GetC(j)).toStdString();
                 else
                     out+= ", ";
             }
@@ -155,18 +167,35 @@ QTableWidget *CMBTimeSeriesSet::ToTable()
 {
     QTableWidget *tablewidget = new QTableWidget();
     tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tablewidget->setColumnCount(nvars*2);
+    if (Interface::Option(options_key::single_column_x))
+    {
+        tablewidget->setColumnCount(nvars);
+    }
+    else
+    {
+        tablewidget->setColumnCount(nvars*2);
+    }
     tablewidget->setRowCount(maxnumpoints());
     QStringList headers;
     QStringList rowlabels;
 
     for (int j=0; j<nvars; j++)
-    {   headers << QString::fromStdString(names[j]) + "-x-value" << QString::fromStdString(names[j]) + "-y-value";
+    {
+        if (Interface::Option(options_key::single_column_x))
+            headers << QString::fromStdString(names[j]) + GetOptions().Y_suffix;
+        else
+            headers << QString::fromStdString(names[j]) + GetOptions().X_suffix << QString::fromStdString(names[j]) + GetOptions().Y_suffix;
         for (int i=0; i<BTC[j].n; i++)
         {
-            if (j==0) rowlabels<<QString::number(i);
-            tablewidget->setItem(i,j*2, new QTableWidgetItem(QString::fromStdString(Label(i,j))));
-            tablewidget->setItem(i,j*2+1, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
+            if (!Interface::Option(options_key::single_column_x))
+            {   if (j==0) rowlabels<<QString::number(i);
+                tablewidget->setItem(i,j*2, new QTableWidgetItem(QString::fromStdString(Label(i,j))));
+                tablewidget->setItem(i,j*2+1, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
+            }
+            else
+            {   if (j==0) rowlabels<<QString::fromStdString(Label(i,j));
+                tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
+            }
         }
     }
 

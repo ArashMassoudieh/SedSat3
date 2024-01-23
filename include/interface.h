@@ -11,12 +11,15 @@ class QFile;
 
 using namespace std;
 
-enum class options_key {x_column_mode};
+enum class options_key {single_column_x};
 
 
 struct options
 {
     bool single_column_x = false;
+    QString X_suffix = "x-value";
+    QString Y_suffix = "y-value";
+
 };
 
 class Interface
@@ -55,8 +58,19 @@ public:
     }
     void SetOption(options_key opt, bool val)
     {
-        if (opt == options_key::x_column_mode)
+        if (opt == options_key::single_column_x)
             Options.single_column_x = val;
+    }
+    bool Option(options_key opt)
+    {
+        if (opt == options_key::single_column_x)
+            return Options.single_column_x;
+
+        return false;
+    }
+    options& GetOptions()
+    {
+        return Options;
     }
 private:
     string Notes;
