@@ -440,6 +440,30 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(contributions);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Levenberg-Marquardt-Batch"))
+        {
+            CMBTimeSeriesSet* contributions = new CMBTimeSeriesSet();
+            contributions->ReadFromJsonObject(jsonobject[key].toObject());
+            contributions->GetOptions().X_suffix = "";
+            contributions->GetOptions().Y_suffix = "";
+            contributions->SetOption(options_key::single_column_x, true);
+            ResultItem res_item;
+            res_item.SetName(key.toStdString());
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::timeseries_set_all_symbol);
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.setYAxisTitle("Contribution");
+            res_item.setXAxisTitle("Sample");
+            res_item.SetYLimit(_range::high, 1);
+            res_item.SetYLimit(_range::low, 0);
+            res_item.SetXAxisMode(xaxis_mode::counter);
+            res_item.SetResult(contributions);
+            operator[](key.toStdString()) = res_item;
+        }
+
+
     }
     return true;
 

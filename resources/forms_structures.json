@@ -163,6 +163,17 @@
     			"default": "true"
     		} 
 	},
+	"Levenberg-Marquardt-Batch": {
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		} 
+	},
 	"OM-Size Correct" : 
 	{
 		"Use only selected elements": {

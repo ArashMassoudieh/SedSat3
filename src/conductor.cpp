@@ -218,6 +218,53 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(result_modeled_vs_measured_isotope);
 
     }
+    if (command == "Levenberg-Marquardt-Batch")
+    {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+
+        bool organicnsizecorrection;
+        if (arguments["Apply size and organic matter correction"]=="true")
+        {   organicnsizecorrection = true;
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
+        else
+            organicnsizecorrection = false;
+
+        rtw->show();
+
+
+        Data()->SetProgressWindow(rtw);
+        CMBTimeSeriesSet *contributions;
+        if (arguments["Softmax transformation"]=="true")
+            contributions = new CMBTimeSeriesSet(Data()->LM_Batch(transformation::softmax,organicnsizecorrection));
+        else
+            contributions = new CMBTimeSeriesSet(Data()->LM_Batch(transformation::linear,organicnsizecorrection));
+
+        results.SetName("LM-Batch");
+
+        results.SetName("Source verification for source'" + arguments["Source Group"] +"'");
+        contributions->GetOptions().X_suffix = "";
+        contributions->GetOptions().Y_suffix = "";
+        contributions->SetOption(options_key::single_column_x, true);
+        ResultItem contributions_result_item;
+        contributions_result_item.SetName("Levenberg-Marquardt-Batch");
+        contributions_result_item.SetResult(contributions);
+        contributions_result_item.SetType(result_type::timeseries_set_all_symbol);
+        contributions_result_item.SetShowAsString(true);
+        contributions_result_item.SetShowTable(true);
+        contributions_result_item.SetShowGraph(true);
+        contributions_result_item.SetYLimit(_range::high, 1);
+        contributions_result_item.SetXAxisMode(xaxis_mode::counter);
+        contributions_result_item.setYAxisTitle("Contribution");
+        contributions_result_item.setXAxisTitle("Sample");
+        contributions_result_item.SetYLimit(_range::low, 0);
+        results.Append(contributions_result_item);
+
+    }
     if (command == "OM-Size Correct")
     {
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);

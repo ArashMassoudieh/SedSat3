@@ -284,6 +284,7 @@ public:
     vector<string> RandomlypickSamples(const double &percentage) const;
     SourceSinkData ReplaceSourceAsTarget(const string &sourcesamplename) const;
     CMBTimeSeriesSet VerifySource(const string &sourcegroup, bool softmax_transformation);
+    CMBTimeSeriesSet LM_Batch(transformation transform, bool om_size_correction); //Levenberg-Marquardt batch
 private:
 
     map<string,ConcentrationSet> element_distributions;

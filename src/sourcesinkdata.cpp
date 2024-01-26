@@ -2517,6 +2517,35 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool so
     return result;
 }
 
+CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size_correction)
+{
+
+    InitializeParametersObservations(sample_set(target_group)->begin()->first);
+    CMBTimeSeriesSet result(numberofsourcesamplesets);
+
+    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
+        result.setname(source_group_counter, samplesetsorder[source_group_counter]);
+    int counter = 0;
+    for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample!=at(target_group).end(); sample++)
+    {
+        if (sample->first != "")
+        {   SourceSinkData correctedData = Corrected(sample->first,om_size_correction,GetElementInformation());
+
+            correctedData.InitializeParametersObservations(sample->first);
+            if (rtw)
+                rtw->SetProgress(double(counter)/double(at(target_group).size()));
+
+            correctedData.SolveLevenBerg_Marquardt(transform);
+
+            result.append(counter,correctedData.ContributionVector().vec);
+            result.SetLabel(counter,sample->first);
+            counter++;
+        }
+
+    }
+    return result;
+}
+
 
 
 vector<string> SourceSinkData::AllSourceSampleNames() const
