@@ -86,11 +86,15 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
         return PlotTimeSeriesSet_M(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
     }
-
-    if (res->Type() == result_type::timeseries_set_all_symbol)
+    if (res->Type() == result_type::timeseries_set_first_symbol)
     {
         CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
-        return PlotTimeSeriesSet_A(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
+        return PlotTimeSeriesSet_M(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
+    }
+    if (res->Type() == result_type::stacked_bar_chart)
+    {
+        CMBTimeSeriesSet* timeseriesset = static_cast<CMBTimeSeriesSet*>(res->Result());
+        return PlotTimeSeriesSet_Stacked(timeseriesset, QString::fromStdString(res->Name()),QString::fromStdString(res->XAxisTitle()),QString::fromStdString(res->YAxisTitle()));
     }
 
     if (res->Type() == result_type::mcmc_samples)
@@ -1144,6 +1148,83 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
 
 
     return true;
+}
+
+bool GeneralChart::PlotTimeSeriesSet_Stacked(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+{
+
+    QVector<QBarSet*> sets(timeseriesset->nvars);
+    for (int i=0; i<timeseriesset->nvars; i++)
+    {   sets[i]  = new QBarSet(QString::fromStdString(timeseriesset->names[i]));
+        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+            *sets[i] << timeseriesset->BTC[i].GetC(j);
+
+    }
+
+    QStackedBarSeries *series = new QStackedBarSeries;
+    for (int i=0; i<timeseriesset->nvars; i++)
+        series->append(sets[i]);
+
+
+    chart->addSeries(series);
+    chart->setTitle(title);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    QStringList categories;
+    for (int j=0; j<timeseriesset->BTC[0].n; j++)
+        categories << QString::fromStdString(timeseriesset->Label(j));
+
+    auto axisX = new QBarCategoryAxis;
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+    auto axisY = new QValueAxis;
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
+    QString xAxisTitle = x_axis_title;
+    QString yAxisTitle = y_axis_title;
+    if (x_axis_title.isEmpty()) xAxisTitle = "Value";
+    if (y_axis_title.isEmpty()) yAxisTitle = "Sample";
+
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+
+    /*double y_min_val = result_item->YLimit(_range::low);
+    double y_max_val = result_item->YLimit(_range::high);
+    QBarCategoryAxis* axisX = new QBarCategoryAxis();
+    QValueAxis* axisY = new QValueAxis();
+
+    axisX->setObjectName("axisX");
+    axisY->setObjectName("axisY");
+    axisX->setTitleText(xAxisTitle);
+    axisY->setTitleText(yAxisTitle);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    QStringList XAxisLabels;
+    axisY->setRange(y_min_val,y_max_val);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    for (int i=0; i<timeseriesset->nvars; i++)
+    {
+        QStackedBarSeries* barseries = new QStackedBarSeries();
+        chart->addSeries(barseries);
+        barseries->attachAxis(axisX);
+        barseries->attachAxis(axisY);
+
+        QBarSet *barset = new QBarSet(QString::fromStdString(timeseriesset->names[i]));
+        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        {
+            *barset<<timeseriesset->BTC[i].GetC(j);
+            if (i==1)
+                axisX->append(QString::fromStdString(timeseriesset->Label(j)));
+        }
+        barseries->append(barset);
+
+    }
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
+*/
+    return true;
+
 }
 
 void GeneralChart::on_Exporttopng()

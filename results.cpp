@@ -408,7 +408,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
             res_item.SetShowGraph(true);
-            res_item.SetType(result_type::timeseries_set_all_symbol);
+            res_item.SetType(result_type::stacked_bar_chart);
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.setYAxisTitle("Contribution");
             res_item.setXAxisTitle("Sample");
@@ -430,7 +430,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
             res_item.SetShowGraph(true);
-            res_item.SetType(result_type::timeseries_set_all_symbol);
+            res_item.SetType(result_type::stacked_bar_chart);
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.setYAxisTitle("Contribution");
             res_item.setXAxisTitle("Sample");
@@ -452,7 +452,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetShowAsString(true);
             res_item.SetShowTable(true);
             res_item.SetShowGraph(true);
-            res_item.SetType(result_type::timeseries_set_all_symbol);
+            res_item.SetType(result_type::stacked_bar_chart);
             res_item.SetYAxisMode(yaxis_mode::normal);
             res_item.setYAxisTitle("Contribution");
             res_item.setXAxisTitle("Sample");

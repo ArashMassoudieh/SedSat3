@@ -253,7 +253,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem contributions_result_item;
         contributions_result_item.SetName("Levenberg-Marquardt-Batch");
         contributions_result_item.SetResult(contributions);
-        contributions_result_item.SetType(result_type::timeseries_set_all_symbol);
+        contributions_result_item.SetType(result_type::stacked_bar_chart);
         contributions_result_item.SetShowAsString(true);
         contributions_result_item.SetShowTable(true);
         contributions_result_item.SetShowGraph(true);
@@ -1131,7 +1131,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.SetName("Error Analysis for target sample'" + arguments["Sample"] +"'");
         contributions_result_item.SetName("Error Analysis");
         contributions_result_item.SetResult(contributions);
-        contributions_result_item.SetType(result_type::timeseries_set_all_symbol);
+        contributions_result_item.SetType(result_type::stacked_bar_chart);
         contributions_result_item.SetShowAsString(true);
         contributions_result_item.SetShowTable(true);
         contributions_result_item.SetShowGraph(true);
@@ -1179,7 +1179,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         contributions->SetOption(options_key::single_column_x, true);
         contributions_result_item.SetName("Source Verification");
         contributions_result_item.SetResult(contributions);
-        contributions_result_item.SetType(result_type::timeseries_set_all_symbol);
+        contributions_result_item.SetType(result_type::stacked_bar_chart);
         contributions_result_item.SetShowAsString(true);
         contributions_result_item.SetShowTable(true);
         contributions_result_item.SetShowGraph(true);
