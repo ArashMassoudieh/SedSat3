@@ -29,7 +29,7 @@ QVariant ElementTableModel::data(const QModelIndex &index, int role) const
                 return "Isotope";
             if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::particle_size)
                 return "Particle Size";
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::orgainc_carbon)
+            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::organic_carbon)
                 return "Organic Carbon";
 
         }
@@ -113,7 +113,7 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
             if (value.toString()=="Particle Size")
                 Data->GetElementInformation(element)->Role = element_information::role::particle_size;
             if (value.toString()=="Organic Carbon")
-                Data->GetElementInformation(element)->Role = element_information::role::orgainc_carbon;
+                Data->GetElementInformation(element)->Role = element_information::role::organic_carbon;
 
         }
         if (index.column()==2)

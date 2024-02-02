@@ -57,7 +57,7 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
         }
 
         if (elementinfo && exclude_elements)
-        {   if (elementinfo->at(element->first).include_in_analysis && elementinfo->at(element->first).Role!=element_information::role::do_not_include && elementinfo->at(element->first).Role != element_information::role::particle_size && elementinfo->at(element->first).Role != element_information::role::orgainc_carbon)
+        {   if (elementinfo->at(element->first).include_in_analysis && elementinfo->at(element->first).Role!=element_information::role::do_not_include && elementinfo->at(element->first).Role != element_information::role::particle_size && elementinfo->at(element->first).Role != element_information::role::organic_carbon)
             {
                 out[element->first] = omnsizecorrected[element->first];
             }
@@ -286,7 +286,7 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> 
     Elemental_Profile out;
     for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        if (elementinfo->at(it->first).Role!=element_information::role::orgainc_carbon && elementinfo->at(it->first).Role != element_information::role::particle_size)
+        if (elementinfo->at(it->first).Role!=element_information::role::organic_carbon && elementinfo->at(it->first).Role != element_information::role::particle_size)
         {   out[it->first]=it->second;
 
             if (mlrset->count(it->first) == 1)

@@ -28,7 +28,7 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
             editor->setCurrentText("Isotope");
         if (Data->GetElementInformation(element_name)->Role == element_information::role::particle_size)
             editor->setCurrentText("Particle Size");
-        if (Data->GetElementInformation(element_name)->Role == element_information::role::orgainc_carbon)
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::organic_carbon)
             editor->setCurrentText("Organic Carbon");
 
 
@@ -98,7 +98,7 @@ void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
             combo->setCurrentText("Isotope");
         if (Data->GetElementInformation(element_name)->Role == element_information::role::particle_size)
             combo->setCurrentText("Particle Size");
-        if (Data->GetElementInformation(element_name)->Role == element_information::role::orgainc_carbon)
+        if (Data->GetElementInformation(element_name)->Role == element_information::role::organic_carbon)
             combo->setCurrentText("Organic Carbon");
 
         return;

@@ -65,6 +65,8 @@ struct ANOVA_info
 
 enum class estimation_mode {only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data};
 
+enum class negative_reporting {list, complete};
+
 class SourceSinkData: public map<string, Elemental_Profile_Set>
 {
 public:
@@ -284,7 +286,7 @@ public:
     vector<string> RandomlypickSamples(const double &percentage) const;
     SourceSinkData ReplaceSourceAsTarget(const string &sourcesamplename) const;
     CMBTimeSeriesSet VerifySource(const string &sourcegroup, bool softmax_transformation);
-    CMBTimeSeriesSet LM_Batch(transformation transform, bool om_size_correction); //Levenberg-Marquardt batch
+    CMBTimeSeriesSet LM_Batch(transformation transform, bool om_size_correction, map<string,vector<string>> &negative_elements); //Levenberg-Marquardt batch
 private:
 
     map<string,ConcentrationSet> element_distributions;

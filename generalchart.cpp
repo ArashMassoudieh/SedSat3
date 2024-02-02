@@ -1237,7 +1237,9 @@ void GeneralChart::on_Exporttopng()
 
     if (!fileName.contains("."))
         fileName+=".png";
+    chart->setAnimationOptions(QChart::NoAnimation);
     this->resize(rect.width() * 2, rect.height() * 2);
+
     chartView->grab().save(fileName);
     this->resize(rect.size());
 }

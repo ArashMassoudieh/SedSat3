@@ -59,19 +59,19 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
     if (elementinfo)
-    for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
-    {
-        if (it->second.include_in_analysis && it->second.Role!=element_information::role::do_not_include && it->second.Role!=element_information::role::orgainc_carbon && it->second.Role != element_information::role::particle_size)
+        for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
         {
-            out.ElementInformation[it->first] = ElementInformation[it->first];
-            out.element_distributions[it->first] = element_distributions[it->first];
+            if (it->second.include_in_analysis && it->second.Role!=element_information::role::do_not_include && it->second.Role!=element_information::role::organic_carbon && it->second.Role != element_information::role::particle_size)
+            {
+                out.ElementInformation[it->first] = ElementInformation[it->first];
+                out.element_distributions[it->first] = element_distributions[it->first];
+            }
         }
-    }
-    else
-    {
-        out.ElementInformation = ElementInformation;
-        out.element_distributions = element_distributions;
-    }
+        else
+        {
+            out.ElementInformation = ElementInformation;
+            out.element_distributions = element_distributions;
+        }
     out.numberofconstituents = numberofconstituents;
     out.numberofisotopes = numberofisotopes;
     out.numberofsourcesamplesets = numberofsourcesamplesets;
@@ -2517,7 +2517,7 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool so
     return result;
 }
 
-CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size_correction)
+CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size_correction, map<string,vector<string>> &negative_elements)
 {
 
     InitializeParametersObservations(sample_set(target_group)->begin()->first);
@@ -2530,16 +2530,18 @@ CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size
     {
         if (sample->first != "")
         {   SourceSinkData correctedData = Corrected(sample->first,om_size_correction,GetElementInformation());
+            negative_elements[sample->first] = correctedData.NegativeValueCheck();
+            if (negative_elements[sample->first].size()==0)
+            {   correctedData.InitializeParametersObservations(sample->first);
+                if (rtw)
+                    rtw->SetProgress(double(counter)/double(at(target_group).size()));
 
-            correctedData.InitializeParametersObservations(sample->first);
-            if (rtw)
-                rtw->SetProgress(double(counter)/double(at(target_group).size()));
+                correctedData.SolveLevenBerg_Marquardt(transform);
 
-            correctedData.SolveLevenBerg_Marquardt(transform);
-
-            result.append(counter,correctedData.ContributionVector().vec);
-            result.SetLabel(counter,sample->first);
-            counter++;
+                result.append(counter,correctedData.ContributionVector().vec);
+                result.SetLabel(counter,sample->first);
+                counter++;
+            }
         }
 
     }

@@ -239,10 +239,16 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         Data()->SetProgressWindow(rtw);
         CMBTimeSeriesSet *contributions;
+        map<string,vector<string>> negatives_elements;
         if (arguments["Softmax transformation"]=="true")
-            contributions = new CMBTimeSeriesSet(Data()->LM_Batch(transformation::softmax,organicnsizecorrection));
+            contributions = new CMBTimeSeriesSet(Data()->LM_Batch(transformation::softmax,organicnsizecorrection,negatives_elements));
         else
-            contributions = new CMBTimeSeriesSet(Data()->LM_Batch(transformation::linear,organicnsizecorrection));
+            contributions = new CMBTimeSeriesSet(Data()->LM_Batch(transformation::linear,organicnsizecorrection,negatives_elements));
+
+        if (negatives_elements.size()>0)
+        {
+            CheckNegativeElements(negatives_elements);
+        }
 
         results.SetName("LM-Batch");
 
@@ -1211,5 +1217,23 @@ bool Conductor::CheckNegativeElements(SourceSinkData *_data)
         return false;
     }
     return true;
+
+}
+
+bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elements)
+{
+    QString message;
+    for (map<string,vector<string>>::iterator it = negative_elements.begin(); it!=negative_elements.end(); it++)
+    {
+        message += "For target sample '" + QString::fromStdString(it->first) + ":\n";
+        for (unsigned int i=0; i<it->second.size(); i++)
+        {
+            message += QString::fromStdString("\t" + it->second[i]) + "\n";
+        }
+
+    }
+
+    QMessageBox::warning(mainwindow, "OpenHydroQual",message, QMessageBox::Ok);
+    return false;
 
 }
