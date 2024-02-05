@@ -32,7 +32,7 @@ Elemental_Profile Elemental_Profile::CopyIncluded(map<string,element_information
     if (elementinfo)
         for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
         {
-            if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role!=element_information::role::do_not_include)
+            if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role!=element_information::role::do_not_include && elementinfo->at(it->first).Role!=element_information::role::particle_size && elementinfo->at(it->first).Role!=element_information::role::organic_carbon)
                 out[it->first] = it->second;
         }
     else

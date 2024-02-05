@@ -1333,6 +1333,11 @@ void SourceSinkData::populate_constituent_orders()
         {
             size_om_order.push_back(it->first);
         }
+    for (map<string, element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
+        if (it->second.Role == element_information::role::organic_carbon)
+        {
+            size_om_order.push_back(it->first);
+        }
 
 }
 

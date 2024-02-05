@@ -179,7 +179,7 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
         double SSE_reduced = SSE_reduced_model(independent,dependent, i);
         double F = (SSE_reduced - chisq)/chisq*(number_of_data_points-number_of_variables-1);
         p_value.push_back(gsl_cdf_fdist_Q (F, number_of_variables, number_of_data_points-(number_of_variables)));
-        if (p_value[i]<0.05)
+        if (p_value[i]<0.05 && aquiutils::lookup(independent_variables_names,dependent_variable_name)==-1)
             make_effective.push_back(true);
         else
             make_effective.push_back(false);

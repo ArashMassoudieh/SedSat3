@@ -348,6 +348,7 @@ MultipleLinearRegression Elemental_Profile_Set::regress_vs_size_OM(const string 
     else if (d=="")
         independent_var_names = {om};
     out.SetEquation(form);
+    out.SetDependentVariableName(element);
     out.Regress(independents,dependent, independent_var_names);
     return out;
 }
