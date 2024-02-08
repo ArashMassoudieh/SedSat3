@@ -66,7 +66,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     else
     {
         for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
-            if (it->second.IncludedInAnalysis())
+            if (it->second.IncludedInAnalysis() && it->first!="")
                 out.Append_Profile(it->first, it->second, elementinfo);
     }
     out.SetRegression(&mlr_vs_om_size);
@@ -173,7 +173,8 @@ QJsonObject Elemental_Profile_Set::toJsonObject()
     if (size() == 0) return QJsonObject();
     for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
     {
-        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject(); 
+        if (it->first!="")
+            json_object[QString::fromStdString(it->first)] = it->second.toJsonObject();
     }
     return json_object;
     
@@ -185,7 +186,8 @@ bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject &jsonobject)
     for(QString key: jsonobject.keys() ) {
         Elemental_Profile elemental_profile;
         elemental_profile.ReadFromJsonObject(jsonobject[key].toObject());
-        Append_Profile(key.toStdString(), elemental_profile);
+        if (!key.isEmpty())
+            Append_Profile(key.toStdString(), elemental_profile);
     }
     return true;
 }
@@ -512,7 +514,7 @@ Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const vector<
     out.clear();
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
-        if (it->second.IncludedInAnalysis())
+        if (it->second.IncludedInAnalysis() && it->first!="")
             out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size,elementinfo),elementinfo);
 
     }

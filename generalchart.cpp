@@ -362,11 +362,28 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
 bool GeneralChart::PlotContribution(Contribution* contributions, const QString &title)
 {
     QPieSeries* series = new QPieSeries();
+    QStringList labels;
     for (map<string, double>::iterator it = contributions->begin(); it != contributions->end(); it++)
     {
         series->append(QString::fromStdString(it->first), it->second * 100);
+        labels.append(QString::number(it->second*100)+"%");
     }
+
     chart->addSeries(series);
+    for(auto slice : series->slices())
+    {   slice->setLabel(QString("%1%").arg(100*slice->percentage(), 0, 'f', 1));
+        slice->setLabelVisible();
+
+    }
+
+    int i=0;
+    for (map<string, double>::iterator it = contributions->begin(); it != contributions->end(); it++)
+    {
+        chart->legend()->markers(series)[i]->setLabel(QString::fromStdString(it->first));
+        i++;
+    }
+
+    series->setLabelsPosition(QPieSlice::LabelOutside);
     chart->setTitle(title);
 
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -1165,7 +1182,6 @@ bool GeneralChart::PlotTimeSeriesSet_Stacked(CMBTimeSeriesSet *timeseriesset, co
     for (int i=0; i<timeseriesset->nvars; i++)
         series->append(sets[i]);
 
-
     chart->addSeries(series);
     chart->setTitle(title);
     chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -1189,40 +1205,7 @@ bool GeneralChart::PlotTimeSeriesSet_Stacked(CMBTimeSeriesSet *timeseriesset, co
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
-    /*double y_min_val = result_item->YLimit(_range::low);
-    double y_max_val = result_item->YLimit(_range::high);
-    QBarCategoryAxis* axisX = new QBarCategoryAxis();
-    QValueAxis* axisY = new QValueAxis();
 
-    axisX->setObjectName("axisX");
-    axisY->setObjectName("axisY");
-    axisX->setTitleText(xAxisTitle);
-    axisY->setTitleText(yAxisTitle);
-    chart->setAnimationOptions(QChart::SeriesAnimations);
-    QStringList XAxisLabels;
-    axisY->setRange(y_min_val,y_max_val);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    for (int i=0; i<timeseriesset->nvars; i++)
-    {
-        QStackedBarSeries* barseries = new QStackedBarSeries();
-        chart->addSeries(barseries);
-        barseries->attachAxis(axisX);
-        barseries->attachAxis(axisY);
-
-        QBarSet *barset = new QBarSet(QString::fromStdString(timeseriesset->names[i]));
-        for (int j=0; j<timeseriesset->BTC[i].n; j++)
-        {
-            *barset<<timeseriesset->BTC[i].GetC(j);
-            if (i==1)
-                axisX->append(QString::fromStdString(timeseriesset->Label(j)));
-        }
-        barseries->append(barset);
-
-    }
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
-*/
     return true;
 
 }

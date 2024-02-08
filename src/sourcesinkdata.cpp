@@ -118,7 +118,7 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
     
-    out.PopulateElementInformation();
+    out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
     return out;
@@ -135,7 +135,7 @@ SourceSinkData SourceSinkData::Extract(const vector<string> &element_list) const
             out[it->first] = it->second.Extract(element_list);
         }
     }
-    out.PopulateElementInformation();
+    out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
     return out;
@@ -311,13 +311,16 @@ Distribution *SourceSinkData::FittedDistribution(const string &element_name)
         return nullptr;
 }
 
-void SourceSinkData::PopulateElementInformation()
+void SourceSinkData::PopulateElementInformation(const map<string,element_information> *ElementInfo)
 {
     ElementInformation.clear();
     vector<string> element_names = ElementNames();
     for (unsigned int i=0; i<element_names.size(); i++)
     {
-        ElementInformation[element_names[i]] = element_information();
+        if (ElementInfo==nullptr)
+            ElementInformation[element_names[i]] = element_information();
+        else
+            ElementInformation[element_names[i]] = ElementInfo->at(element_names[i]);
     }
 }
 
@@ -2089,7 +2092,8 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
 void SourceSinkData::BracketTest()
 {
     for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample != at(target_group).end(); sample++)
-        BracketTest(sample->first);
+        if (sample->first!="")
+            BracketTest(sample->first);
 }
 
 
@@ -2435,7 +2439,7 @@ SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double &perc
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
     out.target_group = target_group;
-    out.PopulateElementInformation();
+    out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
     return out;
@@ -2464,7 +2468,7 @@ SourceSinkData SourceSinkData::ReplaceSourceAsTarget(const string &sourcesamplen
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
     out.target_group = target_group;
-    out.PopulateElementInformation();
+    out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
     return out;

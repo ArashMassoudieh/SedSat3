@@ -126,7 +126,7 @@ public:
         return  sample_set(sample_group)->ElementalDistribution(element_name);
 
     }
-    void PopulateElementInformation();
+    void PopulateElementInformation(const map<string,element_information> *ElementInfo=nullptr);
     bool Execute(const string &command, const map<string,string> &arguments);
     string OutputPath();
     bool SetOutputPath(const string &oppath);
