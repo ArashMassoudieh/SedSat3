@@ -155,7 +155,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
 
     axisX->append(categories);
     chart->addAxis(axisX, Qt::AlignBottom);
-
+    axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
     QLogValueAxis* axisYLog;
     QValueAxis* axisYNormal;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
@@ -173,6 +173,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
             axisYLog->setRange(pow(10, roundDown(log(profile->min())/log(10.0))), pow(10, int(log(profile->max()) / log(10.0))+1));
         axisYLog->setLabelFormat("%g");
         axisYLog->setMinorTickCount(5);
+        axisYLog->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYLog, Qt::AlignLeft);
         _log = true;
     }
@@ -185,6 +186,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
             axisYNormal->setRange(roundDown(profile->min()*10.0)/10, roundDown((profile->max()+0.1)*10.0)/10);
         axisYNormal->setLabelFormat("%f");
         axisYNormal->setMinorTickCount(5);
+        axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
     }
     axisX->setLabelsAngle(-90);

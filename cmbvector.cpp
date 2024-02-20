@@ -60,6 +60,8 @@ QJsonObject CMBVector::toJsonObject()
     }
     out["Vector"] = vector;
     out["Labels"] = elementlabels;
+    out["XAxisLabel"] = XAxisLabel();
+    out["YAxisLabel"] = YAxisLabel();
     return out;
 }
 bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
@@ -75,6 +77,15 @@ bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
         labels[i]=elementlabels[i].toString().toStdString();
     }
 
+    if (jsonobject.contains("XAxisLabel"))
+    {
+        SetXAsixLabel(jsonobject["XAxisLabel"].toString());
+    }
+
+    if (jsonobject.contains("YAxisLabel"))
+    {
+        SetXAsixLabel(jsonobject["YAxisLabel"].toString());
+    }
     return true;
 }
 
@@ -82,6 +93,7 @@ bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
 string CMBVector::ToString()
 {
     string out;
+    out += XAxisLabel().toStdString() + "," + YAxisLabel().toStdString() + "\n";
     if (!boolean_values)
     {   for (int j=0; j<getsize(); j++)
         {
@@ -129,7 +141,7 @@ QTableWidget *CMBVector::ToTable()
     QStringList rowheaders;
     QStringList colheaders;
 
-    colheaders << "Value";
+    colheaders << YAxisLabel();
 
     for (int i=0; i<getsize(); i++)
     {

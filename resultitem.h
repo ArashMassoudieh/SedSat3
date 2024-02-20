@@ -28,8 +28,8 @@ public:
     xaxis_mode XAxisMode() {return x_axis_mode; }
     void SetShowAsString(bool value) {showasstring = value; }
     bool ShowAsString() const {return showasstring;}
-    void setXAxisTitle(const string &title) {X_Axis_Title = title;}
-    void setYAxisTitle(const string &title) {Y_Axis_Title = title;}
+    void setXAxisTitle(const string &title) {X_Axis_Title = title; Interface::SetXAsixLabel(QString::fromStdString(title));}
+    void setYAxisTitle(const string &title) {Y_Axis_Title = title; Interface::SetYAsixLabel(QString::fromStdString(title));}
     string XAxisTitle() {return X_Axis_Title;}
     string YAxisTitle() {return Y_Axis_Title;}
     void SetAbsoluteValue(bool val) {showabsvalue = val;}

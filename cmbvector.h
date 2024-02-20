@@ -36,9 +36,11 @@ public:
     CMBVector Extract(int start, int end) const;
     int size() const {return num;}
     CMBVector ExtractWithinRange(const double &lowval, const double &highval) const;
+
 private:
     vector<string> labels;
     bool boolean_values = false;
+
 
 
 };

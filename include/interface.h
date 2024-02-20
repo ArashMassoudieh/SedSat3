@@ -72,9 +72,15 @@ public:
     {
         return Options;
     }
+    QString XAxisLabel() {return XAxis_Label;}
+    QString YAxisLabel() {return YAxis_Label;}
+    bool SetXAsixLabel(const QString &label) {XAxis_Label = label; return true;}
+    bool SetYAsixLabel(const QString &label) {YAxis_Label = label; return true;}
 private:
     string Notes;
     options Options;
+    QString XAxis_Label = "Sample";
+    QString YAxis_Label = "Value";
 
 
 };
