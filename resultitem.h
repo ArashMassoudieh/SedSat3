@@ -28,10 +28,24 @@ public:
     xaxis_mode XAxisMode() {return x_axis_mode; }
     void SetShowAsString(bool value) {showasstring = value; }
     bool ShowAsString() const {return showasstring;}
-    void setXAxisTitle(const string &title) {X_Axis_Title = title; Interface::SetXAsixLabel(QString::fromStdString(title));}
-    void setYAxisTitle(const string &title) {Y_Axis_Title = title; Interface::SetYAsixLabel(QString::fromStdString(title));}
-    string XAxisTitle() {return X_Axis_Title;}
-    string YAxisTitle() {return Y_Axis_Title;}
+    void setXAxisTitle(const string &title) {
+
+        Interface::SetXAsixLabel(QString::fromStdString(title));
+        if (result)
+        {
+            result->SetXAsixLabel(QString::fromStdString(title));
+        }
+    }
+    void setYAxisTitle(const string &title) {
+
+        Interface::SetYAsixLabel(QString::fromStdString(title));
+        if (result)
+        {
+            result->SetYAsixLabel(QString::fromStdString(title));
+        }
+    }
+    string XAxisTitle() {return Interface::XAxisLabel().toStdString();}
+    string YAxisTitle() {return Interface::YAxisLabel().toStdString();}
     void SetAbsoluteValue(bool val) {showabsvalue = val;}
     bool AbsValue() {return showabsvalue;}
     double YLimit(_range highlow)
@@ -60,13 +74,11 @@ public:
 private:
     string name;
     result_type type;
-    Interface *result;
+    Interface *result = nullptr;
     yaxis_mode y_axis_mode = yaxis_mode::log;
     xaxis_mode x_axis_mode = xaxis_mode::real;
     bool showabsvalue = false;
     bool showasstring = true;
-    string X_Axis_Title;
-    string Y_Axis_Title;
     vector<double> YLimits;
     bool fixYlimit = false;
     bool showTable = false;

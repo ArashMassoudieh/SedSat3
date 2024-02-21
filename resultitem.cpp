@@ -13,8 +13,6 @@ ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
     y_axis_mode = rhs.y_axis_mode;
     x_axis_mode = rhs.x_axis_mode;
     showasstring = rhs.showasstring;
-    X_Axis_Title = rhs.X_Axis_Title;
-    Y_Axis_Title = rhs.Y_Axis_Title;
     fixYlimit = rhs.fixYlimit;
     YLimits = rhs.YLimits;
     showTable = rhs.showTable;
@@ -30,8 +28,6 @@ ResultItem& ResultItem::operator = (const ResultItem &rhs)
     y_axis_mode = rhs.y_axis_mode;
     x_axis_mode = rhs.x_axis_mode;
     showasstring = rhs.showasstring;
-    X_Axis_Title = rhs.X_Axis_Title;
-    Y_Axis_Title = rhs.Y_Axis_Title;
     fixYlimit = rhs.fixYlimit;
     YLimits = rhs.YLimits;
     showTable = rhs.showTable;

@@ -1091,9 +1091,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         PValues->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
         PValues->SetLimit(_range::low, 0);
         Anovaresults.SetYAxisMode(yaxis_mode::normal);
+        Anovaresults.SetResult(PValues);
         Anovaresults.setYAxisTitle("P-value");
         Anovaresults.setXAxisTitle("Samples");
-        Anovaresults.SetResult(PValues);
 
         if (arguments["Modify the included elements based on the results"] == "true")
         {

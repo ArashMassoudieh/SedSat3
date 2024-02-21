@@ -8,10 +8,14 @@ Interface::Interface()
 Interface::Interface(const Interface &intf)
 {
     Options = intf.Options;
+    XAxis_Label = intf.XAxis_Label;
+    YAxis_Label = intf.YAxis_Label;
 }
 Interface& Interface::operator=(const Interface &intf)
 {
     Options = intf.Options;
+    XAxis_Label = intf.XAxis_Label;
+    YAxis_Label = intf.YAxis_Label;
     return *this;
 }
 
