@@ -403,6 +403,7 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
 
     QLogValueAxis* axisYLog;
     QValueAxis* axisYNormal;
+    axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     if (profile_set->min()>0 && _log)
     {
@@ -410,6 +411,7 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
         axisYLog->setRange(pow(10, roundDown(log(profile_set->min())/log(10.0))), pow(10, int(log(profile_set->max()) / log(10.0))+1));
         axisYLog->setLabelFormat("%g");
         axisYLog->setMinorTickCount(5);
+        axisYLog->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYLog, Qt::AlignLeft);
         _log = true;
     }
@@ -422,6 +424,7 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
             axisYNormal->setRange(roundDown(profile_set->min()), result_item->YLimit(_range::low));
         axisYNormal->setLabelFormat("%f");
         axisYNormal->setMinorTickCount(5);
+        axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
     }
 

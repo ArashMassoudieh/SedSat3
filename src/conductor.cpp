@@ -997,7 +997,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultStd.SetYAxisMode(yaxis_mode::normal);
         EDPresultStd.setYAxisTitle("Discrimination power");
         EDPresultStd.SetResult(EDPProfileSet);
-
+        EDPresultStd.setXAxisTitle("Element");
+        EDPresultStd.setYAxisTitle("Standard deviation to mean ratio");
         results.Append(EDPresultStd);
 
         ResultItem EDPresultPercent;
@@ -1011,7 +1012,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.SetYAxisMode(yaxis_mode::normal);
         EDPresultPercent.SetYLimit(_range::high,1);
         EDPresultPercent.SetResult(EDPProfileSetPercent);
+        EDPresultPercent.setXAxisTitle("Element");
+        EDPresultPercent.setYAxisTitle("Discriminant fraction");
         results.Append(EDPresultPercent);
+
 
         ResultItem EDPresult_pValue;
         EDPresult_pValue.SetName("Discriminat p-value");
@@ -1026,7 +1030,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresult_pValue.SetResult(EDPProfileSet_pValue);
         EDPProfileSet_pValue->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
         EDPProfileSet_pValue->SetLimit(_range::low, 0);
+        EDPresult_pValue.setXAxisTitle("Element");
+        EDPresult_pValue.setYAxisTitle("Discriminant fraction");
         results.Append(EDPresult_pValue);
+
     }
     if (command == "EDPM")
     {
@@ -1093,7 +1100,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         Anovaresults.SetYAxisMode(yaxis_mode::normal);
         Anovaresults.SetResult(PValues);
         Anovaresults.setYAxisTitle("P-value");
-        Anovaresults.setXAxisTitle("Samples");
+        Anovaresults.setXAxisTitle("Element");
 
         if (arguments["Modify the included elements based on the results"] == "true")
         {

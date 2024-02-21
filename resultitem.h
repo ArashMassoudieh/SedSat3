@@ -30,18 +30,18 @@ public:
     bool ShowAsString() const {return showasstring;}
     void setXAxisTitle(const string &title) {
 
-        Interface::SetXAsixLabel(QString::fromStdString(title));
+        Interface::SetXAxisLabel(QString::fromStdString(title));
         if (result)
         {
-            result->SetXAsixLabel(QString::fromStdString(title));
+            result->SetXAxisLabel(QString::fromStdString(title));
         }
     }
     void setYAxisTitle(const string &title) {
 
-        Interface::SetYAsixLabel(QString::fromStdString(title));
+        Interface::SetYAxisLabel(QString::fromStdString(title));
         if (result)
         {
-            result->SetYAsixLabel(QString::fromStdString(title));
+            result->SetYAxisLabel(QString::fromStdString(title));
         }
     }
     string XAxisTitle() {return Interface::XAxisLabel().toStdString();}

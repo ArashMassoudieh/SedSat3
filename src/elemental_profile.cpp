@@ -190,7 +190,7 @@ QTableWidget *Elemental_Profile::ToTable()
         }
         i++;
     }
-    headers << "Value";
+    headers << YAxisLabel();
     tablewidget->setHorizontalHeaderLabels(headers);
     tablewidget->setVerticalHeaderLabels(constituents);
     return tablewidget;
@@ -207,6 +207,8 @@ QJsonObject Elemental_Profile::toJsonObject()
         element_contents[QString::fromStdString(it->first)] = it->second;
     }
     json_object["Element Contents"] = element_contents;
+    json_object["XAxisLabel"] = XAxisLabel();
+    json_object["YAxisLabel"] = YAxisLabel();
     return json_object;
 }
 
@@ -225,6 +227,17 @@ bool Elemental_Profile::ReadFromJsonObject(const QJsonObject &jsonobject)
             operator[](key.toStdString()) = jsonobject[key].toDouble();
         }
     }
+
+    if (jsonobject.contains("XAxisLabel"))
+    {
+        SetXAxisLabel(jsonobject["XAxisLabel"].toString());
+    }
+
+    if (jsonobject.contains("YAxisLabel"))
+    {
+        SetXAxisLabel(jsonobject["YAxisLabel"].toString());
+    }
+
     return true;
 }
 

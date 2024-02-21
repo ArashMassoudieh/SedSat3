@@ -79,12 +79,12 @@ bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
 
     if (jsonobject.contains("XAxisLabel"))
     {
-        SetXAsixLabel(jsonobject["XAxisLabel"].toString());
+        SetXAxisLabel(jsonobject["XAxisLabel"].toString());
     }
 
     if (jsonobject.contains("YAxisLabel"))
     {
-        SetXAsixLabel(jsonobject["YAxisLabel"].toString());
+        SetXAxisLabel(jsonobject["YAxisLabel"].toString());
     }
     return true;
 }

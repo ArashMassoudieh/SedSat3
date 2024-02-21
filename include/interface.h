@@ -74,8 +74,8 @@ public:
     }
     QString XAxisLabel() {return XAxis_Label;}
     QString YAxisLabel() {return YAxis_Label;}
-    bool SetXAsixLabel(const QString &label) {XAxis_Label = label; return true;}
-    bool SetYAsixLabel(const QString &label)
+    bool SetXAxisLabel(const QString &label) {XAxis_Label = label; return true;}
+    bool SetYAxisLabel(const QString &label)
     {
         YAxis_Label = label;
         return true;
