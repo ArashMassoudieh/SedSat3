@@ -639,14 +639,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "CMB Bayesian")
     {
-        results.SetName("MCMC results for '" +arguments["Sample"] + "'");
-        ResultItem MCMC_samples;
-        MCMC_samples.SetShowAsString(false);
-        MCMC_samples.SetType(result_type::mcmc_samples);
-        MCMC_samples.SetName("MCMC samples");
-        CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
-
-        bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
         {
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
@@ -654,18 +646,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
                 QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            organicnsizecorrection = true;
-
         }
-        else
-            organicnsizecorrection = false;
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection, Data()->GetElementInformation());
-        if (!CheckNegativeElements(&correctedData))
-            return false;
         if (MCMC!=nullptr) delete MCMC;
         MCMC = new CMCMC<SourceSinkData>();
-        MCMC->Model = &correctedData;
+
         ProgressWindow *rtw = new ProgressWindow(mainwindow,3);
         rtw->SetTitle("Acceptance Rate",0);
         rtw->SetTitle("Purturbation Factor",1);
@@ -674,165 +659,45 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Purturbation Factor",1);
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
-// Samples
-        qDebug()<<2;
-        correctedData.InitializeParametersObservations(arguments["Sample"]);
-        MCMC->SetProperty("number_of_samples",arguments["Number of samples"]);
-        MCMC->SetProperty("number_of_chains",arguments["Number of chains"]);
-        MCMC->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
-        MCMC->SetProperty("dissolve_chains",arguments["Dissolve Chains"]);
-        qDebug()<<3;
-        MCMC->initialize(samples,true);
-        string folderpath;
-        if (!QString::fromStdString(arguments["Samples File Name"]).contains("/"))
-            folderpath = workingfolder.toStdString()+"/";
-        qDebug()<<4;
-        MCMC->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["Samples File Name"], samples, rtw);
-        vector<string> SourceGroupNames = correctedData.SourceGroupNames();
-        samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
-        MCMC_samples.SetResult(samples);
-        results.Append(MCMC_samples);
-// Posterior distributions
-        ResultItem distribution_res_item;
-        CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
-        *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        distribution_res_item.SetName("Posterior Distributions");
-        distribution_res_item.SetShowAsString(false);
-        distribution_res_item.SetShowTable(true);
-        distribution_res_item.SetType(result_type::distribution);
-        distribution_res_item.SetResult(dists);
-        results.Append(distribution_res_item);
-
-//Posterior contribution 95% intervals
-        RangeSet *contribution_credible_intervals = new RangeSet();
-                for (unsigned int i=0; i<correctedData.SourceOrder().size(); i++)
+        results = Data()->MCMC(arguments["Sample"],arguments,MCMC,rtw,workingfolder.toStdString());
+        if (results.Error()!="")
         {
-            Range range;
-            double percentile_low = samples->BTC[i].percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-            double percentile_high = samples->BTC[i].percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-            double mean = samples->BTC[i].mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-            double median = samples->BTC[i].percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-            range.Set(_range::low,percentile_low);
-            range.Set(_range::high,percentile_high);
-            range.SetMean(mean);
-            range.SetMedian(median);
-            contribution_credible_intervals->operator[](samples->names[i]) = range;
+            QMessageBox::warning(mainwindow, "SedSat3",QString::fromStdString(results.Error()), QMessageBox::Ok);
+            return false;
         }
-        ResultItem contribution_credible_intervals_result_item;
-
-        contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
-        contribution_credible_intervals_result_item.SetShowAsString(true);
-        contribution_credible_intervals_result_item.SetShowTable(true);
-        contribution_credible_intervals_result_item.SetType(result_type::rangeset);
-        contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
-        contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
-        contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
-        results.Append(contribution_credible_intervals_result_item);
-
-// Predicted 95% posterior distributions
-        CMBTimeSeriesSet predicted_samples = MCMC->predicted;
-        CMBTimeSeriesSet predicted_samples_elems;
-        vector<string> ConstituentNames = correctedData.ElementOrder();
-        vector<string> IsotopeNames = correctedData.IsotopeOrder();
-        vector<string> AllNames = ConstituentNames;
-
-        AllNames.insert(AllNames.end(),IsotopeNames.begin(), IsotopeNames.end());
-
-        for (int i=0; i<predicted_samples.nvars; i++)
-            predicted_samples.setname(i,AllNames[i]);
-
-
-
-        for (int i=0; i<predicted_samples.nvars; i++)
+        rtw->SetProgress(1);
+    }
+    if (command == "CMB Bayesian-Batch")
+    {
+        if (arguments["Apply size and organic matter correction"]=="true")
         {
-            if (correctedData.GetElementInformation(predicted_samples.names[i])->Role==element_information::role::element)
-                predicted_samples_elems.append(predicted_samples[i],predicted_samples.names[i]);
+            if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
         }
-        ResultItem predicted_distribution_res_item;
-        CMBTimeSeriesSet *predicted_dists_elems = new CMBTimeSeriesSet();
 
-        *predicted_dists_elems = predicted_samples_elems.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        for (int i=0; i<predicted_samples.nvars; i++)
-            predicted_dists_elems->SetObservedValue(i,correctedData.observation(i)->Value());
+        if (MCMC!=nullptr) delete MCMC;
+        MCMC = new CMCMC<SourceSinkData>();
 
-        predicted_distribution_res_item.SetName("Posterior Predicted Constituents");
-        predicted_distribution_res_item.SetShowAsString(false);
-        predicted_distribution_res_item.SetShowTable(true);
-        predicted_distribution_res_item.SetType(result_type::distribution_with_observed);
-        predicted_distribution_res_item.SetResult(predicted_dists_elems);
-        results.Append(predicted_distribution_res_item);
+        ProgressWindow *rtw = new ProgressWindow(mainwindow,3, true);
+        rtw->SetTitle("Acceptance Rate",0);
+        rtw->SetTitle("Purturbation Factor",1);
+        rtw->SetTitle("Log posterior value",2);
+        rtw->SetYAxisTitle("Acceptance Rate",0);
+        rtw->SetYAxisTitle("Purturbation Factor",1);
+        rtw->SetYAxisTitle("Log posterior value",2);
+        rtw->show();
+        CMBMatrix* contributions = new CMBMatrix(Data()->MCMC_Batch(arguments,MCMC,rtw,workingfolder.toStdString()));
+// Need to add negative error check
+        ResultItem contrib_matrix_item;
+        contrib_matrix_item.SetName("Contribution Range Matrix");
+        contrib_matrix_item.SetType(result_type::matrix);
 
-//predicted 95% credible intervals
-
-        RangeSet *predicted_credible_intervals = new RangeSet();
-        vector<double> percentile_low = predicted_samples.percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        vector<double> percentile_high = predicted_samples.percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        vector<double> mean = predicted_samples.mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        vector<double> median = predicted_samples.percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        for (int i=0; i<predicted_dists_elems->nvars; i++)
-        {
-            Range range;
-            range.Set(_range::low,percentile_low[i]);
-            range.Set(_range::high,percentile_high[i]);
-            range.SetMean(mean[i]);
-            range.SetMedian(median[i]);
-            predicted_credible_intervals->operator[](predicted_dists_elems->names[i]) = range;
-            predicted_credible_intervals->operator[](predicted_dists_elems->names[i]).SetValue(correctedData.observation(i)->Value());
-        }
-        ResultItem predicted_credible_intervals_result_item;
-        predicted_credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
-        predicted_credible_intervals_result_item.SetShowAsString(true);
-        predicted_credible_intervals_result_item.SetShowTable(true);
-        predicted_credible_intervals_result_item.SetType(result_type::rangeset_with_observed);
-        predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
-        predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
-        results.Append(predicted_credible_intervals_result_item);
-
-        // Predicted 95% posterior distributions for isotopes
-        CMBTimeSeriesSet predicted_samples_isotopes;
-
-        for (int i=0; i<predicted_samples.nvars; i++)
-        {
-            if (correctedData.GetElementInformation(predicted_samples.names[i])->Role==element_information::role::isotope)
-                predicted_samples_isotopes.append(predicted_samples[i],predicted_samples.names[i]);
-        }
-        ResultItem predicted_distribution_iso_res_item;
-        CMBTimeSeriesSet *predicted_dists_isotopes = new CMBTimeSeriesSet();
-
-        *predicted_dists_isotopes = predicted_samples_isotopes.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        for (int i=0; i<predicted_samples_isotopes.nvars; i++)
-            predicted_dists_isotopes->SetObservedValue(i,correctedData.observation(i+ConstituentNames.size())->Value());
-
-        predicted_distribution_iso_res_item.SetName("Posterior Predicted Isotopes");
-        predicted_distribution_iso_res_item.SetShowAsString(false);
-        predicted_distribution_iso_res_item.SetShowTable(true);
-        predicted_distribution_iso_res_item.SetType(result_type::distribution_with_observed);
-        predicted_distribution_iso_res_item.SetResult(predicted_dists_isotopes);
-        results.Append(predicted_distribution_iso_res_item);
-
-        //predicted 95% credible intervals for isotopes
-
-        RangeSet *predicted_credible_intervals_isotopes = new RangeSet();
-
-        for (int i=0; i<predicted_dists_isotopes->nvars; i++)
-        {
-            Range range;
-            range.Set(_range::low,percentile_low[i+correctedData.ElementOrder().size()]);
-            range.Set(_range::high,percentile_high[i+correctedData.ElementOrder().size()]);
-            range.SetMean(mean[i+correctedData.ElementOrder().size()]);
-            range.SetMedian(median[i+correctedData.ElementOrder().size()]);
-            predicted_credible_intervals_isotopes->operator[](predicted_dists_isotopes->names[i]) = range;
-            predicted_credible_intervals_isotopes->operator[](predicted_dists_isotopes->names[i]).SetValue(correctedData.observation(i+correctedData.ElementOrder().size())->Value());
-        }
-        ResultItem predicted_credible_intervals_isotope_result_item;
-        predicted_credible_intervals_isotope_result_item.SetName("Predicted Samples Credible Intervals for Isotopes");
-        predicted_credible_intervals_isotope_result_item.SetShowAsString(true);
-        predicted_credible_intervals_isotope_result_item.SetShowTable(true);
-        predicted_credible_intervals_isotope_result_item.SetType(result_type::rangeset_with_observed);
-        predicted_credible_intervals_isotope_result_item.SetResult(predicted_credible_intervals_isotopes);
-        predicted_credible_intervals_isotope_result_item.SetYAxisMode(yaxis_mode::normal);
-        results.Append(predicted_credible_intervals_isotope_result_item);
-
+        contrib_matrix_item.SetResult(contributions);
+        contrib_matrix_item.SetShowTable(true);
+        results.Append(contrib_matrix_item);
         rtw->SetProgress(1);
     }
     if (command == "Test CMB Bayesian")

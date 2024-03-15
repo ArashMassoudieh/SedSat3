@@ -22,8 +22,12 @@ public:
     bool ReadFromJson(const QJsonObject &jsonobject);
     string GetName() {return name;}
     QJsonObject toJsonObject();
+    void SetError(const string &_error) {error = _error;}
+    void AppendError(const string &_error) {error = error + _error;}
+    string Error() {return error;}
 private:
     string name;
+    string error;
 
 };
 

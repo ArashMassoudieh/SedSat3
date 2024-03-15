@@ -2,12 +2,22 @@
 
 
 
-ProgressWindow::ProgressWindow(QWidget *parent, int number_of_panels)
+ProgressWindow::ProgressWindow(QWidget *parent, int number_of_panels, bool extra_label_and_progressbar)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
     ChartItems.resize(number_of_panels);
 
+    if (!extra_label_and_progressbar)
+    {
+        ui.progressBar_2->setVisible(false);
+        ui.label->setVisible(false);
+    }
+    else
+    {
+        ui.progressBar_2->setVisible(true);
+        ui.label->setVisible(true);
+    }
 
     for (int i=0; i<number_of_panels; i++)
     {
@@ -79,6 +89,19 @@ void ProgressWindow::SetProgress(const double& prog)
 	ui.progressBar->setValue(prog * 100);
     QCoreApplication::processEvents();
 }
+
+void ProgressWindow::SetProgress2(const double& prog)
+{
+    ui.progressBar_2->setValue(prog * 100);
+    QCoreApplication::processEvents();
+}
+
+void ProgressWindow::SetLabel(const QString& label)
+{
+    ui.label->setText(label);
+    QCoreApplication::processEvents();
+}
+
 
 void ProgressWindow::SetYRange(const double &y0, const double &y1, int chart)
 {

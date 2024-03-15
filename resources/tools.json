@@ -13,6 +13,7 @@
   "Fingerprinting Tools":
   {
     "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
+    "Bayesian Chemical Mass Balance Analysis (Batch)": "CMB Bayesian-Batch",
     "Maximum likelihood fingerprinting using Genetic Algorithm": "GA",
     "Maximum likelihood fingerprinting using Genetic Algorithm - Fixed Source Elemental Profiles": "GA (fixed elemental contribution)",
     "Levenberg-Marquardt optimization": "Levenberg-Marquardt",

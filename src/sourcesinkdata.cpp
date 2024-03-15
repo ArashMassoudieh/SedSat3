@@ -5,6 +5,7 @@
 #include "resultitem.h"
 #include <gsl/gsl_cdf.h>
 #include "GADistribution.h"
+#include "rangeset.h"
 
 
 
@@ -2588,3 +2589,240 @@ vector<string> SourceSinkData::RandomlypickSamples(const double &percentage) con
     return out;
 }
 
+Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments, CMCMC<SourceSinkData> *mcmc, ProgressWindow *rtw, const string &workingfolder)
+{
+    Results results;
+    results.SetName("MCMC results for '" +sample + "'");
+    ResultItem MCMC_samples;
+    MCMC_samples.SetShowAsString(false);
+    MCMC_samples.SetType(result_type::mcmc_samples);
+    MCMC_samples.SetName("MCMC samples");
+    CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
+
+    bool organicnsizecorrection;
+    if (arguments["Apply size and organic matter correction"]=="true")
+    {
+        organicnsizecorrection = true;
+    }
+    else
+        organicnsizecorrection = false;
+
+    SourceSinkData correctedData = Corrected(sample,organicnsizecorrection, GetElementInformation());
+    vector<string> negative_elements = correctedData.NegativeValueCheck();
+    if (negative_elements.size()>0)
+    {
+        results.SetError("Negative elemental content in ");
+        for (unsigned int i=0; i<negative_elements.size(); i++)
+        {
+            if (i==0)
+                results.AppendError(negative_elements[i]);
+            else
+                results.AppendError("," + negative_elements[i]);
+        }
+        return results;
+
+    }
+
+    mcmc->Model = &correctedData;
+
+    rtw->SetTitle("Acceptance Rate",0);
+    rtw->SetTitle("Purturbation Factor",1);
+    rtw->SetTitle("Log posterior value",2);
+    rtw->SetYAxisTitle("Acceptance Rate",0);
+    rtw->SetYAxisTitle("Purturbation Factor",1);
+    rtw->SetYAxisTitle("Log posterior value",2);
+    rtw->show();
+// Samples
+    qDebug()<<2;
+    correctedData.InitializeParametersObservations(sample);
+    mcmc->SetProperty("number_of_samples",arguments["Number of samples"]);
+    mcmc->SetProperty("number_of_chains",arguments["Number of chains"]);
+    mcmc->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
+    mcmc->SetProperty("dissolve_chains",arguments["Dissolve Chains"]);
+    qDebug()<<3;
+    mcmc->initialize(samples,true);
+    string folderpath;
+    if (!QString::fromStdString(arguments["Samples File Name"]).contains("/"))
+        folderpath = workingfolder+"/";
+    qDebug()<<4;
+    mcmc->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["Samples File Name"], samples, rtw);
+    vector<string> SourceGroupNames = correctedData.SourceGroupNames();
+    samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
+    MCMC_samples.SetResult(samples);
+    results.Append(MCMC_samples);
+// Posterior distributions
+    ResultItem distribution_res_item;
+    CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
+    *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    distribution_res_item.SetName("Posterior Distributions");
+    distribution_res_item.SetShowAsString(false);
+    distribution_res_item.SetShowTable(true);
+    distribution_res_item.SetType(result_type::distribution);
+    distribution_res_item.SetResult(dists);
+    results.Append(distribution_res_item);
+
+//Posterior contribution 95% intervals
+    RangeSet *contribution_credible_intervals = new RangeSet();
+            for (unsigned int i=0; i<correctedData.SourceOrder().size(); i++)
+    {
+        Range range;
+        double percentile_low = samples->BTC[i].percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        double percentile_high = samples->BTC[i].percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        double mean = samples->BTC[i].mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        double median = samples->BTC[i].percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        range.Set(_range::low,percentile_low);
+        range.Set(_range::high,percentile_high);
+        range.SetMean(mean);
+        range.SetMedian(median);
+        contribution_credible_intervals->operator[](samples->names[i]) = range;
+    }
+    ResultItem contribution_credible_intervals_result_item;
+
+    contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
+    contribution_credible_intervals_result_item.SetShowAsString(true);
+    contribution_credible_intervals_result_item.SetShowTable(true);
+    contribution_credible_intervals_result_item.SetType(result_type::rangeset);
+    contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
+    contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
+    contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
+    results.Append(contribution_credible_intervals_result_item);
+
+// Predicted 95% posterior distributions
+    CMBTimeSeriesSet predicted_samples = mcmc->predicted;
+    CMBTimeSeriesSet predicted_samples_elems;
+    vector<string> ConstituentNames = correctedData.ElementOrder();
+    vector<string> IsotopeNames = correctedData.IsotopeOrder();
+    vector<string> AllNames = ConstituentNames;
+
+    AllNames.insert(AllNames.end(),IsotopeNames.begin(), IsotopeNames.end());
+
+    for (int i=0; i<predicted_samples.nvars; i++)
+        predicted_samples.setname(i,AllNames[i]);
+
+
+
+    for (int i=0; i<predicted_samples.nvars; i++)
+    {
+        if (correctedData.GetElementInformation(predicted_samples.names[i])->Role==element_information::role::element)
+            predicted_samples_elems.append(predicted_samples[i],predicted_samples.names[i]);
+    }
+    ResultItem predicted_distribution_res_item;
+    CMBTimeSeriesSet *predicted_dists_elems = new CMBTimeSeriesSet();
+
+    *predicted_dists_elems = predicted_samples_elems.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    for (int i=0; i<predicted_samples.nvars; i++)
+        predicted_dists_elems->SetObservedValue(i,correctedData.observation(i)->Value());
+
+    predicted_distribution_res_item.SetName("Posterior Predicted Constituents");
+    predicted_distribution_res_item.SetShowAsString(false);
+    predicted_distribution_res_item.SetShowTable(true);
+    predicted_distribution_res_item.SetType(result_type::distribution_with_observed);
+    predicted_distribution_res_item.SetResult(predicted_dists_elems);
+    results.Append(predicted_distribution_res_item);
+
+//predicted 95% credible intervals
+
+    RangeSet *predicted_credible_intervals = new RangeSet();
+    vector<double> percentile_low = predicted_samples.percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    vector<double> percentile_high = predicted_samples.percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    vector<double> mean = predicted_samples.mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    vector<double> median = predicted_samples.percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    for (int i=0; i<predicted_dists_elems->nvars; i++)
+    {
+        Range range;
+        range.Set(_range::low,percentile_low[i]);
+        range.Set(_range::high,percentile_high[i]);
+        range.SetMean(mean[i]);
+        range.SetMedian(median[i]);
+        predicted_credible_intervals->operator[](predicted_dists_elems->names[i]) = range;
+        predicted_credible_intervals->operator[](predicted_dists_elems->names[i]).SetValue(correctedData.observation(i)->Value());
+    }
+    ResultItem predicted_credible_intervals_result_item;
+    predicted_credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
+    predicted_credible_intervals_result_item.SetShowAsString(true);
+    predicted_credible_intervals_result_item.SetShowTable(true);
+    predicted_credible_intervals_result_item.SetType(result_type::rangeset_with_observed);
+    predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
+    predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
+    results.Append(predicted_credible_intervals_result_item);
+
+    // Predicted 95% posterior distributions for isotopes
+    CMBTimeSeriesSet predicted_samples_isotopes;
+
+    for (int i=0; i<predicted_samples.nvars; i++)
+    {
+        if (correctedData.GetElementInformation(predicted_samples.names[i])->Role==element_information::role::isotope)
+            predicted_samples_isotopes.append(predicted_samples[i],predicted_samples.names[i]);
+    }
+    ResultItem predicted_distribution_iso_res_item;
+    CMBTimeSeriesSet *predicted_dists_isotopes = new CMBTimeSeriesSet();
+
+    *predicted_dists_isotopes = predicted_samples_isotopes.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    for (int i=0; i<predicted_samples_isotopes.nvars; i++)
+        predicted_dists_isotopes->SetObservedValue(i,correctedData.observation(i+ConstituentNames.size())->Value());
+
+    predicted_distribution_iso_res_item.SetName("Posterior Predicted Isotopes");
+    predicted_distribution_iso_res_item.SetShowAsString(false);
+    predicted_distribution_iso_res_item.SetShowTable(true);
+    predicted_distribution_iso_res_item.SetType(result_type::distribution_with_observed);
+    predicted_distribution_iso_res_item.SetResult(predicted_dists_isotopes);
+    results.Append(predicted_distribution_iso_res_item);
+
+    //predicted 95% credible intervals for isotopes
+
+    RangeSet *predicted_credible_intervals_isotopes = new RangeSet();
+
+    for (int i=0; i<predicted_dists_isotopes->nvars; i++)
+    {
+        Range range;
+        range.Set(_range::low,percentile_low[i+correctedData.ElementOrder().size()]);
+        range.Set(_range::high,percentile_high[i+correctedData.ElementOrder().size()]);
+        range.SetMean(mean[i+correctedData.ElementOrder().size()]);
+        range.SetMedian(median[i+correctedData.ElementOrder().size()]);
+        predicted_credible_intervals_isotopes->operator[](predicted_dists_isotopes->names[i]) = range;
+        predicted_credible_intervals_isotopes->operator[](predicted_dists_isotopes->names[i]).SetValue(correctedData.observation(i+correctedData.ElementOrder().size())->Value());
+    }
+    ResultItem predicted_credible_intervals_isotope_result_item;
+    predicted_credible_intervals_isotope_result_item.SetName("Predicted Samples Credible Intervals for Isotopes");
+    predicted_credible_intervals_isotope_result_item.SetShowAsString(true);
+    predicted_credible_intervals_isotope_result_item.SetShowTable(true);
+    predicted_credible_intervals_isotope_result_item.SetType(result_type::rangeset_with_observed);
+    predicted_credible_intervals_isotope_result_item.SetResult(predicted_credible_intervals_isotopes);
+    predicted_credible_intervals_isotope_result_item.SetYAxisMode(yaxis_mode::normal);
+    results.Append(predicted_credible_intervals_isotope_result_item);
+
+    rtw->SetProgress(1);
+}
+
+CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *mcmc, ProgressWindow *rtw, const string &workingfolder)
+{
+    InitializeParametersObservations(at(target_group).begin()->first);
+    CMBMatrix contributions(numberofsourcesamplesets*4,at(target_group).size());
+
+    for (unsigned int i=0; i<numberofsourcesamplesets; i++)
+    {
+        contributions.SetColumnLabel(i*4, samplesetsorder[i] +"-"+"low");
+        contributions.SetColumnLabel(i*4+1, samplesetsorder[i] +"-"+"high");
+        contributions.SetColumnLabel(i*4+2, samplesetsorder[i] +"-"+"median");
+        contributions.SetColumnLabel(i*4+3, samplesetsorder[i] +"-"+"mean");
+    }
+    int counter = 0;
+    for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample!=at(target_group).end(); sample++)
+    {
+        contributions.SetRowLabel(counter,sample->first);
+        rtw->SetLabel(QString::fromStdString(sample->first));
+        Results results = MCMC(sample->first, arguments, mcmc, rtw, workingfolder);
+        for (unsigned int i=0; i<numberofsourcesamplesets; i++)
+        {
+            contributions[counter][4*i] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder[i]+"_contribution").Get(_range::low);
+            contributions[counter][4*i+1] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder[i]+"_contribution").Get(_range::high);
+            contributions[counter][4*i+2] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder[i]+"_contribution").Median();
+            contributions[counter][4*i+3] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder[i]+"_contribution").Mean();
+        }
+
+        counter++;
+        rtw->SetProgress2(double(counter)/double(at(target_group).size()));
+    }
+    rtw->SetProgress2(1);
+    return contributions;
+}

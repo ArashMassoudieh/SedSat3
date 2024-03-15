@@ -12,6 +12,7 @@
 #include "qjsonobject.h"
 #include "cmbvector.h"
 #include "cmbvectorset.h"
+#include "MCMC.h"
 
 enum class transformation {linear, softmax};
 
@@ -287,6 +288,8 @@ public:
     SourceSinkData ReplaceSourceAsTarget(const string &sourcesamplename) const;
     CMBTimeSeriesSet VerifySource(const string &sourcegroup, bool softmax_transformation);
     CMBTimeSeriesSet LM_Batch(transformation transform, bool om_size_correction, map<string,vector<string>> &negative_elements); //Levenberg-Marquardt batch
+    Results MCMC(const string &sample, map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
+    CMBMatrix MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
 private:
 
     map<string,ConcentrationSet> element_distributions;
