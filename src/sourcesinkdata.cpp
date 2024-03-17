@@ -6,6 +6,7 @@
 #include <gsl/gsl_cdf.h>
 #include "GADistribution.h"
 #include "rangeset.h"
+#include <qdir.h>
 
 
 
@@ -2647,7 +2648,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     qDebug()<<4;
     mcmc->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["Samples File Name"], samples, rtw);
     vector<string> SourceGroupNames = correctedData.SourceGroupNames();
-    samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_Contribution");
+    samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_contribution");
     MCMC_samples.SetResult(samples);
     results.Append(MCMC_samples);
 // Posterior distributions
@@ -2809,9 +2810,21 @@ CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceS
     int counter = 0;
     for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample!=at(target_group).end(); sample++)
     {
+        QDir dir(QString::fromStdString(workingfolder)+"/"+QString::fromStdString(sample->first));
+        if (!dir.exists())
+            dir.mkpath(".");
         contributions.SetRowLabel(counter,sample->first);
         rtw->SetLabel(QString::fromStdString(sample->first));
         Results results = MCMC(sample->first, arguments, mcmc, rtw, workingfolder);
+
+        for (map<string,ResultItem>::iterator result_item = results.begin(); result_item!=results.end(); result_item++ )
+        {
+            QString file_name = dir.absolutePath()+"/"+QString::fromStdString(result_item->first)+".txt";
+            QFile file(file_name);
+            file.open(QIODevice::WriteOnly | QIODevice::Text);
+            result_item->second.Result()->writetofile(&file);
+            file.close();
+        }
         for (unsigned int i=0; i<numberofsourcesamplesets; i++)
         {
             contributions[counter][4*i] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder[i]+"_contribution").Get(_range::low);
@@ -2822,6 +2835,9 @@ CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceS
 
         counter++;
         rtw->SetProgress2(double(counter)/double(at(target_group).size()));
+        rtw->ClearGraph(0);
+        rtw->ClearGraph(1);
+        rtw->ClearGraph(2);
     }
     rtw->SetProgress2(1);
     return contributions;

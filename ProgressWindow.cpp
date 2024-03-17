@@ -84,6 +84,11 @@ void ProgressWindow::AppendPoint(const double& x, const double& y, int chart)
 
 }
 
+void ProgressWindow::ClearGraph(int chart)
+{
+    ChartItems[chart].series->clear();
+}
+
 void ProgressWindow::SetProgress(const double& prog)
 {
 	ui.progressBar->setValue(prog * 100);

@@ -41,6 +41,7 @@ public:
     void SetTitle(const QString &title, int chart=0);
     void SetXAxisTitle(const QString &title, int chart=0);
     void SetYAxisTitle(const QString &title, int chart=0);
+    void ClearGraph(int chart=0);
 
 private:
 	Ui::ProgressWindow ui;
