@@ -566,7 +566,8 @@ void GeneralChart::onDistributionsVariableChanged(int i)
 {
     CMBTimeSeriesSet * samplesset = static_cast<CMBTimeSeriesSet*>(result_item->Result());
     QString variable = element_combo->itemText(i);
-    PlotDistribution(&samplesset->operator[](variable.toStdString()),variable);
+    if (samplesset->Contains(variable.toStdString()))
+        PlotDistribution(&samplesset->operator[](variable.toStdString()),variable);
 }
 void GeneralChart::onIndependentChanged(int i_constituent)
 {

@@ -11,10 +11,10 @@
     <ROW Property="ARPURLINFOABOUT" Value="www.SedSat.org"/>
     <ROW Property="ARPURLUPDATEINFO" Value="www.SedSat.org/download"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{D045F53A-BD75-4AEC-A045-69DC2422BF17} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{914811E5-2FBB-416F-9979-C5B823F32F90} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="SedSat3"/>
-    <ROW Property="ProductVersion" Value="1.0.10" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.0.11" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
