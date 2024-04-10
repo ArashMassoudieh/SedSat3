@@ -283,6 +283,7 @@ public:
     void IncludeExcludeElementsBasedOn(const vector<string> elements);
     SourceSinkData RandomlyEliminateSourceSamples(const double &percentage);
     CMBTimeSeriesSet BootStrap(const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation);
+    bool BootStrap(Results *res, const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation);
     vector<string> AllSourceSampleNames() const;
     vector<string> RandomlypickSamples(const double &percentage) const;
     SourceSinkData ReplaceSourceAsTarget(const string &sourcesamplename) const;

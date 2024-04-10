@@ -1005,21 +1005,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             softmax = true;
 
         correctedData.InitializeParametersObservations(arguments["Sample"]);
-        CMBTimeSeriesSet *contributions = new CMBTimeSeriesSet(correctedData.BootStrap(aquiutils::atof(arguments["Pecentage eliminated"]),aquiutils::atoi(arguments["Number of realizations"]),arguments["Sample"],softmax));
-        ResultItem contributions_result_item;
-        results.SetName("Error Analysis for target sample'" + arguments["Sample"] +"'");
-        contributions_result_item.SetName("Error Analysis");
-        contributions_result_item.SetResult(contributions);
-        contributions_result_item.SetType(result_type::stacked_bar_chart);
-        contributions_result_item.SetShowAsString(true);
-        contributions_result_item.SetShowTable(true);
-        contributions_result_item.SetShowGraph(true);
-        contributions_result_item.SetYLimit(_range::high, 1);
-        contributions_result_item.SetXAxisMode(xaxis_mode::counter);
-        contributions_result_item.setYAxisTitle("Contribution");
-        contributions_result_item.setXAxisTitle("Sample");
-        contributions_result_item.SetYLimit(_range::low, 0);
-        results.Append(contributions_result_item);
+        bool out = correctedData.BootStrap(&results, aquiutils::atof(arguments["Pecentage eliminated"]),aquiutils::atoi(arguments["Number of realizations"]),arguments["Sample"],softmax);
 
     }
     if (command == "Source_Verify")
