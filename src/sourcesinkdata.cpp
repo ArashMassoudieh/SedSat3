@@ -2499,6 +2499,82 @@ CMBTimeSeriesSet SourceSinkData::BootStrap(const double &percentage, unsigned in
     return result;
 }
 
+bool SourceSinkData::BootStrap(Results *res, const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation)
+{
+    CMBTimeSeriesSet* contributions = new CMBTimeSeriesSet(numberofsourcesamplesets);
+
+    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets; source_group_counter++)
+        contributions->setname(source_group_counter, samplesetsorder[source_group_counter]);
+    for (unsigned int i=0; i<number_of_samples; i++)
+    {
+        SourceSinkData bootstrappeddata = RandomlyEliminateSourceSamples(percentage);
+        bootstrappeddata.InitializeParametersObservations(target_sample);
+        if (rtw)
+            rtw->SetProgress(double(i)/double(number_of_samples));
+
+        if (softmax_transformation)
+            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+        else
+            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+
+        contributions->append(i,bootstrappeddata.ContributionVector().vec);
+    }
+    ResultItem contributions_result_item;
+    res->SetName("Error Analysis for target sample'" + target_sample +"'");
+    contributions_result_item.SetName("Error Analysis");
+    contributions_result_item.SetResult(contributions);
+    contributions_result_item.SetType(result_type::stacked_bar_chart);
+    contributions_result_item.SetShowAsString(true);
+    contributions_result_item.SetShowTable(true);
+    contributions_result_item.SetShowGraph(true);
+    contributions_result_item.SetYLimit(_range::high, 1);
+    contributions_result_item.SetXAxisMode(xaxis_mode::counter);
+    contributions_result_item.setYAxisTitle("Contribution");
+    contributions_result_item.setXAxisTitle("Sample");
+    contributions_result_item.SetYLimit(_range::low, 0);
+    res->Append(contributions_result_item);
+
+    CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
+    *dists = contributions->distribution(100,0,0);
+    ResultItem distribution_res_item;
+    distribution_res_item.SetName("Posterior Distributions");
+    distribution_res_item.SetShowAsString(false);
+    distribution_res_item.SetShowTable(true);
+    distribution_res_item.SetType(result_type::distribution);
+    distribution_res_item.SetResult(dists);
+    res->Append(distribution_res_item);
+
+//Posterior contribution 95% intervals
+    RangeSet *contribution_credible_intervals = new RangeSet();
+    for (unsigned int i=0; i<SourceOrder().size(); i++)
+    {
+        Range range;
+        double percentile_low = contributions->BTC[i].percentile(0.025);
+        double percentile_high = contributions->BTC[i].percentile(0.975);
+        double mean = contributions->BTC[i].mean();
+        double median = contributions->BTC[i].percentile(0.5);
+        range.Set(_range::low,percentile_low);
+        range.Set(_range::high,percentile_high);
+        range.SetMean(mean);
+        range.SetMedian(median);
+        contribution_credible_intervals->operator[](contributions->names[i]) = range;
+    }
+    ResultItem contribution_credible_intervals_result_item;
+
+    contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
+    contribution_credible_intervals_result_item.SetShowAsString(true);
+    contribution_credible_intervals_result_item.SetShowTable(true);
+    contribution_credible_intervals_result_item.SetType(result_type::rangeset);
+    contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
+    contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
+    contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
+    res->Append(contribution_credible_intervals_result_item);
+
+
+    return true;
+
+}
+
 CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool softmax_transformation)
 {
     InitializeParametersObservations(sample_set(target_group)->begin()->first);
@@ -2664,7 +2740,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
 
 //Posterior contribution 95% intervals
     RangeSet *contribution_credible_intervals = new RangeSet();
-            for (unsigned int i=0; i<correctedData.SourceOrder().size(); i++)
+    for (unsigned int i=0; i<correctedData.SourceOrder().size(); i++)
     {
         Range range;
         double percentile_low = samples->BTC[i].percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
