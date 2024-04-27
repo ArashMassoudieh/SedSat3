@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     ResultscontextMenu = new QMenu(ui->TreeView_Results);
     ResultscontextMenu->addAction(DeleteAction);
     connect(DeleteAction, SIGNAL(triggered()), this, SLOT(DeleteResults()));
-
+    Populate_General_ToolBar();
 
     ui->TreeView_Results->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->TreeView_Results, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
@@ -1038,4 +1038,83 @@ bool MainWindow::CreateFileIfDoesNotExist(QString fileName)
 }
 
 
+void MainWindow::Populate_General_ToolBar()
+{
+    // ImportExcel //
+    QAction* actionimportexcel = new QAction(this);
+    actionimportexcel->setObjectName("Constituents Properties");
+    QIcon iconimportexcel;
 
+    iconimportexcel.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/Import_Excel.png", QSize(), QIcon::Normal, QIcon::Off);
+    actionimportexcel->setIcon(iconimportexcel);
+    ui->toolBar->addAction(actionimportexcel);
+    actionimportexcel->setText("Import Excel");
+    actionimportexcel->setToolTip("Import from Excel File");
+    connect(actionimportexcel, SIGNAL(triggered()), this, SLOT(on_import_excel()));
+
+
+    // Save //
+    QAction* actionsave = new QAction(this);
+    actionsave->setObjectName("Save");
+    QIcon iconsave;
+    iconsave.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/Save.png", QSize(), QIcon::Normal, QIcon::Off);
+    actionsave->setIcon(iconsave);
+    ui->toolBar->addAction(actionsave);
+    actionsave->setText("Save");
+    actionsave->setToolTip("Save");
+    connect(actionsave, SIGNAL(triggered()), this, SLOT(onSaveProject()));
+
+    // Open //
+    QAction* actionopen = new QAction(this);
+    actionopen->setObjectName("Open");
+    QIcon iconopen;
+
+    iconopen.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/open.png", QSize(), QIcon::Normal, QIcon::Off);
+    actionopen->setIcon(iconopen);
+    ui->toolBar->addAction(actionopen);
+    actionopen->setText("Open");
+    actionopen->setToolTip("Open");
+    connect(actionopen, SIGNAL(triggered()), this, SLOT(onOpenProject()));
+
+
+    QAction* seperator = new QAction(this);
+    seperator->setSeparator(true);
+    ui->toolBar->addAction(seperator);
+
+    // Element Properties //
+    QAction* actionelementprops = new QAction(this);
+    actionelementprops->setObjectName("Constituents Properties");
+    QIcon iconelementprops;
+
+    iconelementprops.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/Element_Props.png", QSize(), QIcon::Normal, QIcon::Off);
+    actionelementprops->setIcon(iconelementprops);
+    ui->toolBar->addAction(actionelementprops);
+    actionelementprops->setText("Constituents Selection/Properties");
+    actionelementprops->setToolTip("Constituents Selection/Properties");
+    connect(actionelementprops, SIGNAL(triggered()), this, SLOT(on_constituent_properties_triggered()));
+
+    // Organic Matter and Size Correction //
+    QAction* actionomsizecorrection = new QAction(this);
+    actionomsizecorrection->setObjectName("Organic Matter and Size Correction");
+    QIcon iconomsizecorrection;
+
+    iconomsizecorrection.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/OMSizeCorrection.png", QSize(), QIcon::Normal, QIcon::Off);
+    actionomsizecorrection->setIcon(iconomsizecorrection);
+    ui->toolBar->addAction(actionomsizecorrection);
+    actionomsizecorrection->setText("Organic Matter and Size Correction");
+    actionomsizecorrection->setToolTip("Organic Matter and Size Correction");
+    connect(actionomsizecorrection, SIGNAL(triggered()), this, SLOT(onOMSizeCorrection()));
+
+    // Organic Select Samples //
+    QAction* actionselectsamples = new QAction(this);
+    actionselectsamples->setObjectName("Select Samples");
+    QIcon iconselectsamples;
+
+    iconselectsamples.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/SelectSamples.png", QSize(), QIcon::Normal, QIcon::Off);
+    actionselectsamples->setIcon(iconselectsamples);
+    ui->toolBar->addAction(actionselectsamples);
+    actionselectsamples->setText("Select Samples");
+    actionselectsamples->setToolTip("Select Samples");
+    connect(actionselectsamples, SIGNAL(triggered()), this, SLOT(onIncludeExcludeSample()));
+
+}

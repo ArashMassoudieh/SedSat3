@@ -59,6 +59,7 @@ private:
     QStringList recentFiles;
     bool CreateFileIfDoesNotExist(QString fileName);
     bool LoadModel(const QString &fileName);
+    void Populate_General_ToolBar();
 private slots:
     void on_import_excel();
     void on_plot_raw_elemental_profiles();
