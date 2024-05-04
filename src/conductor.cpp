@@ -1076,6 +1076,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(contributions_result_item);
 
     }
+    Data()->AddtoToolsUsed(command);
     return true;
 }
 

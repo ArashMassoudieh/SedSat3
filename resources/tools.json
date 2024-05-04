@@ -3,12 +3,9 @@
   {
     "3-Organic matter and particle size correction": "MLR",
     "1-Elements' correlation matrix": "CorMat",
-    "8-Discriminant power evaluation": "DFAM",
-    "6-Stepwise discriminant function analysis (Two-way)": "SDFA",
-    "7-Stepwise discriminant function analysis (Multiple-way)": "SDFAM-2",
-    "4-Correct based on size and organic matter": "OM-Size Correct",
-    "5-Bracketing Analysis": "Bracketing Analysis",
-    "2-Outlier Analysis": "Outlier"
+    "4-Bracketing Analysis": "Bracketing Analysis",
+    "2-Outlier Analysis": "Outlier",
+    "5-Analysis of Variance for element selection": "ANOVA"
   },
   "Fingerprinting Tools":
   {
@@ -30,8 +27,11 @@
     "Normal to discriminant hyperplane vector": "DFA",
     "Elements' discriminant power (Two-way)": "EDP",
     "Elements' discriminant power (Multiple-way)": "EDPM",
-    "Analysis of Variance": "ANOVA",
     "Error Analysis": "Error_Analysis",
-    "Source Verification": "Source_Verify"
+    "Source Verification": "Source_Verify",
+    "Stepwise discriminant function analysis (Two-way)": "SDFA",
+    "Stepwise discriminant function analysis (Multiple-way)": "SDFAM-2",
+    "Correct based on size and organic matter": "OM-Size Correct",
+    "Discriminant power evaluation": "DFAM"
   }
 }

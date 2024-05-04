@@ -30,6 +30,7 @@
 #include "resultitem.h"
 #include "selectsamples.h"
 #include "dialogchooseexcelsheets.h"
+#include "toolboxitem.h"
 //#include "MCMC.h"
 
 #ifdef _WIN32
@@ -137,7 +138,7 @@ void MainWindow::onSaveProject()
     outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
     outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
     outputjsonobject["Target Group"] = QString::fromStdString(Data()->TargetGroup());
-
+    outputjsonobject["Tools used"] = Data()->ToolsUsedToJsonObject();
     QJsonObject resultsetjsonobject;
     for (int i=0; i<resultsviewmodel->rowCount(); i++)
     {
@@ -177,7 +178,7 @@ void MainWindow::onSaveProjectAs()
     outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
     outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
     outputjsonobject["Target Group"] = QString::fromStdString(Data()->TargetGroup());
-
+    outputjsonobject["Tools used"] = Data()->ToolsUsedToJsonObject();
     QJsonObject resultsetjsonobject;
     for (int i=0; i<resultsviewmodel->rowCount(); i++)
     {
@@ -215,6 +216,7 @@ bool MainWindow::LoadModel(const QString &fileName)
     this->setWindowTitle("SetSat3:" + ProjectFileName);
     QFile file(fileName);
     QFileInfo fi(file);
+
     conductor->SetWorkingFolder(fi.absolutePath());
     if (file.open(QIODevice::ReadOnly))
     {
@@ -633,13 +635,16 @@ QStandardItem* MainWindow::ToQStandardItem(const QString &key, const QJsonObject
         {
             standarditem->appendRow(ToQStandardItem(json.keys()[i],json[json.keys()[i]].toObject()));
             standarditem->setToolTip(json.keys()[i]);
+            //standarditem->setData(QColor("blue"),Qt::ItemDataRole::ForegroundRole);
         }
         else
         {
-            QStandardItem *subitem = new QStandardItem(json.keys()[i]);
+            QStandardItem *subitem = new ToolBoxItem(Data(),json.keys()[i]);
             subitem->setData(json.value(json.keys()[i]).toString(),Qt::UserRole);
+            subitem->setData(json.value(json.keys()[i]).toString(),Qt::UserRole+1);
             subitem->setToolTip(json.keys()[i]);
             standarditem->appendRow(subitem);
+            //subitem->setData(QColor("green"),Qt::ItemDataRole::ForegroundRole);
         }
     }
     return standarditem;
@@ -650,6 +655,7 @@ QStandardItemModel* MainWindow::ToQStandardItemModel(const QJsonDocument &jsondo
     QStandardItemModel *standarditemmodel = new QStandardItemModel();
     QJsonObject jsonobject = jsondocument.object();
     QStandardItem *standarditem = ToQStandardItem("Tools",jsonobject);
+
     standarditemmodel->appendRow(standarditem);
     return standarditemmodel;
 }
