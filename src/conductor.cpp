@@ -971,6 +971,27 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         bool log = (arguments["Log Transformation"] == "true" ? true : false);
 
+
+        bool OmandSizeCorrect = false;
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+        }
+
+
+
+
+        if (!CheckNegativeElements(&TransformedData))
+                return false;
+
         results.SetName("ANOVA analysis");
         ResultItem Anovaresults;
         Anovaresults.SetName("ANOVA");
@@ -978,7 +999,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         Anovaresults.SetShowAsString(true);
         Anovaresults.SetShowTable(true);
         Anovaresults.SetShowGraph(true);
-        CMBVector *PValues = new CMBVector(Data()->ANOVA(log));
+        CMBVector *PValues = new CMBVector(TransformedData.ANOVA(log));
 
         PValues->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
         PValues->SetLimit(_range::low, 0);
@@ -1076,6 +1097,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(contributions_result_item);
 
     }
+    Data()->AddtoToolsUsed(command);
     return true;
 }
 

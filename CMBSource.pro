@@ -70,7 +70,8 @@ SOURCES += \
     src/observation.cpp \
     src/parameter.cpp \
     src/sourcesinkdata.cpp \
-    testmcmc.cpp
+    testmcmc.cpp \
+    toolboxitem.cpp
 
 HEADERS += \
     ../Utilities/BTC.h \
@@ -138,7 +139,8 @@ HEADERS += \
     selectsampledelegate.h \
     selectsamples.h \
     selectsampletablemodel.h \
-    testmcmc.h
+    testmcmc.h \
+    toolboxitem.h
 
 
 

@@ -224,6 +224,9 @@ public:
     bool WriteElementInformationToFile(QFile *fil);
     bool WriteDataToFile(QFile *file);
     QJsonObject ElementInformationToJsonObject();
+    QJsonArray ToolsUsedToJsonObject();
+    void AddtoToolsUsed(const string &tool);
+    bool ReadToolsUsedFromJsonObject(const QJsonArray &jsonobject);
     QJsonObject ElementDataToJsonObject();
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
@@ -291,6 +294,7 @@ public:
     CMBTimeSeriesSet LM_Batch(transformation transform, bool om_size_correction, map<string,vector<string>> &negative_elements); //Levenberg-Marquardt batch
     Results MCMC(const string &sample, map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
     CMBMatrix MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
+    bool ToolsUsed(const string &toolname);
 private:
 
     map<string,ConcentrationSet> element_distributions;
@@ -326,7 +330,7 @@ private:
     string sizeconsituent;
     const double epsilon = 1e-6;
     double distance_coeff = 1;
-
+    list<string> tools_used;
 
 
 };

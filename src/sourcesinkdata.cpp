@@ -6,6 +6,8 @@
 #include <gsl/gsl_cdf.h>
 #include "GADistribution.h"
 #include "rangeset.h"
+#include "QJsonArray"
+#include "QJsonValue"
 #include <qdir.h>
 
 
@@ -37,6 +39,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     omconstituent = mp.omconstituent;
     sizeconsituent = mp.sizeconsituent;
     distance_coeff = mp.distance_coeff;
+    tools_used = mp.tools_used;
 
 }
 
@@ -165,7 +168,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     omconstituent = mp.omconstituent;
     sizeconsituent = mp.sizeconsituent;
     distance_coeff = mp.distance_coeff;
-
+    tools_used = mp.tools_used;
     return *this;
 }
 
@@ -185,6 +188,7 @@ void SourceSinkData::Clear()
     isotope_order.clear();
     size_om_order.clear();
     selected_target_sample = "";
+    tools_used.clear();
     clear(); 
 }
 
@@ -1717,6 +1721,34 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject()
     return json_object;
 }
 
+QJsonArray SourceSinkData::ToolsUsedToJsonObject()
+{
+    QJsonObject json_object;
+    QJsonArray tools_used_json_array;
+    for (list<string>::iterator it = tools_used.begin(); it != tools_used.end(); it++)
+    {
+        tools_used_json_array.append(QString::fromStdString(*it));
+    }
+
+    return tools_used_json_array;
+}
+
+void SourceSinkData::AddtoToolsUsed(const string &tool)
+{
+    if (!ToolsUsed(tool))
+        tools_used.push_back(tool);
+}
+
+bool SourceSinkData::ReadToolsUsedFromJsonObject(const QJsonArray &jsonarray)
+{
+    foreach (const QJsonValue & value, jsonarray)
+    {
+        AddtoToolsUsed(value.toString().toStdString());
+    }
+
+    return true;
+}
+
 bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jsonobject)
 {
     ElementInformation.clear();
@@ -1775,9 +1807,11 @@ bool SourceSinkData::WriteToFile(QFile *file)
 
 bool SourceSinkData::ReadFromFile(QFile *fil)
 {
+    Clear();
     QJsonObject jsondoc = QJsonDocument().fromJson(fil->readAll()).object();
     ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
     ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
+    ReadToolsUsedFromJsonObject(jsondoc["Tools used"].toArray());
     target_group = jsondoc["Target Group"].toString().toStdString();
     return true;
 }
@@ -2917,4 +2951,13 @@ CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceS
     }
     rtw->SetProgress2(1);
     return contributions;
+}
+
+bool SourceSinkData::ToolsUsed(const string &toolname)
+{
+    std::list<string>::iterator iter = std::find (tools_used.begin(), tools_used.end(), toolname);
+    if (iter == tools_used.end())
+        return false;
+    else
+        return true;
 }
