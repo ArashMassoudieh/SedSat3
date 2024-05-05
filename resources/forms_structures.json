@@ -305,11 +305,11 @@
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
-    	},
-    	"Use only selected samples": {
-   			"type": "checkBox",
-			"default": "false"
-    	},
+	    	},
+	    	"Use only selected samples": {
+	   			"type": "checkBox",
+				"default": "false"
+	    	},
 		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
@@ -328,9 +328,9 @@
    			"type": "checkBox",
 			"default": "false"
     	},
-		"OM and Size Correct based on target sample":{
-			"type": "comboBox",
-			"source": "TargetSamplesList+Blank"
+	"OM and Size Correct based on target sample":{
+		"type": "comboBox",
+		"source": "TargetSamplesList+Blank"
 		},
 		"Source/Target group I" : {
 			"type": "comboBox",
@@ -341,9 +341,9 @@
 			"source": "SourceList"
 		},
 		"Box-cox transformation": {
-   			"type": "checkBox",
+			"type": "checkBox",
 			"default": "false"
-    	}
+    		}
 	},
 	"KS-individual": 
 	{
@@ -574,6 +574,14 @@
  	},
  	"ANOVA": 
     	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
 		"Log Transformation": {
    			"type": "checkBox",
 			"default": "false"
@@ -585,7 +593,11 @@
     		"Modify the included elements based on the results": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
  	},
  	"Error_Analysis":
  	{
