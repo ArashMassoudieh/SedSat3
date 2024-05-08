@@ -19,7 +19,6 @@
   "Miscellaneous Analysis":
   {
     "Distribution Fitting": "DF",
-    "Elements' covariance matrix": "CovMat",
     "Kolmogorov–Smirnov for individual group/element": "KS-individual",
     "Kolmogorov–Smirnov for a group": "KS",
     "Optimal BoxCox parameters": "BoxCox",

@@ -255,7 +255,7 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    	}
+    		}
 	},
 	"SDFA": {
 		"Use only selected elements": {
@@ -472,10 +472,6 @@
 	},
 	"DF": 
 	{
-		"Use only selected elements": {
-   			"type": "checkBox",
-			"default": "false"
-    		},
     		"Use only selected samples": {
    			"type": "checkBox",
 			"default": "false"
@@ -487,6 +483,14 @@
 		"Constituent": {
     			"type": "comboBox",
     			"source": "ElementsList"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
     		}
 	},
 	"Bracketing Analysis":

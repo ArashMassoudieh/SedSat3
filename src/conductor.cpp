@@ -788,24 +788,56 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         cummulative_distribution_item.SetYAxisMode(yaxis_mode::normal);
         cummulative_distribution_item.setXAxisTitle("Value");
         cummulative_distribution_item.setYAxisTitle("CDF");
-        CMBTimeSeriesSet fitted_normal = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::normal);
-        CMBTimeSeriesSet fitted_lognormal = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::lognormal);
-        CMBTimeSeriesSet observed_fitted_normal_CDF = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::normal);
-        CMBTimeSeriesSet observed_fitted_lognormal_CDF = Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::lognormal);
+        /* only selected samples need to be added */
+
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+
+        SourceSinkData TransformedData;
+        bool OmandSizeCorrect = false;
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            OmandSizeCorrect = true;
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, false,false);
+        }
+        else
+            TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+
+        CMBTimeSeriesSet fitted_normal = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::normal);
+        CMBTimeSeriesSet fitted_lognormal;
+        if (arguments["Box-cox transformation"]!="true")
+            fitted_lognormal = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::lognormal);
+        CMBTimeSeriesSet observed_fitted_normal_CDF = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::normal);
+        CMBTimeSeriesSet observed_fitted_lognormal_CDF;
+        if (arguments["Box-cox transformation"]!="true")
+            observed_fitted_lognormal_CDF = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::lognormal);
         CMBTimeSeriesSet *PDF = new CMBTimeSeriesSet();
         PDF->append(fitted_normal["Observed"]);
         PDF->append(fitted_normal["Fitted"]);
-        PDF->append(fitted_lognormal["Fitted"]);
+        if (arguments["Box-cox transformation"]!="true")
+            PDF->append(fitted_lognormal["Fitted"]);
         PDF->setname(0,"Samples");
         PDF->setname(1, "Normal");
-        PDF->setname(2,"Log-normal");
+        if (arguments["Box-cox transformation"]!="true")
+            PDF->setname(2,"Log-normal");
         CMBTimeSeriesSet *CDF = new CMBTimeSeriesSet();
         CDF->append(observed_fitted_normal_CDF["Observed"]);
         CDF->append(observed_fitted_normal_CDF["Fitted"]);
-        CDF->append(observed_fitted_lognormal_CDF["Fitted"]);
+        if (arguments["Box-cox transformation"]!="true")
+            CDF->append(observed_fitted_lognormal_CDF["Fitted"]);
         CDF->setname(0,"Observed");
         CDF->setname(1, "Normal");
-        CDF->setname(2,"Log-normal");
+        if (arguments["Box-cox transformation"]!="true")
+            CDF->setname(2,"Log-normal");
         distribution_item.SetResult(PDF);
         cummulative_distribution_item.SetResult(CDF);
         results.Append(distribution_item);
