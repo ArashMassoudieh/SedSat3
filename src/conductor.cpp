@@ -1003,8 +1003,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         bool log = (arguments["Log Transformation"] == "true" ? true : false);
 
-
-        bool OmandSizeCorrect = false;
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
@@ -1023,6 +1021,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         if (!CheckNegativeElements(&TransformedData))
                 return false;
+
+        if (arguments["Box-cox transformation"]=="true")
+        {   TransformedData = TransformedData.BoxCoxTransformed(true);
+            log=false;
+        }
 
         results.SetName("ANOVA analysis");
         ResultItem Anovaresults;

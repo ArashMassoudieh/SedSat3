@@ -590,6 +590,10 @@
    			"type": "checkBox",
 			"default": "false"
     		},
+    		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
     		"P-value threshold": {
    			"type": "lineEdit",
 			"default": "0.05"
