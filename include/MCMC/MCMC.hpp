@@ -522,7 +522,7 @@ qDebug()<<7;
             QCoreApplication::processEvents();
 		}
 	}
-
+    qDebug()<<"MCMC done!";
 	return 0;
 }
 

@@ -42,8 +42,15 @@ public:
     void SetXAxisTitle(const QString &title, int chart=0);
     void SetYAxisTitle(const QString &title, int chart=0);
     void ClearGraph(int chart=0);
-
+    void SetChartTitle(int i, const QString &title)
+    {
+        if (ChartItems.size()>i)
+        {   charttitles[i]=title;
+            ChartItems[i].chart->setTitle(title);
+        }
+    }
 private:
 	Ui::ProgressWindow ui;
     QVector<ChartCollection> ChartItems;
+    QVector<QString> charttitles;
 };

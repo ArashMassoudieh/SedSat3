@@ -13,7 +13,7 @@
 
 class MainWindow;
 
-enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBox, FileBrowser};
+enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBox, FileBrowser, Description};
 struct parameter_property
 {
     QString Discription;

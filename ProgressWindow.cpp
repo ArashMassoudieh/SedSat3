@@ -7,7 +7,7 @@ ProgressWindow::ProgressWindow(QWidget *parent, int number_of_panels, bool extra
 {
 	ui.setupUi(this);
     ChartItems.resize(number_of_panels);
-
+    charttitles.resize(number_of_panels);
     if (!extra_label_and_progressbar)
     {
         ui.progressBar_2->setVisible(false);

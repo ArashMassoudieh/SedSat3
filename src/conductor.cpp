@@ -709,12 +709,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Purturbation Factor",1);
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
+
         CMBMatrix* contributions = new CMBMatrix(Data()->MCMC_Batch(arguments,MCMC,rtw,workingfolder.toStdString()));
 // Need to add negative error check
         ResultItem contrib_matrix_item;
         contrib_matrix_item.SetName("Contribution Range Matrix");
         contrib_matrix_item.SetType(result_type::matrix);
-
+        contrib_matrix_item.SetYAxisMode(yaxis_mode::normal);
         contrib_matrix_item.SetResult(contributions);
         contrib_matrix_item.SetShowTable(true);
         results.Append(contrib_matrix_item);
@@ -904,13 +905,34 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool log = (arguments["Log Transformation"] == "true" ? true : false);
 
         results.SetName("Two-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
+
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+
+        SourceSinkData TransformedData;
+        bool OmandSizeCorrect = false;
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            OmandSizeCorrect = true;
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, false,false);
+        }
+        else
+            TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
+
         ResultItem EDPresultStd;
         EDPresultStd.SetName("Discreminant difference to standard deviation ratio");
         EDPresultStd.SetType(result_type::predicted_concentration);
         EDPresultStd.SetShowAsString(false);
         EDPresultStd.SetShowTable(true);
         EDPresultStd.SetShowGraph(true);
-        Elemental_Profile *EDPProfileSet = new Elemental_Profile(Data()->DifferentiationPower(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
+        Elemental_Profile *EDPProfileSet = new Elemental_Profile(TransformedData.DifferentiationPower(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
         EDPresultStd.SetYAxisMode(yaxis_mode::normal);
         EDPresultStd.setYAxisTitle("Discrimination power");
         EDPresultStd.SetResult(EDPProfileSet);
@@ -925,7 +947,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.setYAxisTitle("Percentage discriminated");
         EDPresultPercent.SetShowTable(true);
         EDPresultPercent.SetShowGraph(true);
-        Elemental_Profile *EDPProfileSetPercent = new Elemental_Profile(Data()->DifferentiationPower_Percentage(arguments["Source/Target group I"], arguments["Source/Target group II"]));
+        Elemental_Profile *EDPProfileSetPercent = new Elemental_Profile(TransformedData.DifferentiationPower_Percentage(arguments["Source/Target group I"], arguments["Source/Target group II"]));
         EDPresultPercent.SetYAxisMode(yaxis_mode::normal);
         EDPresultPercent.SetYLimit(_range::high,1);
         EDPresultPercent.SetResult(EDPProfileSetPercent);
@@ -941,7 +963,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresult_pValue.setYAxisTitle("p-Value");
         EDPresult_pValue.SetShowTable(true);
         EDPresult_pValue.SetShowGraph(true);
-        Elemental_Profile *EDPProfileSet_pValue = new Elemental_Profile(Data()->t_TestPValue(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
+        Elemental_Profile *EDPProfileSet_pValue = new Elemental_Profile(TransformedData.t_TestPValue(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
         EDPresult_pValue.SetYAxisMode(yaxis_mode::normal);
         EDPresult_pValue.SetYLimit(_range::high,1);
         EDPresult_pValue.SetResult(EDPProfileSet_pValue);
@@ -956,6 +978,26 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         bool log = (arguments["Log Transformation"] == "true" ? true : false);
         bool include_target = (arguments["Include target samples"] == "true" ? true : false);
+
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+
+        SourceSinkData TransformedData;
+        bool OmandSizeCorrect = false;
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            OmandSizeCorrect = true;
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, false,false);
+        }
+        else
+            TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
         results.SetName("Multi-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
         ResultItem EDPresultStd;
         EDPresultStd.SetName("Multi-way discreminant difference to standard deviation ratio");
@@ -963,7 +1005,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultStd.SetShowAsString(true);
         EDPresultStd.SetShowTable(true);
         EDPresultStd.SetShowGraph(true);
-        Elemental_Profile_Set *EDPProfileSet = new Elemental_Profile_Set(Data()->DifferentiationPower(log,include_target));
+        Elemental_Profile_Set *EDPProfileSet = new Elemental_Profile_Set(TransformedData.DifferentiationPower(log,include_target));
         EDPresultStd.SetYAxisMode(yaxis_mode::normal);
         EDPresultStd.setYAxisTitle("Discrimination power");
         EDPresultStd.SetResult(EDPProfileSet);
@@ -977,7 +1019,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultPercent.setYAxisTitle("Percentage discriminated");
         EDPresultPercent.SetShowTable(true);
         EDPresultPercent.SetShowGraph(true);
-        Elemental_Profile_Set *EDPProfileSetPercent = new Elemental_Profile_Set(Data()->DifferentiationPower_Percentage(include_target));
+        Elemental_Profile_Set *EDPProfileSetPercent = new Elemental_Profile_Set(TransformedData.DifferentiationPower_Percentage(include_target));
         EDPresultPercent.SetYAxisMode(yaxis_mode::normal);
         EDPresultPercent.SetYLimit(_range::high,1);
         EDPresultPercent.SetResult(EDPProfileSetPercent);
@@ -990,7 +1032,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDP_pValue.setYAxisTitle("p-Value");
         EDP_pValue.SetShowTable(true);
         EDP_pValue.SetShowGraph(true);
-        Elemental_Profile_Set *EDPProfileSetPValue = new Elemental_Profile_Set(Data()->DifferentiationPower_P_value(include_target));
+        Elemental_Profile_Set *EDPProfileSetPValue = new Elemental_Profile_Set(TransformedData.DifferentiationPower_P_value(include_target));
         EDP_pValue.SetYAxisMode(yaxis_mode::normal);
         EDP_pValue.SetYLimit(_range::high,1);
         EDP_pValue.SetResult(EDPProfileSetPValue);
@@ -1055,7 +1097,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "Error_Analysis")
     {
 
-        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
 
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
@@ -1068,6 +1110,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         }
         else
             organicnsizecorrection = false;
+
 
         rtw->show();
 
@@ -1087,7 +1130,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "Source_Verify")
     {
 
-        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
 
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")

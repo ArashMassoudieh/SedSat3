@@ -2558,9 +2558,12 @@ bool SourceSinkData::BootStrap(Results *res, const double &percentage, unsigned 
     contributions_result_item.SetName("Error Analysis");
     contributions_result_item.SetResult(contributions);
     contributions_result_item.SetType(result_type::stacked_bar_chart);
-    contributions_result_item.SetShowAsString(true);
+    contributions_result_item.SetShowAsString(false);
     contributions_result_item.SetShowTable(true);
-    contributions_result_item.SetShowGraph(true);
+    if (number_of_samples<101)
+        contributions_result_item.SetShowGraph(true);
+    else
+        contributions_result_item.SetShowGraph(false);
     contributions_result_item.SetYLimit(_range::high, 1);
     contributions_result_item.SetXAxisMode(xaxis_mode::counter);
     contributions_result_item.setYAxisTitle("Contribution");
@@ -2600,8 +2603,9 @@ bool SourceSinkData::BootStrap(Results *res, const double &percentage, unsigned 
     contribution_credible_intervals_result_item.SetShowTable(true);
     contribution_credible_intervals_result_item.SetType(result_type::rangeset);
     contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
-    contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
+    contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::normal);
     contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
+    contribution_credible_intervals_result_item.SetYLimit(_range::low,0);
     res->Append(contribution_credible_intervals_result_item);
 
 
@@ -2757,11 +2761,14 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
         folderpath = workingfolder+"/";
     qDebug()<<4;
     mcmc->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["Samples File Name"], samples, rtw);
+    qDebug()<<"Outside MCMC";
     vector<string> SourceGroupNames = correctedData.SourceGroupNames();
+    qDebug()<<"Appending last contributions";
     samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_contribution");
     MCMC_samples.SetResult(samples);
     results.Append(MCMC_samples);
 // Posterior distributions
+    qDebug()<<"Posterior distributions";
     ResultItem distribution_res_item;
     CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
     *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
@@ -2771,7 +2778,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     distribution_res_item.SetType(result_type::distribution);
     distribution_res_item.SetResult(dists);
     results.Append(distribution_res_item);
-
+    qDebug()<<"Posterior distributions 95%";
 //Posterior contribution 95% intervals
     RangeSet *contribution_credible_intervals = new RangeSet();
     for (unsigned int i=0; i<correctedData.SourceOrder().size(); i++)
@@ -2797,7 +2804,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
     contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
     results.Append(contribution_credible_intervals_result_item);
-
+    qDebug()<<"Predicted distributions";
 // Predicted 95% posterior distributions
     CMBTimeSeriesSet predicted_samples = mcmc->predicted;
     CMBTimeSeriesSet predicted_samples_elems;
@@ -2830,7 +2837,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     predicted_distribution_res_item.SetType(result_type::distribution_with_observed);
     predicted_distribution_res_item.SetResult(predicted_dists_elems);
     results.Append(predicted_distribution_res_item);
-
+    qDebug()<<"Predicted distributions 95%";
 //predicted 95% credible intervals
 
     RangeSet *predicted_credible_intervals = new RangeSet();
@@ -2856,7 +2863,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
     predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
     results.Append(predicted_credible_intervals_result_item);
-
+    qDebug()<<"Predicted isotope distributions";
     // Predicted 95% posterior distributions for isotopes
     CMBTimeSeriesSet predicted_samples_isotopes;
 
@@ -2878,7 +2885,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     predicted_distribution_iso_res_item.SetType(result_type::distribution_with_observed);
     predicted_distribution_iso_res_item.SetResult(predicted_dists_isotopes);
     results.Append(predicted_distribution_iso_res_item);
-
+    qDebug()<<"Predicted isotope distributions 95%";
     //predicted 95% credible intervals for isotopes
 
     RangeSet *predicted_credible_intervals_isotopes = new RangeSet();
@@ -2901,8 +2908,9 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     predicted_credible_intervals_isotope_result_item.SetResult(predicted_credible_intervals_isotopes);
     predicted_credible_intervals_isotope_result_item.SetYAxisMode(yaxis_mode::normal);
     results.Append(predicted_credible_intervals_isotope_result_item);
-
+    qDebug()<<"Done for sample "<< QString::fromStdString(sample);
     rtw->SetProgress(1);
+    return results;
 }
 
 CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *mcmc, ProgressWindow *rtw, const string &workingfolder)
@@ -2920,13 +2928,15 @@ CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceS
     int counter = 0;
     for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample!=at(target_group).end(); sample++)
     {
+        qDebug()<<QString::fromStdString(sample->first)<<":"<<"Creating folder";
         QDir dir(QString::fromStdString(workingfolder)+"/"+QString::fromStdString(sample->first));
         if (!dir.exists())
             dir.mkpath(".");
         contributions.SetRowLabel(counter,sample->first);
         rtw->SetLabel(QString::fromStdString(sample->first));
+        qDebug()<<QString::fromStdString(sample->first)<<":"<<"Performing MCMC";
         Results results = MCMC(sample->first, arguments, mcmc, rtw, workingfolder);
-
+        qDebug()<<QString::fromStdString(sample->first)<<":"<<"Writing Result Items";
         for (map<string,ResultItem>::iterator result_item = results.begin(); result_item!=results.end(); result_item++ )
         {
             QString file_name = dir.absolutePath()+"/"+QString::fromStdString(result_item->first)+".txt";

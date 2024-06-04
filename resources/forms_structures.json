@@ -53,6 +53,11 @@
     		{
     			"type": "checkBox",
     			"default": "true"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs sediment fingerprinting using the <b>Genetic Algorithm</b> optimization"
     		}
 	},
 	"GA (disregarding targets)": {
@@ -559,7 +564,15 @@
     		"P-value threshold": {
    			"type": "lineEdit",
 			"default": "0.05"
-    		}
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
  	},
     	"EDPM": 
     	{
@@ -574,7 +587,15 @@
     		"P-value threshold": {
    			"type": "lineEdit",
 			"default": "0.05"
-    		}
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		}
  	},
  	"ANOVA": 
     	{
@@ -612,13 +633,13 @@
  		"Pecentage eliminated": {
    			"type": "spinBox",
 			"default": "20",
-			"maximum": "90",
+			"maximum": "50",
 			"minimum": "5"
     		},
     		"Number of realizations": {
    			"type": "spinBox",
-			"default": "10",
-			"maximum": "1000",
+			"default": "1000",
+			"maximum": "10000",
 			"minimum": "5"
     		},
     		"Sample": {

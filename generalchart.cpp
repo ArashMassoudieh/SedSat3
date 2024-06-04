@@ -263,6 +263,7 @@ bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &title)
         axisYNormal->setLabelFormat("%f");
         axisYNormal->setMinorTickCount(5);
         chart->addAxis(axisYNormal, Qt::AlignLeft);
+        _log= false;
     }
 
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -956,7 +957,7 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
         y_max_val = result_item->YLimit(_range::high);
     }
 
-    if (result_item->FixedYLimit() && result_item->YLimit(_range::low)!=0)
+    if (result_item->FixedYLimit() && result_item->YLimit(_range::high)!=0)
     {
         y_min_val = result_item->YLimit(_range::low);
     }

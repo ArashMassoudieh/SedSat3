@@ -22,7 +22,9 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
             if (object.contains("type"))
             {
 
-                QLabel *label = new QLabel(parameter_prop.Discription, this);
+                QLabel *label;
+                if (object["type"].toString()!="Description")
+                    label = new QLabel(parameter_prop.Discription, this);
                 QString typeval = object.value("type").toString();
                 if (object.value("type").toString()=="spinBox")
                 {
@@ -126,12 +128,41 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                     ui->formLayout->addRow(label,checkbox);
                     parameter_prop.InputWidget = checkbox;
                 }
+                Parameter_Properties.append(parameter_prop);
+
+            }
+        }
+    }
+
+    for (int i=0; i<formdata->keys().size(); i++)
+    {
+        if (formdata->value(formdata->keys()[i]).isObject())
+        {
+            QJsonObject object = formdata->value(formdata->keys()[i]).toObject();
+            formdata->value(formdata->keys()[i]).toObject();
+            parameter_property parameter_prop;
+            parameter_prop.Discription = formdata->keys()[i];
+            parameter_prop.DefaultValue = object.value("default").toString();
+            if (object.contains("type"))
+            {
+
+                QLabel *label;
+                if (object["type"].toString()=="Description")
+                    label = new QLabel(parameter_prop.Discription, this);
+                QString typeval = object.value("type").toString();
+                if (object.value("type").toString()=="Description")
+                {
+                    parameter_prop.Type = delegate_type::Description;
+                    QTextBrowser *textBrowswer = new QTextBrowser(this);
+                    textBrowswer->insertHtml(object.value("default").toString());
+                    ui->formLayout->addRow(label,textBrowswer);
+                    parameter_prop.InputWidget = textBrowswer;
+                }
 
                 Parameter_Properties.append(parameter_prop);
 
             }
         }
-
     }
 
     buttonOk = new QPushButton("Ok",this);
