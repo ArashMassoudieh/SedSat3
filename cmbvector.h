@@ -22,6 +22,7 @@ public:
     double valueAt(int i) const;
     string Label(int i) const {return labels[i];}
     double valueAt(const string &label ) const;
+    int LookupLabel(const string &label ) const;
     vector<string> Labels() const {return labels;}
     void SetLabel(int i, const string &label) {labels[i]=label;}
     void SetLabels(const vector<string> &label) {labels=label;}

@@ -132,6 +132,14 @@ double CMBVector::valueAt(const string &label ) const
     return -999;
 }
 
+int CMBVector::LookupLabel(const string &label ) const
+{
+    for (int i=0; i<getsize(); i++)
+        if (labels[i]==label)
+            return i;
+    return -1;
+}
+
 QTableWidget *CMBVector::ToTable()
 {
     QTableWidget *tablewidget = new QTableWidget();

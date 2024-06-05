@@ -21,115 +21,114 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
             parameter_prop.DefaultValue = object.value("default").toString();
             if (object.contains("type"))
             {
-
-                QLabel *label;
                 if (object["type"].toString()!="Description")
-                    label = new QLabel(parameter_prop.Discription, this);
-                QString typeval = object.value("type").toString();
-                if (object.value("type").toString()=="spinBox")
                 {
-                    parameter_prop.Type = delegate_type::SpinBox;
-                    QSpinBox *spinbox = new QSpinBox(this);
-
-                    if (object.contains("minimum"))
-                        spinbox->setMinimum(object.value("minimum").toString().toInt());
-                    if (object.contains("maximum"))
-                    spinbox->setMaximum(object.value("maximum").toString().toInt());
-                    spinbox->setValue(object.value("default").toString().toInt());
-                    ui->formLayout->addRow(label,spinbox);
-                    parameter_prop.InputWidget = spinbox;
-                }
-                if (object.value("type").toString()=="lineEdit")
-                {
-                    parameter_prop.Type = delegate_type::LineEdit;
-                    QLineEdit *lineedit = new QLineEdit(this);
-                    lineedit->setText(object.value("default").toString());
-                    ui->formLayout->addRow(label,lineedit);
-                    parameter_prop.InputWidget = lineedit;
-                }
-                if (object.value("type").toString()=="comboBox")
-                {
-                    parameter_prop.Type = delegate_type::ComboBox;
-                    QComboBox *combobox = new QComboBox(this);
-                    combobox->setCurrentText(object.value("default").toString());
-                    ui->formLayout->addRow(label,combobox);
-                    parameter_prop.InputWidget = combobox;
+                    QLabel *label = new QLabel(parameter_prop.Discription, this);
+                    QString typeval = object.value("type").toString();
+                    if (object.value("type").toString()=="spinBox")
                     {
-                        if (object.value("source").toString()=="TargetSamplesList")
-                        {
-                            vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
-                            for (unsigned int i=0; i<names.size(); i++)
-                                combobox->addItem(QString::fromStdString(names[i]));
-                        }
-                        else if (object.value("source").toString() == "TargetSamplesList+Blank")
-                        {
-                            vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
-                            combobox->addItem("");
-                            for (unsigned int i = 0; i < names.size(); i++)
-                                combobox->addItem(QString::fromStdString(names[i]));
-                        }
-                        else if (object.value("source").toString()=="ElementsList")
-                        {
-                            vector<string> names = mainwindow()->Data()->ElementNames();
-                            for (unsigned int i=0; i<names.size(); i++)
-                                combobox->addItem(QString::fromStdString(names[i]));
+                        parameter_prop.Type = delegate_type::SpinBox;
+                        QSpinBox *spinbox = new QSpinBox(this);
 
-                        }
-                        else if (object.value("source").toString()=="ElementsList+Blank")
+                        if (object.contains("minimum"))
+                            spinbox->setMinimum(object.value("minimum").toString().toInt());
+                        if (object.contains("maximum"))
+                        spinbox->setMaximum(object.value("maximum").toString().toInt());
+                        spinbox->setValue(object.value("default").toString().toInt());
+                        ui->formLayout->addRow(label,spinbox);
+                        parameter_prop.InputWidget = spinbox;
+                    }
+                    if (object.value("type").toString()=="lineEdit")
+                    {
+                        parameter_prop.Type = delegate_type::LineEdit;
+                        QLineEdit *lineedit = new QLineEdit(this);
+                        lineedit->setText(object.value("default").toString());
+                        ui->formLayout->addRow(label,lineedit);
+                        parameter_prop.InputWidget = lineedit;
+                    }
+                    if (object.value("type").toString()=="comboBox")
+                    {
+                        parameter_prop.Type = delegate_type::ComboBox;
+                        QComboBox *combobox = new QComboBox(this);
+                        combobox->setCurrentText(object.value("default").toString());
+                        ui->formLayout->addRow(label,combobox);
+                        parameter_prop.InputWidget = combobox;
                         {
-                            vector<string> names = mainwindow()->Data()->ElementNames();
-                            combobox->addItem("");
-                            for (unsigned int i=0; i<names.size(); i++)
-                                combobox->addItem(QString::fromStdString(names[i]));
+                            if (object.value("source").toString()=="TargetSamplesList")
+                            {
+                                vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
+                                for (unsigned int i=0; i<names.size(); i++)
+                                    combobox->addItem(QString::fromStdString(names[i]));
+                            }
+                            else if (object.value("source").toString() == "TargetSamplesList+Blank")
+                            {
+                                vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
+                                combobox->addItem("");
+                                for (unsigned int i = 0; i < names.size(); i++)
+                                    combobox->addItem(QString::fromStdString(names[i]));
+                            }
+                            else if (object.value("source").toString()=="ElementsList")
+                            {
+                                vector<string> names = mainwindow()->Data()->ElementNames();
+                                for (unsigned int i=0; i<names.size(); i++)
+                                    combobox->addItem(QString::fromStdString(names[i]));
 
-                        }
-                        else if (object.value("source").toString()=="SourceList")
-                        {
-                            vector<string> names = mainwindow()->Data()->SourceGroupNames();
-                            for (unsigned int i=0; i<names.size(); i++)
-                                combobox->addItem(QString::fromStdString(names[i]));
+                            }
+                            else if (object.value("source").toString()=="ElementsList+Blank")
+                            {
+                                vector<string> names = mainwindow()->Data()->ElementNames();
+                                combobox->addItem("");
+                                for (unsigned int i=0; i<names.size(); i++)
+                                    combobox->addItem(QString::fromStdString(names[i]));
 
-                        }
-                        else if (object.value("source").toString().contains("Items:"))
-                        {
-                            QStringList items = object.value("source").toString().split(":")[1].split(",");
-                            combobox->addItems(items);
+                            }
+                            else if (object.value("source").toString()=="SourceList")
+                            {
+                                vector<string> names = mainwindow()->Data()->SourceGroupNames();
+                                for (unsigned int i=0; i<names.size(); i++)
+                                    combobox->addItem(QString::fromStdString(names[i]));
+
+                            }
+                            else if (object.value("source").toString().contains("Items:"))
+                            {
+                                QStringList items = object.value("source").toString().split(":")[1].split(",");
+                                combobox->addItems(items);
+                            }
                         }
                     }
-                }
-                if (object.value("type").toString()=="fileBrowser_Save")
-                {
-                    parameter_prop.Type = delegate_type::FileBrowser;
-                    FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
-                    filebrowserpushbuttom->dialog_use = save_open::save;
-                    filebrowserpushbuttom->setText(object.value("default").toString());
-                    ui->formLayout->addRow(label,filebrowserpushbuttom);
-                    parameter_prop.InputWidget = filebrowserpushbuttom;
+                    if (object.value("type").toString()=="fileBrowser_Save")
+                    {
+                        parameter_prop.Type = delegate_type::FileBrowser;
+                        FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
+                        filebrowserpushbuttom->dialog_use = save_open::save;
+                        filebrowserpushbuttom->setText(object.value("default").toString());
+                        ui->formLayout->addRow(label,filebrowserpushbuttom);
+                        parameter_prop.InputWidget = filebrowserpushbuttom;
 
-                }
-                if (object.value("type").toString()=="fileBrowser_Open")
-                {
-                    parameter_prop.Type = delegate_type::FileBrowser;
-                    FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
-                    filebrowserpushbuttom->dialog_use = save_open::open;
-                    filebrowserpushbuttom->setText(object.value("default").toString());
-                    ui->formLayout->addRow(label,filebrowserpushbuttom);
-                    parameter_prop.InputWidget = filebrowserpushbuttom;
+                    }
+                    if (object.value("type").toString()=="fileBrowser_Open")
+                    {
+                        parameter_prop.Type = delegate_type::FileBrowser;
+                        FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
+                        filebrowserpushbuttom->dialog_use = save_open::open;
+                        filebrowserpushbuttom->setText(object.value("default").toString());
+                        ui->formLayout->addRow(label,filebrowserpushbuttom);
+                        parameter_prop.InputWidget = filebrowserpushbuttom;
 
+                    }
+                    if (object.value("type").toString()=="checkBox")
+                    {
+                        parameter_prop.Type = delegate_type::CheckBox;
+                        QCheckBox *checkbox = new QCheckBox(this);
+                        if (object.value("default").toString().toLower()=="true")
+                            checkbox->setCheckState(Qt::CheckState::Checked);
+                        else
+                            checkbox->setCheckState(Qt::CheckState::Unchecked);
+                        ui->formLayout->addRow(label,checkbox);
+                        parameter_prop.InputWidget = checkbox;
+                    }
+                    Parameter_Properties.append(parameter_prop);
                 }
-                if (object.value("type").toString()=="checkBox")
-                {
-                    parameter_prop.Type = delegate_type::CheckBox;
-                    QCheckBox *checkbox = new QCheckBox(this);
-                    if (object.value("default").toString().toLower()=="true")
-                        checkbox->setCheckState(Qt::CheckState::Checked);
-                    else
-                        checkbox->setCheckState(Qt::CheckState::Unchecked);
-                    ui->formLayout->addRow(label,checkbox);
-                    parameter_prop.InputWidget = checkbox;
-                }
-                Parameter_Properties.append(parameter_prop);
-
             }
         }
     }
@@ -158,9 +157,6 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                     ui->formLayout->addRow(label,textBrowswer);
                     parameter_prop.InputWidget = textBrowswer;
                 }
-
-                Parameter_Properties.append(parameter_prop);
-
             }
         }
     }

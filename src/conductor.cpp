@@ -1175,6 +1175,52 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(contributions_result_item);
 
     }
+    if (command == "AutoSelect")
+    {
+        SourceSinkData TransformedData;
+        bool OmandSizeCorrect = false;
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            OmandSizeCorrect = true;
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(true, false,false);
+        }
+        else
+            TransformedData = Data()->CopyandCorrect(true, false,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
+        ResultItem EDP_pValue;
+        EDP_pValue.SetName("Multi-way discriminat p-value");
+        EDP_pValue.SetType(result_type::elemental_profile_set);
+        EDP_pValue.SetShowAsString(true);
+        EDP_pValue.setYAxisTitle("p-Value");
+        EDP_pValue.SetShowTable(true);
+        EDP_pValue.SetShowGraph(true);
+        Elemental_Profile_Set *EDPProfileSetPValue = new Elemental_Profile_Set(TransformedData.DifferentiationPower_P_value(false));
+        EDP_pValue.SetYAxisMode(yaxis_mode::normal);
+        EDP_pValue.SetYLimit(_range::high,1);
+        EDP_pValue.SetResult(EDPProfileSetPValue);
+        EDPProfileSetPValue->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
+        EDPProfileSetPValue->SetLimit(_range::low, 0);
+        results.Append(EDP_pValue);
+
+        Elemental_Profile *selected = new Elemental_Profile(EDPProfileSetPValue->SelectTopAggregate(aquiutils::atoi(arguments["Number of elements from each pair"])));
+        ResultItem SelectedElements;
+        SelectedElements.SetResult(selected);
+        SelectedElements.SetName("Selected Elements");
+        SelectedElements.SetType(result_type::predicted_concentration);
+        SelectedElements.SetShowAsString(true);
+        SelectedElements.setYAxisTitle("p-Value");
+        SelectedElements.SetShowTable(true);
+        SelectedElements.SetShowGraph(true);
+        results.Append(SelectedElements);
+
+    }
     Data()->AddtoToolsUsed(command);
     return true;
 }

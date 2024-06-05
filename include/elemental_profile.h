@@ -47,7 +47,8 @@ public:
     void SetIncluded(bool value) {included_in_analysis = value;}
     Elemental_Profile OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlr, const map<string, element_information> *elementinfo=nullptr) const;
     double DotProduct(const CMBVector &vector);
-
+    CMBVector SortByValue(bool ascending = true) const;
+    vector<string> SelectTop(int n, bool ascending = true) const;
 private:
     bool included_in_analysis = true;
     map<string,bool> marked;

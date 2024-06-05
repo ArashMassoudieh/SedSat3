@@ -637,3 +637,24 @@ vector<string> Elemental_Profile_Set::NegativeValueCheck(const vector<string> &e
     }
     return elements_with_negative_value;
 }
+
+Elemental_Profile Elemental_Profile_Set::SelectTopAggregate(int n) const
+{
+    Elemental_Profile out;
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        CMBVector sorted = it->second.SortByValue();
+        for (int i=0; i<n; i++)
+        {
+            if (out.count(sorted.Label(i))==0)
+            {
+                out.AppendElement(sorted.Label(i),sorted[i]);
+            }
+            else
+            {
+                out[sorted.Label(i)] = std::min(sorted[i],out[sorted.Label(i)]) ;
+            }
+        }
+    }
+    return out;
+}

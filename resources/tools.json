@@ -5,7 +5,8 @@
     "1-Elements' correlation matrix": "CorMat",
     "4-Bracketing Analysis": "Bracketing Analysis",
     "2-Outlier Analysis": "Outlier",
-    "5-Analysis of Variance for element selection": "ANOVA"
+    "5-Analysis of Variance for element selection": "ANOVA",
+    "6-Auto-select elements": "AutoSelect"
   },
   "Fingerprinting Tools":
   {

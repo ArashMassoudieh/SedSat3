@@ -351,3 +351,56 @@ double Elemental_Profile::DotProduct(const CMBVector &weightvector)
     }
     return sum;
 }
+
+CMBVector Elemental_Profile::SortByValue(bool ascending) const
+{
+    CMBVector out;
+    vector<string> inserted;
+    if (ascending)
+    {   for (map<string,double>::const_iterator element = cbegin(); element !=cend(); element++)
+        {
+            double min_value = 1e6;
+            string min_element;
+            for (map<string,double>::const_iterator element = cbegin(); element !=cend(); element++)
+            {
+                if (element->second<min_value && lookup(inserted,element->first)==-1)
+                {
+                    min_element = element->first;
+                    min_value = element->second;
+                }
+            }
+            inserted.push_back(min_element);
+            out.append(min_element,min_value);
+        }
+    }
+    else
+    {   for (map<string,double>::const_iterator element = cbegin(); element !=cend(); element++)
+        {
+            double max_value = -1e6;
+            string max_element;
+            for (map<string,double>::const_iterator element = cbegin(); element !=cend(); element++)
+            {
+                if (element->second<max_value && lookup(inserted,element->first)==-1)
+                {
+                    max_element = element->first;
+                    max_value = element->second;
+                }
+            }
+            inserted.push_back(max_element);
+            out.append(max_element,max_value);
+        }
+    }
+    return out;
+}
+
+vector<string> Elemental_Profile::SelectTop(int n, bool ascending) const
+{
+    CMBVector sorted = SortByValue(ascending);
+    vector<string> out;
+    for (int i=0; i<n; i++)
+    {
+        if (i<sorted.num)
+            out.push_back(sorted.Label(i));
+    }
+    return out;
+}
