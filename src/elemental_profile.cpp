@@ -69,6 +69,20 @@ Elemental_Profile Elemental_Profile::CopyandCorrect(bool exclude_elements, bool 
 
 }
 
+Elemental_Profile Elemental_Profile::ExtractElementsOnly(const map<string, element_information> *elementinfo, bool isotopes) const
+{
+    Elemental_Profile out;
+    for (map<string,double>::const_iterator element = cbegin(); element!=cend(); element++)
+    {
+        if (elementinfo->at(element->first).Role==element_information::role::element || (elementinfo->at(element->first).Role == element_information::role::isotope && isotopes))
+        {
+            out[element->first] = at(element->first);
+        }
+
+    }
+    return out;
+}
+
 Elemental_Profile Elemental_Profile::Extract(const vector<string> &element_list) const
 {
 

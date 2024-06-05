@@ -24,6 +24,7 @@ public:
     Elemental_Profile_Set(const Elemental_Profile_Set& mp);
     Elemental_Profile_Set& operator=(const Elemental_Profile_Set &mp);
     Elemental_Profile_Set CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const vector<double> &om_size, const map<string, element_information> *elementinfo=nullptr) const;
+    Elemental_Profile_Set ExtractElementsOnly(const map<string, element_information> *elementinfo, bool isotopes) const;
     Elemental_Profile_Set Extract(const vector<string> &element_list) const;
     Elemental_Profile *Profile(const string &name);
     Elemental_Profile Profile(const string &name) const;
@@ -148,6 +149,7 @@ public:
     vector<string> NegativeValueCheck(const vector<string> &element_names);
     //CMBTimeSeriesSet SelectTop(int n) const;
     Elemental_Profile SelectTopAggregate(int n) const;
+
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;

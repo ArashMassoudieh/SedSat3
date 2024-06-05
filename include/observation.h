@@ -9,9 +9,9 @@ public:
     Observation();
     Observation(const Observation &obs);
     Observation& operator=(const Observation &obs);
-    void SetName(const string &nam) {name = nam;}
-    string Name() {return name;}
-    string GetName() { return name; }
+    void SetName(const std::string &nam) {name = nam;}
+    std::string Name() {return name;}
+    std::string GetName() { return name; }
     void SetValues(const CTimeSeries<double> &values);
     CTimeSeries<double> Values() {return values;}
     double Value() {
@@ -26,7 +26,7 @@ public:
 private:
     CTimeSeries<double> values;
     double predicted_value = 0;
-    string name;
+    std::string name;
 };
 
 #endif // OBSERVATION_H

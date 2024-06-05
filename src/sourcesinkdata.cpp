@@ -129,6 +129,24 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     return out;
 }
 
+SourceSinkData SourceSinkData::ExtractElementsOnly(bool isotopes) const
+{
+    SourceSinkData out;
+    out.target_group = target_group;
+
+    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        out[it->first] = it->second.ExtractElementsOnly(&ElementInformation, isotopes);
+    }
+    out.omconstituent = omconstituent;
+    out.sizeconsituent = sizeconsituent;
+
+    out.PopulateElementInformation(&ElementInformation);
+    out.PopulateElementDistributions();
+    out.AssignAllDistributions();
+    return out;
+}
+
 SourceSinkData SourceSinkData::Extract(const vector<string> &element_list) const
 {
     SourceSinkData out;

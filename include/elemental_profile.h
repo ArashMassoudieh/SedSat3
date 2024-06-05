@@ -49,6 +49,7 @@ public:
     double DotProduct(const CMBVector &vector);
     CMBVector SortByValue(bool ascending = true) const;
     vector<string> SelectTop(int n, bool ascending = true) const;
+    Elemental_Profile ExtractElementsOnly(const map<string, element_information> *ElementInformation, bool isotopes=false) const;
 private:
     bool included_in_analysis = true;
     map<string,bool> marked;

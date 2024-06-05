@@ -46,6 +46,17 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples
     return out;
 }
 
+Elemental_Profile_Set Elemental_Profile_Set::ExtractElementsOnly(const map<string, element_information> *elementinfo, bool isotopes) const
+{
+    Elemental_Profile_Set out;
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        out.Append_Profile(it->first, it->second.ExtractElementsOnly(elementinfo,isotopes));
+    }
+
+    return out;
+}
+
 Elemental_Profile_Set Elemental_Profile_Set::Extract(const vector<string> &element_list) const
 {
     Elemental_Profile_Set out;

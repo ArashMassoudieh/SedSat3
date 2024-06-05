@@ -1097,6 +1097,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "Error_Analysis")
     {
 
+        results.SetName("Error Analysis");
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
 
         bool organicnsizecorrection;
@@ -1130,6 +1131,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (command == "Source_Verify")
     {
 
+        results.SetName("Source Verification");
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
 
         bool organicnsizecorrection;
@@ -1177,6 +1179,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "AutoSelect")
     {
+        results.SetName("Auto-select elements");
         SourceSinkData TransformedData;
         bool OmandSizeCorrect = false;
         if (arguments["OM and Size Correct based on target sample"] != "")
@@ -1194,6 +1197,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
+        TransformedData = TransformedData.ExtractElementsOnly(true);
         ResultItem EDP_pValue;
         EDP_pValue.SetName("Multi-way discriminat p-value");
         EDP_pValue.SetType(result_type::elemental_profile_set);

@@ -295,6 +295,7 @@ public:
     Results MCMC(const string &sample, map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
     CMBMatrix MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
     bool ToolsUsed(const string &toolname);
+    SourceSinkData ExtractElementsOnly(bool isotopes = false) const;
 private:
 
     map<string,ConcentrationSet> element_distributions;
