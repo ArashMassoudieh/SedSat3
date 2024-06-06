@@ -1197,7 +1197,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
-        TransformedData = TransformedData.ExtractElementsOnly(true);
+        bool isotopes = false;
+        if (arguments["Include Isotopes"] == "true")
+            isotopes = true;
+
+        TransformedData = TransformedData.ExtractElementsOnly(isotopes);
         ResultItem EDP_pValue;
         EDP_pValue.SetName("Multi-way discriminat p-value");
         EDP_pValue.SetType(result_type::elemental_profile_set);
@@ -1223,6 +1227,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         SelectedElements.SetShowTable(true);
         SelectedElements.SetShowGraph(true);
         results.Append(SelectedElements);
+
+        if (arguments["Modify the included elements based on the results"] == "true")
+        {
+            Data()->IncludeExcludeElementsBasedOn(selected->ElementNames());
+        }
 
     }
     Data()->AddtoToolsUsed(command);
