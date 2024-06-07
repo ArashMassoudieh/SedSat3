@@ -47,7 +47,7 @@
 
 
 #define version "1.0.16"
-#define date_compiled "5/5/2024"
+#define date_compiled "6/7/2024"
 
 using namespace QXlsx;
 
