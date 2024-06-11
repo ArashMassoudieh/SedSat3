@@ -1962,7 +1962,7 @@ CMBVectorSet SourceSinkData::Stepwise_DiscriminantFunctionAnalysis_MoreInfo()
             for (map<string,Elemental_Profile_Set>::iterator sourcegroup2 = std::next(sourcegroup1,1); sourcegroup2!=end(); sourcegroup2++)
             {
                 if (sourcegroup2->first!=target_group)
-                {   CMBVector v=StepwiseDiscriminantFunctionAnalysis(sourcegroup1->first,sourcegroup2->first);
+                {   CMBVector v=Stepwise_DiscriminantFunctionAnalysis(sourcegroup1->first,sourcegroup2->first);
                     out.Append(sourcegroup1->first + " - " + sourcegroup2->first,v);
                     counter++;
                 }
