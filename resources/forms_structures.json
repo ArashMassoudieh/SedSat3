@@ -528,6 +528,17 @@
 			"source": "SourceList"
 		}
     	},
+        "Bracketing Analysis Batch":
+        {
+            "Use only selected elements": {
+                   "type": "checkBox",
+                "default": "false"
+                },
+                "Use only selected samples": {
+                   "type": "checkBox",
+                "default": "false"
+                }
+            },
     	"Outlier":
     	{
     		"Use only selected elements": {

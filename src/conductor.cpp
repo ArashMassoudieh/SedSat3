@@ -865,6 +865,26 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(BracketingResItem);
 
     }
+    if (command == "Bracketing Analysis Batch")
+    {
+        results.SetName("Bracketing analysis");
+        ResultItem BracketingResItem;
+        BracketingResItem.SetName("Bracketing results");
+        BracketingResItem.SetType(result_type::matrix);
+        BracketingResItem.SetShowTable(true);
+        BracketingResItem.SetShowGraph(false);
+        BracketingResItem.SetShowAsString(false);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+        CMBMatrix *bracketingresult = new CMBMatrix(TransformedData.BracketTest());
+        bracketingresult->SetBooleanValue(true);
+        BracketingResItem.SetResult(bracketingresult);
+        results.Append(BracketingResItem);
+
+    }
     if (command == "BoxCox")
     {
         results.SetName("Box-Cox parameter for '" + arguments["Source/Target group"] + "'");

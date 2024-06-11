@@ -913,9 +913,9 @@ void MainWindow::DeleteResults()
 
 void MainWindow::readRecentFilesList()
 {
-//	//qDebug() << localAppFolderAddress();
+    qDebug() << QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 //	QString add = localAppFolderAddress();
-    ifstream file(localAppFolderAddress().toStdString()+RECENT);
+    ifstream file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString()+RECENT);
     int count = 0;
     if (file.good())
     {
@@ -928,7 +928,7 @@ void MainWindow::readRecentFilesList()
         file.close();
     }
 
-    file.open(localAppFolderAddress().toStdString() + RECENT);
+    file.open(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() +"/"+ RECENT);
     int n = 0;
     if (file.good())
     {
@@ -972,8 +972,8 @@ void MainWindow::addToRecentFiles(QString fileName, bool addToFile)
 
         if (addToFile)
         {
-            CreateFileIfDoesNotExist(localAppFolderAddress() + RECENT);
-            ofstream file(localAppFolderAddress().toStdString() + RECENT, fstream::app);
+            CreateFileIfDoesNotExist(localAppFolderAddress() + "/"+ RECENT);
+            ofstream file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() +"/"+  RECENT, fstream::app);
             if (file.good())
                 file << fileName.toStdString() << std::endl;
             file.close();
@@ -985,7 +985,8 @@ void MainWindow::addToRecentFiles(QString fileName, bool addToFile)
 
 void MainWindow::writeRecentFilesList()
 {
-    ofstream file(localAppFolderAddress().toStdString() + RECENT);
+    qDebug() << QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    ofstream file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() +"/"+ RECENT);
     if (file.good())
     {
         foreach (QString fileName , recentFiles)

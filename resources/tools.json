@@ -3,7 +3,7 @@
   {
     "3-Organic matter and particle size correction": "MLR",
     "1-Elements' correlation matrix": "CorMat",
-    "4-Bracketing Analysis": "Bracketing Analysis",
+    "4-Bracketing Analysis": "Bracketing Analysis Batch",
     "2-Outlier Analysis": "Outlier",
     "5-Analysis of Variance for element selection": "ANOVA",
     "6-Auto-select elements": "AutoSelect"

@@ -136,12 +136,21 @@ QTableWidget *CMBMatrix::ToTable()
         rowheaders << QString::fromStdString(rowlabels[i]);
         for (int j=0; j<getnumcols(); j++)
         {   tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(matr[i][j])));
-            if (highlightoutsideoflimit)
-            {
-                if (matr[i][j]>highlimit || matr[i][j]<lowlimit)
+            if (!boolean_values)
+            {   if (highlightoutsideoflimit)
                 {
-                    tablewidget->item(i,j)->setForeground(QColor(Qt::red));
+                    if (matr[i][j]>highlimit || matr[i][j]<lowlimit)
+                    {
+                        tablewidget->item(i,j)->setForeground(QColor(Qt::red));
+                    }
                 }
+            }
+            else
+            {
+                if (matr[i][j]==1)
+                    tablewidget->setItem(i,j, new QTableWidgetItem("Fail"));
+                else
+                    tablewidget->setItem(i,j, new QTableWidgetItem("Pass"));
             }
         }
     }

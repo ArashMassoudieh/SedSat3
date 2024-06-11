@@ -2143,12 +2143,30 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     return out;
 }
 
-void SourceSinkData::BracketTest()
+
+CMBMatrix SourceSinkData::BracketTest()
 {
-    for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample != at(target_group).end(); sample++)
-        if (sample->first!="")
-            BracketTest(sample->first);
+    vector<string> element_names = ElementNames();
+    CMBMatrix out(at(target_group).size(),element_names.size());
+    int j=0;
+
+    for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample != at(target_group).end(); sample++ )
+    {
+
+        CMBVector bracket_vec = BracketTest(sample->first);
+        for (int i=0; i<element_names.size(); i++)
+        {
+            out[i][j] = bracket_vec.valueAt(i);
+            out.SetRowLabel(i,element_names[i]);
+        }
+        out.SetColumnLabel(j,sample->first);
+        j++;
+    }
+
+    return out;
 }
+
+
 
 
 
