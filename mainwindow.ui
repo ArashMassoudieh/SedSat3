@@ -112,28 +112,10 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QToolButton" name="toolButton_4">
-          <property name="text">
-           <string>...</string>
+         <widget class="QToolButton" name="ShowTabular">
+          <property name="toolTip">
+           <string>Show as Table</string>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButton_3">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButton_2">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButton">
           <property name="text">
            <string>...</string>
           </property>

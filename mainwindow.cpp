@@ -31,6 +31,7 @@
 #include "selectsamples.h"
 #include "dialogchooseexcelsheets.h"
 #include "toolboxitem.h"
+#include "resulttableviewer.h"
 //#include "MCMC.h"
 
 #ifdef _WIN32
@@ -73,6 +74,11 @@ MainWindow::MainWindow(QWidget *parent)
     toolsmodel->setHorizontalHeaderLabels(QStringList()<<"Tools");
     ui->treeViewtools->setModel(toolsmodel);
     ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    QIcon iconTable = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/table.png");
+    ui->ShowTabular->setIcon(iconTable);
+    ui->ShowTabular->setEnabled(false);
+    connect(ui->ShowTabular, SIGNAL(clicked()),this, SLOT(on_show_data_as_table()));
 
     //results
     resultsviewmodel = new QStandardItemModel();
@@ -536,6 +542,7 @@ QStandardItem* MainWindow::ElementsToQStandardItem(const QString &key, const Sou
 void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 {
     qDebug()<<"Selection changed "<<changed;
+    ui->ShowTabular->setEnabled(false);
     if (treeitemchangedprogramatically) return;
     if (plotter==nullptr)
     {
@@ -606,6 +613,9 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 
     if (samples_selected.size()>0 && PlotType==plottype::elemental_profiles)
     {   profiles_data extracted_data = DataCollection.ExtractData(samples_selected);
+        Elemental_Profile_Set *selected_elements_profiles = new Elemental_Profile_Set(DataCollection.ExtractData_EPS(samples_selected));
+        plotted_data = selected_elements_profiles;
+        ui->ShowTabular->setEnabled(true);
         plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
         plotter->SetYAxisScaleType(AxisScale::log);
     }
@@ -1125,4 +1135,14 @@ void MainWindow::Populate_General_ToolBar()
     actionselectsamples->setToolTip("Select Samples");
     connect(actionselectsamples, SIGNAL(triggered()), this, SLOT(onIncludeExcludeSample()));
 
+}
+
+void MainWindow::on_show_data_as_table()
+{
+    ResultTableViewer *tableviewer = new ResultTableViewer(this);
+    tableviewer->setWindowFlag(Qt::WindowMinMaxButtonsHint);
+    QTableWidget *tablewidget = plotted_data->ToTable();
+    tableviewer->setWindowTitle("Elemental Profiles");
+    tableviewer->SetTable(tablewidget);
+    tableviewer->show();
 }

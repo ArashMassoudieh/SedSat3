@@ -273,6 +273,19 @@ profiles_data SourceSinkData::ExtractData(const vector<vector<string>> &indicato
     return extracted_data;
 }
 
+Elemental_Profile_Set SourceSinkData::ExtractData_EPS(const vector<vector<string>> &indicators)
+{
+    Elemental_Profile_Set extracted_data;
+
+    for (int i=0; i<indicators.size(); i++)
+    {
+        Elemental_Profile elemental_profile = sample_set(indicators[i][0])->at(indicators[i][1]);
+        extracted_data.Append_Profile(indicators[i][0] + "-" + indicators[i][1],elemental_profile);
+
+    }
+    return extracted_data;
+}
+
 element_data SourceSinkData::ExtractElementData(const string &element, const string &group)
 {
     element_data extracted_data;
@@ -308,6 +321,8 @@ map<string,vector<double>> SourceSinkData::ExtractElementData(const string &elem
     }
     return extracted_data;
 }
+
+
 void SourceSinkData::AssignAllDistributions()
 {
     vector<string> element_names = ElementNames();
@@ -1844,6 +1859,8 @@ QString SourceSinkData::Role(const element_information::role &rl)
         return "Isotope";
     else if (rl == element_information::role::particle_size)
         return "ParticleSize";
+    else if (rl == element_information::role::organic_carbon)
+        return "OM";
     return "DoNotInclude";
 }
 
@@ -1857,6 +1874,8 @@ element_information::role SourceSinkData::Role(const QString &rl)
         return element_information::role::isotope;
     else if (rl == "ParticleSize")
         return element_information::role::particle_size;
+    else if (rl == "OM")
+        return element_information::role::organic_carbon;
     return element_information::role::do_not_include;
 }
 
@@ -3006,4 +3025,25 @@ bool SourceSinkData::ToolsUsed(const string &toolname)
         return false;
     else
         return true;
+}
+
+string SourceSinkData::FirstOMConstituent()
+{
+    for (map<string,element_information>::iterator element = ElementInformation.begin(); element!=ElementInformation.end(); element++)
+    {
+        if (element->second.Role == element_information::role::organic_carbon)
+            return element->first;
+    }
+    return "";
+}
+
+
+string SourceSinkData::FirstSizeConstituent()
+{
+    for (map<string,element_information>::iterator element = ElementInformation.begin(); element!=ElementInformation.end(); element++)
+    {
+        if (element->second.Role == element_information::role::particle_size)
+            return element->first;
+    }
+    return "";
 }

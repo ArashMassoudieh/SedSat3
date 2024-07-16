@@ -40,7 +40,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
 {
     for (QString key : jsonobject.keys()) {
 
-        if (key == "Contributions")
+        if (key.contains("Contributions"))
         {
             Contribution* contribution = new Contribution();
             contribution->ReadFromJsonObject(jsonobject[key].toObject());
@@ -52,7 +52,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(contribution);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key == "Modeled Elemental Profile")
+        else if (key.contains("Modeled Elemental Profile"))
         {
             Elemental_Profile* modeled = new Elemental_Profile();
             modeled->ReadFromJsonObject(jsonobject[key].toObject());
@@ -77,7 +77,7 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(modeled);
             operator[](key.toStdString()) = res_item;
         }
-        else if (key == "Observed vs Modeled Elemental Profile")
+        else if (key.contains("Observed vs Modeled Elemental Profile"))
         {
             Elemental_Profile_Set* modeled_vs_measured = new Elemental_Profile_Set();
             modeled_vs_measured->ReadFromJsonObject(jsonobject[key].toObject());

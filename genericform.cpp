@@ -54,45 +54,50 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                         ui->formLayout->addRow(label,combobox);
                         parameter_prop.InputWidget = combobox;
                         {
-                            if (object.value("source").toString()=="TargetSamplesList")
+                            if (object.value("source").toString().contains("Blank"))
+                            {
+                                combobox->addItem("");
+                            }
+                            if (object.value("source").toString().contains("TargetSamplesList"))
                             {
                                 vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
                                 for (unsigned int i=0; i<names.size(); i++)
                                     combobox->addItem(QString::fromStdString(names[i]));
                             }
-                            else if (object.value("source").toString() == "TargetSamplesList+Blank")
-                            {
-                                vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
-                                combobox->addItem("");
-                                for (unsigned int i = 0; i < names.size(); i++)
-                                    combobox->addItem(QString::fromStdString(names[i]));
-                            }
-                            else if (object.value("source").toString()=="ElementsList")
+                            if (object.value("source").toString().contains("ElementsList"))
                             {
                                 vector<string> names = mainwindow()->Data()->ElementNames();
                                 for (unsigned int i=0; i<names.size(); i++)
-                                    combobox->addItem(QString::fromStdString(names[i]));
+                                    combobox->addItem(QString::fromStdString(names[i]),QString::fromStdString(names[i]));
 
                             }
-                            else if (object.value("source").toString()=="ElementsList+Blank")
-                            {
-                                vector<string> names = mainwindow()->Data()->ElementNames();
-                                combobox->addItem("");
-                                for (unsigned int i=0; i<names.size(); i++)
-                                    combobox->addItem(QString::fromStdString(names[i]));
-
-                            }
-                            else if (object.value("source").toString()=="SourceList")
+                            if (object.value("source").toString().contains("SourceList"))
                             {
                                 vector<string> names = mainwindow()->Data()->SourceGroupNames();
                                 for (unsigned int i=0; i<names.size(); i++)
-                                    combobox->addItem(QString::fromStdString(names[i]));
+                                    combobox->addItem(QString::fromStdString(names[i]),QString::fromStdString(names[i]));
 
                             }
-                            else if (object.value("source").toString().contains("Items:"))
+                            if (object.value("source").toString().contains("Items:"))
                             {
                                 QStringList items = object.value("source").toString().split(":")[1].split(",");
                                 combobox->addItems(items);
+                            }
+                            if (object.value("source").toString().contains("OM"))
+                            {
+                                QString element = QString::fromStdString(mainwindow()->Data()->FirstOMConstituent());
+                                if (element!="")
+                                    combobox->setCurrentIndex(combobox->findText(element));
+                                int i = combobox->findText(element);
+                                qDebug() << i;
+                            }
+                            if (object.value("source").toString().contains("Size"))
+                            {
+                                QString element = QString::fromStdString(mainwindow()->Data()->FirstSizeConstituent());
+                                if (element!="")
+                                    combobox->setCurrentIndex(combobox->findText(element));
+                                int i = combobox->findText(element);
+                                qDebug() << i;
                             }
                         }
                     }

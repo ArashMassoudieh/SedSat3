@@ -201,11 +201,11 @@
     		},
     		"Organic Matter constituent": {
     			"type": "comboBox",
-    			"source": "ElementsList+Blank"
+    			"source": "ElementsList+Blank+OM"
     		},
     		"Particle Size constituent": {
     			"type": "comboBox",
-    			"source": "ElementsList+Blank"
+    			"source": "ElementsList+Blank+Size"
     		},
     		"Equation": {
     			"type": "comboBox",

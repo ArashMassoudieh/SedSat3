@@ -84,8 +84,10 @@ public:
     vector<string> ElementNames();
     vector<string> SampleNames(const string groupname); // List of sample names for a particular group
     profiles_data ExtractData(const vector<vector<string>> &indicators);
+    Elemental_Profile_Set ExtractData_EPS(const vector<vector<string>> &indicators); // extract elemental profiles for a given element list and sample
     element_data ExtractElementData(const string &element, const string &group);
     map<string,vector<double>> ExtractElementData(const string &element);
+
     Elemental_Profile *GetElementalProfile(const string sample_name); //Get Elemental Profile for a particular sample
     void PopulateElementDistributions();
     void AssignAllDistributions();
@@ -296,6 +298,9 @@ public:
     CMBMatrix MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
     bool ToolsUsed(const string &toolname);
     SourceSinkData ExtractElementsOnly(bool isotopes = false) const;
+    string FirstOMConstituent();
+    string FirstSizeConstituent();
+
 private:
 
     map<string,ConcentrationSet> element_distributions;
