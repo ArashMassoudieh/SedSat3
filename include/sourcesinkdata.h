@@ -241,7 +241,7 @@ public:
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample);
-    void BracketTest(); //Performs bracket test for all target samples
+    CMBMatrix BracketTest(); //Performs bracket test for all target samples
     SourceSinkData BoxCoxTransformed(bool calculateeigenvectorforallgroups=false);
     map<string,ConcentrationSet> ExtractConcentrationSet();
     CMBVector OptimalBoxCoxParameters();

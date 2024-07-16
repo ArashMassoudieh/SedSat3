@@ -32,10 +32,11 @@ public:
     CMBVector GetRow(const string &rowlabel);
     CMBVector GetColumn(const string &rowlabel);
     QStringList RowLabelCategories();
+    void SetBooleanValue(bool val) {boolean_values = val;}
 private:
     vector<string> columnlabels;
     vector<string> rowlabels;
-
+    bool boolean_values = false;
 
 };
 

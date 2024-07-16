@@ -502,6 +502,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
 
+
     }
     if (command == "DFAM")
     {
@@ -865,6 +866,26 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(BracketingResItem);
 
     }
+    if (command == "Bracketing Analysis Batch")
+    {
+        results.SetName("Bracketing analysis");
+        ResultItem BracketingResItem;
+        BracketingResItem.SetName("Bracketing results");
+        BracketingResItem.SetType(result_type::matrix);
+        BracketingResItem.SetShowTable(true);
+        BracketingResItem.SetShowGraph(false);
+        BracketingResItem.SetShowAsString(false);
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+        CMBMatrix *bracketingresult = new CMBMatrix(TransformedData.BracketTest());
+        bracketingresult->SetBooleanValue(true);
+        BracketingResItem.SetResult(bracketingresult);
+        results.Append(BracketingResItem);
+
+    }
     if (command == "BoxCox")
     {
         results.SetName("Box-Cox parameter for '" + arguments["Source/Target group"] + "'");
@@ -1047,7 +1068,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+
+        SourceSinkData TransformedData;
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
@@ -1055,8 +1077,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
                 QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
+        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements,false);
+
+
 
 
 
