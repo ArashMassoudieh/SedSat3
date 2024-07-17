@@ -85,6 +85,7 @@ private slots:
     void on_actionRecent_triggered();
     void DeleteResults();
     void on_show_data_as_table();
+    void on_ZoomExtends();
 
 
 };

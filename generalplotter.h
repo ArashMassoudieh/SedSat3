@@ -35,6 +35,7 @@ public:
     bool AddTimeSeriesSet(const string &name, const vector<vector<double>> &x, const vector<vector<double>> &y);
     bool SetYAxisScaleType(AxisScale axisscale);
     void setZoomMode(bool mode);
+    void ZoomExtends();
     void SetRange(const vector<double> &range, const Axis &whichaxis);
     void SetLegend(bool onoff);
 

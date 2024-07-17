@@ -183,6 +183,14 @@ bool GeneralPlotter::AddScatter(const string &name, const vector<string> &x, con
     replot();
     return true;
 }
+
+void GeneralPlotter::ZoomExtends()
+{
+    SetRange(x_max_min_range,Axis::x);
+    SetRange(y_max_min_range,Axis::y);
+    replot();
+}
+
 bool GeneralPlotter::AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y)
 {
     if (names.size()!=x.size())
@@ -299,8 +307,8 @@ void GeneralPlotter::Clear()
 
 bool GeneralPlotter::AddNoneUniformScatter(const map<string,vector<double>> &data, int shape_counter)
 {
-    x_max_min_range[0] = min(x_max_min_range[0],double(0));
-    x_max_min_range[1] = max(x_max_min_range[1],double(data.size()*1.1));
+    x_max_min_range[0] = double(0);
+    x_max_min_range[1] = double(data.size()*1.1);
 
 
     QCPGraph *points = new QCPGraph(xAxis, yAxis);

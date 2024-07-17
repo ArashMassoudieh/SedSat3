@@ -80,6 +80,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ShowTabular->setEnabled(false);
     connect(ui->ShowTabular, SIGNAL(clicked()),this, SLOT(on_show_data_as_table()));
 
+
+    QIcon iconZoomEx = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Zoom_Extends.png");
+    ui->btnZoom->setIcon(iconZoomEx);
+    ui->btnZoom->setEnabled(false);
+    connect(ui->btnZoom, SIGNAL(clicked()),this, SLOT(on_ZoomExtends()));
+
     //results
     resultsviewmodel = new QStandardItemModel();
     ui->TreeView_Results->setModel(resultsviewmodel);
@@ -621,6 +627,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
     }
     ui->frame->setVisible(true);
     ui->frame->setEnabled(true);
+    ui->btnZoom->setEnabled(true);
     SelectedTreeItemType = TreeQStringSelectedType();
 }
 
@@ -1145,4 +1152,9 @@ void MainWindow::on_show_data_as_table()
     tableviewer->setWindowTitle("Elemental Profiles");
     tableviewer->SetTable(tablewidget);
     tableviewer->show();
+}
+
+void MainWindow::on_ZoomExtends()
+{
+    plotter->ZoomExtends();
 }
