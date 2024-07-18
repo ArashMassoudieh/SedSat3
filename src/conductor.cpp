@@ -923,8 +923,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "EDP")
     {
-        bool log = (arguments["Log Transformation"] == "true" ? true : false);
-
         results.SetName("Two-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
 
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
@@ -946,6 +944,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
 
         ResultItem EDPresultStd;
         EDPresultStd.SetName("Discreminant difference to standard deviation ratio");
@@ -953,7 +953,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultStd.SetShowAsString(false);
         EDPresultStd.SetShowTable(true);
         EDPresultStd.SetShowGraph(true);
-        Elemental_Profile *EDPProfileSet = new Elemental_Profile(TransformedData.DifferentiationPower(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
+        Elemental_Profile *EDPProfileSet = new Elemental_Profile(TransformedData.DifferentiationPower(arguments["Source/Target group I"], arguments["Source/Target group II"],false));
         EDPresultStd.SetYAxisMode(yaxis_mode::normal);
         EDPresultStd.setYAxisTitle("Discrimination power");
         EDPresultStd.SetResult(EDPProfileSet);
@@ -984,7 +984,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresult_pValue.setYAxisTitle("p-Value");
         EDPresult_pValue.SetShowTable(true);
         EDPresult_pValue.SetShowGraph(true);
-        Elemental_Profile *EDPProfileSet_pValue = new Elemental_Profile(TransformedData.t_TestPValue(arguments["Source/Target group I"], arguments["Source/Target group II"],log));
+        Elemental_Profile *EDPProfileSet_pValue = new Elemental_Profile(TransformedData.t_TestPValue(arguments["Source/Target group I"], arguments["Source/Target group II"],false));
         EDPresult_pValue.SetYAxisMode(yaxis_mode::normal);
         EDPresult_pValue.SetYLimit(_range::high,1);
         EDPresult_pValue.SetResult(EDPProfileSet_pValue);
@@ -997,7 +997,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "EDPM")
     {
-        bool log = (arguments["Log Transformation"] == "true" ? true : false);
+
         bool include_target = (arguments["Include target samples"] == "true" ? true : false);
 
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
@@ -1019,6 +1019,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+
         results.SetName("Multi-way element discriminant power between '" + arguments["Source/Target group I"] + "' and '" + arguments["Source/Target group II"] +"'");
         ResultItem EDPresultStd;
         EDPresultStd.SetName("Multi-way discreminant difference to standard deviation ratio");
@@ -1026,7 +1029,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDPresultStd.SetShowAsString(true);
         EDPresultStd.SetShowTable(true);
         EDPresultStd.SetShowGraph(true);
-        Elemental_Profile_Set *EDPProfileSet = new Elemental_Profile_Set(TransformedData.DifferentiationPower(log,include_target));
+        Elemental_Profile_Set *EDPProfileSet = new Elemental_Profile_Set(TransformedData.DifferentiationPower(false,include_target));
         EDPresultStd.SetYAxisMode(yaxis_mode::normal);
         EDPresultStd.setYAxisTitle("Discrimination power");
         EDPresultStd.SetResult(EDPProfileSet);

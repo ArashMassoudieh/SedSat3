@@ -568,10 +568,6 @@
 			"type": "comboBox",
 			"source": "SourceList"
 		},
-		"Log Transformation": {
-   			"type": "checkBox",
-			"default": "false"
-    		},
     		"P-value threshold": {
    			"type": "lineEdit",
 			"default": "0.05"
@@ -583,7 +579,11 @@
     		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
-		}
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
  	},
     	"EDPM": 
     	{
@@ -591,10 +591,6 @@
    			"type": "checkBox",
 			"default": "false"
     		},
-		"Log Transformation": {
-   			"type": "checkBox",
-			"default": "false"
-    		},
     		"P-value threshold": {
    			"type": "lineEdit",
 			"default": "0.05"
@@ -606,7 +602,11 @@
     		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
-		}
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		}
  	},
  	"ANOVA": 
     	{

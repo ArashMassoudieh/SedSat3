@@ -556,8 +556,8 @@ CMBMatrix Elemental_Profile_Set::Outlier(const double &lowerlimit, const double 
     int i=0;
     for (map<string, ConcentrationSet>::iterator it=element_distributions.begin(); it!=element_distributions.end(); it++)
     {
-        means.push_back(it->second.BoxCoxTransform(lambdas[i]).mean());
-        stds.push_back(it->second.BoxCoxTransform(lambdas[i]).stdev());
+        means.push_back(it->second.BoxCoxTransform(lambdas[i], false).mean());
+        stds.push_back(it->second.BoxCoxTransform(lambdas[i], false).stdev());
         std_orig.push_back(it->second.stdev());
         i++;
     }
@@ -604,7 +604,7 @@ Elemental_Profile_Set Elemental_Profile_Set::BocCoxTransformed(CMBVector *lambda
 
     for (map<string,ConcentrationSet>::iterator it=element_distributions.begin(); it!=element_distributions.end(); it++)
     {
-        ConcentrationSet boxcoxtransformed = it->second.BoxCoxTransform(lambdas[i]);
+        ConcentrationSet boxcoxtransformed = it->second.BoxCoxTransform(lambdas[i], false);
         int j=0;
         for (map<string,Elemental_Profile>::iterator profile=out.begin();profile!=out.end(); profile++)
         {   profile->second[it->first] = boxcoxtransformed[j];
