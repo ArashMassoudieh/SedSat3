@@ -92,3 +92,15 @@ Release/
 .qtc_clangd/.cache/clangd/index/
 
 .qtc_clangd/
+
+.vs/SedSat3/FileContentIndex/
+
+.vs/SedSat3/v17/
+
+assets/
+
+*.appxmanifest
+
+SedSat3/x64/Debug/qmake/
+
+SedSat3/x64/Debug/
