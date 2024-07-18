@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="SedSat3.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="chart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="chartview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cmbmatrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cmbtimeseries.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cmbtimeseriesset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cmbvector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cmbvectorset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="contribution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="customplotbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogchooseexcelsheets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="drand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="elementstablemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="elementtabledelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="filebrowserpushbuttom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FilePushButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="formelementinformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generalchart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generalplotter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="genericform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="indicatesheetsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="multiplelinearregression.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="multiplelinearregressionset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="omsizecorrectiontablemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="plotwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="range.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rangeset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resultitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="results.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resultsetitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resultswindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resulttableviewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selectsampledelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selectsamples.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="selectsampletablemodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testmcmc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="toolboxitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cmbdistribution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\concentrationset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\conductor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\elemental_profile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\elemental_profile_set.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\observation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sourcesinkdata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GA\Binary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GA\GADistribution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GA\Individual.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qcustomplot6\qcustomplot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\Matrix_arma.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\QuickSort.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\Utilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\Vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\Vector_arma.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utilities\NormalDist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aboutdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="aboutdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="dialogchooseexcelsheets.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="elementstablemodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="elementtabledelegate.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="filebrowserpushbuttom.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="FilePushButton.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="formelementinformation.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="generalchart.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="genericform.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="indicatesheetsdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="mainwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="omsizecorrectiontablemodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="plotwindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ProgressWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="resultswindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="resulttableviewer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selectsamples.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="selectsampletablemodel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="..\qcustomplot6\qcustomplot.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="chart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="chartview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmbmatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmbtimeseries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmbtimeseriesset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmbvector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cmbvectorset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="contribution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="customplotbar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="generalplotter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="multiplelinearregression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="multiplelinearregressionset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="range.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rangeset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resultitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="results.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resultsetitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="selectsampledelegate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testmcmc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="toolboxitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cmbdistribution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\concentrationset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\conductor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\drand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\elemental_profile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\elemental_profile_set.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\observation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sourcesinkdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GA\Binary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GA\GA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GA\GA.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GA\GADistribution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GA\Individual.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MCMC\MCMC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MCMC\MCMC.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\BTC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\BTC.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\BTCSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\BTCSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\Matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\Matrix_arma.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\QuickSort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\Vector_arma.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utilities\NormalDist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="aboutdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="dialogchooseexcelsheets.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="formelementinformation.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="generalchart.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="genericform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="indicatesheetsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="mainwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="plotwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ProgressWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="resultswindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="resulttableviewer.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="selectsamples.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+</Project>

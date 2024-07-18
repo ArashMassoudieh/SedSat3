@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DE84FA29-C5CB-4451-9EA8-245DC781F608}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
+    <QtInstall>5.15</QtInstall>
+    <QtModules>core;gui;widgets;printsupport;charts</QtModules>
+    <QtBuildConfig>debug</QtBuildConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
+    <QtInstall>5.15</QtInstall>
+    <QtModules>core;gui;widgets;printsupport;charts</QtModules>
+    <QtBuildConfig>release</QtBuildConfig>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(QtMsBuild)\Qt.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;..\Utilities;.;..\qcustomplot6;..\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>Q_version;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>..\armadillo\lapack-blas_lib_win64;..\QXlsx\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;QXlsxd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "..\QXlsx\bin\*.dll" $(SolutionDir)$(Platform)\$(Configuration)\
+copy "..\armadillo\lapack-blas_lib_win64" $(SolutionDir)$(Platform)\$(Configuration)\
+copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;..\Utilities;.;..\qcustomplot6;..\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>Q_version;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>..\armadillo\lapack-blas_lib_win64;..\QXlsx\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;QXlsx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "..\QXlsx\bin\*.dll" $(SolutionDir)$(Platform)\$(Configuration)\
+copy "..\armadillo\lapack-blas_lib_win64" $(SolutionDir)$(Platform)\$(Configuration)\
+copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
+    <ClCompile>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\qcustomplot6\qcustomplot.cpp" />
+    <ClCompile Include="..\Utilities\Matrix.cpp" />
+    <ClCompile Include="..\Utilities\Matrix_arma.cpp" />
+    <ClCompile Include="..\Utilities\NormalDist.cpp" />
+    <ClCompile Include="..\Utilities\QuickSort.cpp" />
+    <ClCompile Include="..\Utilities\Utilities.cpp" />
+    <ClCompile Include="..\Utilities\Vector.cpp" />
+    <ClCompile Include="..\Utilities\Vector_arma.cpp" />
+    <ClCompile Include="aboutdialog.cpp" />
+    <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="multiplelinearregression.cpp" />
+    <ClCompile Include="multiplelinearregressionset.cpp" />
+    <ClCompile Include="omsizecorrectiontablemodel.cpp" />
+    <ClCompile Include="plotwindow.cpp" />
+    <ClCompile Include="ProgressWindow.cpp" />
+    <ClCompile Include="range.cpp" />
+    <ClCompile Include="rangeset.cpp" />
+    <ClCompile Include="resultitem.cpp" />
+    <ClCompile Include="results.cpp" />
+    <ClCompile Include="resultsetitem.cpp" />
+    <ClCompile Include="resultswindow.cpp" />
+    <ClCompile Include="resulttableviewer.cpp" />
+    <ClCompile Include="selectsampledelegate.cpp" />
+    <ClCompile Include="selectsamples.cpp" />
+    <ClCompile Include="selectsampletablemodel.cpp" />
+    <ClCompile Include="src\cmbdistribution.cpp" />
+    <ClCompile Include="src\concentrationset.cpp" />
+    <ClCompile Include="src\conductor.cpp" />
+    <ClCompile Include="src\elemental_profile.cpp" />
+    <ClCompile Include="src\elemental_profile_set.cpp" />
+    <ClCompile Include="src\GA\Binary.cpp" />
+    <ClCompile Include="src\GA\GADistribution.cpp" />
+    <ClCompile Include="src\GA\Individual.cpp" />
+    <ClCompile Include="src\interface.cpp" />
+    <ClCompile Include="src\observation.cpp" />
+    <ClCompile Include="src\parameter.cpp" />
+    <ClCompile Include="src\sourcesinkdata.cpp" />
+    <ClCompile Include="testmcmc.cpp" />
+    <ClCompile Include="toolboxitem.cpp" />
+    <QtRcc Include="SedSat3.qrc" />
+    <ClCompile Include="chart.cpp" />
+    <ClCompile Include="chartview.cpp" />
+    <ClCompile Include="cmbmatrix.cpp" />
+    <ClCompile Include="cmbtimeseries.cpp" />
+    <ClCompile Include="cmbtimeseriesset.cpp" />
+    <ClCompile Include="cmbvector.cpp" />
+    <ClCompile Include="cmbvectorset.cpp" />
+    <ClCompile Include="contribution.cpp" />
+    <ClCompile Include="customplotbar.cpp" />
+    <ClCompile Include="dialogchooseexcelsheets.cpp" />
+    <ClCompile Include="drand.cpp" />
+    <ClCompile Include="elementstablemodel.cpp" />
+    <ClCompile Include="elementtabledelegate.cpp" />
+    <ClCompile Include="filebrowserpushbuttom.cpp" />
+    <ClCompile Include="FilePushButton.cpp" />
+    <ClCompile Include="formelementinformation.cpp" />
+    <ClCompile Include="generalchart.cpp" />
+    <ClCompile Include="generalplotter.cpp" />
+    <ClCompile Include="genericform.cpp" />
+    <ClCompile Include="indicatesheetsdialog.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="aboutdialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="..\qcustomplot6\qcustomplot.h" />
+    <ClInclude Include="..\Utilities\BTC.h" />
+    <ClInclude Include="..\Utilities\BTC.hpp" />
+    <ClInclude Include="..\Utilities\BTCSet.h" />
+    <ClInclude Include="..\Utilities\BTCSet.hpp" />
+    <ClInclude Include="..\Utilities\Matrix.h" />
+    <ClInclude Include="..\Utilities\Matrix_arma.h" />
+    <ClInclude Include="..\Utilities\NormalDist.h" />
+    <ClInclude Include="..\Utilities\QuickSort.h" />
+    <ClInclude Include="..\Utilities\Utilities.h" />
+    <ClInclude Include="..\Utilities\Vector.h" />
+    <ClInclude Include="..\Utilities\Vector_arma.h" />
+    <ClInclude Include="chart.h" />
+    <ClInclude Include="chartview.h" />
+    <ClInclude Include="cmbmatrix.h" />
+    <ClInclude Include="cmbtimeseries.h" />
+    <ClInclude Include="cmbtimeseriesset.h" />
+    <ClInclude Include="cmbvector.h" />
+    <ClInclude Include="cmbvectorset.h" />
+    <ClInclude Include="contribution.h" />
+    <ClInclude Include="customplotbar.h" />
+    <ClInclude Include="generalplotter.h" />
+    <ClInclude Include="include\cmbdistribution.h" />
+    <ClInclude Include="include\concentrationset.h" />
+    <ClInclude Include="include\conductor.h" />
+    <ClInclude Include="include\drand.h" />
+    <ClInclude Include="include\elemental_profile.h" />
+    <ClInclude Include="include\elemental_profile_set.h" />
+    <ClInclude Include="include\GA\Binary.h" />
+    <ClInclude Include="include\GA\GA.h" />
+    <ClInclude Include="include\GA\GA.hpp" />
+    <ClInclude Include="include\GA\GADistribution.h" />
+    <ClInclude Include="include\GA\Individual.h" />
+    <ClInclude Include="include\interface.h" />
+    <ClInclude Include="include\MCMC\MCMC.h" />
+    <ClInclude Include="include\MCMC\MCMC.hpp" />
+    <ClInclude Include="include\observation.h" />
+    <ClInclude Include="include\parameter.h" />
+    <ClInclude Include="include\sourcesinkdata.h" />
+    <ClInclude Include="multiplelinearregression.h" />
+    <ClInclude Include="multiplelinearregressionset.h" />
+    <ClInclude Include="range.h" />
+    <ClInclude Include="rangeset.h" />
+    <ClInclude Include="resultitem.h" />
+    <ClInclude Include="results.h" />
+    <ClInclude Include="resultsetitem.h" />
+    <ClInclude Include="selectsampledelegate.h" />
+    <ClInclude Include="testmcmc.h" />
+    <ClInclude Include="toolboxitem.h" />
+    <QtMoc Include="selectsampletablemodel.h" />
+    <QtMoc Include="selectsamples.h" />
+    <QtMoc Include="resulttableviewer.h" />
+    <QtMoc Include="resultswindow.h" />
+    <QtMoc Include="ProgressWindow.h" />
+    <QtMoc Include="plotwindow.h" />
+    <QtMoc Include="omsizecorrectiontablemodel.h" />
+    <QtMoc Include="mainwindow.h" />
+    <QtMoc Include="indicatesheetsdialog.h" />
+    <QtMoc Include="genericform.h" />
+    <QtMoc Include="generalchart.h" />
+    <QtMoc Include="formelementinformation.h" />
+    <QtMoc Include="FilePushButton.h" />
+    <QtMoc Include="filebrowserpushbuttom.h" />
+    <QtMoc Include="elementtabledelegate.h" />
+    <QtMoc Include="elementstablemodel.h" />
+    <QtMoc Include="dialogchooseexcelsheets.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="aboutdialog.ui" />
+    <QtUic Include="dialogchooseexcelsheets.ui" />
+    <QtUic Include="formelementinformation.ui" />
+    <QtUic Include="generalchart.ui" />
+    <QtUic Include="genericform.ui" />
+    <QtUic Include="indicatesheetsdialog.ui" />
+    <QtUic Include="mainwindow.ui" />
+    <QtUic Include="plotwindow.ui" />
+    <QtUic Include="ProgressWindow.ui" />
+    <QtUic Include="resultswindow.ui" />
+    <QtUic Include="resulttableviewer.ui" />
+    <QtUic Include="selectsamples.ui" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
