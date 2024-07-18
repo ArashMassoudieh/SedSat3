@@ -283,11 +283,15 @@ double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)
     return std::max(fabs(observed_fitted[2].maxC()),fabs(observed_fitted[2].minC()));
 }
 
-ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda)
+ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda, bool normalize)
 {
 
     ConcentrationSet Scaled(size());
-    double std_dev = stdev();
+    double std_dev;
+    if (normalize)
+        std_dev = stdev();
+    else
+        std_dev = 1;
 
     for (unsigned int i = 0; i < size(); i++)
     {
@@ -324,7 +328,7 @@ double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2,
     double d_lambda = (x_2-x_1)/double(n_intervals);
     for (double lambda = x_1; lambda<=x_2; lambda+=d_lambda )
     {
-        vals.push_back(BoxCoxTransform(lambda).KolmogorovSmirnovStat(distribution_type::normal));
+        vals.push_back(BoxCoxTransform(lambda, true).KolmogorovSmirnovStat(distribution_type::normal));
     }
     return OptimalBoxCoxParam(x_1 + std::max(aquiutils::MinElement(vals)-1,0)*d_lambda,x_1+std::min(aquiutils::MinElement(vals)+1,int(vals.size()-1))*d_lambda,n_intervals);
 }

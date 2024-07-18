@@ -52,7 +52,7 @@ public:
     CMBTimeSeriesSet DataCDFnFitted(distribution_type dist_type);
     CMBTimeSeriesSet DistFitted(distribution_type dist_type);
     double KolmogorovSmirnovStat(distribution_type dist_type);
-    ConcentrationSet BoxCoxTransform(const double &lambda);
+    ConcentrationSet BoxCoxTransform(const double &lambda, bool normalize);
     double OptimalBoxCoxParam(const double &x_1,const double &x_2, int n_intervals);
 private:
     Distribution FittedDist; // Distribution fitted based on the sample data
