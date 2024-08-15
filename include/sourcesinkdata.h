@@ -292,7 +292,7 @@ public:
     vector<string> AllSourceSampleNames() const;
     vector<string> RandomlypickSamples(const double &percentage) const;
     SourceSinkData ReplaceSourceAsTarget(const string &sourcesamplename) const;
-    CMBTimeSeriesSet VerifySource(const string &sourcegroup, bool softmax_transformation);
+    CMBTimeSeriesSet VerifySource(const string &sourcegroup, bool softmax_transformation, bool sizeandorganiccorrect);
     CMBTimeSeriesSet LM_Batch(transformation transform, bool om_size_correction, map<string,vector<string>> &negative_elements); //Levenberg-Marquardt batch
     Results MCMC(const string &sample, map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);
     CMBMatrix MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *MCMC, ProgressWindow *rtw, const string &workingfolder);

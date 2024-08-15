@@ -2668,7 +2668,7 @@ bool SourceSinkData::BootStrap(Results *res, const double &percentage, unsigned 
 
 }
 
-CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool softmax_transformation)
+CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool softmax_transformation, bool sizeandorganiccorrect)
 {
     InitializeParametersObservations(sample_set(target_group)->begin()->first);
     CMBTimeSeriesSet result(numberofsourcesamplesets);
@@ -2680,18 +2680,33 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool so
     {
 
         SourceSinkData bootstrappeddata = ReplaceSourceAsTarget(sample->first);
-        bootstrappeddata.InitializeParametersObservations(sample->first);
-        if (rtw)
-            rtw->SetProgress(double(counter)/double(at(sourcegroup).size()));
+        SourceSinkData correctedData = bootstrappeddata.Corrected(sample->first,sizeandorganiccorrect,bootstrappeddata.GetElementInformation());
+        correctedData.SetProgressWindow(rtw);
+        vector<string> negative_elements = correctedData.NegativeValueCheck();
 
-        if (softmax_transformation)
-            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+        if (negative_elements.size()==0)
+        {
+            bootstrappeddata.InitializeParametersObservations(sample->first);
+            if (rtw)
+                rtw->SetProgress(double(counter)/double(at(sourcegroup).size()));
+
+            if (softmax_transformation)
+                bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+            else
+                bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+
+            result.append(counter,bootstrappeddata.ContributionVector().vec);
+            result.SetLabel(counter,sample->first);
+            counter++;
+        }
         else
-            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+        {
+            for (int i=0; i<negative_elements.size(); i++)
+            {
+                qDebug()<<QString::fromStdString(negative_elements[i]);
+            }
+        }
 
-        result.append(counter,bootstrappeddata.ContributionVector().vec);
-        result.SetLabel(counter,sample->first);
-        counter++;
 
     }
     return result;

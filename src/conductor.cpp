@@ -252,7 +252,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         results.SetName("LM-Batch");
 
-        results.SetName("Source verification for source'" + arguments["Source Group"] +"'");
         contributions->GetOptions().X_suffix = "";
         contributions->GetOptions().Y_suffix = "";
         contributions->SetOption(options_key::single_column_x, true);
@@ -1176,7 +1175,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         rtw->show();
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        SourceSinkData correctedData = *Data();
         correctedData.SetProgressWindow(rtw);
         if (!CheckNegativeElements(&correctedData))
             return false;
@@ -1185,7 +1184,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Softmax transformation"] == "true")
             softmax = true;
 
-        CMBTimeSeriesSet *contributions = new CMBTimeSeriesSet(correctedData.VerifySource(arguments["Source Group"],softmax));
+        CMBTimeSeriesSet *contributions = new CMBTimeSeriesSet(correctedData.VerifySource(arguments["Source Group"],softmax,organicnsizecorrection));
         ResultItem contributions_result_item;
         results.SetName("Source verification for source'" + arguments["Source Group"] +"'");
         contributions->GetOptions().X_suffix = "";
@@ -1203,6 +1202,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         contributions_result_item.setXAxisTitle("Source Sample");
         contributions_result_item.SetYLimit(_range::low, 0);
         results.Append(contributions_result_item);
+        rtw->SetProgress(1);
 
     }
     if (command == "AutoSelect")
