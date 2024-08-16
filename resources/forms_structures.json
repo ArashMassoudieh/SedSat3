@@ -241,7 +241,12 @@
 		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
-		}
+		},
+		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool calculates the covariance matrix between the elemental contents of various elements for the specified source group." 
+    		}
 	},
 	"CorMat": {
 		"Use only selected elements": {
@@ -274,7 +279,7 @@
    			"type": "checkBox",
 			"default": "false"
     		},
-    	"Use only selected samples": {
+    		"Use only selected samples": {
    			"type": "checkBox",
 			"default": "false"
     		},
@@ -293,7 +298,11 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
 	},
 	"SDFA": {
 		"Use only selected elements": {
@@ -319,7 +328,11 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-   		}
+   		},
+   		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
 	},
 	"SDFAM-2": {
 		"Use only selected elements": {
@@ -337,7 +350,12 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise multi-way Discriminant Function Analysis (DFA) between all pairs of source groups. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
+
 	},
 	"DFAM": {
 		"Use only selected elements": {
@@ -355,18 +373,22 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
+		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool provides the transformed elemental profiles according to the principle components obtained from the DFA analysis for all pairs of source groups."
 		}
 	},
 	"DFA-Transformed": {
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
-    	},
+    		},
     		"Use only selected samples": {
    			"type": "checkBox",
 			"default": "false"
-    	},
-	"OM and Size Correct based on target sample":{
+    		},
+		"OM and Size Correct based on target sample":{
 		"type": "comboBox",
 		"source": "TargetSamplesList+Blank"
 		},
@@ -381,7 +403,11 @@
 		"Box-cox transformation": {
 			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool provides the transformed elemental profiles according to the principle components obtained from the DFA analysis."
+		}
 	},
 	"KS-individual": 
 	{
@@ -397,7 +423,11 @@
     		{
 			"type": "comboBox",
     			"source": "Items:Normal,Lognormal"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of a given element is to normal or log-normal distribution for the specified source group."
+		}
 	},
 	"KS": 
 	{
@@ -409,7 +439,11 @@
     		{
 			"type": "comboBox",
     			"source": "Items:Normal,Lognormal"
-    		}
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of all elements are to normal or log-normal distribution for the specified source group."
+		}
 	},
 	"CMB Bayesian":
 	{
@@ -447,7 +481,11 @@
     		{
     			"type": "checkBox",
     			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target samle."
+		}
 	},
 	"CMB Bayesian-Batch":
 	{
@@ -481,7 +519,12 @@
     		{
     			"type": "checkBox",
     			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target samle."
+		}
+
 	},
 	"Test CMB Bayesian":
 	{
@@ -529,7 +572,11 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool shows fitted normal and log-normal distributions to the elemental content of the specified element in the specified source group."
+		}
 	},
 	"Bracketing Analysis":
 	{
@@ -544,7 +591,11 @@
 		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
-    		}
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool shows whether the elemental content of the elements in the specified target sample is outside of the range of the elemental contents in all source groups."
+		}
     	},
     	"BoxCox":
     	{
@@ -559,6 +610,10 @@
     		"Source/Target group" : {
 			"type": "comboBox",
 			"source": "SourceList"
+		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool calculates the optimal lambda value in the Box-Cox transformation for the elements in the specified source group to achieve normality."
 		}
     	},
         "Bracketing Analysis Batch":
@@ -570,8 +625,12 @@
                 "Use only selected samples": {
                    "type": "checkBox",
                 "default": "false"
-                }
-            },
+                },
+                "Discription": {
+	    		"type": "Description",
+   			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples."
+		}
+        },
     	"Outlier":
     	{
     		"Use only selected elements": {
@@ -589,7 +648,11 @@
 		"Threshold": {
    			"type": "lineEdit",
 			"default": "3"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool conducts outlier analysis on the elemental profiles for the specified source group. The analysis begins by applying a Box-Cox transformation to each elemental content, followed by calculating the standardized value using the formula (x - mean) / std. Any absolute values exceeding the user-defined threshold are highlighted." 
+		}
     	},
     	"EDP": 
     	{
@@ -616,7 +679,12 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool calculates the measures of discriminant power of elements between the two specified source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value."
+		}
+
  	},
     	"EDPM": 
     	{
@@ -639,7 +707,11 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-    		}
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool calculates the measures of discriminant power of elements between all pairs of source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value."
+		}
  	},
  	"ANOVA": 
     	{
@@ -670,6 +742,10 @@
     		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
+		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs analysis of variance. The resulting p-value indicates the power of a certain element in discriminating between all source groups."
 		}
  	},
  	"Error_Analysis":
@@ -698,7 +774,11 @@
     		{
     			"type": "checkBox",
     			"default": "true"
-    		} 
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect of elmination of the indicated percentage of source samples on the fingerprinting results."
+		}
  	},
  	"Source_Verify": {
  		"Source Group": {
@@ -713,7 +793,11 @@
     		"Softmax transformation": {
     			"type": "checkBox",
     			"default": "true"
-    		}
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool evaluates weather the finger-printing algorithm is capable of correctly infer the source samples based on their elemental profiles. The analysis is done by treating individial source samples from the specified source group as target samples and the use the Levenberg-Marquardt optimization to infer the contribution of sources into it."
+		}
  	},
  	"AutoSelect": {
  		"Number of elements from each pair": {
