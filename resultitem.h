@@ -44,6 +44,14 @@ public:
             result->SetYAxisLabel(QString::fromStdString(title));
         }
     }
+    void setTableTitle(const string &Title)
+    {
+        Table_Title = Title;
+    }
+    string TableTitle()
+    {
+        return Table_Title;
+    }
     string XAxisTitle() {return Interface::XAxisLabel().toStdString();}
     string YAxisTitle() {return Interface::YAxisLabel().toStdString();}
     void SetAbsoluteValue(bool val) {showabsvalue = val;}
@@ -83,6 +91,7 @@ private:
     bool fixYlimit = false;
     bool showTable = false;
     bool showGraph = true;
+    string Table_Title;
 
 };
 

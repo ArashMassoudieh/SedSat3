@@ -123,7 +123,10 @@ void ResultsWindow::on_result_table_clicked()
     ResultTableViewer *tableviewer = new ResultTableViewer(this);
     tableviewer->setWindowFlag(Qt::WindowMinMaxButtonsHint);
     QTableWidget *tablewidget = results->operator[](sender()->objectName().toStdString()).Result()->ToTable();
-    tableviewer->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
+    if (results->operator[](sender()->objectName().toStdString()).TableTitle() == "")
+        tableviewer->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
+    else
+        tableviewer->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).TableTitle()));
     tableviewer->SetTable(tablewidget);
     tableviewer->show();
 }

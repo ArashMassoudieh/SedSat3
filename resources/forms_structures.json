@@ -234,7 +234,15 @@
 		"Threshold": {
    			"type": "lineEdit",
 			"default": "0.75"
-    		}
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+	    	"Discription": {
+	    		"type": "Description",
+   			"default": "This tool generates the element correlation matrix for the chosen source group. To perform the correlation analysis on the corrected elemental profiles based on size and organic matter, select the target sample based on which the correction to be performed." 
+		}
 	},
 	"DFA": {
 		"Use only selected elements": {
@@ -244,7 +252,7 @@
     	"Use only selected samples": {
    			"type": "checkBox",
 			"default": "false"
-    	},
+    		},
 		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
@@ -266,11 +274,11 @@
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
-    	},
-    	"Use only selected samples": {
-   			"type": "checkBox",
-			"default": "false"
-    	},
+	    	},
+	    	"Use only selected samples": {
+	   			"type": "checkBox",
+				"default": "false"
+    		},
 		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"

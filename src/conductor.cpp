@@ -329,12 +329,22 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ResultItem corMatResItem;
         corMatResItem.SetName("Correlation Matrix" );
         corMatResItem.SetShowTable(true);
+        corMatResItem.setTableTitle("Correlation Matrix for source group '" + arguments["Source/Target group"] + "'");
         corMatResItem.SetType(result_type::matrix);
         corMatResItem.SetShowGraph(false);
         double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+        }
         CMBMatrix *cormatr = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).CorrelationMatrix());
         cormatr->SetLimit(_range::high,threshold);
         cormatr->SetLimit(_range::low,-threshold);
@@ -1241,8 +1251,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDP_pValue.SetYAxisMode(yaxis_mode::normal);
         EDP_pValue.SetYLimit(_range::high,1);
         EDP_pValue.SetResult(EDPProfileSetPValue);
-        EDPProfileSetPValue->SetLimit(_range::high, aquiutils::atof(arguments["P-value threshold"]));
-        EDPProfileSetPValue->SetLimit(_range::low, 0);
         results.Append(EDP_pValue);
 
         Elemental_Profile *selected = new Elemental_Profile(EDPProfileSetPValue->SelectTopAggregate(aquiutils::atoi(arguments["Number of elements from each pair"])));
