@@ -57,7 +57,7 @@
     		"Description": 
     		{
     			"type": "Description",
-    			"default": "This tool performs sediment fingerprinting using the <b>Genetic Algorithm</b> optimization"
+    			"default": "This tool performs sediment fingerprinting using the <b>Genetic Algorithm</b> optimization. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated as part of the maximization of the likelihood of observing the measured target sample elemental profile."
     		}
 	},
 	"GA (disregarding targets)": {
@@ -151,6 +151,11 @@
     		{
     			"type": "checkBox",
     			"default": "false"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs sediment fingerprinting using the <b>Genetic Algorithm</b> optimization. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples."
     		} 
 	},
 	"Levenberg-Marquardt": {
@@ -166,6 +171,11 @@
     		{
     			"type": "checkBox",
     			"default": "true"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples."
     		} 
 	},
 	"Levenberg-Marquardt-Batch": {
@@ -177,6 +187,11 @@
     		{
     			"type": "checkBox",
     			"default": "true"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs sediment fingerprinting using the <b>Levenberg-Marquardt</b> optimization algorithm on all target samples. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples.This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples."
     		} 
 	},
 	"OM-Size Correct" : 
@@ -192,6 +207,11 @@
 		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool shows the corrected elemental profiles of source groups after adjusting based on size and organic matter. The correction is done based on the size and organic matter associated with the selected target. The regressions as a result of the last organic and size correction will be used to perform the adjustment." 
     		}
 	},
         "MLR": {
@@ -210,6 +230,11 @@
     		"Equation": {
     			"type": "comboBox",
     			"source": "Items:Linear,Power"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs the regression analysis for organic and size correction on all source groups." 
     		}
 	},
 	"CovMat": {
