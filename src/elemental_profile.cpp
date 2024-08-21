@@ -342,7 +342,7 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> 
                 }
             }
         }
-        if (out[it->first]<0)
+        if (out[it->first]<0 && elementinfo->at(it->first).Role!=element_information::role::isotope)
         {
             cout<<"corrected value is negative!";
         }

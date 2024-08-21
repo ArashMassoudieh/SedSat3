@@ -1032,6 +1032,8 @@ CMatrix SourceSinkData::SourceMeanMatrix_Isotopes(parameter_mode param_mode)
             {
                 double mean_delta = this_source_group->GetEstimatedDistribution(isotope_order[isotope_counter])->DataMean();
                 double standard_ratio = ElementInformation[isotope].standard_ratio;
+// Add a corresponding element check
+
                 double corresponding_element_content = this_source_group->GetEstimatedDistribution(corresponding_element)->DataMean();
                 Y[isotope_counter][source_group_counter] = (mean_delta/1000.0+1.0)*standard_ratio*corresponding_element_content;
 
@@ -2729,7 +2731,9 @@ CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size
             if (negative_elements[sample->first].size()==0)
             {   correctedData.InitializeParametersObservations(sample->first);
                 if (rtw)
-                    rtw->SetProgress(double(counter)/double(at(target_group).size()));
+                {   rtw->SetProgress(double(counter)/double(at(target_group).size()));
+                    rtw->SetLabel(QString::fromStdString(sample->first));
+                }
 
                 correctedData.SolveLevenBerg_Marquardt(transform);
 
@@ -2740,6 +2744,7 @@ CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size
         }
 
     }
+    rtw->SetProgress(1);
     return result;
 }
 

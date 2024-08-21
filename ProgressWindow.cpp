@@ -11,7 +11,7 @@ ProgressWindow::ProgressWindow(QWidget *parent, int number_of_panels, bool extra
     if (!extra_label_and_progressbar)
     {
         ui.progressBar_2->setVisible(false);
-        ui.label->setVisible(false);
+        ui.label->setVisible(true);
     }
     else
     {
@@ -19,6 +19,8 @@ ProgressWindow::ProgressWindow(QWidget *parent, int number_of_panels, bool extra
         ui.label->setVisible(true);
     }
 
+    if (number_of_panels==0)
+        resize(475, 100);
     for (int i=0; i<number_of_panels; i++)
     {
         ChartItems[i].series = new QLineSeries();

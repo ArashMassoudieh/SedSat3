@@ -220,7 +220,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "Levenberg-Marquardt-Batch")
     {
-        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0 );
 
         bool organicnsizecorrection;
         if (arguments["Apply size and organic matter correction"]=="true")
@@ -1299,15 +1299,19 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
     QString message;
     for (map<string,vector<string>>::iterator it = negative_elements.begin(); it!=negative_elements.end(); it++)
     {
-        message += "For target sample '" + QString::fromStdString(it->first) + ":\n";
-        for (unsigned int i=0; i<it->second.size(); i++)
-        {
-            message += QString::fromStdString("\t" + it->second[i]) + "\n";
+        if (it->second.size()>0)
+        {   message += "For target sample '" + QString::fromStdString(it->first) + ":\n";
+            for (unsigned int i=0; i<it->second.size(); i++)
+            {
+                message += QString::fromStdString("\t" + it->second[i]) + "\n";
+            }
         }
 
     }
 
-    QMessageBox::warning(mainwindow, "OpenHydroQual",message, QMessageBox::Ok);
-    return false;
+    if (message!="")
+    {   QMessageBox::warning(mainwindow, "OpenHydroQual",message, QMessageBox::Ok);
+        return false;
+    }
 
 }
