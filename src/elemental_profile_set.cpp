@@ -474,9 +474,13 @@ CMBVector Elemental_Profile_Set::KolmogorovSmirnovStat(distribution_type dist_ty
     return out; 
 }
 
-CVector Elemental_Profile_Set::ElementMeans()
+CVector Elemental_Profile_Set::ElementMeans(const vector<string> &element_order)
 {
-    vector<string> element_names = ElementNames();
+    vector<string> element_names;
+    if (element_order.size()==0)
+        element_names = ElementNames();
+    else
+        element_names = element_order;
     CVector out(element_names.size());
     for (int i=0; i<element_names.size(); i++)
     {

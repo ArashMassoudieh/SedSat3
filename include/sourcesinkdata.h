@@ -339,6 +339,7 @@ private:
     list<string> tools_used;
     CMatrix BetweenGroupCovarianceMatrix();
     CMatrix WithinGroupCovarianceMatrix();
+    CMBVector DFA_eigvector();
     CMBVector DeviationFromMean(const string &group_name);
     CMBVector MeanElementalContent(const string &group_name);
     CMBVector MeanElementalContent();

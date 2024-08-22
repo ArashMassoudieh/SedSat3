@@ -2067,15 +2067,17 @@ DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &sou
     out.eigen_vector.SetLabels(ElementNames());
     out.significance_vector.SetLabels(ElementNames());
     out.significance_vector_2.SetLabels(ElementNames());
-    double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
-    double denuminator = (((CovMatr1+CovMatr2)*out.eigen_vector)*out.eigen_vector).sum();
-    out.S_value = numerator/denuminator;
+    //double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
+    //double denuminator = (((CovMatr1+CovMatr2)*out.eigen_vector)*out.eigen_vector).sum();
+    //out.S_value = numerator/denuminator;
     return out;
 }
 
 DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
 {
     DFA_result_matrix out;
+    CMBVector eigen_vector = DFA_eigvector();
+
     out.eigen_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
     out.significance_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
     int i=0;
@@ -3084,7 +3086,36 @@ CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
 
 CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
 {
+    CMatrix out(element_order.size());
+    double count = 0;
+    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    {
+        if (source_group->first != target_group)
+        {
+            CMBVector deviation = MeanElementalContent() - MeanElementalContent(source_group->first);
+            for (int i=0; i<element_order.size(); i++)
+                for (int j=0; j<element_order.size(); j++)
+                    out[i][j] = deviation[i]*deviation[j]*source_group->second.size();
+            count += source_group->second.size();
+        }
+    }
+    return out/count;
+}
 
+CMBVector SourceSinkData::DFA_eigvector()
+{
+    CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
+    CMatrix_arma S_w = WithinGroupCovarianceMatrix();
+    CMatrix_arma Product = S_B*inv(S_w);
+    arma::vec eigval;
+    arma::mat eigvec;
+
+    eig_sym(eigval, eigvec, Product.matr);
+    CVector_arma vector_corresponding_to_largest_eigen_value(eigval.size());
+    vector_corresponding_to_largest_eigen_value.vect = eigvec[0];
+    CMBVector out(vector_corresponding_to_largest_eigen_value);
+    out.SetLabels(element_order);
+    return out;
 }
 
 CMBVector SourceSinkData::MeanElementalContent(const string &group_name)
@@ -3093,14 +3124,14 @@ CMBVector SourceSinkData::MeanElementalContent(const string &group_name)
     if (count(group_name)==0)
         return out;
 
-    out = at(group_name).ElementMeans();
+    out = at(group_name).ElementMeans(element_order);
     out.SetLabels(element_order);
     return out;
 }
 
 CMBVector SourceSinkData::MeanElementalContent()
 {
-    CMBVector out;
+    CMBVector out(element_order.size());
     double count = 0;
     for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
     {
@@ -3110,5 +3141,6 @@ CMBVector SourceSinkData::MeanElementalContent()
             count += double(source_group->second.size());
         }
     }
+    out.SetLabels(element_order);
     return out/count;
 }
