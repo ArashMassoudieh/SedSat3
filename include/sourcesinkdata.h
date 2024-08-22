@@ -337,6 +337,11 @@ private:
     const double epsilon = 1e-6;
     double distance_coeff = 1;
     list<string> tools_used;
+    CMatrix BetweenGroupCovarianceMatrix();
+    CMatrix WithinGroupCovarianceMatrix();
+    CMBVector DeviationFromMean(const string &group_name);
+    CMBVector MeanElementalContent(const string &group_name);
+    CMBVector MeanElementalContent();
 
 
 };

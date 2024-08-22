@@ -46,4 +46,15 @@ private:
 
 };
 
+CMBVector operator+(const CMBVector&, const CMBVector&);
+CMBVector operator+(double, const CMBVector&);
+CMBVector operator+(const CMBVector&, double);
+CMBVector operator-(const CMBVector&, const CMBVector&);
+CMBVector operator-(double, const CMBVector&);
+CMBVector operator-(const CMBVector&, double);
+CMBVector operator*(const CMBVector&, const CMBVector&);
+CMBVector operator*(double, const CMBVector&);
+CMBVector operator/(const CMBVector&, double);
+
+
 #endif // CMBVector_H

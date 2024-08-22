@@ -3067,3 +3067,48 @@ string SourceSinkData::FirstSizeConstituent()
     }
     return "";
 }
+
+CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
+{
+    CMatrix CovMatr = CMatrix(element_order.size());
+    int counter = 0;
+    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    {
+        if (source_group->first != target_group)
+        {   CovMatr += (source_group->second.size()-1)*source_group->second.CovarianceMatrix();
+            counter += source_group->second.size()-1;
+        }
+    }
+    return CovMatr/double(counter);
+}
+
+CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
+{
+
+}
+
+CMBVector SourceSinkData::MeanElementalContent(const string &group_name)
+{
+    CMBVector out;
+    if (count(group_name)==0)
+        return out;
+
+    out = at(group_name).ElementMeans();
+    out.SetLabels(element_order);
+    return out;
+}
+
+CMBVector SourceSinkData::MeanElementalContent()
+{
+    CMBVector out;
+    double count = 0;
+    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    {
+        if (source_group->first != target_group)
+        {
+            out += double(source_group->second.size())*MeanElementalContent(source_group->first);
+            count += double(source_group->second.size());
+        }
+    }
+    return out/count;
+}

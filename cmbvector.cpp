@@ -285,3 +285,67 @@ CMBVector CMBVector::Extract(int start, int end) const
 }
 
 
+CMBVector operator+(const CMBVector& V1, const CMBVector& V2)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out += V2;
+    return out;
+}
+CMBVector operator+(double d, const CMBVector& V1)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out += d;
+    return out;
+}
+CMBVector operator+(const CMBVector& V1, double d)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out += d;
+    return out;
+}
+CMBVector operator-(const CMBVector& V1, const CMBVector& V2)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out -= V2;
+    return out;
+}
+CMBVector operator-(double d, const CMBVector& V1)
+{
+    CMBVector out(V1.size());
+    out.SetLabels(V1.Labels());
+    out -= V1;
+    out += d;
+    return out;
+}
+CMBVector operator-(const CMBVector& V1, double d)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out -= d;
+    return out;
+}
+CMBVector operator*(const CMBVector& V1, const CMBVector& V2)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out *= V2;
+    return out;
+}
+CMBVector operator*(double d, const CMBVector& V1)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out *= d;
+    return out;
+}
+CMBVector operator/(const CMBVector& V1, double d)
+{
+    CMBVector out = V1;
+    out.SetLabels(V1.Labels());
+    out /= d;
+    return out;
+}
