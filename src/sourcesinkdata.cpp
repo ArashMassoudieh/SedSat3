@@ -3107,13 +3107,22 @@ CMBVector SourceSinkData::DFA_eigvector()
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
     CMatrix_arma Product = S_B*inv(S_w);
+    S_B.writetofile("S_b.txt");
+    S_w.writetofile("S_w.txt");
+    Product.writetofile("S_b*S_w");
     arma::vec eigval;
     arma::mat eigvec;
 
     eig_sym(eigval, eigvec, Product.matr);
-    CVector_arma vector_corresponding_to_largest_eigen_value(eigval.size());
-    vector_corresponding_to_largest_eigen_value.vect = eigvec[0];
-    CMBVector out(vector_corresponding_to_largest_eigen_value);
+    CVector_arma Eigvals(eigval);
+    CMatrix_arma EigVecs(eigvec);
+    Eigvals.writetofile("EigVals.txt");
+    EigVecs.writetofile("EigVects.txt");
+    CMBVector out;
+    if (fabs(Eigvals[0])>fabs(Eigvals[Eigvals.num-1]))
+        out = CVector_arma(eigvec.col(0));
+    else
+        out = CVector_arma(eigvec.col(Eigvals.num-1));
     out.SetLabels(element_order);
     return out;
 }
