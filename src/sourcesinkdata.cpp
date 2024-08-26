@@ -103,6 +103,7 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     out.target_group = target_group;
     if (target!="")
         out.selected_target_sample = target;
+
     vector<double> om_size;
     if (omnsizecorrect)
     {
@@ -361,6 +362,8 @@ void SourceSinkData::PopulateElementInformation(const map<string,element_informa
         else
             ElementInformation[element_names[i]] = ElementInfo->at(element_names[i]);
     }
+
+    numberofsourcesamplesets = size()-1;
 }
 
 bool SourceSinkData::Execute(const string &command, const map<string,string> &arguments)
@@ -2077,8 +2080,11 @@ DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
 {
     DFA_result_matrix out;
     CMBVector eigen_vector = DFA_eigvector();
-    double wilkslambda = WilksLambda();
-
+    int element_count = ElementNames().size();
+    double wilkslambda = min(WilksLambda(),1.0);
+    double ChiSquared = -(TotalNumberofSourceSamples() - 1 - (element_count+(numberofsourcesamplesets-1.0)/2.0))*log(wilkslambda);
+    double df = element_count*(numberofsourcesamplesets - 2.0);
+    double p_value = gsl_cdf_chisq_P (ChiSquared, df);
     out.eigen_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
     out.significance_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
 
@@ -2100,6 +2106,19 @@ DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
     out.eigen_matrix.SetColumnLabels(ElementNames());
     out.significance_matrix.SetColumnLabels(ElementNames());
     return out;
+}
+
+int SourceSinkData::TotalNumberofSourceSamples() const
+{
+    int count = 0;
+    for (map<string,Elemental_Profile_Set>::const_iterator source_group = cbegin(); source_group!=cend(); source_group++)
+    {
+        if (source_group->first != target_group)
+        {
+            count += double(source_group->second.size());
+        }
+    }
+    return count;
 }
 
 CMBVector SourceSinkData::DFATransformed(const CMBVector &eigenvector, const string &sourcegroup)
@@ -3074,7 +3093,8 @@ string SourceSinkData::FirstSizeConstituent()
 
 CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
 {
-    CMatrix CovMatr = CMatrix(element_order.size());
+    vector<string> elementNames = ElementNames();
+    CMatrix CovMatr(elementNames.size());
     int counter = 0;
     for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
     {
@@ -3088,15 +3108,16 @@ CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
 
 CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
 {
-    CMatrix out(element_order.size());
+    vector<string> elementNames = ElementNames();
+    CMatrix out(elementNames.size());
     double count = 0;
     for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
     {
         if (source_group->first != target_group)
         {
             CMBVector deviation = MeanElementalContent() - MeanElementalContent(source_group->first);
-            for (int i=0; i<element_order.size(); i++)
-                for (int j=0; j<element_order.size(); j++)
+            for (int i=0; i<elementNames.size(); i++)
+                for (int j=0; j<elementNames.size(); j++)
                     out[i][j] = +deviation[i]*deviation[j]*source_group->second.size();
             count += source_group->second.size();
         }
@@ -3106,7 +3127,8 @@ CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
 
 CMatrix SourceSinkData::TotalScatterMatrix()
 {
-    CMatrix out(element_order.size());
+    vector<string> elementNames = ElementNames();
+    CMatrix out(elementNames.size());
     double count = 0;
     CMBVector OverallMean = MeanElementalContent();
     for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
@@ -3115,9 +3137,9 @@ CMatrix SourceSinkData::TotalScatterMatrix()
         {
             for (map<string,Elemental_Profile>::iterator elem_prof = source_group->second.begin(); elem_prof!=source_group->second.end(); elem_prof++ )
             {
-                for (int i=0; i<element_order.size(); i++)
-                    for (int j=0; j<element_order.size(); j++)
-                        out[i][j] += (OverallMean[i]-elem_prof->second.at(element_order[i]))*(OverallMean[j]-elem_prof->second.at(element_order[j]));
+                for (int i=0; i<elementNames.size(); i++)
+                    for (int j=0; j<elementNames.size(); j++)
+                        out[i][j] += (OverallMean[i]-elem_prof->second.at(elementNames[i]))*(OverallMean[j]-elem_prof->second.at(elementNames[j]));
             }
             count += source_group->second.size();
         }
@@ -3166,15 +3188,16 @@ CMBVector SourceSinkData::MeanElementalContent(const string &group_name)
     CMBVector out;
     if (count(group_name)==0)
         return out;
-
-    out = at(group_name).ElementMeans(element_order);
-    out.SetLabels(element_order);
+    vector<string> elementNames = ElementNames();
+    out = at(group_name).ElementMeans();
+    out.SetLabels(elementNames);
     return out;
 }
 
 CMBVector SourceSinkData::MeanElementalContent()
 {
-    CMBVector out(element_order.size());
+    vector<string> elementNames = ElementNames();
+    CMBVector out(elementNames.size());
     double count = 0;
     for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
     {

@@ -240,6 +240,7 @@ public:
     CMBVectorSet Stepwise_DiscriminantFunctionAnalysis_MoreInfo();
     DFA_result_vector DiscriminantFunctionAnalysis(const string &source1);
     DFA_result_matrix DiscriminantFunctionAnalysis();
+    int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample);
