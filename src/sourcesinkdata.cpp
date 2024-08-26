@@ -2077,9 +2077,11 @@ DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
 {
     DFA_result_matrix out;
     CMBVector eigen_vector = DFA_eigvector();
+    double wilkslambda = WilksLambda();
 
     out.eigen_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
     out.significance_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
+
     int i=0;
     for (map<string,Elemental_Profile_Set>::iterator source = begin(); source != end(); source++)
     {
@@ -3070,7 +3072,7 @@ string SourceSinkData::FirstSizeConstituent()
     return "";
 }
 
-CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
+CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
 {
     CMatrix CovMatr = CMatrix(element_order.size());
     int counter = 0;
@@ -3084,7 +3086,7 @@ CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
     return CovMatr/double(counter);
 }
 
-CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
+CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
 {
     CMatrix out(element_order.size());
     double count = 0;
@@ -3095,11 +3097,43 @@ CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
             CMBVector deviation = MeanElementalContent() - MeanElementalContent(source_group->first);
             for (int i=0; i<element_order.size(); i++)
                 for (int j=0; j<element_order.size(); j++)
-                    out[i][j] = deviation[i]*deviation[j]*source_group->second.size();
+                    out[i][j] = +deviation[i]*deviation[j]*source_group->second.size();
             count += source_group->second.size();
         }
     }
     return out/count;
+}
+
+CMatrix SourceSinkData::TotalScatterMatrix()
+{
+    CMatrix out(element_order.size());
+    double count = 0;
+    CMBVector OverallMean = MeanElementalContent();
+    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    {
+        if (source_group->first != target_group)
+        {
+            for (map<string,Elemental_Profile>::iterator elem_prof = source_group->second.begin(); elem_prof!=source_group->second.end(); elem_prof++ )
+            {
+                for (int i=0; i<element_order.size(); i++)
+                    for (int j=0; j<element_order.size(); j++)
+                        out[i][j] += (OverallMean[i]-elem_prof->second.at(element_order[i]))*(OverallMean[j]-elem_prof->second.at(element_order[j]));
+            }
+            count += source_group->second.size();
+        }
+    }
+    return out/count;
+}
+
+double SourceSinkData::WilksLambda()
+{
+    CMatrix_arma S_w = WithinGroupCovarianceMatrix();
+    CMatrix_arma S_T = TotalScatterMatrix();
+    S_w.writetofile("S_w.txt");
+    S_T.writetofile("S_T.txt");
+    double numerator = S_w.det();
+    double denumerator = S_T.det();
+    return numerator/denumerator;
 }
 
 CMBVector SourceSinkData::DFA_eigvector()
