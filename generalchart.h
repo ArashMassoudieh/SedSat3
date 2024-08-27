@@ -48,6 +48,7 @@ public:
     bool PlotMCMCSamples(CTimeSeries<double> *mlr,const QString& variable);
     bool PlotDistribution(CTimeSeries<double> *mlr,const QString& variable);
     bool PlotScatter(CMBMatrix *matrix);
+    bool PlotScatter(CMBVectorSet *vectorset);
 private:
     Ui::GeneralChart *ui;
     Chart* chart;

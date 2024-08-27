@@ -392,7 +392,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         ResultItem DFA_Projected;
         DFA_Projected.SetName("Projected Elemental Profiles");
-        DFA_Projected.SetType(result_type::vectorset);
+        DFA_Projected.SetType(result_type::vectorset_groups);
         DFA_Projected.SetShowTable(true);
         DFA_Projected.SetShowGraph(true);
         DFA_Projected.SetYAxisMode(yaxis_mode::normal);

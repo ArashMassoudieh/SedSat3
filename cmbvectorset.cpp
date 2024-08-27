@@ -56,6 +56,26 @@ unsigned int CMBVectorSet::MaxSize() const
     return max_size;
 }
 
+double CMBVectorSet::max() const
+{
+    double out = -1e23;
+    for (map<string,CMBVector>::const_iterator it = cbegin(); it!=cend();it++)
+    {
+        out = std::max(out,it->second.max());
+    }
+    return out;
+};
+double CMBVectorSet::min() const
+{
+    double out = 1e23;
+    for (map<string,CMBVector>::const_iterator it = cbegin(); it!=cend();it++)
+    {
+        out = std::min(out,it->second.min());
+    }
+    return out;
+}
+
+
 QTableWidget *CMBVectorSet::ToTable()
 {
     QTableWidget *tablewidget = new QTableWidget();
