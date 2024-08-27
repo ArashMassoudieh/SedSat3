@@ -149,7 +149,7 @@ public:
     vector<string> NegativeValueCheck(const vector<string> &element_names);
     //CMBTimeSeriesSet SelectTop(int n) const;
     Elemental_Profile SelectTopAggregate(int n) const;
-
+    CMBVector DotProduct(const CVector &v) const;
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;

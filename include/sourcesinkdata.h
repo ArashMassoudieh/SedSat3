@@ -38,19 +38,19 @@ struct element_data_groups
 };
 
 
-struct DFA_result_vector
+/*struct DFA_result_vector
 {
     CMBVector eigen_vector;
     CMBVector significance_vector;
     CMBVector significance_vector_2;
     double S_value;
-};
+};*/
 
-struct DFA_result_matrix
+struct DFA_result
 {
-    CMBMatrix eigen_matrix;
-    CMBMatrix significance_matrix;
-    vector<double> S_values;
+    vector<CMBVector> eigen_vectors;
+    CMBVectorSet projected;
+    CMBVector p_values;
 };
 
 struct ANOVA_info
@@ -233,13 +233,12 @@ public:
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
-    DFA_result_vector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
-    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2);
-    CMBVector Stepwise_DiscriminantFunctionAnalysis(const string &source1,const string &source2);
-    CMBVector Stepwise_DiscriminantFunctionAnalysis();
-    CMBVectorSet Stepwise_DiscriminantFunctionAnalysis_MoreInfo();
-    DFA_result_vector DiscriminantFunctionAnalysis(const string &source1);
-    DFA_result_matrix DiscriminantFunctionAnalysis();
+    DFA_result DiscriminantFunctionAnalysis(const string &source1);
+    DFA_result DiscriminantFunctionAnalysis();
+    DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    DFA_result StepWiseDiscriminantFunctionAnalysis(const string &source1);
+    DFA_result StepWiseDiscriminantFunctionAnalysis();
+    DFA_result StepWiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
     int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
@@ -342,6 +341,8 @@ private:
     CMatrix WithinGroupCovarianceMatrix();
     CMatrix TotalScatterMatrix();
     double WilksLambda();
+    double DFA_P_Value();
+    CMBVectorSet DFA_Projected();
     CMBVector DFA_eigvector();
     CMBVector DeviationFromMean(const string &group_name);
     CMBVector MeanElementalContent(const string &group_name);

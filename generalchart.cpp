@@ -188,6 +188,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         axisYNormal->setMinorTickCount(5);
         axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
+        _log = false;
     }
     axisX->setLabelsAngle(-90);
     chart->addAxis(axisX, Qt::AlignBottom);

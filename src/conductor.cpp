@@ -354,15 +354,10 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFA")
     {
-        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
         rtw->show();
         results.SetName("DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
-        ResultItem DFAResItem;
-        DFAResItem.SetName("DFA coefficients");
-        DFAResItem.SetType(result_type::vector);
-        DFAResItem.SetShowTable(true);
-        DFAResItem.SetAbsoluteValue(true);
-        DFAResItem.SetYAxisMode(yaxis_mode::log);
+
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         
@@ -384,14 +379,32 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        DFA_result_vector *dfaeigenvector = new DFA_result_vector(TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
-        DFAResItem.SetResult(&dfaeigenvector->eigen_vector);
-        results.Append(DFAResItem);
+        DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"], arguments["Source/Target group II"]);
+        CMBVector *p_value = new CMBVector(dfa_res.p_values);
+        ResultItem DFA_P_Val;
+        DFA_P_Val.SetName("P-Value");
+        DFA_P_Val.SetType(result_type::vector);
+        DFA_P_Val.SetShowTable(true);
+        DFA_P_Val.SetShowGraph(false);
 
+        DFA_P_Val.SetResult(p_value);
+        results.Append(DFA_P_Val);
 
+        ResultItem DFA_Projected;
+        DFA_Projected.SetName("Projected Elemental Profiles");
+        DFA_Projected.SetType(result_type::vectorset);
+        DFA_Projected.SetShowTable(true);
+        DFA_Projected.SetShowGraph(true);
+        DFA_Projected.SetYAxisMode(yaxis_mode::normal);
+        CMBVectorSet *projected = new CMBVectorSet(dfa_res.projected);
+        DFA_Projected.SetResult(projected);
+
+        results.Append(DFA_Projected);
+
+        rtw->SetProgress(1);
 
     }
-    if (command == "SDFA")
+/*    if (command == "SDFA")
     {
         ProgressWindow* rtw = new ProgressWindow(mainwindow);
         rtw->show();
@@ -425,7 +438,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
-        CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        //CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
 
@@ -633,7 +646,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFAResItem.SetResult(weighted_results);
         results.Append(DFAResItem);
 
-    }
+    }*/
     if (command == "KS")
     {
         results.SetName("Kolmogorov–Smirnov statististics for " + arguments["Source/Target group"] );

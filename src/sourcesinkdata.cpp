@@ -363,7 +363,10 @@ void SourceSinkData::PopulateElementInformation(const map<string,element_informa
             ElementInformation[element_names[i]] = ElementInfo->at(element_names[i]);
     }
 
-    numberofsourcesamplesets = size()-1;
+    if (target_group!="")
+        numberofsourcesamplesets = size()-1;
+    else
+        numberofsourcesamplesets = size();
 }
 
 bool SourceSinkData::Execute(const string &command, const map<string,string> &arguments)
@@ -1895,159 +1898,6 @@ bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const strin
     return true;
 }
 
-DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1,const string &source2)
-{
-    DFA_result_vector out;
-    CMBVector mean1 = at(source1).ElementMeans();
-    CMBVector mean2 = at(source2).ElementMeans();
-    CMBMatrix CovMatr1 = at(source1).CovarianceMatrix();
-    CMBMatrix CovMatr2 = at(source2).CovarianceMatrix();
-    out.eigen_vector = ((mean1-mean2)/(CovMatr1+CovMatr2));
-    out.significance_vector = out.eigen_vector*(mean1+mean2);
-    out.eigen_vector=out.eigen_vector/out.eigen_vector.norm2();
-    out.eigen_vector.SetLabels(ElementNames());
-    out.significance_vector_2 = ((mean1+mean2)*(mean1+mean2))/(CovMatr1+CovMatr2);
-    out.significance_vector.SetLabels(ElementNames());
-    out.significance_vector_2.SetLabels(ElementNames());
-    double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
-    CVector term1 = (CovMatr1+CovMatr2)*out.eigen_vector;
-    CVector term2 = term1*out.eigen_vector;
-    double denuminator = term2.sum();
-    out.S_value = fabs(numerator/denuminator);
-    if (rtw)
-        rtw->SetProgress(1);
-    return out;
-}
-
-CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2)
-{
-    DFA_result_vector DFA_vector_full = DiscriminantFunctionAnalysis(source1,source2);
-    vector<string> all_labels = DFA_vector_full.eigen_vector.AbsSort(DFA_vector_full.significance_vector).Labels();
-    vector<string> selected_labels;
-    CMBVector out;
-    CMBVector Significance_increment;
-    double S_value_past = 0;
-    for (int i=0; i<DFA_vector_full.eigen_vector.getsize(); i++)
-    {
-        selected_labels.push_back(all_labels[i]);
-        SourceSinkData tobeanalysed = Extract(selected_labels);
-        DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
-        out.append(selected_labels[i],thisDFAresults.S_value);
-        Significance_increment.append(selected_labels[i], thisDFAresults.S_value-S_value_past);
-        S_value_past = thisDFAresults.S_value;
-    }
-    return out;
-}
-
-CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis(const string &source1,const string &source2)
-{
-    CMBVector out;
-    vector<string> elemnames = ElementNames();
-    vector<string> selected_labels;
-    for (unsigned int i=0; i<elemnames.size(); i++)
-    {
-        if (rtw)
-            rtw->SetProgress(double(i + 1) / double(elemnames.size()));
-        double max_S = 0;
-        string highestimproved;
-        for (unsigned int j=0; j<elemnames.size(); j++)
-        {
-            vector<string> selected_labels_temp = selected_labels;
-            if (lookup(selected_labels,elemnames[j])==-1)
-            {
-                selected_labels_temp.push_back(elemnames[j]);
-                SourceSinkData tobeanalysed = Extract(selected_labels_temp);
-                DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
-                if (thisDFAresults.S_value>max_S)
-                {
-                    highestimproved = elemnames[j];
-                    max_S = thisDFAresults.S_value;
-                }
-            }
-        }
-        out.append(highestimproved,max_S);
-        selected_labels.push_back(highestimproved);
-
-    }
-    return out;
-}
-
-CMBVectorSet SourceSinkData::Stepwise_DiscriminantFunctionAnalysis_MoreInfo()
-{
-    CMBVectorSet out;
-
-    int counter=0;
-    for (map<string,Elemental_Profile_Set>::iterator sourcegroup1 = begin(); sourcegroup1!=end(); sourcegroup1++)
-    {
-        if (sourcegroup1->first!=target_group)
-        {   if (rtw)
-                rtw->SetProgress(double(counter) / double((size()-1))*(size()-2)/2.0);
-
-            for (map<string,Elemental_Profile_Set>::iterator sourcegroup2 = std::next(sourcegroup1,1); sourcegroup2!=end(); sourcegroup2++)
-            {
-                if (sourcegroup2->first!=target_group)
-                {   CMBVector v=Stepwise_DiscriminantFunctionAnalysis(sourcegroup1->first,sourcegroup2->first);
-                    out.Append(sourcegroup1->first + " - " + sourcegroup2->first,v);
-                    counter++;
-                }
-            }
-
-        }
-    }
-
-    return out;
-}
-
-CMBVector SourceSinkData::Stepwise_DiscriminantFunctionAnalysis()
-{
-    CMBVector out;
-    vector<string> elemnames = ElementNames();
-    vector<string> selected_labels;
-    for (unsigned int i=0; i<elemnames.size(); i++)
-    {
-        if (rtw)
-            rtw->SetProgress(double(i + 1) / double(elemnames.size()));
-        double max_S = 0;
-        string highestimproved;
-        string max_sourcegroup1, max_sourcegroup2;
-        for (map<string,Elemental_Profile_Set>::iterator sourcegroup1 = begin(); sourcegroup1!=end(); sourcegroup1++)
-        {
-            for (map<string,Elemental_Profile_Set>::iterator sourcegroup2 = std::next(sourcegroup1,1); sourcegroup2!=end(); sourcegroup2++)
-            {
-                if (sourcegroup1->first!=target_group && sourcegroup2->first!=target_group)
-                {
-                    for (unsigned int j=0; j<elemnames.size(); j++)
-                    {
-
-                        vector<string> selected_labels_temp = selected_labels;
-                        if (lookup(selected_labels,elemnames[j])==-1)
-                        {
-                            selected_labels_temp.push_back(elemnames[j]);
-                            SourceSinkData tobeanalysed = Extract(selected_labels_temp);
-                            DFA_result_vector thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(sourcegroup1->first,sourcegroup2->first);
-                            if (thisDFAresults.S_value>max_S)
-                            {
-                                highestimproved = elemnames[j];
-                                max_S = thisDFAresults.S_value;
-                                max_sourcegroup1 = sourcegroup1->first;
-                                max_sourcegroup2 = sourcegroup2->first;
-                            }
-                        }
-                    }
-                }
-
-            }
-
-        }
-        out.append(highestimproved + " between " + max_sourcegroup1 + " and " + max_sourcegroup2,max_S);
-        selected_labels.push_back(highestimproved);
-    }
-
-
-    return out;
-}
-
-
 void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
 {
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
@@ -2055,58 +1905,32 @@ void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const d
             it->second.Outlier(lowerthreshold,upperthreshold);
 }
 
-DFA_result_vector SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
+DFA_result SourceSinkData::DiscriminantFunctionAnalysis()
 {
-    DFA_result_vector out;
-    CMBVector mean1 = at(source1).ElementMeans();
-    Elemental_Profile_Set rest = TheRest(source1);
-    CMBVector mean2 = rest.ElementMeans();
-    CMBMatrix CovMatr1 = at(source1).CovarianceMatrix();
-    CMBMatrix CovMatr2 = rest.CovarianceMatrix();
-    out.eigen_vector = ((mean1-mean2)/(CovMatr1+CovMatr2));
-    out.significance_vector = out.eigen_vector*(mean1+mean2);
-    out.significance_vector_2 = ((mean1+mean2)*(mean1+mean2))/(CovMatr1+CovMatr2);
-    out.eigen_vector=out.eigen_vector/out.eigen_vector.norm2();
-    out.eigen_vector.SetLabels(ElementNames());
-    out.significance_vector.SetLabels(ElementNames());
-    out.significance_vector_2.SetLabels(ElementNames());
-    //double numerator = pow((out.eigen_vector*(mean1-mean2)).sum(),2);
-    //double denuminator = (((CovMatr1+CovMatr2)*out.eigen_vector)*out.eigen_vector).sum();
-    //out.S_value = numerator/denuminator;
-    return out;
-}
-
-DFA_result_matrix SourceSinkData::DiscriminantFunctionAnalysis()
-{
-    DFA_result_matrix out;
+    DFA_result out;
     CMBVector eigen_vector = DFA_eigvector();
-    int element_count = ElementNames().size();
-    double wilkslambda = min(WilksLambda(),1.0);
-    double ChiSquared = -(TotalNumberofSourceSamples() - 1 - (element_count+(numberofsourcesamplesets-1.0)/2.0))*log(wilkslambda);
-    double df = element_count*(numberofsourcesamplesets - 2.0);
-    double p_value = gsl_cdf_chisq_P (ChiSquared, df);
-    out.eigen_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
-    out.significance_matrix = CMBMatrix(ElementNames().size(),this->size()-1);
-
-    int i=0;
-    for (map<string,Elemental_Profile_Set>::iterator source = begin(); source != end(); source++)
-    {
-        if (source->first!=target_group)
-        {   DFA_result_vector w = DiscriminantFunctionAnalysis(source->first);
-            CMBMatrix elem_profile_set = source->second.toMatrix();
-            string temp = elem_profile_set.ToString();
-            out.eigen_matrix.matr[i] = w.eigen_vector;
-            out.significance_matrix.matr[i] = w.significance_vector;
-            out.eigen_matrix.SetRowLabel(i,source->first);
-            out.significance_matrix.SetRowLabel(i,source->first);
-            out.S_values.push_back(w.S_value);
-            i++;
-        }
-    }
-    out.eigen_matrix.SetColumnLabels(ElementNames());
-    out.significance_matrix.SetColumnLabels(ElementNames());
+    out.eigen_vectors.push_back(eigen_vector);
+    double p_value = DFA_P_Value();
+    out.p_values = CMBVector(1); out.p_values[0] = p_value;
     return out;
 }
+
+
+DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, const string &source2)
+{
+    SourceSinkData twoSources;
+    twoSources.AppendSampleSet(source1,at(source1));
+    twoSources.AppendSampleSet(source2,at(source2));
+    twoSources.PopulateElementInformation(&ElementInformation);
+    DFA_result out;
+    CMBVector eigen_vector = twoSources.DFA_eigvector();
+    out.projected = twoSources.DFA_Projected();
+    out.eigen_vectors.push_back(eigen_vector);
+    double p_value = twoSources.DFA_P_Value();
+    out.p_values = CMBVector(1); out.p_values[0] = p_value;
+    return out;
+}
+
 
 int SourceSinkData::TotalNumberofSourceSamples() const
 {
@@ -3151,11 +2975,35 @@ double SourceSinkData::WilksLambda()
 {
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
     CMatrix_arma S_T = TotalScatterMatrix();
-    S_w.writetofile("S_w.txt");
-    S_T.writetofile("S_T.txt");
     double numerator = S_w.det();
     double denumerator = S_T.det();
     return numerator/denumerator;
+}
+
+double SourceSinkData::DFA_P_Value()
+{
+    int element_count = ElementNames().size();
+    double wilkslambda = min(WilksLambda(),1.0);
+    double ChiSquared = -(TotalNumberofSourceSamples() - 1 - (element_count+(numberofsourcesamplesets-1.0)/2.0))*log(wilkslambda);
+    double df;
+    if (target_group!="")
+        df = element_count*(numberofsourcesamplesets - 2.0);
+    else
+        df = element_count*(numberofsourcesamplesets - 1.0);
+    double p_value = gsl_cdf_chisq_Q (ChiSquared, df);
+    return p_value;
+}
+
+CMBVectorSet SourceSinkData::DFA_Projected()
+{
+    CMBVector eigen_vector = DFA_eigvector();
+    CMBVectorSet out;
+    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    {
+        CMBVector weighted = source_group->second.DotProduct(eigen_vector);
+        out.Append(source_group->first,weighted);
+    }
+    return out;
 }
 
 CMBVector SourceSinkData::DFA_eigvector()
@@ -3163,23 +3011,21 @@ CMBVector SourceSinkData::DFA_eigvector()
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
     CMatrix_arma Product = S_B*inv(S_w);
-    S_B.writetofile("S_b.txt");
-    S_w.writetofile("S_w.txt");
-    Product.writetofile("S_b*S_w");
+
     arma::vec eigval;
     arma::mat eigvec;
 
     eig_sym(eigval, eigvec, Product.matr);
     CVector_arma Eigvals(eigval);
     CMatrix_arma EigVecs(eigvec);
-    Eigvals.writetofile("EigVals.txt");
-    EigVecs.writetofile("EigVects.txt");
+
     CMBVector out;
     if (fabs(Eigvals[0])>fabs(Eigvals[Eigvals.num-1]))
         out = CVector_arma(eigvec.col(0));
     else
         out = CVector_arma(eigvec.col(Eigvals.num-1));
-    out.SetLabels(element_order);
+    vector<string> elementNames = ElementNames();
+    out.SetLabels(elementNames);
     return out;
 }
 

@@ -672,3 +672,16 @@ Elemental_Profile Elemental_Profile_Set::SelectTopAggregate(int n) const
     }
     return out;
 }
+
+CMBVector Elemental_Profile_Set::DotProduct(const CVector &v) const
+{
+    CMBVector out(size());
+    int counter = 0;
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        out[counter] = it->second.DotProduct(v);
+        out.SetLabel(counter,it->first);
+        counter++;
+    }
+    return out;
+}
