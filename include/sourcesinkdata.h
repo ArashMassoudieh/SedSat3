@@ -51,6 +51,7 @@ struct DFA_result
     vector<CMBVector> eigen_vectors;
     CMBVectorSet projected;
     CMBVector p_values;
+    CMBVector wilkslambda;
 };
 
 struct ANOVA_info
@@ -238,7 +239,7 @@ public:
     DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
     CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1);
     CMBVector StepwiseDiscriminantFunctionAnalysis();
-    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
     int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);

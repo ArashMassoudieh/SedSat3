@@ -401,6 +401,18 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         results.Append(DFA_Projected);
 
+        ResultItem DFA_eigen_vector;
+        DFA_Projected.SetName("Eigen vector");
+        DFA_Projected.SetType(result_type::vector);
+        DFA_Projected.SetShowTable(true);
+        DFA_Projected.SetShowGraph(true);
+        DFA_Projected.SetYAxisMode(yaxis_mode::normal);
+        CMBVector *eigen_vector = new CMBVector(dfa_res.eigen_vectors[0]);
+        DFA_Projected.SetResult(eigen_vector);
+
+        results.Append(DFA_Projected);
+
+
         rtw->SetProgress(1);
 
     }
@@ -409,12 +421,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
         rtw->show();
         results.SetName("Stepwise DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
-        ResultItem DFASValues;
-        DFASValues.SetName("p-Values");
-        DFASValues.SetType(result_type::vector);
-        DFASValues.SetShowTable(true);
-        DFASValues.SetAbsoluteValue(true);
-        DFASValues.SetYAxisMode(yaxis_mode::log);
+
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         bool OmandSizeCorrect = false;
@@ -438,9 +445,26 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
-        CMBVector *SVector = new CMBVector(TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
-        DFASValues.SetResult(SVector);
+        vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]);
+        CMBVector *PVector = new CMBVector(SDFA_res[0]);
+        ResultItem DFASValues;
+        DFASValues.SetName("p-Values");
+        DFASValues.SetType(result_type::vector);
+        DFASValues.SetShowTable(true);
+        DFASValues.SetAbsoluteValue(true);
+        DFASValues.SetYAxisMode(yaxis_mode::log);
+        DFASValues.SetResult(PVector);
+        CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
+        ResultItem DFASWilksLambdaValues;
+        DFASWilksLambdaValues.SetName("Wilks' Lambda");
+        DFASWilksLambdaValues.SetType(result_type::vector);
+        DFASWilksLambdaValues.SetShowTable(true);
+        DFASWilksLambdaValues.SetAbsoluteValue(true);
+        DFASWilksLambdaValues.SetYAxisMode(yaxis_mode::log);
+        DFASWilksLambdaValues.SetResult(WilksLambdaVector);
+
         results.Append(DFASValues);
+        results.Append(DFASWilksLambdaValues);
 
     }
 /*  if (command == "SDFAM")

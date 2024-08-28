@@ -1928,6 +1928,7 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, c
     out.eigen_vectors.push_back(eigen_vector);
     double p_value = twoSources.DFA_P_Value();
     out.p_values = CMBVector(1); out.p_values[0] = p_value;
+    out.wilkslambda = CMBVector(1); out.wilkslambda[0] = twoSources.WilksLambda();
     return out;
 }
 
@@ -3014,7 +3015,7 @@ CMBVector SourceSinkData::DFA_eigvector()
 {
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
-    CMatrix_arma Product = inv(S_w)*S_B;
+    CMatrix_arma Product = S_B*inv(S_w);
 
     arma::vec eigval;
     arma::mat eigvec;
@@ -3064,9 +3065,9 @@ CMBVector SourceSinkData::MeanElementalContent()
     return out/count;
 }
 
-CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2)
+vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2)
 {
-    CMBVector out;
+    vector<CMBVector> out(2);
     vector<string> elemnames = ElementNames();
     vector<string> selected_labels;
     for (unsigned int i=0; i<elemnames.size(); i++)
@@ -3075,6 +3076,7 @@ CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &sou
             rtw->SetProgress(double(i + 1) / double(elemnames.size()));
         double min_P = 100;
         string highestimproved;
+        double wilkslambda;
         for (unsigned int j=0; j<elemnames.size(); j++)
         {
             vector<string> selected_labels_temp = selected_labels;
@@ -3087,10 +3089,12 @@ CMBVector SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &sou
                 {
                     highestimproved = elemnames[j];
                     min_P = thisDFAresults.p_values[0];
+                    wilkslambda = thisDFAresults.wilkslambda[0];
                 }
             }
         }
-        out.append(highestimproved,min_P);
+        out[0].append(highestimproved,min_P);
+        out[1].append(highestimproved,wilkslambda);
         selected_labels.push_back(highestimproved);
 
     }
