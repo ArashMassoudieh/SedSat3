@@ -407,11 +407,11 @@ CMBMatrix Elemental_Profile_Set::CovarianceMatrix()
 
     for (int i = 0; i < X->size2; i++) {
             for (int j = i; j < X->size2; j++) {
-              gsl_vector_view a = gsl_matrix_column (X, i);
-              gsl_vector_view b = gsl_matrix_column (X, j);
+              gsl_vector_view a = gsl_matrix_column(X, i);
+              gsl_vector_view b = gsl_matrix_column(X, j);
               double cov = gsl_stats_covariance(a.vector.data, a.vector.stride,b.vector.data, b.vector.stride, a.vector.size);
-              out[i][j]=cov;
-              out[j][i]=cov;
+              out[i][j]=cov*(a.vector.size-1)/a.vector.size;
+              out[j][i]=cov*(a.vector.size-1)/a.vector.size;
             }
           }
     return out;

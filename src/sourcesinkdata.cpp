@@ -1923,8 +1923,9 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, c
     twoSources.AppendSampleSet(source2,at(source2));
     twoSources.PopulateElementInformation(&ElementInformation);
     DFA_result out;
+    //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
     CMBVector eigen_vector = twoSources.DFA_eigvector();
-    out.projected = twoSources.DFA_Projected();
+    out.projected = twoSources.DFA_Projected(source1, source2);
     out.eigen_vectors.push_back(eigen_vector);
     double p_value = twoSources.DFA_P_Value();
     out.p_values = CMBVector(1); out.p_values[0] = p_value;
@@ -2982,7 +2983,7 @@ double SourceSinkData::WilksLambda()
     S_T.writetofile("S_T.txt");
     double numerator = S_w.det();
     double denumerator = S_T.det();
-    return numerator/denumerator;
+    return fabs(numerator)/fabs(denumerator);
 }
 
 double SourceSinkData::DFA_P_Value()
@@ -3011,29 +3012,71 @@ CMBVectorSet SourceSinkData::DFA_Projected()
     return out;
 }
 
+
+CMBVectorSet SourceSinkData::DFA_Projected(const string &source1, const string &source2)
+{
+    //CMBVector eigen_vector = DFA_weight_vector(source1,source2);
+    CMBVector eigen_vector = DFA_eigvector();
+    CMBVectorSet out;
+    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    {
+        CMBVector weighted = source_group->second.DotProduct(eigen_vector);
+        out.Append(source_group->first,weighted);
+    }
+    return out;
+}
+
 CMBVector SourceSinkData::DFA_eigvector()
 {
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
-    CMatrix_arma Product = S_B*inv(S_w);
+    CMatrix_arma Product = inv(S_w)*S_B;
 
-    arma::vec eigval;
-    arma::mat eigvec;
+    arma::cx_vec eigval;
+    arma::cx_mat eigvec;
     S_w.writetofile("S_w.txt");
     S_B.writetofile("S_b.txt");
     Product.writetofile("S_B*S_w.txt");
-    eig_sym(eigval, eigvec, Product.matr);
+    eig_gen(eigval, eigvec, Product.matr);
 
-    CVector_arma Eigvals(eigval);
-    CMatrix_arma EigVecs(eigvec);
+
+    CVector_arma Eigvals = GetReal(eigval);
+    CMatrix_arma Eigvecs = GetReal(eigvec);
+
+    CVector_arma EigvalsImg = GetImg(eigval);
+    CMatrix_arma EigvecsImg = GetImg(eigvec);
+
+    Eigvecs.writetofile("Eigvecs.txt");
+    Eigvals.writetofile("Eigvals.txt");
+    EigvalsImg.writetofile("EigvalsImg.txt");
+    EigvecsImg.writetofile("EigvecsImg.txt");
 
     CMBVector out;
     if (fabs(Eigvals[0])>fabs(Eigvals[Eigvals.num-1]))
-        out = CVector_arma(eigvec.col(0));
+        out = CVector_arma(Eigvecs.getcol(0));
     else
-        out = CVector_arma(eigvec.col(Eigvals.num-1));
+        out = CVector_arma(Eigvecs.getcol(Eigvals.num-1));
     vector<string> elementNames = ElementNames();
     out.SetLabels(elementNames);
+    return out;
+}
+
+CMBVector SourceSinkData::DFA_weight_vector(const string &source1, const string &source2)
+{
+    CMatrix_arma Sigma1 = at(source1).CovarianceMatrix();
+    CMatrix_arma Sigma2 = at(source2).CovarianceMatrix();
+    Sigma1.writetofile("Sigma1.txt");
+    Sigma2.writetofile("Sigma2.txt");
+    CMatrix_arma Sigma = Sigma1 + Sigma2;
+    Invert(Sigma).writetofile("Inv_Sigma.txt");
+    CVector mu1_vec = at(source1).ElementMeans();
+    CVector mu2_vec = at(source2).ElementMeans();
+    CVector_arma mu1 = mu1_vec;
+    CVector_arma mu2 = mu2_vec;
+    CVector out_arma = (mu2-mu1)/(Sigma1+Sigma2);
+    CMBVector out = out_arma;
+    out = out/out.norm2();
+    out.SetLabels(ElementNames());
     return out;
 }
 

@@ -344,7 +344,9 @@ private:
     double WilksLambda();
     double DFA_P_Value();
     CMBVectorSet DFA_Projected();
+    CMBVectorSet DFA_Projected(const string &source1, const string &source2);
     CMBVector DFA_eigvector();
+    CMBVector DFA_weight_vector(const string &source1, const string &source2);
     CMBVector DeviationFromMean(const string &group_name);
     CMBVector MeanElementalContent(const string &group_name);
     CMBVector MeanElementalContent();

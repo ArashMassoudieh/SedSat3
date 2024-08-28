@@ -453,6 +453,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);
         DFASValues.SetYAxisMode(yaxis_mode::log);
+        DFASValues.SetYLimit(_range::high,1);
         DFASValues.SetResult(PVector);
         CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
         ResultItem DFASWilksLambdaValues;
@@ -461,6 +462,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetShowTable(true);
         DFASWilksLambdaValues.SetAbsoluteValue(true);
         DFASWilksLambdaValues.SetYAxisMode(yaxis_mode::log);
+        DFASWilksLambdaValues.SetYLimit(_range::high,1);
         DFASWilksLambdaValues.SetResult(WilksLambdaVector);
 
         results.Append(DFASValues);
