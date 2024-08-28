@@ -404,13 +404,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetProgress(1);
 
     }
-/*    if (command == "SDFA")
+    if (command == "SDFA")
     {
-        ProgressWindow* rtw = new ProgressWindow(mainwindow);
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
         rtw->show();
         results.SetName("Stepwise DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
         ResultItem DFASValues;
-        DFASValues.SetName("S-Values");
+        DFASValues.SetName("p-Values");
         DFASValues.SetType(result_type::vector);
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);
@@ -438,12 +438,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
-        //CMBVector *SVector = new CMBVector(TransformedData.Stepwise_DiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
+        CMBVector *SVector = new CMBVector(TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]));
         DFASValues.SetResult(SVector);
         results.Append(DFASValues);
 
     }
-    if (command == "SDFAM")
+/*  if (command == "SDFAM")
     {
         ProgressWindow* rtw = new ProgressWindow(mainwindow);
         rtw->show();

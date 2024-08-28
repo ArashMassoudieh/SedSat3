@@ -236,9 +236,9 @@ public:
     DFA_result DiscriminantFunctionAnalysis(const string &source1);
     DFA_result DiscriminantFunctionAnalysis();
     DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
-    DFA_result StepWiseDiscriminantFunctionAnalysis(const string &source1);
-    DFA_result StepWiseDiscriminantFunctionAnalysis();
-    DFA_result StepWiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1);
+    CMBVector StepwiseDiscriminantFunctionAnalysis();
+    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
     int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
