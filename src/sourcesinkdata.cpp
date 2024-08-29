@@ -1933,6 +1933,23 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, c
     return out;
 }
 
+DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
+{
+    SourceSinkData twoSources;
+    twoSources.AppendSampleSet(source1,at(source1));
+    twoSources.AppendSampleSet("Others",TheRest(source1));
+    twoSources.PopulateElementInformation(&ElementInformation);
+    DFA_result out;
+    //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
+    CMBVector eigen_vector = twoSources.DFA_eigvector();
+    out.projected = twoSources.DFA_Projected(source1, this);
+    out.eigen_vectors.push_back(eigen_vector);
+    double p_value = twoSources.DFA_P_Value();
+    out.p_values = CMBVector(1); out.p_values[0] = p_value;
+    out.wilkslambda = CMBVector(1); out.wilkslambda[0] = twoSources.WilksLambda();
+    return out;
+}
+
 
 int SourceSinkData::TotalNumberofSourceSamples() const
 {
@@ -3015,13 +3032,26 @@ CMBVectorSet SourceSinkData::DFA_Projected()
 
 CMBVectorSet SourceSinkData::DFA_Projected(const string &source1, const string &source2)
 {
-    //CMBVector eigen_vector = DFA_weight_vector(source1,source2);
     CMBVector eigen_vector = DFA_eigvector();
     CMBVectorSet out;
     for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
     {
         CMBVector weighted = source_group->second.DotProduct(eigen_vector);
         out.Append(source_group->first,weighted);
+    }
+    return out;
+}
+
+CMBVectorSet SourceSinkData::DFA_Projected(const string &source1, SourceSinkData *original)
+{
+    CMBVector eigen_vector = DFA_eigvector();
+    CMBVectorSet out;
+    for (map<string,Elemental_Profile_Set>::iterator source_group = original->begin(); source_group!=original->end(); source_group++)
+    {
+        if (source_group->first != original->target_group)
+        {   CMBVector weighted = source_group->second.DotProduct(eigen_vector);
+            out.Append(source_group->first,weighted);
+        }
     }
     return out;
 }
@@ -3034,23 +3064,24 @@ CMBVector SourceSinkData::DFA_eigvector()
 
     arma::cx_vec eigval;
     arma::cx_mat eigvec;
-    S_w.writetofile("S_w.txt");
+/*  S_w.writetofile("S_w.txt");
     S_B.writetofile("S_b.txt");
     Product.writetofile("S_B*S_w.txt");
+*/
     eig_gen(eigval, eigvec, Product.matr);
 
 
     CVector_arma Eigvals = GetReal(eigval);
     CMatrix_arma Eigvecs = GetReal(eigvec);
 
+    /*
     CVector_arma EigvalsImg = GetImg(eigval);
     CMatrix_arma EigvecsImg = GetImg(eigvec);
-
     Eigvecs.writetofile("Eigvecs.txt");
     Eigvals.writetofile("Eigvals.txt");
     EigvalsImg.writetofile("EigvalsImg.txt");
     EigvecsImg.writetofile("EigvecsImg.txt");
-
+*/
     CMBVector out;
     if (fabs(Eigvals[0])>fabs(Eigvals[Eigvals.num-1]))
         out = CVector_arma(Eigvecs.getcol(0));
@@ -3128,6 +3159,43 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
                 selected_labels_temp.push_back(elemnames[j]);
                 SourceSinkData tobeanalysed = Extract(selected_labels_temp);
                 DFA_result thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
+                if (thisDFAresults.p_values[0]<min_P)
+                {
+                    highestimproved = elemnames[j];
+                    min_P = thisDFAresults.p_values[0];
+                    wilkslambda = thisDFAresults.wilkslambda[0];
+                }
+            }
+        }
+        out[0].append(highestimproved,min_P);
+        out[1].append(highestimproved,wilkslambda);
+        selected_labels.push_back(highestimproved);
+
+    }
+    return out;
+}
+
+
+vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1)
+{
+    vector<CMBVector> out(2);
+    vector<string> elemnames = ElementNames();
+    vector<string> selected_labels;
+    for (unsigned int i=0; i<elemnames.size(); i++)
+    {
+        if (rtw)
+            rtw->SetProgress(double(i + 1) / double(elemnames.size()));
+        double min_P = 100;
+        string highestimproved;
+        double wilkslambda;
+        for (unsigned int j=0; j<elemnames.size(); j++)
+        {
+            vector<string> selected_labels_temp = selected_labels;
+            if (lookup(selected_labels,elemnames[j])==-1)
+            {
+                selected_labels_temp.push_back(elemnames[j]);
+                SourceSinkData tobeanalysed = Extract(selected_labels_temp);
+                DFA_result thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1);
                 if (thisDFAresults.p_values[0]<min_P)
                 {
                     highestimproved = elemnames[j];

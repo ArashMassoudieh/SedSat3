@@ -237,9 +237,10 @@ public:
     DFA_result DiscriminantFunctionAnalysis(const string &source1);
     DFA_result DiscriminantFunctionAnalysis();
     DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
-    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1);
-    CMBVector StepwiseDiscriminantFunctionAnalysis();
+
+    vector<CMBVector> StepwiseDiscriminantFunctionAnalysis();
     vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1);
     int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
@@ -345,6 +346,7 @@ private:
     double DFA_P_Value();
     CMBVectorSet DFA_Projected();
     CMBVectorSet DFA_Projected(const string &source1, const string &source2);
+    CMBVectorSet DFA_Projected(const string &source1, SourceSinkData *original);
     CMBVector DFA_eigvector();
     CMBVector DFA_weight_vector(const string &source1, const string &source2);
     CMBVector DeviationFromMean(const string &group_name);

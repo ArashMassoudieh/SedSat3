@@ -339,6 +339,10 @@
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
 		},
+		"Source group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
@@ -409,6 +413,10 @@
    			"type": "checkBox",
 			"default": "false"
     		},
+		"Source group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
 		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"
