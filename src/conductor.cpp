@@ -382,13 +382,24 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"], arguments["Source/Target group II"]);
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
-        DFA_P_Val.SetName("P-Value");
+        DFA_P_Val.SetName("Chi-Squared P-Value");
         DFA_P_Val.SetType(result_type::vector);
         DFA_P_Val.SetShowTable(true);
         DFA_P_Val.SetShowGraph(false);
 
         DFA_P_Val.SetResult(p_value);
         results.Append(DFA_P_Val);
+
+        CMBVector *f_test_p_value = new CMBVector(dfa_res.F_test_P_value);
+        ResultItem DFA_F_Test_P_Val;
+        DFA_F_Test_P_Val.SetName("F-test P-Value");
+        DFA_F_Test_P_Val.SetType(result_type::vector);
+        DFA_F_Test_P_Val.SetShowTable(true);
+        DFA_F_Test_P_Val.SetShowGraph(false);
+
+        DFA_F_Test_P_Val.SetResult(f_test_p_value);
+        results.Append(DFA_F_Test_P_Val);
+
 
         ResultItem DFA_Projected;
         DFA_Projected.SetName("Projected Elemental Profiles");
@@ -454,6 +465,16 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         DFA_P_Val.SetResult(p_value);
         results.Append(DFA_P_Val);
+
+        CMBVector *f_test_p_value = new CMBVector(dfa_res.F_test_P_value);
+        ResultItem DFA_F_Test_P_Val;
+        DFA_F_Test_P_Val.SetName("F-test P-Value");
+        DFA_F_Test_P_Val.SetType(result_type::vector);
+        DFA_F_Test_P_Val.SetShowTable(true);
+        DFA_F_Test_P_Val.SetShowGraph(false);
+
+        DFA_F_Test_P_Val.SetResult(f_test_p_value);
+        results.Append(DFA_F_Test_P_Val);
 
         ResultItem DFA_Projected;
         DFA_Projected.SetName("Projected Elemental Profiles");
@@ -529,9 +550,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetYAxisMode(yaxis_mode::log);
         DFASWilksLambdaValues.SetYLimit(_range::high,1);
         DFASWilksLambdaValues.SetResult(WilksLambdaVector);
+        CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
+        ResultItem DFASF_Test_P_Value;
+        DFASF_Test_P_Value.SetName("F-test P-value");
+        DFASF_Test_P_Value.SetType(result_type::vector);
+        DFASF_Test_P_Value.SetShowTable(true);
+        DFASF_Test_P_Value.SetAbsoluteValue(true);
+        DFASF_Test_P_Value.SetYAxisMode(yaxis_mode::log);
+        DFASF_Test_P_Value.SetYLimit(_range::high,1);
+        DFASF_Test_P_Value.SetResult(F_test_P_value);
 
         results.Append(DFASValues);
         results.Append(DFASWilksLambdaValues);
+        results.Append(DFASF_Test_P_Value);
 
     }
 
@@ -582,10 +613,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetAbsoluteValue(true);
         DFASWilksLambdaValues.SetYAxisMode(yaxis_mode::log);
         DFASWilksLambdaValues.SetYLimit(_range::high,1);
-        DFASWilksLambdaValues.SetResult(WilksLambdaVector);
+        CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
+        ResultItem DFASF_Test_P_Value;
+        DFASF_Test_P_Value.SetName("F-test P-value");
+        DFASF_Test_P_Value.SetType(result_type::vector);
+        DFASF_Test_P_Value.SetShowTable(true);
+        DFASF_Test_P_Value.SetAbsoluteValue(true);
+        DFASF_Test_P_Value.SetYAxisMode(yaxis_mode::log);
+        DFASF_Test_P_Value.SetYLimit(_range::high,1);
+        DFASF_Test_P_Value.SetResult(F_test_P_value);
 
         results.Append(DFASValues);
         results.Append(DFASWilksLambdaValues);
+        results.Append(DFASF_Test_P_Value);
 
     }
 /*  if (command == "SDFAM")

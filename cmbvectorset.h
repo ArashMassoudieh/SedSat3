@@ -23,6 +23,9 @@ public:
     unsigned int MaxSize() const;
     double max() const;
     double min() const;
+    double FTest_p_value() const;
+    double OverallMean() const;
+    int TotalNumberofObservations() const;
 private:
 
 

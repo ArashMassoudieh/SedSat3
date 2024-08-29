@@ -1,5 +1,6 @@
 #include "cmbvectorset.h"
 #include <QFile>
+#include <gsl/gsl_cdf.h>
 
 CMBVectorSet::CMBVectorSet():Interface(),map<string, CMBVector>()
 {
@@ -127,4 +128,46 @@ CMBVector &CMBVectorSet::GetColumn(const string columnlabel)
 void CMBVectorSet::Append(const string &columnlabel,const CMBVector &vector)
 {
     this->operator[](columnlabel) = vector;
+}
+
+double CMBVectorSet::FTest_p_value() const
+{
+    double SSB = 0;
+    double Overall_Mean = OverallMean();
+    for (map<string,CMBVector>::const_iterator vect = cbegin(); vect!=cend(); vect++ )
+    {
+        SSB += pow(vect->second.mean()-Overall_Mean,2)*vect->second.num;
+    }
+    double MSB = SSB/(size()-1);
+    double SSW=0;
+    for (map<string,CMBVector>::const_iterator vect = cbegin(); vect!=cend(); vect++ )
+    {
+        SSW += pow(vect->second.stdev(),2)*vect->second.num;
+    }
+    double MSW = SSW/(TotalNumberofObservations()-size());
+    double F = MSB/MSW;
+    double p_value = gsl_cdf_fdist_Q (F, size()-1, TotalNumberofObservations());
+    return p_value;
+}
+
+double CMBVectorSet::OverallMean() const
+{
+    double sum=0;
+    double count = 0;
+    for (map<string,CMBVector>::const_iterator vect = cbegin(); vect!=cend(); vect++ )
+    {
+        sum+=vect->second.mean()*vect->second.num;
+        count+=vect->second.num;
+    }
+    return sum/count;
+}
+
+int CMBVectorSet::TotalNumberofObservations() const
+{
+    double count = 0;
+    for (map<string,CMBVector>::const_iterator vect = cbegin(); vect!=cend(); vect++ )
+    {
+        count+=vect->second.num;
+    }
+    return count;
 }

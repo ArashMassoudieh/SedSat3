@@ -52,6 +52,7 @@ struct DFA_result
     CMBVectorSet projected;
     CMBVector p_values;
     CMBVector wilkslambda;
+    CMBVector F_test_P_value;
 };
 
 struct ANOVA_info

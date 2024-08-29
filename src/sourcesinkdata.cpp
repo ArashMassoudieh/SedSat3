@@ -1926,6 +1926,7 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, c
     //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
     CMBVector eigen_vector = twoSources.DFA_eigvector();
     out.projected = twoSources.DFA_Projected(source1, source2);
+    out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = out.projected.FTest_p_value();
     out.eigen_vectors.push_back(eigen_vector);
     double p_value = twoSources.DFA_P_Value();
     out.p_values = CMBVector(1); out.p_values[0] = p_value;
@@ -1943,6 +1944,8 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
     //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
     CMBVector eigen_vector = twoSources.DFA_eigvector();
     out.projected = twoSources.DFA_Projected(source1, this);
+    CMBVectorSet pairwiseProjected = twoSources.DFA_Projected(source1, "Others");
+    out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = pairwiseProjected.FTest_p_value();
     out.eigen_vectors.push_back(eigen_vector);
     double p_value = twoSources.DFA_P_Value();
     out.p_values = CMBVector(1); out.p_values[0] = p_value;
@@ -2995,9 +2998,11 @@ double SourceSinkData::WilksLambda()
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_T = S_w + S_B;
+    /*
     S_w.writetofile("S_w.txt");
     S_B.writetofile("S_B.txt");
     S_T.writetofile("S_T.txt");
+    */
     double numerator = S_w.det();
     double denumerator = S_T.det();
     return fabs(numerator)/fabs(denumerator);
@@ -3141,7 +3146,7 @@ CMBVector SourceSinkData::MeanElementalContent()
 
 vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2)
 {
-    vector<CMBVector> out(2);
+    vector<CMBVector> out(3);
     vector<string> elemnames = ElementNames();
     vector<string> selected_labels;
     for (unsigned int i=0; i<elemnames.size(); i++)
@@ -3151,6 +3156,7 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
         double min_P = 100;
         string highestimproved;
         double wilkslambda;
+        double F_test_p_value;
         for (unsigned int j=0; j<elemnames.size(); j++)
         {
             vector<string> selected_labels_temp = selected_labels;
@@ -3164,11 +3170,13 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
                     highestimproved = elemnames[j];
                     min_P = thisDFAresults.p_values[0];
                     wilkslambda = thisDFAresults.wilkslambda[0];
+                    F_test_p_value = thisDFAresults.F_test_P_value[0];
                 }
             }
         }
         out[0].append(highestimproved,min_P);
         out[1].append(highestimproved,wilkslambda);
+        out[2].append(highestimproved,F_test_p_value);
         selected_labels.push_back(highestimproved);
 
     }
@@ -3188,6 +3196,7 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
         double min_P = 100;
         string highestimproved;
         double wilkslambda;
+        double F_test_p_value;
         for (unsigned int j=0; j<elemnames.size(); j++)
         {
             vector<string> selected_labels_temp = selected_labels;
@@ -3201,11 +3210,13 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
                     highestimproved = elemnames[j];
                     min_P = thisDFAresults.p_values[0];
                     wilkslambda = thisDFAresults.wilkslambda[0];
+                    F_test_p_value = thisDFAresults.F_test_P_value[0];
                 }
             }
         }
         out[0].append(highestimproved,min_P);
         out[1].append(highestimproved,wilkslambda);
+        out[2].append(highestimproved,F_test_p_value);
         selected_labels.push_back(highestimproved);
 
     }
