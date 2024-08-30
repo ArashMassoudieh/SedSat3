@@ -418,7 +418,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_Projected.SetShowTable(true);
         DFA_Projected.SetShowGraph(true);
         DFA_Projected.SetYAxisMode(yaxis_mode::normal);
-        CMBVector *eigen_vector = new CMBVector(dfa_res.eigen_vectors[0]);
+        CMBVector *eigen_vector = new CMBVector(dfa_res.eigen_vectors.begin()->second);
         DFA_Projected.SetResult(eigen_vector);
 
         results.Append(DFA_Projected);
@@ -493,7 +493,81 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_Projected.SetShowTable(true);
         DFA_Projected.SetShowGraph(true);
         DFA_Projected.SetYAxisMode(yaxis_mode::normal);
-        CMBVector *eigen_vector = new CMBVector(dfa_res.eigen_vectors[0]);
+        CMBVector *eigen_vector = new CMBVector(dfa_res.eigen_vectors.begin()->second);
+        DFA_Projected.SetResult(eigen_vector);
+
+        results.Append(DFA_Projected);
+
+
+        rtw->SetProgress(1);
+
+    }
+    if (command == "DFAM")
+    {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
+        rtw->show();
+        results.SetName("Multi-way DFA analysis");
+
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+        }
+
+        TransformedData.SetProgressWindow(rtw);
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+
+        DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis();
+        CMBVector *p_value = new CMBVector(dfa_res.p_values);
+        ResultItem DFA_P_Val;
+        DFA_P_Val.SetName("P-Value");
+        DFA_P_Val.SetType(result_type::vector);
+        DFA_P_Val.SetShowTable(true);
+        DFA_P_Val.SetShowGraph(false);
+
+        DFA_P_Val.SetResult(p_value);
+        results.Append(DFA_P_Val);
+
+        CMBVector *f_test_p_value = new CMBVector(dfa_res.F_test_P_value);
+        ResultItem DFA_F_Test_P_Val;
+        DFA_F_Test_P_Val.SetName("F-test P-Value");
+        DFA_F_Test_P_Val.SetType(result_type::vector);
+        DFA_F_Test_P_Val.SetShowTable(true);
+        DFA_F_Test_P_Val.SetShowGraph(false);
+
+        DFA_F_Test_P_Val.SetResult(f_test_p_value);
+        results.Append(DFA_F_Test_P_Val);
+
+        ResultItem DFA_Projected;
+        DFA_Projected.SetName("Projected Elemental Profiles");
+        DFA_Projected.SetType(result_type::vectorset_groups);
+        DFA_Projected.SetShowTable(true);
+        DFA_Projected.SetShowGraph(true);
+        DFA_Projected.SetYAxisMode(yaxis_mode::normal);
+        CMBVectorSetSet *projected = new CMBVectorSetSet(dfa_res.multi_projected);
+        DFA_Projected.SetResult(projected);
+
+        results.Append(DFA_Projected);
+
+        ResultItem DFA_eigen_vector;
+        DFA_Projected.SetName("Eigen vector");
+        DFA_Projected.SetType(result_type::vector);
+        DFA_Projected.SetShowTable(true);
+        DFA_Projected.SetShowGraph(true);
+        DFA_Projected.SetYAxisMode(yaxis_mode::normal);
+        CMBVectorSet *eigen_vector = new CMBVectorSet(dfa_res.eigen_vectors);
         DFA_Projected.SetResult(eigen_vector);
 
         results.Append(DFA_Projected);

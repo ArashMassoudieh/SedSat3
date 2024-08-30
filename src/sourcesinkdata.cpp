@@ -1908,10 +1908,29 @@ void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const d
 DFA_result SourceSinkData::DiscriminantFunctionAnalysis()
 {
     DFA_result out;
-    CMBVector eigen_vector = DFA_eigvector();
-    out.eigen_vectors.push_back(eigen_vector);
-    double p_value = DFA_P_Value();
-    out.p_values = CMBVector(1); out.p_values[0] = p_value;
+    out.F_test_P_value = CMBVector(size()-1);
+    out.p_values = CMBVector(size()-1);
+    out.wilkslambda = CMBVector(size()-1);
+
+    int counter = 0;
+    for (map<string, Elemental_Profile_Set>::iterator source = begin(); source!=end(); source++)
+    {
+        if (source->first!=target_group)
+        {
+            DFA_result res = DiscriminantFunctionAnalysis(source->first);
+            out.F_test_P_value[counter] = res.F_test_P_value[0];
+            out.F_test_P_value.SetLabel(counter, source->first);
+            out.p_values[counter] = res.p_values[0];
+            out.p_values.SetLabel(counter, source->first);
+            out.wilkslambda[counter] = res.wilkslambda[0];
+            out.wilkslambda.SetLabel(counter, source->first);
+
+            out.eigen_vectors.Append(source->first,res.eigen_vectors[source->first + " vs the rest"]);
+            out.multi_projected.Append(source->first,res.projected);
+            counter++;
+        }
+
+    }
     return out;
 }
 
@@ -1927,7 +1946,7 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, c
     CMBVector eigen_vector = twoSources.DFA_eigvector();
     out.projected = twoSources.DFA_Projected(source1, source2);
     out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = out.projected.FTest_p_value();
-    out.eigen_vectors.push_back(eigen_vector);
+    out.eigen_vectors.Append(source1 + " vs " +source2,eigen_vector);
     double p_value = twoSources.DFA_P_Value();
     out.p_values = CMBVector(1); out.p_values[0] = p_value;
     out.wilkslambda = CMBVector(1); out.wilkslambda[0] = twoSources.WilksLambda();
@@ -1946,7 +1965,7 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
     out.projected = twoSources.DFA_Projected(source1, this);
     CMBVectorSet pairwiseProjected = twoSources.DFA_Projected(source1, "Others");
     out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = pairwiseProjected.FTest_p_value();
-    out.eigen_vectors.push_back(eigen_vector);
+    out.eigen_vectors.Append(source1 + " vs the rest", eigen_vector);
     double p_value = twoSources.DFA_P_Value();
     out.p_values = CMBVector(1); out.p_values[0] = p_value;
     out.wilkslambda = CMBVector(1); out.wilkslambda[0] = twoSources.WilksLambda();

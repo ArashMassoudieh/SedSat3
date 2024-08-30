@@ -12,6 +12,7 @@
 #include "qjsonobject.h"
 #include "cmbvector.h"
 #include "cmbvectorset.h"
+#include "cmbvectorsetset.h"
 #include "MCMC.h"
 
 enum class transformation {linear, softmax};
@@ -48,11 +49,12 @@ struct element_data_groups
 
 struct DFA_result
 {
-    vector<CMBVector> eigen_vectors;
+    CMBVectorSet eigen_vectors;
     CMBVectorSet projected;
     CMBVector p_values;
     CMBVector wilkslambda;
     CMBVector F_test_P_value;
+    CMBVectorSetSet multi_projected;
 };
 
 struct ANOVA_info
