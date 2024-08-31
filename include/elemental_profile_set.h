@@ -134,7 +134,7 @@ public:
     CMBMatrix CorrelationMatrix();
     CMBVector KolmogorovSmirnovStat(distribution_type dist_type);
     gsl_matrix *CopytoGSLMatrix();
-    CVector ElementMeans();
+    CVector ElementMeans(const vector<string> &element_order = vector<string>());
     QTableWidget *ToTable() override;
     Elemental_Profile_Set CopyIncludedinAnalysis(bool applyomsizecorrection, const vector<double> &om_size, map<string, element_information> *elementinfo=nullptr);
     Elemental_Profile_Set EliminateSamples(vector<string> sampplestobeeliminated, map<string, element_information> *elementinfo) const;
@@ -149,7 +149,7 @@ public:
     vector<string> NegativeValueCheck(const vector<string> &element_names);
     //CMBTimeSeriesSet SelectTop(int n) const;
     Elemental_Profile SelectTopAggregate(int n) const;
-
+    CMBVector DotProduct(const CVector &v) const;
 private:
     map<string,ConcentrationSet> element_distributions; // concentrations for each element
     MultipleLinearRegressionSet mlr_vs_om_size;

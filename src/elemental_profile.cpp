@@ -342,7 +342,7 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> 
                 }
             }
         }
-        if (out[it->first]<0)
+        if (out[it->first]<0 && elementinfo->at(it->first).Role!=element_information::role::isotope)
         {
             cout<<"corrected value is negative!";
         }
@@ -350,7 +350,7 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> 
     return out;
 }
 
-double Elemental_Profile::DotProduct(const CMBVector &weightvector)
+double Elemental_Profile::DotProduct(const CMBVector &weightvector) const
 {
     if (this->size()!=weightvector.getsize())
     {
@@ -358,7 +358,7 @@ double Elemental_Profile::DotProduct(const CMBVector &weightvector)
     }
     double sum = 0;
     int i=0;
-    for (map<string,double>::iterator it=begin(); it!=end(); it++)
+    for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++)
     {
         sum+=it->second*weightvector[i];
         i++;

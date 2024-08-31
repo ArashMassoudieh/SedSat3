@@ -301,6 +301,54 @@
     		},
     		"Discription": {
 	    		"type": "Description",
+   			"default": "This tool performs Discriminant Function Analysis between the two source groups indicated. It provides the p-value, and the scatter matrix of projected elemental profiles based on the principle eigen vector of the discriminant hyper-plane." 
+		}
+	},
+	"DFAM": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
+	},
+	"DFAOnevsRest": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Source group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
    			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
 		}
 	},
@@ -308,10 +356,10 @@
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
-	    	},
-	    	"Use only selected samples": {
-	   			"type": "checkBox",
-				"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
     		},
 		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
@@ -328,13 +376,13 @@
 		"Box-cox transformation": {
    			"type": "checkBox",
 			"default": "false"
-   		},
-   		"Discription": {
+    		},
+    		"Discription": {
 	    		"type": "Description",
    			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
 		}
 	},
-	"SDFAM-2": {
+	"SDFAM": {
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
@@ -353,33 +401,10 @@
     		},
     		"Discription": {
 	    		"type": "Description",
-   			"default": "This tool performs step-wise multi-way Discriminant Function Analysis (DFA) between all pairs of source groups. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
-		}
-
-	},
-	"DFAM": {
-		"Use only selected elements": {
-   			"type": "checkBox",
-			"default": "false"
-	    	},
-	    	"Use only selected samples": {
-	   			"type": "checkBox",
-				"default": "false"
-	    	},
-		"OM and Size Correct based on target sample":{
-			"type": "comboBox",
-			"source": "TargetSamplesList+Blank"
-		},
-		"Box-cox transformation": {
-   			"type": "checkBox",
-			"default": "false"
-		},
-		"Discription": {
-	    		"type": "Description",
-   			"default": "This tool provides the transformed elemental profiles according to the principle components obtained from the DFA analysis for all pairs of source groups."
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
 		}
 	},
-	"DFA-Transformed": {
+	"SDFAOnevsRest": {
 		"Use only selected elements": {
    			"type": "checkBox",
 			"default": "false"
@@ -388,25 +413,21 @@
    			"type": "checkBox",
 			"default": "false"
     		},
+		"Source group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
 		"OM and Size Correct based on target sample":{
-		"type": "comboBox",
-		"source": "TargetSamplesList+Blank"
-		},
-		"Source/Target group I" : {
 			"type": "comboBox",
-			"source": "SourceList"
-		},
-		"Source/Target group II" : {
-			"type": "comboBox",
-			"source": "SourceList"
+			"source": "TargetSamplesList+Blank"
 		},
 		"Box-cox transformation": {
-			"type": "checkBox",
+   			"type": "checkBox",
 			"default": "false"
     		},
     		"Discription": {
 	    		"type": "Description",
-   			"default": "This tool provides the transformed elemental profiles according to the principle components obtained from the DFA analysis."
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
 		}
 	},
 	"KS-individual": 

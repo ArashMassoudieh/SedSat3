@@ -13,6 +13,7 @@ public:
     CMBVector(const CMBVector& mp);
     CMBVector& operator=(const CMBVector &mp);
     CMBVector(const CVector& mp);
+
     CMBVector& operator=(const CVector &mp);
     QJsonObject toJsonObject() override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
@@ -45,5 +46,16 @@ private:
 
 
 };
+
+CMBVector operator+(const CMBVector&, const CMBVector&);
+CMBVector operator+(double, const CMBVector&);
+CMBVector operator+(const CMBVector&, double);
+CMBVector operator-(const CMBVector&, const CMBVector&);
+CMBVector operator-(double, const CMBVector&);
+CMBVector operator-(const CMBVector&, double);
+CMBVector operator*(const CMBVector&, const CMBVector&);
+CMBVector operator*(double, const CMBVector&);
+CMBVector operator/(const CMBVector&, double);
+
 
 #endif // CMBVector_H

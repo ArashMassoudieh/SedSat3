@@ -407,11 +407,11 @@ CMBMatrix Elemental_Profile_Set::CovarianceMatrix()
 
     for (int i = 0; i < X->size2; i++) {
             for (int j = i; j < X->size2; j++) {
-              gsl_vector_view a = gsl_matrix_column (X, i);
-              gsl_vector_view b = gsl_matrix_column (X, j);
+              gsl_vector_view a = gsl_matrix_column(X, i);
+              gsl_vector_view b = gsl_matrix_column(X, j);
               double cov = gsl_stats_covariance(a.vector.data, a.vector.stride,b.vector.data, b.vector.stride, a.vector.size);
-              out[i][j]=cov;
-              out[j][i]=cov;
+              out[i][j]=cov*(a.vector.size-1)/a.vector.size;
+              out[j][i]=cov*(a.vector.size-1)/a.vector.size;
             }
           }
     return out;
@@ -474,9 +474,13 @@ CMBVector Elemental_Profile_Set::KolmogorovSmirnovStat(distribution_type dist_ty
     return out; 
 }
 
-CVector Elemental_Profile_Set::ElementMeans()
+CVector Elemental_Profile_Set::ElementMeans(const vector<string> &element_order)
 {
-    vector<string> element_names = ElementNames();
+    vector<string> element_names;
+    if (element_order.size()==0)
+        element_names = ElementNames();
+    else
+        element_names = element_order;
     CVector out(element_names.size());
     for (int i=0; i<element_names.size(); i++)
     {
@@ -665,6 +669,19 @@ Elemental_Profile Elemental_Profile_Set::SelectTopAggregate(int n) const
                 out[sorted.Label(i)] = std::min(sorted[i],out[sorted.Label(i)]) ;
             }
         }
+    }
+    return out;
+}
+
+CMBVector Elemental_Profile_Set::DotProduct(const CVector &v) const
+{
+    CMBVector out(size());
+    int counter = 0;
+    for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
+    {
+        out[counter] = it->second.DotProduct(v);
+        out.SetLabel(counter,it->first);
+        counter++;
     }
     return out;
 }

@@ -112,6 +112,11 @@ bool GeneralChart::Plot(ResultItem* res)
         CMBMatrix* matrix = static_cast<CMBMatrix*>(res->Result());
         return PlotScatter(matrix);
     }
+    if (res->Type() == result_type::vectorset_groups)
+    {
+        CMBVectorSet* vector_set = static_cast<CMBVectorSet*>(res->Result());
+        return PlotScatter(vector_set);
+    }
 
     chartView->update();
     return false; 
@@ -188,6 +193,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         axisYNormal->setMinorTickCount(5);
         axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
+        _log = false;
     }
     axisX->setLabelsAngle(-90);
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -763,6 +769,56 @@ bool GeneralChart::PlotScatter(CMBMatrix *matrix)
 
     return true;
 }
+
+bool GeneralChart::PlotScatter(CMBVectorSet *vectorset)
+{
+
+    QCategoryAxis* axisX = new QCategoryAxis();
+    QValueAxis* axisYNormal = new QValueAxis();
+    axisX->setObjectName("axisX");
+    axisYNormal->setObjectName("axisY");
+
+    double x_min_val = 0.5;
+    double x_max_val = vectorset->size()+0.5;
+    double y_min_val = vectorset->min();
+    double y_max_val = vectorset->max();
+
+
+    axisX->setRange(x_min_val,x_max_val);
+    axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
+    axisYNormal->setRange(y_min_val-(y_max_val-y_min_val)*0.05,y_max_val+(y_max_val-y_min_val)*0.05);
+    axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisYNormal, Qt::AlignLeft);
+
+    QStringList categories;
+    int counter = 0;
+    for (map<string, CMBVector>::iterator vec = vectorset->begin(); vec!=vectorset->end(); vec++)
+    {
+        QScatterSeries* series = new QScatterSeries();
+
+        for (int j=0; j<vec->second.num; j++)
+            series->append(counter+1,vec->second[j]);
+
+        counter++;
+        QPen pen = series->pen();
+        pen.setWidth(2);
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        series->setPen(pen);
+
+        series->setName(QString::fromStdString(vec->first));
+        series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+        series->setMarkerSize(15.0);
+        chart->addSeries(series);
+        series->attachAxis(axisX);
+        series->attachAxis(axisYNormal);
+        axisX->append(QString::fromStdString(vec->first), counter+0.5);
+    }
+
+    return true;
+}
+
 
 
 

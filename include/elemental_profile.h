@@ -46,7 +46,7 @@ public:
     bool IncludedInAnalysis() const {return included_in_analysis;}
     void SetIncluded(bool value) {included_in_analysis = value;}
     Elemental_Profile OrganicandSizeCorrect(const vector<double> &om_size, const MultipleLinearRegressionSet *mlr, const map<string, element_information> *elementinfo=nullptr) const;
-    double DotProduct(const CMBVector &vector);
+    double DotProduct(const CMBVector &vector) const;
     CMBVector SortByValue(bool ascending = true) const;
     vector<string> SelectTop(int n, bool ascending = true) const;
     Elemental_Profile ExtractElementsOnly(const map<string, element_information> *ElementInformation, bool isotopes=false) const;

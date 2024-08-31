@@ -12,6 +12,7 @@
 #include "qjsonobject.h"
 #include "cmbvector.h"
 #include "cmbvectorset.h"
+#include "cmbvectorsetset.h"
 #include "MCMC.h"
 
 enum class transformation {linear, softmax};
@@ -38,19 +39,22 @@ struct element_data_groups
 };
 
 
-struct DFA_result_vector
+/*struct DFA_result_vector
 {
     CMBVector eigen_vector;
     CMBVector significance_vector;
     CMBVector significance_vector_2;
     double S_value;
-};
+};*/
 
-struct DFA_result_matrix
+struct DFA_result
 {
-    CMBMatrix eigen_matrix;
-    CMBMatrix significance_matrix;
-    vector<double> S_values;
+    CMBVectorSet eigen_vectors;
+    CMBVectorSet projected;
+    CMBVector p_values;
+    CMBVector wilkslambda;
+    CMBVector F_test_P_value;
+    CMBVectorSetSet multi_projected;
 };
 
 struct ANOVA_info
@@ -233,13 +237,14 @@ public:
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
-    DFA_result_vector DiscriminantFunctionAnalysis(const string &source1, const string &source2);
-    CMBVector StepwiseDiscriminantFunctionAnalysis(const string &source1,const string &source2);
-    CMBVector Stepwise_DiscriminantFunctionAnalysis(const string &source1,const string &source2);
-    CMBVector Stepwise_DiscriminantFunctionAnalysis();
-    CMBVectorSet Stepwise_DiscriminantFunctionAnalysis_MoreInfo();
-    DFA_result_vector DiscriminantFunctionAnalysis(const string &source1);
-    DFA_result_matrix DiscriminantFunctionAnalysis();
+    DFA_result DiscriminantFunctionAnalysis(const string &source1);
+    DFA_result DiscriminantFunctionAnalysis();
+    DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+
+    vector<CMBVector> StepwiseDiscriminantFunctionAnalysis();
+    vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
+    vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1);
+    int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample);
@@ -337,6 +342,19 @@ private:
     const double epsilon = 1e-6;
     double distance_coeff = 1;
     list<string> tools_used;
+    CMatrix BetweenGroupCovarianceMatrix();
+    CMatrix WithinGroupCovarianceMatrix();
+    CMatrix TotalScatterMatrix();
+    double WilksLambda();
+    double DFA_P_Value();
+    CMBVectorSet DFA_Projected();
+    CMBVectorSet DFA_Projected(const string &source1, const string &source2);
+    CMBVectorSet DFA_Projected(const string &source1, SourceSinkData *original);
+    CMBVector DFA_eigvector();
+    CMBVector DFA_weight_vector(const string &source1, const string &source2);
+    CMBVector DeviationFromMean(const string &group_name);
+    CMBVector MeanElementalContent(const string &group_name);
+    CMBVector MeanElementalContent();
 
 
 };
