@@ -11,10 +11,10 @@
     <ROW Property="ARPURLINFOABOUT" Value="www.SedSat.org"/>
     <ROW Property="ARPURLUPDATEINFO" Value="www.SedSat.org/download"/>
     <ROW Property="Manufacturer" Value="EnviroInformatics"/>
-    <ROW Property="ProductCode" Value="1033:{914811E5-2FBB-416F-9979-C5B823F32F90} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{92049B7B-398A-4416-8BA2-3DD82D3BDD37} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="SedSat3"/>
-    <ROW Property="ProductVersion" Value="1.0.11" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.0.18" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="x64_Release:Windows 9x/ME" ValueLocId="-"/>
@@ -28,6 +28,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="CommonAppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="COMMON~1|CommonAppDataFolder" IsPseudoRoot="1"/>
     <ROW Directory="GIFMod_Dir" Directory_Parent="StartMenuFolder" DefaultDir="SedSat3"/>
     <ROW Directory="Icons_1_Dir" Directory_Parent="resources_Dir" DefaultDir="Icons"/>
     <ROW Directory="Icons_Dir" Directory_Parent="APPDIR" DefaultDir="Icons"/>
@@ -37,17 +38,17 @@
     <ROW Directory="bin_1_Dir" Directory_Parent="bin_Dir" DefaultDir="bin"/>
     <ROW Directory="bin_Dir" Directory_Parent="APPDIR" DefaultDir="bin"/>
     <ROW Directory="platforms_Dir" Directory_Parent="bin_1_Dir" DefaultDir="PLATFO~1|platforms"/>
+    <ROW Directory="regid.199509.com.example_Dir" Directory_Parent="CommonAppDataFolder" DefaultDir="REGID1~1.EXA|regid.1995-09.com.example"/>
     <ROW Directory="resources_Dir" Directory_Parent="APPDIR" DefaultDir="RESOUR~1|resources"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{D2079C08-FD01-46B6-B092-B19378EB97DE}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="B35B3203FEB4CFFA576A27CB835D3E6" ComponentId="{2A192B35-8CAC-4893-8E21-6D47204E01B2}" Directory_="APPDIR" Attributes="260" KeyPath="B35B3203FEB4CFFA576A27CB835D3E6" Options="2"/>
     <ROW Component="CMBSource" ComponentId="{11759CBC-CFA1-4DA3-8F24-870E0686A44E}" Directory_="GIFMod_Dir" Attributes="0"/>
     <ROW Component="Cancel.png" ComponentId="{CD3D714A-0F5F-48A9-AA45-1DF166ADDC4F}" Directory_="Icons_1_Dir" Attributes="0" KeyPath="Cancel.png" Type="0"/>
-    <ROW Component="D36C9FE0826D4D2B9C2DDCCE2C83E860" ComponentId="{C5A82F84-796D-4BF3-AD8E-E6C550560CA8}" Directory_="APPDIR" Attributes="260" KeyPath="D36C9FE0826D4D2B9C2DDCCE2C83E860" Options="2"/>
     <ROW Component="D3Dcompiler_47.dll" ComponentId="{5D913DA8-EE60-46D7-A31D-F32E850F3D00}" Directory_="bin_1_Dir" Attributes="256" KeyPath="D3Dcompiler_47.dll"/>
     <ROW Component="Graph.png" ComponentId="{C1383E62-A1C0-40B3-B309-D8E47334E323}" Directory_="Icons_1_Dir" Attributes="0" KeyPath="Graph.png" Type="0"/>
     <ROW Component="Icons" ComponentId="{69B09046-16CF-42EF-8159-81DE85D9D4DE}" Directory_="Icons_Dir" Attributes="0"/>
+    <ROW Component="MicrosoftVisualC" ComponentId="{0FEA8BAC-42E3-499B-B696-BCA8F097B576}" Directory_="APPDIR" Attributes="260" KeyPath="MicrosoftVisualC" Options="2"/>
     <ROW Component="ProductInformation" ComponentId="{347A6828-995F-46BA-BBF7-59D742BA3475}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
     <ROW Component="QXlsx.dll" ComponentId="{71216427-4E02-4598-8C47-91B325B5B868}" Directory_="bin_1_Dir" Attributes="256" KeyPath="QXlsx.dll"/>
     <ROW Component="Qt5Charts.dll" ComponentId="{1EECB8AF-4799-4115-9D11-315561CF8F1A}" Directory_="bin_1_Dir" Attributes="256" KeyPath="Qt5Charts.dll"/>
@@ -65,36 +66,45 @@
     <ROW Component="libGLESv2.dll" ComponentId="{6E51E751-93AF-450C-B8D1-16F4A0412A2E}" Directory_="bin_1_Dir" Attributes="256" KeyPath="libGLESv2.dll"/>
     <ROW Component="opengl32sw.dll" ComponentId="{7E75FD9E-D2A4-4C78-B658-EDA76E6E82FF}" Directory_="bin_1_Dir" Attributes="256" KeyPath="opengl32sw.dll"/>
     <ROW Component="qwindows.dll" ComponentId="{5008F710-0409-4657-A1A5-A9B65C4538C3}" Directory_="platforms_Dir" Attributes="256" KeyPath="qwindows.dll"/>
+    <ROW Component="regid.199509.com.example" ComponentId="{59972F83-729F-47E2-9432-8BDAACFE5AE4}" Directory_="regid.199509.com.example_Dir" Attributes="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="B35B3203FEB4CFFA576A27CB835D3E6" Title="Visual C++ Redistributable for Visual Studio 2017 x86" Description="Visual C++ Redistributable for Visual Studio 2017 x86" Display="5" Level="1" Attributes="0" Components="B35B3203FEB4CFFA576A27CB835D3E6"/>
-    <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D36C9FE0826D4D2B9C2DDCCE2C83E860 D3Dcompiler_47.dll Graph.png QXlsx.dll Qt5Charts.dll Qt5Core.dll Qt5Gui.dll Qt5Svg.dll Qt5Widgets.dll SedSat.exe blas_win64_MT.dll gsl.dll gslcblas.dll lapack_win64_MT.dll libEGL.dll libGLESv2.dll opengl32sw.dll"/>
+    <ROW Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860" Title="Visual C++ Redistributable for Visual Studio 2017 x64" Description="Visual C++ Redistributable for Visual Studio 2017 x64" Display="3" Level="1" Attributes="0" Components="D3Dcompiler_47.dll Graph.png QXlsx.dll Qt5Charts.dll Qt5Core.dll Qt5Gui.dll Qt5Svg.dll Qt5Widgets.dll SedSat.exe blas_win64_MT.dll gsl.dll gslcblas.dll lapack_win64_MT.dll libEGL.dll libGLESv2.dll opengl32sw.dll regid.199509.com.example"/>
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="APPDIR CMBSource Cancel.png Icons ProductInformation forms_structures.json qwindows.dll"/>
+    <ROW Feature="MicrosoftVisualC" Title="Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.40.33810" Description="Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.40.33810" Display="5" Level="1" Attributes="0" Components="MicrosoftVisualC"/>
     <ATTRIBUTE name="CurrentFeature" value="D36C9FE0826D4D2B9C2DDCCE2C83E860"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="CMBSource_Icon.ico" Component_="Graph.png" FileName="CMBSOU~1.ICO|CMBSource_Icon.ico" Attributes="0" SourcePath="resources\Icons\CMBSource_Icon.ico" SelfReg="false" NextFile="Element_Props.png"/>
     <ROW File="CMBSource_Icon.png" Component_="Graph.png" FileName="CMBSOU~1.PNG|CMBSource_Icon.png" Attributes="0" SourcePath="resources\Icons\CMBSource_Icon.png" SelfReg="false" NextFile="table.png"/>
     <ROW File="Cancel.png" Component_="Cancel.png" FileName="Cancel.png" Attributes="0" SourcePath="resources\Icons\Cancel.png" SelfReg="false" NextFile="Proceed.png"/>
-    <ROW File="D3Dcompiler_47.dll" Component_="D3Dcompiler_47.dll" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\D3Dcompiler_47.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
+    <ROW File="D3Dcompiler_47.dll" Component_="D3Dcompiler_47.dll" FileName="D3DCOM~1.DLL|D3Dcompiler_47.dll" Attributes="0" SourcePath="dlls\D3DCompiler_47.dll" SelfReg="false" NextFile="lapack_win64_MT.dll"/>
+    <ROW File="Element_Props.png" Component_="Graph.png" FileName="ELEMEN~1.PNG|Element_Props.png" Attributes="0" SourcePath="resources\Icons\Element_Props.png" SelfReg="false" NextFile="Import_Excel.png"/>
     <ROW File="Graph.png" Component_="Graph.png" FileName="Graph.png" Attributes="0" SourcePath="resources\Icons\Graph.png" SelfReg="false" NextFile="gsl.dll"/>
+    <ROW File="Import_Excel.png" Component_="Graph.png" FileName="IMPORT~1.PNG|Import_Excel.png" Attributes="0" SourcePath="resources\Icons\Import_Excel.png" SelfReg="false" NextFile="OMSizeCorrection.png"/>
+    <ROW File="OMSizeCorrection.png" Component_="Graph.png" FileName="OMSIZE~1.PNG|OMSizeCorrection.png" Attributes="0" SourcePath="resources\Icons\OMSizeCorrection.png" SelfReg="false" NextFile="open.png"/>
     <ROW File="Proceed.png" Component_="Cancel.png" FileName="Proceed.png" Attributes="0" SourcePath="resources\Icons\Proceed.png" SelfReg="false" NextFile="tools.json"/>
-    <ROW File="QXlsx.dll" Component_="QXlsx.dll" FileName="QXlsx.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\QXlsx.dll" SelfReg="false" NextFile="Graph.png"/>
-    <ROW File="Qt5Charts.dll" Component_="Qt5Charts.dll" FileName="QT5CHA~1.DLL|Qt5Charts.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Charts.dll" SelfReg="false" NextFile="Qt5Core.dll"/>
-    <ROW File="Qt5Core.dll" Component_="Qt5Core.dll" FileName="Qt5Core.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Core.dll" SelfReg="false" NextFile="Qt5Gui.dll"/>
-    <ROW File="Qt5Gui.dll" Component_="Qt5Gui.dll" FileName="Qt5Gui.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Gui.dll" SelfReg="false" NextFile="Qt5Svg.dll"/>
-    <ROW File="Qt5Svg.dll" Component_="Qt5Svg.dll" FileName="Qt5Svg.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Svg.dll" SelfReg="false" NextFile="Qt5Widgets.dll"/>
-    <ROW File="Qt5Widgets.dll" Component_="Qt5Widgets.dll" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\Qt5Widgets.dll" SelfReg="false" NextFile="QXlsx.dll"/>
-    <ROW File="SedSat.exe" Component_="SedSat.exe" FileName="SedSat.exe" Attributes="0" SourcePath="build\release\SedSat.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="blas_win64_MT.dll" Component_="blas_win64_MT.dll" FileName="BLAS_W~1.DLL|blas_win64_MT.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\blas_win64_MT.dll" SelfReg="false" NextFile="D3Dcompiler_47.dll"/>
+    <ROW File="QXlsx.dll" Component_="QXlsx.dll" FileName="QXlsx.dll" Attributes="0" SourcePath="dlls\QXlsx.dll" SelfReg="false" NextFile="Graph.png"/>
+    <ROW File="Qt5Charts.dll" Component_="Qt5Charts.dll" FileName="QT5CHA~1.DLL|Qt5Charts.dll" Attributes="0" SourcePath="dlls\Qt5Charts.dll" SelfReg="false" NextFile="Qt5Core.dll"/>
+    <ROW File="Qt5Core.dll" Component_="Qt5Core.dll" FileName="Qt5Core.dll" Attributes="0" SourcePath="dlls\Qt5Core.dll" SelfReg="false" NextFile="Qt5Gui.dll"/>
+    <ROW File="Qt5Gui.dll" Component_="Qt5Gui.dll" FileName="Qt5Gui.dll" Attributes="0" SourcePath="dlls\Qt5Gui.dll" SelfReg="false" NextFile="Qt5Svg.dll"/>
+    <ROW File="Qt5Svg.dll" Component_="Qt5Svg.dll" FileName="Qt5Svg.dll" Attributes="0" SourcePath="dlls\Qt5Svg.dll" SelfReg="false" NextFile="Qt5Widgets.dll"/>
+    <ROW File="Qt5Widgets.dll" Component_="Qt5Widgets.dll" FileName="QT5WID~1.DLL|Qt5Widgets.dll" Attributes="0" SourcePath="dlls\Qt5Widgets.dll" SelfReg="false" NextFile="QXlsx.dll"/>
+    <ROW File="Save.png" Component_="Graph.png" FileName="Save.png" Attributes="0" SourcePath="resources\Icons\Save.png" SelfReg="false" NextFile="SelectSamples.png"/>
+    <ROW File="SedSat.exe" Component_="SedSat.exe" FileName="SedSat3.exe" Attributes="0" SourcePath="x64\Release\SedSat3.exe" SelfReg="false" NextFile="Zoom_Extends.png" DigSign="true"/>
+    <ROW File="SelectSamples.png" Component_="Graph.png" FileName="SELECT~1.PNG|SelectSamples.png" Attributes="0" SourcePath="resources\Icons\SelectSamples.png" SelfReg="false"/>
+    <ROW File="Zoom_Extends.png" Component_="Graph.png" FileName="ZOOM_E~1.PNG|Zoom_Extends.png" Attributes="0" SourcePath="resources\Icons\Zoom_Extends.png" SelfReg="false" NextFile="CMBSource_Icon.ico"/>
+    <ROW File="blas_win64_MT.dll" Component_="blas_win64_MT.dll" FileName="BLAS_W~1.DLL|blas_win64_MT.dll" Attributes="0" SourcePath="dlls\blas_win64_MT.dll" SelfReg="false" NextFile="D3Dcompiler_47.dll"/>
     <ROW File="export.png" Component_="Graph.png" FileName="export.png" Attributes="0" SourcePath="resources\Icons\export.png" SelfReg="false" NextFile="CMBSource_Icon.png"/>
     <ROW File="forms_structures.json" Component_="forms_structures.json" FileName="FORMS_~1.JSO|forms_structures.json" Attributes="0" SourcePath="resources\forms_structures.json" SelfReg="false" NextFile="Cancel.png"/>
-    <ROW File="gsl.dll" Component_="gsl.dll" FileName="gsl.dll" Attributes="0" SourcePath="build\release\gsl.dll" SelfReg="false" NextFile="gslcblas.dll"/>
-    <ROW File="gslcblas.dll" Component_="gslcblas.dll" FileName="gslcblas.dll" Attributes="0" SourcePath="build\release\gslcblas.dll" SelfReg="false" NextFile="export.png"/>
-    <ROW File="lapack_win64_MT.dll" Component_="lapack_win64_MT.dll" FileName="LAPACK~1.DLL|lapack_win64_MT.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\lapack_win64_MT.dll" SelfReg="false" NextFile="libEGL.dll"/>
-    <ROW File="libEGL.dll" Component_="libEGL.dll" FileName="libEGL.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libEGL.dll" SelfReg="false" NextFile="libGLESv2.dll"/>
-    <ROW File="libGLESv2.dll" Component_="libGLESv2.dll" FileName="LIBGLE~1.DLL|libGLESv2.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\libGLESv2.dll" SelfReg="false" NextFile="opengl32sw.dll"/>
-    <ROW File="opengl32sw.dll" Component_="opengl32sw.dll" FileName="OPENGL~1.DLL|opengl32sw.dll" Attributes="0" SourcePath="..\CMB_Source_setup\dlls\opengl32sw.dll" SelfReg="false" NextFile="Qt5Charts.dll"/>
-    <ROW File="qwindows.dll" Component_="qwindows.dll" FileName="qwindows.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2015_64\plugins\platforms\qwindows.dll" SelfReg="false" NextFile="forms_structures.json"/>
+    <ROW File="gsl.dll" Component_="gsl.dll" FileName="gsl.dll" Attributes="0" SourcePath="dlls\gsl.dll" SelfReg="false" NextFile="gslcblas.dll"/>
+    <ROW File="gslcblas.dll" Component_="gslcblas.dll" FileName="gslcblas.dll" Attributes="0" SourcePath="dlls\gslcblas.dll" SelfReg="false" NextFile="export.png"/>
+    <ROW File="lapack_win64_MT.dll" Component_="lapack_win64_MT.dll" FileName="LAPACK~1.DLL|lapack_win64_MT.dll" Attributes="0" SourcePath="dlls\lapack_win64_MT.dll" SelfReg="false" NextFile="libEGL.dll"/>
+    <ROW File="libEGL.dll" Component_="libEGL.dll" FileName="libEGL.dll" Attributes="0" SourcePath="dlls\libEGL.dll" SelfReg="false" NextFile="libGLESv2.dll"/>
+    <ROW File="libGLESv2.dll" Component_="libGLESv2.dll" FileName="LIBGLE~1.DLL|libGLESv2.dll" Attributes="0" SourcePath="dlls\libGLESv2.dll" SelfReg="false" NextFile="opengl32sw.dll"/>
+    <ROW File="open.png" Component_="Graph.png" FileName="open.png" Attributes="0" SourcePath="resources\Icons\open.png" SelfReg="false" NextFile="Save.png"/>
+    <ROW File="opengl32sw.dll" Component_="opengl32sw.dll" FileName="OPENGL~1.DLL|opengl32sw.dll" Attributes="0" SourcePath="dlls\opengl32sw.dll" SelfReg="false" NextFile="Qt5Charts.dll"/>
+    <ROW File="qwindows.dll" Component_="qwindows.dll" FileName="qwindows.dll" Attributes="0" SourcePath="..\..\Qt\5.15.2\msvc2019_64\plugins\platforms\qwindows.dll" SelfReg="false" NextFile="forms_structures.json"/>
     <ROW File="table.png" Component_="Graph.png" FileName="table.png" Attributes="0" SourcePath="resources\Icons\table.png" SelfReg="false" NextFile="SedSat.exe"/>
     <ROW File="tools.json" Component_="forms_structures.json" FileName="TOOLS~1.JSO|tools.json" Attributes="0" SourcePath="resources\tools.json" SelfReg="false" NextFile="blas_win64_MT.dll"/>
   </COMPONENT>
@@ -125,10 +135,17 @@
     <ROW Action="AI_InstallPostPrerequisite" Description="Installing prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="Installing [1]{[2] completed}" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
     <ROW Action="AI_InstallPrerequisite" Description="Installing prerequisite software" DescriptionLocId="ActionText.Description.AI_InstallPrerequisite" Template="Installing [1]{[2] completed}" TemplateLocId="ActionText.Template.AI_InstallPrerequisite"/>
     <ROW Action="AI_VerifyPrereq" Description="Verifying prerequisites" DescriptionLocId="ActionText.Description.AI_VerifyPrereq" Template="[1] was not installed correctly." TemplateLocId="ActionText.Template.AI_VerifyPrereq"/>
+    <ROW Action="AI_XmlCommit" Description="Committing XML file configurations." DescriptionLocId="ActionText.Description.AI_XmlCommit" Template="Committing XML file configurations." TemplateLocId="ActionText.Template.AI_XmlCommit"/>
+    <ROW Action="AI_XmlConfig" Description="Executing XML file configurations" DescriptionLocId="ActionText.Description.AI_XmlConfig" Template="Configuring XML file: &quot;[1]&quot;" TemplateLocId="ActionText.Template.AI_XmlConfig"/>
+    <ROW Action="AI_XmlInstall" Description="Generating actions to configure XML files" DescriptionLocId="ActionText.Description.AI_XmlInstall"/>
+    <ROW Action="AI_XmlRemove" Description="Executing XML file configurations" DescriptionLocId="ActionText.Description.AI_XmlRemove" Template="Configuring XML file: &quot;[1]&quot;" TemplateLocId="ActionText.Template.AI_XmlRemove"/>
+    <ROW Action="AI_XmlRollback" Description="Rolling back XML file configurations." DescriptionLocId="ActionText.Description.AI_XmlRollback" Template="Rolling back XML file configurations." TemplateLocId="ActionText.Template.AI_XmlRollback"/>
+    <ROW Action="AI_XmlUninstall" Description="Generating actions to configure XML files" DescriptionLocId="ActionText.Description.AI_XmlUninstall"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="xmlCfg.dll" SourcePath="&lt;AI_CUSTACTS&gt;xmlCfg.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
@@ -161,10 +178,13 @@
     <ROW Directory_="Icons_Dir" Component_="Icons" ManualDelete="false"/>
     <ROW Directory_="GIFMod_Dir" Component_="CMBSource" ManualDelete="false"/>
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="false"/>
+    <ROW Directory_="regid.199509.com.example_Dir" Component_="regid.199509.com.example" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
     <ROW Action="AI_CleanPrereq" Type="65" Source="Prereq.dll" Target="CleanPrereq" WithoutSeq="true"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[~]"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[~]"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DownloadPrereq" Type="1" Source="Prereq.dll" Target="DownloadPrereq"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
@@ -179,6 +199,12 @@
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
+    <ROW Action="AI_XmlCommit" Type="11777" Source="xmlCfg.dll" Target="OnXmlCommit" WithoutSeq="true"/>
+    <ROW Action="AI_XmlConfig" Type="11265" Source="xmlCfg.dll" Target="OnXmlConfig" WithoutSeq="true"/>
+    <ROW Action="AI_XmlInstall" Type="1" Source="xmlCfg.dll" Target="OnXmlInstall" AdditionalSeq="AI_DATA_SETTER"/>
+    <ROW Action="AI_XmlRemove" Type="11265" Source="xmlCfg.dll" Target="OnXmlRemove" WithoutSeq="true"/>
+    <ROW Action="AI_XmlRollback" Type="11521" Source="xmlCfg.dll" Target="OnXmlRollback" WithoutSeq="true"/>
+    <ROW Action="AI_XmlUninstall" Type="1" Source="xmlCfg.dll" Target="OnXmlUninstall" AdditionalSeq="AI_DATA_SETTER_1"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="x64_Release:[ProgramFiles64Folder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -192,21 +218,25 @@
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
-    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
-    <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
     <ROW Action="AI_AppSearchEx" Sequence="101"/>
+    <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
+    <ROW Action="AI_XmlInstall" Condition="(REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5102"/>
+    <ROW Action="AI_DATA_SETTER" Condition="(REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5101"/>
+    <ROW Action="AI_XmlUninstall" Condition="(REMOVE)" Sequence="3102"/>
+    <ROW Action="AI_DATA_SETTER_1" Condition="(REMOVE)" Sequence="3101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_AppSearchEx" Sequence="101"/>
     <ROW Action="AI_DownloadPrereq" Sequence="1297"/>
     <ROW Action="AI_ExtractPrereq" Sequence="1298"/>
     <ROW Action="AI_InstallPrerequisite" Sequence="1299"/>
     <ROW Action="AI_InstallPostPrerequisite" Sequence="1301"/>
-    <ROW Action="AI_AppSearchEx" Sequence="101"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="x64_Release"/>
@@ -215,8 +245,7 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="x64_Release"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
-    <ROW Registry="B35B3203FEB4CFFA576A27CB835D3E6" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="B35B3203FEB4CFFA576A27CB835D3E6" Value="1" Component_="B35B3203FEB4CFFA576A27CB835D3E6"/>
-    <ROW Registry="D36C9FE0826D4D2B9C2DDCCE2C83E860" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="D36C9FE0826D4D2B9C2DDCCE2C83E860" Value="1" Component_="D36C9FE0826D4D2B9C2DDCCE2C83E860"/>
+    <ROW Registry="MicrosoftVisualC" Root="-1" Key="Software\Caphyon\Advanced Installer\Prereqs\[ProductCode]\[ProductVersion]" Name="MicrosoftVisualC" Value="1" Component_="MicrosoftVisualC"/>
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
@@ -232,13 +261,48 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
-    <ROW PrereqKey="B35B3203FEB4CFFA576A27CB835D3E6" DisplayName="Visual C++ Redistributable for Visual Studio 2017 x86" VersionMin="14.10" SetupFileUrl="Prerequisites\Visual C++ Redistributable for Visual Studio 2017\vc_redist.x86.exe" Location="0" ExactSize="0" WinNTVersions="Windows Vista RTM x86, Windows Vista SP1 x86, Windows Server 2008 RTM x86, Windows 7 RTM x86" WinNT64Versions="Windows Vista RTM x64, Windows Vista SP1 x64, Windows Server 2008 RTM x64, Windows 7 RTM x64, Windows Server 2008 R2 RTM x64" Operator="0" Options="f" TargetName="Visual C++ Redistributable for Visual Studio 2017\vc_redist.x86.exe" Feature="B35B3203FEB4CFFA576A27CB835D3E6"/>
-    <ROW PrereqKey="D36C9FE0826D4D2B9C2DDCCE2C83E860" DisplayName="Visual C++ Redistributable for Visual Studio 2017 x64" VersionMin="14.10" SetupFileUrl="Prerequisites\Visual C++ Redistributable for Visual Studio 2017\vc_redist.x64.exe" Location="0" ExactSize="0" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" WinNT64Versions="Windows Vista RTM x64, Windows Vista SP1 x64, Windows Server 2008 RTM x64, Windows 7 RTM x64, Windows Server 2008 R2 RTM x64" Operator="1" NoUiComLine="/q /norestart" Options="xf" TargetName="Visual C++ Redistributable for Visual Studio 2017\vc_redist.x64.exe" Feature="D36C9FE0826D4D2B9C2DDCCE2C83E860"/>
-    <ATTRIBUTE name="PrereqsOrder" value="D36C9FE0826D4D2B9C2DDCCE2C83E860 B35B3203FEB4CFFA576A27CB835D3E6"/>
+    <ROW PrereqKey="MicrosoftVisualC" DisplayName="Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.40.33810" VersionMin="14.40.33810.0" SetupFileUrl="dlls\VC_redist.x64.exe" Location="0" ExactSize="0" WinNTVersions="Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" Operator="1" Options="fi" TargetName="VC_redist.x64.exe" Feature="MicrosoftVisualC"/>
+    <ATTRIBUTE name="PrereqsOrder" value="MicrosoftVisualC"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
-    <ROW SearchKey="B35B3203FEB4CFFA576A27CB835D3E6Syst" Prereq="B35B3203FEB4CFFA576A27CB835D3E6" SearchType="0" SearchString="[SystemFolder]vcruntime140.dll" VerMin="14.10.25008" Order="2" Property="PreReqSearch_2_B35B3203FEB4CFFA576A"/>
-    <ROW SearchKey="B35B3203FEB4CFFA576A27CB835D3E6Vers" Prereq="B35B3203FEB4CFFA576A27CB835D3E6" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum\Version" VerMin="14.10.25008" Order="1" Property="PreReqSearch_B35B3203FEB4CFFA576A27"/>
-    <ROW SearchKey="D36C9FE0826D4D2B9C2DDCCE2C83E860Ver" Prereq="D36C9FE0826D4D2B9C2DDCCE2C83E860" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\DevDiv\VC\Servicing\14.0\RuntimeMinimum\Version" VerMin="14.10.25008" Order="1" Property="PreReqSearch_D36C9FE0826D4D2B9C2DDC" Platform="1"/>
+    <ROW SearchKey="SystemFolderfile.dll" Prereq="MicrosoftVisualC" SearchType="0" SearchString="[SystemFolder]file.dll" VerMin="1.0" Order="1" Property="PreReqSearch"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SoftwareIdentificationComponent">
+    <ATTRIBUTE name="LocalFile" value="regid.199509.com.example_ProductNam"/>
+    <ATTRIBUTE name="SystemFile" value="regid.199509.com.example_ProductN_1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlAttributeComponent">
+    <ROW XmlAttribute="xmlnsds" XmlElement="swidsoftware_identification_tag" Name="xmlns:ds" Flags="14" Order="0" Value="http://www.w3.org/2000/09/xmldsig#"/>
+    <ROW XmlAttribute="xmlnsswid" XmlElement="swidsoftware_identification_tag" Name="xmlns:swid" Flags="14" Order="1" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd"/>
+    <ROW XmlAttribute="xmlnsxsi" XmlElement="swidsoftware_identification_tag" Name="xmlns:xsi" Flags="14" Order="2" Value="http://www.w3.org/2001/XMLSchema-instance"/>
+    <ROW XmlAttribute="xsischemaLocation" XmlElement="swidsoftware_identification_tag" Name="xsi:schemaLocation" Flags="14" Order="3" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd software_identification_tag.xsd"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlElementComponent">
+    <ROW XmlElement="swidbuild" ParentElement="swidnumeric" Name="swid:build" Condition="1" Order="2" Flags="14" Text="18"/>
+    <ROW XmlElement="swidentitlement_required_indicator" ParentElement="swidsoftware_identification_tag" Name="swid:entitlement_required_indicator" Condition="1" Order="0" Flags="14" Text="false"/>
+    <ROW XmlElement="swidmajor" ParentElement="swidnumeric" Name="swid:major" Condition="1" Order="0" Flags="14" Text="1"/>
+    <ROW XmlElement="swidminor" ParentElement="swidnumeric" Name="swid:minor" Condition="1" Order="1" Flags="14" Text="0"/>
+    <ROW XmlElement="swidname" ParentElement="swidproduct_version" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[ProductVersion]"/>
+    <ROW XmlElement="swidname_1" ParentElement="swidsoftware_creator" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]"/>
+    <ROW XmlElement="swidname_2" ParentElement="swidsoftware_licensor" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]"/>
+    <ROW XmlElement="swidname_3" ParentElement="swidtag_creator" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]"/>
+    <ROW XmlElement="swidnumeric" ParentElement="swidproduct_version" Name="swid:numeric" Condition="1" Order="1" Flags="14"/>
+    <ROW XmlElement="swidproduct_title" ParentElement="swidsoftware_identification_tag" Name="swid:product_title" Condition="1" Order="1" Flags="14" Text="[ProductName]"/>
+    <ROW XmlElement="swidproduct_version" ParentElement="swidsoftware_identification_tag" Name="swid:product_version" Condition="1" Order="2" Flags="14"/>
+    <ROW XmlElement="swidregid" ParentElement="swidsoftware_creator" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.1995-09.com.example"/>
+    <ROW XmlElement="swidregid_1" ParentElement="swidsoftware_licensor" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.1995-09.com.example"/>
+    <ROW XmlElement="swidregid_2" ParentElement="swidtag_creator" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.1995-09.com.example"/>
+    <ROW XmlElement="swidreview" ParentElement="swidnumeric" Name="swid:review" Condition="1" Order="3" Flags="14" Text="0"/>
+    <ROW XmlElement="swidsoftware_creator" ParentElement="swidsoftware_identification_tag" Name="swid:software_creator" Condition="1" Order="3" Flags="14"/>
+    <ROW XmlElement="swidsoftware_id" ParentElement="swidsoftware_identification_tag" Name="swid:software_id" Condition="1" Order="5" Flags="14"/>
+    <ROW XmlElement="swidsoftware_identification_tag" Name="swid:software_identification_tag" Condition="1" Order="0" Flags="14"/>
+    <ROW XmlElement="swidsoftware_licensor" ParentElement="swidsoftware_identification_tag" Name="swid:software_licensor" Condition="1" Order="4" Flags="14"/>
+    <ROW XmlElement="swidtag_creator" ParentElement="swidsoftware_identification_tag" Name="swid:tag_creator" Condition="1" Order="6" Flags="14"/>
+    <ROW XmlElement="swidtag_creator_regid" ParentElement="swidsoftware_id" Name="swid:tag_creator_regid" Condition="1" Order="1" Flags="14" Text="regid.1995-09.com.example"/>
+    <ROW XmlElement="swidunique_id" ParentElement="swidsoftware_id" Name="swid:unique_id" Condition="1" Order="0" Flags="14" Text="[ProductName]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlFileComponent">
+    <ROW XmlFile="regid.199509.com.example_ProductN_1" FileName="REGID1~1.SWI|regid.1995-09.com.example_[|ProductName].swidtag" DirProperty="regid.199509.com.example_Dir" Component="ProductInformation" RootElement="swidsoftware_identification_tag" Flags="153" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="regid.199509.com.example_ProductNam" FileName="REGID1~1.SWI|regid.1995-09.com.example_[|ProductName].swidtag" DirProperty="APPDIR" Component="ProductInformation" RootElement="swidsoftware_identification_tag" Flags="153" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
   </COMPONENT>
 </DOCUMENT>
