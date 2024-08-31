@@ -4,7 +4,6 @@
 #include <string>
 
 
-
 GeneralChart::GeneralChart(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GeneralChart)
@@ -118,6 +117,12 @@ bool GeneralChart::Plot(ResultItem* res)
         return PlotScatter(vector_set);
     }
 
+    if (res->Type() == result_type::dfa_vectorsetset)
+    {
+        CMBVectorSetSet* vector_set = static_cast<CMBVectorSetSet*>(res->Result());
+        return PlotVectorSetSet(vector_set,QString::fromStdString(res->Name()));
+    }
+
     chartView->update();
     return false; 
 }
@@ -128,6 +133,31 @@ double roundDown(double a, double rounding_value) {
     else
         return -round(-a/rounding_value+1)*rounding_value;
 
+}
+
+bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &title)
+{
+    source1_combo = new QComboBox();
+    source2_combo = new QComboBox();
+    QLabel *source1_label = new QLabel();
+    QLabel *source2_label = new QLabel();
+    source1_label->setText("Source group I:");
+    source2_label->setText("Source group II:");
+
+    connect(source1_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onDFAPairChanged(int)));
+    connect(source2_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onDFAPairChanged(int)));
+
+    for (map<std::string,CMBVectorSet>::iterator it = profile->begin(); it!=profile->end(); it++ )
+    {
+        source1_combo->addItem(QString::fromStdString(it->first));
+        source2_combo->addItem(QString::fromStdString(it->first));
+    }
+    ui->horizontalLayout->addWidget(source1_label);
+    ui->horizontalLayout->addWidget(source1_combo);
+    ui->horizontalLayout->addWidget(source2_label);
+    ui->horizontalLayout->addWidget(source2_combo);
+    onDFAPairChanged(source1_combo->currentIndex());
+    return true;
 }
 
 bool GeneralChart::PlotVectorSet(CMBVectorSet *profile, const QString &title)
@@ -142,9 +172,12 @@ bool GeneralChart::PlotVectorSet(CMBVectorSet *profile, const QString &title)
     {
         element_combo->addItem(QString::fromStdString(it->first));
     }
+
+
     ui->horizontalLayout->addWidget(element_label);
     ui->horizontalLayout->addWidget(element_combo);
     onPairChanged(element_combo->currentIndex());
+
     return true;
 }
 
@@ -562,6 +595,28 @@ void GeneralChart::onPairChanged(int pair_id)
 
 }
 
+void GeneralChart::onDFAPairChanged(int pair_id)
+{
+    chart->removeAllSeries();
+    for (int i=0; i<chart->axes().size(); i++)
+        chart->removeAxis(chart->axes()[i]);
+
+    for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
+    {
+        chart->removeAxis(chart->axes(Qt::Vertical)[i]);
+    }
+
+    for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
+    {
+        chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
+    }
+    CMBVectorSetSet* vectorset = static_cast<CMBVectorSetSet*>(result_item->Result());
+    qDebug()<<source1_combo->currentText();
+    qDebug()<<source2_combo->currentText();
+    if (source1_combo->currentText()!="" && source2_combo->currentText()!="")
+        PlotScatter(&vectorset->at(source1_combo->currentText().toStdString()),&vectorset->at(source2_combo->currentText().toStdString()), "WB_" + source1_combo->currentText(), "WB_" + source2_combo->currentText() );
+}
+
 void GeneralChart::onMCMCVariableChanged(int i)
 {
     CMBTimeSeriesSet * samplesset = static_cast<CMBTimeSeriesSet*>(result_item->Result());
@@ -814,6 +869,56 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset)
         series->attachAxis(axisX);
         series->attachAxis(axisYNormal);
         axisX->append(QString::fromStdString(vec->first), counter+0.5);
+    }
+
+    return true;
+}
+
+
+bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset2, const QString &xaxisTitle, const QString &yaxisTitle)
+{
+
+    QValueAxis* axisX = new QValueAxis();
+    QValueAxis* axisYNormal = new QValueAxis();
+    axisX->setObjectName("axisX");
+    axisYNormal->setObjectName("axisY");
+
+    double x_min_val = vectorset1->min();
+    double x_max_val = vectorset1->max();
+    double y_min_val = vectorset2->min();
+    double y_max_val = vectorset2->max();
+
+
+    axisX->setRange(x_min_val-(x_max_val-x_min_val)*0.05,x_max_val+(x_max_val-x_min_val)*0.05);
+    axisX->setTitleText(xaxisTitle);
+    axisYNormal->setRange(y_min_val-(y_max_val-y_min_val)*0.05,y_max_val+(y_max_val-y_min_val)*0.05);
+    axisYNormal->setTitleText(yaxisTitle);
+
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisYNormal, Qt::AlignLeft);
+
+    QStringList categories;
+    int counter = 0;
+    for (map<string, CMBVector>::iterator vec = vectorset1->begin(); vec!=vectorset1->end(); vec++)
+    {
+        QScatterSeries* series = new QScatterSeries();
+
+        for (int j=0; j<vec->second.num; j++)
+            series->append(vec->second[j],vectorset2->at(vec->first)[j]);
+
+        counter++;
+        QPen pen = series->pen();
+        pen.setWidth(2);
+        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        series->setPen(pen);
+
+        series->setName(QString::fromStdString(vec->first));
+        series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
+        series->setMarkerSize(15.0);
+        chart->addSeries(series);
+        series->attachAxis(axisX);
+        series->attachAxis(axisYNormal);
+
     }
 
     return true;

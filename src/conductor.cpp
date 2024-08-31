@@ -458,7 +458,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source group"]);
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
-        DFA_P_Val.SetName("P-Value");
+        DFA_P_Val.SetName("Chi-squared P-Value");
         DFA_P_Val.SetType(result_type::vector);
         DFA_P_Val.SetShowTable(true);
         DFA_P_Val.SetShowGraph(false);
@@ -532,7 +532,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis();
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
-        DFA_P_Val.SetName("P-Value");
+        DFA_P_Val.SetName("Chi-squared P-Value");
         DFA_P_Val.SetType(result_type::vector);
         DFA_P_Val.SetShowTable(true);
         DFA_P_Val.SetShowGraph(false);
@@ -552,7 +552,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         ResultItem DFA_Projected;
         DFA_Projected.SetName("Projected Elemental Profiles");
-        DFA_Projected.SetType(result_type::vectorset_groups);
+        DFA_Projected.SetType(result_type::dfa_vectorsetset);
         DFA_Projected.SetShowTable(true);
         DFA_Projected.SetShowGraph(true);
         DFA_Projected.SetYAxisMode(yaxis_mode::normal);
@@ -608,7 +608,71 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]);
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
-        DFASValues.SetName("p-Values");
+        DFASValues.SetName("Chi-squared p-Values");
+        DFASValues.SetType(result_type::vector);
+        DFASValues.SetShowTable(true);
+        DFASValues.SetAbsoluteValue(true);
+        DFASValues.SetYAxisMode(yaxis_mode::log);
+        DFASValues.SetYLimit(_range::high,1);
+        DFASValues.SetResult(PVector);
+        CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
+        ResultItem DFASWilksLambdaValues;
+        DFASWilksLambdaValues.SetName("Wilks' Lambda");
+        DFASWilksLambdaValues.SetType(result_type::vector);
+        DFASWilksLambdaValues.SetShowTable(true);
+        DFASWilksLambdaValues.SetAbsoluteValue(true);
+        DFASWilksLambdaValues.SetYAxisMode(yaxis_mode::log);
+        DFASWilksLambdaValues.SetYLimit(_range::high,1);
+        DFASWilksLambdaValues.SetResult(WilksLambdaVector);
+        CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
+        ResultItem DFASF_Test_P_Value;
+        DFASF_Test_P_Value.SetName("F-test P-value");
+        DFASF_Test_P_Value.SetType(result_type::vector);
+        DFASF_Test_P_Value.SetShowTable(true);
+        DFASF_Test_P_Value.SetAbsoluteValue(true);
+        DFASF_Test_P_Value.SetYAxisMode(yaxis_mode::log);
+        DFASF_Test_P_Value.SetYLimit(_range::high,1);
+        DFASF_Test_P_Value.SetResult(F_test_P_value);
+
+        results.Append(DFASValues);
+        results.Append(DFASWilksLambdaValues);
+        results.Append(DFASF_Test_P_Value);
+
+    }
+
+    if (command == "SDFAM")
+    {
+        ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
+        rtw->show();
+        results.SetName("Multiway Stepwise DFA");
+
+        bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
+        bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
+        bool OmandSizeCorrect = false;
+        SourceSinkData TransformedData;
+        if (arguments["OM and Size Correct based on target sample"] != "")
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+            OmandSizeCorrect = true;
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, exclude_elements,false);
+        }
+        else
+            TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
+
+
+        if (arguments["Box-cox transformation"]=="true")
+            TransformedData = TransformedData.BoxCoxTransformed(true);
+        TransformedData.SetProgressWindow(rtw);
+        vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis();
+        CMBVector *PVector = new CMBVector(SDFA_res[0]);
+        ResultItem DFASValues;
+        DFASValues.SetName("Chi-Squared p-Values");
         DFASValues.SetType(result_type::vector);
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);
@@ -672,7 +736,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source group"]);
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
-        DFASValues.SetName("p-Values");
+        DFASValues.SetName("Chi-squared p-Values");
         DFASValues.SetType(result_type::vector);
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);

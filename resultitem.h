@@ -3,7 +3,7 @@
 #include <string>
 #include "parameter.h"
 
-enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, vectorset, mcmc_samples, timeseries_set_first_symbol, timeseries_set_all_symbol, distribution_with_observed,rangeset, rangeset_with_observed, matrix1vs1, stacked_bar_chart, vectorset_groups};
+enum class result_type {timeseries, contribution, distribution, distribution_set, timeseries_set, samples, predicted_concentration, elemental_profile_set, mlrset, mlr, matrix, vector, vectorset, mcmc_samples, timeseries_set_first_symbol, timeseries_set_all_symbol, distribution_with_observed,rangeset, rangeset_with_observed, matrix1vs1, stacked_bar_chart, vectorset_groups, dfa_vectorsetset};
 enum class yaxis_mode {normal, log};
 enum class xaxis_mode {real, counter};
 #include "interface.h"
