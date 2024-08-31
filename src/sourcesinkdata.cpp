@@ -3202,6 +3202,46 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
     return out;
 }
 
+vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis()
+{
+    vector<CMBVector> out(3);
+    vector<string> elemnames = ElementNames();
+    vector<string> selected_labels;
+    for (unsigned int i=0; i<elemnames.size(); i++)
+    {
+        if (rtw)
+            rtw->SetProgress(double(i + 1) / double(elemnames.size()));
+        double min_P = 100;
+        string highestimproved;
+        double wilkslambda;
+        double F_test_p_value;
+        for (unsigned int j=0; j<elemnames.size(); j++)
+        {
+            vector<string> selected_labels_temp = selected_labels;
+            if (lookup(selected_labels,elemnames[j])==-1)
+            {
+                selected_labels_temp.push_back(elemnames[j]);
+                SourceSinkData tobeanalysed = Extract(selected_labels_temp);
+                double p_value = tobeanalysed.DFA_P_Value();
+
+                if (p_value<min_P)
+                {
+                    highestimproved = elemnames[j];
+                    min_P = p_value;
+                    wilkslambda = tobeanalysed.WilksLambda();
+                    CMBVectorSet projected = tobeanalysed.DFA_Projected();
+                    F_test_p_value = projected.FTest_p_value();
+                }
+            }
+        }
+        out[0].append(highestimproved,min_P);
+        out[1].append(highestimproved,wilkslambda);
+        out[2].append(highestimproved,F_test_p_value);
+        selected_labels.push_back(highestimproved);
+
+    }
+    return out;
+}
 
 vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1)
 {

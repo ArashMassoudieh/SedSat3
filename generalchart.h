@@ -7,6 +7,7 @@
 #include "results.h"
 #include "cmbvector.h"
 #include "cmbvectorset.h"
+#include "cmbvectorsetset.h"
 #include <contribution.h>
 #include <elemental_profile_set.h>
 #include <multiplelinearregressionset.h>
@@ -33,6 +34,7 @@ public:
     bool Plot(ResultItem* res);
     bool PlotVector(CMBVector *profile, const QString &title);
     bool PlotVectorSet(CMBVectorSet *profile, const QString &title);
+    bool PlotVectorSetSet(CMBVectorSetSet *profile, const QString &title);
     bool PlotMatrix(CMBMatrix *matrix, const QString &title);
     bool PlotProfileSet(Elemental_Profile_Set *elementalprofileset, const QString &title);
     bool PlotContribution(Contribution* contributions, const QString &title);
@@ -49,11 +51,14 @@ public:
     bool PlotDistribution(CTimeSeries<double> *mlr,const QString& variable);
     bool PlotScatter(CMBMatrix *matrix);
     bool PlotScatter(CMBVectorSet *vectorset);
+    bool PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset2, const QString &xaxis_title, const QString &yaxistitle);
 private:
     Ui::GeneralChart *ui;
     Chart* chart;
     ChartView *chartView;
     QComboBox *element_combo;
+    QComboBox *source1_combo;
+    QComboBox *source2_combo;
     QComboBox *independent_combo;
     bool PlotRegression(MultipleLinearRegression *timeseriesset,const QString& independent_var);
     ResultItem* result_item=nullptr;
@@ -61,6 +66,7 @@ private slots:
     void onIndependentChanged(int i_independent);
     void onElementChanged(int i_constituent);
     void onPairChanged(int pair_id);
+    void onDFAPairChanged(int pair_id);
     void onMCMCVariableChanged(int);
     void onDistributionsVariableChanged(int);
     void on_Exporttopng();
