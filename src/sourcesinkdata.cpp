@@ -3098,19 +3098,16 @@ CMBVector SourceSinkData::DFA_eigvector()
     CVector_arma Eigvals = GetReal(eigval);
     CMatrix_arma Eigvecs = GetReal(eigvec);
 
-    /*
+    
     CVector_arma EigvalsImg = GetImg(eigval);
     CMatrix_arma EigvecsImg = GetImg(eigvec);
     Eigvecs.writetofile("Eigvecs.txt");
     Eigvals.writetofile("Eigvals.txt");
     EigvalsImg.writetofile("EigvalsImg.txt");
     EigvecsImg.writetofile("EigvecsImg.txt");
-*/
-    CMBVector out;
-    if (fabs(Eigvals[0])>fabs(Eigvals[Eigvals.num-1]))
-        out = CVector_arma(Eigvecs.getcol(0));
-    else
-        out = CVector_arma(Eigvecs.getcol(Eigvals.num-1));
+    
+    CMBVector out = CVector_arma(Eigvecs.getcol(Eigvals.abs_max_elems()));
+    
     vector<string> elementNames = ElementNames();
     out.SetLabels(elementNames);
     return out;
@@ -3245,7 +3242,7 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis()
 
 vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1)
 {
-    vector<CMBVector> out(2);
+    vector<CMBVector> out(3);
     vector<string> elemnames = ElementNames();
     vector<string> selected_labels;
     for (unsigned int i=0; i<elemnames.size(); i++)

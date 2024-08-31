@@ -124,6 +124,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="..\Utilities\Vector.cpp" />
     <ClCompile Include="..\Utilities\Vector_arma.cpp" />
     <ClCompile Include="aboutdialog.cpp" />
+    <ClCompile Include="cmbvectorsetset.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="multiplelinearregression.cpp" />
     <ClCompile Include="multiplelinearregressionset.cpp" />
@@ -200,6 +201,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="cmbtimeseriesset.h" />
     <ClInclude Include="cmbvector.h" />
     <ClInclude Include="cmbvectorset.h" />
+    <ClInclude Include="cmbvectorsetset.h" />
     <ClInclude Include="contribution.h" />
     <ClInclude Include="customplotbar.h" />
     <ClInclude Include="generalplotter.h" />

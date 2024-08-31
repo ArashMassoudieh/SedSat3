@@ -354,6 +354,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "DFA")
     {
+        if (arguments["Source/Target group I"] == arguments["Source/Target group II"])
+        {
+            QString message = "The selected sources must be different";
+            QMessageBox::warning(mainwindow, "OpenHydroQual", message, QMessageBox::Ok);
+            return false;
+        }
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
         rtw->show();
         results.SetName("DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
@@ -578,6 +584,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "SDFA")
     {
+        if (arguments["Source/Target group I"] == arguments["Source/Target group II"])
+        {
+            QString message = "The selected sources must be different";
+            QMessageBox::warning(mainwindow, "OpenHydroQual", message, QMessageBox::Ok);
+            return false; 
+        }
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
         rtw->show();
         results.SetName("Stepwise DFA between " + arguments["Source/Target group I"] + "&" + arguments["Source/Target group II"] );
@@ -585,6 +597,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         bool OmandSizeCorrect = false;
+        
         SourceSinkData TransformedData;
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
@@ -751,6 +764,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetAbsoluteValue(true);
         DFASWilksLambdaValues.SetYAxisMode(yaxis_mode::log);
         DFASWilksLambdaValues.SetYLimit(_range::high,1);
+        DFASWilksLambdaValues.SetResult(WilksLambdaVector);
         CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
         ResultItem DFASF_Test_P_Value;
         DFASF_Test_P_Value.SetName("F-test P-value");
