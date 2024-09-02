@@ -8,7 +8,7 @@ CMBVector::CMBVector():CVector(),Interface()
 
 }
 
-CMBVector::CMBVector(const CMBVector& mp):CVector(mp)
+CMBVector::CMBVector(const CMBVector& mp):CVector(mp), Interface()
 {
     labels = mp.labels;
     boolean_values = mp.boolean_values;
@@ -18,9 +18,15 @@ CMBVector::CMBVector(const CMBVector& mp):CVector(mp)
 
 }
 
-CMBVector::CMBVector(const CVector& mp):CVector(mp)
+CMBVector::CMBVector(const CVector& mp):CVector(mp), Interface()
 {
     labels.resize(getsize());
+}
+
+CMBVector::CMBVector(const CVector_arma& mp): Interface()
+{
+    labels.resize(getsize());
+    CVector::operator=(mp);
 }
 
 CMBVector::CMBVector(int n):CVector(n), Interface()
@@ -47,6 +53,14 @@ CMBVector& CMBVector::operator=(const CVector &mp)
     labels.resize(getsize());
     return *this; 
 }
+
+CMBVector& CMBVector::operator=(const CVector_arma &mp)
+{
+    CVector::operator=(mp);
+    labels.resize(getsize());
+    return *this;
+}
+
 
 QJsonObject CMBVector::toJsonObject()
 {
