@@ -3098,6 +3098,7 @@ CMBVector SourceSinkData::DFA_eigvector()
     //EigvalsImg.writetofile("EigvalsImg.txt");
     //EigvecsImg.writetofile("EigvecsImg.txt");
     
+
     CMBVector out = CVector_arma(Eigvecs.getcol(Eigvals.abs_max_elems()));
     
     vector<string> elementNames = ElementNames();
