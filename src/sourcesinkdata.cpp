@@ -3084,7 +3084,7 @@ CMBVector SourceSinkData::DFA_eigvector()
 
     arma::cx_vec eigval;
     arma::cx_mat eigvec;
-    eig_gen(eigval, eigvec, Product.matr);
+    eig_gen(eigval, eigvec, Product);
 
 
     CVector_arma Eigvals = GetReal(eigval);
