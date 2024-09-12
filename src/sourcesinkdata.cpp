@@ -3017,11 +3017,7 @@ double SourceSinkData::WilksLambda()
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_T = S_w + S_B;
-    /*
-    S_w.writetofile("S_w.txt");
-    S_B.writetofile("S_B.txt");
-    S_T.writetofile("S_T.txt");
-    */
+   
     double numerator = S_w.det();
     double denumerator = S_T.det();
     return fabs(numerator)/fabs(denumerator);
@@ -3088,10 +3084,6 @@ CMBVector SourceSinkData::DFA_eigvector()
 
     arma::cx_vec eigval;
     arma::cx_mat eigvec;
-/*  S_w.writetofile("S_w.txt");
-    S_B.writetofile("S_b.txt");
-    Product.writetofile("S_B*S_w.txt");
-*/
     eig_gen(eigval, eigvec, Product.matr);
 
 
@@ -3101,11 +3093,12 @@ CMBVector SourceSinkData::DFA_eigvector()
     
     CVector_arma EigvalsImg = GetImg(eigval);
     CMatrix_arma EigvecsImg = GetImg(eigvec);
-    Eigvecs.writetofile("Eigvecs.txt");
-    Eigvals.writetofile("Eigvals.txt");
-    EigvalsImg.writetofile("EigvalsImg.txt");
-    EigvecsImg.writetofile("EigvecsImg.txt");
+    //Eigvecs.writetofile("Eigvecs.txt");
+    //Eigvals.writetofile("Eigvals.txt");
+    //EigvalsImg.writetofile("EigvalsImg.txt");
+    //EigvecsImg.writetofile("EigvecsImg.txt");
     
+
     CMBVector out = CVector_arma(Eigvecs.getcol(Eigvals.abs_max_elems()));
     
     vector<string> elementNames = ElementNames();
@@ -3117,10 +3110,10 @@ CMBVector SourceSinkData::DFA_weight_vector(const string &source1, const string 
 {
     CMatrix_arma Sigma1 = at(source1).CovarianceMatrix();
     CMatrix_arma Sigma2 = at(source2).CovarianceMatrix();
-    Sigma1.writetofile("Sigma1.txt");
-    Sigma2.writetofile("Sigma2.txt");
+    //Sigma1.writetofile("Sigma1.txt");
+    //Sigma2.writetofile("Sigma2.txt");
     CMatrix_arma Sigma = Sigma1 + Sigma2;
-    Invert(Sigma).writetofile("Inv_Sigma.txt");
+    //Invert(Sigma).writetofile("Inv_Sigma.txt");
     CVector mu1_vec = at(source1).ElementMeans();
     CVector mu2_vec = at(source2).ElementMeans();
     CVector_arma mu1 = mu1_vec;

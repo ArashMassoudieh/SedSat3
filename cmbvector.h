@@ -11,6 +11,7 @@ public:
     CMBVector();
     CMBVector(int n);
     CMBVector(const CMBVector& mp);
+    CMBVector(const CVector_arma& mp);
     CMBVector& operator=(const CMBVector &mp);
     CMBVector(const CVector& mp);
     CMBVector(const CVector_arma& mp);

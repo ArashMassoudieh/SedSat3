@@ -47,6 +47,13 @@ CMBVector& CMBVector::operator=(const CMBVector &mp)
 
 }
 
+CMBVector& CMBVector::operator=(const CVector_arma &mp)
+{
+    CVector::operator=(mp);
+    labels.resize(mp.size());
+    return *this;
+}
+
 CMBVector& CMBVector::operator=(const CVector &mp)
 {
     CVector::operator=(mp);
