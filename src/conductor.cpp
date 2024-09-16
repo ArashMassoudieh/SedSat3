@@ -1439,14 +1439,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
                 QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+
+            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(true, false,false);
         }
-        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements,false);
-
-
-
-
-
+        else
+            TransformedData = Data()->CopyandCorrect(true, false,false);
 
         if (!CheckNegativeElements(&TransformedData))
                 return false;
