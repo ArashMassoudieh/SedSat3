@@ -569,7 +569,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         ResultItem DFA_eigen_vector;
         DFA_Projected.SetName("Eigen vector");
-        DFA_Projected.SetType(result_type::vector);
+        DFA_Projected.SetType(result_type::vectorset);
         DFA_Projected.SetShowTable(true);
         DFA_Projected.SetShowGraph(true);
         DFA_Projected.SetYAxisMode(yaxis_mode::normal);
