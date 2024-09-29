@@ -388,7 +388,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"], arguments["Source/Target group II"]);
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
-        DFA_P_Val.SetName("Chi-Squared P-Value");
+        DFA_P_Val.SetName("Chi-squared P-Value");
         DFA_P_Val.SetType(result_type::vector);
         DFA_P_Val.SetShowTable(true);
         DFA_P_Val.SetShowGraph(false);
@@ -438,7 +438,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
         rtw->show();
-        results.SetName("DFA between " + arguments["Source"] + "& the rest");
+        results.SetName("DFA between " + arguments["Source group"] + "& the rest");
 
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
@@ -557,7 +557,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(DFA_F_Test_P_Val);
 
         ResultItem DFA_Projected;
-        DFA_Projected.SetName("Projected Elemental Profiles");
+        DFA_Projected.SetName("Multiway Projected Elemental Profiles");
         DFA_Projected.SetType(result_type::dfa_vectorsetset);
         DFA_Projected.SetShowTable(true);
         DFA_Projected.SetShowGraph(true);
@@ -621,7 +621,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]);
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
-        DFASValues.SetName("Chi-squared p-Values");
+        DFASValues.SetName("Chi-squared P-Values");
         DFASValues.SetType(result_type::vector);
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);
@@ -639,7 +639,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetResult(WilksLambdaVector);
         CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
         ResultItem DFASF_Test_P_Value;
-        DFASF_Test_P_Value.SetName("F-test P-value");
+        DFASF_Test_P_Value.SetName("F-test P-Value");
         DFASF_Test_P_Value.SetType(result_type::vector);
         DFASF_Test_P_Value.SetShowTable(true);
         DFASF_Test_P_Value.SetAbsoluteValue(true);
@@ -685,7 +685,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis();
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
-        DFASValues.SetName("Chi-Squared p-Values");
+        DFASValues.SetName("Chi-squared P-Values");
         DFASValues.SetType(result_type::vector);
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);
@@ -703,7 +703,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetResult(WilksLambdaVector);
         CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
         ResultItem DFASF_Test_P_Value;
-        DFASF_Test_P_Value.SetName("F-test P-value");
+        DFASF_Test_P_Value.SetName("F-test P-Value");
         DFASF_Test_P_Value.SetType(result_type::vector);
         DFASF_Test_P_Value.SetShowTable(true);
         DFASF_Test_P_Value.SetAbsoluteValue(true);
@@ -749,7 +749,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source group"]);
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
-        DFASValues.SetName("Chi-squared p-Values");
+        DFASValues.SetName("Chi-squared P-Values");
         DFASValues.SetType(result_type::vector);
         DFASValues.SetShowTable(true);
         DFASValues.SetAbsoluteValue(true);
@@ -767,7 +767,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASWilksLambdaValues.SetResult(WilksLambdaVector);
         CMBVector *F_test_P_value = new CMBVector(SDFA_res[2]);
         ResultItem DFASF_Test_P_Value;
-        DFASF_Test_P_Value.SetName("F-test P-value");
+        DFASF_Test_P_Value.SetName("F-test P-Value");
         DFASF_Test_P_Value.SetType(result_type::vector);
         DFASF_Test_P_Value.SetShowTable(true);
         DFASF_Test_P_Value.SetAbsoluteValue(true);

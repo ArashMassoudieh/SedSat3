@@ -3,6 +3,8 @@
 #include "contribution.h"
 #include "elemental_profile_set.h"
 #include "rangeset.h"
+#include "cmbvectorset.h"
+#include "cmbvectorsetset.h"
 
 Results::Results()
 {
@@ -63,6 +65,36 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetType(result_type::predicted_concentration);
             res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetResult(modeled);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Multiway Projected Elemental Profiles"))
+        {
+            CMBVectorSetSet* projected_elements = new CMBVectorSetSet();
+            projected_elements->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::dfa_vectorsetset);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(projected_elements);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Projected Elemental Profiles"))
+        {
+            CMBVectorSet* projected_elements = new CMBVectorSet();
+            projected_elements->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vectorset_groups);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetResult(projected_elements);
             operator[](key.toStdString()) = res_item;
         }
         else if (key.contains("Elemental Profiles"))
@@ -208,6 +240,67 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetName(key.toStdString());
             res_item.SetYAxisMode(yaxis_mode::log);
             res_item.SetResult(dfaresults);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Chi-squared P-Value"))
+        {
+            CMBVector* chisquarepvalue = new CMBVector();
+            chisquarepvalue->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetResult(chisquarepvalue);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Wilks' Lambda"))
+        {
+            CMBVector* wilkslambda = new CMBVector();
+            wilkslambda->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetYLimit(_range::high,1);
+            res_item.SetResult(wilkslambda);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("F-test P-Value"))
+        {
+            CMBVector* ftestpvalue = new CMBVector();
+            ftestpvalue->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetResult(ftestpvalue);
+            operator[](key.toStdString()) = res_item;
+        }
+        else if (key.contains("Eigen vector"))
+        {
+            CMBVector* eigenvector = new CMBVector();
+            eigenvector->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetAbsoluteValue(true);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::log);
+            res_item.SetResult(eigenvector);
             operator[](key.toStdString()) = res_item;
         }
         else if (key.contains("Box-Cox parameters"))
