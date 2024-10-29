@@ -1944,6 +1944,8 @@ DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, c
     DFA_result out;
     //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
     CMBVector eigen_vector = twoSources.DFA_eigvector();
+    if (eigen_vector.size()==0)
+        return out;
     out.projected = twoSources.DFA_Projected(source1, source2);
     out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = out.projected.FTest_p_value();
     out.eigen_vectors.Append(source1 + " vs " +source2,eigen_vector);
@@ -3080,6 +3082,9 @@ CMBVector SourceSinkData::DFA_eigvector()
 {
     CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
     CMatrix_arma S_w = WithinGroupCovarianceMatrix();
+    CMatrix_arma InvS_w = inv(S_w);
+    if (InvS_w.getnumrows()==0)
+        return CMBVector();
     CMatrix_arma Product = inv(S_w)*S_B;
 
     arma::cx_vec eigval;
@@ -3174,6 +3179,8 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
                 selected_labels_temp.push_back(elemnames[j]);
                 SourceSinkData tobeanalysed = Extract(selected_labels_temp);
                 DFA_result thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
+                if (thisDFAresults.eigen_vectors.size()==0)
+                    return out;
                 if (thisDFAresults.p_values[0]<min_P)
                 {
                     highestimproved = elemnames[j];

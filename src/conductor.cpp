@@ -386,6 +386,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"], arguments["Source/Target group II"]);
+        if (dfa_res.eigen_vectors.size()==0)
+        {
+            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            return false;
+        }
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
         DFA_P_Val.SetName("Chi-squared P-Value");
@@ -462,6 +467,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source group"]);
+        if (dfa_res.eigen_vectors.size()==0)
+        {
+            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            return false;
+        }
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
         DFA_P_Val.SetName("Chi-squared P-Value");
@@ -536,6 +546,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis();
+        if (dfa_res.eigen_vectors.size()==0)
+        {
+            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            return false;
+        }
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
         ResultItem DFA_P_Val;
         DFA_P_Val.SetName("Chi-squared P-Value");
@@ -619,6 +634,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]);
+        if (SDFA_res[0].size()==0)
+        {
+            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            return false;
+        }
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
         DFASValues.SetName("Chi-squared P-Values");
@@ -683,6 +703,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis();
+        if (SDFA_res[0].size()==0)
+        {
+            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            return false;
+        }
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
         DFASValues.SetName("Chi-squared P-Values");
@@ -747,6 +772,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             TransformedData = TransformedData.BoxCoxTransformed(true);
         TransformedData.SetProgressWindow(rtw);
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source group"]);
+        if (SDFA_res[0].size()==0)
+        {
+            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            return false;
+        }
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
         ResultItem DFASValues;
         DFASValues.SetName("Chi-squared P-Values");
