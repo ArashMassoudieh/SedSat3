@@ -360,11 +360,11 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
         }
         else if (key.contains("Bracketing results"))
         {
-            CMBVector* bracketingresults = new CMBVector();
+            CMBMatrix* bracketingresults = new CMBMatrix();
             bracketingresults->ReadFromJsonObject(jsonobject[key].toObject());
             bracketingresults->SetBooleanValue(true);
             ResultItem res_item;
-            res_item.SetShowAsString(true);
+            res_item.SetShowAsString(false);
             res_item.SetShowTable(true);
             res_item.SetShowGraph(false);
             res_item.SetType(result_type::vector);
