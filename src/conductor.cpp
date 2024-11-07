@@ -367,9 +367,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
-        if (!CheckNegativeElements(&TransformedData))
-            return false;
+        SourceSinkData TransformedData = *Data();
 
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
@@ -380,6 +378,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
+
+        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements, false);
         
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
@@ -448,9 +448,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
 
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
-        if (!CheckNegativeElements(&TransformedData))
-            return false;
+        SourceSinkData TransformedData = *Data();
 
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
@@ -461,6 +459,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
+
+        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements, false);
 
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
@@ -527,9 +527,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
 
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
-        if (!CheckNegativeElements(&TransformedData))
-            return false;
+        SourceSinkData TransformedData = *Data();
 
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
@@ -540,6 +538,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
+
+        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements, false);
+        
+        if (!CheckNegativeElements(&TransformedData))
+            return false;
 
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
