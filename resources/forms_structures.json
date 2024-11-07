@@ -231,6 +231,10 @@
     			"type": "comboBox",
     			"source": "Items:Linear,Power"
     		},
+			"P-value threshold": {
+				"type": "lineEdit",
+				"default": "0.05"
+    		},
     		"Description": 
     		{
     			"type": "Description",
@@ -264,7 +268,7 @@
 		"Threshold": {
    			"type": "lineEdit",
 			"default": "0.75"
-    		},
+    	},
     		"OM and Size Correct based on target sample":{
 			"type": "comboBox",
 			"source": "TargetSamplesList+Blank"

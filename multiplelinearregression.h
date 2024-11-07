@@ -41,6 +41,13 @@ public:
     void SetEquation(regression_form form) {
         regressionEquation = form;
     }
+    void SetPValueThreshold(const double &p) {
+        p_value_threshold = p;
+    }
+    double PValueThreshold()
+    {
+        return p_value_threshold;
+    }
 private:
     vector<double> coefficients_intercept_;
     vector<vector<double>> independent_data;
@@ -50,6 +57,7 @@ private:
     CMBMatrix correlation_matrix_;
     double chisq, R2, R2_adj;
     vector<double> p_value;
+    double p_value_threshold = 0.05;
     vector<bool> make_effective;
     regression_form regressionEquation = regression_form::linear;
 };

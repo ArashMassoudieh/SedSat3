@@ -236,7 +236,7 @@ public:
     QJsonObject ElementDataToJsonObject();
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
-    bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear);
+    bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear, const double &p_value_threshold=0.05);
     DFA_result DiscriminantFunctionAnalysis(const string &source1);
     DFA_result DiscriminantFunctionAnalysis();
     DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
@@ -339,6 +339,7 @@ private:
     estimation_mode parameter_estimation_mode = estimation_mode::elemental_profile_and_contribution;
     string omconstituent;
     string sizeconsituent;
+    double regression_p_value_threshold = 0.05;
     const double epsilon = 1e-6;
     double distance_coeff = 1;
     list<string> tools_used;

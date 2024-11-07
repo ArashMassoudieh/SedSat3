@@ -77,13 +77,13 @@ QTableWidget *MultipleLinearRegressionSet::ToTable()
         tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[0])));
         tablewidget->setItem(i,1, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[1])));
         tablewidget->setItem(i,2, new QTableWidgetItem(QString::number(it->second.P_Value()[0])));
-        if (it->second.P_Value()[0]<0.05)
+        if (it->second.P_Value()[0]< it->second.PValueThreshold())
             tablewidget->item(i, 2)->setForeground(Qt::red);
         if (it->second.CoefficientsIntercept().size() > 2)
         {
             tablewidget->setItem(i, 3, new QTableWidgetItem(QString::number(it->second.CoefficientsIntercept()[2])));
             tablewidget->setItem(i, 4, new QTableWidgetItem(QString::number(it->second.P_Value()[1])));
-            if (it->second.P_Value()[1] < 0.05)
+            if (it->second.P_Value()[1] < it->second.PValueThreshold())
                 tablewidget->item(i, 4)->setForeground(Qt::red);
         }
         i++;

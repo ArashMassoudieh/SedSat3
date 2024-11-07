@@ -25,6 +25,7 @@ MultipleLinearRegression::MultipleLinearRegression(const MultipleLinearRegressio
     independent_data = mp.independent_data;
     make_effective = mp.make_effective;
     regressionEquation = mp.regressionEquation;
+    p_value_threshold = mp.p_value_threshold; 
 
 }
 MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLinearRegression &mp)
@@ -42,6 +43,7 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
     dependent_variable_name = mp.dependent_variable_name;
     make_effective = mp.make_effective;
     regressionEquation = mp.regressionEquation;
+    p_value_threshold = mp.p_value_threshold;
     return *this;
 }
 
@@ -179,7 +181,7 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
         double SSE_reduced = SSE_reduced_model(independent,dependent, i);
         double F = (SSE_reduced - chisq)/chisq*(number_of_data_points-number_of_variables-1);
         p_value.push_back(gsl_cdf_fdist_Q (F, number_of_variables, number_of_data_points-(number_of_variables)));
-        if (p_value[i]<0.05 && aquiutils::lookup(independent_variables_names,dependent_variable_name)==-1)
+        if (p_value[i]<p_value_threshold && aquiutils::lookup(independent_variables_names,dependent_variable_name)==-1)
             make_effective.push_back(true);
         else
             make_effective.push_back(false);

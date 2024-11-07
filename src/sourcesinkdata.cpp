@@ -38,6 +38,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     parameter_estimation_mode = mp.parameter_estimation_mode;
     omconstituent = mp.omconstituent;
     sizeconsituent = mp.sizeconsituent;
+    regression_p_value_threshold = mp.regression_p_value_threshold;
     distance_coeff = mp.distance_coeff;
     tools_used = mp.tools_used;
 
@@ -63,6 +64,7 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
+    out.regression_p_value_threshold = regression_p_value_threshold;
     if (elementinfo)
         for (map<string,element_information>::iterator it = ElementInformation.begin(); it!=ElementInformation.end(); it++)
         {
@@ -123,7 +125,7 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
-    
+    out.regression_p_value_threshold = regression_p_value_threshold;
     out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
@@ -141,7 +143,7 @@ SourceSinkData SourceSinkData::ExtractElementsOnly(bool isotopes) const
     }
     out.omconstituent = omconstituent;
     out.sizeconsituent = sizeconsituent;
-
+    out.regression_p_value_threshold = regression_p_value_threshold;
     out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
@@ -185,6 +187,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     selected_target_sample = mp.selected_target_sample;
     parameter_estimation_mode = mp.parameter_estimation_mode;
     omconstituent = mp.omconstituent;
+    regression_p_value_threshold = mp.regression_p_value_threshold;
     sizeconsituent = mp.sizeconsituent;
     distance_coeff = mp.distance_coeff;
     tools_used = mp.tools_used;
@@ -1887,13 +1890,14 @@ element_information::role SourceSinkData::Role(const QString &rl)
     return element_information::role::do_not_include;
 }
 
-bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form)
+bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form, const double& p_value_threshold)
 {
     omconstituent = om;
     sizeconsituent = d;
+    regression_p_value_threshold = p_value_threshold;
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
     {
-        it->second.SetRegression(om,d,form);
+        it->second.SetRegression(om,d,form,p_value_threshold);
     }
     return true;
 }
