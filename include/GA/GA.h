@@ -19,12 +19,12 @@ class ProgressWindow;
 struct GA_Twiking_parameters
 {
     int totnumparams;
-	int maxpop=2;
-	int nParam;
-	int numenhancements, num_enh;
-	int nGen;
-	int cross_over_type;
-	int no_bins;
+    int maxpop=2;
+    int nParam;
+    int numenhancements, num_enh;
+    int nGen;
+    int cross_over_type;
+    int no_bins;
     bool sens_out = false;
     bool RCGA = false;
     bool readfromgafile;
@@ -54,7 +54,7 @@ class CGA
 public:
 
     double sumfitness;
-	double MaxFitness;
+    double MaxFitness;
     GA_Twiking_parameters GA_params;
     _filenames filenames;
     vector<double> calc_output_percentiles;
