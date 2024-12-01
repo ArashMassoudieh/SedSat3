@@ -899,25 +899,86 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
 
     QStringList categories;
     int counter = 0;
+
+
     for (map<string, CMBVector>::iterator vec = vectorset1->begin(); vec!=vectorset1->end(); vec++)
     {
         QScatterSeries* series = new QScatterSeries();
 
+        CTimeSeriesSet<double> vals(2);
         for (int j=0; j<vec->second.num; j++)
+        {
             series->append(vec->second[j],vectorset2->at(vec->first)[j]);
+            vals.BTC[0].append(j,vec->second[j]);
+            vals.BTC[1].append(j,vectorset2->at(vec->first)[j]);
+        }
 
+        double mean1 = vals.BTC[0].mean();
+        double mean2 = vals.BTC[1].mean();
+        double std1 = vals.BTC[0].std();
+        double std2 = vals.BTC[1].std();
+        double Cov = Covariance(vals.BTC[0],vals.BTC[1]);
+
+        QColor color = QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
         counter++;
-        QPen pen = series->pen();
-        pen.setWidth(2);
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
-        series->setPen(pen);
+
 
         series->setName(QString::fromStdString(vec->first));
         series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
         series->setMarkerSize(15.0);
+        series->setColor(color);
+        QPen pen = series->pen();
+        pen.setColor(color);
+        pen.setWidth(2);
+        pen.setBrush(color);
+        series->setPen(pen);
+
         chart->addSeries(series);
         series->attachAxis(axisX);
         series->attachAxis(axisYNormal);
+        double rho = Cov/(std1*std2);
+        double major_diagonal;
+        double minor_diagonal;
+        if (std1>=std2)
+        {
+            major_diagonal = 2*sqrt(2*((std1*std1+std2*std2)/2.0 + sqrt(pow((std1*std1-std2*std2)/2.0,2)+pow(rho*std1*std2,2))));
+            minor_diagonal = 2*sqrt(2*((std1*std1+std2*std2)/2.0 - sqrt(pow((std1*std1-std2*std2)/2.0,2)+pow(rho*std1*std2,2))));
+        }
+        else
+        {
+            major_diagonal = 2*sqrt(2*((std1*std1+std2*std2)/2.0 - sqrt(pow((std1*std1-std2*std2)/2.0,2)+pow(rho*std1*std2,2))));
+            minor_diagonal = 2*sqrt(2*((std1*std1+std2*std2)/2.0 + sqrt(pow((std1*std1-std2*std2)/2.0,2)+pow(rho*std1*std2,2))));
+        }
+        double orientation = 0.5*atan(2*rho*std1*std2/(std1*std1-std2*std2));
+
+        qDebug()<<"Std1="<<std1;
+        qDebug()<<"Std2="<<std2;
+        qDebug()<<"Rho="<<rho;
+        qDebug()<<"Major diagonal="<<major_diagonal;
+        qDebug()<<"Minor diagonal="<<minor_diagonal;
+        qDebug()<<"Orienation="<<orientation;
+        vector<QPointF> ellipsepoints = calculateRotatedEllipsePoints(mean1, mean2, major_diagonal, minor_diagonal, orientation, M_PI/30.0);
+        QLineSeries* seriesellipse = new QLineSeries();
+        seriesellipse->setName(QString::fromStdString(vec->first));
+
+        for (size_t i = 0; i<ellipsepoints.size(); i++)
+        {
+            seriesellipse->append(ellipsepoints[i].x(), ellipsepoints[i].y());
+        }
+
+        QPen penellipse = seriesellipse->pen();
+        pen.setColor(color);
+        pen.setWidth(1);
+        pen.setBrush(color);
+        seriesellipse->setPen(pen);
+
+        chart->addSeries(seriesellipse);
+
+        for (size_t i = 0; i< chart->legend()->markers(seriesellipse).size(); i++)
+            chart->legend()->markers(seriesellipse)[i]->setVisible(false);
+        seriesellipse->attachAxis(axisX);
+        seriesellipse->attachAxis(axisYNormal);
+
 
     }
 
@@ -1393,4 +1454,27 @@ void GeneralChart::on_Exporttopng()
 
     chartView->grab().save(fileName);
     this->resize(rect.size());
+}
+
+
+std::vector<QPointF> GeneralChart::calculateRotatedEllipsePoints(
+    double centerX, double centerY,
+    double semiMajorAxis, double semiMinorAxis,
+    double rotationAngle, double interval
+) {
+    std::vector<QPointF> points;
+
+    // Iterate over the angle in the range [0, 2π] with the given interval
+    for (double t = 0; t <= 2 * M_PI; t += interval) {
+        // Parametric equations for rotated ellipse
+        double x = centerX + semiMajorAxis * cos(t) * cos(rotationAngle)
+                             - semiMinorAxis * sin(t) * sin(rotationAngle);
+        double y = centerY + semiMajorAxis * cos(t) * sin(rotationAngle)
+                             + semiMinorAxis * sin(t) * cos(rotationAngle);
+        QPointF point(x,y);
+        points.push_back(point);
+    }
+
+
+    return points;
 }

@@ -70,6 +70,7 @@ private slots:
     void onMCMCVariableChanged(int);
     void onDistributionsVariableChanged(int);
     void on_Exporttopng();
+    std::vector<QPointF> calculateRotatedEllipsePoints(double centerX, double centerY, double semiMajorAxis, double semiMinorAxis, double rotationAngle, double interval);
 
 };
 
