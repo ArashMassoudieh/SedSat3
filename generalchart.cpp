@@ -966,11 +966,12 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
             seriesellipse->append(ellipsepoints[i].x(), ellipsepoints[i].y());
         }
 
-        QPen penellipse = seriesellipse->pen();
-        pen.setColor(color);
-        pen.setWidth(1);
-        pen.setBrush(color);
-        seriesellipse->setPen(pen);
+        QPen penellipse = QPen(QBrush(Qt::DashLine),2,Qt::PenStyle::DashLine);
+        penellipse.setColor(color);
+        penellipse.setWidth(2);
+        penellipse.setBrush(color);
+
+        seriesellipse->setPen(penellipse);
 
         chart->addSeries(seriesellipse);
 
