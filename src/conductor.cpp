@@ -651,6 +651,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASValues.SetYAxisMode(yaxis_mode::log);
         DFASValues.SetYLimit(_range::high,1);
         DFASValues.SetResult(PVector);
+        
+        
+
         CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
         ResultItem DFASWilksLambdaValues;
         DFASWilksLambdaValues.SetName("Wilks' Lambda");
@@ -720,6 +723,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASValues.SetYAxisMode(yaxis_mode::log);
         DFASValues.SetYLimit(_range::high,1);
         DFASValues.SetResult(PVector);
+
+        if (arguments["Modify the included elements based on the results"] == "true")
+        {
+            vector<string> selected = PVector->ExtractUpToMinimum().Labels();
+            Data()->IncludeExcludeElementsBasedOn(selected);
+        }
+            
         CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
         ResultItem DFASWilksLambdaValues;
         DFASWilksLambdaValues.SetName("Wilks' Lambda");

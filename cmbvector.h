@@ -40,7 +40,8 @@ public:
     void append(const string &label, const double &val);
     CMBVector Extract(int start, int end) const;
     int size() const {return num;}
-    CMBVector ExtractWithinRange(const double &lowval, const double &highval) const;
+    CMBVector ExtractWithinRange(const double &lowval, const double &highval) const; //Extract element names with values within lowval and highval
+    CMBVector ExtractUpToMinimum() const; //Extrac the element names up to the minimum value
 
 private:
     vector<string> labels;

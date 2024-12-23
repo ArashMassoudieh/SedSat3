@@ -406,6 +406,10 @@
     		"Discription": {
 	    		"type": "Description",
    			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		},
+		"Modify the included elements based on the results": {
+				"type": "checkBox",
+				"default": "false"
 		}
 	},
 	"SDFAOnevsRest": {
@@ -840,12 +844,12 @@
     			"default": "The <b>Auto-select</b> tool selects a minimum number of elements with discriminatory power to differenciate between all source pair combinations. It performs a <i>t-test</i> between each pair of source groups and select the elements with the lowest p-values from each pair. The number of elements choosen from each pair is indicated in the box labeled 'Number of elements from each pair'" 
     		},
     		"Modify the included elements based on the results": {
-   			"type": "checkBox",
-			"default": "false"
+				"type": "checkBox",
+				"default": "false"
     		},
     		"Include Isotopes": {
-   			"type": "checkBox",
-			"default": "false"
+				"type": "checkBox",
+				"default": "false"
     		}
  	}
 }

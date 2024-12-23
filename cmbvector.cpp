@@ -288,6 +288,18 @@ CMBVector CMBVector::ExtractWithinRange(const double &lowval, const double &high
     return out;
 }
 
+CMBVector CMBVector::ExtractUpToMinimum() const
+{
+    CMBVector out;
+    out.append(labels[0], valueAt(0));
+    for (int i = 1; i < size(); i++)
+    {
+        if (valueAt(i) < valueAt(i-1))
+            out.append(labels[i], valueAt(i));
+    }
+    return out;
+}
+
 CMBVector CMBVector::Extract(int start, int end) const
 {
     CMBVector out;
