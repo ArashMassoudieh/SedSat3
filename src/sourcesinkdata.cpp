@@ -2022,7 +2022,7 @@ Elemental_Profile_Set SourceSinkData::TheRest(const string &source)
 }
 
 
-CMBVector SourceSinkData::BracketTest(const string &target_sample)
+CMBVector SourceSinkData::BracketTest(const string &target_sample, bool correct_based_on_om_n_size)
 {
 
     vector<string> element_names = ElementNames();
@@ -2031,19 +2031,25 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
     CVector mins(element_names.size());
     maxs.SetAllValues(1.0);
     mins.SetAllValues(1.0);
-    for (map<string,Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
-    {
-        for (unsigned int i=0; i<element_names.size(); i++)
-        {   out.SetLabel(i,element_names[i]);
-            if (at(target_group).Profile(target_sample)->at(element_names[i])<=it->second.ElementalDistribution(element_names[i])->max())
-            {
-                    maxs[i]=0;
-            }
-            if (at(target_group).Profile(target_sample)->at(element_names[i])>=it->second.ElementalDistribution(element_names[i])->min())
-            {
-                    mins[i]=0;
-            }
+    SourceSinkData CopiedData = CopyandCorrect(false, false, correct_based_on_om_n_size, target_sample);
 
+    for (map<string,Elemental_Profile_Set>::iterator it = CopiedData.begin(); it!=CopiedData.end(); it++)
+    {
+        if (it->first != target_group)
+        {
+            for (unsigned int i = 0; i < element_names.size(); i++)
+            {
+                out.SetLabel(i, element_names[i]);
+                if (CopiedData.at(target_group).Profile(target_sample)->at(element_names[i]) <= it->second.ElementalDistribution(element_names[i])->max())
+                {
+                    maxs[i] = 0;
+                }
+                if (CopiedData.at(target_group).Profile(target_sample)->at(element_names[i]) >= it->second.ElementalDistribution(element_names[i])->min())
+                {
+                    mins[i] = 0;
+                }
+
+            }
         }
     }
 
@@ -2059,7 +2065,7 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample)
 }
 
 
-CMBMatrix SourceSinkData::BracketTest()
+CMBMatrix SourceSinkData::BracketTest(bool correct_based_on_on_n_size)
 {
     vector<string> element_names = ElementNames();
     CMBMatrix out(at(target_group).size(),element_names.size());
@@ -2068,7 +2074,12 @@ CMBMatrix SourceSinkData::BracketTest()
     for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample != at(target_group).end(); sample++ )
     {
 
-        CMBVector bracket_vec = BracketTest(sample->first);
+        SourceSinkData copiedData = *this; 
+        if (correct_based_on_on_n_size)
+        {
+            copiedData = CopyandCorrect(false, false, true, sample->first);
+        }
+        CMBVector bracket_vec = copiedData.BracketTest(sample->first,false);
         for (int i=0; i<element_names.size(); i++)
         {
             out[i][j] = bracket_vec.valueAt(i);

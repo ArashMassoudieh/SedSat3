@@ -247,8 +247,8 @@ public:
     int TotalNumberofSourceSamples() const;
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
-    CMBVector BracketTest(const string &target_sample);
-    CMBMatrix BracketTest(); //Performs bracket test for all target samples
+    CMBVector BracketTest(const string &target_sample, bool correct_for_OM_n_Size);
+    CMBMatrix BracketTest(bool correct_for_OM_n_Size); //Performs bracket test for all target samples
     SourceSinkData BoxCoxTransformed(bool calculateeigenvectorforallgroups=false);
     map<string,ConcentrationSet> ExtractConcentrationSet();
     CMBVector OptimalBoxCoxParameters();

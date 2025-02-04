@@ -123,8 +123,9 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
     {
         if (elementinfo==nullptr)
             element_distributions[it->first].push_back(it->second);
-        else if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role != element_information::role::do_not_include && elementinfo->at(it->first).Role != element_information::role::particle_size && elementinfo->at(it->first).Role != element_information::role::organic_carbon)
-            element_distributions[it->first].push_back(it->second);
+        else if (elementinfo->count(it->first)!=0)
+            if (elementinfo->at(it->first).include_in_analysis && elementinfo->at(it->first).Role != element_information::role::do_not_include && elementinfo->at(it->first).Role != element_information::role::particle_size && elementinfo->at(it->first).Role != element_information::role::organic_carbon)
+                element_distributions[it->first].push_back(it->second);
     }
     return &operator[](name);
 }

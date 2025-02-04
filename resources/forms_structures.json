@@ -613,7 +613,11 @@
    			"type": "checkBox",
 			"default": "false"
     		},
-    		"Use only selected samples": {
+    	"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Correct based on size and organic matter": {
    			"type": "checkBox",
 			"default": "false"
     		},
@@ -649,12 +653,16 @@
         {
             "Use only selected elements": {
                    "type": "checkBox",
-                "default": "false"
+					"default": "false"
                 },
                 "Use only selected samples": {
                    "type": "checkBox",
-                "default": "false"
+					"default": "false"
                 },
+				"Correct based on size and organic matter": {
+					"type": "checkBox",
+					"default": "false"
+				},
                 "Discription": {
 	    		"type": "Description",
    			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples."

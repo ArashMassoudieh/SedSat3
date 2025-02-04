@@ -1259,10 +1259,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         BracketingResItem.SetShowGraph(false);
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        bool correct_based_on_size_and_organic_matter = (arguments["Correct based on size and organic matter"] == "true" ? true : false);
+        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,correct_based_on_size_and_organic_matter, arguments["Sample"]);
         if (!CheckNegativeElements(&TransformedData))
             return false;
-        CMBVector *bracketingresult = new CMBVector(TransformedData.BracketTest(arguments["Sample"]));
+        CMBVector *bracketingresult = new CMBVector(TransformedData.BracketTest(arguments["Sample"],false));
         bracketingresult->SetBooleanValue(true);
         BracketingResItem.SetResult(bracketingresult);
         results.Append(BracketingResItem);
@@ -1282,7 +1283,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
-        CMBMatrix *bracketingresult = new CMBMatrix(TransformedData.BracketTest());
+        bool correct_based_on_size_and_organic_matter = (arguments["Correct based on size and organic matter"] == "true" ? true : false);;
+        CMBMatrix *bracketingresult = new CMBMatrix(TransformedData.BracketTest(correct_based_on_size_and_organic_matter));
         bracketingresult->SetBooleanValue(true);
         BracketingResItem.SetResult(bracketingresult);
         results.Append(BracketingResItem);
