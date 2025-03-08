@@ -400,8 +400,8 @@ bool MainWindow::ReadExcel(const QString &filename)
             Elemental_Profile elemental_profile;
             for (int col=0; col<element_names[0].count(); col++)
             {
-                bool isnumber = false; 
-                qDebug()<<xlsxR.cellAt(row, col + 2);
+                bool isnumber = false;
+                //qDebug()<<xlsxR.cellAt(row, col + 2);
                 if (!xlsxR.cellAt(row, col + 2))
                 {
                     QMessageBox::warning(this, "Cell is empty!", "In sheet " + sheetnames[sheetnumber] + ", row " + QString::number(row) + " and column " + QString::number(col+2) + " the cell is empty!", QMessageBox::Ok);

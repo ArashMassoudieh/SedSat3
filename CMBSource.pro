@@ -147,7 +147,7 @@ HEADERS += \
 
 
 INCLUDEPATH += include/
-INCLUDEPATH += ../QXlsx/QXlsx/header/
+INCLUDEPATH += ../QXlsx/QXlsx/header/ \
 INCLUDEPATH += ../qcustomplot6/
 INCLUDEPATH += ../Utilities/
 INCLUDEPATH += /usr/include/
