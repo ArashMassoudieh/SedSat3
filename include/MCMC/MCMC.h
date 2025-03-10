@@ -12,7 +12,7 @@
 
 class ProgressWindow;
 
-using namespace std;
+//using namespace std;
 
 /*struct Param
 {

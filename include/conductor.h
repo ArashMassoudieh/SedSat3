@@ -8,7 +8,7 @@
 #include "MCMC.h"
 #include "results.h"
 
-using namespace std;
+//using namespace std;
 
 class MainWindow;
 

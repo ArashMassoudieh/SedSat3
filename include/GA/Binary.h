@@ -2,7 +2,7 @@
 #pragma once
 #include <vector>
 
-using namespace std;
+//using namespace std;
 
 class CBinary  
 {
@@ -12,7 +12,7 @@ public:
     CBinary(int n, int preci);
 	virtual ~CBinary();
     int nDigits = 4;
-    vector<int> Digit;
+    std::vector<int> Digit;
 	int precision;
 	CBinary(const CBinary &B);
     CBinary operator = (const CBinary &B);
@@ -28,6 +28,6 @@ public:
 
 CBinary code(double x, double minrange, double maxrange, int precision);
 void cross(CBinary &B1, CBinary &B2, int p);
-void cross(CBinary &B1, CBinary &B2, vector<int> p);
+void cross(CBinary &B1, CBinary &B2, std::vector<int> p);
 void cross2p(CBinary &B1, CBinary &B2, int p1, int p2);
 

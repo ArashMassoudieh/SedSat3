@@ -283,6 +283,23 @@ double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)
     return std::max(fabs(observed_fitted[2].maxC()),fabs(observed_fitted[2].minC()));
 }
 
+double ConcentrationSet::BoxCoxLogLikelihood(double lambda)
+{
+    ConcentrationSet y_prime = BoxCoxTransform(lambda,true);
+    
+    double y_prime_std = 0; 
+    double y_prime_mean = y_prime.mean();
+    double first_term = 0;
+    double second_term = 0;
+    for (int i = 0; i < size(); i++)
+    {
+        first_term += -1.0 / double(size()) * pow(y_prime[i] - y_prime_mean, 2);
+        second_term += (lambda - 1) * log(at(i)/ stdev());
+
+    }
+    return -double(size())/2.0 * log(first_term) - second_term;
+}
+
 ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda, bool normalize)
 {
 
@@ -329,6 +346,7 @@ double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2,
     for (double lambda = x_1; lambda<=x_2; lambda+=d_lambda )
     {
         vals.push_back(BoxCoxTransform(lambda, true).KolmogorovSmirnovStat(distribution_type::normal));
+        //vals.push_back(BoxCoxLogLikelihood(lambda));
     }
     return OptimalBoxCoxParam(x_1 + std::max(aquiutils::MinElement(vals)-1,0)*d_lambda,x_1+std::min(aquiutils::MinElement(vals)+1,int(vals.size()-1))*d_lambda,n_intervals);
 }

@@ -5,7 +5,7 @@
 #include <interface.h>
 #include <string>
 
-using namespace std;
+//using namespace std;
 
 class QJsonObject;
 class ResultItem;

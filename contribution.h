@@ -5,7 +5,7 @@
 #include <map>
 #include "interface.h"
 
-using namespace std;
+//using namespace std;
 
 class QFile; 
 

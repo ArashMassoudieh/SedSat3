@@ -13,7 +13,7 @@
 #include <gsl/gsl_matrix.h>
 #include "cmbvector.h"
 
-using namespace std;
+//using namespace std;
 
 
 

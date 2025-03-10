@@ -4,7 +4,7 @@
 #include <vector>
 #include "parameter.h"
 
-using namespace std;
+//using namespace std;
 
 class TestMCMC
 {

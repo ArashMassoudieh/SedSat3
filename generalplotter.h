@@ -16,7 +16,7 @@ class QWidget;
 enum class AxisScale {normal, log};
 enum class Axis {x, y};
 
-using namespace std;
+//using namespace std;
 
 class GeneralPlotter : public QCustomPlot
 {

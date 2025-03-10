@@ -1013,19 +1013,13 @@ void MainWindow::writeRecentFilesList()
 }
 
 QString localAppFolderAddress() {
-    #ifdef _WIN32
-    TCHAR szPath[MAX_PATH];
+#ifdef _WIN32
+    WCHAR szPath[MAX_PATH];  // Use WCHAR to ensure Unicode compatibility
 
-    if (SUCCEEDED(SHGetFolderPath(NULL,
-        CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
-        NULL,
-        0,
-        szPath)))
-    {
-        return QString("%1/").arg(QString::fromStdWString(szPath));
-        //PathAppend(szPath, TEXT("New Doc.txt"));
-        //HANDLE hFile = CreateFile(szPath, ...);
+    if (SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, szPath))) {
+        return QString("%1/").arg(QString::fromWCharArray(szPath));
     }
+    return QString(); // Explicit return in case of failure
 #else
     return QString();
 #endif

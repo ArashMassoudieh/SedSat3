@@ -4,7 +4,7 @@
 #include <vector>
 #include "BTC.h"
 
-using namespace std;
+//using namespace std;
 enum class distribution_type {normal, lognormal, dirichlet, none, uniform};
 enum class parameter_mode {direct, based_on_fitted_distribution};
 class Distribution

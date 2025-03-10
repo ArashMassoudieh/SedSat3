@@ -46,7 +46,7 @@ struct _filenames
     string outputfilename;
 };
 
-using namespace std;
+//using namespace std;
 
 template<class T>
 class CGA

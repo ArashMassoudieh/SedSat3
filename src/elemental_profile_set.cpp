@@ -3,7 +3,7 @@
 #include <gsl/gsl_statistics_double.h>
 
 
-using namespace std;
+//using namespace std;
 
 Elemental_Profile_Set::Elemental_Profile_Set() :map<string, Elemental_Profile>(), Interface()
 {

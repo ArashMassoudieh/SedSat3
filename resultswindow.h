@@ -5,7 +5,7 @@
 #include "string"
 #include "results.h"
 
-using namespace std;
+//using namespace std;
 
 namespace Ui {
 class ResultsWindow;

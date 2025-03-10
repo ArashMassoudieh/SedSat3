@@ -7,7 +7,7 @@
 #include "cmbtimeseriesset.h"
 
 
-using namespace std;
+//using namespace std;
 
 
 
@@ -52,6 +52,7 @@ public:
     CMBTimeSeriesSet DataCDFnFitted(distribution_type dist_type);
     CMBTimeSeriesSet DistFitted(distribution_type dist_type);
     double KolmogorovSmirnovStat(distribution_type dist_type);
+    double BoxCoxLogLikelihood(double lambda);
     ConcentrationSet BoxCoxTransform(const double &lambda, bool normalize);
     double OptimalBoxCoxParam(const double &x_1,const double &x_2, int n_intervals);
 private:
