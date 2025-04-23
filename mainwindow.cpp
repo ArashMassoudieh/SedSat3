@@ -48,8 +48,8 @@
 #endif
 
 
-#define version "1.0.25"
-#define date_compiled "1/31/2025"
+#define version "1.1.1"
+#define date_compiled "4/23/2025"
 
 using namespace QXlsx;
 
@@ -1014,22 +1014,9 @@ void MainWindow::writeRecentFilesList()
 }
 
 QString localAppFolderAddress() {
-    #ifdef _WIN32
-    TCHAR szPath[MAX_PATH];
-
-    if (SUCCEEDED(SHGetFolderPath(NULL,
-        CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
-        NULL,
-        0,
-        szPath)))
-    {
-        return QString("%1/").arg(QString::fromStdWString(szPath));
-        //PathAppend(szPath, TEXT("New Doc.txt"));
-        //HANDLE hFile = CreateFile(szPath, ...);
-    }
-#else
-    return QString();
-#endif
+    QString localAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    qDebug() << "Local AppData Folder:" << localAppDataPath;
+    return localAppDataPath;
 }
 
 void MainWindow::on_actionRecent_triggered()

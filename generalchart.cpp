@@ -195,7 +195,6 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
     chart->addAxis(axisX, Qt::AlignBottom);
     axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
     QLogValueAxis* axisYLog;
-    axisYLog->setBase(100);
     QValueAxis* axisYNormal;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     double profile_min;
