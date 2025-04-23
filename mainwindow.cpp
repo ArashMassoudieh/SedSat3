@@ -35,9 +35,10 @@
 //#include "MCMC.h"
 
 #ifdef _WIN32
-#include <windows.h>
-#include <ShlObj.h>
-#pragma comment(lib "shell32.lib")
+#define NOBYTE
+//#include <windows.h>
+
+//#pragma comment(lib "shell32.lib")
 #endif
 
 #define RECENT "SedSatrecentFiles.txt"
@@ -401,7 +402,7 @@ bool MainWindow::ReadExcel(const QString &filename)
             for (int col=0; col<element_names[0].count(); col++)
             {
                 bool isnumber = false; 
-                qDebug()<<xlsxR.cellAt(row, col + 2);
+                
                 if (!xlsxR.cellAt(row, col + 2))
                 {
                     QMessageBox::warning(this, "Cell is empty!", "In sheet " + sheetnames[sheetnumber] + ", row " + QString::number(row) + " and column " + QString::number(col+2) + " the cell is empty!", QMessageBox::Ok);
@@ -1013,22 +1014,10 @@ void MainWindow::writeRecentFilesList()
 }
 
 QString localAppFolderAddress() {
-    #ifdef _WIN32
-    TCHAR szPath[MAX_PATH];
-
-    if (SUCCEEDED(SHGetFolderPath(NULL,
-        CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
-        NULL,
-        0,
-        szPath)))
-    {
-        return QString("%1/").arg(QString::fromStdWString(szPath));
-        //PathAppend(szPath, TEXT("New Doc.txt"));
-        //HANDLE hFile = CreateFile(szPath, ...);
-    }
-#else
-    return QString();
-#endif
+    
+    QString localAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    qDebug() << "Local AppData Folder:" << localAppDataPath;
+    return localAppDataPath;
 }
 
 void MainWindow::on_actionRecent_triggered()

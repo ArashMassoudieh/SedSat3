@@ -1,25 +1,29 @@
 {
-  "Pre-Analysis Tools":
+  "Deterministic Sediment Fingerprinting": 
   {
-    "3-Organic matter and particle size correction": "MLR",
-    "1-Elements' correlation matrix": "CorMat",
-    "4-Bracketing Analysis": "Bracketing Analysis Batch",
-    "2-Outlier Analysis": "Outlier",
-    "5-Analysis of Variance for element selection": "ANOVA",
-    "6-Auto-select elements": "AutoSelect"
+		"1-Outlier Analysis": "Outlier",
+		"2-Organic matter and particle size correction": "MLR",
+		"3-Bracketing Analysis": "Bracketing Analysis Batch",
+		"4-Stepwise discriminant function analysis (Multiway)": "SDFAM",
+		"5-Fingerprinting": "Levenberg-Marquardt",
+		"6-Fingerprinting (Batch)": "Levenberg-Marquardt-Batch"
   },
-  "Fingerprinting Tools":
+  "Bayesian Sediment Fingerprinting": 
   {
-    "Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
-    "Bayesian Chemical Mass Balance Analysis (Batch)": "CMB Bayesian-Batch",
-    "Maximum likelihood fingerprinting using Genetic Algorithm": "GA",
-    "Maximum likelihood fingerprinting using Genetic Algorithm - Fixed Source Elemental Profiles": "GA (fixed elemental contribution)",
-    "Levenberg-Marquardt optimization": "Levenberg-Marquardt",
-    "Levenberg-Marquardt optimization (Batch)": "Levenberg-Marquardt-Batch"
+		"1-Outlier Analysis": "Outlier",
+		"2-Organic matter and particle size correction": "MLR",
+		"3-Bracketing Analysis": "Bracketing Analysis Batch",
+		"4-Stepwise discriminant function analysis (Multiway)": "SDFAM",
+		"5-Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
+		"6-Bayesian Chemical Mass Balance Analysis (Batch)": "CMB Bayesian-Batch"
   },
-  "Miscellaneous Analysis":
+  "Other Statistical Tools":
   {
-    "Distribution Fitting": "DF",
+    "Elements' correlation matrix": "CorMat",
+    "Outlier Analysis": "Outlier",
+    "Analysis of Variance for element selection": "ANOVA",
+    "Auto-select elements": "AutoSelect",
+	"Distribution Fitting": "DF",
     "Kolmogorov–Smirnov for individual group/element": "KS-individual",
     "Kolmogorov–Smirnov for a group": "KS",
     "Optimal BoxCox parameters": "BoxCox",
@@ -37,3 +41,4 @@
     "Discriminant power evaluation": "DFAM"
   }
 }
+  

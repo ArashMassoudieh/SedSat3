@@ -724,11 +724,25 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASValues.SetYLimit(_range::high,1);
         DFASValues.SetResult(PVector);
 
+        ResultItem DFASelected;
+        DFASelected.SetName("Elements to be Selected");
+        DFASelected.SetType(result_type::vector);
+        DFASelected.SetShowTable(true);
+        DFASelected.SetAbsoluteValue(true);
+        DFASelected.SetYAxisMode(yaxis_mode::log);
+        DFASelected.SetYLimit(_range::high, 1);
+        
+        CMBVector* PVectorSelected = new CMBVector();
+        
+        vector<string> selected = PVector->ExtractUpToMinimum().Labels();
         if (arguments["Modify the included elements based on the results"] == "true")
-        {
-            vector<string> selected = PVector->ExtractUpToMinimum().Labels();
             Data()->IncludeExcludeElementsBasedOn(selected);
+        for (int i = 0; i<selected.size(); i++)
+        {
+            PVectorSelected->append(selected[i], PVector->valueAt(i));
         }
+        
+        DFASelected.SetResult(PVectorSelected);
             
         CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
         ResultItem DFASWilksLambdaValues;
@@ -750,6 +764,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASF_Test_P_Value.SetResult(F_test_P_value);
 
         results.Append(DFASValues);
+		results.Append(DFASelected);
         results.Append(DFASWilksLambdaValues);
         results.Append(DFASF_Test_P_Value);
 
@@ -1284,6 +1299,15 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (!CheckNegativeElements(&TransformedData))
             return false;
         bool correct_based_on_size_and_organic_matter = (arguments["Correct based on size and organic matter"] == "true" ? true : false);;
+        if (correct_based_on_size_and_organic_matter)
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
+        
         CMBMatrix *bracketingresult = new CMBMatrix(TransformedData.BracketTest(correct_based_on_size_and_organic_matter));
         bracketingresult->SetBooleanValue(true);
         BracketingResItem.SetResult(bracketingresult);
