@@ -8,7 +8,7 @@ enum class yaxis_mode {normal, log};
 enum class xaxis_mode {real, counter};
 #include "interface.h"
 
-using namespace std;
+//using namespace std;
 
 class ResultItem: public Interface
 {

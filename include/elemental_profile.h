@@ -17,7 +17,7 @@ struct element_information
 };
 
 
-using namespace std;
+//using namespace std;
 class Elemental_Profile : public map<string,double>, public Interface
 {
 public:

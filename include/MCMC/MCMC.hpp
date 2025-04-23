@@ -13,7 +13,7 @@
 
 
 
-using namespace std;
+//using namespace std;
 
 template<class T>
 CMCMC<T>::CMCMC(void)

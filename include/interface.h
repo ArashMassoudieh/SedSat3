@@ -9,7 +9,7 @@
 
 class QFile; 
 
-using namespace std;
+//using namespace std;
 
 enum class options_key {single_column_x};
 

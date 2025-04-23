@@ -10,7 +10,7 @@
 #include "qdebug.h"
 #endif // QT_version
 
-using namespace std;
+//using namespace std;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -159,7 +159,7 @@ void cross(CBinary &B1, CBinary &B2, int p)
 
 }
 
-void cross(CBinary &B1, CBinary &B2, vector<int> p)
+void cross(CBinary &B1, CBinary &B2, std::vector<int> p)
 {
 	CBinary BT1 = B1;
 	CBinary BT2 = B2;
@@ -216,8 +216,8 @@ void cross2p(CBinary &B1, CBinary &B2, int p1, int p2)
 void CBinary::show()
 {
 	for (int i=0; i<nDigits; i++)
-		cout<<Digit[i];
-	cout<<endl;
+		std::cout<<Digit[i];
+	std::cout<<std::endl;
 
 
 }

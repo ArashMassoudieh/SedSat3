@@ -3,7 +3,7 @@
 #include "Utilities.h"
 #include <QFile>
 
-using namespace std;
+//using namespace std;
 
 Elemental_Profile::Elemental_Profile() :map<string, double>(), Interface()
 {

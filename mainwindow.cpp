@@ -1014,10 +1014,22 @@ void MainWindow::writeRecentFilesList()
 }
 
 QString localAppFolderAddress() {
-    
-    QString localAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-    qDebug() << "Local AppData Folder:" << localAppDataPath;
-    return localAppDataPath;
+    #ifdef _WIN32
+    TCHAR szPath[MAX_PATH];
+
+    if (SUCCEEDED(SHGetFolderPath(NULL,
+        CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE,
+        NULL,
+        0,
+        szPath)))
+    {
+        return QString("%1/").arg(QString::fromStdWString(szPath));
+        //PathAppend(szPath, TEXT("New Doc.txt"));
+        //HANDLE hFile = CreateFile(szPath, ...);
+    }
+#else
+    return QString();
+#endif
 }
 
 void MainWindow::on_actionRecent_triggered()
