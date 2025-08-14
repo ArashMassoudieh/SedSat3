@@ -99,6 +99,21 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     return out;
 }
 
+
+int SourceSinkData::ElementsCount(bool exclude_elements) const
+{
+    int count = 0;
+    for (map<string, element_information>::const_iterator it=ElementInformation.begin(); it!=ElementInformation.end(); it++)
+    {
+        if ((it->second.include_in_analysis && it->second.Role!=element_information::role::do_not_include && it->second.Role != element_information::role::particle_size && it->second.Role != element_information::role::organic_carbon) || !exclude_elements)
+        {
+            count++;
+        }
+    }
+    return count;
+
+}
+
 SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const string &target) const
 {
     SourceSinkData out;
@@ -2065,22 +2080,27 @@ CMBVector SourceSinkData::BracketTest(const string &target_sample, bool correct_
 }
 
 
-CMBMatrix SourceSinkData::BracketTest(bool correct_based_on_on_n_size)
+CMBMatrix SourceSinkData::BracketTest(bool correct_based_on_on_n_size, bool exclude_elements, bool exclude_samples)
 {
-    vector<string> element_names = ElementNames();
-    CMBMatrix out(at(target_group).size(),element_names.size());
+
+    CMBMatrix out(at(target_group).size(),ElementsCount(exclude_elements));
     int j=0;
 
     for (map<string,Elemental_Profile>::iterator sample = at(target_group).begin(); sample != at(target_group).end(); sample++ )
     {
 
-        SourceSinkData copiedData = *this; 
+        SourceSinkData copiedData;
         if (correct_based_on_on_n_size)
         {
-            copiedData = CopyandCorrect(false, false, true, sample->first);
+            copiedData = CopyandCorrect(exclude_samples, exclude_elements, true, sample->first);
         }
+        else
+            copiedData = CopyandCorrect(exclude_samples,exclude_elements, false);
+
+        vector<string> element_names = copiedData.ElementNames();
+
         CMBVector bracket_vec = copiedData.BracketTest(sample->first,false);
-        for (int i=0; i<element_names.size(); i++)
+        for (size_t i=0; i<element_names.size(); i++)
         {
             out[i][j] = bracket_vec.valueAt(i);
             out.SetRowLabel(i,element_names[i]);

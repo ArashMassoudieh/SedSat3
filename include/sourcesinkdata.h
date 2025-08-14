@@ -80,6 +80,7 @@ public:
     SourceSinkData& operator=(const SourceSinkData &mp);
     SourceSinkData Corrected(const string &target_sample, bool omnsizecorrect=true, map<string, element_information> *elementinfo=nullptr);
     SourceSinkData CopyandCorrect(bool exclude_samples, bool exclude_elements, bool omnsizecorrect, const string &target_sample="") const;
+    int ElementsCount(bool exclude_elements) const;
     SourceSinkData Extract(const vector<string> &element_list) const;
     void Clear();
     Elemental_Profile_Set* AppendSampleSet(const string &name, const Elemental_Profile_Set &elemental_profile_set=Elemental_Profile_Set());
@@ -248,7 +249,7 @@ public:
     CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
     Elemental_Profile_Set TheRest(const string &source);
     CMBVector BracketTest(const string &target_sample, bool correct_for_OM_n_Size);
-    CMBMatrix BracketTest(bool correct_for_OM_n_Size); //Performs bracket test for all target samples
+    CMBMatrix BracketTest(bool correct_for_OM_n_Size, bool exclude_elements, bool exclude_samples); //Performs bracket test for all target samples
     SourceSinkData BoxCoxTransformed(bool calculateeigenvectorforallgroups=false);
     map<string,ConcentrationSet> ExtractConcentrationSet();
     CMBVector OptimalBoxCoxParameters();

@@ -48,8 +48,8 @@
 #endif
 
 
-#define version "1.1.1"
-#define date_compiled "4/23/2025"
+#define version "1.1.2"
+#define date_compiled "8/14/2025"
 
 using namespace QXlsx;
 
@@ -772,7 +772,7 @@ void MainWindow::on_constituent_properties_triggered()
 void MainWindow::onIncludeExcludeSample()
 {
     Data()->OutlierAnalysisForAll(-3,3);
-    Data()->BracketTest(false);
+    Data()->BracketTest(false, false, false);
     SelectSamples *include_exclude_samples = new SelectSamples(this);
     include_exclude_samples->SetMode(mode::samples);
     include_exclude_samples->SetData(&DataCollection);
