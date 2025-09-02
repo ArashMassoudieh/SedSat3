@@ -2771,7 +2771,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     qDebug()<<"Posterior distributions";
     ResultItem distribution_res_item;
     CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
-    *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    *dists = samples->distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
     distribution_res_item.SetName("Posterior Distributions");
     distribution_res_item.SetShowAsString(false);
     distribution_res_item.SetShowTable(true);

@@ -1178,7 +1178,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(MCMC_samples);
         ResultItem distribution_res_item;
         CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
-        *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        *dists = samples->distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         distribution_res_item.SetName("Posterior Distributions");
         distribution_res_item.SetShowAsString(false);
         distribution_res_item.SetType(result_type::distribution);
