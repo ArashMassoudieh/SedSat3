@@ -1,7 +1,7 @@
 #include "elemental_profile_set.h"
 #include "iostream"
 #include <gsl/gsl_statistics_double.h>
-
+#include <QFile>
 
 //using namespace std;
 

@@ -735,7 +735,7 @@ void MainWindow::showdistributionsforelements()
     {   PlotWindow *plotwindow = new PlotWindow(this);
         if (Group=="")
         {
-            CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
+            TimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
             plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
             for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
             {
@@ -746,7 +746,7 @@ void MainWindow::showdistributionsforelements()
         }
         else
         {
-            CTimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+            TimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
             plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
         }
         plotwindow->setWindowTitle(Element);

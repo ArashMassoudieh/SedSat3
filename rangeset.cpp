@@ -1,4 +1,5 @@
 #include "rangeset.h"
+#include <QFile>
 
 RangeSet::RangeSet():map<string, Range>(),Interface()
 {

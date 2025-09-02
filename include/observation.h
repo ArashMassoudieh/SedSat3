@@ -1,7 +1,7 @@
 #ifndef OBSERVATION_H
 #define OBSERVATION_H
 
-#include "BTC.h"
+#include "TimeSeries.h"
 
 class Observation
 {
@@ -12,11 +12,11 @@ public:
     void SetName(const std::string &nam) {name = nam;}
     std::string Name() {return name;}
     std::string GetName() { return name; }
-    void SetValues(const CTimeSeries<double> &values);
-    CTimeSeries<double> Values() {return values;}
+    void SetValues(const TimeSeries<double> &values);
+    TimeSeries<double> Values() {return values;}
     double Value() {
-        if (values.n>0)
-            return values.GetC(0);
+        if (values.size()>0)
+            return values.getValue(0);
         else
             return 0;
     };
@@ -24,7 +24,7 @@ public:
     double PredictedValue() {return predicted_value;}
     void SetPredictedValue(const double &value) {predicted_value = value;}
 private:
-    CTimeSeries<double> values;
+    TimeSeries<double> values;
     double predicted_value = 0;
     std::string name;
 };

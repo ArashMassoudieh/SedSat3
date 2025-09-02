@@ -2,7 +2,7 @@
 
 #include <QPoint>
 #include "qcustomplot.h"
-#include "BTCSet.h"
+#include "TimeSeriesSet.h"
 
 class QRubberBand;
 class QMouseEvent;

@@ -1,18 +1,19 @@
 #include "cmbtimeseries.h"
 #include "QJsonArray"
+#include <QFile>
 #include "Vector.h"
 
-CMBTimeSeries::CMBTimeSeries():CTimeSeries<double>(),Interface()
+CMBTimeSeries::CMBTimeSeries():TimeSeries<double>(),Interface()
 {
 
 }
 
-CMBTimeSeries::CMBTimeSeries(const CMBTimeSeries& mp):CTimeSeries<double>(mp)
+CMBTimeSeries::CMBTimeSeries(const CMBTimeSeries& mp):TimeSeries<double>(mp)
 {
 
 }
 
-CMBTimeSeries::CMBTimeSeries(int n):CTimeSeries<double>(n), Interface()
+CMBTimeSeries::CMBTimeSeries(int n):TimeSeries<double>(n), Interface()
 {
 
 }
@@ -27,10 +28,10 @@ QJsonObject CMBTimeSeries::toJsonObject()
     QJsonObject out;
     QJsonArray t_values;
     QJsonArray C_values;
-    for (int i=0; i<n; i++)
+    for (int i=0; i<size(); i++)
     {
-        t_values.append(GetT(i));
-        C_values.append(GetC(i));
+        t_values.append(getTime(i));
+        C_values.append(getValue(i));
     }
     out["time"] = t_values;
     out["value"] = C_values;
@@ -47,9 +48,9 @@ bool CMBTimeSeries::ReadFromJsonObject(const QJsonObject &jsonobject)
 string CMBTimeSeries::ToString()
 {
     string out;
-    for (int i=0; i<n; i++)
+    for (int i=0; i<size(); i++)
     {
-        out+=QString::number(GetT(i)).toStdString() + "," + QString::number(GetC(i)).toStdString();
+        out+=QString::number(getTime(i)).toStdString() + "," + QString::number(getValue(i)).toStdString();
     }
 
     return out;
@@ -66,21 +67,21 @@ QTableWidget *CMBTimeSeries::ToTable()
     QTableWidget *tablewidget = new QTableWidget();
     tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tablewidget->setColumnCount(1);
-    tablewidget->setRowCount(n);
+    tablewidget->setRowCount(size());
     QStringList headers;
     QStringList rowlabels;
 
-    for (int i=0; i<n; i++)
+    for (int i=0; i<size(); i++)
     {
-        rowlabels<<QString::number(GetT(i));
+        rowlabels<<QString::number(getTime(i));
         if (highlightoutsideoflimit)
         {
-            if (GetC(i)>highlimit || GetC(i)<lowlimit)
+            if (getTime(i)>highlimit || getValue(i)<lowlimit)
             {
                 tablewidget->item(i,0)->setForeground(QColor(Qt::red));
             }
         }
-        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(GetC(i))));
+        tablewidget->setItem(i,0, new QTableWidgetItem(QString::number(getValue(i))));
     }
     headers << "Value";
     tablewidget->setHorizontalHeaderLabels(headers);

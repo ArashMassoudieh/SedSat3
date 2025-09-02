@@ -1,10 +1,9 @@
 #ifndef CMBTimeSeries_H
 #define CMBTimeSeries_H
 
-#include "BTC.h"
 #include "interface.h"
 
-class CMBTimeSeries : public CTimeSeries<double>, public Interface
+class CMBTimeSeries : public TimeSeries<double>, public Interface
 {
 public:
     CMBTimeSeries();
