@@ -2827,7 +2827,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     ResultItem predicted_distribution_res_item;
     CMBTimeSeriesSet *predicted_dists_elems = new CMBTimeSeriesSet();
 
-    *predicted_dists_elems = predicted_samples_elems.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    *predicted_dists_elems = predicted_samples_elems.distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
     for (int i=0; i<predicted_samples.size(); i++)
         predicted_dists_elems->SetObservedValue(i,correctedData.observation(i)->Value());
 
@@ -2875,7 +2875,7 @@ Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments,
     ResultItem predicted_distribution_iso_res_item;
     CMBTimeSeriesSet *predicted_dists_isotopes = new CMBTimeSeriesSet();
 
-    *predicted_dists_isotopes = predicted_samples_isotopes.distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+    *predicted_dists_isotopes = predicted_samples_isotopes.distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
     for (int i=0; i<predicted_samples_isotopes.size(); i++)
         predicted_dists_isotopes->SetObservedValue(i,correctedData.observation(i+ConstituentNames.size())->Value());
 
