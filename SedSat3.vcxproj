@@ -31,12 +31,12 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.7</QtInstall>
+    <QtInstall>Qt 6.8</QtInstall>
     <QtModules>core;gui;widgets;printsupport;charts</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.7</QtInstall>
+    <QtInstall>Qt 6.8</QtInstall>
     <QtModules>core;gui;widgets;printsupport;charts</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
@@ -60,8 +60,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;..\Utilities;.;..\qcustomplot6;..\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>Q_version;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;..\qcustomplot6;..\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -77,8 +77,8 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;..\Utilities;.;..\qcustomplot6;..\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>Q_version;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;..\qcustomplot6;..\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -117,13 +117,13 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\qcustomplot6\qcustomplot.cpp" />
-    <ClCompile Include="..\Utilities\Matrix.cpp" />
-    <ClCompile Include="..\Utilities\Matrix_arma.cpp" />
-    <ClCompile Include="..\Utilities\NormalDist.cpp" />
-    <ClCompile Include="..\Utilities\QuickSort.cpp" />
-    <ClCompile Include="..\Utilities\Utilities.cpp" />
-    <ClCompile Include="..\Utilities\Vector.cpp" />
-    <ClCompile Include="..\Utilities\Vector_arma.cpp" />
+    <ClCompile Include=".\Utilities\Matrix.cpp" />
+    <ClCompile Include=".\Utilities\Matrix_arma.cpp" />
+    <ClCompile Include=".\Utilities\NormalDist.cpp" />
+    <ClCompile Include=".\Utilities\QuickSort.cpp" />
+    <ClCompile Include=".\Utilities\Utilities.cpp" />
+    <ClCompile Include=".\Utilities\Vector.cpp" />
+    <ClCompile Include=".\Utilities\Vector_arma.cpp" />
     <ClCompile Include="aboutdialog.cpp" />
     <ClCompile Include="cmbvectorsetset.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -183,18 +183,18 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <QtMoc Include="aboutdialog.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utilities\TimeSeries.h" />
+    <ClInclude Include="Utilities\TimeSeries.hpp" />
+    <ClInclude Include="Utilities\TimeSeriesSet.h" />
+    <ClInclude Include="Utilities\TimeSeriesSet.hpp" />
     <QtMoc Include="..\qcustomplot6\qcustomplot.h" />
-    <ClInclude Include="..\Utilities\BTC.h" />
-    <ClInclude Include="..\Utilities\BTC.hpp" />
-    <ClInclude Include="..\Utilities\BTCSet.h" />
-    <ClInclude Include="..\Utilities\BTCSet.hpp" />
-    <ClInclude Include="..\Utilities\Matrix.h" />
-    <ClInclude Include="..\Utilities\Matrix_arma.h" />
-    <ClInclude Include="..\Utilities\NormalDist.h" />
-    <ClInclude Include="..\Utilities\QuickSort.h" />
-    <ClInclude Include="..\Utilities\Utilities.h" />
-    <ClInclude Include="..\Utilities\Vector.h" />
-    <ClInclude Include="..\Utilities\Vector_arma.h" />
+    <ClInclude Include=".\Utilities\Matrix.h" />
+    <ClInclude Include=".\Utilities\Matrix_arma.h" />
+    <ClInclude Include=".\Utilities\NormalDist.h" />
+    <ClInclude Include=".\Utilities\QuickSort.h" />
+    <ClInclude Include=".\Utilities\Utilities.h" />
+    <ClInclude Include=".\Utilities\Vector.h" />
+    <ClInclude Include=".\Utilities\Vector_arma.h" />
     <ClInclude Include="chart.h" />
     <ClInclude Include="chartview.h" />
     <ClInclude Include="cmbmatrix.h" />

@@ -433,7 +433,7 @@ int counter=0;
             counter++;
 #pragma omp critical
         {
-#ifdef Q_version
+#ifdef Q_GUI_SUPPORT
 			if (rtw != nullptr)
 			{
 #ifndef NO_OPENMP
@@ -649,7 +649,7 @@ int CGA<T>::optimize()
 
         Fitness[current_generation][0] = Ind[j].actual_fitness;
 
-#ifdef Q_version
+#ifdef Q_GUI_SUPPORT
     if (rtw)
     {   if (current_generation==0)
         {
