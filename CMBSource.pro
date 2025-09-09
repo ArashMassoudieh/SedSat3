@@ -10,7 +10,9 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += _arma
-DEFINES += Q_version
+DEFINES += SUPPORT_USE_QJSON
+DEFINES += GSL
+DEFINES += Q_GUI_SUPPORT
 SOURCES += \
     ../Utilities/Distribution.cpp \
     ../Utilities/Matrix.cpp \
@@ -75,10 +77,10 @@ SOURCES += \
     toolboxitem.cpp
 
 HEADERS += \
-    ../Utilities/BTC.h \
-    ../Utilities/BTC.hpp \
-    ../Utilities/BTCSet.h \
-    ../Utilities/BTCSet.hpp \
+    ../Utilities/TimeSeries.h \
+    ../Utilities/TimeSeries.hpp \
+    ../Utilities/TimeSeriesSet.h \
+    ../Utilities/TimeSeriesSet.hpp \
     ../Utilities/Distribution.h \
     ../Utilities/Matrix.h \
     ../Utilities/Matrix_arma.h \
@@ -246,7 +248,6 @@ win32 {
 
 linux {
     #sudo apt-get install libblas-dev liblapack-dev
-    greaterThan(QT_MAJOR_VERSION, 5): LIBS += /home/arash/Projects/QXlsx/libQXlsx6.a
     lessThan(QT_MAJOR_VERSION, 6): LIBS += /home/arash/Projects/QXlsx/libQXlsx.a
     LIBS += -L"/usr/local/lib/ -lsuperlu.so"
     DEFINES += ARMA_USE_LAPACK ARMA_USE_BLAS
@@ -266,3 +267,10 @@ macx {
 
 
 
+
+unix:!macx: LIBS += -L$$PWD/../QXlsx/ -lQXlsx
+
+INCLUDEPATH += $$PWD/../QXlsx/QXlsx
+DEPENDPATH += $$PWD/../QXlsx/QXlsx
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/../QXlsx/libQXlsx.a

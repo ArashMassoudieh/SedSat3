@@ -47,8 +47,8 @@ public:
     bool PlotRangeSet(RangeSet *rangeset, const QString &title, const QString &x_axis_title, const QString &y_axis_title);
     bool InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const QString &title);
     bool InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &title);
-    bool PlotMCMCSamples(CTimeSeries<double> *mlr,const QString& variable);
-    bool PlotDistribution(CTimeSeries<double> *mlr,const QString& variable);
+    bool PlotMCMCSamples(TimeSeries<double> *mlr,const QString& variable);
+    bool PlotDistribution(TimeSeries<double> *mlr,const QString& variable);
     bool PlotScatter(CMBMatrix *matrix);
     bool PlotScatter(CMBVectorSet *vectorset);
     bool PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset2, const QString &xaxis_title, const QString &yaxistitle);

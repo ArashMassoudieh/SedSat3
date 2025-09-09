@@ -18,7 +18,7 @@ Observation& Observation::operator=(const Observation &obs)
     return *this;
 }
 
-void Observation::SetValues(const CTimeSeries<double> &_values)
+void Observation::SetValues(const TimeSeries<double> &_values)
 {
     values = _values;
 }

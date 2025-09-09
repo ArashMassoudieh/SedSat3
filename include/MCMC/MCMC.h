@@ -5,7 +5,7 @@
 #include "NormalDist.h"
 #include "GA.h"
 #include "Vector.h"
-#include "BTCSet.h"
+#include "TimeSeriesSet.h"
 #include "observation.h"
 #include "parameter.h"
 #include "cmbtimeseriesset.h"
@@ -95,7 +95,7 @@ public:
     vector<T> CopiedModels;
     void writeoutput(string filename);
 	vector<int> params;
-    CTimeSeriesSet<double> MData;
+    TimeSeriesSet<double> MData;
     _MCMC_file_names FileInformation;
     double posterior(vector<double> par, int chain_counter);
     void model(T *Model1 , vector<double> par);
@@ -109,23 +109,23 @@ public:
     Observation *observation(int i);
     CVector sensitivity(double d, vector<double> par);
     CVector sensitivity_ln(double d, vector<double> par);
-#ifdef Q_version
+#ifdef Q_GUI_SUPPORT
     ProgressWindow *rtw=nullptr;
 #endif // QT_version
     CMatrix sensitivity_mat_lumped(double d, vector<double> par);
-    CTimeSeriesSet<double> prior_distribution(int n_bins);
+    TimeSeriesSet<double> prior_distribution(int n_bins);
 
     int readfromfile(string filename);
-    CTimeSeriesSet<double> model(vector<double> par);
-    vector<vector<CTimeSeriesSet<double>>> BTCout_obs;
-    vector<vector<CTimeSeriesSet<double>>> BTCout_obs_noise;
-    vector<vector<CTimeSeriesSet<double>>> BTCout_obs_prcntle;
-    vector<vector<CTimeSeriesSet<double>>> BTCout_obs_prcntle_noise;
+    TimeSeriesSet<double> model(vector<double> par);
+    vector<vector<TimeSeriesSet<double>>> BTCout_obs;
+    vector<vector<TimeSeriesSet<double>>> BTCout_obs_noise;
+    vector<vector<TimeSeriesSet<double>>> BTCout_obs_prcntle;
+    vector<vector<TimeSeriesSet<double>>> BTCout_obs_prcntle_noise;
 	vector<CMatrix> global_sens_lumped;
-    CTimeSeriesSet<double> paramsList;
-    CTimeSeriesSet<double> realized_paramsList;
-    void ProduceRealizations(CTimeSeriesSet<double> &MCMCout);
-    void get_outputpercentiles(CTimeSeriesSet<double> &MCMCout);
+    TimeSeriesSet<double> paramsList;
+    TimeSeriesSet<double> realized_paramsList;
+    void ProduceRealizations(TimeSeriesSet<double> &MCMCout);
+    void get_outputpercentiles(TimeSeriesSet<double> &MCMCout);
 
 	vector<double> calc_output_percentiles;
     void SetRunTimeWindow(ProgressWindow *_rtw);

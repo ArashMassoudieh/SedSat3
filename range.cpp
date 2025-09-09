@@ -1,6 +1,7 @@
 #include "range.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QFile>
 
 Range::Range():Interface()
 {

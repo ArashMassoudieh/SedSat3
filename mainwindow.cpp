@@ -35,9 +35,10 @@
 //#include "MCMC.h"
 
 #ifdef _WIN32
-#include <windows.h>
-#include <ShlObj.h>
-#pragma comment(lib "shell32.lib")
+#define NOBYTE
+//#include <windows.h>
+
+//#pragma comment(lib "shell32.lib")
 #endif
 
 #define RECENT "SedSatrecentFiles.txt"
@@ -47,8 +48,8 @@
 #endif
 
 
-#define version "1.0.25"
-#define date_compiled "1/31/2025"
+#define version "1.1.2"
+#define date_compiled "8/14/2025"
 
 using namespace QXlsx;
 
@@ -400,8 +401,8 @@ bool MainWindow::ReadExcel(const QString &filename)
             Elemental_Profile elemental_profile;
             for (int col=0; col<element_names[0].count(); col++)
             {
-                bool isnumber = false;
-                //qDebug()<<xlsxR.cellAt(row, col + 2);
+                bool isnumber = false; 
+                
                 if (!xlsxR.cellAt(row, col + 2))
                 {
                     QMessageBox::warning(this, "Cell is empty!", "In sheet " + sheetnames[sheetnumber] + ", row " + QString::number(row) + " and column " + QString::number(col+2) + " the cell is empty!", QMessageBox::Ok);
@@ -734,7 +735,7 @@ void MainWindow::showdistributionsforelements()
     {   PlotWindow *plotwindow = new PlotWindow(this);
         if (Group=="")
         {
-            CTimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
+            TimeSeries<double> elem_dist = DataCollection.FittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
             plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
             for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
             {
@@ -745,7 +746,7 @@ void MainWindow::showdistributionsforelements()
         }
         else
         {
-            CTimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+            TimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
             plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
         }
         plotwindow->setWindowTitle(Element);
@@ -771,7 +772,7 @@ void MainWindow::on_constituent_properties_triggered()
 void MainWindow::onIncludeExcludeSample()
 {
     Data()->OutlierAnalysisForAll(-3,3);
-    Data()->BracketTest(false);
+    Data()->BracketTest(false, false, false);
     SelectSamples *include_exclude_samples = new SelectSamples(this);
     include_exclude_samples->SetMode(mode::samples);
     include_exclude_samples->SetData(&DataCollection);
@@ -1013,16 +1014,9 @@ void MainWindow::writeRecentFilesList()
 }
 
 QString localAppFolderAddress() {
-#ifdef _WIN32
-    WCHAR szPath[MAX_PATH];  // Use WCHAR to ensure Unicode compatibility
-
-    if (SUCCEEDED(SHGetFolderPathW(NULL, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, szPath))) {
-        return QString("%1/").arg(QString::fromWCharArray(szPath));
-    }
-    return QString(); // Explicit return in case of failure
-#else
-    return QString();
-#endif
+    QString localAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    qDebug() << "Local AppData Folder:" << localAppDataPath;
+    return localAppDataPath;
 }
 
 void MainWindow::on_actionRecent_triggered()

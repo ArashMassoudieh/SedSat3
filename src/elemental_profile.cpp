@@ -323,7 +323,7 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> 
 
                 if (mlr->Effective(0) && mlr->GetIndependentVariableNames()[0] != it->first)
                 {
-                    qDebug() << om_size[0] << "," << this->at(mlr->GetIndependentVariableNames()[0]) << "," << mlr->CoefficientsIntercept()[1];
+                    //qDebug() << om_size[0] << "," << this->at(mlr->GetIndependentVariableNames()[0]) << "," << mlr->CoefficientsIntercept()[1];
                     if (mlr->Equation() == regression_form::linear)
                         out[it->first] += (om_size[0] - this->at(mlr->GetIndependentVariableNames()[0])) * mlr->CoefficientsIntercept()[1];
                     else
@@ -333,7 +333,7 @@ Elemental_Profile Elemental_Profile::OrganicandSizeCorrect(const vector<double> 
                 {
                     if (mlr->Effective(1) && mlr->GetIndependentVariableNames()[1] != it->first)
                     {
-                        qDebug() << om_size[1] << "," << this->at(mlr->GetIndependentVariableNames()[1]) << "," << mlr->CoefficientsIntercept()[2];
+                        //qDebug() << om_size[1] << "," << this->at(mlr->GetIndependentVariableNames()[1]) << "," << mlr->CoefficientsIntercept()[2];
                         if (mlr->Equation() == regression_form::linear)
                             out[it->first] += (om_size[1] - this->at(mlr->GetIndependentVariableNames()[1])) * mlr->CoefficientsIntercept()[2];
                         else

@@ -525,9 +525,9 @@ bool GeneralChart:: InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const Q
     ui->horizontalLayout->addWidget(element_label);
     ui->horizontalLayout->addWidget(element_combo);
 
-    for (int i = 0; i<mcmcsamples->nvars; i++ )
+    for (int i = 0; i<mcmcsamples->size(); i++ )
     {
-        element_combo->addItem(QString::fromStdString(mcmcsamples->names[i]));
+        element_combo->addItem(QString::fromStdString(mcmcsamples->getSeriesName(i)));
     }
     connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onMCMCVariableChanged(int)));
 
@@ -545,9 +545,9 @@ bool GeneralChart::InitializeDistributions(CMBTimeSeriesSet *distributions, cons
     ui->horizontalLayout->addWidget(element_label);
     ui->horizontalLayout->addWidget(element_combo);
 
-    for (int i = 0; i<distributions->nvars; i++ )
+    for (int i = 0; i<distributions->size(); i++ )
     {
-        element_combo->addItem(QString::fromStdString(distributions->names[i]));
+        element_combo->addItem(QString::fromStdString(distributions->getSeriesName(i)));
     }
     connect(element_combo, SIGNAL(currentIndexChanged(int)),this, SLOT(onDistributionsVariableChanged(int)));
 
@@ -905,19 +905,19 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
     {
         QScatterSeries* series = new QScatterSeries();
 
-        CTimeSeriesSet<double> vals(2);
+        TimeSeriesSet<double> vals(2);
         for (int j=0; j<vec->second.num; j++)
         {
             series->append(vec->second[j],vectorset2->at(vec->first)[j]);
-            vals.BTC[0].append(j,vec->second[j]);
-            vals.BTC[1].append(j,vectorset2->at(vec->first)[j]);
+            vals[0].append(j,vec->second[j]);
+            vals[1].append(j,vectorset2->at(vec->first)[j]);
         }
 
-        double mean1 = vals.BTC[0].mean();
-        double mean2 = vals.BTC[1].mean();
-        double std1 = vals.BTC[0].std();
-        double std2 = vals.BTC[1].std();
-        double Cov = Covariance(vals.BTC[0],vals.BTC[1]);
+        double mean1 = vals[0].mean();
+        double mean2 = vals[1].mean();
+        double std1 = vals[0].stddev();
+        double std2 = vals[1].stddev();
+        double Cov = Covariance(vals[0],vals[1]);
 
         QColor color = QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
         counter++;
@@ -989,7 +989,7 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
 
 
 
-bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& variable)
+bool GeneralChart::PlotMCMCSamples(TimeSeries<double> *samples,const QString& variable)
 {
 
     chart->removeAllSeries();
@@ -1039,9 +1039,9 @@ bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& v
     series->setPen(marker_pen);
 
 
-    for (int i=0; i<samples->n; i++)
+    for (int i=0; i<samples->size(); i++)
     {
-        series->append(samples->GetT(i),samples->GetC(i));
+        series->append(samples->getTime(i),samples->getValue(i));
     }
 
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -1054,7 +1054,7 @@ bool GeneralChart::PlotMCMCSamples(CTimeSeries<double> *samples,const QString& v
 }
 
 
-bool GeneralChart::PlotDistribution(CTimeSeries<double> *samples,const QString& variable)
+bool GeneralChart::PlotDistribution(TimeSeries<double> *samples,const QString& variable)
 {
     chart->removeAllSeries();
     for (int i=0; i<chart->axes().size(); i++)
@@ -1097,9 +1097,9 @@ bool GeneralChart::PlotDistribution(CTimeSeries<double> *samples,const QString& 
     series->setName(variable);
     series->setPen(marker_pen);
 
-    for (int i=0; i<samples->n; i++)
+    for (int i=0; i<samples->size(); i++)
     {
-        series-> append(samples->GetT(i),samples->GetC(i));
+        series-> append(samples->getTime(i),samples->getValue(i));
     }
 
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -1148,22 +1148,22 @@ bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QStr
     axisY->setRange(y_min_val,y_max_val);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
-    for (int i=0; i<timeseriesset->nvars; i++)
+    for (int i=0; i<timeseriesset->size(); i++)
     {
         QLineSeries *lineseries = new QLineSeries();
         chart->addSeries(lineseries);
         lineseries->attachAxis(axisX);
         lineseries->attachAxis(axisY);
 
-        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        for (int j=0; j<timeseriesset->at(i).size(); j++)
         {
-            lineseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+            lineseries->append(timeseriesset->at(i).getTime(j),timeseriesset->at(i).getValue(j));
         }
         QPen pen = lineseries->pen();
         pen.setWidth(2);
         pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         lineseries->setPen(pen);
-        lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
+        lineseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
     }
 
@@ -1312,36 +1312,36 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
         scatterseries->attachAxis(axisX);
         scatterseries->attachAxis(axisY);
 
-        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        for (int j=0; j<timeseriesset->at(i).size(); j++)
         {
             x_Labels.append(QString::fromStdString(timeseriesset->Label(j)));
             //axisX->append(QString::fromStdString(timeseriesset->Label(j)),j+1);
-            scatterseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+            scatterseries->append(timeseriesset->at(i).getTime(j),timeseriesset->at(i).getValue(j));
         }
         QPen pen = scatterseries->pen();
         pen.setWidth(2);
 
         pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         scatterseries->setPen(pen);
-        scatterseries->setName(QString::fromStdString(timeseriesset->names[i]));
+        scatterseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
     }
-    for (int i=1; i<timeseriesset->nvars; i++)
+    for (int i=1; i<timeseriesset->size(); i++)
     {
         QLineSeries *lineseries = new QLineSeries();
         chart->addSeries(lineseries);
         lineseries->attachAxis(axisX);
         lineseries->attachAxis(axisY);
 
-        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        for (int j=0; j<timeseriesset->at(i).size(); j++)
         {
-            lineseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+            lineseries->append(timeseriesset->at(i).getTime(j),timeseriesset->at(i).getValue(j));
         }
         QPen pen = lineseries->pen();
         pen.setWidth(2);
         pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         lineseries->setPen(pen);
-        lineseries->setName(QString::fromStdString(timeseriesset->names[i]));
+        lineseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
     }
 
@@ -1370,16 +1370,16 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
     axisY->setRange(y_min_val,y_max_val);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignLeft);
-    for (int i=0; i<timeseriesset->nvars; i++)
+    for (int i=0; i<timeseriesset->size(); i++)
     {
         QScatterSeries* scatterseries = new QScatterSeries();
         chart->addSeries(scatterseries);
         scatterseries->attachAxis(axisX);
         scatterseries->attachAxis(axisY);
 
-        for (int j=0; j<timeseriesset->BTC[i].n; j++)
+        for (int j=0; j<timeseriesset->at(i).size(); j++)
         {
-            scatterseries->append(timeseriesset->BTC[i].GetT(j),timeseriesset->BTC[i].GetC(j));
+            scatterseries->append(timeseriesset->at(i).getTime(j),timeseriesset->at(i).getValue(j));
             if (i==0)
                 axisX->append(QString::fromStdString(timeseriesset->Label(j)),j+0.5);
         }
@@ -1389,7 +1389,7 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
 
         pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
         scatterseries->setPen(pen);
-        scatterseries->setName(QString::fromStdString(timeseriesset->names[i]));
+        scatterseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
     }
 
@@ -1400,23 +1400,23 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
 bool GeneralChart::PlotTimeSeriesSet_Stacked(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
 {
 
-    QVector<QBarSet*> sets(timeseriesset->nvars);
-    for (int i=0; i<timeseriesset->nvars; i++)
-    {   sets[i]  = new QBarSet(QString::fromStdString(timeseriesset->names[i]));
-        for (int j=0; j<timeseriesset->BTC[i].n; j++)
-            *sets[i] << timeseriesset->BTC[i].GetC(j);
+    QVector<QBarSet*> sets(timeseriesset->size());
+    for (int i=0; i<timeseriesset->size(); i++)
+    {   sets[i]  = new QBarSet(QString::fromStdString(timeseriesset->getSeriesName(i)));
+        for (int j=0; j<timeseriesset->at(i).size(); j++)
+            *sets[i] << timeseriesset->at(i).getValue(j);
 
     }
 
     QStackedBarSeries *series = new QStackedBarSeries;
-    for (int i=0; i<timeseriesset->nvars; i++)
+    for (int i=0; i<timeseriesset->size(); i++)
         series->append(sets[i]);
 
     chart->addSeries(series);
     chart->setTitle(title);
     chart->setAnimationOptions(QChart::SeriesAnimations);
     QStringList categories;
-    for (int j=0; j<timeseriesset->BTC[0].n; j++)
+    for (int j=0; j<timeseriesset->at(0).size(); j++)
         categories << QString::fromStdString(timeseriesset->Label(j));
 
     auto axisX = new QBarCategoryAxis;

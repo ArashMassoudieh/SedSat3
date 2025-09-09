@@ -724,11 +724,25 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASValues.SetYLimit(_range::high,1);
         DFASValues.SetResult(PVector);
 
+        ResultItem DFASelected;
+        DFASelected.SetName("Elements to be Selected");
+        DFASelected.SetType(result_type::vector);
+        DFASelected.SetShowTable(true);
+        DFASelected.SetAbsoluteValue(true);
+        DFASelected.SetYAxisMode(yaxis_mode::log);
+        DFASelected.SetYLimit(_range::high, 1);
+        
+        CMBVector* PVectorSelected = new CMBVector();
+        
+        vector<string> selected = PVector->ExtractUpToMinimum().Labels();
         if (arguments["Modify the included elements based on the results"] == "true")
-        {
-            vector<string> selected = PVector->ExtractUpToMinimum().Labels();
             Data()->IncludeExcludeElementsBasedOn(selected);
+        for (int i = 0; i<selected.size(); i++)
+        {
+            PVectorSelected->append(selected[i], PVector->valueAt(i));
         }
+        
+        DFASelected.SetResult(PVectorSelected);
             
         CMBVector *WilksLambdaVector = new CMBVector(SDFA_res[1]);
         ResultItem DFASWilksLambdaValues;
@@ -750,6 +764,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFASF_Test_P_Value.SetResult(F_test_P_value);
 
         results.Append(DFASValues);
+		results.Append(DFASelected);
         results.Append(DFASWilksLambdaValues);
         results.Append(DFASF_Test_P_Value);
 
@@ -1163,7 +1178,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         results.Append(MCMC_samples);
         ResultItem distribution_res_item;
         CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
-        *dists = samples->distribution(100,0,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
+        *dists = samples->distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
         distribution_res_item.SetName("Posterior Distributions");
         distribution_res_item.SetShowAsString(false);
         distribution_res_item.SetType(result_type::distribution);
@@ -1280,11 +1295,20 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         BracketingResItem.SetShowAsString(false);
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
-        if (!CheckNegativeElements(&TransformedData))
+
+        if (!CheckNegativeElements(data))
             return false;
         bool correct_based_on_size_and_organic_matter = (arguments["Correct based on size and organic matter"] == "true" ? true : false);;
-        CMBMatrix *bracketingresult = new CMBMatrix(TransformedData.BracketTest(correct_based_on_size_and_organic_matter));
+        if (correct_based_on_size_and_organic_matter)
+        {
+            if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+            {
+                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                return false;
+            }
+        }
+        
+        CMBMatrix *bracketingresult = new CMBMatrix(Data()->BracketTest(correct_based_on_size_and_organic_matter,exclude_elements,exclude_samples));
         bracketingresult->SetBooleanValue(true);
         BracketingResItem.SetResult(bracketingresult);
         results.Append(BracketingResItem);

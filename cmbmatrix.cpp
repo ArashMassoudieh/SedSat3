@@ -131,32 +131,49 @@ QTableWidget *CMBMatrix::ToTable()
     for (int j=0; j<getnumcols(); j++)
         colheaders << QString::fromStdString(columnlabels[j]);
 
-    for (int i=0; i<getnumrows(); i++)
-    {
+    for (int i = 0; i < getnumrows(); i++)
         rowheaders << QString::fromStdString(rowlabels[i]);
-        for (int j=0; j<getnumcols(); j++)
-        {   tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(matr[i][j])));
-            if (!boolean_values)
-            {   if (highlightoutsideoflimit)
-                {
-                    if (matr[i][j]>highlimit || matr[i][j]<lowlimit)
-                    {
-                        tablewidget->item(i,j)->setForeground(QColor(Qt::red));
-                    }
-                }
-            }
-            else
-            {
-                if (matr[i][j]==1)
-                    tablewidget->setItem(i,j, new QTableWidgetItem("Fail"));
-                else
-                    tablewidget->setItem(i,j, new QTableWidgetItem("Pass"));
-            }
-        }
-    }
 
     tablewidget->setHorizontalHeaderLabels(colheaders);
     tablewidget->setVerticalHeaderLabels(rowheaders);
+    
+    for (int i = 0; i < getnumrows(); i++)
+    {
+        for (int j = 0; j < getnumcols(); j++)
+        {
+            QTableWidgetItem* item;
+
+            if (boolean_values)
+            {
+                item = new QTableWidgetItem(matr[i][j] == 1 ? "Fail" : "Pass");
+            }
+            else
+            {
+                item = new QTableWidgetItem(QString::number(matr[i][j]));
+
+                if (highlightoutsideoflimit)
+                {
+                    if (matr[i][j] > highlimit || matr[i][j] < lowlimit)
+                    {
+                        tablewidget->verticalHeaderItem(i)->setForeground(QBrush(Qt::red));
+                        //item->setData(Qt::ForegroundRole, QColor(Qt::red));
+                        item->setBackground(QBrush(Qt::red));
+                    }
+                    else
+                    {
+                        item->setForeground(QBrush(Qt::black));
+                    }
+                }
+            }
+
+            tablewidget->setItem(i, j, item);
+			tablewidget->item(i, j)->setTextAlignment(Qt::AlignCenter);
+			
+            
+        }
+    }
+
+    
     return tablewidget;
 }
 

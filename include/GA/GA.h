@@ -3,13 +3,11 @@
 
 #include "Individual.h"
 #include "GADistribution.h"
-#include <stdio.h>
-#include "BTC.h"
 #include "math.h"
-#include <iostream>
-#include "Matrix.h"
+#include <string>
+
 #ifndef mac_version
-#include "omp.h"
+
 #endif
 #include <vector>
 
@@ -40,10 +38,10 @@ struct GA_Twiking_parameters
 
 struct _filenames
 {
-    string initialpopfilemame;
-    string pathname;
-    string getfromfilename;
-    string outputfilename;
+    std::string initialpopfilemame;
+    std::string pathname;
+    std::string getfromfilename;
+    std::string outputfilename;
 };
 
 //using namespace std;
@@ -89,7 +87,7 @@ public:
     bool SetProperties(const map<string,string> &arguments);
     void InitiatePopulation();
     string last_error;
-#ifdef Q_version
+#ifdef Q_GUI_SUPPORT
     void SetRunTimeWindow(ProgressWindow *_rtw) {rtw=_rtw;}
 #endif
 private:
@@ -127,7 +125,7 @@ private:
     int numberOfThreads;
 	// GUI
 
-    #ifdef Q_version
+    #ifdef Q_GUI_SUPPORT
         ProgressWindow *rtw=nullptr;
     #endif // QT_version
 

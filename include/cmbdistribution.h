@@ -2,7 +2,7 @@
 #define CMBDISTRIBUTION_H
 
 #include <vector>
-#include "BTC.h"
+#include "TimeSeries.h"
 
 //using namespace std;
 enum class distribution_type {normal, lognormal, dirichlet, none, uniform};
@@ -16,8 +16,8 @@ public:
     double Eval(const double &x);
     static double Eval(const double &x, const vector<double> parameters, distribution_type distribution);
     double EvalLog(const double &x);
-    CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
-    static CTimeSeries<double> EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type);
+    TimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
+    static TimeSeries<double> EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type);
     vector<double> parameters;
     distribution_type distribution = distribution_type::none;
     void SetType(const distribution_type &typ);

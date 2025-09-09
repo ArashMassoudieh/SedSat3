@@ -247,7 +247,7 @@ CMBTimeSeriesSet ConcentrationSet::DataCDFnFitted(distribution_type dist_type)
         }
     }
     out.append(fitted, "Fitted");
-    CTimeSeries<double> diff = out[0]-out[1];
+    TimeSeries<double> diff = out[0]-out[1];
     out.append(out[0] - out[1],"Error");
     return out; 
 }

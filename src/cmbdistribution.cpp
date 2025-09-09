@@ -48,9 +48,9 @@ double Distribution::EvalLog(const double &x)
     return out;
 }
 
-CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff)
+TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff)
 {
-    CTimeSeries<double> out;
+    TimeSeries<double> out;
     double x;
     for (int i=0; i<numberofpoints; i++)
     {
@@ -67,9 +67,9 @@ CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const
     return out;
 }
 
-CTimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type)
+TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type)
 {
-    CTimeSeries<double> out;
+    TimeSeries<double> out;
     double x;
     for (int i=0; i<numberofpoints; i++)
     {

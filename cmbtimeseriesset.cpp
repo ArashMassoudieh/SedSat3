@@ -1,40 +1,41 @@
 #include "cmbtimeseriesset.h"
-#include "QJsonArray"
+#include <QJsonArray>
+#include <QFile>
 #include "Vector.h"
 
-CMBTimeSeriesSet::CMBTimeSeriesSet():CTimeSeriesSet<double>(),Interface()
+CMBTimeSeriesSet::CMBTimeSeriesSet():TimeSeriesSet<double>(),Interface()
 {
 
 }
 
-CMBTimeSeriesSet::CMBTimeSeriesSet(const CMBTimeSeriesSet& mp):CTimeSeriesSet<double>(mp)
+CMBTimeSeriesSet::CMBTimeSeriesSet(const CMBTimeSeriesSet& mp):TimeSeriesSet<double>(mp)
 {
      observed_value = mp.observed_value;
      labels = mp.labels;
 }
 
-CMBTimeSeriesSet::CMBTimeSeriesSet(int n):CTimeSeriesSet<double>(n), Interface()
+CMBTimeSeriesSet::CMBTimeSeriesSet(int n):TimeSeriesSet<double>(n), Interface()
 {
     observed_value.resize(n);
 }
 
 CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CMBTimeSeriesSet &mp)
 {
-    CTimeSeriesSet<double>::operator=(mp);
+    TimeSeriesSet<double>::operator=(mp);
     observed_value = mp.observed_value;
     labels = mp.labels;
     return *this;
 }
 
-CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CTimeSeriesSet<double> &mp)
+CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const TimeSeriesSet<double> &mp)
 {
-    CTimeSeriesSet<double>::operator=(mp);
-    observed_value.resize(nvars);
+    TimeSeriesSet<double>::operator=(mp);
+    observed_value.resize(size());
     return *this;
 }
-CMBTimeSeriesSet::CMBTimeSeriesSet(const CTimeSeriesSet<double>& mp):CTimeSeriesSet<double>(mp)
+CMBTimeSeriesSet::CMBTimeSeriesSet(const TimeSeriesSet<double>& mp):TimeSeriesSet<double>(mp)
 {
-    observed_value.resize(nvars);
+    observed_value.resize(size());
 }
 
 QJsonObject CMBTimeSeriesSet::toJsonObject()
@@ -46,20 +47,20 @@ QJsonObject CMBTimeSeriesSet::toJsonObject()
             labels.append(QString::fromStdString(Label(j)));
     }
     out["labels"] = labels;
-    for (int i=0; i<nvars; i++)
+    for (int i=0; i<size(); i++)
     {
         QJsonObject timeseries;
         QJsonArray t_values;
         QJsonArray C_values;
-        for (int j=0; j<BTC[i].n; j++)
+        for (int j=0; j<at(i).size(); j++)
         {
-            t_values.append(BTC[i].GetT(j));
-            C_values.append(BTC[i].GetC(j));
+            t_values.append(at(i).getTime(j));
+            C_values.append(at(i).getValue(j));
 
         }
         timeseries["time"] = t_values;
         timeseries["value"] = C_values;
-        out[QString::fromStdString(names[i])] = timeseries;
+        out[QString::fromStdString(getSeriesName(i))] = timeseries;
     }
     QJsonArray Jobserved_values;
     for (unsigned int i=0; i<observed_value.size(); i++)
@@ -90,7 +91,7 @@ bool CMBTimeSeriesSet::ReadFromJsonObject(const QJsonObject &jsonobject)
             QString SeriesName = key;
             QJsonArray TimeJArray = jsonobject[key].toObject()["time"].toArray();
             QJsonArray ValueJArray = jsonobject[key].toObject()["value"].toArray();
-            CTimeSeries<double> this_series;
+            TimeSeries<double> this_series;
             for (unsigned int i=0; i<TimeJArray.count(); i++)
                 this_series.append(TimeJArray[i].toDouble(), ValueJArray[i].toDouble());
             append(this_series,SeriesName.toStdString());
@@ -105,18 +106,18 @@ string CMBTimeSeriesSet::ToString()
 {
 
     string out;
-    for (unsigned int i=0; i<names.size(); i++)
-        out += "\t" + names[i];
+    for (unsigned int i=0; i<size(); i++)
+        out += "\t" + getSeriesName(i);
     out += "\n";
     for (int j=0; j<maxnumpoints(); j++)
     {
-        for (int i=0; i<nvars; i++)
+        for (int i=0; i<size(); i++)
         {
             {
                 if (i>0)
                     out += ", ";
-                if (j<BTC[i].n)
-                    out+= Label(j,i) + "," + QString::number(BTC[i].GetC(j)).toStdString();
+                if (j<at(i).size())
+                    out+= Label(j,i) + "," + QString::number(at(i).getValue(j)).toStdString();
                 else
                     out+= ", ";
             }
@@ -136,13 +137,13 @@ bool CMBTimeSeriesSet::writetofile(QFile* file)
 void CMBTimeSeriesSet::AppendLastContribution(int colnumber, const string &name)
 {
     CMBTimeSeriesSet out;
-    CTimeSeries<double> last_contribution;
+    TimeSeries<double> last_contribution;
     for (int j=0; j<maxnumpoints(); j++)
     {
         double sum = 0;
         for (int i=0; i<colnumber; i++)
         {
-            sum+=BTC[i].GetC(j);
+            sum+=at(i).getValue(j);
         }
         if (1.0-sum<0)
         {
@@ -152,12 +153,12 @@ void CMBTimeSeriesSet::AppendLastContribution(int colnumber, const string &name)
     }
     for (int i = 0; i<colnumber; i++)
     {
-        out.append(BTC[i],names[i]);
+        out.append(at(i),getSeriesName(i));
     }
     out.append(last_contribution,name);
-    for (int i=colnumber; i<nvars; i++)
+    for (int i=colnumber; i<size(); i++)
     {
-        out.append(BTC[i],names[i]);
+        out.append(at(i),getSeriesName(i));
     }
     *this = out;
 
@@ -169,32 +170,32 @@ QTableWidget *CMBTimeSeriesSet::ToTable()
     tablewidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     if (Interface::Option(options_key::single_column_x))
     {
-        tablewidget->setColumnCount(nvars);
+        tablewidget->setColumnCount(size());
     }
     else
     {
-        tablewidget->setColumnCount(nvars*2);
+        tablewidget->setColumnCount(size()*2);
     }
     tablewidget->setRowCount(maxnumpoints());
     QStringList headers;
     QStringList rowlabels;
 
-    for (int j=0; j<nvars; j++)
+    for (int j=0; j<size(); j++)
     {
         if (Interface::Option(options_key::single_column_x))
-            headers << QString::fromStdString(names[j]) + GetOptions().Y_suffix;
+            headers << QString::fromStdString(getSeriesName(j)) + GetOptions().Y_suffix;
         else
-            headers << QString::fromStdString(names[j]) + GetOptions().X_suffix << QString::fromStdString(names[j]) + GetOptions().Y_suffix;
-        for (int i=0; i<BTC[j].n; i++)
+            headers << QString::fromStdString(getSeriesName(j)) + GetOptions().X_suffix << QString::fromStdString(getSeriesName(j))+ GetOptions().Y_suffix;
+        for (int i=0; i<at(j).size(); i++)
         {
             if (!Interface::Option(options_key::single_column_x))
             {   if (j==0) rowlabels<<QString::number(i);
                 tablewidget->setItem(i,j*2, new QTableWidgetItem(QString::fromStdString(Label(i,j))));
-                tablewidget->setItem(i,j*2+1, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
+                tablewidget->setItem(i,j*2+1, new QTableWidgetItem(QString::number(at(j).getValue(i))));
             }
             else
             {   if (j==0) rowlabels<<QString::fromStdString(Label(i,j));
-                tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(BTC[j].GetC(i))));
+                tablewidget->setItem(i,j, new QTableWidgetItem(QString::number(at(j).getValue(i))));
             }
         }
     }
