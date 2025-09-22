@@ -163,7 +163,7 @@ SedSAT3 is distributed under the GNU General Public License v3.0 (GPL-3.0).
 
 If you use SedSAT3 in your research, please cite:
 
-> Massoudieh, A., et al. (2023). *SedSAT3: An open-source software for sediment source apportionment*. U.S. Geological Survey. https://github.com/ArashMassoudieh/SedSat3  
+> Massoudieh, A., et al. (2023). *SedSAT user's manual. (https://github.com/ArashMassoudieh/SedSat-User-s-Manual/blob/main/SedSat_User_s_Manual.pdf)
 
 ---
 
