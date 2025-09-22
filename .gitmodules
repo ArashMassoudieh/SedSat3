@@ -1,3 +1,6 @@
 [submodule "Utilities"]
 	path = Utilities
 	url = https://github.com/ArashMassoudieh/Utilities.git
+[submodule "thirdparty/QXlsx"]
+	path = thirdparty/QXlsx
+	url = https://github.com/j2doll/QXlsx.git
