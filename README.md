@@ -122,7 +122,7 @@ After installation, you can start SedSAT3 in several ways:
 
 ## Documentation
 
-- **User Manual**: Detailed descriptions of preprocessing routines, tracer selection methods, and apportionment algorithms are provided in the SedSAT3 User’s Manual: https://sedsat.org/docs  
+- **User Manual**: Detailed descriptions of preprocessing routines, tracer selection methods, and apportionment algorithms are provided in the SedSAT3 User’s Manual:(https://github.com/ArashMassoudieh/SedSat-User-s-Manual/blob/main/SedSat_User_s_Manual.pdf)  
 
 ---
 
