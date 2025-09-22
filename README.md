@@ -26,9 +26,13 @@ A precompiled installer is available at:
 
 The installer bundles all required libraries, so no extra setup is needed.  
 
-### Linux
-A Debian package for Ubuntu will be provided at:  
-👉 [insert final DEB package URL here]  
+### Linux (Ubuntu/Debian)
+
+You can install SedSAT3 from the prebuilt `.deb` package:
+
+```bash
+wget https://github.com/ArashMassoudieh/SedSat3/releases/download/Latest/SedSat3-Linux.deb
+sudo apt install ./SedSat3-Linux.deb
 
 Alternatively, you can build from source (see below).  
 
