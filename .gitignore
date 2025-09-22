@@ -118,3 +118,19 @@ build/Debug/
 =======
 build/Desktop_Qt_6_8_3-Debug/
 >>>>>>> origin/main
+
+*.deb
+
+build/_CPack_Packages/Linux/DEB/sedsat3-1.0.25-Linux/
+
+build/CMakeFiles/SedSat3.dir/
+
+build/SedSat3_autogen/
+
+# CMake build directories and files
+build/ 
+CMakeCache.txt 
+CMakeFiles/ 
+cmake_install.cmake 
+Makefile 
+install_manifest.txt
