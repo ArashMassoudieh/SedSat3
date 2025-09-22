@@ -1,6 +1,6 @@
 # SedSAT3 (Sediment Source Assessment Tool, version 1.0.25)
 
-SedSAT3 is an open-source software package developed by the U.S. Geological Survey for sediment source fingerprinting using chemical and isotopic tracers. It provides a graphical user interface and a suite of tools for preprocessing, tracer selection, source apportionment, and diagnostic analysis. The software supports multiple apportionment approaches, including deterministic maximum likelihood estimation, metaheuristic search with genetic algorithms, and Bayesian inference through Markov Chain Monte Carlo (MCMC) sampling.
+SedSAT3 is an open-source software package developed by the U.S. Geological Survey for sediment source fingerprinting using chemical and isotopic tracers. It provides a graphical user interface and a suite of tools for preprocessing, tracer selection, source apportionment, and diagnostic analysis. The software supports multiple apportionment approaches, including deterministic maximum likelihood estimation, metaheuristic search with genetic algorithms, and Bayesian inference through Markov Chain Monte Ca...
 
 ---
 
@@ -24,9 +24,21 @@ SedSAT3 is an open-source software package developed by the U.S. Geological Surv
 A precompiled installer is available at:  
 https://sedsat.org/download
 
-### Linux
-A Debian package for Ubuntu will be provided at:  
-[insert final DEB package URL here]
+### Linux (Ubuntu/Debian)
+
+You can install SedSAT3 from the prebuilt `.deb` package:
+
+```bash
+wget https://github.com/ArashMassoudieh/SedSat3/releases/download/Latest/SedSat3-Linux.deb
+sudo apt install ./SedSat3-Linux.deb
+```
+
+This installs SedSAT3 to `/usr/local/sedsat3` with:
+
+- Executable at `/usr/local/sedsat3/bin/SedSat3`
+- Resources at `/usr/local/sedsat3/resources`
+- A symlink `/usr/local/bin/sedsat3` so you can run the app by typing `sedsat3`
+- A desktop launcher at `/usr/share/applications/sedsat3.desktop`, so the app appears in your GNOME/KDE menu with its icon.
 
 ### macOS
 Build from source (instructions below).
@@ -42,7 +54,7 @@ SedSAT3 can be compiled on Windows, macOS, and Linux. The software depends on se
 - Qt 6 (including `qmake` or CMake)  
 - GNU Scientific Library (GSL)  
 - Armadillo  
-- QXlsx  
+- QXlsx (included as a submodule)  
 - A C++17 or newer compiler (MSVC, g++, or clang)  
 
 ### Clone the Repository
@@ -61,20 +73,39 @@ git submodule update
 
 ### Build Instructions
 
-#### Using qmake (Qt recommended)
+#### Using qmake (quick testing)
 
 ```bash
 qmake SedSat3.pro
 make        # or `nmake` on Windows
 ```
 
-### Run the Application
-
-On success, the SedSAT3 executable will be available in the build directory.  
+#### Using CMake (for packaging and distribution)
 
 ```bash
-./SedSat3
+mkdir build && cd build
+cmake ..
+cmake --build . --parallel
+cpack -G DEB   # to generate a Debian package
 ```
+
+The `.deb` file will appear in the `build/` folder.
+
+---
+
+## Running SedSAT3
+
+After installation, you can start SedSAT3 in several ways:
+
+- From the terminal:
+  ```bash
+  sedsat3
+  ```
+- From the applications menu (look for "SedSat3" with its icon).  
+- Or directly:
+  ```bash
+  /usr/local/sedsat3/bin/SedSat3
+  ```
 
 ---
 
@@ -91,7 +122,7 @@ On success, the SedSAT3 executable will be available in the build directory.
 
 ## Documentation
 
-- **User Manual**: Detailed descriptions of preprocessing routines, tracer selection methods, and apportionment algorithms are provided in the SedSAT3 User’s Manual: https://sedsat.org/docs  
+- **User Manual**: Detailed descriptions of preprocessing routines, tracer selection methods, and apportionment algorithms are provided in the SedSAT3 User’s Manual:(https://github.com/ArashMassoudieh/SedSat-User-s-Manual/blob/main/SedSat_User_s_Manual.pdf)  
 
 ---
 
