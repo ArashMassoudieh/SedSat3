@@ -19,6 +19,7 @@ SOURCES += \
     Utilities/Utilities.cpp \
     Utilities/Vector.cpp \
     Utilities/Vector_arma.cpp \
+    optionsdialog.cpp \
     thirdparty/qcustomplot6/qcustomplot.cpp \
     FilePushButton.cpp \
     ProgressWindow.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     Utilities/Utilities.h \
     Utilities/Vector.h \
     Utilities/Vector_arma.h \
+    optionsdialog.h \
     thirdparty/qcustomplot6/qcustomplot.h \
     FilePushButton.h \
     ProgressWindow.h \
@@ -184,4 +186,18 @@ unix:!macx {
 macx {
     LIBS += -lomp -lpthread
 }
+
+FORMS += \
+    ProgressWindow.ui \
+    aboutdialog.ui \
+    dialogchooseexcelsheets.ui \
+    formelementinformation.ui \
+    generalchart.ui \
+    genericform.ui \
+    indicatesheetsdialog.ui \
+    mainwindow.ui \
+    plotwindow.ui \
+    resultswindow.ui \
+    resulttableviewer.ui \
+    selectsamples.ui
 

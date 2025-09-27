@@ -32,6 +32,7 @@
 #include "dialogchooseexcelsheets.h"
 #include "toolboxitem.h"
 #include "resulttableviewer.h"
+#include "optionsdialog.h"
 //#include "MCMC.h"
 
 #ifdef _WIN32
@@ -113,10 +114,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave_Project,SIGNAL(triggered()),this,SLOT(onSaveProject()));
     connect(ui->actionSave_As,SIGNAL(triggered()),this,SLOT(onSaveProjectAs()));
     connect(ui->actionOpen_Project,SIGNAL(triggered()),this,SLOT(onOpenProject()));
+    connect(ui->actionOptions,SIGNAL(triggered()),this,SLOT(on_Options_triggered()));
+
     CGA<SourceSinkData> GA;
     centralform.reset(ui->textBrowser);
     conductor->SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
     readRecentFilesList();
+
 }
 
 MainWindow::~MainWindow()
@@ -152,6 +156,7 @@ void MainWindow::onSaveProject()
     outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
     outputjsonobject["Target Group"] = QString::fromStdString(Data()->TargetGroup());
     outputjsonobject["Tools used"] = Data()->ToolsUsedToJsonObject();
+    outputjsonobject["Options"] = Data()->OptionsToJsonObject();
     QJsonObject resultsetjsonobject;
     for (int i=0; i<resultsviewmodel->rowCount(); i++)
     {
@@ -771,7 +776,9 @@ void MainWindow::on_constituent_properties_triggered()
 
 void MainWindow::onIncludeExcludeSample()
 {
-    Data()->OutlierAnalysisForAll(-3,3);
+    if (Data()->GetOptions()->operator[]("Outlier deviation threshold") == 3)
+        on_Options_triggered();
+    Data()->OutlierAnalysisForAll(-Data()->GetOptions()->operator[]("Outlier deviation threshold") ,Data()->GetOptions()->operator[]("Outlier deviation threshold"));
     Data()->BracketTest(false, false, false);
     SelectSamples *include_exclude_samples = new SelectSamples(this);
     include_exclude_samples->SetMode(mode::samples);
@@ -1145,4 +1152,12 @@ void MainWindow::on_show_data_as_table()
 void MainWindow::on_ZoomExtends()
 {
     plotter->ZoomExtends();
+}
+
+
+void MainWindow::on_Options_triggered()
+{
+    OptionsDialog dlg(Data()->GetOptions());
+    dlg.exec();
+
 }

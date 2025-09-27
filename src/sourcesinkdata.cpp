@@ -14,7 +14,7 @@
 
 SourceSinkData::SourceSinkData():map<string, Elemental_Profile_Set>()
 {
-
+    options["Outlier deviation threshold"] = 3;
 }
 
 SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_Profile_Set>(mp)
@@ -41,6 +41,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& mp):map<string, Elemental_P
     regression_p_value_threshold = mp.regression_p_value_threshold;
     distance_coeff = mp.distance_coeff;
     tools_used = mp.tools_used;
+    options = mp.options;
 
 }
 
@@ -96,6 +97,7 @@ SourceSinkData SourceSinkData::Corrected(const string &target, bool omnsizecorre
     //out.PopulateElementInformation();
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
+    out.options = options;
     return out;
 }
 
@@ -144,6 +146,7 @@ SourceSinkData SourceSinkData::CopyandCorrect(bool exclude_samples, bool exclude
     out.PopulateElementInformation(&ElementInformation);
     out.PopulateElementDistributions();
     out.AssignAllDistributions();
+    out.options = options;
     return out;
 }
 
@@ -206,6 +209,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData &mp)
     sizeconsituent = mp.sizeconsituent;
     distance_coeff = mp.distance_coeff;
     tools_used = mp.tools_used;
+    options = mp.options;
     return *this;
 }
 
@@ -1792,11 +1796,24 @@ QJsonArray SourceSinkData::ToolsUsedToJsonObject()
     return tools_used_json_array;
 }
 
+QJsonObject SourceSinkData::OptionsToJsonObject()
+{
+    QJsonObject json_object;
+    for (QMap<QString,double>::iterator it = options.begin(); it != options.end(); it++)
+    {
+        json_object[it.key()] = it.value();
+    }
+
+    return json_object;
+}
+
+
 void SourceSinkData::AddtoToolsUsed(const string &tool)
 {
     if (!ToolsUsed(tool))
         tools_used.push_back(tool);
 }
+
 
 bool SourceSinkData::ReadToolsUsedFromJsonObject(const QJsonArray &jsonarray)
 {
@@ -1807,6 +1824,7 @@ bool SourceSinkData::ReadToolsUsedFromJsonObject(const QJsonArray &jsonarray)
 
     return true;
 }
+
 
 bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jsonobject)
 {
@@ -1830,6 +1848,15 @@ bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject &jsonobject
         Elemental_Profile_Set elemental_profile_set;
         elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject());
         operator[](key.toStdString()) = elemental_profile_set;
+    }
+
+    return true;
+}
+
+bool SourceSinkData::ReadOptionsfromJsonObject(const QJsonObject &jsonobject)
+{
+    for(QString key: jsonobject.keys() ) {
+        options[key] = jsonobject[key].toDouble();
     }
 
     return true;
@@ -1871,6 +1898,7 @@ bool SourceSinkData::ReadFromFile(QFile *fil)
     ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
     ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
     ReadToolsUsedFromJsonObject(jsondoc["Tools used"].toArray());
+    ReadOptionsfromJsonObject(jsondoc["Options"].toObject());
     target_group = jsondoc["Target Group"].toString().toStdString();
     return true;
 }
@@ -1920,7 +1948,7 @@ bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const strin
 void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
 {
     for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
-        if (it->first!=target_group && !it->second.OutlierAnalysisDone())
+        if (it->first!=target_group)
             it->second.Outlier(lowerthreshold,upperthreshold);
 }
 

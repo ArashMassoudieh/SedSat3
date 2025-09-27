@@ -232,11 +232,13 @@ public:
     bool WriteDataToFile(QFile *file);
     QJsonObject ElementInformationToJsonObject();
     QJsonArray ToolsUsedToJsonObject();
+    QJsonObject OptionsToJsonObject();
     void AddtoToolsUsed(const string &tool);
     bool ReadToolsUsedFromJsonObject(const QJsonArray &jsonobject);
     QJsonObject ElementDataToJsonObject();
     bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
     bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
+    bool ReadOptionsfromJsonObject(const QJsonObject &jsonobject);
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear, const double &p_value_threshold=0.05);
     DFA_result DiscriminantFunctionAnalysis(const string &source1);
     DFA_result DiscriminantFunctionAnalysis();
@@ -306,6 +308,7 @@ public:
     SourceSinkData ExtractElementsOnly(bool isotopes = false) const;
     string FirstOMConstituent();
     string FirstSizeConstituent();
+    QMap<QString, double> *GetOptions() {return &options;}
 
 private:
 
@@ -357,6 +360,7 @@ private:
     CMBVector DeviationFromMean(const string &group_name);
     CMBVector MeanElementalContent(const string &group_name);
     CMBVector MeanElementalContent();
+    QMap<QString, double> options;
 
 
 };
