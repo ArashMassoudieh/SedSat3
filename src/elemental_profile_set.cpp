@@ -34,12 +34,12 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyandCorrect(bool exclude_samples
     Elemental_Profile_Set out;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        if (it->second.IncludedInAnalysis() || !exclude_samples)
+        if (it->second.IsIncludedInAnalysis() || !exclude_samples)
         {
             if ((mlr_vs_om_size.size()!=0))
-                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,omnsizecorrect,om_size,&mlr_vs_om_size,elementinfo));
+                out.Append_Profile(it->first, it->second.CreateCorrectedProfile(exclude_elements,omnsizecorrect,om_size,&mlr_vs_om_size,elementinfo));
             else
-                out.Append_Profile(it->first, it->second.CopyandCorrect(exclude_elements,false,om_size,nullptr,elementinfo));
+                out.Append_Profile(it->first, it->second.CreateCorrectedProfile(exclude_elements,false,om_size,nullptr,elementinfo));
         }
     }
     out.SetRegression(&mlr_vs_om_size);
@@ -51,7 +51,7 @@ Elemental_Profile_Set Elemental_Profile_Set::ExtractElementsOnly(const map<strin
     Elemental_Profile_Set out;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        out.Append_Profile(it->first, it->second.ExtractElementsOnly(elementinfo,isotopes));
+        out.Append_Profile(it->first, it->second.ExtractChemicalElements(elementinfo,isotopes));
     }
 
     return out;
@@ -62,7 +62,7 @@ Elemental_Profile_Set Elemental_Profile_Set::Extract(const vector<string> &eleme
     Elemental_Profile_Set out;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        out.Append_Profile(it->first, it->second.Extract(element_list));
+        out.Append_Profile(it->first, it->second.ExtractElements(element_list));
     }
     return out;
 }
@@ -77,7 +77,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedinAnalysis(bool applyom
     else
     {
         for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
-            if (it->second.IncludedInAnalysis() && it->first!="")
+            if (it->second.IsIncludedInAnalysis() && it->first!="")
                 out.Append_Profile(it->first, it->second, elementinfo);
     }
     out.SetRegression(&mlr_vs_om_size);
@@ -89,7 +89,7 @@ Elemental_Profile_Set Elemental_Profile_Set::EliminateSamples(vector<string> sam
     Elemental_Profile_Set out;
 
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
-        if (it->second.IncludedInAnalysis() && lookup(samplestobeeliminated, it->first)==-1)
+        if (it->second.IsIncludedInAnalysis() && lookup(samplestobeeliminated, it->first)==-1)
             out.Append_Profile(it->first, it->second, elementinfo);
 
     out.SetRegression(&mlr_vs_om_size);
@@ -117,7 +117,7 @@ Elemental_Profile *Elemental_Profile_Set::Append_Profile(const string &name, con
     }
     else
     {
-        operator[](name) = profile.CopyIncluded(elementinfo);
+        operator[](name) = profile.CreateAnalysisProfile(elementinfo);
     }
     for (map<string,double>::const_iterator it=profile.begin(); it!=profile.end(); it++)
     {
@@ -219,7 +219,7 @@ bool Elemental_Profile_Set::ContainsElement(const string &elementname)
     bool out=true;
     for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
     {
-        out &= it->second.contains(elementname);
+        out &= it->second.Contains(elementname);
 
     }
     return out;
@@ -310,7 +310,7 @@ vector<double> Elemental_Profile_Set::GetProfileForSample(const string &sample_n
     if (!Profile(sample_name))
         return vector<double>();
 
-    return Profile(sample_name)->Vals();
+    return Profile(sample_name)->GetAllValues();
 }
 
 double Elemental_Profile_Set::max()
@@ -318,7 +318,7 @@ double Elemental_Profile_Set::max()
     double _max = -1e12;
     for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
     {
-        if (it->second.max() > _max) _max = it->second.max(); 
+        if (it->second.GetMaximum() > _max) _max = it->second.GetMaximum(); 
     }
     return _max; 
 }
@@ -328,7 +328,7 @@ double Elemental_Profile_Set::min()
     double _min = 1e12;
     for (map<string, Elemental_Profile>::iterator it = begin(); it != end(); it++)
     {
-        if (it->second.min() < _min) _min = it->second.min();
+        if (it->second.GetMinimum() < _min) _min = it->second.GetMinimum();
     }
     return _min;
 }
@@ -507,10 +507,10 @@ QTableWidget *Elemental_Profile_Set::ToTable()
     {
         for (int j=0; j<element_names.size(); j++)
         {
-            tablewidget->setItem(j,i, new QTableWidgetItem(QString::number(it->second.Val(element_names[j]))));
+            tablewidget->setItem(j,i, new QTableWidgetItem(QString::number(it->second.GetValue(element_names[j]))));
             if (highlightoutsideoflimit)
             {
-                if (it->second.Val(element_names[j])>highlimit || it->second.Val(element_names[j])<lowlimit)
+                if (it->second.GetValue(element_names[j])>highlimit || it->second.GetValue(element_names[j])<lowlimit)
                 {
                     tablewidget->item(j,i)->setForeground(QColor(Qt::red));
                 }
@@ -531,8 +531,8 @@ Elemental_Profile_Set Elemental_Profile_Set::OrganicandSizeCorrect(const vector<
     out.clear();
     for (map<string,Elemental_Profile>::iterator it=begin(); it!=end(); it++)
     {
-        if (it->second.IncludedInAnalysis() && it->first!="")
-            out.Append_Profile(it->first, it->second.OrganicandSizeCorrect(om_size,&mlr_vs_om_size,elementinfo),elementinfo);
+        if (it->second.IsIncludedInAnalysis() && it->first!="")
+            out.Append_Profile(it->first, it->second.ApplyOrganicMatterAndSizeCorrections(om_size,&mlr_vs_om_size,elementinfo),elementinfo);
 
     }
 
@@ -659,7 +659,7 @@ Elemental_Profile Elemental_Profile_Set::SelectTopAggregate(int n) const
     Elemental_Profile out;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        CMBVector sorted = it->second.SortByValue();
+        CMBVector sorted = it->second.SortByConcentration();
         for (int i=0; i<n; i++)
         {
             if (out.count(sorted.Label(i))==0)
@@ -681,7 +681,7 @@ CMBVector Elemental_Profile_Set::DotProduct(const CVector &v) const
     int counter = 0;
     for (map<string,Elemental_Profile>::const_iterator it=cbegin(); it!=cend(); it++)
     {
-        out[counter] = it->second.DotProduct(v);
+        out[counter] = it->second.CalculateDotProduct(v);
         out.SetLabel(counter,it->first);
         counter++;
     }

@@ -315,7 +315,7 @@ element_data SourceSinkData::ExtractElementData(const string &element, const str
     extracted_data.group_name = group;
     for (map<string,Elemental_Profile>::iterator profile=sample_set(group)->begin(); profile!=sample_set(group)->end() ; profile++)
     {
-        extracted_data.values.push_back(profile->second.Val(element));
+        extracted_data.values.push_back(profile->second.GetValue(element));
         extracted_data.sample_names.push_back(profile->first);
     }
     return extracted_data;
@@ -613,7 +613,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
             {
                 Observation obs;
                 obs.SetName(targetsamplename + "_" + element_iterator->first);
-                obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
+                obs.AppendValues(0,GetElementalProfile(targetsamplename)->GetValue(element_iterator->first));
                 observations.push_back(obs);
             }
 
@@ -636,7 +636,7 @@ bool SourceSinkData::InitializeParametersObservations(const string &targetsample
             {
                 Observation obs;
                 obs.SetName(targetsamplename + "_" + element_iterator->first);
-                obs.AppendValues(0,GetElementalProfile(targetsamplename)->Val(element_iterator->first));
+                obs.AppendValues(0,GetElementalProfile(targetsamplename)->GetValue(element_iterator->first));
                 observations.push_back(obs);
             }
 
@@ -678,7 +678,7 @@ double SourceSinkData::LogLikelihoodSourceElementalDistributions()
 
             for (map<string,Elemental_Profile>::iterator sample = this_source_group->begin(); sample!=this_source_group->end(); sample++)
             {
-                logLikelihood += this_source_group->ElementalDistribution(element_order[element_counter])->GetEstimatedDistribution()->EvalLog(sample->second.Val(element_order[element_counter]));
+                logLikelihood += this_source_group->ElementalDistribution(element_order[element_counter])->GetEstimatedDistribution()->EvalLog(sample->second.GetValue(element_order[element_counter]));
             }
 
         }
@@ -691,9 +691,9 @@ CVector SourceSinkData::ObservedDataforSelectedSample(const string &SelectedTarg
     CVector observed_data(element_order.size());
     for (unsigned int i=0; i<element_order.size(); i++)
     {   if (SelectedTargetSample!="")
-            observed_data[i] = this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(element_order[i]);
+            observed_data[i] = this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->GetValue(element_order[i]);
         else if (selected_target_sample!="")
-            observed_data[i] = this->sample_set(TargetGroup())->Profile(selected_target_sample)->Val(element_order[i]);
+            observed_data[i] = this->sample_set(TargetGroup())->Profile(selected_target_sample)->GetValue(element_order[i]);
     }
     return observed_data;
 }
@@ -704,9 +704,9 @@ CVector SourceSinkData::ObservedDataforSelectedSample_Isotope(const string &Sele
     for (unsigned int i=0; i<isotope_order.size(); i++)
     {   string corresponding_element = ElementInformation[isotope_order[i]].base_element;
         if (SelectedTargetSample!="")
-            observed_data[i] = (this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(isotope_order[i])/double(1000)+1.0)*ElementInformation[isotope_order[i]].standard_ratio*sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(corresponding_element);
+            observed_data[i] = (this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->GetValue(isotope_order[i])/double(1000)+1.0)*ElementInformation[isotope_order[i]].standard_ratio*sample_set(TargetGroup())->Profile(SelectedTargetSample)->GetValue(corresponding_element);
         else if (selected_target_sample!="")
-            observed_data[i] = (this->sample_set(TargetGroup())->Profile(selected_target_sample)->Val(isotope_order[i])/double(1000)+1.0)*ElementInformation[isotope_order[i]].standard_ratio*sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(corresponding_element);
+            observed_data[i] = (this->sample_set(TargetGroup())->Profile(selected_target_sample)->GetValue(isotope_order[i])/double(1000)+1.0)*ElementInformation[isotope_order[i]].standard_ratio*sample_set(TargetGroup())->Profile(SelectedTargetSample)->GetValue(corresponding_element);
     }
     return observed_data;
 }
@@ -717,9 +717,9 @@ CVector SourceSinkData::ObservedDataforSelectedSample_Isotope_delta(const string
     for (unsigned int i=0; i<isotope_order.size(); i++)
     {   string corresponding_element = ElementInformation[isotope_order[i]].base_element;
         if (SelectedTargetSample!="")
-            observed_data[i] = this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->Val(isotope_order[i]);
+            observed_data[i] = this->sample_set(TargetGroup())->Profile(SelectedTargetSample)->GetValue(isotope_order[i]);
         else if (selected_target_sample!="")
-            observed_data[i] = this->sample_set(TargetGroup())->Profile(selected_target_sample)->Val(isotope_order[i]);
+            observed_data[i] = this->sample_set(TargetGroup())->Profile(selected_target_sample)->GetValue(isotope_order[i]);
     }
     return observed_data;
 }
@@ -2041,7 +2041,7 @@ CMBVector SourceSinkData::DFATransformed(const CMBVector &eigenvector, const str
     int i=0;
     for (map<string,Elemental_Profile>::iterator sample = operator[](sourcegroup).begin(); sample != operator[](sourcegroup).end(); sample++)
     {
-        out[i] = sample->second.DotProduct(eigenvector);
+        out[i] = sample->second.CalculateDotProduct(eigenvector);
         out.SetLabel(i,sample->first);
         i++;
     }

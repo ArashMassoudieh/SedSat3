@@ -1682,7 +1682,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         if (arguments["Modify the included elements based on the results"] == "true")
         {
-            Data()->IncludeExcludeElementsBasedOn(selected->ElementNames());
+            Data()->IncludeExcludeElementsBasedOn(selected->GetElementNames());
         }
 
     }

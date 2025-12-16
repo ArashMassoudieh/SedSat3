@@ -21,7 +21,7 @@ QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
         }
         if (index.column()==1)
         {
-            if (GetProfileSet(index.row())->IncludedInAnalysis())
+            if (GetProfileSet(index.row())->IsIncludedInAnalysis())
                 return "Yes";
             else
                 return "No";
@@ -82,9 +82,9 @@ bool SelectSampleTableModel::setData(const QModelIndex & index, const QVariant &
         if (index.column()==1)
         {
             if (value.toString()=="Yes" || value.toBool())
-                GetProfileSet(index.row())->SetIncluded(true);
+                GetProfileSet(index.row())->SetIncludedInAnalysis(true);
             else
-                GetProfileSet(index.row())->SetIncluded(false);
+                GetProfileSet(index.row())->SetIncludedInAnalysis(false);
         }
 
     }
