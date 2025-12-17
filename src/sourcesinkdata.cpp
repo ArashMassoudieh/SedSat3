@@ -951,6 +951,7 @@ bool SourceSinkData::InitializeParametersAndObservations(
     return true;
 }
 
+
 CVector SourceSinkData::GetSourceContributions()
 {
     CVector contributions(size()-1);
