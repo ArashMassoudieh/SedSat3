@@ -441,15 +441,15 @@ vector<double> Elemental_Profile_Set::GetAllConcentrationsFor(const string& elem
     return concentrations;
 }
 
-vector<double> Elemental_Profile_Set::GetConcentrationsForSample(const string& sample_name)
+vector<double> Elemental_Profile_Set::GetConcentrationsForSample(const string& sample_name) const
 {
-    Elemental_Profile* profile = GetProfile(sample_name);
-
-    if (!profile) {
+    // Check if sample exists
+    if (count(sample_name) == 0) {
         return vector<double>();
     }
 
-    return profile->GetAllValues();
+    // Use at() to get const reference (no copy)
+    return at(sample_name).GetAllValues();
 }
 
 double Elemental_Profile_Set::GetMaximum() const

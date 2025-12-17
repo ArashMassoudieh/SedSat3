@@ -22,7 +22,7 @@ void SelectSamples::SetData(SourceSinkData *_data)
     ui->GroupComboBox->clear();
     for (map<string,Elemental_Profile_Set>::iterator it=data->begin(); it!=data->end(); it++)
     {
-        if (Mode!=mode::regressions || it->first!=data->TargetGroup())
+        if (Mode!=mode::regressions || it->first!=data->GetTargetGroup())
             ui->GroupComboBox->addItem(QString::fromStdString(it->first));
     }
     if (Mode==mode::samples)

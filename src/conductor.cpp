@@ -30,7 +30,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {   organicnsizecorrection = true;
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -38,9 +38,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        SourceSinkData correctedData = Data()->CreateCorrectedDataset(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         rtw->show();
-        correctedData.InitializeParametersObservations(arguments["Sample"]);
+        correctedData.InitializeParametersAndObservations(arguments["Sample"]);
         if (!CheckNegativeElements(&correctedData))
             return false;
         GA = new CGA<SourceSinkData>(&correctedData);
@@ -111,19 +111,19 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {   organicnsizecorrection = true;
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
         else
             organicnsizecorrection = false;
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        SourceSinkData correctedData = Data()->CreateCorrectedDataset(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         if (!CheckNegativeElements(&correctedData))
             return false;
 
         rtw->show();
-        correctedData.InitializeParametersObservations(arguments["Sample"],estimation_mode::only_contributions);
+        correctedData.InitializeParametersAndObservations(arguments["Sample"],estimation_mode::only_contributions);
         correctedData.SetParameterEstimationMode(estimation_mode::only_contributions);
         GA = new CGA<SourceSinkData>(&correctedData);
         GA->filenames.pathname = workingfolder.toStdString() + "/";
@@ -147,7 +147,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (GA!=nullptr) delete GA;
         ProgressWindow *rtw = new ProgressWindow(mainwindow);
         rtw->show();
-        Data()->InitializeParametersObservations(arguments["Sample"],estimation_mode::source_elemental_profiles_based_on_source_data);
+        Data()->InitializeParametersAndObservations(arguments["Sample"],estimation_mode::source_elemental_profiles_based_on_source_data);
         Data()->SetParameterEstimationMode(estimation_mode::source_elemental_profiles_based_on_source_data);
         GA = new CGA<SourceSinkData>(Data());
         GA->filenames.pathname = workingfolder.toStdString() + "/";
@@ -181,7 +181,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {   organicnsizecorrection = true;
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -189,11 +189,11 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             organicnsizecorrection = false;
 
         rtw->show();
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        SourceSinkData correctedData = Data()->CreateCorrectedDataset(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         if (!CheckNegativeElements(&correctedData))
             return false;
 
-        correctedData.InitializeParametersObservations(arguments["Sample"]);
+        correctedData.InitializeParametersAndObservations(arguments["Sample"]);
         correctedData.SetProgressWindow(rtw);
         if (arguments["Softmax transformation"]=="true")
             correctedData.SolveLevenBerg_Marquardt(transformation::softmax);
@@ -227,7 +227,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {   organicnsizecorrection = true;
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -275,7 +275,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         Data()->SetSelectedTargetSample(arguments["Sample"]);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,true,arguments["Sample"]);
+        SourceSinkData TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,true,arguments["Sample"]);
         vector<ResultItem> resultitems = TransformedData.GetSourceProfiles();
         results.SetName("Corrected Elemental Profiles for Target" + arguments["Sample"]);
         for (unsigned int i=0; i<resultitems.size(); i++)
@@ -290,7 +290,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         results.SetName("MLR_vs_OM&Size ");
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+        SourceSinkData TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         if (arguments["Equation"]=="Linear")
             TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::linear, QString::fromStdString(arguments["P-value threshold"]).toDouble());
         else
@@ -299,7 +299,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         Data()->SetOMandSizeConstituents(arguments["Organic Matter constituent"],arguments["Particle Size constituent"]);
         for (map<string,Elemental_Profile_Set>::iterator it=Data()->begin(); it!=Data()->end(); it++)
         {
-            if (it->first != Data()->TargetGroup())
+            if (it->first != Data()->GetTargetGroup())
             it->second.SetRegressionModels(TransformedData[it->first].GetRegressionModels());
 
         }
@@ -335,15 +335,15 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+        SourceSinkData TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         if (arguments["OM and Size Correct based on target sample"] != "")
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+            TransformedData = TransformedData.CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
         CMBMatrix *cormatr = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).CalculateCorrelationMatrix());
         cormatr->SetLimit(_range::high,threshold);
@@ -357,7 +357,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Source/Target group I"] == arguments["Source/Target group II"])
         {
             QString message = "The selected sources must be different";
-            QMessageBox::warning(mainwindow, "OpenHydroQual", message, QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", message, QMessageBox::Ok);
             return false;
         }
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
@@ -373,13 +373,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+            TransformedData = TransformedData.CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
 
-        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements, false);
+        TransformedData = TransformedData.CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
         
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
@@ -388,7 +388,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source/Target group I"], arguments["Source/Target group II"]);
         if (dfa_res.eigen_vectors.size()==0)
         {
-            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
             return false;
         }
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
@@ -454,13 +454,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+            TransformedData = TransformedData.CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
 
-        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements, false);
+        TransformedData = TransformedData.CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
 
         TransformedData.SetProgressWindow(rtw);
         if (arguments["Box-cox transformation"]=="true")
@@ -469,7 +469,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis(arguments["Source group"]);
         if (dfa_res.eigen_vectors.size()==0)
         {
-            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
             return false;
         }
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
@@ -533,13 +533,13 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
-            TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
+            TransformedData = TransformedData.CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
 
-        TransformedData = TransformedData.CopyandCorrect(exclude_samples, exclude_elements, false);
+        TransformedData = TransformedData.CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
         
         if (!CheckNegativeElements(&TransformedData))
             return false;
@@ -551,7 +551,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         DFA_result dfa_res = TransformedData.DiscriminantFunctionAnalysis();
         if (dfa_res.eigen_vectors.size()==0)
         {
-            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
             return false;
         }
         CMBVector *p_value = new CMBVector(dfa_res.p_values);
@@ -605,7 +605,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Source/Target group I"] == arguments["Source/Target group II"])
         {
             QString message = "The selected sources must be different";
-            QMessageBox::warning(mainwindow, "OpenHydroQual", message, QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", message, QMessageBox::Ok);
             return false; 
         }
         ProgressWindow* rtw = new ProgressWindow(mainwindow,0);
@@ -621,14 +621,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, exclude_elements,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -639,7 +639,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source/Target group I"],arguments["Source/Target group II"]);
         if (SDFA_res[0].size()==0)
         {
-            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
             return false;
         }
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
@@ -693,14 +693,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, exclude_elements,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -711,7 +711,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis();
         if (SDFA_res[0].size()==0)
         {
-            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
             return false;
         }
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
@@ -784,14 +784,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, exclude_elements,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -802,7 +802,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         vector<CMBVector> SDFA_res = TransformedData.StepwiseDiscriminantFunctionAnalysis(arguments["Source group"]);
         if (SDFA_res[0].size()==0)
         {
-            QMessageBox::warning(mainwindow, "OpenHydroQual", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+            QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
             return false;
         }
         CMBVector *PVector = new CMBVector(SDFA_res[0]);
@@ -858,7 +858,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
@@ -898,7 +898,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
@@ -938,7 +938,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
@@ -1004,7 +1004,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
@@ -1081,7 +1081,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -1111,7 +1111,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -1217,14 +1217,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, false,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -1275,7 +1275,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         bool exclude_elements = (arguments["Use only selected elements"]=="true"?true:false);
         bool correct_based_on_size_and_organic_matter = (arguments["Correct based on size and organic matter"] == "true" ? true : false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements,correct_based_on_size_and_organic_matter, arguments["Sample"]);
+        SourceSinkData TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements,correct_based_on_size_and_organic_matter, arguments["Sample"]);
         if (!CheckNegativeElements(&TransformedData))
             return false;
         CMBVector *bracketingresult = new CMBVector(TransformedData.BracketTest(arguments["Sample"],false));
@@ -1303,7 +1303,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -1332,7 +1332,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         bool exclude_samples = (arguments["Use only selected samples"] == "true" ? true : false);
         bool exclude_elements = (arguments["Use only selected elements"] == "true" ? true : false);
-        SourceSinkData TransformedData = Data()->CopyandCorrect(exclude_samples, exclude_elements, false);
+        SourceSinkData TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
         results.SetName("Outlier analysis for '" + arguments["Source/Target group"] + "'");
@@ -1361,14 +1361,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, false,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -1436,14 +1436,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(exclude_samples, false,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(exclude_samples, false,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -1505,14 +1505,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
 
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(true, false,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(true, false,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(true, false,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(true, false,false);
 
         if (!CheckNegativeElements(&TransformedData))
                 return false;
@@ -1558,7 +1558,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {   organicnsizecorrection = true;
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -1568,7 +1568,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
         rtw->show();
 
-        SourceSinkData correctedData = Data()->Corrected(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
+        SourceSinkData correctedData = Data()->CreateCorrectedDataset(arguments["Sample"],organicnsizecorrection,Data()->GetElementInformation());
         correctedData.SetProgressWindow(rtw);
         if (!CheckNegativeElements(&correctedData))
             return false;
@@ -1577,7 +1577,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Softmax transformation"] == "true")
             softmax = true;
 
-        correctedData.InitializeParametersObservations(arguments["Sample"]);
+        correctedData.InitializeParametersAndObservations(arguments["Sample"]);
         bool out = correctedData.BootStrap(&results, aquiutils::atof(arguments["Pecentage eliminated"]),aquiutils::atoi(arguments["Number of realizations"]),arguments["Sample"],softmax);
 
     }
@@ -1592,7 +1592,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {   organicnsizecorrection = true;
             if (Data()->OMandSizeConstituents()[0]=="" && Data()->OMandSizeConstituents()[1]=="")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3","Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
         }
@@ -1640,14 +1640,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         {
             if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
             {
-                QMessageBox::warning(mainwindow, "OpenHydroQual", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+                QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
                 return false;
             }
             OmandSizeCorrect = true;
-            TransformedData = Data()->Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CopyandCorrect(true, false,false);
+            TransformedData = Data()->CreateCorrectedDataset(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation()).CreateCorrectedAndFilteredDataset(true, false,false);
         }
         else
-            TransformedData = Data()->CopyandCorrect(true, false,false);
+            TransformedData = Data()->CreateCorrectedAndFilteredDataset(true, false,false);
         if (!CheckNegativeElements(&TransformedData))
             return false;
 
@@ -1655,7 +1655,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Include Isotopes"] == "true")
             isotopes = true;
 
-        TransformedData = TransformedData.ExtractElementsOnly(isotopes);
+        TransformedData = TransformedData.ExtractChemicalElements(isotopes);
         ResultItem EDP_pValue;
         EDP_pValue.SetName("Multi-way discriminat p-value");
         EDP_pValue.SetType(result_type::elemental_profile_set);
@@ -1703,7 +1703,7 @@ bool Conductor::CheckNegativeElements(SourceSinkData *_data)
         {
             message += QString::fromStdString(NegativeCheckResults[i]+"\n");
         }
-        QMessageBox::warning(mainwindow, "OpenHydroQual",message, QMessageBox::Ok);
+        QMessageBox::warning(mainwindow, "SedSAT3",message, QMessageBox::Ok);
         return false;
     }
     return true;
@@ -1726,7 +1726,7 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
     }
 
     if (message!="")
-    {   QMessageBox::warning(mainwindow, "OpenHydroQual",message, QMessageBox::Ok);
+    {   QMessageBox::warning(mainwindow, "SedSAT3",message, QMessageBox::Ok);
         return false;
     }
 

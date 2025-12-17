@@ -20,7 +20,7 @@ public:
     double GetRange(_range lowhigh);
     void SetRange(_range, double value);
     void SetName(const string &nam) {name = nam;}
-    string Name() {return name;}
+    string Name() const {return name;}
     double Value() {return value;}
     void SetValue(double val) {value = val;}
     double GetValue() {return value;}

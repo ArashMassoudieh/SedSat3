@@ -60,13 +60,13 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                             }
                             if (object.value("source").toString().contains("TargetSamplesList"))
                             {
-                                vector<string> names = mainwindow()->Data()->SampleNames(mainwindow()->Data()->TargetGroup());
+                                vector<string> names = mainwindow()->Data()->GetSampleNames(mainwindow()->Data()->GetTargetGroup());
                                 for (unsigned int i=0; i<names.size(); i++)
                                     combobox->addItem(QString::fromStdString(names[i]));
                             }
                             if (object.value("source").toString().contains("ElementsList"))
                             {
-                                vector<string> names = mainwindow()->Data()->ElementNames();
+                                vector<string> names = mainwindow()->Data()->GetElementNames();
                                 for (unsigned int i=0; i<names.size(); i++)
                                     combobox->addItem(QString::fromStdString(names[i]),QString::fromStdString(names[i]));
 

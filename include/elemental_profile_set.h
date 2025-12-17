@@ -109,7 +109,7 @@ public:
     /**
      * @brief Get all element concentrations for a specific sample
      */
-    vector<double> GetConcentrationsForSample(const string& sample_name);
+    vector<double> GetConcentrationsForSample(const string& sample_name) const; 
 
     /**
      * @brief Check if an element exists in ALL profiles
