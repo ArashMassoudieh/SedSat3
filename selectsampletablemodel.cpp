@@ -17,7 +17,7 @@ QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {   if (index.column()==0)
         {
-            return QString::fromStdString(Data->operator[](selectedSource).SampleNames()[index.row()]);
+            return QString::fromStdString(Data->operator[](selectedSource).GetSampleNames()[index.row()]);
         }
         if (index.column()==1)
         {
@@ -46,12 +46,12 @@ QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
 
 Elemental_Profile* SelectSampleTableModel::GetProfileSet(int row)
 {
-    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).SampleNames()[row]];
+    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).GetSampleNames()[row]];
 }
 
 Elemental_Profile* SelectSampleTableModel::GetProfileSet(int row) const
 {
-    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).SampleNames()[row]];
+    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).GetSampleNames()[row]];
 }
 QVariant SelectSampleTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {

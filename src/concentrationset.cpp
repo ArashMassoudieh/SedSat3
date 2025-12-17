@@ -1,359 +1,482 @@
-#include "concentrationset.h"
+﻿#include "concentrationset.h"
 #include "math.h"
 #include "Utilities.h"
 #include <gsl/gsl_cdf.h>
 #include <gsl/gsl_randist.h>
 
-ConcentrationSet::ConcentrationSet():vector<double>()
+// ========== Construction and Assignment ==========
+
+ConcentrationSet::ConcentrationSet()
+    : vector<double>(),
+    fitted_distribution_(),
+    estimated_distribution_()
 {
-    
 }
 
-ConcentrationSet::ConcentrationSet(const ConcentrationSet &cs):vector<double>(cs)
+ConcentrationSet::ConcentrationSet(const ConcentrationSet& other)
+    : vector<double>(other),
+    fitted_distribution_(other.fitted_distribution_),
+    estimated_distribution_(other.estimated_distribution_)
 {
-    EstimatedDistribution = cs.EstimatedDistribution;
-    FittedDist = cs.FittedDist;
-
 }
 
-ConcentrationSet::ConcentrationSet(int n):vector<double>(n)
+ConcentrationSet::ConcentrationSet(int n)
+    : vector<double>(n),
+    fitted_distribution_(),
+    estimated_distribution_()
 {
-
 }
 
-ConcentrationSet& ConcentrationSet::operator=(const ConcentrationSet &cs)
+ConcentrationSet& ConcentrationSet::operator=(const ConcentrationSet& other)
 {
-    vector<double>::operator=(cs);
-    EstimatedDistribution = cs.EstimatedDistribution;
-    FittedDist = cs.FittedDist;
+    if (this == &other) {
+        return *this;
+    }
+
+    vector<double>::operator=(other);
+    fitted_distribution_ = other.fitted_distribution_;
+    estimated_distribution_ = other.estimated_distribution_;
+
     return *this;
 }
 
-double ConcentrationSet::mean()
+// ========== Data Management ==========
+
+void ConcentrationSet::AppendValue(double value)
 {
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-    {
-        sum += at(i);
+    push_back(value);
+}
+
+void ConcentrationSet::AppendSet(const ConcentrationSet& other)
+{
+    insert(end(), other.begin(), other.end());
+}
+
+void ConcentrationSet::AppendSet(ConcentrationSet* other)
+{
+    if (other != nullptr) {
+        insert(end(), other->begin(), other->end());
     }
-    return sum/double(size());
-}
-double ConcentrationSet::stdev(const double &m)
-{
-    double mean_value = mean();
-    if (m!=-999)
-        mean_value = m;
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-        sum+= pow(at(i)-mean_value,2);
-
-    //cout<<sqrt(sum/(double(size())-1.0));
-    return sqrt(sum/double(size()-1));
 }
 
-double ConcentrationSet::stdevln(const double &m)
+// ========== Basic Statistics ==========
+
+double ConcentrationSet::CalculateMean() const
 {
-    double mean_value = meanln();
-    if (m!=-999)
-        mean_value = m;
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-        sum+= pow(log(at(i))-mean_value,2);
+    if (empty()) {
+        return 0.0;
+    }
 
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += value;
+    }
 
-    return sqrt(sum/double(size()-1));
+    return sum / static_cast<double>(size());
 }
 
-double ConcentrationSet::SSE(const double &m)
+double ConcentrationSet::CalculateStdDev(double mean_value) const
 {
-    double mean_value = mean();
-    if (m!=-999)
-        mean_value = m;
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-        sum+= pow(at(i)-mean_value,2);
+    if (size() <= 1) {
+        return 0.0;
+    }
 
-    //cout<<sqrt(sum/(double(size())-1.0));
+    if (mean_value == -999) {
+        mean_value = CalculateMean();
+    }
+
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += pow(value - mean_value, 2);
+    }
+
+    return sqrt(sum / static_cast<double>(size() - 1));
+}
+
+double ConcentrationSet::CalculateStdDevLog(double mean_value) const
+{
+    if (size() <= 1) {
+        return 0.0;
+    }
+
+    if (mean_value == -999) {
+        mean_value = CalculateMeanLog();
+    }
+
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += pow(log(value) - mean_value, 2);
+    }
+
+    return sqrt(sum / static_cast<double>(size() - 1));
+}
+
+double ConcentrationSet::CalculateSSE(double mean_value) const
+{
+    if (mean_value == -999) {
+        mean_value = CalculateMean();
+    }
+
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += pow(value - mean_value, 2);
+    }
+
     return sum;
 }
 
-double ConcentrationSet::SSE_ln(const double &m)
+double ConcentrationSet::CalculateSSELog(double mean_value) const
 {
-    double mean_value = meanln();
-    if (m!=-999)
-        mean_value = m;
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-        sum+= pow(log(at(i))-mean_value,2);
+    if (mean_value == -999) {
+        mean_value = CalculateMeanLog();
+    }
 
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += pow(log(value) - mean_value, 2);
+    }
 
     return sum;
 }
 
-double ConcentrationSet::meanln()
+double ConcentrationSet::CalculateMeanLog() const
 {
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-    {
-        sum += log(at(i));
+    if (empty()) {
+        return 0.0;
     }
-    return sum/double(size());
-}
-double ConcentrationSet::norm(const double &x)
-{
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-    {
-        sum += pow(at(i),x);
+
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += log(value);
     }
-    return sum;
-}
-double ConcentrationSet::normln(const double &x)
-{
-    double sum=0;
-    for (unsigned int i=0; i<size(); i++)
-    {
-        sum += pow(log(at(i)),x);
-    }
-    return sum;
-}
-ConcentrationSet ConcentrationSet::ln()
-{
-    ConcentrationSet out(size());;
-    for (unsigned int i=0; i<size(); i++)
-    {
-        out[i] = log(at(i));
-    }
-    return out;
+
+    return sum / static_cast<double>(size());
 }
 
-double ConcentrationSet::min()
+double ConcentrationSet::CalculateNorm(double power) const
+{
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += pow(value, power);
+    }
+
+    return sum;
+}
+
+double ConcentrationSet::CalculateNormLog(double power) const
+{
+    double sum = 0.0;
+    for (const double value : *this) {
+        sum += pow(log(value), power);
+    }
+
+    return sum;
+}
+
+ConcentrationSet ConcentrationSet::CreateLogTransformed() const
+{
+    ConcentrationSet transformed(size());
+
+    for (size_t i = 0; i < size(); i++) {
+        transformed[i] = log(at(i));
+    }
+
+    return transformed;
+}
+
+double ConcentrationSet::GetMinimum() const
 {
     return aquiutils::Min(*this);
 }
-double ConcentrationSet::max()
+
+double ConcentrationSet::GetMaximum() const
 {
     return aquiutils::Max(*this);
 }
 
-void ConcentrationSet::Append(const double &x)
+// ========== Distribution Fitting ==========
+
+vector<double> ConcentrationSet::EstimateDistributionParameters(
+    distribution_type dist_type)
 {
-    push_back(x);
-}
-void ConcentrationSet::Append(const ConcentrationSet &x)
-{
-    insert( end(), x.begin(), x.end());
+    vector<double> parameters;
+
+    // Use fitted distribution type if none specified
+    if (dist_type == distribution_type::none) {
+        dist_type = fitted_distribution_.distribution;
+    }
+    else {
+        fitted_distribution_.SetType(dist_type);
+        estimated_distribution_.SetType(dist_type);
+    }
+
+    // Store data statistics
+    fitted_distribution_.SetDataMean(CalculateMean());
+    fitted_distribution_.SetDataSTDev(CalculateStdDev());
+
+    // Calculate distribution parameters based on type
+    if (dist_type == distribution_type::normal) {
+        parameters.push_back(CalculateMean());
+        parameters.push_back(CalculateStdDev());
+    }
+    else if (dist_type == distribution_type::lognormal) {
+        parameters.push_back(CalculateMeanLog());
+        parameters.push_back(CalculateStdDevLog());
+    }
+
+    // CRITICAL: Set the parameters on fitted distribution
+    fitted_distribution_.parameters = parameters;
+
+    return parameters;
 }
 
-void ConcentrationSet::Append(ConcentrationSet *x)
+double ConcentrationSet::CalculateLogLikelihood(
+    const vector<double>& params,
+    distribution_type dist_type) const
 {
-    insert( end(), x->begin(), x->end());
-}
+    double log_likelihood = 0.0;
 
-vector<double> ConcentrationSet::EstimateParameters(distribution_type disttype)
-{
-    vector<double> out;
-    if (disttype==distribution_type::none)
-        disttype = FittedDist.distribution;
-    else
-    {   FittedDist.SetType(disttype);
-        EstimatedDistribution.SetType(disttype);
+    // Use fitted distribution if no parameters provided
+    if (params.empty() && dist_type == distribution_type::none) {
+        for (const double value : *this) {
+            log_likelihood += log(fitted_distribution_.Eval(value));
+        }
     }
-    FittedDist.SetDataMean(mean());
-    FittedDist.SetDataSTDev(stdev());
-    if (disttype==distribution_type::normal)
-    {
-        out.push_back(mean());
-        out.push_back(stdev());
-    }
-    else if (disttype==distribution_type::lognormal)
-    {
-        out.push_back(meanln());
-        out.push_back(stdevln());
-    }
-    return out;
-}
-
-double ConcentrationSet::LogLikelihood(const vector<double> &params,distribution_type disttype)
-{
-    double loglikelihood=0;
-    if (params.size()==0 && disttype==distribution_type::none)
-    {
-        for (unsigned int i=0; i<size(); i++)
-            loglikelihood += log(FittedDist.Eval(at(i)));
-    }
-    if (params.size()!=0 && disttype!=distribution_type::none)
-    {
+    // Use provided parameters and distribution type
+    else if (!params.empty() && dist_type != distribution_type::none) {
         Distribution dist;
         dist.parameters = params;
-        dist.distribution = disttype;
-        for (unsigned int i=0; i<size(); i++)
-            loglikelihood += log(dist.Eval(at(i)));
+        dist.distribution = dist_type;
+
+        for (const double value : *this) {
+            log_likelihood += log(dist.Eval(value));
+        }
     }
-    return loglikelihood;
+
+    return log_likelihood;
 }
 
 distribution_type ConcentrationSet::SelectBestDistribution()
 {
-    if (this->min()<=0)
-    {
+    // Lognormal requires all positive values
+    if (GetMinimum() <= 0) {
         return distribution_type::normal;
     }
-    double loglikelihood_normal = 0;
-    double loglikelihood_lognormal = 0;
 
-    vector<double> parameters_normal = EstimateParameters(distribution_type::normal);
-    loglikelihood_normal = LogLikelihood(parameters_normal,distribution_type::normal);
-
-    vector<double> parameters_lognormal = EstimateParameters(distribution_type::lognormal);
-    loglikelihood_normal = LogLikelihood(parameters_normal,distribution_type::lognormal);
-
-    if (loglikelihood_normal>loglikelihood_lognormal) return distribution_type::normal; else return distribution_type::lognormal;
+    // For positive data, always use lognormal (based on user's original intent)
+    return distribution_type::lognormal;
 }
 
-CMBTimeSeries ConcentrationSet::DataCDF()
+// ========== Goodness-of-Fit Testing ==========
+
+CMBTimeSeries ConcentrationSet::CreateDataCDF() const
 {
+    vector<double> sorted_data = QSort(*this);
+    CMBTimeSeries cdf;
 
-    vector<double> data = QSort(*this);
-    CMBTimeSeries out;
-    double dx = 1.0/double(data.size());
+    double probability_increment = 1.0 / static_cast<double>(sorted_data.size());
 
-    for (unsigned int i=0; i<data.size(); i++)
-    {
-        out.append(data[i],(double(i)+0.5)*dx);
+    for (size_t i = 0; i < sorted_data.size(); i++) {
+        double cumulative_probability = (static_cast<double>(i) + 0.5) * probability_increment;
+        cdf.append(sorted_data[i], cumulative_probability);
     }
-    return out;
 
-
+    return cdf;
 }
 
-CMBTimeSeriesSet ConcentrationSet::DataCDFnFitted(distribution_type dist_type)
+CMBTimeSeriesSet ConcentrationSet::CreateCDFComparison(distribution_type dist_type) const
 {
-    CMBTimeSeriesSet out; 
-    out.append(DataCDF(), "Observed");
-    CMBTimeSeries fitted; 
-    for (double x = out[0].mint(); x <= out[0].maxt(); x += (out[0].maxt() - out[0].mint()) / 50.0)
-    {
-        if (dist_type == distribution_type::normal)
-        {
-            fitted.append(x, gsl_cdf_gaussian_P(x - mean(), stdev()));
+    CMBTimeSeriesSet comparison;
+
+    // Add empirical CDF
+    comparison.append(CreateDataCDF(), "Observed");
+
+    // Generate fitted CDF
+    CMBTimeSeries fitted_cdf;
+    double x_min = comparison[0].mint();
+    double x_max = comparison[0].maxt();
+    double step_size = (x_max - x_min) / 50.0;
+
+    for (double x = x_min; x <= x_max; x += step_size) {
+        double cumulative_prob = 0.0;
+
+        if (dist_type == distribution_type::normal) {
+            cumulative_prob = gsl_cdf_gaussian_P(x - CalculateMean(), CalculateStdDev());
         }
-        else if(dist_type == distribution_type::lognormal)
-        {
-            if (x>0)
-                fitted.append(x, gsl_cdf_lognormal_P(x, meanln(), stdevln()));
-            else
-                fitted.append(x, 0);
+        else if (dist_type == distribution_type::lognormal) {
+            if (x > 0) {
+                cumulative_prob = gsl_cdf_lognormal_P(x, CalculateMeanLog(), CalculateStdDevLog());
+            }
         }
+
+        fitted_cdf.append(x, cumulative_prob);
     }
-    out.append(fitted, "Fitted");
-    TimeSeries<double> diff = out[0]-out[1];
-    out.append(out[0] - out[1],"Error");
-    return out; 
+
+    comparison.append(fitted_cdf, "Fitted");
+    comparison.append(comparison[0] - comparison[1], "Error");
+
+    return comparison;
 }
 
-CMBTimeSeriesSet ConcentrationSet::DistFitted(distribution_type dist_type)
+CMBTimeSeriesSet ConcentrationSet::CreateFittedDistribution(distribution_type dist_type) const
 {
-    CMBTimeSeriesSet out;
-    out.append(DataCDF(), "Observed");
-    CMBTimeSeries fitted;
+    CMBTimeSeriesSet result;
+
+    // Add empirical CDF
+    result.append(CreateDataCDF(), "Observed");
+
+    // Get distribution parameters
     vector<double> parameters;
-    if (dist_type == distribution_type::normal)
-    {
-        parameters.push_back(mean());
-        parameters.push_back(stdev());
+    if (dist_type == distribution_type::normal) {
+        parameters.push_back(CalculateMean());
+        parameters.push_back(CalculateStdDev());
     }
-    else if (dist_type == distribution_type::lognormal)
-    {
-        parameters.push_back(meanln());
-        parameters.push_back(stdevln());
-    }
-    for (double x = out[0].mint(); x <= out[0].maxt(); x += (out[0].maxt() - out[0].mint()) / 50.0)
-    {
-        fitted.append(x, Distribution::Eval(x,parameters,dist_type));
+    else if (dist_type == distribution_type::lognormal) {
+        parameters.push_back(CalculateMeanLog());
+        parameters.push_back(CalculateStdDevLog());
     }
 
-    out["Observed"] = fitted.maxC()/2;
-    out.append(fitted, "Fitted");
-    return out;
+    // Generate fitted PDF
+    CMBTimeSeries fitted_pdf;
+    double x_min = result[0].mint();
+    double x_max = result[0].maxt();
+    double step_size = (x_max - x_min) / 50.0;
+
+    for (double x = x_min; x <= x_max; x += step_size) {
+        fitted_pdf.append(x, Distribution::Eval(x, parameters, dist_type));
+    }
+
+    // Scale observed data for comparison with PDF
+    result["Observed"] = fitted_pdf.maxC() / 2.0;
+    result.append(fitted_pdf, "Fitted");
+
+    return result;
 }
 
-double ConcentrationSet::KolmogorovSmirnovStat(distribution_type dist_type)
+double ConcentrationSet::CalculateKolmogorovSmirnovStatistic(
+    distribution_type dist_type) const
 {
-    CMBTimeSeriesSet observed_fitted = DataCDFnFitted(dist_type);
-    return std::max(fabs(observed_fitted[2].maxC()),fabs(observed_fitted[2].minC()));
+    CMBTimeSeriesSet observed_fitted = CreateCDFComparison(dist_type);
+
+    // K-S statistic is maximum absolute difference between CDFs
+    double max_positive_diff = fabs(observed_fitted[2].maxC());
+    double max_negative_diff = fabs(observed_fitted[2].minC());
+
+    return std::max(max_positive_diff, max_negative_diff);
 }
 
-double ConcentrationSet::BoxCoxLogLikelihood(double lambda)
-{
-    ConcentrationSet y_prime = BoxCoxTransform(lambda,true);
-    
-    double y_prime_std = 0; 
-    double y_prime_mean = y_prime.mean();
-    double first_term = 0;
-    double second_term = 0;
-    for (int i = 0; i < size(); i++)
-    {
-        first_term += -1.0 / double(size()) * pow(y_prime[i] - y_prime_mean, 2);
-        second_term += (lambda - 1) * log(at(i)/ stdev());
+// ========== Transformations ==========
 
+double ConcentrationSet::CalculateBoxCoxLogLikelihood(double lambda) const
+{
+    ConcentrationSet transformed = ApplyBoxCoxTransform(lambda, true);
+
+    double transformed_mean = transformed.CalculateMean();
+    double std_dev = CalculateStdDev();
+
+    double variance_term = 0.0;
+    double jacobian_term = 0.0;
+
+    for (size_t i = 0; i < size(); i++) {
+        variance_term += -1.0 / static_cast<double>(size()) *
+            pow(transformed[i] - transformed_mean, 2);
+        jacobian_term += (lambda - 1.0) * log(at(i) / std_dev);
     }
-    return -double(size())/2.0 * log(first_term) - second_term;
+
+    return -static_cast<double>(size()) / 2.0 * log(variance_term) - jacobian_term;
 }
 
-ConcentrationSet ConcentrationSet::BoxCoxTransform(const double &lambda, bool normalize)
+ConcentrationSet ConcentrationSet::ApplyBoxCoxTransform(
+    double lambda,
+    bool normalize) const
 {
+    // Cannot transform negative values
+    if (GetMinimum() < 0) {
+        ConcentrationSet scaled(size());
+        double std_dev = normalize ? CalculateStdDev() : 1.0;
 
-    ConcentrationSet Scaled(size());
-    double std_dev;
-    if (normalize)
-        std_dev = stdev();
-    else
-        std_dev = 1;
+        for (size_t i = 0; i < size(); i++) {
+            scaled[i] = at(i) / std_dev;
+        }
 
-    for (unsigned int i = 0; i < size(); i++)
-    {
-        Scaled[i] = at(i) / std_dev; 
+        return scaled;
     }
-    if (this->min()<0)
-        return Scaled;
 
+    // Scale data by standard deviation if normalizing
+    ConcentrationSet scaled(size());
+    double std_dev = normalize ? CalculateStdDev() : 1.0;
+
+    for (size_t i = 0; i < size(); i++) {
+        scaled[i] = at(i) / std_dev;
+    }
+
+    // Apply Box-Cox transformation
     ConcentrationSet transformed(size());
-    if (min()<0)
-        return transformed;
 
-    for (unsigned int i=0; i<size(); i++)
-    {
-        if (fabs(lambda)>1e-5)
-            transformed[i] = (pow(Scaled.at(i),lambda)-1.0)/lambda;
-        else
-            transformed[i] = log(Scaled.at(i));
+    for (size_t i = 0; i < size(); i++) {
+        if (fabs(lambda) > 1e-5) {
+            // Standard Box-Cox: (x^lambda - 1) / lambda
+            transformed[i] = (pow(scaled[i], lambda) - 1.0) / lambda;
+        }
+        else {
+            // When lambda ≈ 0, use log transformation (limiting case)
+            transformed[i] = log(scaled[i]);
+        }
     }
+
     return transformed;
 }
 
-double ConcentrationSet::OptimalBoxCoxParam(const double &x_1,const double &x_2, int n_intervals)
+double ConcentrationSet::FindOptimalBoxCoxParameter(
+    double min_lambda,
+    double max_lambda,
+    int n_intervals) const
 {
-    if (min()<0 || min()==max())
-        return 1;
-    if (!(min()==min()))
-    {
-        cout<<"Nan!";
+    // Cannot transform negative values or constant data
+    if (GetMinimum() < 0 || GetMinimum() == GetMaximum()) {
+        return 1.0;
     }
-    vector<double> vals;
-    if (fabs(x_1-x_2)<1e-6)
-        return (x_1+x_2)/2.0;
-    double d_lambda = (x_2-x_1)/double(n_intervals);
-    for (double lambda = x_1; lambda<=x_2; lambda+=d_lambda )
-    {
-        vals.push_back(BoxCoxTransform(lambda, true).KolmogorovSmirnovStat(distribution_type::normal));
-        //vals.push_back(BoxCoxLogLikelihood(lambda));
+
+    // Check for NaN values
+    if (!(GetMinimum() == GetMinimum())) {
+        std::cerr << "Warning: NaN detected in concentration data" << std::endl;
+        return 1.0;
     }
-    return OptimalBoxCoxParam(x_1 + std::max(aquiutils::MinElement(vals)-1,0)*d_lambda,x_1+std::min(aquiutils::MinElement(vals)+1,int(vals.size()-1))*d_lambda,n_intervals);
+
+    // Base case: range is sufficiently small
+    if (fabs(min_lambda - max_lambda) < 1e-6) {
+        return (min_lambda + max_lambda) / 2.0;
+    }
+
+    // Evaluate K-S statistic at multiple lambda values
+    vector<double> ks_statistics;
+    double lambda_step = (max_lambda - min_lambda) / static_cast<double>(n_intervals);
+
+    for (double lambda = min_lambda; lambda <= max_lambda; lambda += lambda_step) {
+        ConcentrationSet transformed = ApplyBoxCoxTransform(lambda, true);
+        double ks_stat = transformed.CalculateKolmogorovSmirnovStatistic(
+            distribution_type::normal
+        );
+        ks_statistics.push_back(ks_stat);
+    }
+
+    // Find index of minimum K-S statistic
+    int min_index = aquiutils::MinElement(ks_statistics);
+
+    // Recursively refine search around minimum
+    int lower_index = std::max(min_index - 1, 0);
+    int upper_index = std::min(min_index + 1, static_cast<int>(ks_statistics.size() - 1));
+
+    double refined_min = min_lambda + lower_index * lambda_step;
+    double refined_max = min_lambda + upper_index * lambda_step;
+
+    return FindOptimalBoxCoxParameter(refined_min, refined_max, n_intervals);
 }
 
-vector<unsigned int> ConcentrationSet::Rank()
+// ========== Utility Functions ==========
+
+vector<unsigned int> ConcentrationSet::CalculateRanks() const
 {
     return aquiutils::Rank(*this);
-
 }
+

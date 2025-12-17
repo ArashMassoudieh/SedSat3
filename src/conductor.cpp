@@ -300,7 +300,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         for (map<string,Elemental_Profile_Set>::iterator it=Data()->begin(); it!=Data()->end(); it++)
         {
             if (it->first != Data()->TargetGroup())
-            it->second.SetRegression(TransformedData[it->first].GetExistingRegressionSet());
+            it->second.SetRegressionModels(TransformedData[it->first].GetRegressionModels());
 
         }
         vector<ResultItem> regression_result = TransformedData.GetMLRResults();
@@ -317,7 +317,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         covMatResItem.SetShowTable(true);
         covMatResItem.SetType(result_type::matrix);
 
-        CMBMatrix *covmatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CovarianceMatrix());
+        CMBMatrix *covmatr = new CMBMatrix(Data()->at(arguments["Source/Target group"]).CalculateCovarianceMatrix());
         covMatResItem.SetShowGraph(false);
         covMatResItem.SetResult(covmatr);
         results.Append(covMatResItem);
@@ -345,7 +345,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
             TransformedData = TransformedData.Corrected(arguments["OM and Size Correct based on target sample"], true, Data()->GetElementInformation());
         }
-        CMBMatrix *cormatr = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).CorrelationMatrix());
+        CMBMatrix *cormatr = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).CalculateCorrelationMatrix());
         cormatr->SetLimit(_range::high,threshold);
         cormatr->SetLimit(_range::low,-threshold);
         corMatResItem.SetResult(cormatr);
@@ -1054,7 +1054,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             dist = distribution_type::normal;
         else if (arguments["Distribution"]=="Lognormal")
             dist = distribution_type::lognormal;
-        CMBVector *ksoutput = new CMBVector(Data()->at(arguments["Source/Target group"]).KolmogorovSmirnovStat(dist));
+        CMBVector *ksoutput = new CMBVector(Data()->at(arguments["Source/Target group"]).CalculateKolmogorovSmirnovStatistics(dist));
         KSItem.SetShowTable(true);
         KSItem.SetResult(ksoutput);
         results.Append(KSItem);
@@ -1070,7 +1070,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             dist = distribution_type::normal;
         else if (arguments["Distribution"]=="Lognormal")
             dist = distribution_type::lognormal;
-        CMBTimeSeriesSet *ksoutput = new CMBTimeSeriesSet(Data()->at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(dist));
+        CMBTimeSeriesSet *ksoutput = new CMBTimeSeriesSet(Data()->at(arguments["Source/Target group"]).GetElementDistribution(arguments["Constituent"])->CreateCDFComparison(dist));
         KSItem.SetResult(ksoutput);
         KSItem.SetShowTable(false);
         results.Append(KSItem);
@@ -1231,14 +1231,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         if (arguments["Box-cox transformation"]=="true")
             TransformedData = TransformedData.BoxCoxTransformed(true);
 
-        CMBTimeSeriesSet fitted_normal = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::normal);
+        CMBTimeSeriesSet fitted_normal = TransformedData.at(arguments["Source/Target group"]).GetElementDistribution(arguments["Constituent"])->CreateFittedDistribution(distribution_type::normal);
         CMBTimeSeriesSet fitted_lognormal;
         if (arguments["Box-cox transformation"]!="true")
-            fitted_lognormal = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DistFitted(distribution_type::lognormal);
-        CMBTimeSeriesSet observed_fitted_normal_CDF = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::normal);
+            fitted_lognormal = TransformedData.at(arguments["Source/Target group"]).GetElementDistribution(arguments["Constituent"])->CreateFittedDistribution(distribution_type::lognormal);
+        CMBTimeSeriesSet observed_fitted_normal_CDF = TransformedData.at(arguments["Source/Target group"]).GetElementDistribution(arguments["Constituent"])->CreateCDFComparison(distribution_type::normal);
         CMBTimeSeriesSet observed_fitted_lognormal_CDF;
         if (arguments["Box-cox transformation"]!="true")
-            observed_fitted_lognormal_CDF = TransformedData.at(arguments["Source/Target group"]).ElementalDistribution(arguments["Constituent"])->DataCDFnFitted(distribution_type::lognormal);
+            observed_fitted_lognormal_CDF = TransformedData.at(arguments["Source/Target group"]).GetElementDistribution(arguments["Constituent"])->CreateCDFComparison(distribution_type::lognormal);
         CMBTimeSeriesSet *PDF = new CMBTimeSeriesSet();
         PDF->append(fitted_normal["Observed"]);
         PDF->append(fitted_normal["Fitted"]);
@@ -1323,7 +1323,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         BoxCoxResItem.SetShowTable(true);
         BoxCoxResItem.SetShowGraph(true);
         BoxCoxResItem.SetYAxisMode(yaxis_mode::normal);
-        CMBVector *boxcoxparams = new CMBVector(Data()->at(arguments["Source/Target group"]).BoxCoxParameters());
+        CMBVector *boxcoxparams = new CMBVector(Data()->at(arguments["Source/Target group"]).CalculateBoxCoxParameters());
         BoxCoxResItem.SetResult(boxcoxparams);
         results.Append(BoxCoxResItem);
 
@@ -1343,7 +1343,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         OutlierResItem.SetShowTable(true);
         OutlierResItem.SetShowGraph(false);
         double threshold = QString::fromStdString(arguments["Threshold"]).toDouble();
-        CMBMatrix *outliermatrix = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).Outlier(-threshold,threshold));
+        CMBMatrix *outliermatrix = new CMBMatrix(TransformedData.at(arguments["Source/Target group"]).DetectOutliers(-threshold,threshold));
         outliermatrix->SetLimit(_range::high,threshold);
         outliermatrix->SetLimit(_range::low,-threshold);
         OutlierResItem.SetResult(outliermatrix);
@@ -1669,7 +1669,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         EDP_pValue.SetResult(EDPProfileSetPValue);
         results.Append(EDP_pValue);
 
-        Elemental_Profile *selected = new Elemental_Profile(EDPProfileSetPValue->SelectTopAggregate(aquiutils::atoi(arguments["Number of elements from each pair"])));
+        Elemental_Profile *selected = new Elemental_Profile(EDPProfileSetPValue->SelectTopElementsAggregate(aquiutils::atoi(arguments["Number of elements from each pair"])));
         ResultItem SelectedElements;
         SelectedElements.SetResult(selected);
         SelectedElements.SetName("Selected Elements");

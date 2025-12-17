@@ -8,7 +8,7 @@ Distribution::Distribution()
 
 }
 
-double Distribution::Eval(const double &x)
+double Distribution::Eval(const double &x) const
 {
     double out = 0;
     if (distribution==distribution_type::normal)

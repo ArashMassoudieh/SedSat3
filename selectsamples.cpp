@@ -35,7 +35,7 @@ void SelectSamples::SetData(SourceSinkData *_data)
     }
     else if (Mode==mode::regressions)
     {
-        OmSizeCorrectionTableModel *OMSizemodel = new OmSizeCorrectionTableModel(data->operator[](ui->GroupComboBox->currentText().toStdString()).GetExistingRegressionSet());
+        OmSizeCorrectionTableModel *OMSizemodel = new OmSizeCorrectionTableModel(data->operator[](ui->GroupComboBox->currentText().toStdString()).GetRegressionModels());
         ui->SamplestableView->setModel(OMSizemodel);
         SelectSampleDelegate *omsizecorrectionDelegate = new SelectSampleDelegate(data, this);
         omsizecorrectionDelegate->SetMode(mode::regressions);
@@ -54,7 +54,7 @@ void SelectSamples::comboChanged()
     }
     else if (Mode==mode::regressions)
     {
-        OmSizeCorrectionTableModel *OMSizemodel = new OmSizeCorrectionTableModel(data->operator[](ui->GroupComboBox->currentText().toStdString()).GetExistingRegressionSet());
+        OmSizeCorrectionTableModel *OMSizemodel = new OmSizeCorrectionTableModel(data->operator[](ui->GroupComboBox->currentText().toStdString()).GetRegressionModels());
         ui->SamplestableView->setModel(OMSizemodel);
         SelectSampleDelegate *omsizecorrectionDelegate = new SelectSampleDelegate(data, this);
         omsizecorrectionDelegate->SetMode(mode::regressions);

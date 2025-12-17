@@ -125,13 +125,13 @@ public:
             return nullptr;
 
         }
-        if (!sample_set(sample_group)->ElementalDistribution(element_name))
+        if (!sample_set(sample_group)->GetElementDistribution(element_name))
         {
             cout<<"Element '" + element_name +"' does not exist!"<<std::endl;
             return nullptr;
         }
 
-        return  sample_set(sample_group)->ElementalDistribution(element_name);
+        return  sample_set(sample_group)->GetElementDistribution(element_name);
 
     }
     void PopulateElementInformation(const map<string,element_information> *ElementInfo=nullptr);

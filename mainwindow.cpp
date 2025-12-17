@@ -258,8 +258,8 @@ bool MainWindow::LoadModel(const QString &fileName)
                 {
                     string source = QString::fromStdString(it->first).split("OM & Size MLR for ")[1].toStdString();
                     if (Data()->count(source)>0)
-                    {   Data()->at(source).SetRegression(static_cast<MultipleLinearRegressionSet*>(it->second.Result()));
-                        Data()->SetOMandSizeConstituents(Data()->at(source).GetExistingRegressionSet()->begin()->second.GetIndependentVariableNames());
+                    {   Data()->at(source).SetRegressionModels(static_cast<MultipleLinearRegressionSet*>(it->second.Result()));
+                        Data()->SetOMandSizeConstituents(Data()->at(source).GetRegressionModels()->begin()->second.GetIndependentVariableNames());
                     }
                 }
             }
@@ -429,7 +429,7 @@ bool MainWindow::ReadExcel(const QString &filename)
                 }
             }
             row++;
-            elemental_profile_set->Append_Profile(sample_name.toStdString(),elemental_profile);
+            elemental_profile_set->AppendProfile(sample_name.toStdString(),elemental_profile);
         }
 
     }
@@ -587,7 +587,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
         if (indexes[i].data(Qt::UserRole).toString()=="Group")
         {
             QString Group_Name_Selected = indexes[i].data().toString();
-            vector<string> Sample_Names = DataCollection.sample_set(Group_Name_Selected.toStdString())->SampleNames();
+            vector<string> Sample_Names = DataCollection.sample_set(Group_Name_Selected.toStdString())->GetSampleNames();
             for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
             {
                 vector<string> item;
@@ -744,14 +744,14 @@ void MainWindow::showdistributionsforelements()
             plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
             for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
             {
-                elem_dist = DataCollection.sample_set(it->first)->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+                elem_dist = DataCollection.sample_set(it->first)->GetElementDistribution(Element.toStdString())->GetFittedDistribution()->EvaluateAsTimeSeries();
                 plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
             }
 
         }
         else
         {
-            TimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->ElementalDistribution(Element.toStdString())->FittedDistribution()->EvaluateAsTimeSeries();
+            TimeSeries<double> elem_dist = DataCollection.sample_set(Group.toStdString())->GetElementDistribution(Element.toStdString())->GetFittedDistribution()->EvaluateAsTimeSeries();
             plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
         }
         plotwindow->setWindowTitle(Element);
@@ -883,14 +883,14 @@ void MainWindow::on_test_likelihood()
     {
         for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
         {
-            DataCollection.SetParameterValue(3+element_counter*sources.size()+source_group_counter,DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[0]);
+            DataCollection.SetParameterValue(3+element_counter*sources.size()+source_group_counter,DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->GetFittedDistribution()->parameters[0]);
         }
     }
     for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
     {
         for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
         {
-            DataCollection.SetParameterValue(3+source_group_counter+element_counter*sources.size()+sources.size()*elements.size(),DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->FittedDistribution()->parameters[1]);
+            DataCollection.SetParameterValue(3+source_group_counter+element_counter*sources.size()+sources.size()*elements.size(),DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->GetFittedDistribution()->parameters[1]);
         }
     }
     DataCollection.SetParameterValue(3+2*sources.size()*elements.size(),1);

@@ -13,7 +13,7 @@ public:
     Distribution();
     Distribution(const Distribution &dist);
     Distribution& operator = (const Distribution &dist);
-    double Eval(const double &x);
+    double Eval(const double &x) const;
     static double Eval(const double &x, const vector<double> parameters, distribution_type distribution);
     double EvalLog(const double &x);
     TimeSeries<double> EvaluateAsTimeSeries(int numberofpoint=100, const double &stdcoeff = 4);
