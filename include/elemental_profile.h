@@ -13,9 +13,6 @@
  * concentrations) to trace sediment origins. This class represents a single
  * sample's complete elemental "fingerprint."
  *
- * @section references References
- * - Collins, A.L., et al. (2017). Sediment source fingerprinting: A review.
- *   Journal of Environmental Management, 194, 86-108.
  *
  * @warning This class publicly inherits from std::map, which has a non-virtual
  *          destructor. Avoid polymorphic deletion through std::map pointer.
