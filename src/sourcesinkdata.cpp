@@ -1416,21 +1416,28 @@ bool SourceSinkData::SolveLevenberg_Marquardt(transformation trans)
 
 CVector SourceSinkData::PredictTarget(parameter_mode param_mode)
 {
-    CVector C = SourceMeanMatrix(param_mode)*GetContributionVector();
-    for (unsigned int i=0; i<element_order_.size(); i++)
+    // Compute predicted concentrations: C = Source_Matrix × Contribution_Vector
+    CMatrix source_mean_matrix = SourceMeanMatrix(param_mode);
+    CVector contribution_vector = GetContributionVector();
+    CVector predicted_concentrations = source_mean_matrix * contribution_vector;
+
+    // Update stored predicted values in observation objects for each element
+    for (unsigned int i = 0; i < element_order_.size(); i++)
     {
-        observation(i)->SetPredictedValue(C[i]);
+        observation(i)->SetPredictedValue(predicted_concentrations[i]);
     }
-    return C;
+
+    return predicted_concentrations;
 }
 
 CVector SourceSinkData::PredictTarget_Isotope(parameter_mode param_mode)
 {
-    CMatrix srcMatrixIso = SourceMeanMatrix_Isotopes(param_mode);
-    CVector contribVect = GetContributionVector();
-    CVector C = srcMatrixIso*contribVect;
+    // Compute predicted isotopic concentrations: C = Source_Matrix × Contribution_Vector
+    CMatrix source_isotope_matrix = SourceMeanMatrix_Isotopes(param_mode);
+    CVector contribution_vector = GetContributionVector();
+    CVector predicted_isotope_concentrations = source_isotope_matrix * contribution_vector;
 
-    return C;
+    return predicted_isotope_concentrations;
 }
 
 CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)

@@ -538,8 +538,49 @@ public:
     Elemental_Profile Sample(const string &samplename) const; //extract a single sample
     CVector Gradient(const CVector &value, const estimation_mode estmode); //calculates the gradient of likelihood function
     CVector GradientUpdate(const estimation_mode estmode = estimation_mode::elemental_profile_and_contribution); //Improve the estimate by one step using the gradient descent method
-    CVector PredictTarget(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    CVector PredictTarget_Isotope(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
+    /**
+     * @brief Predicts target sample elemental concentrations based on source contributions
+     *
+     * Calculates the predicted elemental composition of the target sample as a linear
+     * combination of source profiles weighted by their contributions:
+     *
+     * C_predicted = Σ (source_mean_i × contribution_i)
+     *
+     * This is the core mixing model prediction, where each element's concentration
+     * is the sum of contributions from all sources.
+     *
+     * The function also updates the predicted values stored in observation objects
+     * for later comparison with measured values.
+     *
+     * @param param_mode Parameter mode for obtaining source mean values:
+     *        - parameter_mode::direct: Use current parameter values directly
+     *        - parameter_mode::based_on_fitted_distribution: Use means from fitted distributions
+     *
+     * @return CVector Predicted elemental concentrations in the order specified by
+     *         element_order_. Vector size equals the number of elements.
+     */
+    CVector PredictTarget(parameter_mode param_mode = parameter_mode::direct);
+
+    /**
+     * @brief Predicts target sample isotopic compositions based on source contributions
+     *
+     * Calculates the predicted isotopic composition (as absolute concentrations, not
+     * delta values) of the target sample as a linear combination of source isotopic
+     * profiles weighted by their contributions:
+     *
+     * C_isotope_predicted = Σ (source_isotope_mean_i × contribution_i)
+     *
+     * Unlike PredictTarget_Isotope_delta(), this returns absolute isotopic concentrations
+     * rather than delta notation values.
+     *
+     * @param param_mode Parameter mode for obtaining source mean values:
+     *        - parameter_mode::direct: Use current parameter values directly
+     *        - parameter_mode::based_on_fitted_distribution: Use means from fitted distributions
+     *
+     * @return CVector Predicted isotopic concentrations (absolute values) in the order
+     *         specified by isotope_order_. Vector size equals the number of isotopes.
+     */
+    CVector PredictTarget_Isotope(parameter_mode param_mode = parameter_mode::direct);
     CVector PredictTarget_Isotope_delta(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
     CMatrix SourceMeanMatrix(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
     CMatrix SourceMeanMatrix_Isotopes(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
