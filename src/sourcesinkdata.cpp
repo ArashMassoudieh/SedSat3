@@ -2004,305 +2004,434 @@ CVector SourceSinkData::Gradient(const CVector& parameters, estimation_mode est_
     return gradient / gradient.norm2();
 }
 
-CVector SourceSinkData::GradientUpdate(const estimation_mode estmode)
+CVector SourceSinkData::GradientUpdate(estimation_mode est_mode)
 {
-    CVector X = GetParameterValue();
-    double baseLikelihood = LogLikelihood(estmode);
-    CVector dx = Gradient(X,estmode);
-    CVector X_new1 = X+distance_coeff_*dx;
-    SetParameterValue(X_new1);
-    double newLikelihood1 = LogLikelihood(estmode);
-    CVector X_new2 = X+2*distance_coeff_*dx;
-    SetParameterValue(X_new2);
-    double newLikelihood2 = LogLikelihood(estmode);
-    qDebug()<<"Distance Coeff:" << distance_coeff_;
-    if (distance_coeff_<10e-6)
-        distance_coeff_=1;
-    if (newLikelihood2>newLikelihood1 && newLikelihood2>baseLikelihood)
-    {
-        distance_coeff_*=2;
-        return X_new2;
+    // Get current parameters and evaluate baseline likelihood
+    CVector current_params = GetParameterValue();
+    double baseline_likelihood = LogLikelihood(est_mode);
+
+    // Compute normalized gradient direction
+    CVector gradient_direction = Gradient(current_params, est_mode);
+
+    // Try two candidate steps: standard and aggressive (2×)
+    CVector candidate_step1 = current_params + distance_coeff_ * gradient_direction;
+    SetParameterValue(candidate_step1);
+    double likelihood_step1 = LogLikelihood(est_mode);
+
+    CVector candidate_step2 = current_params + 2.0 * distance_coeff_ * gradient_direction;
+    SetParameterValue(candidate_step2);
+    double likelihood_step2 = LogLikelihood(est_mode);
+
+    // Debug output
+    std::cout << "Distance Coefficient: " << distance_coeff_ << std::endl;
+
+    // Reset step size if it becomes too small
+    if (distance_coeff_ < 1e-6) {
+        distance_coeff_ = 1.0;
     }
-    else if (newLikelihood1>newLikelihood2 && newLikelihood1>baseLikelihood)
+
+    // ========== Strategy 1: Aggressive step (2×) is best ==========
+    if (likelihood_step2 > likelihood_step1 && likelihood_step2 > baseline_likelihood)
     {
-        SetParameterValue(X_new1);
-        return X_new1;
+        // Success with larger step - increase step size for next iteration
+        distance_coeff_ *= 2.0;
+        return candidate_step2;
     }
+
+    // ========== Strategy 2: Standard step (1×) is best ==========
+    else if (likelihood_step1 > likelihood_step2 && likelihood_step1 > baseline_likelihood)
+    {
+        // Success with standard step - keep current step size
+        SetParameterValue(candidate_step1);
+        return candidate_step1;
+    }
+
+    // ========== Strategy 3: Neither improved - backtrack ==========
     else
     {
-        int counter = 0;
-        while (baseLikelihood>newLikelihood1 || counter<5)
+        const int max_backtrack_iterations = 5;
+        int backtrack_count = 0;
+
+        // Progressively reduce step size until we find improvement
+        while (baseline_likelihood >= likelihood_step1 && backtrack_count < max_backtrack_iterations)
         {
-            distance_coeff_*=0.5;
-            X_new1 = X+distance_coeff_*dx;
-            SetParameterValue(X_new1);
-            newLikelihood1 = LogLikelihood(estmode);
-            counter++;
+            distance_coeff_ *= 0.5;  // Halve the step size
+
+            candidate_step1 = current_params + distance_coeff_ * gradient_direction;
+            SetParameterValue(candidate_step1);
+            likelihood_step1 = LogLikelihood(est_mode);
+
+            backtrack_count++;
         }
-        if (counter<5)
-        {   SetParameterValue(X_new1);
-            return X_new1;
+
+        if (backtrack_count < max_backtrack_iterations)
+        {
+            // Found an improvement with smaller step
+            SetParameterValue(candidate_step1);
+            return candidate_step1;
         }
         else
         {
-            SetParameterValue(X);
-            return X;
+            // No improvement found after backtracking - return to original
+            std::cerr << "Warning: No improvement found after " << max_backtrack_iterations
+                << " backtracking iterations" << std::endl;
+            SetParameterValue(current_params);
+            return current_params;
         }
     }
-
 }
-
-
-
 
 vector<string> SourceSinkData::ElementsToBeUsedInCMB()
 {
+    // Reset counters and ordering
     numberofconstituents_ = 0;
     constituent_order_.clear();
 
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        if (it->second.Role == element_information::role::element)
-        {   numberofconstituents_ ++;
-            constituent_order_.push_back(it->first);
+    // Collect all chemical elements (exclude isotopes, size, organic carbon)
+    for (const auto& [element_name, elem_info] : element_information_)
+    {
+        if (elem_info.Role == element_information::role::element)
+        {
+            numberofconstituents_++;
+            constituent_order_.push_back(element_name);
         }
+    }
+
     return constituent_order_;
 }
 
-
 vector<string> SourceSinkData::IsotopesToBeUsedInCMB()
 {
+    // Reset counters and ordering
     numberofisotopes_ = 0;
     isotope_order_.clear();
 
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        if (it->second.Role == element_information::role::isotope && it->second.include_in_analysis)
-        {   numberofisotopes_ ++;
-            isotope_order_.push_back(it->first);
+    // Collect isotopes marked for inclusion in analysis
+    for (const auto& [element_name, elem_info] : element_information_)
+    {
+        if (elem_info.Role == element_information::role::isotope &&
+            elem_info.include_in_analysis)
+        {
+            numberofisotopes_++;
+            isotope_order_.push_back(element_name);
         }
+    }
+
     return isotope_order_;
 }
-
 void SourceSinkData::PopulateConstituentOrders()
 {
+    // Reset all counters and ordering vectors
     numberofconstituents_ = 0;
     constituent_order_.clear();
     element_order_.clear();
     size_om_order_.clear();
     isotope_order_.clear();
 
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        {   numberofconstituents_ ++;
-            constituent_order_.push_back(it->first);
-        }
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        if (it->second.Role == element_information::role::element && it->second.include_in_analysis)
-        {
-            element_order_.push_back(it->first);
-        }
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        if (it->second.Role == element_information::role::isotope && it->second.include_in_analysis)
-        {
-            isotope_order_.push_back(it->first);
-        }
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        if (it->second.Role == element_information::role::particle_size)
-        {
-            size_om_order_.push_back(it->first);
-        }
-    for (map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        if (it->second.Role == element_information::role::organic_carbon)
-        {
-            size_om_order_.push_back(it->first);
-        }
-
-}
-
-vector<string> SourceSinkData::SourceGroupNames()
-{
-    vector<string> sourcegroups;
-    for (map<string,Elemental_Profile_Set>::iterator source_iterator = begin(); source_iterator!=end(); source_iterator++)
+    // Pass 1: Collect ALL constituents (elements, isotopes, metadata)
+    for (const auto& [constituent_name, constituent_info] : element_information_)
     {
-        if (source_iterator->first!=target_group_)
-            sourcegroups.push_back(source_iterator->first);
+        numberofconstituents_++;
+        constituent_order_.push_back(constituent_name);
     }
-    return sourcegroups;
+
+    // Pass 2: Collect chemical elements included in analysis
+    for (const auto& [element_name, elem_info] : element_information_)
+    {
+        if (elem_info.Role == element_information::role::element &&
+            elem_info.include_in_analysis)
+        {
+            element_order_.push_back(element_name);
+        }
+    }
+
+    // Pass 3: Collect isotopes included in analysis
+    for (const auto& [isotope_name, elem_info] : element_information_)
+    {
+        if (elem_info.Role == element_information::role::isotope &&
+            elem_info.include_in_analysis)
+        {
+            isotope_order_.push_back(isotope_name);
+        }
+    }
+
+    // Pass 4: Collect particle size parameters
+    for (const auto& [param_name, elem_info] : element_information_)
+    {
+        if (elem_info.Role == element_information::role::particle_size)
+        {
+            size_om_order_.push_back(param_name);
+        }
+    }
+
+    // Pass 5: Collect organic carbon parameters
+    for (const auto& [param_name, elem_info] : element_information_)
+    {
+        if (elem_info.Role == element_information::role::organic_carbon)
+        {
+            size_om_order_.push_back(param_name);
+        }
+    }
+}
+vector<string> SourceSinkData::SourceGroupNames() const
+{
+    vector<string> source_names;
+
+    // Collect all group names except the target
+    for (const auto& [group_name, profile_set] : *this)
+    {
+        if (group_name != target_group_)
+        {
+            source_names.push_back(group_name);
+        }
+    }
+
+    return source_names;
 }
 
-bool SourceSinkData::SetSelectedTargetSample(const string &sample_name)
+bool SourceSinkData::SetSelectedTargetSample(const string& sample_name)
 {
-    if (GetSampleSet(GetTargetGroup())->GetProfile(sample_name))
+    // Verify sample exists in target group before setting
+    Elemental_Profile_Set* target_group = GetSampleSet(GetTargetGroup());
+
+    if (target_group && target_group->GetProfile(sample_name))
     {
         selected_target_sample_ = sample_name;
         return true;
     }
+
     return false;
 }
-string SourceSinkData::SelectedTargetSample()
+
+string SourceSinkData::SelectedTargetSample() const
 {
     return selected_target_sample_;
 }
 
-Elemental_Profile *SourceSinkData::GetElementalProfile(const string sample_name)
+Elemental_Profile* SourceSinkData::GetElementalProfile(const string& sample_name)
 {
-
-    for (map<string,Elemental_Profile_Set>::const_iterator group=begin(); group!=end(); group++ )
+    // Search all groups for the specified sample
+    for (auto& [group_name, profile_set] : *this)
     {
-        for (map<string,Elemental_Profile>::const_iterator sample=group->second.cbegin(); sample!=group->second.cend(); sample++)
-            if (sample->first == sample_name)
-                return GetSampleSet(group->first)->GetProfile(sample->first);
+        // Search within this group's samples
+        for (const auto& [profile_name, profile] : profile_set)
+        {
+            if (profile_name == sample_name)
+            {
+                // Found it - return pointer to the profile
+                return profile_set.GetProfile(profile_name);
+            }
+        }
     }
+
+    // Sample not found in any group
     return nullptr;
 }
 
 ResultItem SourceSinkData::GetContribution()
 {
-    ResultItem result_cont;
-    Contribution *contribution = new Contribution();
-    for (int i=0; i<GetSourceOrder().size(); i++)
-    {
-        contribution->operator[](GetSourceOrder()[i]) = GetContributionVector()[i];
-    }
-    result_cont.SetName("Contributions");
-    result_cont.SetResult(contribution);
-    result_cont.SetType(result_type::contribution);
+    ResultItem result;
+    Contribution* contributions = new Contribution();
 
-    return  result_cont;
+    // Package contribution values with source names
+    vector<string> source_order = GetSourceOrder();
+    CVector contribution_values = GetContributionVector();
+
+    for (size_t i = 0; i < source_order.size(); i++)
+    {
+        (*contributions)[source_order[i]] = contribution_values[i];
+    }
+
+    // Configure result item
+    result.SetName("Contributions");
+    result.SetResult(contributions);
+    result.SetType(result_type::contribution);
+
+    return result;
 }
+
 ResultItem SourceSinkData::GetPredictedElementalProfile(parameter_mode param_mode)
 {
-    ResultItem result_modeled;
+    ResultItem result;
+    Elemental_Profile* predicted_profile = new Elemental_Profile();
 
-    Elemental_Profile *modeled_profile = new Elemental_Profile();
-    CVector predicted_profile = PredictTarget(param_mode);
+    // Compute predicted concentrations using mixing model
+    CVector predicted_concentrations = PredictTarget(param_mode);
     vector<string> element_names = ElementOrder();
-    for (int i=0; i<element_names.size(); i++)
+
+    // Package predictions into elemental profile
+    for (size_t i = 0; i < element_names.size(); i++)
     {
-        modeled_profile->AppendElement(element_names[i],predicted_profile[i]);
+        predicted_profile->AppendElement(element_names[i], predicted_concentrations[i]);
     }
-    result_modeled.SetName("Modeled Elemental Profile");
-    result_modeled.SetResult(modeled_profile);
-    result_modeled.SetType(result_type::predicted_concentration);
-    return result_modeled;
+
+    // Configure result item
+    result.SetName("Modeled Elemental Profile");
+    result.SetResult(predicted_profile);
+    result.SetType(result_type::predicted_concentration);
+
+    return result;
 }
 
 CVector SourceSinkData::GetPredictedValues()
 {
-    CVector out(ObservationsCount());
-    for (unsigned int i=0; i<ObservationsCount(); i++)
+    const size_t num_observations = ObservationsCount();
+    CVector predicted_values(num_observations);
+
+    // Collect predicted value from each observation
+    for (size_t i = 0; i < num_observations; i++)
     {
-        out[i] = observation(i)->PredictedValue();
+        predicted_values[i] = observation(i)->PredictedValue();
     }
-    return out;
+
+    return predicted_values;
 }
 
 ResultItem SourceSinkData::GetPredictedElementalProfile_Isotope(parameter_mode param_mode)
 {
-    ResultItem result_modeled;
+    ResultItem result;
+    Elemental_Profile* predicted_isotopes = new Elemental_Profile();
 
-    Elemental_Profile *modeled_profile = new Elemental_Profile();
-    CVector predicted_profile = PredictTarget_Isotope_delta(param_mode);
+    // Compute predicted delta values using mixing model
+    CVector predicted_delta_values = PredictTarget_Isotope_delta(param_mode);
     vector<string> isotope_names = IsotopeOrder();
-    for (unsigned int i=0; i<isotope_names.size(); i++)
+
+    // Package predictions into elemental profile
+    for (size_t i = 0; i < isotope_names.size(); i++)
     {
-        modeled_profile->AppendElement(isotope_names[i],predicted_profile[i]);
+        predicted_isotopes->AppendElement(isotope_names[i], predicted_delta_values[i]);
     }
-    result_modeled.SetName("Modeled Elemental Profile for Isotopes");
-    result_modeled.SetResult(modeled_profile);
-    result_modeled.SetType(result_type::predicted_concentration);
-    return result_modeled;
+
+    // Configure result item
+    result.SetName("Modeled Elemental Profile for Isotopes");
+    result.SetResult(predicted_isotopes);
+    result.SetType(result_type::predicted_concentration);
+
+    return result;
 }
 
 ResultItem SourceSinkData::GetObservedvsModeledElementalProfile(parameter_mode param_mode)
 {
-    ResultItem result_obs;
+    ResultItem result;
 
-    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile(param_mode).Result());
-    Elemental_Profile* observed = static_cast<Elemental_Profile*>(GetObservedElementalProfile().Result());
-    Elemental_Profile_Set* modeled_vs_observed = new Elemental_Profile_Set(); 
-    modeled_vs_observed->AppendProfile("Observed", *observed);
-    modeled_vs_observed->AppendProfile("Modeled", *predicted);
-    
-    result_obs.SetName("Observed vs Modeled Elemental Profile");
-    result_obs.SetResult(modeled_vs_observed);
-    result_obs.SetType(result_type::elemental_profile_set);
-    return result_obs;
+    // Get predicted and observed profiles
+    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(
+        GetPredictedElementalProfile(param_mode).Result()
+        );
+    Elemental_Profile* observed = static_cast<Elemental_Profile*>(
+        GetObservedElementalProfile().Result()
+        );
+
+    // Create comparison profile set
+    Elemental_Profile_Set* comparison = new Elemental_Profile_Set();
+    comparison->AppendProfile("Observed", *observed);
+    comparison->AppendProfile("Modeled", *predicted);
+
+    // Configure result item
+    result.SetName("Observed vs Modeled Elemental Profile");
+    result.SetResult(comparison);
+    result.SetType(result_type::elemental_profile_set);
+
+    return result;
 }
 
 vector<ResultItem> SourceSinkData::GetMLRResults()
 {
-    vector<ResultItem> out;
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
+    vector<ResultItem> mlr_results;
+
+    // Collect regression results from each sample group
+    for (auto& [group_name, profile_set] : *this)
     {
-        ResultItem profile_result = it->second.GetRegressionsAsResult();
-        profile_result.SetShowTable(true);
-        profile_result.SetName("OM & Size MLR for " + it->first);
-        out.push_back(profile_result);
+        // Get MLR models for this group
+        ResultItem regression_result = profile_set.GetRegressionsAsResult();
+
+        // Configure for display
+        regression_result.SetShowTable(true);
+        regression_result.SetName("OM & Size MLR for " + group_name);
+
+        mlr_results.push_back(regression_result);
     }
-    return out;
+
+    return mlr_results;
 }
 
 ResultItem SourceSinkData::GetObservedvsModeledElementalProfile_Isotope(parameter_mode param_mode)
 {
-    ResultItem result_obs;
+    ResultItem result;
 
-    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(GetPredictedElementalProfile_Isotope(param_mode).Result());
-    Elemental_Profile* observed = static_cast<Elemental_Profile*>(GetObservedElementalProfile_Isotope().Result());
-    Elemental_Profile_Set* modeled_vs_observed = new Elemental_Profile_Set();
-    modeled_vs_observed->AppendProfile("Observed", *observed);
-    modeled_vs_observed->AppendProfile("Modeled", *predicted);
+    // Get predicted and observed isotope profiles
+    Elemental_Profile* predicted = static_cast<Elemental_Profile*>(
+        GetPredictedElementalProfile_Isotope(param_mode).Result()
+        );
+    Elemental_Profile* observed = static_cast<Elemental_Profile*>(
+        GetObservedElementalProfile_Isotope().Result()
+        );
 
-    result_obs.SetName("Observed vs Modeled Elemental Profile for Isotopes");
-    result_obs.SetResult(modeled_vs_observed);
-    result_obs.SetType(result_type::elemental_profile_set);
-    return result_obs;
+    // Create comparison profile set
+    Elemental_Profile_Set* comparison = new Elemental_Profile_Set();
+    comparison->AppendProfile("Observed", *observed);
+    comparison->AppendProfile("Modeled", *predicted);
+
+    // Configure result item
+    result.SetName("Observed vs Modeled Elemental Profile for Isotopes");
+    result.SetResult(comparison);
+    result.SetType(result_type::elemental_profile_set);
+
+    return result;
 }
 
 ResultItem SourceSinkData::GetObservedElementalProfile()
 {
-    ResultItem result_obs;
+    ResultItem result;
+    Elemental_Profile* observed_profile = new Elemental_Profile();
 
-    Elemental_Profile* obs_profile = new Elemental_Profile();
-    CVector observed_profile = ObservedDataforSelectedSample(selected_target_sample_);
+    // Retrieve observed concentrations for selected target sample
+    CVector observed_concentrations = ObservedDataforSelectedSample(selected_target_sample_);
     vector<string> element_names = ElementOrder();
-    for (int i = 0; i < element_names.size(); i++)
+
+    // Package observations into elemental profile
+    for (size_t i = 0; i < element_names.size(); i++)
     {
-        obs_profile->AppendElement(element_names[i], observed_profile[i]);
+        observed_profile->AppendElement(element_names[i], observed_concentrations[i]);
     }
-    CVector modeled_profile = ObservedDataforSelectedSample(selected_target_sample_);
-    
-    for (int i = 0; i < element_names.size(); i++)
-    {
-        obs_profile->AppendElement(element_names[i], observed_profile[i]);
-    }
-    result_obs.SetName("Observed Elemental Profile");
-    result_obs.SetResult(obs_profile);
-    result_obs.SetType(result_type::predicted_concentration);
-    return result_obs;
+
+    // Configure result item
+    result.SetName("Observed Elemental Profile");
+    result.SetResult(observed_profile);
+    result.SetType(result_type::predicted_concentration);
+
+    return result;
 }
 
 ResultItem SourceSinkData::GetObservedElementalProfile_Isotope()
 {
-    ResultItem result_obs;
+    ResultItem result;
+    Elemental_Profile* observed_isotopes = new Elemental_Profile();
 
-    Elemental_Profile* obs_profile = new Elemental_Profile();
-    CVector observed_profile = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_);
+    // Retrieve observed delta values for selected target sample
+    CVector observed_delta_values = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_);
     vector<string> isotope_names = IsotopeOrder();
-    for (unsigned int i = 0; i < isotope_names.size(); i++)
+
+    // Package observations into elemental profile
+    for (size_t i = 0; i < isotope_names.size(); i++)
     {
-        obs_profile->AppendElement(isotope_names[i], observed_profile[i]);
+        observed_isotopes->AppendElement(isotope_names[i], observed_delta_values[i]);
     }
 
-    result_obs.SetName("Observed Elemental Profile for Isotopes");
-    result_obs.SetResult(obs_profile);
-    result_obs.SetType(result_type::predicted_concentration);
-    return result_obs;
+    // Configure result item
+    result.SetName("Observed Elemental Profile for Isotopes");
+    result.SetResult(observed_isotopes);
+    result.SetType(result_type::predicted_concentration);
+
+    return result;
 }
 
 ResultItem SourceSinkData::GetCalculatedElementMeans()
 {
-    Elemental_Profile_Set *profile_set = new Elemental_Profile_Set();
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++ )
-    { 
+    Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
         if (it->first != target_group_)
         {
             Elemental_Profile element_profile;
@@ -2313,16 +2442,18 @@ ResultItem SourceSinkData::GetCalculatedElementMeans()
             profile_set->AppendProfile(it->first, element_profile);
         }
     }
+
     ResultItem resitem;
     resitem.SetName("Calculated mean elemental contents");
     resitem.SetType(result_type::elemental_profile_set);
     resitem.SetResult(profile_set);
     return resitem;
-    
 }
+
 ResultItem SourceSinkData::GetCalculatedElementSigma()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
         if (it->first != target_group_)
@@ -2338,6 +2469,7 @@ ResultItem SourceSinkData::GetCalculatedElementSigma()
             profile_set->AppendProfile(it->first, element_profile);
         }
     }
+
     ResultItem resitem;
     resitem.SetName("Calculated elemental contents standard deviations");
     resitem.SetType(result_type::elemental_profile_set);
@@ -2345,13 +2477,18 @@ ResultItem SourceSinkData::GetCalculatedElementSigma()
     return resitem;
 }
 
+
 vector<ResultItem> SourceSinkData::GetSourceProfiles()
 {
-    vector<ResultItem> out;
+    vector<ResultItem> source_profile_results;
+
+    // Package elemental profiles for each source group
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
+        // Skip target group - only process sources
         if (it->first != target_group_)
         {
+            // Create and configure result item for this source
             ResultItem result_item;
             result_item.SetName("Elemental Profiles for " + it->first);
             result_item.SetShowAsString(true);
@@ -2359,18 +2496,23 @@ vector<ResultItem> SourceSinkData::GetSourceProfiles()
             result_item.SetShowGraph(true);
             result_item.SetType(result_type::elemental_profile_set);
 
+            // Copy profile set for this source
             Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
             *profile_set = it->second;
             result_item.SetResult(profile_set);
-            out.push_back(result_item);
 
+            source_profile_results.push_back(result_item);
         }
     }
-    return out;
+
+    return source_profile_results;
 }
+
+
 ResultItem SourceSinkData::GetCalculatedElementMu()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
         if (it->first != target_group_)
@@ -2383,15 +2525,18 @@ ResultItem SourceSinkData::GetCalculatedElementMu()
             profile_set->AppendProfile(it->first, element_profile);
         }
     }
+
     ResultItem resitem;
     resitem.SetName("Calculated mu parameter of elemental contents");
     resitem.SetType(result_type::elemental_profile_set);
     resitem.SetResult(profile_set);
     return resitem;
 }
+
 ResultItem SourceSinkData::GetEstimatedElementMu()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
         if (it->first != target_group_)
@@ -2404,6 +2549,7 @@ ResultItem SourceSinkData::GetEstimatedElementMu()
             profile_set->AppendProfile(it->first, element_profile);
         }
     }
+
     ResultItem resitem;
     resitem.SetName("Infered mu parameter elemental contents");
     resitem.SetType(result_type::elemental_profile_set);
@@ -2414,6 +2560,7 @@ ResultItem SourceSinkData::GetEstimatedElementMu()
 ResultItem SourceSinkData::GetEstimatedElementMean()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
         if (it->first != target_group_)
@@ -2423,11 +2570,12 @@ ResultItem SourceSinkData::GetEstimatedElementMean()
             {
                 double sigma = it->second.GetElementDistribution(element_order_[element_counter])->GetEstimatedSigma();
                 double mu = it->second.GetElementDistribution(element_order_[element_counter])->GetEstimatedMu();
-                element_profile.AppendElement(element_order_[element_counter], exp(mu+pow(sigma,2)/2));
+                element_profile.AppendElement(element_order_[element_counter], exp(mu + pow(sigma, 2) / 2));
             }
             profile_set->AppendProfile(it->first, element_profile);
         }
     }
+
     ResultItem resitem;
     resitem.SetName("Infered mean of elemental contents");
     resitem.SetType(result_type::elemental_profile_set);
@@ -2438,6 +2586,7 @@ ResultItem SourceSinkData::GetEstimatedElementMean()
 ResultItem SourceSinkData::GetEstimatedElementSigma()
 {
     Elemental_Profile_Set* profile_set = new Elemental_Profile_Set();
+
     for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
         if (it->first != target_group_)
@@ -2451,6 +2600,7 @@ ResultItem SourceSinkData::GetEstimatedElementSigma()
             profile_set->AppendProfile(it->first, element_profile);
         }
     }
+
     ResultItem resitem;
     resitem.SetName("Infered sigma parameter");
     resitem.SetType(result_type::elemental_profile_set);
@@ -2459,20 +2609,158 @@ ResultItem SourceSinkData::GetEstimatedElementSigma()
 }
 
 
-bool SourceSinkData::WriteElementInformationToFile(QFile *file)
-{
-    file->write("***\n");
-    file->write("Element Information\n");
-    for (map<string,element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
-        file->write(QString::fromStdString(it->first).toUtf8()+ "\t" + Role(it->second.Role).toUtf8()+"\n");
 
+QJsonArray SourceSinkData::ToolsUsedToJsonObject()
+{
+    QJsonArray tools_used_json_array;
+    
+    // Serialize each tool name
+    for (list<string>::iterator it = tools_used.begin(); it != tools_used.end(); it++)
+    {
+        tools_used_json_array.append(QString::fromStdString(*it));
+    }
+    
+    return tools_used_json_array;
+}
+
+QJsonObject SourceSinkData::OptionsToJsonObject()
+{
+    QJsonObject json_object;
+    
+    // Serialize each option name-value pair
+    for (QMap<QString, double>::iterator it = options_.begin(); it != options_.end(); it++)
+    {
+        json_object[it.key()] = it.value();
+    }
+    
+    return json_object;
+}
+
+void SourceSinkData::AddtoToolsUsed(const string& tool)
+{
+    // Only add if not already present
+    if (!ToolsUsed(tool))
+    {
+        tools_used.push_back(tool);
+    }
+}
+
+bool SourceSinkData::ReadToolsUsedFromJsonObject(const QJsonArray& jsonarray)
+{
+    // Deserialize each tool name
+    foreach (const QJsonValue& value, jsonarray)
+    {
+        AddtoToolsUsed(value.toString().toStdString());
+    }
+    
+    return true;
+}
+
+bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject& jsonobject)
+{
+    // Clear existing element information
+    element_information_.clear();
+    
+    // Deserialize metadata for each element
+    for (QString key : jsonobject.keys())
+    {
+        element_information elem_info;
+        elem_info.Role = Role(jsonobject[key].toObject()["Role"].toString());
+        elem_info.standard_ratio = jsonobject[key].toObject()["Standard Ratio"].toDouble();
+        elem_info.base_element = jsonobject[key].toObject()["Base Element"].toString().toStdString();
+        elem_info.include_in_analysis = jsonobject[key].toObject()["Include"].toBool();
+        
+        element_information_[key.toStdString()] = elem_info;
+    }
+    
+    return true;
+}
+
+bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject& jsonobject)
+{
+    // Clear existing data
+    clear();
+    
+    // Deserialize each sample group
+    for (QString key : jsonobject.keys())
+    {
+        Elemental_Profile_Set elemental_profile_set;
+        elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject());
+        operator[](key.toStdString()) = elemental_profile_set;
+    }
+    
+    return true;
+}
+
+bool SourceSinkData::ReadOptionsfromJsonObject(const QJsonObject& jsonobject)
+{
+    // Deserialize each option
+    for (QString key : jsonobject.keys())
+    {
+        options_[key] = jsonobject[key].toDouble();
+    }
+    
+    return true;
+}
+
+QJsonObject SourceSinkData::ElementDataToJsonObject()
+{
+    QJsonObject json_object;
+    
+    // Serialize each sample group
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject();
+    }
+    
+    return json_object;
+}
+
+bool SourceSinkData::WriteDataToFile(QFile* file)
+{
+    // Write header
+    file->write("***\n");
+    file->write("Elemental Profiles\n");
+    
+    // Write each sample group
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        file->write("**\n");
+        file->write(QString::fromStdString(it->first + "\n").toUtf8());
+        it->second.writetofile(file);
+    }
+    
+    return true;
+}
+
+bool SourceSinkData::WriteToFile(QFile* file)
+{
+    return WriteDataToFile(file);
+}
+
+bool SourceSinkData::ReadFromFile(QFile* fil)
+{
+    // Clear existing data
+    Clear();
+    
+    // Parse JSON from file
+    QJsonObject jsondoc = QJsonDocument().fromJson(fil->readAll()).object();
+    
+    // Load all components
+    ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
+    ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
+    ReadToolsUsedFromJsonObject(jsondoc["Tools used"].toArray());
+    ReadOptionsfromJsonObject(jsondoc["Options"].toObject());
+    target_group_ = jsondoc["Target Group"].toString().toStdString();
+    
     return true;
 }
 
 QJsonObject SourceSinkData::ElementInformationToJsonObject()
 {
     QJsonObject json_object;
-    
+
+    // Serialize metadata for each element
     for (map<string, element_information>::iterator it = element_information_.begin(); it != element_information_.end(); it++)
     {
         QJsonObject elem_info_json_obj;
@@ -2480,160 +2768,46 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject()
         elem_info_json_obj["Standard Ratio"] = it->second.standard_ratio;
         elem_info_json_obj["Base Element"] = QString::fromStdString(it->second.base_element);
         elem_info_json_obj["Include"] = it->second.include_in_analysis;
+
         json_object[QString::fromStdString(it->first)] = elem_info_json_obj;
-
-    }
-
-
-    return json_object;
-}
-
-QJsonArray SourceSinkData::ToolsUsedToJsonObject()
-{
-    QJsonObject json_object;
-    QJsonArray tools_used_json_array;
-    for (list<string>::iterator it = tools_used.begin(); it != tools_used.end(); it++)
-    {
-        tools_used_json_array.append(QString::fromStdString(*it));
-    }
-
-    return tools_used_json_array;
-}
-
-QJsonObject SourceSinkData::OptionsToJsonObject()
-{
-    QJsonObject json_object;
-    for (QMap<QString,double>::iterator it = options_.begin(); it != options_.end(); it++)
-    {
-        json_object[it.key()] = it.value();
     }
 
     return json_object;
 }
 
-
-void SourceSinkData::AddtoToolsUsed(const string &tool)
+QString SourceSinkData::Role(const element_information::role& role)
 {
-    if (!ToolsUsed(tool))
-        tools_used.push_back(tool);
-}
-
-
-bool SourceSinkData::ReadToolsUsedFromJsonObject(const QJsonArray &jsonarray)
-{
-    foreach (const QJsonValue & value, jsonarray)
-    {
-        AddtoToolsUsed(value.toString().toStdString());
-    }
-
-    return true;
-}
-
-
-bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject &jsonobject)
-{
-    element_information_.clear();
-    for(QString key: jsonobject.keys() ) {
-        element_information elem_info;
-        elem_info.Role = Role(jsonobject[key].toObject()["Role"].toString());
-        elem_info.standard_ratio = jsonobject[key].toObject()["Standard Ratio"].toDouble();
-        elem_info.base_element = jsonobject[key].toObject()["Base Element"].toString().toStdString();
-        elem_info.include_in_analysis = jsonobject[key].toObject()["Include"].toBool();
-        element_information_[key.toStdString()] = elem_info;
-    }
-
-    return true;
-}
-
-bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject &jsonobject)
-{
-    clear();
-    for(QString key: jsonobject.keys() ) {
-        Elemental_Profile_Set elemental_profile_set;
-        elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject());
-        operator[](key.toStdString()) = elemental_profile_set;
-    }
-
-    return true;
-}
-
-bool SourceSinkData::ReadOptionsfromJsonObject(const QJsonObject &jsonobject)
-{
-    for(QString key: jsonobject.keys() ) {
-        options_[key] = jsonobject[key].toDouble();
-    }
-
-    return true;
-}
-
-QJsonObject SourceSinkData::ElementDataToJsonObject()
-{
-    QJsonObject json_object;
-    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
-    {
-        json_object[QString::fromStdString(it->first)] = it->second.toJsonObject();
-    }
-    return json_object;
-}
-
-
-bool SourceSinkData::WriteDataToFile(QFile *file)
-{
-    file->write("***\n");
-    file->write("Elemental Profiles\n");
-    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
-    {
-        file->write("**\n");
-        file->write(QString::fromStdString(it->first+"\n").toUtf8());
-        it->second.writetofile(file);
-    }
-    return true;
-}
-
-bool SourceSinkData::WriteToFile(QFile *file)
-{
-    return true;
-}
-
-bool SourceSinkData::ReadFromFile(QFile *fil)
-{
-    Clear();
-    QJsonObject jsondoc = QJsonDocument().fromJson(fil->readAll()).object();
-    ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
-    ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
-    ReadToolsUsedFromJsonObject(jsondoc["Tools used"].toArray());
-    ReadOptionsfromJsonObject(jsondoc["Options"].toObject());
-    target_group_ = jsondoc["Target Group"].toString().toStdString();
-    return true;
-}
-
-QString SourceSinkData::Role(const element_information::role &rl)
-{
-    if (rl == element_information::role::do_not_include)
+    // Convert enum to string representation
+    if (role == element_information::role::do_not_include)
         return "DoNotInclude";
-    else if (rl == element_information::role::element)
+    else if (role == element_information::role::element)
         return "Element";
-    else if (rl == element_information::role::isotope)
+    else if (role == element_information::role::isotope)
         return "Isotope";
-    else if (rl == element_information::role::particle_size)
+    else if (role == element_information::role::particle_size)
         return "ParticleSize";
-    else if (rl == element_information::role::organic_carbon)
+    else if (role == element_information::role::organic_carbon)
         return "OM";
+
+    // Default for unrecognized values
     return "DoNotInclude";
 }
 
-element_information::role SourceSinkData::Role(const QString &rl)
+element_information::role SourceSinkData::Role(const QString& role_string)
 {
-    if (rl == "DoNotInclude")
+    // Convert string to enum representation
+    if (role_string == "DoNotInclude")
         return element_information::role::do_not_include;
-    else if (rl == "Element")
+    else if (role_string == "Element")
         return element_information::role::element;
-    else if (rl == "Isotope")
+    else if (role_string == "Isotope")
         return element_information::role::isotope;
-    else if (rl == "ParticleSize")
+    else if (role_string == "ParticleSize")
         return element_information::role::particle_size;
-    else if (rl == "OM")
+    else if (role_string == "OM")
         return element_information::role::organic_carbon;
+
+    // Default for unrecognized values
     return element_information::role::do_not_include;
 }
 

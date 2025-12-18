@@ -315,7 +315,24 @@ public:
      */
     map<string, vector<double>> ExtractElementDataByGroup(const string& element) const;
 
-    Elemental_Profile *GetElementalProfile(const string sample_name); //Get Elemental Profile for a particular sample
+    /**
+     * @brief Finds and retrieves an elemental profile by sample name
+     *
+     * Searches all groups (sources and target) for a sample with the given name
+     * and returns a pointer to its elemental profile. Useful when the group
+     * containing the sample is unknown.
+     *
+     * @param sample_name Name of the sample to find
+     *
+     * @return Pointer to the elemental profile if found, nullptr otherwise
+     *
+     * @note Searches all groups sequentially until sample is found
+     * @note Returns pointer to internal data - do not delete
+     *
+     * @see GetSampleSet() if group is known
+     */
+ 
+    Elemental_Profile* GetElementalProfile(const string& sample_name);
     
     /**
      * @brief Populate element distributions from all groups
@@ -374,8 +391,53 @@ public:
      */
     void PopulateElementInformation(const map<string, element_information>* ElementInfo = nullptr);
 
-    static QString Role(const element_information::role &rl);
-    static element_information::role Role(const QString &rl);
+    /**
+     * @brief Converts element role enum to string representation
+     *
+     * Converts the element_information::role enumeration to a human-readable
+     * string for serialization, display, or file output.
+     *
+     * Mappings:
+     * - do_not_include → "DoNotInclude"
+     * - element → "Element"
+     * - isotope → "Isotope"
+     * - particle_size → "ParticleSize"
+     * - organic_carbon → "OM"
+     *
+     * @param role Element role enumeration value
+     *
+     * @return QString representation of the role
+     *
+     * @note Returns "DoNotInclude" for unrecognized values
+     *
+     * @see Role(const QString&) for reverse conversion
+     */
+    QString Role(const element_information::role& role);
+
+    /**
+     * @brief Converts string representation to element role enum
+     *
+     * Parses a string and returns the corresponding element_information::role
+     * enumeration for deserialization or configuration loading.
+     *
+     * Mappings:
+     * - "DoNotInclude" → do_not_include
+     * - "Element" → element
+     * - "Isotope" → isotope
+     * - "ParticleSize" → particle_size
+     * - "OM" → organic_carbon
+     *
+     * @param role_string QString representation of the role
+     *
+     * @return element_information::role enumeration value
+     *
+     * @note Returns do_not_include for unrecognized strings
+     *
+     * @see Role(const element_information::role&) for forward conversion
+     */
+    element_information::role Role(const QString& role_string);
+
+    
     element_information* GetElementInformation(const string &element_name)
     {
         if (element_information_.count(element_name))
@@ -637,7 +699,39 @@ public:
     
     Elemental_Profile Sample(const string &samplename) const; //extract a single sample
     
-    CVector GradientUpdate(const estimation_mode estmode = estimation_mode::elemental_profile_and_contribution); //Improve the estimate by one step using the gradient descent method
+    /**
+     * @brief Performs one gradient ascent step with adaptive step size
+     *
+     * Executes a single iteration of gradient ascent optimization on the log-likelihood
+     * function using an adaptive step size (distance_coeff_). The algorithm tries
+     * multiple step sizes to find one that improves the likelihood:
+     *
+     * Algorithm:
+     * 1. Compute gradient direction at current parameters
+     * 2. Try step sizes: distance_coeff_ and 2×distance_coeff_
+     * 3. If larger step is better: accept it and increase step size for next iteration
+     * 4. If smaller step is better: accept it and keep current step size
+     * 5. If neither improves: backtrack with progressively smaller steps
+     *
+     * Step Size Adaptation:
+     * - Double step size if 2× step succeeds (aggressive exploration)
+     * - Halve step size during backtracking (conservative convergence)
+     * - Reset to 1.0 if step size becomes too small
+     *
+     * @param est_mode Estimation mode determining which likelihood components to include
+     *
+     * @return Updated parameter vector after the gradient step
+     *
+     * @note Modifies distance_coeff_ member variable for next iteration
+     * @note May return original parameters if no improvement found after 5 backtracks
+     * @note This is a simple gradient ascent; Levenberg-Marquardt is often preferred
+     *
+     * @see Gradient() for gradient computation
+     * @see LogLikelihood() for objective function
+     * @see distance_coeff_ for current step size
+     */
+    
+    CVector GradientUpdate(estimation_mode estmode = estimation_mode::elemental_profile_and_contribution); //Improve the estimate by one step using the gradient descent method
     /**
      * @brief Predicts target sample elemental concentrations based on source contributions
      *
@@ -979,32 +1073,403 @@ public:
      */
     double LogLikelihood(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
 
+    /**
+     * @brief Identifies chemical elements to be used in Chemical Mass Balance (CMB) analysis
+     *
+     * Scans the element information map and collects all elements marked with the
+     * 'element' role. Updates the constituent count and ordering vectors used
+     * throughout CMB calculations.
+     *
+     * @return Vector of element names to be included in CMB analysis
+     *
+     * @note Updates constituent_order_ and numberofconstituents_ member variables
+     * @note Includes all elements regardless of include_in_analysis flag
+     * @note "Constituents" refers to chemical elements (not isotopes or metadata)
+     *
+     * @see IsotopesToBeUsedInCMB() for isotope selection
+     * @see PopulateConstituentOrders() for comprehensive ordering setup
+     */
     vector<string> ElementsToBeUsedInCMB();
+
+    /**
+     * @brief Identifies isotopes to be used in Chemical Mass Balance (CMB) analysis
+     *
+     * Scans the element information map and collects all isotopes marked with the
+     * 'isotope' role AND flagged for inclusion in analysis. Updates the isotope
+     * count and ordering vectors used in CMB calculations.
+     *
+     * @return Vector of isotope names to be included in CMB analysis
+     *
+     * @note Updates isotope_order_ and numberofisotopes_ member variables
+     * @note Only includes isotopes where include_in_analysis = true
+     * @note Isotopes are typically δ values (e.g., δ¹³C, δ¹⁵N)
+     *
+     * @see ElementsToBeUsedInCMB() for element selection
+     * @see PopulateConstituentOrders() for comprehensive ordering setup
+     */
     vector<string> IsotopesToBeUsedInCMB();
-    vector<string> SourceGroupNames();
-    bool SetSelectedTargetSample(const string &sample_name);
-    string SelectedTargetSample();
-    vector<string> GetSourceOrder() {return samplesetsorder_;}
+    /**
+     * @brief Retrieves the names of all source groups (excluding target)
+     *
+     * Returns a list of source group names, which are the pollution/emission
+     * sources being apportioned in the CMB analysis. The target sample group
+     * is excluded since it represents the receptor, not a source.
+     *
+     * @return Vector of source group names
+     *
+     * @note Target group is filtered out
+     * @note Order matches the internal map ordering
+     *
+     * @see GetSourceOrder() for the ordering used in parameter vectors
+     * @see GetTargetGroup() for the target group name
+     */
+    vector<string> SourceGroupNames() const;
+    
+    /**
+     * @brief Sets the currently selected target sample for analysis
+     *
+     * Specifies which sample from the target group will be used as the receptor
+     * in CMB calculations. Validates that the sample exists before setting.
+     *
+     * @param sample_name Name of the target sample to analyze
+     *
+     * @return true if sample exists and was selected, false if sample not found
+     *
+     * @note Must be called before InitializeParametersAndObservations()
+     * @note Sample must exist in the target group
+     *
+     * @see SelectedTargetSample() to retrieve current selection
+     * @see InitializeParametersAndObservations() which uses this selection
+     */
+    bool SetSelectedTargetSample(const string& sample_name);
+
+    /**
+     * @brief Retrieves the name of the currently selected target sample
+     *
+     * @return Name of the target sample being analyzed
+     *
+     * @see SetSelectedTargetSample() to change the selection
+     */
+    string SelectedTargetSample() const;
+    
+    /**
+     * @brief Packages source contributions into a ResultItem for output
+     *
+     * Creates a ResultItem containing the current source contribution estimates,
+     * formatted for export or display. Each source is paired with its contribution
+     * fraction.
+     *
+     * @return ResultItem of type 'contribution' containing source fractions
+     *
+     * @note Creates new Contribution object on heap (managed by ResultItem)
+     * @note Source ordering matches GetSourceOrder()
+     *
+     * @see GetContributionVector() for raw contribution values
+     * @see GetSourceOrder() for source ordering
+     */
+    ResultItem GetContribution();
+    
+    vector<string> GetSourceOrder() const {return samplesetsorder_;}
     vector<string> SamplesetsOrder() {return samplesetsorder_;}
     vector<string> ConstituentOrder() {return constituent_order_;}
     vector<string> ElementOrder() {return element_order_;}
     vector<string> IsotopeOrder() {return isotope_order_;}
     vector<string> SizeOMOrder() {return size_om_order_;}
-    ResultItem GetContribution();
+    
+    /**
+     * @brief Generates predicted elemental concentrations for the target sample
+     *
+     * Computes the model's predicted elemental composition using the current
+     * source contributions and profiles. The prediction follows the mixing model:
+     * C_predicted = S × f, where S is the source matrix and f is contributions.
+     *
+     * @param param_mode Controls whether to use parametric or empirical source means
+     *
+     * @return ResultItem containing the predicted Elemental_Profile
+     *
+     * @note Creates new Elemental_Profile on heap (managed by ResultItem)
+     * @note Only includes chemical elements, not isotopes
+     *
+     * @see PredictTargetConcentrations() for the underlying calculation
+     * @see GetPredictedElementalProfile_Isotope() for isotope predictions
+     */
     ResultItem GetPredictedElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    CVector GetPredictedValues(); // copied the predicted constituents and isotopes from observations into a vector
+
+    /**
+     * @brief Retrieves predicted values for all observations
+     *
+     * Collects the predicted values from all observation objects, which represent
+     * the model's expected measurements for comparison with actual observations.
+     *
+     * @return Vector of predicted values matching the observations vector
+     *
+     * @note Length matches ObservationsCount()
+     * @note Values come from observation objects, not direct calculation
+     *
+     * @see ObservationsCount() for number of observations
+     */
+    CVector GetPredictedValues();
+
+    /**
+     * @brief Generates predicted isotope delta values for the target sample
+     *
+     * Computes the model's predicted isotopic composition (δ values in ‰) using
+     * current source contributions and isotope profiles. Predictions are converted
+     * from absolute concentrations back to delta notation.
+     *
+     * @param param_mode Controls whether to use parametric or empirical source means
+     *
+     * @return ResultItem containing the predicted Elemental_Profile with isotope δ values
+     *
+     * @note Creates new Elemental_Profile on heap (managed by ResultItem)
+     * @note Only includes isotopes, not chemical elements
+     * @note Values are in delta notation (‰), not absolute concentrations
+     *
+     * @see PredictTargetIsotopeDelta() for the underlying calculation
+     * @see GetPredictedElementalProfile() for element predictions
+     */
     ResultItem GetPredictedElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    ResultItem GetObservedElementalProfile();
-    ResultItem GetObservedElementalProfile_Isotope();
+
+    /**
+     * @brief Creates a comparison of observed vs modeled elemental profiles
+     *
+     * Generates a profile set containing both the observed target sample
+     * composition and the model's predicted composition for side-by-side
+     * comparison and residual analysis.
+     *
+     * @param param_mode Controls whether to use parametric or empirical source means
+     *
+     * @return ResultItem containing Elemental_Profile_Set with "Observed" and "Modeled" profiles
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes chemical elements, not isotopes
+     * @note Useful for visualization and goodness-of-fit assessment
+     *
+     * @see GetPredictedElementalProfile() for predicted profile
+     * @see GetObservedElementalProfile() for observed profile
+     */
     ResultItem GetObservedvsModeledElementalProfile(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+
+    /**
+     * @brief Creates a comparison of observed vs modeled isotope delta values
+     *
+     * Generates a profile set containing both the observed target sample
+     * isotopic composition and the model's predicted isotope delta values
+     * for side-by-side comparison and residual analysis.
+     *
+     * @param param_mode Controls whether to use parametric or empirical source means
+     *
+     * @return ResultItem containing Elemental_Profile_Set with "Observed" and "Modeled" isotope profiles
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes isotopes, not chemical elements
+     * @note All values are in delta notation (‰)
+     * @note Useful for assessing isotope mixing model performance
+     *
+     * @see GetPredictedElementalProfile_Isotope() for predicted isotope profile
+     * @see GetObservedElementalProfile_Isotope() for observed isotope profile
+     * @see GetObservedvsModeledElementalProfile() for element version
+     */
     ResultItem GetObservedvsModeledElementalProfile_Isotope(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    
+    /**
+     * @brief Retrieves the observed elemental concentrations for the selected target sample
+     *
+     * Extracts the measured elemental composition of the currently selected target
+     * sample. These are the observed/measured values that the model attempts to
+     * reproduce through source apportionment.
+     *
+     * @return ResultItem containing the observed Elemental_Profile for chemical elements
+     *
+     * @note Creates new Elemental_Profile on heap (managed by ResultItem)
+     * @note Only includes chemical elements, not isotopes
+     * @note Uses selected_target_sample_ set via SetSelectedTargetSample()
+     *
+     * @see GetObservedElementalProfile_Isotope() for isotope observations
+     * @see SetSelectedTargetSample() to specify which sample to use
+     * @see ObservedDataforSelectedSample() for the underlying data retrieval
+     */
+    ResultItem GetObservedElementalProfile();
+
+    /**
+     * @brief Retrieves the observed isotope delta values for the selected target sample
+     *
+     * Extracts the measured isotopic composition (δ values in ‰) of the currently
+     * selected target sample. These are the observed isotope signatures that
+     * constrain source contributions in the apportionment model.
+     *
+     * @return ResultItem containing the observed Elemental_Profile with isotope δ values
+     *
+     * @note Creates new Elemental_Profile on heap (managed by ResultItem)
+     * @note Only includes isotopes, not chemical elements
+     * @note Values are in delta notation (‰)
+     * @note Uses selected_target_sample_ set via SetSelectedTargetSample()
+     *
+     * @see GetObservedElementalProfile() for element observations
+     * @see SetSelectedTargetSample() to specify which sample to use
+     * @see ObservedDataforSelectedSample_Isotope_delta() for underlying data retrieval
+     */
+    ResultItem GetObservedElementalProfile_Isotope();
+    
+    
+    
+    /**
+     * @brief Retrieves multiple linear regression results for all sample groups
+     *
+     * Collects the organic matter (OM) and particle size regression models for
+     * each source group. These regressions are used to correct elemental
+     * concentrations for variations in OM content and particle size distribution.
+     *
+     * Regression Model:
+     *   C_corrected = C_measured + β₁(OM_ref - OM_measured) + β₂(Size_ref - Size_measured)
+     *
+     * Or for multiplicative form:
+     *   C_corrected = C_measured × (OM_ref/OM_measured)^β₁ × (Size_ref/Size_measured)^β₂
+     *
+     * @return Vector of ResultItems, one per sample group, containing MLR models
+     *
+     * @note Each ResultItem is configured for table display
+     * @note Includes both source groups and target group
+     * @note Regressions must be computed first via SetRegression()
+     *
+     * @see Elemental_Profile_Set::SetRegression() to compute regressions
+     * @see Elemental_Profile::OrganicandSizeCorrect() for applying corrections
+     */
     vector<ResultItem> GetMLRResults();
+    
+    /**
+     * @brief Computes estimated mean concentrations for all source elements
+     *
+     * Calculates the mean elemental concentrations for each source group using
+     * the current estimated distributions. These means represent the model's
+     * current estimate of typical elemental composition for each source.
+     *
+     * For log-normal distributions: Mean = exp(μ + σ²/2)
+     * For normal distributions: Mean = μ
+     *
+     * @return ResultItem containing Elemental_Profile_Set with mean profiles for each source
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes source groups (target excluded)
+     * @note Only includes elements in element_order_
+     * @note Uses estimated distributions (updated during optimization/MCMC)
+     *
+     * @see GetCalculatedElementStandardDeviations() for corresponding std deviations
+     * @see Distribution::CalculateMean() for mean calculation
+     */
     ResultItem GetCalculatedElementMeans();
-    vector<ResultItem> GetSourceProfiles();
+
+    /**
+     * @brief Computes estimated standard deviations for all source elements
+     *
+     * Calculates the standard deviations of elemental concentrations for each
+     * source group using the current estimated distributions. The calculation
+     * method depends on the distribution type.
+     *
+     * For log-normal distributions: Returns log-space σ (CalculateStdDevLog)
+     * For normal distributions: Returns linear-space σ (CalculateStdDev)
+     *
+     * @return ResultItem containing Elemental_Profile_Set with std dev profiles for each source
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes source groups (target excluded)
+     * @note Only includes elements in element_order_
+     * @note Different calculations for normal vs log-normal distributions
+     *
+     * @see GetEstimatedSourceMeans() for corresponding means
+     * @see Distribution::CalculateStdDev() for normal distribution std dev
+     * @see Distribution::CalculateStdDevLog() for log-normal distribution std dev
+     */
     ResultItem GetCalculatedElementSigma();
+
+    /**
+     * @brief Retrieves elemental profiles for all source groups
+     *
+     * Collects the complete elemental profile sets for each source group,
+     * packaged as ResultItems configured for multiple display formats
+     * (table, graph, and string representation).
+     *
+     * @return Vector of ResultItems, one per source group, each containing
+     *         an Elemental_Profile_Set with all samples from that source
+     *
+     * @note Creates new Elemental_Profile_Set objects on heap (managed by ResultItems)
+     * @note Target group is excluded - only returns source profiles
+     * @note Each ResultItem is configured for table, graph, and string display
+     * @note Useful for visualizing source composition variability
+     *
+     * @see GetCalculatedElementMeans() for summary statistics of sources
+     */
+    vector<ResultItem> GetSourceProfiles();
+
+    
+    /**
+     * @brief Computes μ parameters from fitted log-normal distributions for source elements
+     *
+     * Calculates the μ (log-space mean) parameter for each element in each source
+     * group based on the fitted log-normal distributions from source sample data.
+     *
+     * @return ResultItem containing Elemental_Profile_Set with μ values for each source
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes source groups (target excluded)
+     * @note Uses CalculateMeanLog() - computed from fitted distribution
+     *
+     * @see GetEstimatedElementMu() for MCMC-inferred μ values
+     */
     ResultItem GetCalculatedElementMu();
+
+    /**
+     * @brief Retrieves estimated μ parameters from Bayesian inference for source elements
+     *
+     * Returns the inferred μ (log-space mean) parameters for each element in each
+     * source group as estimated during MCMC sampling or optimization.
+     *
+     * @return ResultItem containing Elemental_Profile_Set with inferred μ values
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes source groups (target excluded)
+     * @note Uses GetEstimatedMu() - updated during MCMC/optimization
+     *
+     * @see GetCalculatedElementMu() for fitted μ values from source data
+     * @see GetEstimatedElementMean() for actual concentration means
+     */
     ResultItem GetEstimatedElementMu();
+
+    /**
+     * @brief Computes actual mean concentrations from estimated log-normal parameters
+     *
+     * Calculates the actual concentration means for each element in each source
+     * using the estimated μ and σ parameters from Bayesian inference.
+     *
+     * Formula: Mean = exp(μ + σ²/2)
+     *
+     * @return ResultItem containing Elemental_Profile_Set with mean concentrations
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes source groups (target excluded)
+     * @note Converts log-normal parameters to actual concentration space
+     *
+     * @see GetEstimatedElementMu() for μ parameter values
+     * @see GetEstimatedElementSigma() for σ parameter values
+     */
     ResultItem GetEstimatedElementMean();
+
+    /**
+     * @brief Retrieves estimated σ parameters from Bayesian inference for source elements
+     *
+     * Returns the inferred σ (log-space standard deviation) parameters for each
+     * element in each source group as estimated during MCMC sampling or optimization.
+     *
+     * @return ResultItem containing Elemental_Profile_Set with inferred σ values
+     *
+     * @note Creates new Elemental_Profile_Set on heap (managed by ResultItem)
+     * @note Only includes source groups (target excluded)
+     * @note Uses GetEstimatedSigma() - updated during MCMC/optimization
+     * @note Values are in log-space (not actual concentration std dev)
+     *
+     * @see GetEstimatedElementMu() for corresponding μ parameters
+     * @see GetEstimatedElementMean() for actual concentration means
+     */
     ResultItem GetEstimatedElementSigma();
     /**
      * @brief Calculates the combined residual vector for elemental and isotopic predictions
@@ -1160,47 +1625,245 @@ public:
      */
     CVector OneStepLevenberg_Marquardt_softmax(double lambda);
     /**
- * @brief Solves for optimal source contributions using the Levenberg-Marquardt algorithm
- *
- * Iteratively optimizes source contributions to minimize the residual between predicted
- * and observed elemental/isotopic compositions. The algorithm adaptively adjusts the
- * damping parameter (lambda) based on convergence behavior:
- * - Decreases lambda when error reduces significantly (faster convergence)
- * - Increases lambda when error increases (more stable steps)
- *
- * Convergence criteria (any of):
- * - Residual norm < tolerance (1e-10)
- * - Parameter change norm < tolerance (1e-10)
- * - Maximum iterations reached (1000)
- *
- * @param trans Parameterization method:
- *        - transformation::linear: Direct contribution values with constraint Σc_i = 1
- *        - transformation::softmax: Unconstrained parameters transformed via softmax
- *
- * @return bool Currently always returns false (legacy). Consider checking convergence
- *         status: true if converged within tolerance, false if max iterations reached.
- *
- * @note Updates internal state with optimized contributions. If rtw_ (real-time widget)
- *       is set, displays convergence progress graphically.
- */
+     * @brief Solves for optimal source contributions using the Levenberg-Marquardt algorithm
+     *
+     * Iteratively optimizes source contributions to minimize the residual between predicted
+     * and observed elemental/isotopic compositions. The algorithm adaptively adjusts the
+     * damping parameter (lambda) based on convergence behavior:
+     * - Decreases lambda when error reduces significantly (faster convergence)
+     * - Increases lambda when error increases (more stable steps)
+     *
+     * Convergence criteria (any of):
+     * - Residual norm < tolerance (1e-10)
+     * - Parameter change norm < tolerance (1e-10)
+     * - Maximum iterations reached (1000)
+     *
+     * @param trans Parameterization method:
+     *        - transformation::linear: Direct contribution values with constraint Σc_i = 1
+     *        - transformation::softmax: Unconstrained parameters transformed via softmax
+     *
+     * @return bool Currently always returns false (legacy). Consider checking convergence
+     *         status: true if converged within tolerance, false if max iterations reached.
+     *
+     * @note Updates internal state with optimized contributions. If rtw_ (real-time widget)
+     *       is set, displays convergence progress graphically.
+     */
     bool SolveLevenberg_Marquardt(transformation trans = transformation::linear);
+
+    /**
+     * @brief Writes element information metadata to a text file
+     *
+     * Outputs a summary of element roles (element, isotope, particle size, etc.)
+     * to a file in tab-delimited format for documentation or debugging purposes.
+     *
+     * Output format:
+     *   ***
+     *   Element Information
+     *   ElementName\tRole
+     *   ...
+     *
+     * @param file Pointer to an open QFile for writing
+     *
+     * @return true if write operation succeeded
+     *
+     * @note File must be opened in write mode before calling
+     * @note Includes all elements regardless of include_in_analysis flag
+     *
+     * @see ElementInformationToJsonObject() for JSON format export
+     */
+    bool WriteElementInformationToFile(QFile* file);
+
+    /**
+     * @brief Exports element information metadata to a JSON object
+     *
+     * Serializes all element metadata (role, standard ratio, base element,
+     * inclusion flag) to a JSON object for saving or transmission.
+     *
+     * JSON structure:
+     * {
+     *   "ElementName": {
+     *     "Role": "element|isotope|particle_size|organic_carbon|do_not_include",
+     *     "Standard Ratio": <number>,
+     *     "Base Element": "ElementName",
+     *     "Include": <boolean>
+     *   },
+     *   ...
+     * }
+     *
+     * @return QJsonObject containing all element information
+     *
+     * @note Includes all elements regardless of include_in_analysis flag
+     * @note Standard ratio and base element are relevant for isotopes only
+     *
+     * @see WriteElementInformationToFile() for text format export
+     */
+    QJsonObject ElementInformationToJsonObject();
+
+    /**
+     * @brief Exports the list of analysis tools used to a JSON array
+     *
+     * Serializes the names of all statistical/analytical tools that have been
+     * applied to this dataset (e.g., "MCMC", "Levenberg-Marquardt", "BoxCox").
+     *
+     * @return QJsonArray containing tool names as strings
+     *
+     * @see AddtoToolsUsed() to add tools to the list
+     * @see ReadToolsUsedFromJsonObject() to deserialize
+     */
+    QJsonArray ToolsUsedToJsonObject();
+
+    /**
+     * @brief Exports analysis options/settings to a JSON object
+     *
+     * Serializes all analysis configuration options (numerical parameters,
+     * thresholds, flags) as key-value pairs.
+     *
+     * @return QJsonObject containing option names and values
+     *
+     * @see ReadOptionsfromJsonObject() to deserialize
+     */
+    QJsonObject OptionsToJsonObject();
+
+    /**
+     * @brief Adds a tool name to the list of tools used in analysis
+     *
+     * Records that a particular analysis tool was applied to this dataset.
+     * Prevents duplicate entries.
+     *
+     * @param tool Name of the tool used (e.g., "MCMC", "Bootstrap")
+     *
+     * @note Only adds if not already present in the list
+     *
+     * @see ToolsUsed() to check if a tool is in the list
+     */
+    void AddtoToolsUsed(const string& tool);
+
+    /**
+     * @brief Deserializes the list of analysis tools from a JSON array
+     *
+     * @param jsonarray JSON array containing tool names
+     *
+     * @return true if successfully loaded
+     *
+     * @see ToolsUsedToJsonObject() for serialization
+     */
+    bool ReadToolsUsedFromJsonObject(const QJsonArray& jsonarray);
+
+    /**
+     * @brief Deserializes element information metadata from a JSON object
+     *
+     * Loads element roles, standard ratios, base elements, and inclusion flags
+     * from JSON format. Clears existing element information before loading.
+     *
+     * @param jsonobject JSON object containing element metadata
+     *
+     * @return true if successfully loaded
+     *
+     * @note Clears element_information_ before loading
+     *
+     * @see ElementInformationToJsonObject() for serialization
+     */
+    bool ReadElementInformationfromJsonObject(const QJsonObject& jsonobject);
+
+    /**
+     * @brief Deserializes elemental profile data from a JSON object
+     *
+     * Loads all sample groups and their elemental profiles from JSON format.
+     * Clears existing data before loading.
+     *
+     * @param jsonobject JSON object containing elemental profile sets
+     *
+     * @return true if successfully loaded
+     *
+     * @note Clears all existing data before loading
+     *
+     * @see ElementDataToJsonObject() for serialization
+     */
+    bool ReadElementDatafromJsonObject(const QJsonObject& jsonobject);
+
+    /**
+     * @brief Deserializes analysis options from a JSON object
+     *
+     * Loads configuration options and settings from JSON format.
+     *
+     * @param jsonobject JSON object containing option key-value pairs
+     *
+     * @return true if successfully loaded
+     *
+     * @see OptionsToJsonObject() for serialization
+     */
+    bool ReadOptionsfromJsonObject(const QJsonObject& jsonobject);
+
+    /**
+     * @brief Exports all elemental profile data to a JSON object
+     *
+     * Serializes all sample groups and their elemental profiles to JSON format.
+     *
+     * @return QJsonObject containing all elemental profile sets
+     *
+     * @see ReadElementDatafromJsonObject() for deserialization
+     */
+    QJsonObject ElementDataToJsonObject();
+
+    /**
+     * @brief Writes elemental profile data to a text file
+     *
+     * Outputs all sample groups and their elemental profiles in tab-delimited
+     * text format for documentation or debugging purposes.
+     *
+     * Format:
+     *   ***
+     *   Elemental Profiles
+     *   **
+     *   GroupName
+     *   [profile data]
+     *   ...
+     *
+     * @param file Pointer to an open QFile for writing
+     *
+     * @return true if write operation succeeded
+     *
+     * @note File must be opened in write mode before calling
+     *
+     * @see WriteToFile() for the public interface
+     */
+    bool WriteDataToFile(QFile* file);
+
+    /**
+     * @brief Writes dataset to a text file
+     *
+     * Public interface for writing elemental profile data to a file.
+     *
+     * @param file Pointer to an open QFile for writing
+     *
+     * @return true if write operation succeeded
+     *
+     * @see ReadFromFile() for loading from file
+     */
+    bool WriteToFile(QFile* file);
+
+    /**
+     * @brief Loads complete dataset from a JSON file
+     *
+     * Deserializes all dataset components from a JSON file: elemental profiles,
+     * element information, tools used, options, and target group designation.
+     * Clears existing data before loading.
+     *
+     * @param fil Pointer to an open QFile for reading
+     *
+     * @return true if successfully loaded
+     *
+     * @note Clears all existing data before loading
+     * @note File should contain JSON with standard structure
+     *
+     * @see WriteToFile() for saving to file
+     */
+    bool ReadFromFile(QFile* fil);
 
     void SetProgressWindow(ProgressWindow *_rtw) {rtw_ = _rtw;}
     void SetParameterEstimationMode(estimation_mode est_mode) {parameter_estimation_mode = est_mode;}
     estimation_mode ParameterEstimationMode() {return parameter_estimation_mode;}
-    bool WriteToFile(QFile *fil);
-    bool ReadFromFile(QFile *fil);
-    bool WriteElementInformationToFile(QFile *fil);
-    bool WriteDataToFile(QFile *file);
-    QJsonObject ElementInformationToJsonObject();
-    QJsonArray ToolsUsedToJsonObject();
-    QJsonObject OptionsToJsonObject();
-    void AddtoToolsUsed(const string &tool);
-    bool ReadToolsUsedFromJsonObject(const QJsonArray &jsonobject);
-    QJsonObject ElementDataToJsonObject();
-    bool ReadElementInformationfromJsonObject(const QJsonObject &jsonobject);
-    bool ReadElementDatafromJsonObject(const QJsonObject &jsonobject);
-    bool ReadOptionsfromJsonObject(const QJsonObject &jsonobject);
+    
     bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear, const double &p_value_threshold=0.05);
     DFA_result DiscriminantFunctionAnalysis(const string &source1);
     DFA_result DiscriminantFunctionAnalysis();
@@ -1540,6 +2203,28 @@ private:
      */
     double GetElementDistributionSigmaValue(size_t element_index, size_t source_index);
         
+    /**
+      * @brief Populates all element ordering vectors used throughout CMB analysis
+      *
+      * Scans the element information map and organizes elements into separate
+      * ordering vectors based on their roles. These vectors define the order
+      * in which elements appear in matrices, parameter vectors, and observations.
+      *
+      * Populated Vectors:
+      * - constituent_order_: All species (elements, isotopes, metadata) in the dataset
+      * - element_order_: Chemical elements flagged for analysis
+      * - isotope_order_: Isotopes flagged for analysis
+      * - size_om_order_: Particle size and organic carbon parameters
+      *
+      * @note Clears and repopulates all ordering vectors
+      * @note Only elements/isotopes with include_in_analysis=true appear in element_order_/isotope_order_
+      * @note Size and OM parameters are always included (no include_in_analysis check)
+      * @note Must be called before InitializeParametersAndObservations()
+      *
+      * @see InitializeParametersAndObservations() which depends on these orderings
+      * @see element_order_ for elements used in CMB calculations
+      * @see isotope_order_ for isotopes used in CMB calculations
+      */
     void PopulateConstituentOrders();
         
     estimation_mode parameter_estimation_mode = estimation_mode::elemental_profile_and_contribution;
