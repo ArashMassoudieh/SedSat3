@@ -1,4 +1,4 @@
-#ifndef SOURCESINKDATA_H
+﻿#ifndef SOURCESINKDATA_H
 #define SOURCESINKDATA_H
 
 #include <elemental_profile_set.h>
@@ -549,9 +549,87 @@ public:
     void SetContributionSoftmax(int i, double value);
     void SetContribution(const CVector &X);
     void SetContributionSoftmax(const CVector &X); //set source contribution softmax transforations
-    CVector ObservedDataforSelectedSample(const string &SelectedTargetSample="");
-    CVector ObservedDataforSelectedSample_Isotope(const string &SelectedTargetSample="");//return observed isotopes transformed into isotope contents
-    CVector ObservedDataforSelectedSample_Isotope_delta(const string &SelectedTargetSample="");//return delta values of observed isotopes
+    
+    /**
+     * @brief Retrieves the observed elemental data for a selected target sample
+     *
+     * Extracts the elemental concentration values for a specific target sample,
+     * returning them in the order specified by element_order_. If no sample name
+     * is provided, uses the internally stored selected_target_sample_.
+     *
+     * @param SelectedTargetSample The name of the target sample to retrieve data for.
+     *        If empty string (""), the function uses the internally stored
+     *        selected_target_sample_ member variable.
+     *
+     * @return CVector A vector containing elemental concentration values for the selected
+     *         sample, ordered according to element_order_. The vector size equals the
+     *         number of elements in element_order_.
+     */
+    
+     /**
+      * @brief Retrieves the observed elemental data for a selected target sample
+      *
+      * Extracts the elemental concentration values for a specific target sample,
+      * returning them in the order specified by element_order_. If no sample name
+      * is provided, uses the internally stored selected_target_sample_.
+      *
+      * @param SelectedTargetSample The name of the target sample to retrieve data for.
+      *        If empty string (""), the function uses the internally stored
+      *        selected_target_sample_ member variable.
+      *
+      * @return CVector A vector containing elemental concentration values for the selected
+      *         sample, ordered according to element_order_. The vector size equals the
+      *         number of elements in element_order_.
+      */
+    CVector ObservedDataforSelectedSample(const string& SelectedTargetSample = "");
+
+    /**
+     * @brief Retrieves the observed isotopic data for a selected target sample
+     *
+     * Extracts and converts isotopic ratio values for a specific target sample into
+     * absolute concentrations. The conversion uses the delta notation formula:
+     * concentration = (δ/1000 + 1) × standard_ratio × base_element_concentration
+     *
+     * For each isotope, this function:
+     * 1. Identifies the corresponding base element
+     * 2. Retrieves the isotope ratio (in delta notation, ‰)
+     * 3. Converts to absolute concentration using the standard ratio and base element concentration
+     *
+     * If no sample name is provided, uses the internally stored selected_target_sample_.
+     *
+     * @param SelectedTargetSample The name of the target sample to retrieve data for.
+     *        If empty string (""), the function uses the internally stored
+     *        selected_target_sample_ member variable.
+     *
+     * @return CVector A vector containing converted isotopic concentration values for the
+     *         selected sample, ordered according to isotope_order_. The vector size equals
+     *         the number of isotopes in isotope_order_.
+     */
+    CVector ObservedDataforSelectedSample_Isotope(const string& SelectedTargetSample = "");
+
+    /**
+     * @brief Retrieves the observed isotopic data in delta notation for a selected target sample
+     *
+     * Extracts isotopic ratio values for a specific target sample in their original
+     * delta notation (‰) format, without conversion to absolute concentrations.
+     * This is the raw delta value representation as stored in the sample data.
+     *
+     * Unlike ObservedDataforSelectedSample_Isotope(), this function returns the
+     * isotope ratios directly as delta values rather than converting them to
+     * absolute concentrations using standard ratios and base element concentrations.
+     *
+     * If no sample name is provided, uses the internally stored selected_target_sample_.
+     *
+     * @param SelectedTargetSample The name of the target sample to retrieve data for.
+     *        If empty string (""), the function uses the internally stored
+     *        selected_target_sample_ member variable.
+     *
+     * @return CVector A vector containing isotopic delta values (‰) for the selected
+     *         sample, ordered according to isotope_order_. The vector size equals the
+     *         number of isotopes in isotope_order_.
+     */
+    CVector ObservedDataforSelectedSample_Isotope_delta(const string& SelectedTargetSample = "");
+
     double GetObjectiveFunctionValue();
     double LogLikelihood(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
     vector<string> ElementsToBeUsedInCMB();
@@ -581,14 +659,185 @@ public:
     ResultItem GetEstimatedElementMu();
     ResultItem GetEstimatedElementMean();
     ResultItem GetEstimatedElementSigma();
+    /**
+     * @brief Calculates the combined residual vector for elemental and isotopic predictions
+     *
+     * Computes residuals between predicted and observed values for both elemental
+     * concentrations and isotopic delta values. Elemental residuals are calculated in
+     * log-space to account for multiplicative errors, while isotopic residuals are
+     * calculated in linear space (delta notation).
+     *
+     * The combined residual vector has the structure:
+     * [log(C_pred/C_obs) for each element, δ_pred - δ_obs for each isotope]
+     *
+     * This residual vector is used in optimization and uncertainty quantification.
+     *
+     * @return CVector Combined residual vector with elemental log-residuals followed by
+     *         isotopic linear residuals. Returns a vector with non-finite values if
+     *         predictions are invalid (e.g., non-positive elemental concentrations).
+     *
+     * @note Logs debug warnings if non-finite values are detected in predictions or residuals
+     */
     CVector ResidualVector();
+
+    /**
+     * @brief Calculates the combined residual vector using Armadillo vector format
+     *
+     * Armadillo-based implementation of residual calculation for compatibility with
+     * linear algebra operations and optimization routines that use Armadillo types.
+     * Functionally equivalent to ResidualVector() but returns CVector_arma type.
+     *
+     * Computes residuals between predicted and observed values for both elemental
+     * concentrations (in log-space) and isotopic delta values (in linear space).
+     *
+     * @return CVector_arma Combined residual vector in Armadillo format with elemental
+     *         log-residuals followed by isotopic linear residuals.
+     *
+     * @see ResidualVector()
+     */
     CVector_arma ResidualVector_arma();
-    CMatrix ResidualJacobian();
-    CMatrix ResidualJacobian_softmax();
+    /**
+     * @brief Calculates the Jacobian matrix of residuals with respect to source contributions (Armadillo)
+     *
+     * Computes the numerical derivative of the residual vector with respect to the first
+     * (n-1) source contributions using finite differences. The last source contribution
+     * is implicit (1 - sum of others), so it doesn't appear as a parameter.
+     *
+     * The Jacobian matrix J has dimensions [(n-1) sources × (elements + isotopes)],
+     * where J[i,j] = ∂residual_j / ∂contribution_i
+     *
+     * Uses adaptive epsilon based on distance from contribution = 0.5 to improve
+     * numerical stability near boundary values (0 or 1).
+     *
+     * @return CMatrix_arma Jacobian matrix where each column corresponds to a source
+     *         contribution parameter and each row to a residual component (elemental
+     *         or isotopic). Armadillo format for compatibility with linear algebra operations.
+     *
+     * @note This version uses setcol() and epsilon = (0.5 - contribution) * 1e-6
+     */
     CMatrix_arma ResidualJacobian_arma();
-    CVector OneStepLevenBerg_Marquardt(double lambda = 0);
-    CVector OneStepLevenBerg_Marquardt_softmax(double lambda);
-    bool SolveLevenBerg_Marquardt(transformation trans = transformation::linear );
+
+    /**
+     * @brief Calculates the Jacobian matrix of residuals with respect to source contributions
+     *
+     * Computes the numerical derivative of the residual vector with respect to the first
+     * (n-1) source contributions using finite differences. The last source contribution
+     * is implicit (1 - sum of others), so it doesn't appear as a parameter.
+     *
+     * The Jacobian matrix J has dimensions [(n-1) sources × (elements + isotopes)],
+     * where J[i,j] = ∂residual_j / ∂contribution_i
+     *
+     * Uses adaptive epsilon based on distance from contribution = 0.5 to improve
+     * numerical stability. Larger epsilon (1e-3) compared to _arma version.
+     *
+     * @return CMatrix Jacobian matrix where each row corresponds to a source contribution
+     *         parameter and each column to a residual component (elemental or isotopic).
+     *
+     * @note This version uses setrow() and epsilon = (0.5 - contribution) * 1e-3
+     */
+    CMatrix ResidualJacobian();
+
+    /**
+     * @brief Calculates the Jacobian using softmax parameterization of contributions
+     *
+     * Computes the numerical derivative of residuals with respect to unconstrained
+     * softmax parameters. Unlike the standard Jacobian, this includes all n sources
+     * as the softmax transformation ensures contributions sum to 1 automatically.
+     *
+     * The softmax parameterization: contribution_i = exp(x_i) / Σexp(x_j)
+     * allows optimization over unconstrained parameters x_i ∈ (-∞, +∞).
+     *
+     * The Jacobian matrix J has dimensions [n sources × (elements + isotopes)],
+     * where J[i,j] = ∂residual_j / ∂x_i (softmax parameter)
+     *
+     * Uses sign-dependent epsilon to handle positive and negative softmax parameters.
+     *
+     * @return CMatrix Jacobian matrix where each row corresponds to a softmax parameter
+     *         and each column to a residual component. Dimension is (n × m) rather than
+     *         ((n-1) × m) since all parameters are independent in softmax space.
+     *
+     * @note Epsilon = -sign(x_i) * 1e-3 provides better numerical behavior across
+     *       the full range of softmax parameters
+     */
+    CMatrix ResidualJacobian_softmax();
+    /**
+     * @brief Performs one iteration of the Levenberg-Marquardt optimization algorithm
+     *
+     * Computes the parameter update step for source contributions using the
+     * Levenberg-Marquardt (LM) algorithm, which interpolates between Gauss-Newton
+     * and gradient descent methods.
+     *
+     * The algorithm solves: (J^T J + λ diag(J^T J)) dx = -J^T r
+     * where J is the Jacobian, r is the residual vector, and λ controls the step size.
+     *
+     * - Small λ → Gauss-Newton (fast convergence near minimum)
+     * - Large λ → Gradient descent (stable far from minimum)
+     *
+     * If the normal equations matrix is near-singular (det < 1e-6), additional
+     * regularization is applied to ensure numerical stability.
+     *
+     * @param lambda Damping parameter controlling the trade-off between Gauss-Newton
+     *        and gradient descent. Typical values: 0.001 to 1000.
+     *        Larger values produce smaller, more conservative steps.
+     *
+     * @return CVector Parameter update vector dx of size (n-1) where n is the number
+     *         of sources. Apply as: contribution[i] += dx[i]
+     *
+     * @note Uses standard contribution parameterization where the last source
+     *       contribution is implicit (1 - sum of others)
+     */
+    CVector OneStepLevenberg_Marquardt(double lambda);
+
+    /**
+     * @brief Performs one iteration of Levenberg-Marquardt using softmax parameterization
+     *
+     * Computes the parameter update step for softmax-parameterized source contributions
+     * using the Levenberg-Marquardt algorithm. The softmax parameterization allows
+     * unconstrained optimization while automatically ensuring contributions sum to 1.
+     *
+     * The algorithm solves: (J^T J + λ diag(J^T J)) dx = -J^T r
+     * where J is the Jacobian with respect to softmax parameters.
+     *
+     * Softmax parameterization: contribution_i = exp(x_i) / Σexp(x_j)
+     * This allows x_i ∈ (-∞, +∞) while maintaining valid contributions.
+     *
+     * @param lambda Damping parameter controlling the trade-off between Gauss-Newton
+     *        and gradient descent. Typical values: 0.001 to 1000.
+     *        Larger values produce smaller, more conservative steps.
+     *
+     * @return CVector Parameter update vector dx of size n where n is the number
+     *         of sources. Apply as: softmax_param[i] += dx[i], then recompute
+     *         contributions via softmax transformation.
+     *
+     * @note Uses softmax parameterization where all n sources are independent parameters
+     */
+    CVector OneStepLevenberg_Marquardt_softmax(double lambda);
+    /**
+ * @brief Solves for optimal source contributions using the Levenberg-Marquardt algorithm
+ *
+ * Iteratively optimizes source contributions to minimize the residual between predicted
+ * and observed elemental/isotopic compositions. The algorithm adaptively adjusts the
+ * damping parameter (lambda) based on convergence behavior:
+ * - Decreases lambda when error reduces significantly (faster convergence)
+ * - Increases lambda when error increases (more stable steps)
+ *
+ * Convergence criteria (any of):
+ * - Residual norm < tolerance (1e-10)
+ * - Parameter change norm < tolerance (1e-10)
+ * - Maximum iterations reached (1000)
+ *
+ * @param trans Parameterization method:
+ *        - transformation::linear: Direct contribution values with constraint Σc_i = 1
+ *        - transformation::softmax: Unconstrained parameters transformed via softmax
+ *
+ * @return bool Currently always returns false (legacy). Consider checking convergence
+ *         status: true if converged within tolerance, false if max iterations reached.
+ *
+ * @note Updates internal state with optimized contributions. If rtw_ (real-time widget)
+ *       is set, displays convergence progress graphically.
+ */
+    bool SolveLevenberg_Marquardt(transformation trans = transformation::linear);
+
     void SetProgressWindow(ProgressWindow *_rtw) {rtw_ = _rtw;}
     void SetParameterEstimationMode(estimation_mode est_mode) {parameter_estimation_mode = est_mode;}
     estimation_mode ParameterEstimationMode() {return parameter_estimation_mode;}
@@ -770,11 +1019,96 @@ private:
 
     /// User-configurable options (e.g., outlier thresholds)
         QMap<QString, double> options_;
-    double LogPriorContributions();
-    double LogLikelihoodSourceElementalDistributions();
-    double LogLikelihoodModelvsMeasured(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
-    double LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
+    
+    /**
+        * @brief Retrieves the contributions from all sources
+        *
+        * Calculates source contributions where the first (size-2) sources have their
+        * contributions stored as parameters, and the last source's contribution is
+        * calculated as the remainder to ensure all contributions sum to 1.
+        *
+        * @return CVector A vector of size (size()-1) containing contribution values for each source.
+        *         The first (size-2) elements are retrieved from stored parameters, and the last
+        *         element is computed as (1 - sum of other contributions) to maintain the constraint
+        *         that all contributions sum to 1.
+        */
     CVector GetSourceContributions();
+
+    /**
+        * @brief Calculates the log prior probability for source contributions
+        *
+        * Evaluates whether the current source contributions are physically valid by checking
+        * if all contributions are non-negative. This acts as a constraint in Bayesian inference.
+        *
+        * @return double Returns -1e10 (effectively negative infinity) if any contribution is negative,
+        *         indicating an invalid state. Returns 0 if all contributions are valid (non-negative),
+        *         representing a uniform prior over the valid contribution space.
+        */
+    double LogPriorContributions();
+        
+    /**
+     * @brief Calculates the log-likelihood of source elemental distributions
+     *
+     * Computes the total log-likelihood by evaluating how well each source sample's
+     * observed elemental concentrations fit their respective estimated distributions.
+     * This iterates through all elements and all source groups, summing the log-probability
+     * densities of each sample's elemental values under their estimated distributions.
+     *
+     * This is used in Bayesian inference to assess how well the model's estimated
+     * distributions for each source explain the observed source sample data.
+     *
+     * @return double The sum of log-probabilities across all elements, all source groups,
+     *         and all samples within those groups. Higher values indicate better fit
+     *         between observed data and estimated distributions.
+     */
+    double LogLikelihoodSourceElementalDistributions();
+
+    /**
+     * @brief Calculates the log-likelihood of the model prediction versus measured data
+     *
+     * Compares the model's predicted elemental concentrations against the observed data
+     * for the selected target sample. The likelihood is computed in log-space to handle
+     * the multiplicative error structure, assuming log-normally distributed errors.
+     *
+     * The log-likelihood formula used is:
+     * log(L) = -n*log(σ) - ||log(C_pred) - log(C_obs)||² / (2σ²)
+     *
+     * where n is the number of elements, σ is the error standard deviation,
+     * C_pred is the predicted concentration vector, and C_obs is the observed concentration vector.
+     *
+     * @param est_mode Estimation mode determining how predictions are made:
+     *        - elemental_profile_and_contribution: Uses fitted distributions for source profiles
+     *        - other modes: Uses direct parameter values
+     *
+     * @return double The log-likelihood value. Returns -1e10 (effectively negative infinity)
+     *         if any predicted concentration is non-positive, as log-transformation is undefined
+     *         for such values. Otherwise returns the calculated log-likelihood.
+     */
+    double LogLikelihoodModelvsMeasured(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
+
+    /**
+     * @brief Calculates the log-likelihood of the model prediction versus measured isotopic data
+     *
+     * Compares the model's predicted isotopic delta values against the observed isotopic data
+     * for the selected target sample. Unlike the elemental log-likelihood calculation, this
+     * operates directly on delta notation (‰) values in linear space, assuming normally
+     * distributed errors in delta values.
+     *
+     * The log-likelihood formula used is:
+     * log(L) = -n*log(σ_iso) - ||δ_pred - δ_obs||² / (2σ_iso²)
+     *
+     * where n is the number of isotopes, σ_iso is the isotopic error standard deviation,
+     * δ_pred is the predicted delta value vector, and δ_obs is the observed delta value vector.
+     *
+     * @param est_mode Estimation mode determining how predictions are made:
+     *        - elemental_profile_and_contribution: Uses fitted distributions for source profiles
+     *        - other modes: Uses direct parameter values
+     *
+     * @return double The log-likelihood value based on isotopic delta values.
+     */
+    
+    double LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
+    
     Parameter* ElementalContent_mu(int element_iterator, int source_iterator);
     Parameter* ElementalContent_sigma(int element_iterator, int source_iterator);
     double ElementalContent_mu_value(int element_iterator, int source_iterator);

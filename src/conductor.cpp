@@ -196,9 +196,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         correctedData.InitializeParametersAndObservations(arguments["Sample"]);
         correctedData.SetProgressWindow(rtw);
         if (arguments["Softmax transformation"]=="true")
-            correctedData.SolveLevenBerg_Marquardt(transformation::softmax);
+            correctedData.SolveLevenberg_Marquardt(transformation::softmax);
         else
-            correctedData.SolveLevenBerg_Marquardt(transformation::linear);
+            correctedData.SolveLevenberg_Marquardt(transformation::linear);
 
         results.SetName("LM " + arguments["Sample"]);
         ResultItem result_cont = correctedData.GetContribution();

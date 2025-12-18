@@ -1,4 +1,4 @@
-#include "sourcesinkdata.h"
+﻿#include "sourcesinkdata.h"
 #include "iostream"
 #include "NormalDist.h"
 #include "qjsondocument.h"
@@ -1033,234 +1033,383 @@ CVector SourceSinkData::ObservedDataforSelectedSample_Isotope_delta(const string
 
 double SourceSinkData::LogLikelihoodModelvsMeasured(estimation_mode est_mode)
 {
-    double LogLikelihood = 0;
-    CVector C;
-    if (est_mode == estimation_mode::elemental_profile_and_contribution)
-        C = PredictTarget(parameter_mode::based_on_fitted_distribution);
-    else
-        C = PredictTarget(parameter_mode::direct);
-    CVector C_obs = ObservedDataforSelectedSample(selected_target_sample_);
+    // Determine parameter mode based on estimation mode
+    parameter_mode param_mode = (est_mode == estimation_mode::elemental_profile_and_contribution)
+        ? parameter_mode::based_on_fitted_distribution
+        : parameter_mode::direct;
 
-    if (C.min()>0)
-        LogLikelihood -= C.num*log(error_stdev_) + pow((C.Log()-C_obs.Log()).norm2(),2)/(2*pow(error_stdev_,2));
-    else
-        LogLikelihood -= 1e10;
+    // Get predicted and observed concentrations
+    CVector predicted_concentrations = PredictTarget(param_mode);
+    CVector observed_concentrations = ObservedDataforSelectedSample(selected_target_sample_);
 
+    // Check validity of predictions (all values must be positive for log-transformation)
+    if (predicted_concentrations.min() <= 0)
+    {
+        return -1e10; // Invalid prediction: return extremely low likelihood
+    }
 
-    return LogLikelihood;
+    // Calculate log-likelihood in log-space
+    // Formula: log(L) = -n*log(σ) - ||log(C_pred) - log(C_obs)||² / (2σ²)
+    const double num_elements = predicted_concentrations.num;
+    const double normalization_term = num_elements * log(error_stdev_);
+
+    CVector log_residuals = predicted_concentrations.Log() - observed_concentrations.Log();
+    const double sum_squared_residuals = pow(log_residuals.norm2(), 2);
+    const double variance_term = 2.0 * pow(error_stdev_, 2);
+
+    double log_likelihood = -normalization_term - (sum_squared_residuals / variance_term);
+
+    return log_likelihood;
 }
 
 double SourceSinkData::LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_mode)
 {
-    double LogLikelihood = 0;
-    CVector C;
-    if (est_mode == estimation_mode::elemental_profile_and_contribution)
-        C = PredictTarget_Isotope_delta(parameter_mode::based_on_fitted_distribution);
-    else
-        C = PredictTarget_Isotope_delta(parameter_mode::direct);
-    CVector C_obs = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_);
+    // Determine parameter mode based on estimation mode
+    parameter_mode param_mode = (est_mode == estimation_mode::elemental_profile_and_contribution)
+        ? parameter_mode::based_on_fitted_distribution
+        : parameter_mode::direct;
 
+    // Get predicted and observed isotopic delta values
+    CVector predicted_deltas = PredictTarget_Isotope_delta(param_mode);
+    CVector observed_deltas = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_);
 
-        LogLikelihood -= C.num*log(error_stdev_isotope_) + pow((C-C_obs).norm2(),2)/(2*pow(error_stdev_isotope_,2));
+    // Calculate log-likelihood in linear space (delta values)
+    // Formula: log(L) = -n*log(σ_iso) - ||δ_pred - δ_obs||² / (2σ_iso²)
+    const double num_isotopes = predicted_deltas.num;
+    const double normalization_term = num_isotopes * log(error_stdev_isotope_);
 
-    return LogLikelihood;
+    CVector residuals = predicted_deltas - observed_deltas;
+    const double sum_squared_residuals = pow(residuals.norm2(), 2);
+    const double variance_term = 2.0 * pow(error_stdev_isotope_, 2);
+
+    double log_likelihood = -normalization_term - (sum_squared_residuals / variance_term);
+
+    return log_likelihood;
 }
 
 
 CVector SourceSinkData::ResidualVector()
 {
-    CVector C = PredictTarget(parameter_mode::direct);
-    CVector C_iso = PredictTarget_Isotope_delta(parameter_mode::direct);
-    if (!C.is_finite())
+    // Get predicted values using direct parameter mode
+    CVector predicted_concentrations = PredictTarget(parameter_mode::direct);
+    CVector predicted_deltas = PredictTarget_Isotope_delta(parameter_mode::direct);
+
+    // Check for invalid predictions
+    if (!predicted_concentrations.is_finite())
     {
-        qDebug()<<"oops!";
+        qDebug() << "Warning: Non-finite predicted concentrations detected in ResidualVector()";
     }
-    CVector C_obs = ObservedDataforSelectedSample(selected_target_sample_);
-    CVector C_obs_iso = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_);
-    CVector Residual = C.Log() - C_obs.Log();
-    CVector Residual_isotope = C_iso - C_obs_iso;
-    Residual.append(Residual_isotope);
-    if (!Residual.is_finite())
+
+    // Get observed values for the selected target sample
+    CVector observed_concentrations = ObservedDataforSelectedSample(selected_target_sample_);
+    CVector observed_deltas = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_);
+
+    // Calculate residuals
+    // Elemental: log-space residuals (log(predicted) - log(observed))
+    CVector elemental_residuals = predicted_concentrations.Log() - observed_concentrations.Log();
+
+    // Isotopic: linear residuals (predicted_delta - observed_delta)
+    CVector isotopic_residuals = predicted_deltas - observed_deltas;
+
+    // Combine residuals: [elemental_residuals, isotopic_residuals]
+    CVector combined_residuals = elemental_residuals;
+    combined_residuals.append(isotopic_residuals);
+
+    // Check for non-finite residuals (indicates numerical issues)
+    if (!combined_residuals.is_finite())
     {
-        CVector X = GetContributionVector();
-        CVector X_softmax = GetContributionVectorSoftmax();
-        qDebug()<<"oops!";
+        qDebug() << "Warning: Non-finite residuals detected in ResidualVector()";
+        qDebug() << "Contribution vector:" << GetContributionVector().toString();
+        qDebug() << "Contribution vector (softmax):" << GetContributionVectorSoftmax().toString();
     }
-    return Residual;
+
+    return combined_residuals;
 }
 
 CVector_arma SourceSinkData::ResidualVector_arma()
 {
-    CVector_arma C = PredictTarget().vec;
-    CVector_arma C_iso = PredictTarget_Isotope_delta().vec;
-    CVector_arma C_obs = ObservedDataforSelectedSample(selected_target_sample_).vec;
-    CVector_arma C_obs_iso = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_).vec;
-    CVector_arma Residual = C.Log() - C_obs.Log();
-    CVector_arma Residual_iso = C_iso-C_obs;
-    Residual.append(Residual_iso);
+    // Get predicted values (returns CVector with .vec member for Armadillo compatibility)
+    CVector_arma predicted_concentrations = PredictTarget().vec;
+    CVector_arma predicted_deltas = PredictTarget_Isotope_delta().vec;
 
-    return Residual;
+    // Get observed values for the selected target sample
+    CVector_arma observed_concentrations = ObservedDataforSelectedSample(selected_target_sample_).vec;
+    CVector_arma observed_deltas = ObservedDataforSelectedSample_Isotope_delta(selected_target_sample_).vec;
+
+    // Calculate residuals
+    // Elemental: log-space residuals (log(predicted) - log(observed))
+    CVector_arma elemental_residuals = predicted_concentrations.Log() - observed_concentrations.Log();
+
+    // Isotopic: linear residuals (predicted_delta - observed_delta)
+    CVector_arma isotopic_residuals = predicted_deltas - observed_deltas;
+
+    // Combine residuals: [elemental_residuals, isotopic_residuals]
+    CVector_arma combined_residuals = elemental_residuals;
+    combined_residuals.append(isotopic_residuals);
+
+    return combined_residuals;
 }
+
 
 CMatrix_arma SourceSinkData::ResidualJacobian_arma()
 {
-    CMatrix_arma Jacobian(GetSourceOrder().size()-1,element_order_.size()+isotope_order_.size());
-    CVector_arma base_contribution = GetContributionVector(false).vec;
-    CVector_arma base_residual = ResidualVector_arma();
-    for (unsigned int i = 0; i < GetSourceOrder().size()-1; i++)
+    const size_t num_sources = GetSourceOrder().size();
+    const size_t num_parameters = num_sources - 1; // Last contribution is implicit
+    const size_t num_residuals = element_order_.size() + isotope_order_.size();
+
+    CMatrix_arma jacobian(num_parameters, num_residuals);
+
+    // Store base state
+    CVector_arma base_contributions = GetContributionVector(false).vec;
+    CVector_arma base_residuals = ResidualVector_arma();
+
+    // Compute derivatives using finite differences
+    for (unsigned int i = 0; i < num_parameters; i++)
     {
-        double epsilon = (0.5 - base_contribution[i]) * 1e-6; 
-        SetContribution(i, base_contribution[i] + epsilon);
-        CVector_arma purturbed_residual = ResidualVector_arma();
-        Jacobian.setcol(i,(purturbed_residual - base_residual) / epsilon);
-        SetContribution(i, base_contribution[i]);
+        // Adaptive epsilon: smaller when far from 0.5, larger when near boundaries
+        const double epsilon = (0.5 - base_contributions[i]) * 1e-6;
+
+        // Perturb contribution
+        SetContribution(i, base_contributions[i] + epsilon);
+        CVector_arma perturbed_residuals = ResidualVector_arma();
+
+        // Compute derivative: ∂residuals/∂contribution_i
+        jacobian.setcol(i, (perturbed_residuals - base_residuals) / epsilon);
+
+        // Restore original contribution
+        SetContribution(i, base_contributions[i]);
     }
-    return Jacobian;
+
+    return jacobian;
 }
 
 CMatrix SourceSinkData::ResidualJacobian()
 {
-    CMatrix Jacobian(GetSourceOrder().size()-1,element_order_.size()+isotope_order_.size());
-    CVector base_contribution = GetContributionVector(false).vec;
-    CVector base_residual = ResidualVector();
-    for (unsigned int i = 0; i < GetSourceOrder().size()-1; i++)
+    const size_t num_sources = GetSourceOrder().size();
+    const size_t num_parameters = num_sources - 1; // Last contribution is implicit
+    const size_t num_residuals = element_order_.size() + isotope_order_.size();
+
+    CMatrix jacobian(num_parameters, num_residuals);
+
+    // Store base state
+    CVector base_contributions = GetContributionVector(false);
+    CVector base_residuals = ResidualVector();
+
+    // Compute derivatives using finite differences
+    for (unsigned int i = 0; i < num_parameters; i++)
     {
-        double epsilon = (0.5 - base_contribution[i]) * 1e-3;
-        SetContribution(i, base_contribution[i] + epsilon);
-        CVector X = GetContributionVector();
-        CVector purturbed_residual = ResidualVector();
-        Jacobian.setrow(i,(purturbed_residual - base_residual) / epsilon);
-        SetContribution(i, base_contribution[i]);
+        // Adaptive epsilon: smaller when far from 0.5, larger when near boundaries
+        const double epsilon = (0.5 - base_contributions[i]) * 1e-3;
+
+        // Perturb contribution
+        SetContribution(i, base_contributions[i] + epsilon);
+        CVector perturbed_residuals = ResidualVector();
+
+        // Compute derivative: ∂residuals/∂contribution_i
+        jacobian.setrow(i, (perturbed_residuals - base_residuals) / epsilon);
+
+        // Restore original contribution
+        SetContribution(i, base_contributions[i]);
     }
-    return Jacobian;
+
+    return jacobian;
 }
 
 CMatrix SourceSinkData::ResidualJacobian_softmax()
 {
-    CMatrix Jacobian(GetSourceOrder().size(),element_order_.size()+isotope_order_.size());
-    CVector base_contribution = GetContributionVectorSoftmax().vec;
-    CVector base_residual = ResidualVector();
-    for (unsigned int i = 0; i < GetSourceOrder().size(); i++)
+    const size_t num_sources = GetSourceOrder().size();
+    const size_t num_residuals = element_order_.size() + isotope_order_.size();
+
+    CMatrix jacobian(num_sources, num_residuals); // All sources are parameters in softmax
+
+    // Store base state
+    CVector base_softmax_params = GetContributionVectorSoftmax();
+    CVector base_residuals = ResidualVector();
+
+    // Compute derivatives using finite differences
+    for (unsigned int i = 0; i < num_sources; i++)
     {
-        double epsilon = -sign(base_contribution[i]) * 1e-3;
+        // Sign-dependent epsilon for better numerical behavior
+        const double epsilon = -sign(base_softmax_params[i]) * 1e-3;
 
-        CVector X = base_contribution;
-        X[i]+=epsilon;
-        SetContributionSoftmax(X);
-        CVector purturbed_residual = ResidualVector();
-        Jacobian.setrow(i,(purturbed_residual - base_residual) / epsilon);
-        SetContributionSoftmax(base_contribution);
-    }
-    return Jacobian;
-}
+        // Perturb softmax parameter
+        CVector perturbed_params = base_softmax_params;
+        perturbed_params[i] += epsilon;
+        SetContributionSoftmax(perturbed_params);
 
+        CVector perturbed_residuals = ResidualVector();
 
-CVector SourceSinkData::OneStepLevenBerg_Marquardt(double lambda)
-{
+        // Compute derivative: ∂residuals/∂softmax_param_i
+        jacobian.setrow(i, (perturbed_residuals - base_residuals) / epsilon);
 
-    CVector V = ResidualVector();
-    CMatrix M = ResidualJacobian();
-    CMatrix JTJ = M*Transpose(M);
-    JTJ.ScaleDiagonal(1+lambda);
-    CVector J_epsilon = M*V;
-
-    if (det(JTJ)<=1e-6)
-    {
-        JTJ += lambda*CMatrix::Diag(JTJ.getnumcols());
+        // Restore original softmax parameters
+        SetContributionSoftmax(base_softmax_params);
     }
 
-    CVector dx = J_epsilon/JTJ;
-    return dx;
+    return jacobian;
 }
 
-CVector SourceSinkData::OneStepLevenBerg_Marquardt_softmax(double lambda)
+CVector SourceSinkData::OneStepLevenberg_Marquardt(double lambda)
 {
+    // Get current residuals and Jacobian
+    CVector residuals = ResidualVector();
+    CMatrix jacobian = ResidualJacobian();
 
-    CVector V = ResidualVector();
-    CMatrix M = ResidualJacobian_softmax();
-    CMatrix JTJ = M*Transpose(M);
-    JTJ.ScaleDiagonal(1+lambda);
-    CVector J_epsilon = M*V;
+    // Compute J^T J (normal equations matrix)
+    CMatrix jacobian_transpose_jacobian = jacobian * Transpose(jacobian);
 
-    if (det(JTJ)<=1e-6)
+    // Apply Levenberg-Marquardt damping: (1 + λ) on diagonal
+    jacobian_transpose_jacobian.ScaleDiagonal(1.0 + lambda);
+
+    // Compute right-hand side: J^T r
+    CVector jacobian_times_residuals = jacobian * residuals;
+
+    // Check for near-singular matrix and add regularization if needed
+    if (det(jacobian_transpose_jacobian) <= 1e-6)
     {
-        JTJ += lambda*CMatrix::Diag(JTJ.getnumcols());
+        // Add additional regularization: λI
+        const size_t matrix_size = jacobian_transpose_jacobian.getnumcols();
+        CMatrix identity = CMatrix::Diag(matrix_size);
+        jacobian_transpose_jacobian += lambda * identity;
     }
-    CVector dx = J_epsilon / JTJ;
 
-    return dx;
+    // Solve for parameter update: dx = (J^T J)^(-1) J^T r
+    CVector parameter_update = jacobian_times_residuals / jacobian_transpose_jacobian;
+
+    return parameter_update;
 }
 
-
-bool SourceSinkData::SolveLevenBerg_Marquardt(transformation trans)
+CVector SourceSinkData::OneStepLevenberg_Marquardt_softmax(double lambda)
 {
+    // Get current residuals and Jacobian (softmax parameterization)
+    CVector residuals = ResidualVector();
+    CMatrix jacobian = ResidualJacobian_softmax();
+
+    // Compute J^T J (normal equations matrix)
+    CMatrix jacobian_transpose_jacobian = jacobian * Transpose(jacobian);
+
+    // Apply Levenberg-Marquardt damping: (1 + λ) on diagonal
+    jacobian_transpose_jacobian.ScaleDiagonal(1.0 + lambda);
+
+    // Compute right-hand side: J^T r
+    CVector jacobian_times_residuals = jacobian * residuals;
+
+    // Check for near-singular matrix and add regularization if needed
+    if (det(jacobian_transpose_jacobian) <= 1e-6)
+    {
+        // Add additional regularization: λI
+        const size_t matrix_size = jacobian_transpose_jacobian.getnumcols();
+        CMatrix identity = CMatrix::Diag(matrix_size);
+        jacobian_transpose_jacobian += lambda * identity;
+    }
+
+    // Solve for parameter update: dx = (J^T J)^(-1) J^T r
+    CVector parameter_update = jacobian_times_residuals / jacobian_transpose_jacobian;
+
+    return parameter_update;
+}
+
+bool SourceSinkData::SolveLevenberg_Marquardt(transformation trans)
+{
+    // Initialize contributions based on parameterization
     if (trans == transformation::linear)
         InitializeContributionsRandomly();
     else if (trans == transformation::softmax)
         InitializeContributionsRandomlySoftmax();
-    double err = 1000;
-    double err_p;
-    double tol = 1e-10;
-    double lambda = 1;
-    int counter = 0;
-    double err_0 = ResidualVector().norm2();
-    double err_x = 10000;
-    double err_x0 = 10000;
-    while (err>tol && err_x>tol && counter<1000)
+
+    // Algorithm parameters
+    const double tolerance = 1e-10;
+    const int max_iterations = 1000;
+    const double improvement_threshold = 0.8; // Error must reduce to <80% for lambda decrease
+    const double lambda_decrease_factor = 1.2;
+    const double lambda_increase_factor = 1.2;
+    const double lambda_no_update_factor = 5.0;
+
+    // Initialize tracking variables
+    double lambda = 1.0;
+    double current_error = ResidualVector().norm2();
+    double previous_error = 1000.0;
+    double initial_param_change = 10000.0;
+    double current_param_change = 10000.0;
+    int iteration = 0;
+
+    // Main optimization loop
+    while (current_error > tolerance &&
+        current_param_change > tolerance &&
+        iteration < max_iterations)
     {
-        CVector X0;
+        // Store current parameter values
+        CVector current_params;
         if (trans == transformation::linear)
-            X0 = GetContributionVector(false);
+            current_params = GetContributionVector(false);
         else if (trans == transformation::softmax)
-            X0 = GetContributionVectorSoftmax();
+            current_params = GetContributionVectorSoftmax();
 
-        err_p = err;
-        CVector dx;
+        previous_error = current_error;
 
+        // Compute parameter update step
+        CVector parameter_update;
         if (trans == transformation::linear)
-            dx = OneStepLevenBerg_Marquardt(lambda);
+            parameter_update = OneStepLevenberg_Marquardt(lambda);
         else if (trans == transformation::softmax)
-            dx = OneStepLevenBerg_Marquardt_softmax(lambda);
+            parameter_update = OneStepLevenberg_Marquardt_softmax(lambda);
 
-        if (dx.num == 0)
-           lambda *= 5; 
-        else
+        // Handle singular Jacobian (no valid update computed)
+        if (parameter_update.num == 0)
         {
-            err_x = dx.norm2();
-            if (counter == 0) err_x0 = err_x;
-            CVector X = X0 - dx;
-            if (trans == transformation::linear)
-                SetContribution(X);
-            else if (trans == transformation::softmax)
-                SetContributionSoftmax(X);
-
-            CVector V = ResidualVector();
-            err = V.norm2();
-            if (err < err_p * 0.8)
-            {
-                lambda /= 1.2;
-            }
-            else if (err > err_p)
-            {
-                lambda *= 1.2;
-                if (trans == transformation::linear)
-                    SetContribution(X0);
-                else if (trans == transformation::softmax)
-                    SetContributionSoftmax(X0);
-                err = err_p;
-            }
-            if (rtw_)
-            {
-                rtw_->AppendPoint(counter, err);
-                rtw_->SetXRange(0, counter);
-                rtw_->SetProgress(1 - err_x / err_x0);
-                
-            }
-            
+            lambda *= lambda_no_update_factor;
+            continue; // Skip to next iteration
         }
-        counter++;
+
+        // Track parameter change magnitude
+        current_param_change = parameter_update.norm2();
+        if (iteration == 0)
+            initial_param_change = current_param_change;
+
+        // Apply parameter update
+        CVector updated_params = current_params - parameter_update;
+        if (trans == transformation::linear)
+            SetContribution(updated_params);
+        else if (trans == transformation::softmax)
+            SetContributionSoftmax(updated_params);
+
+        // Evaluate new error
+        CVector residuals = ResidualVector();
+        current_error = residuals.norm2();
+
+        // Adaptive lambda adjustment based on error change
+        if (current_error < previous_error * improvement_threshold)
+        {
+            // Good progress: decrease lambda (move toward Gauss-Newton)
+            lambda /= lambda_decrease_factor;
+        }
+        else if (current_error > previous_error)
+        {
+            // Error increased: reject step, increase lambda (move toward gradient descent)
+            lambda *= lambda_increase_factor;
+
+            // Restore previous parameters
+            if (trans == transformation::linear)
+                SetContribution(current_params);
+            else if (trans == transformation::softmax)
+                SetContributionSoftmax(current_params);
+
+            current_error = previous_error;
+        }
+        // else: modest improvement, keep lambda unchanged
+
+        // Update progress visualization if available
+        if (rtw_)
+        {
+            rtw_->AppendPoint(iteration, current_error);
+            rtw_->SetXRange(0, iteration);
+            rtw_->SetProgress(1.0 - current_param_change / initial_param_change);
+        }
+
+        iteration++;
     }
 
+    // TODO: Return convergence status instead of always false
     return false;
 }
 
@@ -2840,9 +2989,9 @@ CMBTimeSeriesSet SourceSinkData::BootStrap(const double &percentage, unsigned in
             rtw_->SetProgress(double(i)/double(number_of_samples));
 
         if (softmax_transformation)
-            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+            bootstrappeddata.SolveLevenberg_Marquardt(transformation::softmax);
         else
-            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+            bootstrappeddata.SolveLevenberg_Marquardt(transformation::linear);
 
         result.append(i,bootstrappeddata.GetContributionVector().vec);
     }
@@ -2863,9 +3012,9 @@ bool SourceSinkData::BootStrap(Results *res, const double &percentage, unsigned 
             rtw_->SetProgress(double(i)/double(number_of_samples));
 
         if (softmax_transformation)
-            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+            bootstrappeddata.SolveLevenberg_Marquardt(transformation::softmax);
         else
-            bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+            bootstrappeddata.SolveLevenberg_Marquardt(transformation::linear);
 
         contributions->append(i,bootstrappeddata.GetContributionVector().vec);
     }
@@ -2952,9 +3101,9 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool so
                 rtw_->SetProgress(double(counter)/double(at(sourcegroup).size()));
 
             if (softmax_transformation)
-                bootstrappeddata.SolveLevenBerg_Marquardt(transformation::softmax);
+                bootstrappeddata.SolveLevenberg_Marquardt(transformation::softmax);
             else
-                bootstrappeddata.SolveLevenBerg_Marquardt(transformation::linear);
+                bootstrappeddata.SolveLevenberg_Marquardt(transformation::linear);
 
             result.append(counter,bootstrappeddata.GetContributionVector().vec);
             result.SetLabel(counter,sample->first);
@@ -2994,7 +3143,7 @@ CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size
                     rtw_->SetLabel(QString::fromStdString(sample->first));
                 }
 
-                correctedData.SolveLevenBerg_Marquardt(transform);
+                correctedData.SolveLevenberg_Marquardt(transform);
 
                 result.append(counter,correctedData.GetContributionVector().vec);
                 result.SetLabel(counter,sample->first);
