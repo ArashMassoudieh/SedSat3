@@ -21,7 +21,7 @@ public:
     void SetRange(_range, double value);
     void SetName(const string &nam) {name = nam;}
     string Name() const {return name;}
-    double Value() {return value;}
+    double Value() const {return value;}
     void SetValue(double val) {value = val;}
     double GetValue() {return value;}
     void UpdatePriorDistribution();

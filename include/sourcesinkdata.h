@@ -530,13 +530,113 @@ public:
      */
     bool InitializeContributionsRandomlySoftmax();
 
+    /**
+     * @brief Sets a parameter value and updates corresponding model components
+     *
+     * Updates a parameter in the parameter vector and synchronizes the change with
+     * the appropriate model component (contributions, distribution parameters, or
+     * error terms). The parameter vector layout depends on the estimation mode.
+     *
+     * Parameter Vector Layout (full mode: elemental_profile_and_contribution):
+     *   [0 to n-2]:                    Contribution parameters (n-1 sources)
+     *   [n-1 to end of element μ]:     Element μ parameters (num_elements × num_sources)
+     *   [element μ to end of isotope μ]: Isotope μ parameters (num_isotopes × num_sources)
+     *   [isotope μ to end of element σ]: Element σ parameters (num_elements × num_sources)
+     *   [element σ to end of isotope σ]: Isotope σ parameters (num_isotopes × num_sources)
+     *   [end-1]:                       Error std dev for elements
+     *   [end]:                         Error std dev for isotopes
+     *
+     * @param index Parameter index in the parameters_ vector
+     * @param value New parameter value
+     *
+     * @return true if parameter was successfully updated, false if index is invalid
+     *
+     * @note Automatically updates last contribution to maintain sum constraint
+     * @note Validates that standard deviations are non-negative
+     * @note Parameter layout varies by estimation_mode_
+     *
+     * @see SetParameterValue(const CVector&) for batch updates
+     * @see GetParameterValue() to retrieve current values
+     */
+    bool SetParameterValue(size_t index, double value);
+    
+    /**
+     * @brief Retrieves a single parameter value by index
+     *
+     * @param index Parameter index in the parameters_ vector
+     *
+     * @return Parameter value at the specified index
+     *
+     * @note No bounds checking - ensure index is valid
+     * @see GetParameterValue() for retrieving all parameter values
+     */
+    double GetParameterValue(size_t index) const;
 
-    bool SetParameterValue(unsigned int i, double value); //set the parameter values for estimation
-    bool SetParameterValue(const CVector &value); //set the parameter values for estimation
-    CVector GetParameterValue(); // return the vector of all the parameter values
-    double GetParameterValue(unsigned int i); // return the value of parameter i
+    /**
+     * @brief Sets multiple parameter values from a vector
+     *
+     * Updates all parameters using values from the provided vector. Each parameter
+     * update triggers synchronization with the corresponding model component
+     * (contributions, distributions, or error terms).
+     *
+     * @param values Vector containing new parameter values (size must match parameters_.size())
+     *
+     * @return true if all parameters were successfully updated, false if any update failed
+     *
+     * @note Updates are applied sequentially; partial updates possible if one fails
+     * @note For contributions, the last source is updated n times (once per update)
+     *
+     * @see SetParameterValue(size_t, double) for single parameter updates
+     * @see GetParameterValue() to retrieve current parameter vector
+     */
+    bool SetParameterValue(const CVector& values);
+
+    /**
+     * @brief Retrieves all current parameter values as a vector
+     *
+     * Returns a vector containing all parameter values in the order they appear
+     * in the parameters_ vector. The parameter layout depends on estimation_mode_.
+     *
+     * @return Vector of all parameter values
+     *
+     * @see GetParameterValue(size_t) for single parameter access
+     * @see SetParameterValue(const CVector&) to update all parameters
+     */
+    CVector GetParameterValue() const;
+
+    /**
+     * @brief Computes the normalized gradient of the log-likelihood function
+     *
+     * Calculates the gradient vector ∇log(L) using numerical differentiation
+     * (finite differences). The gradient points in the direction of steepest
+     * ascent for the log-likelihood, which is used in gradient-based optimization.
+     *
+     * Numerical Differentiation:
+     *   ∂log(L)/∂θ_i ≈ [log(L(θ + ε·e_i)) - log(L(θ))] / ε
+     *
+     * Where:
+     * - θ is the parameter vector
+     * - e_i is the i-th unit vector
+     * - ε is a small perturbation (epsilon_)
+     *
+     * @param parameters Parameter vector at which to evaluate the gradient
+     * @param est_mode Estimation mode determining which likelihood components to include
+     *
+     * @return Normalized gradient vector (unit length: ||∇log(L)|| = 1)
+     *
+     * @note The gradient is normalized by its L2 norm for numerical stability
+     * @note Uses forward finite differences with step size epsilon_
+     * @note Modifies internal state during calculation but restores original parameters
+     *
+     * @see GradientUpdate() for gradient descent step calculation
+     * @see LogLikelihood() for likelihood function being differentiated
+     * @see epsilon_ for the perturbation step size
+     */
+    CVector Gradient(const CVector& parameters, estimation_mode est_mode);
+    
+    
     Elemental_Profile Sample(const string &samplename) const; //extract a single sample
-    CVector Gradient(const CVector &value, const estimation_mode estmode); //calculates the gradient of likelihood function
+    
     CVector GradientUpdate(const estimation_mode estmode = estimation_mode::elemental_profile_and_contribution); //Improve the estimate by one step using the gradient descent method
     /**
      * @brief Predicts target sample elemental concentrations based on source contributions
@@ -582,14 +682,182 @@ public:
      */
     CVector PredictTarget_Isotope(parameter_mode param_mode = parameter_mode::direct);
     CVector PredictTarget_Isotope_delta(parameter_mode param_mode= parameter_mode::based_on_fitted_distribution);
-    CMatrix SourceMeanMatrix(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    CMatrix SourceMeanMatrix_Isotopes(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
-    CVector GetContributionVector(bool full=true);
+    
+    /**
+     * @brief Builds the source mean concentration matrix for chemical elements
+     *
+     * Constructs a matrix where each entry [i,j] represents the mean concentration
+     * of element i in source j. This matrix is used in the mixing model equation:
+     * C_target = S × f, where S is the source matrix and f is the contribution vector.
+     *
+     * The parameter mode determines how means are calculated:
+     * - based_on_fitted_distribution: Uses parametric mean from fitted distribution
+     *   Mean = exp(μ + σ²/2) for lognormal distributions
+     * - direct: Uses empirical mean computed directly from source sample data
+     *
+     * @param param_mode Controls whether to use parametric or empirical means
+     *
+     * @return Matrix of size (num_elements × num_sources) containing mean concentrations
+     *         in log-space for elements
+     *
+     * @note Elements are ordered according to element_order_ vector
+     * @note Sources are ordered according to samplesetsorder_ vector
+     * @note Uses estimated distributions (updated during MCMC/optimization)
+     *
+     * @see BuildSourceMeanMatrix_Isotopes() for isotope version
+     * @see PredictTargetConcentrations() for usage in mixing model
+     */
+    CMatrix BuildSourceMeanMatrix(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+    /**
+     * @brief Builds the source mean concentration matrix for isotopes
+     *
+     * Constructs a matrix where each entry [i,j] represents the mean absolute
+     * concentration of isotope i in source j. Isotopes are stored as delta values
+     * (δ in ‰) but must be converted to absolute concentrations for the mixing model.
+     *
+     * Conversion formula from delta notation to absolute concentration:
+     *   [isotope] = (δ/1000 + 1) × R_standard × [base_element]
+     *
+     * Where:
+     * - δ = measured delta value in per mil (‰)
+     * - R_standard = standard isotope ratio for the isotope
+     * - [base_element] = concentration of the base element (e.g., C for δ¹³C)
+     *
+     * The parameter mode determines how means are calculated:
+     * - based_on_fitted_distribution: Uses parametric means from fitted distributions
+     * - direct: Uses empirical means computed directly from sample data
+     *
+     * @param param_mode Controls whether to use parametric or empirical means
+     *
+     * @return Matrix of size (num_isotopes × num_sources) containing mean isotope
+     *         concentrations in absolute units (not delta notation)
+     *
+     * @note Isotopes are ordered according to isotope_order_ vector
+     * @note Sources are ordered according to samplesetsorder_ vector
+     * @note Mixing occurs in concentration space, not delta space
+     *
+     * @see BuildSourceMeanMatrix() for chemical element version
+     * @see PredictTargetIsotopeDelta() for converting predictions back to delta notation
+     */
+    CMatrix BuildSourceMeanMatrix_Isotopes(parameter_mode param_mode = parameter_mode::based_on_fitted_distribution);
+
+    /**
+     * @brief Retrieves the current source contribution fractions
+     *
+     * Returns a vector of contribution fractions from each source. Contributions
+     * represent the fraction of the target sample originating from each source,
+     * subject to the constraint: Σ f_i = 1.
+     *
+     * During optimization, only n-1 contributions are independent parameters;
+     * the last contribution is computed from the sum constraint. This function
+     * can return either the independent parameters only or all contributions.
+     *
+     * @param include_all If true, returns all n contributions including the
+     *                    constrained one. If false, returns only the n-1
+     *                    independent contributions used in optimization.
+     *
+     * @return Vector of contribution fractions, size n or n-1
+     *
+     * @note All contributions satisfy: 0 ≤ f_i ≤ 1 and Σ f_i = 1
+     * @note Sources are ordered according to samplesetsorder_ vector
+     *
+     * @see SetContribution() to update contribution values
+     * @see GetContributionVectorSoftmax() for unconstrained softmax parameterization
+     */
+    CVector GetContributionVector(bool include_all = true);
+
+    /**
+     * @brief Retrieves the softmax parameters for source contributions
+     *
+     * Returns the unconstrained softmax parameters x_i that are transformed to
+     * contribution fractions via: f_i = exp(x_i) / Σ exp(x_j)
+     *
+     * Softmax parameterization allows unconstrained optimization since x_i can
+     * take any real value, and the transformation automatically ensures the
+     * sum constraint Σ f_i = 1 is satisfied.
+     *
+     * @return Vector of softmax parameters, size n (all sources)
+     *
+     * @note Softmax parameters are unbounded: x_i ∈ (-∞, +∞)
+     * @note Sources are ordered according to samplesetsorder_ vector
+     *
+     * @see SetContributionSoftmax() to update softmax parameters
+     * @see GetContributionVector() for actual contribution fractions
+     */
     CVector GetContributionVectorSoftmax();
-    void SetContribution(int i, double value);
-    void SetContributionSoftmax(int i, double value);
-    void SetContribution(const CVector &X);
-    void SetContributionSoftmax(const CVector &X); //set source contribution softmax transforations
+    /**
+     * @brief Sets a single source contribution value
+     *
+     * Updates the contribution fraction for the specified source and automatically
+     * recalculates the last source's contribution to maintain the sum constraint
+     * Σ f_i = 1.
+     *
+     * @param source_index Index of the source to update (0-based)
+     * @param contribution_value New contribution fraction (must satisfy 0 ≤ f ≤ 1)
+     *
+     * @note Last contribution is automatically updated: f_n = 1 - Σ(f_1...f_{n-1})
+     * @note This is inefficient for updating multiple contributions; use
+     *       SetContribution(const CVector&) instead
+     *
+     * @see SetContribution(const CVector&) for batch updates
+     */
+    void SetContribution(size_t source_index, double contribution_value);
+
+    /**
+     * @brief Sets a single softmax parameter value
+     *
+     * Updates the unconstrained softmax parameter for the specified source.
+     * Does NOT automatically update the actual contribution fractions - use
+     * SetContributionSoftmax(const CVector&) to apply the full transformation.
+     *
+     * @param source_index Index of the source to update (0-based)
+     * @param softmax_value New softmax parameter (unbounded: x ∈ ℝ)
+     *
+     * @note This only updates the softmax parameter, not the contribution
+     * @note Use SetContributionSoftmax(const CVector&) for proper updates
+     *
+     * @see SetContributionSoftmax(const CVector&) for complete softmax transformation
+     */
+    void SetContributionSoftmax(size_t source_index, double softmax_value);
+
+    /**
+     * @brief Sets all source contributions from a vector
+     *
+     * Updates contributions for multiple sources. If the vector has n-1 elements,
+     * the last contribution is computed automatically. If it has n elements, all
+     * are set directly (though the last will still be recalculated on each update).
+     *
+     * @param contributions Vector of contribution values
+     *
+     * @note Validates that all contributions are non-negative
+     * @note Inefficiency: Recalculates last contribution n times in the loop
+     *       (could be optimized to calculate once at the end)
+     *
+     * @warning Will output error message if any contribution is negative
+     *
+     * @see SetContribution(size_t, double) for single updates
+     */
+    void SetContribution(const CVector& contributions);
+
+    /**
+     * @brief Sets all source contributions using softmax transformation
+     *
+     * Applies the softmax transformation to convert unconstrained parameters to
+     * valid contribution fractions:
+     *   f_i = exp(x_i) / Σ exp(x_j)
+     *
+     * This ensures Σ f_i = 1 automatically and all f_i ∈ [0,1]. Both the softmax
+     * parameters and the resulting contributions are stored.
+     *
+     * @param softmax_params Vector of unconstrained softmax parameters
+     *
+     * @note This is the correct way to update contributions in softmax mode
+     * @note Validates that resulting contributions are non-negative (should
+     *       always be true mathematically, but checks for numerical issues)
+     *
+     * @see SetContributionSoftmax(size_t, double) for single parameter updates
+     */
+    void SetContributionSoftmax(const CVector& softmax_params);
     
     /**
      * @brief Retrieves the observed elemental data for a selected target sample
@@ -1188,10 +1456,89 @@ private:
     
     double LogLikelihoodModelvsMeasured_Isotope(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
     
-    Parameter* ElementalContent_mu(int element_iterator, int source_iterator);
-    Parameter* ElementalContent_sigma(int element_iterator, int source_iterator);
-    double ElementalContent_mu_value(int element_iterator, int source_iterator);
-    double ElementalContent_sigma_value(int element_iterator, int source_iterator);
+    /**
+     * @brief Retrieves pointer to the μ (mean) parameter for an element distribution
+     *
+     * Accesses the parameter object representing the mean (μ) of the log-normal
+     * distribution for a specific element in a specific source. These parameters
+     * are used during Bayesian inference when estimating source profiles.
+     *
+     * Parameter vector layout:
+     *   [Contributions (n-1)] [Element μ] [Element σ] [Isotope μ] [Isotope σ] [Errors]
+     *
+     * Index calculation for element μ:
+     *   index = (n-1) + element_idx × num_sources + source_idx
+     *
+     * Where n-1 accounts for the independent contribution parameters (last is constrained).
+     *
+     * @param element_index Index of the element in element_order_ (0-based)
+     * @param source_index Index of the source in samplesetsorder_ (0-based)
+     *
+     * @return Pointer to the Parameter object, or nullptr if indices are out of bounds
+     *
+     * @note For log-normal distributions: actual mean = exp(μ + σ²/2)
+     * @note Only used when estimation_mode != only_contributions
+     *
+     * @see GetElementDistributionMuValue() for direct value access
+     * @see GetElementDistributionSigmaParameter() for corresponding σ parameter
+     */
+    Parameter* GetElementDistributionMuParameter(size_t element_index, size_t source_index);
+
+    /**
+     * @brief Retrieves pointer to the σ (std dev) parameter for an element distribution
+     *
+     * Accesses the parameter object representing the standard deviation (σ) of the
+     * log-normal distribution for a specific element in a specific source.
+     *
+     * Parameter vector layout:
+     *   [Contributions (n-1)] [Element μ] [Element σ] [Isotope μ] [Isotope σ] [Errors]
+     *                                     ^^^^^^^^^^^
+     *
+     * Index calculation for element σ:
+     *   index = (n-1) + num_elements × num_sources + element_idx × num_sources + source_idx
+     *
+     * @param element_index Index of the element in element_order_ (0-based)
+     * @param source_index Index of the source in samplesetsorder_ (0-based)
+     *
+     * @return Pointer to the Parameter object, or nullptr if indices are out of bounds
+     *
+     * @note σ represents log-space standard deviation for log-normal distributions
+     * @note Only used when estimation_mode != only_contributions
+     *
+     * @see GetElementDistributionSigmaValue() for direct value access
+     * @see GetElementDistributionMuParameter() for corresponding μ parameter
+     */
+    Parameter* GetElementDistributionSigmaParameter(size_t element_index, size_t source_index);
+
+    /**
+     * @brief Retrieves the current value of the μ parameter for an element distribution
+     *
+     * Convenience function to get the parameter value directly without accessing
+     * the Parameter object.
+     *
+     * @param element_index Index of the element in element_order_ (0-based)
+     * @param source_index Index of the source in samplesetsorder_ (0-based)
+     *
+     * @return Current μ value, or 0.0 if parameter cannot be retrieved
+     *
+     * @see GetElementDistributionMuParameter() for Parameter object access
+     */
+    double GetElementDistributionMuValue(size_t element_index, size_t source_index);
+
+    /**
+     * @brief Retrieves the current value of the σ parameter for an element distribution
+     *
+     * Convenience function to get the parameter value directly without accessing
+     * the Parameter object.
+     *
+     * @param element_index Index of the element in element_order_ (0-based)
+     * @param source_index Index of the source in samplesetsorder_ (0-based)
+     *
+     * @return Current σ value, or 0.0 if parameter cannot be retrieved
+     *
+     * @see GetElementDistributionSigmaParameter() for Parameter object access
+     */
+    double GetElementDistributionSigmaValue(size_t element_index, size_t source_index);
         
     void PopulateConstituentOrders();
         

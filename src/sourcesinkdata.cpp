@@ -1417,7 +1417,7 @@ bool SourceSinkData::SolveLevenberg_Marquardt(transformation trans)
 CVector SourceSinkData::PredictTarget(parameter_mode param_mode)
 {
     // Compute predicted concentrations: C = Source_Matrix × Contribution_Vector
-    CMatrix source_mean_matrix = SourceMeanMatrix(param_mode);
+    CMatrix source_mean_matrix = BuildSourceMeanMatrix(param_mode);
     CVector contribution_vector = GetContributionVector();
     CVector predicted_concentrations = source_mean_matrix * contribution_vector;
 
@@ -1433,7 +1433,7 @@ CVector SourceSinkData::PredictTarget(parameter_mode param_mode)
 CVector SourceSinkData::PredictTarget_Isotope(parameter_mode param_mode)
 {
     // Compute predicted isotopic concentrations: C = Source_Matrix × Contribution_Vector
-    CMatrix source_isotope_matrix = SourceMeanMatrix_Isotopes(param_mode);
+    CMatrix source_isotope_matrix = BuildSourceMeanMatrix_Isotopes(param_mode);
     CVector contribution_vector = GetContributionVector();
     CVector predicted_isotope_concentrations = source_isotope_matrix * contribution_vector;
 
@@ -1442,8 +1442,8 @@ CVector SourceSinkData::PredictTarget_Isotope(parameter_mode param_mode)
 
 CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)
 {
-    CMatrix SourceMeanMat = SourceMeanMatrix(param_mode);
-    CMatrix SourceMeanMat_Iso = SourceMeanMatrix_Isotopes(param_mode);
+    CMatrix SourceMeanMat = BuildSourceMeanMatrix(param_mode);
+    CMatrix SourceMeanMat_Iso = BuildSourceMeanMatrix_Isotopes(param_mode);
     CVector C_elements = SourceMeanMat*GetContributionVector();
     CVector C = SourceMeanMat_Iso*GetContributionVector();
     for (unsigned int i=0; i<numberofisotopes_; i++)
@@ -1503,284 +1503,505 @@ double SourceSinkData::LogLikelihood(estimation_mode est_mode)
     return total_log_likelihood;
 }
 
-CMatrix SourceSinkData::SourceMeanMatrix(parameter_mode param_mode)
+CMatrix SourceSinkData::BuildSourceMeanMatrix(parameter_mode param_mode)
 {
-    CMatrix Y(element_order_.size(),numberofsourcesamplesets_);
-    for (unsigned int element_counter=0; element_counter<element_order_.size(); element_counter++)
+    const size_t num_elements = element_order_.size();
+    const size_t num_sources = numberofsourcesamplesets_;
+
+    // Initialize source mean matrix: rows = elements, cols = sources
+    // Matrix entry [i,j] = mean concentration of element i in source j
+    CMatrix source_means(num_elements, num_sources);
+
+    // Fill matrix with mean concentrations for each element and source
+    for (size_t element_idx = 0; element_idx < num_elements; element_idx++)
     {
-        for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
+        const string& element_name = element_order_[element_idx];
+
+        for (size_t source_idx = 0; source_idx < num_sources; source_idx++)
         {
-            Elemental_Profile_Set *this_source_group = GetSampleSet(samplesetsorder_[source_group_counter]);
-            if (param_mode==parameter_mode::based_on_fitted_distribution)
-                Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(element_order_[element_counter])->Mean();
-            else
-                Y[element_counter][source_group_counter] = this_source_group->GetEstimatedDistribution(element_order_[element_counter])->DataMean();
-        }
-    }
-    return Y;
-}
+            const string& source_name = samplesetsorder_[source_idx];
+            Elemental_Profile_Set* source_group = GetSampleSet(source_name);
 
-CMatrix SourceSinkData::SourceMeanMatrix_Isotopes(parameter_mode param_mode)
-{
-    CMatrix Y(isotope_order_.size(),numberofsourcesamplesets_);
-    for (unsigned int isotope_counter=0; isotope_counter<isotope_order_.size(); isotope_counter++)
-    {
-        for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
-        {
-            string isotope = isotope_order_[isotope_counter];
-            string corresponding_element = element_information_[isotope].base_element;
-            Elemental_Profile_Set *this_source_group = GetSampleSet(samplesetsorder_[source_group_counter]);
+            // Get estimated distribution for this element in this source
+            Distribution* element_dist = source_group->GetEstimatedDistribution(element_name);
 
-            if (param_mode==parameter_mode::based_on_fitted_distribution)
-            {
-                double mean_delta = this_source_group->GetEstimatedDistribution(isotope_order_[isotope_counter])->Mean();
-                double standard_ratio = element_information_[isotope].standard_ratio;
-                double corresponding_element_content = this_source_group->GetEstimatedDistribution(corresponding_element)->Mean();
-                Y[isotope_counter][source_group_counter] = (mean_delta/1000.0+1.0)*standard_ratio*corresponding_element_content;
-
+            // Calculate mean based on parameter mode
+            if (param_mode == parameter_mode::based_on_fitted_distribution) {
+                // Parametric mean from distribution parameters (μ, σ)
+                // For lognormal: Mean = exp(μ + σ²/2)
+                source_means[element_idx][source_idx] = element_dist->Mean();
             }
-            else
-            {
-                double mean_delta = this_source_group->GetEstimatedDistribution(isotope_order_[isotope_counter])->DataMean();
-                double standard_ratio = element_information_[isotope].standard_ratio;
-// Add a corresponding element check
-
-                double corresponding_element_content = this_source_group->GetEstimatedDistribution(corresponding_element)->DataMean();
-                Y[isotope_counter][source_group_counter] = (mean_delta/1000.0+1.0)*standard_ratio*corresponding_element_content;
-
+            else {
+                // Empirical mean calculated directly from data points
+                source_means[element_idx][source_idx] = element_dist->DataMean();
             }
         }
     }
-    return Y;
+
+    return source_means;
 }
 
-CVector SourceSinkData::GetContributionVector(bool full)
+CMatrix SourceSinkData::BuildSourceMeanMatrix_Isotopes(parameter_mode param_mode)
 {
-    if (full)
-    {   CVector X(numberofsourcesamplesets_);
-        for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
+    const size_t num_isotopes = isotope_order_.size();
+    const size_t num_sources = numberofsourcesamplesets_;
+
+    // Initialize source isotope matrix: rows = isotopes, cols = sources
+    // Matrix entry [i,j] = mean absolute concentration of isotope i in source j
+    CMatrix source_isotope_means(num_isotopes, num_sources);
+
+    // Fill matrix with mean isotope concentrations (converted from delta)
+    for (size_t isotope_idx = 0; isotope_idx < num_isotopes; isotope_idx++)
+    {
+        const string& isotope_name = isotope_order_[isotope_idx];
+        const element_information& isotope_info = element_information_[isotope_name];
+        const string& base_element = isotope_info.base_element;
+        const double standard_ratio = isotope_info.standard_ratio;
+
+        for (size_t source_idx = 0; source_idx < num_sources; source_idx++)
         {
-            Elemental_Profile_Set *this_source_group = GetSampleSet(samplesetsorder_[source_group_counter]);
-            X[source_group_counter] = this_source_group->GetContribution();
+            const string& source_name = samplesetsorder_[source_idx];
+            Elemental_Profile_Set* source_group = GetSampleSet(source_name);
+
+            // Get distributions for isotope and its base element
+            Distribution* isotope_dist = source_group->GetEstimatedDistribution(isotope_name);
+            Distribution* base_element_dist = source_group->GetEstimatedDistribution(base_element);
+
+            // Retrieve mean values based on parameter mode
+            double mean_delta;
+            double mean_base_concentration;
+
+            if (param_mode == parameter_mode::based_on_fitted_distribution) {
+                // Use parametric means from fitted distributions
+                mean_delta = isotope_dist->Mean();
+                mean_base_concentration = base_element_dist->Mean();
+            }
+            else {
+                // Use empirical means from actual data
+                mean_delta = isotope_dist->DataMean();
+                mean_base_concentration = base_element_dist->DataMean();
+            }
+
+            // Convert delta notation to absolute concentration
+            // Formula: [isotope] = (δ/1000 + 1) × R_standard × [base_element]
+            double delta_ratio = (mean_delta / 1000.0) + 1.0;
+            double absolute_isotope_concentration = delta_ratio * standard_ratio * mean_base_concentration;
+
+            source_isotope_means[isotope_idx][source_idx] = absolute_isotope_concentration;
         }
-        return X;
     }
-    else
-    {   CVector X(numberofsourcesamplesets_-1);
-        for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_-1; source_group_counter++)
-        {
-            Elemental_Profile_Set *this_source_group = GetSampleSet(samplesetsorder_[source_group_counter]);
-            X[source_group_counter] = this_source_group->GetContribution();
-        }
-        return X;
+
+    return source_isotope_means;
+}
+
+CVector SourceSinkData::GetContributionVector(bool include_all)
+{
+    // Determine vector size based on whether to include constrained contribution
+    const size_t num_contributions = include_all ?
+        numberofsourcesamplesets_ :
+        numberofsourcesamplesets_ - 1;
+
+    CVector contributions(num_contributions);
+
+    // Retrieve contribution values from each source group
+    for (size_t source_idx = 0; source_idx < num_contributions; source_idx++)
+    {
+        const string& source_name = samplesetsorder_[source_idx];
+        Elemental_Profile_Set* source_group = GetSampleSet(source_name);
+        contributions[source_idx] = source_group->GetContribution();
     }
+
+    return contributions;
 }
 
 CVector SourceSinkData::GetContributionVectorSoftmax()
 {
+    const size_t num_sources = numberofsourcesamplesets_;
+    CVector softmax_parameters(num_sources);
 
-   CVector X(numberofsourcesamplesets_);
-    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
+    // Retrieve softmax parameter values from each source group
+    for (size_t source_idx = 0; source_idx < num_sources; source_idx++)
     {
-        Elemental_Profile_Set *this_source_group = GetSampleSet(samplesetsorder_[source_group_counter]);
-        X[source_group_counter] = this_source_group->GetContributionSoftmax(); 
+        const string& source_name = samplesetsorder_[source_idx];
+        Elemental_Profile_Set* source_group = GetSampleSet(source_name);
+        softmax_parameters[source_idx] = source_group->GetContributionSoftmax();
     }
-    return X;
 
+    return softmax_parameters;
 }
 
 
 
 
-
-void SourceSinkData::SetContribution(int i, double value)
+void SourceSinkData::SetContribution(size_t source_index, double contribution_value)
 {
-    GetSampleSet(samplesetsorder_[i])->SetContribution(value);
-    GetSampleSet(samplesetsorder_[samplesetsorder_.size()-1])->SetContribution(1-GetContributionVector(false).sum());
+    // Set the specified contribution
+    const string& source_name = samplesetsorder_[source_index];
+    GetSampleSet(source_name)->SetContribution(contribution_value);
+
+    // Update last contribution to maintain sum constraint
+    const size_t last_source_index = samplesetsorder_.size() - 1;
+    const string& last_source_name = samplesetsorder_[last_source_index];
+
+    // Calculate constrained contribution: c_last = 1 - Σ(c_i)
+    double sum_of_independent = GetContributionVector(false).sum();
+    double constrained_contribution = 1.0 - sum_of_independent;
+
+    GetSampleSet(last_source_name)->SetContribution(constrained_contribution);
 }
 
-void SourceSinkData::SetContributionSoftmax(int i, double value)
+void SourceSinkData::SetContributionSoftmax(size_t source_index, double softmax_value)
 {
-    GetSampleSet(samplesetsorder_[i])->SetContributionSoftmax(value);
+    // Set softmax parameter (no constraint to maintain)
+    const string& source_name = samplesetsorder_[source_index];
+    GetSampleSet(source_name)->SetContributionSoftmax(softmax_value);
 }
 
-void SourceSinkData::SetContribution(const CVector &X)
+void SourceSinkData::SetContribution(const CVector& contributions)
 {
-    for (int i=0; i<X.num; i++)
+    // Set each contribution (last contribution updated automatically each time)
+    for (size_t i = 0; i < static_cast<size_t>(contributions.num); i++)
     {
-        SetContribution(i,X.vec[i]);
+        SetContribution(i, contributions.vec[i]);
     }
-    if (X.min()<0)
+
+    // Validate: all contributions should be non-negative
+    if (contributions.min() < 0.0) {
+        std::cerr << "Warning: Negative contribution detected in SetContribution()" << std::endl;
+        std::cerr << "  Min value: " << contributions.min() << std::endl;
+    }
+}
+
+void SourceSinkData::SetContributionSoftmax(const CVector& softmax_params)
+{
+    // Compute softmax normalization denominator: Σ exp(x_i)
+    double denominator = 0.0;
+    for (size_t i = 0; i < static_cast<size_t>(softmax_params.num); i++)
     {
-        qDebug()<<"oops!";
+        denominator += exp(softmax_params[i]);
     }
-}
 
-void SourceSinkData::SetContributionSoftmax(const CVector &X)
-{
-    double denominator = 0;
-    for (int i=0; i<X.num; i++)
+    // Apply softmax transformation: c_i = exp(x_i) / Σ exp(x_j)
+    for (size_t i = 0; i < static_cast<size_t>(softmax_params.num); i++)
     {
-        denominator += exp(X[i]);
+        double softmax_param = softmax_params.at(i);
+        double contribution = exp(softmax_param) / denominator;
+
+        // Set both softmax parameter and computed contribution
+        SetContributionSoftmax(i, softmax_param);
+        SetContribution(i, contribution);
     }
-    for (int i=0; i<X.num; i++)
-    {
-        SetContributionSoftmax(i,X.at(i));
-        SetContribution(i,exp(X.at(i))/denominator);
-    }
-    CVector XX = GetContributionVector();
-    if (XX.min()<0)
-    {
-        qDebug()<<"oops!";
+
+    // Validate: resulting contributions should be valid
+    CVector resulting_contributions = GetContributionVector();
+    if (resulting_contributions.min() < 0.0) {
+        std::cerr << "Warning: Invalid contributions after softmax transformation" << std::endl;
+        std::cerr << "  Min contribution: " << resulting_contributions.min() << std::endl;
+        std::cerr << "  This should not happen with softmax - check for numerical issues" << std::endl;
     }
 }
 
+Parameter* SourceSinkData::GetElementDistributionMuParameter(
+    size_t element_index,
+    size_t source_index)
+{
+    // Parameter vector layout:
+    // [0 to n-2]: Contribution parameters (n-1 independent contributions)
+    // [n-1 onwards]: Element μ parameters
 
-Parameter* SourceSinkData::ElementalContent_mu(int element_iterator, int source_iterator)
-{
-    return &parameters_[size()-2+element_iterator*numberofsourcesamplesets_ +source_iterator];
-}
-Parameter* SourceSinkData::ElementalContent_sigma(int element_iterator, int source_iterator)
-{
-    return &parameters_[size()-2+element_iterator*numberofsourcesamplesets_ +source_iterator + numberofconstituents_*numberofsourcesamplesets_];
+    const size_t num_contribution_params = size() - 1;  // Exclude target group
+    const size_t element_mu_base_index = num_contribution_params;
+
+    // Calculate index for this element's μ in this source
+    // Elements are stored in blocks: all sources for element 0, then all sources for element 1, etc.
+    const size_t parameter_index = element_mu_base_index +
+        (element_index * numberofsourcesamplesets_) +
+        source_index;
+
+    // Bounds check
+    if (parameter_index >= parameters_.size()) {
+        std::cerr << "Error: Parameter index out of bounds in GetElementDistributionMuParameter" << std::endl;
+        return nullptr;
+    }
+
+    return &parameters_[parameter_index];
 }
 
-double SourceSinkData::ElementalContent_mu_value(int element_iterator, int source_iterator)
+Parameter* SourceSinkData::GetElementDistributionSigmaParameter(
+    size_t element_index,
+    size_t source_index)
 {
-    return ElementalContent_mu(element_iterator,source_iterator)->Value();
-}
-double SourceSinkData::ElementalContent_sigma_value(int element_iterator, int source_iterator)
-{
-    return ElementalContent_sigma(element_iterator,source_iterator)->Value();
+    // Parameter vector layout:
+    // [0 to n-2]: Contribution parameters
+    // [n-1 to n-1 + num_elements × num_sources - 1]: Element μ parameters
+    // [next block]: Element σ parameters ← We're here
+
+    const size_t num_contribution_params = size() - 1;
+    const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+    const size_t element_sigma_base_index = num_contribution_params + num_element_mu_params;
+
+    // Calculate index for this element's σ in this source
+    const size_t parameter_index = element_sigma_base_index +
+        (element_index * numberofsourcesamplesets_) +
+        source_index;
+
+    // Bounds check
+    if (parameter_index >= parameters_.size()) {
+        std::cerr << "Error: Parameter index out of bounds in GetElementDistributionSigmaParameter" << std::endl;
+        return nullptr;
+    }
+
+    return &parameters_[parameter_index];
 }
 
-bool SourceSinkData::SetParameterValue(unsigned int i, double value)
+double SourceSinkData::GetElementDistributionMuValue(
+    size_t element_index,
+    size_t source_index)
 {
-    if (i<0 || i>parameters_.size())
+    Parameter* mu_param = GetElementDistributionMuParameter(element_index, source_index);
+
+    if (mu_param == nullptr) {
+        std::cerr << "Warning: Unable to retrieve μ parameter for element "
+            << element_index << ", source " << source_index << std::endl;
+        return 0.0;
+    }
+
+    return mu_param->Value();
+}
+
+double SourceSinkData::GetElementDistributionSigmaValue(
+    size_t element_index,
+    size_t source_index)
+{
+    Parameter* sigma_param = GetElementDistributionSigmaParameter(element_index, source_index);
+
+    if (sigma_param == nullptr) {
+        std::cerr << "Warning: Unable to retrieve σ parameter for element "
+            << element_index << ", source " << source_index << std::endl;
+        return 0.0;
+    }
+
+    return sigma_param->Value();
+}
+
+bool SourceSinkData::SetParameterValue(size_t index, double value)
+{
+    // Validate index
+    if (index >= parameters_.size()) {
         return false;
-
-    int est_mode_key_1=1;
-    int est_mode_key_2=1;
-    if (parameter_estimation_mode==estimation_mode::only_contributions)
-        est_mode_key_2 = 0;
-    if (parameter_estimation_mode==estimation_mode::source_elemental_profiles_based_on_source_data)
-        est_mode_key_1 = 0;
-
-    parameters_[i].SetValue(value);
-    //Contributions
-    if (i<est_mode_key_1*(numberofsourcesamplesets_-1))
-    {
-        GetSampleSet(samplesetsorder_[i])->SetContribution(value);
-        GetSampleSet(samplesetsorder_[numberofsourcesamplesets_-1])->SetContribution(1-GetContributionVector(false).sum());//+GetSampleSet(samplesetsorder_[numberofsourcesamplesets_-1])->GetContribution()
-        return true;
-    }
-    //Element means
-    else if (i<est_mode_key_1*(numberofsourcesamplesets_-1)+numberofconstituents_*numberofsourcesamplesets_ && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
-    {
-        int element_counter = (i-(numberofsourcesamplesets_-1))/numberofsourcesamplesets_;
-        int group_counter = (i-(numberofsourcesamplesets_-1))%numberofsourcesamplesets_;
-        GetElementDistribution(element_order_[element_counter],samplesetsorder_[group_counter])->SetEstimatedMu(value);
-        return true;
-    }
-    //Isotopes means
-    else if (i<est_mode_key_1*(numberofsourcesamplesets_-1)+(numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_ && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
-    {
-        int isotope_counter = (i-(numberofsourcesamplesets_-1)-numberofconstituents_*numberofsourcesamplesets_)/numberofsourcesamplesets_;
-        int group_counter = (i-(numberofsourcesamplesets_-1-numberofconstituents_*numberofsourcesamplesets_))%numberofsourcesamplesets_;
-        GetElementDistribution(isotope_order_[isotope_counter],samplesetsorder_[group_counter])->SetEstimatedMu(value);
-        return true;
     }
 
-    //Element standard deviations
-    else if (i<est_mode_key_1*(numberofsourcesamplesets_-1)+(2*numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_ && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
+    // Determine which parameter blocks are active based on estimation mode
+    const bool estimating_contributions =
+        (parameter_estimation_mode_ != estimation_mode::source_elemental_profiles_based_on_source_data);
+    const bool estimating_profiles =
+        (parameter_estimation_mode_ != estimation_mode::only_contributions);
+
+    // Calculate parameter block boundaries
+    const size_t num_contribution_params = estimating_contributions ? (numberofsourcesamplesets_ - 1) : 0;
+    const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+    const size_t num_isotope_mu_params = numberofisotopes_ * numberofsourcesamplesets_;
+    const size_t num_element_sigma_params = num_element_mu_params;
+    const size_t num_isotope_sigma_params = num_isotope_mu_params;
+
+    // Update parameter value
+    parameters_[index].SetValue(value);
+
+    // ========== Block 1: Contribution Parameters ==========
+    if (estimating_contributions && index < num_contribution_params)
     {
-        if (value<0)
-        {
-            cout<<"stop!"<<std::endl;
+        // Update this source's contribution
+        GetSampleSet(samplesetsorder_[index])->SetContribution(value);
+
+        // Update last contribution to maintain sum constraint: c_n = 1 - Σ(c_1...c_{n-1})
+        const size_t last_source_index = numberofsourcesamplesets_ - 1;
+        double sum_of_independent = GetContributionVector(false).sum();
+        GetSampleSet(samplesetsorder_[last_source_index])->SetContribution(1.0 - sum_of_independent);
+
+        return true;
+    }
+
+    // ========== Block 2: Element μ Parameters ==========
+    size_t element_mu_start = num_contribution_params;
+    size_t element_mu_end = element_mu_start + num_element_mu_params;
+
+    if (estimating_profiles &&
+        parameter_estimation_mode_ == estimation_mode::elemental_profile_and_contribution &&
+        index >= element_mu_start && index < element_mu_end)
+    {
+        size_t offset = index - element_mu_start;
+        size_t element_index = offset / numberofsourcesamplesets_;
+        size_t source_index = offset % numberofsourcesamplesets_;
+
+        GetElementDistribution(element_order_[element_index], samplesetsorder_[source_index])
+            ->SetEstimatedMu(value);
+
+        return true;
+    }
+
+    // ========== Block 3: Isotope μ Parameters ==========
+    size_t isotope_mu_start = element_mu_end;
+    size_t isotope_mu_end = isotope_mu_start + num_isotope_mu_params;
+
+    if (estimating_profiles &&
+        parameter_estimation_mode_ == estimation_mode::elemental_profile_and_contribution &&
+        index >= isotope_mu_start && index < isotope_mu_end)
+    {
+        size_t offset = index - isotope_mu_start;
+        size_t isotope_index = offset / numberofsourcesamplesets_;
+        size_t source_index = offset % numberofsourcesamplesets_;
+
+        GetElementDistribution(isotope_order_[isotope_index], samplesetsorder_[source_index])
+            ->SetEstimatedMu(value);
+
+        return true;
+    }
+
+    // ========== Block 4: Element σ Parameters ==========
+    size_t element_sigma_start = isotope_mu_end;
+    size_t element_sigma_end = element_sigma_start + num_element_sigma_params;
+
+    if (estimating_profiles &&
+        parameter_estimation_mode_ == estimation_mode::elemental_profile_and_contribution &&
+        index >= element_sigma_start && index < element_sigma_end)
+    {
+        if (value < 0.0) {
+            std::cerr << "Error: Element σ parameter cannot be negative (value = "
+                << value << ")" << std::endl;
+            return false;
         }
-        int element_counter = (i-(numberofsourcesamplesets_-1)-(numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_)/numberofsourcesamplesets_;
-        int group_counter = (i-(numberofsourcesamplesets_-1)-(numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_)%numberofsourcesamplesets_;
-        GetElementDistribution(element_order_[element_counter],samplesetsorder_[group_counter])->SetEstimatedSigma(value);
-        return true;
-    }
-    //Isotope standard deviations
-    else if (i<est_mode_key_1*(numberofsourcesamplesets_-1)+(2*numberofconstituents_+2*numberofisotopes_)*numberofsourcesamplesets_ && parameter_estimation_mode==estimation_mode::elemental_profile_and_contribution)
-    {
-        if (value<0)
-        {
-            cout<<"stop!"<<std::endl;
-        }
-        int isotope_counter = (i-(numberofsourcesamplesets_-1)-(2*numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_)/numberofsourcesamplesets_;
-        int group_counter = (i-(numberofsourcesamplesets_-1)-(2*numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_)%numberofsourcesamplesets_;
-        GetElementDistribution(isotope_order_[isotope_counter],samplesetsorder_[group_counter])->SetEstimatedSigma(value);
+
+        size_t offset = index - element_sigma_start;
+        size_t element_index = offset / numberofsourcesamplesets_;
+        size_t source_index = offset % numberofsourcesamplesets_;
+
+        GetElementDistribution(element_order_[element_index], samplesetsorder_[source_index])
+            ->SetEstimatedSigma(value);
+
         return true;
     }
 
-    //Observed standard deviation
-    else if (i==est_mode_key_1*(numberofsourcesamplesets_-1)+2*(numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_*est_mode_key_2)
+    // ========== Block 5: Isotope σ Parameters ==========
+    size_t isotope_sigma_start = element_sigma_end;
+    size_t isotope_sigma_end = isotope_sigma_start + num_isotope_sigma_params;
+
+    if (estimating_profiles &&
+        parameter_estimation_mode_ == estimation_mode::elemental_profile_and_contribution &&
+        index >= isotope_sigma_start && index < isotope_sigma_end)
     {
-        if (value<0)
-        {
-            cout<<"stop!"<<std::endl;
+        if (value < 0.0) {
+            std::cerr << "Error: Isotope σ parameter cannot be negative (value = "
+                << value << ")" << std::endl;
+            return false;
         }
+
+        size_t offset = index - isotope_sigma_start;
+        size_t isotope_index = offset / numberofsourcesamplesets_;
+        size_t source_index = offset % numberofsourcesamplesets_;
+
+        GetElementDistribution(isotope_order_[isotope_index], samplesetsorder_[source_index])
+            ->SetEstimatedSigma(value);
+
+        return true;
+    }
+
+    // ========== Block 6: Element Error Standard Deviation ==========
+    size_t error_element_index = isotope_sigma_end;
+
+    if (estimating_contributions && index == error_element_index)
+    {
+        if (value < 0.0) {
+            std::cerr << "Error: Element error std dev cannot be negative (value = "
+                << value << ")" << std::endl;
+            return false;
+        }
+
         error_stdev_ = value;
         return true;
     }
-    //Observed isotope standard deviation
-    else if (i==est_mode_key_1*(numberofsourcesamplesets_-1)+2*(numberofconstituents_+numberofisotopes_)*numberofsourcesamplesets_*est_mode_key_2+1)
+
+    // ========== Block 7: Isotope Error Standard Deviation ==========
+    size_t error_isotope_index = error_element_index + 1;
+
+    if (estimating_contributions && index == error_isotope_index)
     {
-        if (value<0)
-        {
-            cout<<"stop!"<<std::endl;
+        if (value < 0.0) {
+            std::cerr << "Error: Isotope error std dev cannot be negative (value = "
+                << value << ")" << std::endl;
+            return false;
         }
+
         error_stdev_isotope_ = value;
         return true;
     }
 
+    // If we reach here, index doesn't match any known parameter block
+    std::cerr << "Warning: Parameter index " << index << " not recognized" << std::endl;
     return false;
 }
 
-double SourceSinkData::GetParameterValue(unsigned int i)
+double SourceSinkData::GetParameterValue(size_t index) const
 {
-    return parameters_[i].Value();
+    return parameters_[index].Value();
 }
 
-
-bool SourceSinkData::SetParameterValue(const CVector &value)
+bool SourceSinkData::SetParameterValue(const CVector& values)
 {
-    bool out = true;
-    for (int i=0; i<value.num; i++)
+    bool all_successful = true;
+
+    // Update each parameter sequentially
+    for (size_t i = 0; i < static_cast<size_t>(values.num); i++)
     {
-        out &=SetParameterValue(i,value[i]);
+        bool success = SetParameterValue(i, values[i]);
+        all_successful &= success;
+
+        // Note: Continue even if one fails to attempt all updates
     }
-    return out;
+
+    return all_successful;
 }
 
-CVector SourceSinkData::GetParameterValue()
+CVector SourceSinkData::GetParameterValue() const
 {
-    CVector out(parameters_.size());
-    for (unsigned int i=0; i<parameters_.size(); i++)
+    CVector parameter_values(parameters_.size());
+
+    // Extract value from each parameter
+    for (size_t i = 0; i < parameters_.size(); i++)
     {
-        out[i]=parameters_[i].Value();
+        parameter_values[i] = parameters_[i].Value();
     }
-    return out;
+
+    return parameter_values;
 }
 
-CVector SourceSinkData::Gradient(const CVector &value, const estimation_mode estmode)
+CVector SourceSinkData::Gradient(const CVector& parameters, estimation_mode est_mode)
 {
+    CVector gradient(parameters.num);
+    CVector perturbed_params = parameters;
 
-    CVector out(value.num);
-    CVector base_vector = value;
-    SetParameterValue(value);
-    double baseValue = LogLikelihood(estmode);
-    for (int i=0; i<value.num; i++)
+    // Set base parameters and evaluate baseline log-likelihood
+    SetParameterValue(parameters);
+    double baseline_log_likelihood = LogLikelihood(est_mode);
+
+    // Compute partial derivative for each parameter using finite differences
+    for (size_t i = 0; i < static_cast<size_t>(parameters.num); i++)
     {
-        base_vector[i]+=epsilon_;
-        SetParameterValue(base_vector);
-        double loglikehood = LogLikelihood(estmode);
-        out[i] = (loglikehood-baseValue)/epsilon_;
+        // Perturb parameter i by epsilon
+        perturbed_params[i] += epsilon_;
+        SetParameterValue(perturbed_params);
+
+        // Evaluate log-likelihood at perturbed point
+        double perturbed_log_likelihood = LogLikelihood(est_mode);
+
+        // Compute numerical derivative: ∂log(L)/∂θ_i ≈ Δlog(L) / Δθ_i
+        gradient[i] = (perturbed_log_likelihood - baseline_log_likelihood) / epsilon_;
+
+        // Restore parameter for next iteration
+        perturbed_params[i] = parameters[i];
     }
-    return out/out.norm2();
+
+    // Normalize gradient to unit length for numerical stability
+    return gradient / gradient.norm2();
 }
 
 CVector SourceSinkData::GradientUpdate(const estimation_mode estmode)
