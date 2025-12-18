@@ -1469,17 +1469,38 @@ double SourceSinkData::GetObjectiveFunctionValue()
 
 double SourceSinkData::LogLikelihood(estimation_mode est_mode)
 {
-    double YLogLikelihood = 0;
-    double CLogLikelihood = 0;
-    double CLogLikelihood_Isotope = 0;
-    if (est_mode != estimation_mode::only_contributions)
-        YLogLikelihood = LogLikelihoodSourceElementalDistributions();
-    double LogPrior = LogPriorContributions();
-    if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data)
-    {   CLogLikelihood = LogLikelihoodModelvsMeasured(est_mode);
-        CLogLikelihood_Isotope = LogLikelihoodModelvsMeasured_Isotope(est_mode);
+    // Initialize likelihood components
+    double source_data_log_likelihood = 0.0;
+    double element_observation_log_likelihood = 0.0;
+    double isotope_observation_log_likelihood = 0.0;
+
+    // Component 1: Log-likelihood of source data given estimated distributions
+    // P(Y | μ, σ) - Only included when estimating source profiles
+    if (est_mode != estimation_mode::only_contributions) {
+        source_data_log_likelihood = LogLikelihoodSourceElementalDistributions();
     }
-    return YLogLikelihood + CLogLikelihood + CLogLikelihood_Isotope + LogPrior;
+
+    // Component 2: Log-prior on contributions
+    // P(f) - Always included (uniform Dirichlet prior)
+    double contribution_log_prior = LogPriorContributions();
+
+    // Component 3: Log-likelihood of observations given model predictions
+    // P(C_obs | f, μ, σ) - Only when fitting to target sample
+    if (est_mode != estimation_mode::source_elemental_profiles_based_on_source_data) {
+        // Elements: log P(C_obs | C_pred)
+        element_observation_log_likelihood = LogLikelihoodModelvsMeasured(est_mode);
+
+        // Isotopes: log P(δ_obs | δ_pred)
+        isotope_observation_log_likelihood = LogLikelihoodModelvsMeasured_Isotope(est_mode);
+    }
+
+    // Sum all components to get total log-likelihood
+    double total_log_likelihood = source_data_log_likelihood +
+        element_observation_log_likelihood +
+        isotope_observation_log_likelihood +
+        contribution_log_prior;
+
+    return total_log_likelihood;
 }
 
 CMatrix SourceSinkData::SourceMeanMatrix(parameter_mode param_mode)

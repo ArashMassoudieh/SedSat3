@@ -671,8 +671,46 @@ public:
      */
     CVector ObservedDataforSelectedSample_Isotope_delta(const string& SelectedTargetSample = "");
 
+    /**
+     * @brief Returns the objective function value for optimization algorithms
+     *
+     * Computes the negative log-likelihood based on the current parameter values
+     * and estimation mode. Used by optimization algorithms (Levenberg-Marquardt,
+     * gradient descent) where minimizing -log(L) is equivalent to maximizing
+     * likelihood L.
+     *
+     * @return Negative log-likelihood value (lower values indicate better fit)
+     *
+     * @note Uses parameter_estimation_mode_ to determine which likelihood
+     *       components to include
+     *
+     * @see LogLikelihood() for likelihood calculation details
+     */
     double GetObjectiveFunctionValue();
+
+    /**
+     * @brief Calculates the total log-likelihood for Bayesian source apportionment
+     *
+     * Computes the posterior log-likelihood by summing multiple components based
+     * on the estimation mode. Components include source data likelihood, observation
+     * likelihood (elements and isotopes), and contribution priors.
+     *
+     * Likelihood Components by Estimation Mode:
+     * - only_contributions: log P(C_obs|f) + log P(δ_obs|f) + log P(f)
+     * - elemental_profile_and_contribution: log P(Y|μ,σ) + log P(C_obs|f,μ,σ) + log P(δ_obs|f,μ,σ) + log P(f)
+     * - source_elemental_profiles_based_on_source_data: log P(Y|μ,σ) + log P(f)
+     *
+     * @param est_mode Estimation mode determining which likelihood terms to include
+     *
+     * @return Total log-likelihood (higher values indicate better model fit)
+     *
+     * @see LogLikelihoodSourceElementalDistributions() for source data term
+     * @see LogLikelihoodModelVsObserved() for element observation term
+     * @see LogLikelihoodModelVsObserved_Isotope() for isotope observation term
+     * @see LogPriorContributions() for contribution prior term
+     */
     double LogLikelihood(estimation_mode est_mode = estimation_mode::elemental_profile_and_contribution);
+
     vector<string> ElementsToBeUsedInCMB();
     vector<string> IsotopesToBeUsedInCMB();
     vector<string> SourceGroupNames();
