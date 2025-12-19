@@ -1860,36 +1860,529 @@ public:
      */
     bool ReadFromFile(QFile* fil);
 
+    /**
+     * @brief Performs multiple linear regression of elements vs OM and particle size
+     *
+     * Computes regression models for all sample groups to quantify how elemental
+     * concentrations vary with organic matter (OM) content and particle size.
+     * These models are used to correct elemental profiles for OM/size variations.
+     *
+     * Regression forms:
+     * - Linear: C_corrected = C + β₁(OM_ref - OM) + β₂(Size_ref - Size)
+     * - Multiplicative: C_corrected = C × (OM_ref/OM)^β₁ × (Size_ref/Size)^β₂
+     *
+     * @param om Name of the organic matter constituent (e.g., "OC", "OM")
+     * @param particle_size Name of the particle size constituent (e.g., "D50", "PM2.5")
+     * @param form Regression form (linear or multiplicative)
+     * @param p_value_threshold Significance threshold for including predictors (default: 0.05)
+     *
+     * @return true if regressions were computed successfully
+     *
+     * @note Stores OM and size constituent names for later correction
+     * @note Regressions are computed for all groups (sources and target)
+     * @note Predictors with p > threshold are excluded from the model
+     *
+     * @see Elemental_Profile::OrganicandSizeCorrect() for applying corrections
+     * @see GetMLRResults() to retrieve regression results
+     */
+    bool PerformRegressionVsOMAndSize(
+        const string& om,
+        const string& particle_size,
+        regression_form form,
+        const double& p_value_threshold = 0.05);
+
+    /**
+     * @brief Performs outlier detection on all source groups
+     *
+     * Applies Box-Cox transformation and identifies outliers based on standardized
+     * residuals. Samples with standardized values outside the threshold range are
+     * flagged as outliers in their notes.
+     *
+     * Detection method:
+     * 1. Box-Cox transform each element's distribution
+     * 2. Calculate z-scores: z = (x_transformed - μ) / σ
+     * 3. Flag outliers: z < lower_threshold OR z > upper_threshold
+     *
+     * @param lower_threshold Lower bound for standardized values (e.g., -3.0)
+     * @param upper_threshold Upper bound for standardized values (e.g., +3.0)
+     *
+     * @note Only analyzes source groups (target group excluded)
+     * @note Outliers are flagged in sample notes, not removed
+     * @note Uses Box-Cox transformation for normalization
+     *
+     * @see Elemental_Profile_Set::DetectOutliers() for the detection algorithm
+     **/
+    
+    void OutlierAnalysisForAll(const double& lowerthreshold = -3, const double& upperthreshold = 3); 
+    
     void SetProgressWindow(ProgressWindow *_rtw) {rtw_ = _rtw;}
     void SetParameterEstimationMode(estimation_mode est_mode) {parameter_estimation_mode = est_mode;}
     estimation_mode ParameterEstimationMode() {return parameter_estimation_mode;}
     
-    bool Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form=regression_form::linear, const double &p_value_threshold=0.05);
-    DFA_result DiscriminantFunctionAnalysis(const string &source1);
+    
+    /**
+     * @brief Performs discriminant function analysis for all source groups
+     *
+     * Conducts pairwise discriminant function analysis (DFA) comparing each source
+     * group against all others combined. DFA identifies the linear combination of
+     * elemental concentrations that best separates each source from the rest,
+     * which helps assess source uniqueness and potential confounding.
+     *
+     * For each source, computes:
+     * - Wilks' Lambda (measure of group separation)
+     * - F-test p-value (significance of separation)
+     * - Discriminant p-value (multivariate normality test)
+     * - Eigenvector (discriminant function coefficients)
+     * - Projected samples (scores along discriminant axis)
+     *
+     * @return DFA_result containing statistics and projections for all sources
+     *
+     * @note Target group is excluded from analysis
+     * @note Each source is compared against all others combined ("one vs rest")
+     * @note Lower Wilks' Lambda indicates better separation
+     *
+     * @see DiscriminantFunctionAnalysis(const string&) for single source analysis
+     */
     DFA_result DiscriminantFunctionAnalysis();
-    DFA_result DiscriminantFunctionAnalysis(const string &source1, const string &source2);
+
+    /**
+     * @brief Performs discriminant function analysis between two specific sources
+     *
+     * Conducts pairwise DFA to assess how well two source groups can be
+     * distinguished based on their elemental compositions. Useful for identifying
+     * potentially confounded sources that may be difficult to apportion separately.
+     *
+     * @param source1 Name of first source group
+     * @param source2 Name of second source group
+     *
+     * @return DFA_result containing separation statistics and discriminant function
+     *
+     * @note Creates temporary dataset with only the two specified sources
+     * @note Returns empty result if eigenvector computation fails
+     *
+     * @see DiscriminantFunctionAnalysis() for all-sources analysis
+     */
+    DFA_result DiscriminantFunctionAnalysis(const string& source1, const string& source2);
+
+    /**
+     * @brief Performs discriminant function analysis for one source vs all others
+     *
+     * Conducts DFA comparing a single source group against all other sources
+     * combined ("one vs rest" comparison). Assesses how uniquely this source
+     * can be identified based on elemental composition.
+     *
+     * @param source1 Name of source group to test
+     *
+     * @return DFA_result containing separation statistics and discriminant function
+     *
+     * @note All other source groups are pooled into an "Others" category
+     * @note Projections include both pairwise and full dataset versions
+     *
+     * @see DiscriminantFunctionAnalysis() for systematic all-sources analysis
+     * @see DiscriminantFunctionAnalysis(const string&, const string&) for two-group comparison
+     */
+    DFA_result DiscriminantFunctionAnalysis(const string& source1);
 
     vector<CMBVector> StepwiseDiscriminantFunctionAnalysis();
     vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2);
     vector<CMBVector> StepwiseDiscriminantFunctionAnalysis(const string &source1);
+    /**
+     * @brief Counts the total number of source samples across all source groups
+     *
+     * Sums the number of samples in all source groups, excluding the target group.
+     * Useful for determining sample size for statistical analyses and reporting.
+     *
+     * @return Total number of source samples (across all source groups)
+     *
+     * @note Target group samples are excluded from the count
+     * @note Each source group may contain multiple samples
+     *
+     * @see size() for number of groups (including target)
+     */
     int TotalNumberofSourceSamples() const;
-    CMBVector DFATransformed(const CMBVector &eigenvector, const string &source);
-    Elemental_Profile_Set TheRest(const string &source);
-    CMBVector BracketTest(const string &target_sample, bool correct_for_OM_n_Size);
-    CMBMatrix BracketTest(bool correct_for_OM_n_Size, bool exclude_elements, bool exclude_samples); //Performs bracket test for all target samples
-    SourceSinkData BoxCoxTransformed(bool calculateeigenvectorforallgroups=false);
-    map<string,ConcentrationSet> ExtractConcentrationSet();
+
+    /**
+     * @brief Projects samples onto a discriminant function axis
+     *
+     * Transforms elemental profiles from a source group by computing their
+     * projections (dot products) with a discriminant eigenvector. This projects
+     * high-dimensional elemental compositions onto a one-dimensional discriminant
+     * axis for visualization and separation assessment.
+     *
+     * Projection formula: score_i = Σ(x_ij × w_j)
+     * Where x_ij is element j in sample i, and w_j is the eigenvector weight
+     *
+     * @param eigenvector Discriminant function coefficients (eigenvector)
+     * @param source_group Name of the source group to project
+     *
+     * @return CMBVector containing discriminant scores for each sample, labeled
+     *         with sample names
+     *
+     * @note Vector length matches number of samples in the source group
+     * @note Sample names are stored as labels in the returned vector
+     *
+     * @see DiscriminantFunctionAnalysis() for computing eigenvectors
+     * @see DFA_Projected() for comprehensive projection results
+     */
+    CMBVector DFATransformed(const CMBVector& eigenvector, const string& source_group);
+
+    /**
+     * @brief Collects all source samples except those from a specified source group
+     *
+     * Creates a combined profile set containing samples from all source groups
+     * except the specified one and the target group. Useful for "one vs rest"
+     * comparisons in discriminant function analysis and other statistical tests.
+     *
+     * @param excluded_source Name of the source group to exclude
+     *
+     * @return Elemental_Profile_Set containing all samples from other source groups
+     *
+     * @note Target group is always excluded
+     * @note Sample names are preserved in the returned profile set
+     * @note If sample names overlap between sources, later ones may overwrite earlier ones
+     *
+     * @see DiscriminantFunctionAnalysis(const string&) for usage in one-vs-rest DFA
+     */
+    Elemental_Profile_Set TheRest(const string& excluded_source);
+    /**
+     * @brief Performs bracket test to check if target concentrations fall within source ranges
+     *
+     * Tests whether each element's concentration in the target sample falls within
+     * the range (min to max) observed across all source samples. Elements outside
+     * source ranges indicate potential issues: missing sources, measurement errors,
+     * or non-conservative behavior.
+     *
+     * Test criteria for each element:
+     * - Pass (0): Target concentration within [min_sources, max_sources]
+     * - Fail (1): Target concentration outside source ranges
+     *
+     * Failed elements are annotated in the target sample's notes with whether
+     * the value is too high or too low relative to sources.
+     *
+     * @param target_sample Name of the target sample to test
+     * @param correct_based_on_om_n_size If true, apply OM/size corrections before testing
+     *
+     * @return CMBVector of pass/fail flags (0 = pass, 1 = fail) for each element
+     *
+     * @note Flags are labeled with element names
+     * @note Failed elements are documented in target sample notes
+     * @note Test assumes conservative mixing (no gains/losses)
+     *
+     * @see CreateCorrectedAndFilteredDataset() for data preparation
+     */
+    CMBVector BracketTest(const string& target_sample, bool correct_based_on_om_n_size);
+    /**
+     * @brief Performs bracket test on all target samples
+     *
+     * Applies the bracket test to every sample in the target group, producing a
+     * matrix showing which elements in which samples fall outside source concentration
+     * ranges. This provides a comprehensive view of potential CMB model violations
+     * across the entire target dataset.
+     *
+     * Matrix structure:
+     * - Rows: Elements
+     * - Columns: Target samples
+     * - Values: 0 = pass (within range), 1 = fail (outside range)
+     *
+     * @param correct_based_on_om_n_size If true, apply OM/size corrections before testing
+     * @param exclude_elements If true, filter out elements marked for exclusion
+     * @param exclude_samples If true, filter out samples marked for exclusion
+     *
+     * @return CMBMatrix of bracket test results for all target samples
+     *
+     * @note Each target sample is tested independently
+     * @note Failed elements are documented in individual sample notes
+     * @note Matrix dimensions: (num_elements × num_target_samples)
+     *
+     * @see BracketTest(const string&, bool) for single-sample test
+     * @see CreateCorrectedAndFilteredDataset() for data preparation
+     */
+    CMBMatrix BracketTest(bool correct_based_on_om_n_size, bool exclude_elements, bool exclude_samples);
+    
+    
+    /**
+     * @brief Applies Box-Cox transformation to all source groups for normalization
+     *
+     * Transforms elemental concentrations using the Box-Cox power transformation
+     * to improve normality of distributions. This is useful for statistical analyses
+     * that assume normally distributed data (e.g., t-tests, ANOVA, discriminant analysis).
+     *
+     * Box-Cox transformation: y = (x^λ - 1) / λ  (or ln(x) if λ = 0)
+     *
+     * The optimal λ parameter for each element is determined by maximum likelihood
+     * estimation to best achieve normality.
+     *
+     * @param calculate_optimal_lambda If true, compute optimal λ for each element;
+     *                                 if false, use default transformation
+     *
+     * @return New SourceSinkData object with transformed concentrations
+     *
+     * @note Target group is not transformed (only sources)
+     * @note Element distributions are recalculated after transformation
+     * @note Original data is preserved (returns new object)
+     *
+     * @see OptimalBoxCoxParameters() for λ parameter computation
+     * @see Elemental_Profile_Set::ApplyBoxCoxTransform() for transformation details
+     */
+    SourceSinkData BoxCoxTransformed(bool calculate_optimal_lambda=false);
+
+
+    /**
+     * @brief Extracts concentration distributions for all elements across sources
+     *
+     * Collects all concentration values for each element across all source samples
+     * (excluding target) into ConcentrationSet objects. This aggregates data for
+     * statistical analysis of elemental distributions across the entire source dataset.
+     *
+     * @return Map of element names to ConcentrationSet objects containing all
+     *         source sample concentrations for that element
+     *
+     * @note Target group samples are excluded
+     * @note Each ConcentrationSet contains values from all sources combined
+     * @note Useful for computing global statistics or fitting distributions
+     *
+     * @see PopulateElementDistributions() for storing distributions in profile sets
+     * @see AssignAllDistributions() for fitting distribution models
+     */
+    map<string, ConcentrationSet> ExtractConcentrationSet();
+   
+    /**
+     * @brief Computes optimal Box-Cox transformation parameters for all elements
+     *
+     * Determines the optimal λ (lambda) parameter for each element's Box-Cox
+     * transformation by maximizing the log-likelihood of achieving normality.
+     * The parameter search spans λ ∈ [-5, 5] with 10 iterations of refinement.
+     *
+     * Box-Cox transformation: y = (x^λ - 1) / λ  (or ln(x) if λ = 0)
+     *
+     * Special cases:
+     * - λ = 1: No transformation (linear)
+     * - λ = 0.5: Square root transformation
+     * - λ = 0: Log transformation
+     * - λ = -1: Reciprocal transformation
+     *
+     * @return CMBVector of optimal λ parameters, one per element, labeled with
+     *         element names
+     *
+     * @note Uses concentration data from all source samples (target excluded)
+     * @note Search range: λ ∈ [-5, 5]
+     * @note Optimization iterations: 10
+     *
+     * @see BoxCoxTransformed() for applying the transformation
+     * @see ExtractConcentrationSet() for data aggregation
+     * @see ConcentrationSet::FindOptimalBoxCoxParameter() for optimization algorithm
+     */
     CMBVector OptimalBoxCoxParameters();
-    Elemental_Profile DifferentiationPower(const string &source1, const string &source2, bool log);
-    Elemental_Profile DifferentiationPower_Percentage(const string &source1, const string &source2);
-    Elemental_Profile t_TestPValue(const string &source1, const string &source2, bool log);
-    Elemental_Profile_Set DifferentiationPower(bool log, bool include_target);
+
+    /**
+     * @brief Computes t-test p-values for element-wise differences between two sources
+     *
+     * Performs independent two-sample t-tests for each element to assess whether
+     * concentrations differ significantly between two source groups. Lower p-values
+     * indicate stronger evidence that the sources differ for that element.
+     *
+     * T-statistic: t = (μ₁ - μ₂) / √(σ₁²/n₁ + σ₂²/n₂)
+     *
+     * @param source1 Name of first source group
+     * @param source2 Name of second source group
+     * @param use_log If true, perform test on log-transformed concentrations;
+     *                if false, use linear-space concentrations
+     *
+     * @return Elemental_Profile containing two-tailed p-values for each element
+     *
+     * @note P-values are two-tailed (tests for any difference, not directional)
+     * @note Lower p-values indicate better source differentiation
+     * @note Log-space testing appropriate for log-normally distributed data
+     *
+     * @see DifferentiationPower_P_value() for all pairwise comparisons
+     */
+    Elemental_Profile t_TestPValue(const string& source1, const string& source2, bool use_log);
+
+    /**
+     * @brief Computes differentiation power metric between two sources
+     *
+     * Calculates a standardized measure of how well each element differentiates
+     * between two sources. The metric quantifies separation in units of pooled
+     * standard deviations.
+     *
+     * Formula: D = 2 × |μ₁ - μ₂| / (σ₁ + σ₂)
+     *
+     * Interpretation:
+     * - D > 2: Strong differentiation (means differ by >1 pooled std dev)
+     * - D ≈ 1: Moderate differentiation
+     * - D < 0.5: Weak differentiation (substantial overlap)
+     *
+     * @param source1 Name of first source group
+     * @param source2 Name of second source group
+     * @param use_log If true, compute using log-space statistics;
+     *                if false, use linear-space statistics
+     *
+     * @return Elemental_Profile containing differentiation power for each element
+     *
+     * @note Higher values indicate better discrimination ability
+     * @note Complementary to p-values (considers effect size, not just significance)
+     *
+     * @see DifferentiationPower(bool, bool) for all pairwise comparisons
+     */
+    Elemental_Profile DifferentiationPower(const string& source1, const string& source2, bool use_log);
+
+    /**
+     * @brief Computes differentiation power for all source pairs
+     *
+     * Performs pairwise differentiation power analysis for all combinations of
+     * source groups, generating a comprehensive matrix of source separability.
+     *
+     * @param use_log If true, compute using log-space statistics;
+     *                if false, use linear-space statistics
+     * @param include_target If true, include target group in comparisons;
+     *                       if false, only compare source groups
+     *
+     * @return Elemental_Profile_Set with differentiation profiles for each source pair
+     *
+     * @note Profile names formatted as "Source1 and Source2"
+     * @note Number of comparisons: n(n-1)/2 for n groups
+     *
+     * @see DifferentiationPower(const string&, const string&, bool) for single pair
+     */
+    Elemental_Profile_Set DifferentiationPower(bool use_log, bool include_target);
+
+    /**
+     * @brief Computes rank-based differentiation percentage between two sources
+     *
+     * Calculates the percentage of samples that can be correctly classified based
+     * on element concentrations using a rank-based approach. Provides a
+     * distribution-free measure of source separability.
+     *
+     * Method:
+     * 1. Pool samples from both sources
+     * 2. Rank all concentrations for each element
+     * 3. Count correct classifications (Source1 samples with low ranks +
+     *    Source2 samples with high ranks, or vice versa)
+     * 4. Return classification success percentage
+     *
+     * @param source1 Name of first source group
+     * @param source2 Name of second source group
+     *
+     * @return Elemental_Profile containing classification percentages (0-1) for each element
+     *
+     * @note Values near 1.0 indicate excellent separation
+     * @note Values near 0.5 indicate no separation (random classification)
+     * @note Non-parametric (no distributional assumptions)
+     *
+     * @see DifferentiationPower_Percentage(bool) for all pairwise comparisons
+     */
+    Elemental_Profile DifferentiationPower_Percentage(const string& source1, const string& source2);
+
+    /**
+     * @brief Computes rank-based differentiation percentage for all source pairs
+     *
+     * Performs pairwise rank-based differentiation analysis for all combinations
+     * of source groups.
+     *
+     * @param include_target If true, include target group in comparisons;
+     *                       if false, only compare source groups
+     *
+     * @return Elemental_Profile_Set with differentiation percentages for each source pair
+     *
+     * @note Profile names formatted as "Source1 and Source2"
+     * @note Non-parametric alternative to DifferentiationPower()
+     *
+     * @see DifferentiationPower_Percentage(const string&, const string&) for single pair
+     */
     Elemental_Profile_Set DifferentiationPower_Percentage(bool include_target);
+
+    /**
+     * @brief Computes t-test p-values for all source pairs
+     *
+     * Performs pairwise t-test analysis for all combinations of source groups,
+     * generating a comprehensive matrix of statistical significance values.
+     *
+     * @param include_target If true, include target group in comparisons;
+     *                       if false, only compare source groups
+     *
+     * @return Elemental_Profile_Set with p-value profiles for each source pair
+     *
+     * @note Profile names formatted as "Source1 and Source2"
+     * @note Uses linear-space (not log-space) statistics
+     * @note Lower p-values indicate statistically significant differences
+     *
+     * @see t_TestPValue(const string&, const string&, bool) for single pair
+     */
     Elemental_Profile_Set DifferentiationPower_P_value(bool include_target);
+    
+    /**
+     * @brief Checks for zero or negative concentration values across all sources
+     *
+     * Scans all source groups for elements with zero or negative concentrations,
+     * which are problematic for log-normal distributions and certain statistical
+     * analyses. Returns detailed error messages identifying problematic elements
+     * and their source groups.
+     *
+     * @return Vector of error messages describing zero/negative values found
+     *
+     * @note Returns empty vector if no issues found
+     * @note Only checks source groups (target excluded)
+     * @note Calls PopulateConstituentOrders() to ensure element ordering is current
+     *
+     * @see Elemental_Profile_Set::CheckForNegativeValues() for group-level checking
+     */
     vector<string> NegativeValueCheck();
-    double GrandMean(const string &element, bool logtransformed);
+
+    /**
+     * @brief Sets inclusion flag for all elements
+     *
+     * Enables or disables all elements for analysis in batch. Useful for
+     * quickly excluding all elements, then selectively re-enabling specific ones.
+     *
+     * @param include_in_analysis If true, include all elements in analysis;
+     *                            if false, exclude all elements from analysis
+     *
+     * @note Affects all elements regardless of role (elements, isotopes, etc.)
+     * @note Does not affect element_information roles, only the inclusion flag
+     *
+     * @see element_information::include_in_analysis for per-element control
+     */
+    void IncludeExcludeAllElements(bool include_in_analysis);
+
+    /**
+     * @brief Computes grand mean concentration for an element across all sources
+     *
+     * Calculates the overall mean concentration weighted by sample sizes across
+     * all source groups (excluding target). Useful for normalizing concentrations
+     * or assessing typical background levels.
+     *
+     * Formula: μ_grand = Σ(n_i × μ_i) / Σ(n_i)
+     * Where n_i is sample size and μ_i is mean for source i
+     *
+     * @param element Name of the element
+     * @param use_log If true, compute using log-space means;
+     *                if false, use linear-space means
+     *
+     * @return Weighted grand mean concentration
+     *
+     * @note Target group is excluded from calculation
+     * @note Weighting ensures sources with more samples have proportional influence
+     *
+     * @see GrandStandardDeviation() for corresponding variability measure
+     */
+    double GrandMean(const string& element, bool use_log);
+
+    /**
+     * @brief Combines all source samples into a single profile set
+     *
+     * Pools samples from all source groups into one unified Elemental_Profile_Set.
+     * Useful for computing global statistics or testing overall source characteristics.
+     *
+     * @return Elemental_Profile_Set containing all source samples combined
+     *
+     * @note Target group is excluded
+     * @note Sample names are preserved (may have duplicates across sources)
+     * @note Element distributions are recalculated for the combined set
+     *
+     * @see ExtractConcentrationSet() for alternative data aggregation
+     */
     Elemental_Profile_Set LumpAllProfileSets();
-    void IncludeExcludeAllElements(bool value);
+
     void SetOMandSizeConstituents(const string &_omconstituent, const string &_sizeconsituent)
     {
         omconstituent_ = _omconstituent;
@@ -1915,9 +2408,57 @@ public:
         out.push_back(sizeconsituent_);
         return out;
     }
-    void OutlierAnalysisForAll(const double &lowerthreshold=-3, const double &upperthreshold=3);
-    ANOVA_info ANOVA(const string &element, bool logtransformed);
-    CMBVector ANOVA(bool logtransformed);
+    
+    /**
+     * @brief Performs one-way ANOVA for all elements across source groups
+     *
+     * Conducts analysis of variance to test whether mean concentrations differ
+     * significantly among source groups for each element. Lower p-values indicate
+     * stronger evidence that at least one source differs from the others.
+     *
+     * Null hypothesis: μ₁ = μ₂ = ... = μₖ (all source means equal)
+     * Alternative: At least one mean differs
+     *
+     * @param use_log If true, perform ANOVA on log-transformed concentrations;
+     *                if false, use linear-space concentrations
+     *
+     * @return CMBVector of p-values for each element, labeled with element names
+     *
+     * @note Lower p-values indicate significant differences among sources
+     * @note Target group is excluded from analysis
+     * @note Log-space appropriate for log-normally distributed data
+     *
+     * @see ANOVA(const string&, bool) for detailed statistics on single element
+     */
+    CMBVector ANOVA(bool use_log);
+
+    /**
+     * @brief Performs one-way ANOVA for a single element across source groups
+     *
+     * Conducts detailed analysis of variance decomposing total variance into
+     * between-group and within-group components. Tests whether sources have
+     * significantly different mean concentrations for this element.
+     *
+     * ANOVA decomposition:
+     * - SST (Total Sum of Squares) = SSB + SSW
+     * - SSB (Between-group) = Σ n_i(μ_i - μ_grand)²
+     * - SSW (Within-group) = Σ Σ (x_ij - μ_i)²
+     * - F-statistic = MSB / MSW
+     *
+     * @param element Name of the element to analyze
+     * @param use_log If true, perform ANOVA on log-transformed concentrations;
+     *                if false, use linear-space concentrations
+     *
+     * @return ANOVA_info structure containing SST, SSB, SSW, MSB, MSW, F, and p-value
+     *
+     * @note Target group is excluded from analysis
+     * @note Degrees of freedom: df_between = k-1, df_within = N-k
+     *
+     * @see ANOVA(bool) for all-element analysis
+     */
+    ANOVA_info ANOVA(const string& element, bool use_log);
+
+    
     void IncludeExcludeElementsBasedOn(const vector<string> elements);
     SourceSinkData RandomlyEliminateSourceSamples(const double &percentage);
     CMBTimeSeriesSet BootStrap(const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation);

@@ -2811,529 +2811,828 @@ element_information::role SourceSinkData::Role(const QString& role_string)
     return element_information::role::do_not_include;
 }
 
-bool SourceSinkData::Perform_Regression_vs_om_size(const string &om, const string &d, regression_form form, const double& p_value_threshold)
+bool SourceSinkData::PerformRegressionVsOMAndSize(
+    const string& om,
+    const string& particle_size,
+    regression_form form,
+    const double& p_value_threshold)
 {
+    // Store OM and size constituent names for later use in corrections
     omconstituent_ = om;
-    sizeconsituent_ = d;
+    sizeconsituent_ = particle_size;
     regression_p_value_threshold_ = p_value_threshold;
-    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it!=end(); it++)
+
+    // Compute regression models for all sample groups
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
-        it->second.SetRegressionModels(om,d,form,p_value_threshold);
+        it->second.SetRegressionModels(om, particle_size, form, p_value_threshold);
     }
+
     return true;
 }
 
-void SourceSinkData::OutlierAnalysisForAll(const double &lowerthreshold, const double &upperthreshold)
+void SourceSinkData::OutlierAnalysisForAll(const double& lower_threshold, const double& upper_threshold)
 {
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
-        if (it->first!=target_group_)
-            it->second.DetectOutliers(lowerthreshold,upperthreshold);
+    // Perform outlier detection on each source group
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    {
+        // Skip target group - only analyze sources
+        if (it->first != target_group_)
+        {
+            it->second.DetectOutliers(lower_threshold, upper_threshold);
+        }
+    }
 }
 
 DFA_result SourceSinkData::DiscriminantFunctionAnalysis()
 {
-    DFA_result out;
-    out.F_test_P_value = CMBVector(size()-1);
-    out.p_values = CMBVector(size()-1);
-    out.wilkslambda = CMBVector(size()-1);
+    DFA_result result;
 
-    int counter = 0;
-    for (map<string, Elemental_Profile_Set>::iterator source = begin(); source!=end(); source++)
+    // Initialize result vectors for all sources
+    const size_t num_sources = size() - 1;  // Exclude target
+    result.F_test_P_value = CMBVector(num_sources);
+    result.p_values = CMBVector(num_sources);
+    result.wilkslambda = CMBVector(num_sources);
+
+    // Perform DFA for each source vs all others
+    size_t counter = 0;
+    for (map<string, Elemental_Profile_Set>::iterator source = begin(); source != end(); source++)
     {
-        if (source->first!=target_group_)
+        // Skip target group
+        if (source->first != target_group_)
         {
-            DFA_result res = DiscriminantFunctionAnalysis(source->first);
-            out.F_test_P_value[counter] = res.F_test_P_value[0];
-            out.F_test_P_value.SetLabel(counter, source->first);
-            out.p_values[counter] = res.p_values[0];
-            out.p_values.SetLabel(counter, source->first);
-            out.wilkslambda[counter] = res.wilkslambda[0];
-            out.wilkslambda.SetLabel(counter, source->first);
+            // Run one-vs-rest DFA for this source
+            DFA_result source_result = DiscriminantFunctionAnalysis(source->first);
 
-            out.eigen_vectors.Append(source->first,res.eigen_vectors[source->first + " vs the rest"]);
-            out.multi_projected.Append(source->first,res.projected);
+            // Extract and store results
+            result.F_test_P_value[counter] = source_result.F_test_P_value[0];
+            result.F_test_P_value.SetLabel(counter, source->first);
+
+            result.p_values[counter] = source_result.p_values[0];
+            result.p_values.SetLabel(counter, source->first);
+
+            result.wilkslambda[counter] = source_result.wilkslambda[0];
+            result.wilkslambda.SetLabel(counter, source->first);
+
+            result.eigen_vectors.Append(source->first, source_result.eigen_vectors[source->first + " vs the rest"]);
+            result.multi_projected.Append(source->first, source_result.projected);
+
             counter++;
         }
-
     }
-    return out;
+
+    return result;
 }
 
-
-DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1, const string &source2)
+DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string& source1, const string& source2)
 {
-    SourceSinkData twoSources;
-    twoSources.AppendSampleSet(source1,at(source1));
-    twoSources.AppendSampleSet(source2,at(source2));
-    twoSources.PopulateElementInformation(&element_information_);
-    DFA_result out;
-    //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
-    CMBVector eigen_vector = twoSources.DFA_eigvector();
-    if (eigen_vector.size()==0)
-        return out;
-    out.projected = twoSources.DFA_Projected(source1, source2);
-    out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = out.projected.FTest_p_value();
-    out.eigen_vectors.Append(source1 + " vs " +source2,eigen_vector);
-    double p_value = twoSources.DFA_P_Value();
-    out.p_values = CMBVector(1); out.p_values[0] = p_value;
-    out.wilkslambda = CMBVector(1); out.wilkslambda[0] = twoSources.WilksLambda();
-    return out;
+    // Create temporary dataset with only two sources
+    SourceSinkData two_sources;
+    two_sources.AppendSampleSet(source1, at(source1));
+    two_sources.AppendSampleSet(source2, at(source2));
+    two_sources.PopulateElementInformation(&element_information_);
+
+    DFA_result result;
+
+    // Compute discriminant eigenvector
+    CMBVector eigen_vector = two_sources.DFA_eigvector();
+
+    // Return empty result if eigenvector computation failed
+    if (eigen_vector.size() == 0)
+    {
+        return result;
+    }
+
+    // Project samples onto discriminant axis
+    result.projected = two_sources.DFA_Projected(source1, source2);
+
+    // Compute F-test p-value for separation
+    result.F_test_P_value = CMBVector(1);
+    result.F_test_P_value[0] = result.projected.FTest_p_value();
+
+    // Store eigenvector
+    result.eigen_vectors.Append(source1 + " vs " + source2, eigen_vector);
+
+    // Compute discriminant p-value and Wilks' Lambda
+    double p_value = two_sources.DFA_P_Value();
+    result.p_values = CMBVector(1);
+    result.p_values[0] = p_value;
+
+    result.wilkslambda = CMBVector(1);
+    result.wilkslambda[0] = two_sources.WilksLambda();
+
+    return result;
 }
 
-DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string &source1)
+DFA_result SourceSinkData::DiscriminantFunctionAnalysis(const string& source1)
 {
-    SourceSinkData twoSources;
-    twoSources.AppendSampleSet(source1,at(source1));
-    twoSources.AppendSampleSet("Others",TheRest(source1));
-    twoSources.PopulateElementInformation(&element_information_);
-    DFA_result out;
-    //CMBVector eigen_vector = twoSources.DFA_weight_vector(source1, source2);
-    CMBVector eigen_vector = twoSources.DFA_eigvector();
-    out.projected = twoSources.DFA_Projected(source1, this);
-    CMBVectorSet pairwiseProjected = twoSources.DFA_Projected(source1, "Others");
-    out.F_test_P_value = CMBVector(1); out.F_test_P_value[0] = pairwiseProjected.FTest_p_value();
-    out.eigen_vectors.Append(source1 + " vs the rest", eigen_vector);
-    double p_value = twoSources.DFA_P_Value();
-    out.p_values = CMBVector(1); out.p_values[0] = p_value;
-    out.wilkslambda = CMBVector(1); out.wilkslambda[0] = twoSources.WilksLambda();
-    return out;
+    // Create temporary dataset with one source vs all others
+    SourceSinkData two_sources;
+    two_sources.AppendSampleSet(source1, at(source1));
+    two_sources.AppendSampleSet("Others", TheRest(source1));
+    two_sources.PopulateElementInformation(&element_information_);
+
+    DFA_result result;
+
+    // Compute discriminant eigenvector
+    CMBVector eigen_vector = two_sources.DFA_eigvector();
+
+    // Project all samples onto discriminant axis
+    result.projected = two_sources.DFA_Projected(source1, this);
+
+    // Project pairwise comparison (source vs others)
+    CMBVectorSet pairwise_projected = two_sources.DFA_Projected(source1, "Others");
+
+    // Compute F-test p-value from pairwise projection
+    result.F_test_P_value = CMBVector(1);
+    result.F_test_P_value[0] = pairwise_projected.FTest_p_value();
+
+    // Store eigenvector with descriptive label
+    result.eigen_vectors.Append(source1 + " vs the rest", eigen_vector);
+
+    // Compute discriminant p-value and Wilks' Lambda
+    double p_value = two_sources.DFA_P_Value();
+    result.p_values = CMBVector(1);
+    result.p_values[0] = p_value;
+
+    result.wilkslambda = CMBVector(1);
+    result.wilkslambda[0] = two_sources.WilksLambda();
+
+    return result;
 }
-
-
 int SourceSinkData::TotalNumberofSourceSamples() const
 {
     int count = 0;
-    for (map<string,Elemental_Profile_Set>::const_iterator source_group = cbegin(); source_group!=cend(); source_group++)
+
+    // Sum samples across all source groups
+    for (map<string, Elemental_Profile_Set>::const_iterator source_group = cbegin(); source_group != cend(); source_group++)
     {
+        // Skip target group - only count source samples
         if (source_group->first != target_group_)
         {
-            count += double(source_group->second.size());
+            count += source_group->second.size();
         }
     }
+
     return count;
 }
 
-CMBVector SourceSinkData::DFATransformed(const CMBVector &eigenvector, const string &sourcegroup)
+CMBVector SourceSinkData::DFATransformed(const CMBVector& eigenvector, const string& source_group)
 {
-    CMBVector out(operator[](sourcegroup).size());
-    int i=0;
-    for (map<string,Elemental_Profile>::iterator sample = operator[](sourcegroup).begin(); sample != operator[](sourcegroup).end(); sample++)
+    // Initialize result vector for discriminant scores
+    CMBVector discriminant_scores(operator[](source_group).size());
+
+    // Project each sample onto the discriminant axis
+    size_t sample_index = 0;
+    for (map<string, Elemental_Profile>::iterator sample = operator[](source_group).begin();
+        sample != operator[](source_group).end();
+        sample++)
     {
-        out[i] = sample->second.CalculateDotProduct(eigenvector);
-        out.SetLabel(i,sample->first);
-        i++;
+        // Compute dot product: discriminant score = eigenvector · sample_profile
+        discriminant_scores[sample_index] = sample->second.CalculateDotProduct(eigenvector);
+        discriminant_scores.SetLabel(sample_index, sample->first);
+
+        sample_index++;
     }
 
-    return out;
+    return discriminant_scores;
 }
 
-Elemental_Profile_Set SourceSinkData::TheRest(const string &source)
+Elemental_Profile_Set SourceSinkData::TheRest(const string& excluded_source)
 {
-    Elemental_Profile_Set out;
-    for (map<string,Elemental_Profile_Set>::iterator profile_set = begin(); profile_set!=end(); profile_set++)
+    Elemental_Profile_Set combined_sources;
+
+    // Iterate through all sample groups
+    for (map<string, Elemental_Profile_Set>::iterator profile_set = begin();
+        profile_set != end();
+        profile_set++)
     {
-        if (profile_set->first!=source && profile_set->first!=target_group_)
-            for (map<string, Elemental_Profile>::iterator profile=profile_set->second.begin(); profile!=profile_set->second.end(); profile++ )
+        // Skip the excluded source and target group
+        if (profile_set->first != excluded_source && profile_set->first != target_group_)
+        {
+            // Add all samples from this source group
+            for (map<string, Elemental_Profile>::iterator profile = profile_set->second.begin();
+                profile != profile_set->second.end();
+                profile++)
             {
-                out.AppendProfile(profile->first, profile->second);
-
+                combined_sources.AppendProfile(profile->first, profile->second);
             }
+        }
     }
-    return out;
+
+    return combined_sources;
 }
 
 
-CMBVector SourceSinkData::BracketTest(const string &target_sample, bool correct_based_on_om_n_size)
+CMBVector SourceSinkData::BracketTest(const string& target_sample, bool correct_based_on_om_n_size)
 {
-
     vector<string> element_names = GetElementNames();
-    CMBVector out(element_names.size());
-    CVector maxs(element_names.size());
-    CVector mins(element_names.size());
-    maxs.SetAllValues(1.0);
-    mins.SetAllValues(1.0);
-    SourceSinkData CopiedData = CreateCorrectedAndFilteredDataset(false, false, correct_based_on_om_n_size, target_sample);
+    const size_t num_elements = element_names.size();
 
-    for (map<string,Elemental_Profile_Set>::iterator it = CopiedData.begin(); it!=CopiedData.end(); it++)
+    // Initialize result vectors
+    CMBVector bracket_test_results(num_elements);
+    CVector exceeds_max(num_elements);  // Flags for concentrations above source maximum
+    CVector below_min(num_elements);    // Flags for concentrations below source minimum
+
+    exceeds_max.SetAllValues(1.0);  // Assume all exceed until proven otherwise
+    below_min.SetAllValues(1.0);    // Assume all below until proven otherwise
+
+    // Create corrected dataset for testing
+    SourceSinkData corrected_data = CreateCorrectedAndFilteredDataset(
+        false, false, correct_based_on_om_n_size, target_sample);
+
+    // Check each source group's concentration ranges
+    for (map<string, Elemental_Profile_Set>::iterator it = corrected_data.begin();
+        it != corrected_data.end();
+        it++)
     {
+        // Skip target group
         if (it->first != target_group_)
         {
-            for (unsigned int i = 0; i < element_names.size(); i++)
+            // Check each element
+            for (size_t i = 0; i < num_elements; i++)
             {
-                out.SetLabel(i, element_names[i]);
-                if (CopiedData.at(target_group_).GetProfile(target_sample)->at(element_names[i]) <= it->second.GetElementDistribution(element_names[i])->GetMaximum())
-                {
-                    maxs[i] = 0;
-                }
-                if (CopiedData.at(target_group_).GetProfile(target_sample)->at(element_names[i]) >= it->second.GetElementDistribution(element_names[i])->GetMinimum())
-                {
-                    mins[i] = 0;
-                }
+                bracket_test_results.SetLabel(i, element_names[i]);
 
+                double target_concentration = corrected_data.at(target_group_)
+                    .GetProfile(target_sample)->at(element_names[i]);
+                double source_maximum = it->second.GetElementDistribution(element_names[i])
+                    ->GetMaximum();
+                double source_minimum = it->second.GetElementDistribution(element_names[i])
+                    ->GetMinimum();
+
+                // Check if target is within this source's range
+                if (target_concentration <= source_maximum)
+                {
+                    exceeds_max[i] = 0;  // Target does not exceed max
+                }
+                if (target_concentration >= source_minimum)
+                {
+                    below_min[i] = 0;    // Target is not below min
+                }
             }
         }
     }
 
-    for (unsigned int i=0; i<element_names.size(); i++)
+    // Compile results and annotate failures
+    for (size_t i = 0; i < num_elements; i++)
     {
-        out[i] = max(maxs[i],mins[i]);
-        if (maxs[i]>0.5)
-            at(target_group_).GetProfile(target_sample)->AppendtoNotes(element_names[i] + " value is higher than the maximum of the sources");
-        else if (mins[i]>0.5)
-            at(target_group_).GetProfile(target_sample)->AppendtoNotes(element_names[i] + " value is lower than the minimum of the sources");
+        // Fail if either above all maxima or below all minima
+        bracket_test_results[i] = max(exceeds_max[i], below_min[i]);
+
+        // Annotate failures in target sample notes
+        if (exceeds_max[i] > 0.5)
+        {
+            at(target_group_).GetProfile(target_sample)->AppendtoNotes(
+                element_names[i] + " value is higher than the maximum of the sources");
+        }
+        else if (below_min[i] > 0.5)
+        {
+            at(target_group_).GetProfile(target_sample)->AppendtoNotes(
+                element_names[i] + " value is lower than the minimum of the sources");
+        }
     }
-    return out;
+
+    return bracket_test_results;
 }
 
 
-CMBMatrix SourceSinkData::BracketTest(bool correct_based_on_on_n_size, bool exclude_elements, bool exclude_samples)
+CMBMatrix SourceSinkData::BracketTest(
+    bool correct_based_on_om_n_size,
+    bool exclude_elements,
+    bool exclude_samples)
 {
+    // Initialize result matrix
+    // Note: Matrix is constructed as (num_rows, num_cols) but accessed as [row][col]
+    const size_t num_target_samples = at(target_group_).size();
+    const size_t num_elements = CountElements(exclude_elements);
+    CMBMatrix bracket_results(num_target_samples, num_elements);
 
-    CMBMatrix out(at(target_group_).size(),CountElements(exclude_elements));
-    int j=0;
-
-    for (map<string,Elemental_Profile>::iterator sample = at(target_group_).begin(); sample != at(target_group_).end(); sample++ )
+    // Test each target sample
+    size_t sample_index = 0;
+    for (map<string, Elemental_Profile>::iterator sample = at(target_group_).begin();
+        sample != at(target_group_).end();
+        sample++)
     {
-
-        SourceSinkData copiedData;
-        if (correct_based_on_on_n_size)
+        // Prepare dataset for this target sample
+        SourceSinkData corrected_data;
+        if (correct_based_on_om_n_size)
         {
-            copiedData = CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, true, sample->first);
+            corrected_data = CreateCorrectedAndFilteredDataset(
+                exclude_samples, exclude_elements, true, sample->first);
         }
         else
-            copiedData = CreateCorrectedAndFilteredDataset(exclude_samples,exclude_elements, false);
-
-        vector<string> element_names = copiedData.GetElementNames();
-
-        CMBVector bracket_vec = copiedData.BracketTest(sample->first,false);
-        for (size_t i=0; i<element_names.size(); i++)
         {
-            out[i][j] = bracket_vec.valueAt(i);
-            out.SetRowLabel(i,element_names[i]);
+            corrected_data = CreateCorrectedAndFilteredDataset(
+                exclude_samples, exclude_elements, false);
         }
-        out.SetColumnLabel(j,sample->first);
-        j++;
+
+        // Perform bracket test for this sample
+        vector<string> element_names = corrected_data.GetElementNames();
+        CMBVector bracket_vector = corrected_data.BracketTest(sample->first, false);
+
+        // Store results in matrix
+        for (size_t element_index = 0; element_index < element_names.size(); element_index++)
+        {
+            bracket_results[element_index][sample_index] = bracket_vector.valueAt(element_index);
+            bracket_results.SetRowLabel(element_index, element_names[element_index]);
+        }
+        bracket_results.SetColumnLabel(sample_index, sample->first);
+
+        sample_index++;
     }
 
-    return out;
+    return bracket_results;
 }
 
 
 
-
-
-SourceSinkData SourceSinkData::BoxCoxTransformed(bool calculateeigenvectors)
+SourceSinkData SourceSinkData::BoxCoxTransformed(bool calculate_optimal_lambda)
 {
-    CMBVector lambda_vals=OptimalBoxCoxParameters();
-    SourceSinkData out(*this);
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
+    // Compute optimal lambda parameters for each element
+    CMBVector lambda_parameters = OptimalBoxCoxParameters();
+
+    // Create copy of data for transformation
+    SourceSinkData transformed_data(*this);
+
+    // Apply Box-Cox transformation to each source group
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
-        if (it->first!=target_group_)
+        // Skip target group - only transform sources
+        if (it->first != target_group_)
         {
-            if (calculateeigenvectors)
-                out[it->first] = it->second.ApplyBoxCoxTransform(&lambda_vals);
-            else
-                out[it->first] = it->second.ApplyBoxCoxTransform();
-        }
-    }
-    out.PopulateElementDistributions();
-    out.AssignAllDistributions();
-
-    return out;
-}
-
-map<string,ConcentrationSet> SourceSinkData::ExtractConcentrationSet()
-{
-    map<string,ConcentrationSet> out;
-    vector<string> element_names=GetElementNames();
-    for (unsigned int i=0; i<element_names.size();i++)
-    {   ConcentrationSet concset;
-        for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=end(); it++)
-        {
-            if (it->first!=target_group_)
+            if (calculate_optimal_lambda)
             {
-                for (map<string,Elemental_Profile>::iterator sample=it->second.begin(); sample!=it->second.end(); sample++)
-                    concset.AppendValue(sample->second[element_names[i]]);
+                // Transform using optimal lambda parameters
+                transformed_data[it->first] = it->second.ApplyBoxCoxTransform(&lambda_parameters);
+            }
+            else
+            {
+                // Transform using default parameters
+                transformed_data[it->first] = it->second.ApplyBoxCoxTransform();
             }
         }
-        out[element_names[i]]=concset;
-
     }
 
-    return out;
+    // Recalculate distributions for transformed data
+    transformed_data.PopulateElementDistributions();
+    transformed_data.AssignAllDistributions();
+
+    return transformed_data;
+}
+
+map<string, ConcentrationSet> SourceSinkData::ExtractConcentrationSet()
+{
+    map<string, ConcentrationSet> element_concentrations;
+    vector<string> element_names = GetElementNames();
+
+    // Build concentration set for each element
+    for (size_t i = 0; i < element_names.size(); i++)
+    {
+        ConcentrationSet concentration_set;
+
+        // Collect concentrations from all source groups
+        for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+        {
+            // Skip target group - only collect from sources
+            if (it->first != target_group_)
+            {
+                // Add each sample's concentration for this element
+                for (map<string, Elemental_Profile>::iterator sample = it->second.begin();
+                    sample != it->second.end();
+                    sample++)
+                {
+                    concentration_set.AppendValue(sample->second[element_names[i]]);
+                }
+            }
+        }
+
+        element_concentrations[element_names[i]] = concentration_set;
+    }
+
+    return element_concentrations;
 }
 
 CMBVector SourceSinkData::OptimalBoxCoxParameters()
 {
-    map<string,ConcentrationSet> concset = ExtractConcentrationSet();
-    vector<string> element_names=GetElementNames();
-    CMBVector out(element_names.size());
-    for (unsigned int i=0; i<element_names.size();i++)
-    {
-        out[i] = concset[element_names[i]].FindOptimalBoxCoxParameter(-5,5,10);
+    // Extract concentration distributions for all elements
+    map<string, ConcentrationSet> concentration_sets = ExtractConcentrationSet();
+    vector<string> element_names = GetElementNames();
 
+    // Compute optimal lambda for each element
+    CMBVector lambda_parameters(element_names.size());
+
+    for (size_t i = 0; i < element_names.size(); i++)
+    {
+        // Find optimal lambda using maximum likelihood estimation
+        // Search range: [-5, 5], refinement iterations: 10
+        lambda_parameters[i] = concentration_sets[element_names[i]].FindOptimalBoxCoxParameter(-5, 5, 10);
     }
-    out.SetLabels(element_names);
-    return out;
-}
 
-Elemental_Profile SourceSinkData::t_TestPValue(const string &source1, const string &source2, bool log)
+    // Label parameters with element names
+    lambda_parameters.SetLabels(element_names);
+
+    return lambda_parameters;
+}
+Elemental_Profile SourceSinkData::t_TestPValue(const string& source1, const string& source2, bool use_log)
 {
-    vector<string> element_names=GetElementNames();
-    Elemental_Profile elemental_profile_item;
-    for (unsigned int i=0; i<element_names.size();i++)
+    vector<string> element_names = GetElementNames();
+    Elemental_Profile p_values;
+
+    // Perform t-test for each element
+    for (size_t i = 0; i < element_names.size(); i++)
     {
-        ConcentrationSet ConcentrationSet1 = *at(source1).GetElementDistribution(element_names[i]);
-        ConcentrationSet ConcentrationSet2 = *at(source2).GetElementDistribution(element_names[i]);
-        double std1, std2;
-        double mean1, mean2;
-        if (!log)
+        // Get concentration distributions for both sources
+        ConcentrationSet concentration_set1 = *at(source1).GetElementDistribution(element_names[i]);
+        ConcentrationSet concentration_set2 = *at(source2).GetElementDistribution(element_names[i]);
+
+        // Compute statistics in appropriate space
+        double std1, std2, mean1, mean2;
+        if (!use_log)
         {
-            std1 = ConcentrationSet1.CalculateStdDev();
-            std2 = ConcentrationSet2.CalculateStdDev();
-            mean1 = ConcentrationSet1.CalculateMean();
-            mean2 = ConcentrationSet2.CalculateMean();
+            // Linear-space statistics
+            std1 = concentration_set1.CalculateStdDev();
+            std2 = concentration_set2.CalculateStdDev();
+            mean1 = concentration_set1.CalculateMean();
+            mean2 = concentration_set2.CalculateMean();
         }
         else
         {
-            std1 = ConcentrationSet1.CalculateStdDevLog();
-            std2 = ConcentrationSet2.CalculateStdDevLog();
-            mean1 = ConcentrationSet1.CalculateMeanLog();
-            mean2 = ConcentrationSet2.CalculateMeanLog();
+            // Log-space statistics
+            std1 = concentration_set1.CalculateStdDevLog();
+            std2 = concentration_set2.CalculateStdDevLog();
+            mean1 = concentration_set1.CalculateMeanLog();
+            mean2 = concentration_set2.CalculateMeanLog();
         }
-        double t = (mean1-mean2)/sqrt(pow(std1,2)/ConcentrationSet1.size() + pow(std2,2)/ConcentrationSet2.size());
-        double pvalueQ = gsl_cdf_tdist_Q (t, ConcentrationSet1.size() + ConcentrationSet2.size() - 2);
-        pvalueQ = min(pvalueQ, 1.0-pvalueQ);
-        double pvalueP = gsl_cdf_tdist_P (t, ConcentrationSet1.size() + ConcentrationSet2.size() - 2);
-        pvalueP = min(pvalueP, 1.0-pvalueP);
-        elemental_profile_item.AppendElement(element_names[i],pvalueQ+pvalueP);
-    }
-    return elemental_profile_item;
 
+        // Compute t-statistic
+        double standard_error = sqrt(pow(std1, 2) / concentration_set1.size() +
+            pow(std2, 2) / concentration_set2.size());
+        double t_statistic = (mean1 - mean2) / standard_error;
+
+        // Compute two-tailed p-value
+        size_t degrees_of_freedom = concentration_set1.size() + concentration_set2.size() - 2;
+        double p_value_upper = gsl_cdf_tdist_Q(t_statistic, degrees_of_freedom);
+        double p_value_lower = gsl_cdf_tdist_P(t_statistic, degrees_of_freedom);
+
+        // Two-tailed: use minimum of tails, then sum
+        p_value_upper = min(p_value_upper, 1.0 - p_value_upper);
+        p_value_lower = min(p_value_lower, 1.0 - p_value_lower);
+        double p_value = p_value_upper + p_value_lower;
+
+        p_values.AppendElement(element_names[i], p_value);
+    }
+
+    return p_values;
 }
 
-Elemental_Profile SourceSinkData::DifferentiationPower(const string &source1, const string &source2, bool log)
+Elemental_Profile SourceSinkData::DifferentiationPower(const string& source1, const string& source2, bool use_log)
 {
-    vector<string> element_names=GetElementNames();
-    Elemental_Profile elemental_profile_item;
-    for (unsigned int i=0; i<element_names.size();i++)
+    vector<string> element_names = GetElementNames();
+    Elemental_Profile differentiation_powers;
+
+    // Compute differentiation power for each element
+    for (size_t i = 0; i < element_names.size(); i++)
     {
-        ConcentrationSet ConcentrationSet1 = *at(source1).GetElementDistribution(element_names[i]);
-        ConcentrationSet ConcentrationSet2 = *at(source2).GetElementDistribution(element_names[i]);
-        double std1, std2;
-        double mean1, mean2;
-        if (!log)
+        // Get concentration distributions for both sources
+        ConcentrationSet concentration_set1 = *at(source1).GetElementDistribution(element_names[i]);
+        ConcentrationSet concentration_set2 = *at(source2).GetElementDistribution(element_names[i]);
+
+        // Compute statistics in appropriate space
+        double std1, std2, mean1, mean2;
+        if (!use_log)
         {
-            std1 = ConcentrationSet1.CalculateStdDev();
-            std2 = ConcentrationSet2.CalculateStdDev();
-            mean1 = ConcentrationSet1.CalculateMean();
-            mean2 = ConcentrationSet2.CalculateMean();
+            // Linear-space statistics
+            std1 = concentration_set1.CalculateStdDev();
+            std2 = concentration_set2.CalculateStdDev();
+            mean1 = concentration_set1.CalculateMean();
+            mean2 = concentration_set2.CalculateMean();
         }
         else
         {
-            std1 = ConcentrationSet1.CalculateStdDevLog();
-            std2 = ConcentrationSet2.CalculateStdDevLog();
-            mean1 = ConcentrationSet1.CalculateMeanLog();
-            mean2 = ConcentrationSet2.CalculateMeanLog();
+            // Log-space statistics
+            std1 = concentration_set1.CalculateStdDevLog();
+            std2 = concentration_set2.CalculateStdDevLog();
+            mean1 = concentration_set1.CalculateMeanLog();
+            mean2 = concentration_set2.CalculateMeanLog();
         }
-        elemental_profile_item.AppendElement(element_names[i],2*(fabs(mean1-mean2)/(std1+std2)));
-    }
-    return elemental_profile_item;
 
+        // Compute differentiation power: 2 × |Δμ| / (σ₁ + σ₂)
+        double diff_power = 2.0 * fabs(mean1 - mean2) / (std1 + std2);
+
+        differentiation_powers.AppendElement(element_names[i], diff_power);
+    }
+
+    return differentiation_powers;
 }
 
-
-Elemental_Profile_Set SourceSinkData::DifferentiationPower(bool log, bool include_target)
+Elemental_Profile_Set SourceSinkData::DifferentiationPower(bool use_log, bool include_target)
 {
+    Elemental_Profile_Set all_pairs;
 
-    Elemental_Profile_Set out;
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    // Compare all pairs of source groups
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
     {
-        if (include_target || it->first!=target_group_)
-        for (map<string,Elemental_Profile_Set>::iterator it2=next(it); it2!=end(); it2++)
+        if (include_target || it->first != target_group_)
         {
-            if (include_target || it2->first!=target_group_)
-            {   Elemental_Profile elem_prof = DifferentiationPower(it->first, it2->first, log);
-                out.AppendProfile(it->first + " and " + it2->first, elem_prof);
+            for (map<string, Elemental_Profile_Set>::iterator it2 = next(it); it2 != end(); it2++)
+            {
+                if (include_target || it2->first != target_group_)
+                {
+                    Elemental_Profile diff_power = DifferentiationPower(it->first, it2->first, use_log);
+                    all_pairs.AppendProfile(it->first + " and " + it2->first, diff_power);
+                }
             }
         }
     }
-    return out;
+
+    return all_pairs;
 }
 
-Elemental_Profile SourceSinkData::DifferentiationPower_Percentage(const string &source1, const string &source2)
+Elemental_Profile SourceSinkData::DifferentiationPower_Percentage(const string& source1, const string& source2)
 {
-    vector<string> element_names=GetElementNames();
-    Elemental_Profile elemental_profile_item;
-    for (unsigned int i=0; i<element_names.size();i++)
+    vector<string> element_names = GetElementNames();
+    Elemental_Profile classification_percentages;
+
+    // Compute classification percentage for each element
+    for (size_t i = 0; i < element_names.size(); i++)
     {
-        ConcentrationSet ConcentrationSet1 = *at(source1).GetElementDistribution(element_names[i]);
-        ConcentrationSet ConcentrationSet2 = *at(source2).GetElementDistribution(element_names[i]);
-        ConcentrationSet ConcentrationSetAll = ConcentrationSet1;
-        ConcentrationSetAll.AppendSet(ConcentrationSet2);
-        vector<unsigned int> Rank = ConcentrationSetAll.CalculateRanks();
-        int Set1BelowLimitCount = aquiutils::CountLessThan(Rank,ConcentrationSet1.size(),ConcentrationSet1.size(),false);
-        int Set1AboveLimitCount = aquiutils::CountGreaterThan(Rank,ConcentrationSet1.size(),ConcentrationSet1.size(),false);
-        int Set2BelowLimitCount = aquiutils::CountLessThan(Rank,ConcentrationSet1.size(),ConcentrationSet1.size(),true);
-        int Set2AboveLimitCount = aquiutils::CountGreaterThan(Rank,ConcentrationSet1.size(),ConcentrationSet1.size(),true);
-        double set1fraction = double(Set1BelowLimitCount+Set2AboveLimitCount)/double(ConcentrationSetAll.size());
-        double set2fraction = double(Set1AboveLimitCount+Set2BelowLimitCount)/double(ConcentrationSetAll.size());
-        elemental_profile_item.AppendElement(element_names[i],max(set1fraction,set2fraction));
+        // Get concentration distributions
+        ConcentrationSet concentration_set1 = *at(source1).GetElementDistribution(element_names[i]);
+        ConcentrationSet concentration_set2 = *at(source2).GetElementDistribution(element_names[i]);
 
+        // Pool all samples and compute ranks
+        ConcentrationSet combined_set = concentration_set1;
+        combined_set.AppendSet(concentration_set2);
+        vector<unsigned int> ranks = combined_set.CalculateRanks();
 
+        // Count correct classifications
+        size_t n1 = concentration_set1.size();
+        int set1_below_limit = aquiutils::CountLessThan(ranks, n1, n1, false);
+        int set1_above_limit = aquiutils::CountGreaterThan(ranks, n1, n1, false);
+        int set2_below_limit = aquiutils::CountLessThan(ranks, n1, n1, true);
+        int set2_above_limit = aquiutils::CountGreaterThan(ranks, n1, n1, true);
+
+        // Compute classification success rates
+        double set1_fraction = double(set1_below_limit + set2_above_limit) / double(combined_set.size());
+        double set2_fraction = double(set1_above_limit + set2_below_limit) / double(combined_set.size());
+
+        // Use best classification direction
+        double classification_percentage = max(set1_fraction, set2_fraction);
+
+        classification_percentages.AppendElement(element_names[i], classification_percentage);
     }
-    return elemental_profile_item;
 
+    return classification_percentages;
 }
 
 Elemental_Profile_Set SourceSinkData::DifferentiationPower_Percentage(bool include_target)
 {
-    Elemental_Profile_Set out;
+    Elemental_Profile_Set all_pairs;
 
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    // Compare all pairs of source groups
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
     {
-        if (include_target || it->first!=target_group_)
-        for (map<string,Elemental_Profile_Set>::iterator it2=next(it); it2!=end(); it2++)
+        if (include_target || it->first != target_group_)
         {
-            if (include_target || it2->first!=target_group_)
-            {   Elemental_Profile elem_prof = DifferentiationPower_Percentage(it->first, it2->first);
-                out.AppendProfile(it->first + " and " + it2->first, elem_prof);
+            for (map<string, Elemental_Profile_Set>::iterator it2 = next(it); it2 != end(); it2++)
+            {
+                if (include_target || it2->first != target_group_)
+                {
+                    Elemental_Profile diff_power_pct = DifferentiationPower_Percentage(it->first, it2->first);
+                    all_pairs.AppendProfile(it->first + " and " + it2->first, diff_power_pct);
+                }
             }
         }
     }
-    return out;
 
+    return all_pairs;
 }
 
 Elemental_Profile_Set SourceSinkData::DifferentiationPower_P_value(bool include_target)
 {
-    Elemental_Profile_Set out;
+    Elemental_Profile_Set all_pairs;
 
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    // Compare all pairs of source groups
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
     {
-        if (include_target || it->first!=target_group_)
-        for (map<string,Elemental_Profile_Set>::iterator it2=next(it); it2!=end(); it2++)
+        if (include_target || it->first != target_group_)
         {
-            if (include_target || it2->first!=target_group_)
-            {   Elemental_Profile elem_prof = t_TestPValue(it->first, it2->first,false);
-                out.AppendProfile(it->first + " and " + it2->first, elem_prof);
+            for (map<string, Elemental_Profile_Set>::iterator it2 = next(it); it2 != end(); it2++)
+            {
+                if (include_target || it2->first != target_group_)
+                {
+                    Elemental_Profile p_values = t_TestPValue(it->first, it2->first, false);
+                    all_pairs.AppendProfile(it->first + " and " + it2->first, p_values);
+                }
             }
         }
     }
-    return out;
 
+    return all_pairs;
 }
 
 vector<string> SourceSinkData::NegativeValueCheck()
 {
-    vector<string> out;
+    vector<string> error_messages;
+
+    // Ensure element ordering is current
     PopulateConstituentOrders();
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+
+    // Check each source group for negative values
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
     {
-        vector<string> NegativeItems = it->second.CheckForNegativeValues(element_order_);
-        for (unsigned int i=0; i<NegativeItems.size(); i++ )
+        vector<string> negative_elements = it->second.CheckForNegativeValues(element_order_);
+
+        // Generate error message for each problematic element
+        for (size_t i = 0; i < negative_elements.size(); i++)
         {
-            out.push_back("There are zero or negative values for element '" + NegativeItems[i] + "' in sample group '" + it->first +"'");
+            error_messages.push_back("There are zero or negative values for element '" +
+                negative_elements[i] + "' in sample group '" +
+                it->first + "'");
         }
     }
-    return out;
+
+    return error_messages;
 }
 
-void SourceSinkData::IncludeExcludeAllElements(bool value)
+void SourceSinkData::IncludeExcludeAllElements(bool include_in_analysis)
 {
-    for(map<string, element_information>::iterator it = element_information_.begin(); it!=element_information_.end(); it++)
+    // Set inclusion flag for all elements
+    for (map<string, element_information>::iterator it = element_information_.begin();
+        it != element_information_.end();
+        it++)
     {
-        it->second.include_in_analysis = value;
+        it->second.include_in_analysis = include_in_analysis;
     }
 }
 
-double SourceSinkData::GrandMean(const string &element, bool logtransformed)
+double SourceSinkData::GrandMean(const string& element, bool use_log)
 {
-    double sum=0;
-    double count=0;
-    for (map<string,Elemental_Profile_Set>::iterator it=begin(); it!=prev(end()); it++)
+    double weighted_sum = 0.0;
+    double total_count = 0.0;
+
+    // Accumulate weighted means from each source group
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
     {
-        if (it->first!=target_group_)
-        {   if (!logtransformed)
-            {   sum+=it->second.GetElementDistribution(element)->CalculateMean()*it->second.GetElementDistribution(element)->size();
-                count += it->second.GetElementDistribution(element)->size();
+        // Skip target group
+        if (it->first != target_group_)
+        {
+            ConcentrationSet* element_dist = it->second.GetElementDistribution(element);
+            size_t sample_count = element_dist->size();
+
+            if (!use_log)
+            {
+                // Linear-space mean
+                weighted_sum += element_dist->CalculateMean() * sample_count;
             }
             else
-            {   sum+=it->second.GetElementDistribution(element)->CalculateMeanLog()*it->second.GetElementDistribution(element)->size();
-                count += it->second.GetElementDistribution(element)->size();
+            {
+                // Log-space mean
+                weighted_sum += element_dist->CalculateMeanLog() * sample_count;
             }
+
+            total_count += sample_count;
         }
     }
-    return sum/count;
+
+    // Compute weighted average
+    return weighted_sum / total_count;
 }
 
 Elemental_Profile_Set SourceSinkData::LumpAllProfileSets()
 {
-    Elemental_Profile_Set out;
-    for (map<string,Elemental_Profile_Set>::const_iterator it=begin(); it!=prev(end()); it++)
+    Elemental_Profile_Set combined_sources;
+
+    // Pool samples from all source groups
+    for (map<string, Elemental_Profile_Set>::const_iterator it = begin(); it != prev(end()); it++)
     {
-        if (it->first!=target_group_)
+        // Skip target group
+        if (it->first != target_group_)
         {
-            out.AppendProfiles(it->second,nullptr);
+            combined_sources.AppendProfiles(it->second, nullptr);
         }
     }
-    out.UpdateElementDistributions();
-    return out;
+
+    // Recalculate distributions for combined dataset
+    combined_sources.UpdateElementDistributions();
+
+    return combined_sources;
 }
 
-CMBVector SourceSinkData::ANOVA(bool logtransformed)
+CMBVector SourceSinkData::ANOVA(bool use_log)
 {
     vector<string> element_names = GetElementNames();
     CMBVector p_values(element_names.size());
     p_values.SetLabels(element_names);
-    for (unsigned int i=0; i<element_names.size(); i++)
+
+    // Perform ANOVA for each element
+    for (size_t i = 0; i < element_names.size(); i++)
     {
-        ANOVA_info anova = ANOVA(element_names[i],logtransformed);
-        p_values[i] = anova.p_value;
+        ANOVA_info anova_result = ANOVA(element_names[i], use_log);
+        p_values[i] = anova_result.p_value;
     }
+
     return p_values;
 }
 
-ANOVA_info SourceSinkData::ANOVA(const string &element, bool logtransformed)
+ANOVA_info SourceSinkData::ANOVA(const string& element, bool use_log)
 {
     ANOVA_info anova;
-    Elemental_Profile_Set All_ProfileSets = LumpAllProfileSets();
-    if (!logtransformed)
-    {   anova.SST = All_ProfileSets.GetElementDistribution(element)->CalculateSSE();
-        double sum=0;
-        double sum_w=0;
-        for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
+
+    // Combine all source samples for total variance calculation
+    Elemental_Profile_Set all_sources = LumpAllProfileSets();
+    ConcentrationSet* all_element_data = all_sources.GetElementDistribution(element);
+
+    if (!use_log)
+    {
+        // Linear-space ANOVA
+
+        // Total sum of squares (SST)
+        anova.SST = all_element_data->CalculateSSE();
+
+        // Between-group sum of squares (SSB) and within-group sum of squares (SSW)
+        double grand_mean = all_element_data->CalculateMean();
+        double sum_between = 0.0;
+        double sum_within = 0.0;
+
+        for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+            source_group != end();
+            source_group++)
         {
             if (source_group->first != target_group_)
-            {   sum += pow(source_group->second.GetElementDistribution(element)->CalculateMean()-All_ProfileSets.GetElementDistribution(element)->CalculateMean(), 2) * source_group->second.GetElementDistribution(element)->size();
-                sum_w += source_group->second.GetElementDistribution(element)->CalculateSSE();
+            {
+                ConcentrationSet* group_data = source_group->second.GetElementDistribution(element);
+                double group_mean = group_data->CalculateMean();
+                size_t group_size = group_data->size();
+
+                // SSB: variance of group means weighted by sample size
+                sum_between += pow(group_mean - grand_mean, 2) * group_size;
+
+                // SSW: sum of within-group variances
+                sum_within += group_data->CalculateSSE();
             }
         }
-        anova.SSB = sum;
-        anova.SSW = sum_w;
+
+        anova.SSB = sum_between;
+        anova.SSW = sum_within;
     }
     else
-    {   anova.SST = pow(All_ProfileSets.GetElementDistribution(element)->CalculateStdDevLog(),2)*(All_ProfileSets.GetElementDistribution(element)->size()-1);
-        double sum=0;
-        double sum_w=0;
-        for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++ )
+    {
+        // Log-space ANOVA
+
+        // Total sum of squares (SST)
+        double total_std_log = all_element_data->CalculateStdDevLog();
+        size_t total_size = all_element_data->size();
+        anova.SST = pow(total_std_log, 2) * (total_size - 1);
+
+        // Between-group sum of squares (SSB) and within-group sum of squares (SSW)
+        double grand_mean_log = all_element_data->CalculateMeanLog();
+        double sum_between = 0.0;
+        double sum_within = 0.0;
+
+        for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+            source_group != end();
+            source_group++)
         {
             if (source_group->first != target_group_)
-            {   sum += pow(source_group->second.GetElementDistribution(element)->CalculateMeanLog()-All_ProfileSets.GetElementDistribution(element)->CalculateMeanLog(),2)*source_group->second.GetElementDistribution(element)->size();
-                sum_w += source_group->second.GetElementDistribution(element)->CalculateSSELog();
+            {
+                ConcentrationSet* group_data = source_group->second.GetElementDistribution(element);
+                double group_mean_log = group_data->CalculateMeanLog();
+                size_t group_size = group_data->size();
+
+                // SSB: variance of group means weighted by sample size
+                sum_between += pow(group_mean_log - grand_mean_log, 2) * group_size;
+
+                // SSW: sum of within-group variances
+                sum_within += group_data->CalculateSSELog();
             }
         }
-        anova.SSB = sum;
-        anova.SSW = sum_w;
+
+        anova.SSB = sum_between;
+        anova.SSW = sum_within;
     }
-    anova.MSB = anova.SSB/(double(this->size()-2.0));
-    anova.MSW = anova.SSW/(double(All_ProfileSets.GetElementDistribution(element)->size())-(this->size()-1));
-    anova.F = anova.MSB/anova.MSW;
-    anova.p_value = gsl_cdf_fdist_Q (anova.F, this->size()-2, All_ProfileSets.size());
+
+    // Compute mean squares and F-statistic
+    size_t num_groups = this->size() - 1;  // Exclude target
+    size_t total_samples = all_element_data->size();
+
+    // Degrees of freedom
+    size_t df_between = num_groups - 1;
+    size_t df_within = total_samples - num_groups;
+
+    // Mean squares
+    anova.MSB = anova.SSB / double(df_between);
+    anova.MSW = anova.SSW / double(df_within);
+
+    // F-statistic
+    anova.F = anova.MSB / anova.MSW;
+
+    // P-value from F-distribution
+    anova.p_value = gsl_cdf_fdist_Q(anova.F, df_between, total_samples);
+
     return anova;
-
 }
-
 void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string> elements)
 {
 

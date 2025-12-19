@@ -292,9 +292,9 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         bool exclude_samples = (arguments["Use only selected samples"]=="true"?true:false);
         SourceSinkData TransformedData = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false,false);
         if (arguments["Equation"]=="Linear")
-            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::linear, QString::fromStdString(arguments["P-value threshold"]).toDouble());
+            TransformedData.PerformRegressionVsOMAndSize(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::linear, QString::fromStdString(arguments["P-value threshold"]).toDouble());
         else
-            TransformedData.Perform_Regression_vs_om_size(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::power, QString::fromStdString(arguments["P-value threshold"]).toDouble());
+            TransformedData.PerformRegressionVsOMAndSize(arguments["Organic Matter constituent"],arguments["Particle Size constituent"],regression_form::power, QString::fromStdString(arguments["P-value threshold"]).toDouble());
 
         Data()->SetOMandSizeConstituents(arguments["Organic Matter constituent"],arguments["Particle Size constituent"]);
         for (map<string,Elemental_Profile_Set>::iterator it=Data()->begin(); it!=Data()->end(); it++)
