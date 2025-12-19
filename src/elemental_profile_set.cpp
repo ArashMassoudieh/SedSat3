@@ -815,7 +815,7 @@ CMBMatrix Elemental_Profile_Set::DetectOutliers(
     CMBVector lambdas = CalculateBoxCoxParameters();
 
     // Initialize output matrix: rows = samples, columns = elements
-    CMBMatrix outlier_magnitude(size(), begin()->second.size());
+    CMBMatrix outlier_magnitude(begin()->second.size(), size());
 
     // Calculate means and standard deviations of Box-Cox transformed distributions
     vector<double> means;

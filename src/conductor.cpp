@@ -9,9 +9,10 @@
 
 #include "mainwindow.h"
 
-Conductor::Conductor(MainWindow* _mainwindow)
+Conductor::Conductor(MainWindow* mainwindow)
+    : data(nullptr),
+    mainwindow(mainwindow)
 {
-    mainwindow = _mainwindow;
 }
 
 bool Conductor::Execute(const string &command, map<string,string> arguments)
@@ -22,7 +23,6 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
     if (command == "GA")
     {
-        if (GA!=nullptr) delete GA;
         ProgressWindow *rtw = new ProgressWindow(mainwindow);
 
         bool organicnsizecorrection;
@@ -43,7 +43,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         correctedData.InitializeParametersAndObservations(arguments["Sample"]);
         if (!CheckNegativeElements(&correctedData))
             return false;
-        GA = new CGA<SourceSinkData>(&correctedData);
+        GA = std::make_unique<CGA<SourceSinkData>>(&correctedData);
         GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
         GA->SetProperties(arguments);
@@ -102,7 +102,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "GA (fixed elemental contribution)")
     {
-        if (GA!=nullptr) delete GA;
+
         ProgressWindow *rtw = new ProgressWindow(mainwindow);
         rtw->SetTitle("Fitness",0);
         rtw->SetYAxisTitle("Fitness",0);
@@ -125,7 +125,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->show();
         correctedData.InitializeParametersAndObservations(arguments["Sample"],estimation_mode::only_contributions);
         correctedData.SetParameterEstimationMode(estimation_mode::only_contributions);
-        GA = new CGA<SourceSinkData>(&correctedData);
+        GA = std::make_unique<CGA<SourceSinkData>>(&correctedData);
         GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
         GA->SetProperties(arguments);
@@ -144,12 +144,12 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     }
     if (command == "GA (disregarding targets)")
     {
-        if (GA!=nullptr) delete GA;
+        
         ProgressWindow *rtw = new ProgressWindow(mainwindow);
         rtw->show();
         Data()->InitializeParametersAndObservations(arguments["Sample"],estimation_mode::source_elemental_profiles_based_on_source_data);
         Data()->SetParameterEstimationMode(estimation_mode::source_elemental_profiles_based_on_source_data);
-        GA = new CGA<SourceSinkData>(Data());
+        GA = std::make_unique<CGA<SourceSinkData>>(Data());
         GA->filenames.pathname = workingfolder.toStdString() + "/";
         GA->SetRunTimeWindow(rtw);
         GA->SetProperties(arguments);
@@ -1086,8 +1086,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
         }
 
-        if (MCMC!=nullptr) delete MCMC;
-        MCMC = new CMCMC<SourceSinkData>();
+        
+        MCMC = std::make_unique<CMCMC<SourceSinkData>>();
 
         ProgressWindow *rtw = new ProgressWindow(mainwindow,3);
         rtw->SetTitle("Acceptance Rate",0);
@@ -1097,7 +1097,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Purturbation Factor",1);
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
-        results = Data()->MCMC(arguments["Sample"],arguments,MCMC,rtw,workingfolder.toStdString());
+        results = Data()->MCMC(arguments["Sample"],arguments,MCMC.get(), rtw, workingfolder.toStdString());
         if (results.Error()!="")
         {
             QMessageBox::warning(mainwindow, "SedSat3",QString::fromStdString(results.Error()), QMessageBox::Ok);
@@ -1116,8 +1116,8 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
             }
         }
 
-        if (MCMC!=nullptr) delete MCMC;
-        MCMC = new CMCMC<SourceSinkData>();
+        
+        MCMC = std::make_unique<CMCMC<SourceSinkData>>();
 
         ProgressWindow *rtw = new ProgressWindow(mainwindow,3, true);
         rtw->SetTitle("Acceptance Rate",0);
@@ -1128,7 +1128,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         rtw->SetYAxisTitle("Log posterior value",2);
         rtw->show();
 
-        CMBMatrix* contributions = new CMBMatrix(Data()->MCMC_Batch(arguments,MCMC,rtw,workingfolder.toStdString()));
+        CMBMatrix* contributions = new CMBMatrix(Data()->MCMC_Batch(arguments,MCMC.get(), rtw, workingfolder.toStdString()));
 // Need to add negative error check
         ResultItem contrib_matrix_item;
         contrib_matrix_item.SetName("Contribution Range Matrix");
@@ -1148,7 +1148,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
         MCMC_samples.SetName("MCMC samples for testing MCMC'");
         CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
         CMCMC<TestMCMC> *mcmcfortesting = new CMCMC<TestMCMC>();
-        if (MCMC!=nullptr) delete MCMC;
+        
         TestMCMC testingmodel;
         mcmcfortesting->Model = &testingmodel;
         ProgressWindow *rtw = new ProgressWindow(mainwindow,3);
