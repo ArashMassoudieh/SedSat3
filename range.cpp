@@ -68,7 +68,7 @@ void Range::Set(_range lowhigh,const double &value)
     else
         range[0]=value;
 }
-double Range::Get(_range lowhigh)
+double Range::Get(_range lowhigh) const
 {
     if (lowhigh==_range::high)
         return range[1];

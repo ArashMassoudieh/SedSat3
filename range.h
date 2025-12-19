@@ -16,10 +16,10 @@ public:
     bool writetofile(QFile*) override;
     bool Read(const QStringList &strlist) override;
     void Set(_range lowhigh,const double &value);
-    double Get(_range lowhigh);
-    double Mean() {return mean;}
+    double Get(_range lowhigh) const;
+    double Mean() const {return mean;}
     void SetMean(const double &m) {mean = m;}
-    double Median() {return median;}
+    double Median() const {return median;}
     void SetMedian(const double &m) {median = m;}
     void SetValue(const double value) {observed_value = value;}
     double GetValue() {return observed_value; }

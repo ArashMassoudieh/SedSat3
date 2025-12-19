@@ -40,6 +40,7 @@ SourceSinkData::SourceSinkData()
     options_()
 {
     options_["Outlier deviation threshold"] = 3.0;
+    rtw_ = nullptr;
 }
 
 SourceSinkData::SourceSinkData(const SourceSinkData& other)
@@ -67,6 +68,7 @@ SourceSinkData::SourceSinkData(const SourceSinkData& other)
     tools_used_(other.tools_used_),
     options_(other.options_)
 {
+    rtw_ = nullptr;
 }
 
 SourceSinkData& SourceSinkData::operator=(const SourceSinkData& other)
@@ -628,22 +630,6 @@ void SourceSinkData::PopulateElementInformation(const map<string, element_inform
     {
         numberofsourcesamplesets_ = size();      // No target group
     }
-}
-
-bool SourceSinkData::Execute(const string &command, const map<string,string> &arguments)
-{
-    return true;
-}
-
-string SourceSinkData::GetOutputPath() const
-{
-    return outputpath_;
-}
-
-bool SourceSinkData::SetOutputPath(const string &oppath)
-{
-    outputpath_ = oppath;
-    return true;
 }
 
 string SourceSinkData::GetParameterName(int index) const
@@ -1464,7 +1450,7 @@ CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)
 
 double SourceSinkData::GetObjectiveFunctionValue()
 {
-    return -LogLikelihood(parameter_estimation_mode);
+    return -LogLikelihood(parameter_estimation_mode_);
 }
 
 double SourceSinkData::LogLikelihood(estimation_mode est_mode)
@@ -2189,25 +2175,6 @@ vector<string> SourceSinkData::SourceGroupNames() const
     return source_names;
 }
 
-bool SourceSinkData::SetSelectedTargetSample(const string& sample_name)
-{
-    // Verify sample exists in target group before setting
-    Elemental_Profile_Set* target_group = GetSampleSet(GetTargetGroup());
-
-    if (target_group && target_group->GetProfile(sample_name))
-    {
-        selected_target_sample_ = sample_name;
-        return true;
-    }
-
-    return false;
-}
-
-string SourceSinkData::SelectedTargetSample() const
-{
-    return selected_target_sample_;
-}
-
 Elemental_Profile* SourceSinkData::GetElementalProfile(const string& sample_name)
 {
     // Search all groups for the specified sample
@@ -2615,7 +2582,7 @@ QJsonArray SourceSinkData::ToolsUsedToJsonObject()
     QJsonArray tools_used_json_array;
     
     // Serialize each tool name
-    for (list<string>::iterator it = tools_used.begin(); it != tools_used.end(); it++)
+    for (list<string>::iterator it = tools_used_.begin(); it != tools_used_.end(); it++)
     {
         tools_used_json_array.append(QString::fromStdString(*it));
     }
@@ -2641,7 +2608,7 @@ void SourceSinkData::AddtoToolsUsed(const string& tool)
     // Only add if not already present
     if (!ToolsUsed(tool))
     {
-        tools_used.push_back(tool);
+        tools_used_.push_back(tool);
     }
 }
 
@@ -3633,888 +3600,1578 @@ ANOVA_info SourceSinkData::ANOVA(const string& element, bool use_log)
 
     return anova;
 }
-void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string> elements)
+void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string>& elements)
 {
-
-    for (map<string,element_information>::iterator element = element_information_.begin(); element!=element_information_.end(); element++)
+    // First, exclude all elements
+    for (map<string, element_information>::iterator element = element_information_.begin();
+        element != element_information_.end();
+        element++)
     {
-        element->second.include_in_analysis=false;
+        element->second.include_in_analysis = false;
     }
-    for (unsigned int i=0; i<elements.size(); i++)
+
+    // Then, include only specified elements
+    for (size_t i = 0; i < elements.size(); i++)
     {
-        element_information_[elements[i]].include_in_analysis=true;
+        if (element_information_.count(elements[i]) > 0)
+        {
+            element_information_[elements[i]].include_in_analysis = true;
+        }
     }
 }
 
-SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double &percentage)
+SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double& percentage)
 {
-    SourceSinkData out;
-    vector<string> samplestobeeliminated = RandomlypickSamples(percentage/100.0);
-    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
+    SourceSinkData reduced_dataset;
+
+    // Randomly select samples to eliminate
+    vector<string> samples_to_eliminate = RandomlypickSamples(percentage / 100.0);
+
+    // Copy groups with specified samples eliminated
+    for (map<string, Elemental_Profile_Set>::const_iterator it = cbegin(); it != cend(); it++)
     {
-        if (it->first!=target_group_)
+        if (it->first != target_group_)
         {
-            out[it->first] = it->second.EliminateSamples(samplestobeeliminated,&element_information_);
+            // Remove randomly selected samples from source groups
+            reduced_dataset[it->first] = it->second.EliminateSamples(
+                samples_to_eliminate, &element_information_);
         }
         else
-            out[it->first] = it->second;
-    }
-    out.omconstituent_ = omconstituent_;
-    out.sizeconsituent_ = sizeconsituent_;
-    out.target_group_ = target_group_;
-    out.PopulateElementInformation(&element_information_);
-    out.PopulateElementDistributions();
-    out.AssignAllDistributions();
-    return out;
-}
-
-
-Elemental_Profile SourceSinkData::Sample(const string &samplename) const
-{
-    for (map<string, Elemental_Profile_Set>::const_iterator it=cbegin(); it!=cend(); it++)
-    {
-        if (it->second.count(samplename)==1)
         {
-            return it->second.at(samplename);
+            // Preserve target group unchanged
+            reduced_dataset[it->first] = it->second;
         }
     }
+
+    // Copy metadata and settings
+    reduced_dataset.omconstituent_ = omconstituent_;
+    reduced_dataset.sizeconsituent_ = sizeconsituent_;
+    reduced_dataset.target_group_ = target_group_;
+
+    // Recalculate distributions for reduced dataset
+    reduced_dataset.PopulateElementInformation(&element_information_);
+    reduced_dataset.PopulateElementDistributions();
+    reduced_dataset.AssignAllDistributions();
+
+    return reduced_dataset;
+}
+
+Elemental_Profile SourceSinkData::Sample(const string& sample_name) const
+{
+    // Search all groups for the specified sample
+    for (map<string, Elemental_Profile_Set>::const_iterator it = cbegin(); it != cend(); it++)
+    {
+        if (it->second.count(sample_name) == 1)
+        {
+            return it->second.at(sample_name);
+        }
+    }
+
+    // Sample not found - return empty profile
     return Elemental_Profile();
 }
-
-SourceSinkData SourceSinkData::ReplaceSourceAsTarget(const string &sourcesamplename) const
+SourceSinkData SourceSinkData::ReplaceSourceAsTarget(const string& source_sample_name) const
 {
-    SourceSinkData out = *this;
-    Elemental_Profile target = Sample(sourcesamplename);
-    Elemental_Profile_Set targetgroup = Elemental_Profile_Set();
-    targetgroup.AppendProfile(sourcesamplename,target);
-    out[target_group_] = targetgroup;
-    out.omconstituent_ = omconstituent_;
-    out.sizeconsituent_ = sizeconsituent_;
-    out.target_group_ = target_group_;
-    out.PopulateElementInformation(&element_information_);
-    out.PopulateElementDistributions();
-    out.AssignAllDistributions();
-    return out;
+    // Create copy of current dataset
+    SourceSinkData modified_dataset = *this;
+
+    // Extract specified source sample
+    Elemental_Profile target_profile = Sample(source_sample_name);
+
+    // Create new target group with this sample
+    Elemental_Profile_Set new_target_group = Elemental_Profile_Set();
+    new_target_group.AppendProfile(source_sample_name, target_profile);
+    modified_dataset[target_group_] = new_target_group;
+
+    // Copy metadata and settings
+    modified_dataset.omconstituent_ = omconstituent_;
+    modified_dataset.sizeconsituent_ = sizeconsituent_;
+    modified_dataset.target_group_ = target_group_;
+
+    // Recalculate distributions
+    modified_dataset.PopulateElementInformation(&element_information_);
+    modified_dataset.PopulateElementDistributions();
+    modified_dataset.AssignAllDistributions();
+
+    return modified_dataset;
 }
 
-CMBTimeSeriesSet SourceSinkData::BootStrap(const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation)
+CMBTimeSeriesSet SourceSinkData::BootStrap(
+    const double& percentage,
+    unsigned int num_iterations,
+    string target_sample,
+    bool use_softmax)
 {
-    CMBTimeSeriesSet result(numberofsourcesamplesets_);
+    // Initialize result time series
+    CMBTimeSeriesSet contribution_time_series(numberofsourcesamplesets_);
 
-    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
-        result.setname(source_group_counter, samplesetsorder_[source_group_counter]);
-    for (unsigned int i=0; i<number_of_samples; i++)
+    // Set source names for time series
+    for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
     {
-        SourceSinkData bootstrappeddata = RandomlyEliminateSourceSamples(percentage);
-        bootstrappeddata.InitializeParametersAndObservations(target_sample);
-        if (rtw_)
-            rtw_->SetProgress(double(i)/double(number_of_samples));
-
-        if (softmax_transformation)
-            bootstrappeddata.SolveLevenberg_Marquardt(transformation::softmax);
-        else
-            bootstrappeddata.SolveLevenberg_Marquardt(transformation::linear);
-
-        result.append(i,bootstrappeddata.GetContributionVector().vec);
+        contribution_time_series.setname(source_idx, samplesetsorder_[source_idx]);
     }
-    return result;
+
+    // Perform bootstrap iterations
+    for (size_t iteration = 0; iteration < num_iterations; iteration++)
+    {
+        // Create bootstrapped dataset with randomly excluded samples
+        SourceSinkData bootstrapped_data = RandomlyEliminateSourceSamples(percentage);
+        bootstrapped_data.InitializeParametersAndObservations(target_sample);
+
+        // Update progress if progress tracker available
+        if (rtw_)
+        {
+            rtw_->SetProgress(double(iteration) / double(num_iterations));
+        }
+
+        // Solve CMB model with appropriate transformation
+        if (use_softmax)
+        {
+            bootstrapped_data.SolveLevenberg_Marquardt(transformation::softmax);
+        }
+        else
+        {
+            bootstrapped_data.SolveLevenberg_Marquardt(transformation::linear);
+        }
+
+        // Record contributions from this iteration
+        contribution_time_series.append(iteration, bootstrapped_data.GetContributionVector().vec);
+    }
+
+    return contribution_time_series;
 }
 
-bool SourceSinkData::BootStrap(Results *res, const double &percentage, unsigned int number_of_samples, string target_sample, bool softmax_transformation)
+bool SourceSinkData::BootStrap(
+    Results* results,
+    const double& percentage,
+    unsigned int num_iterations,
+    string target_sample,
+    bool use_softmax)
 {
+    // Initialize contribution time series
     CMBTimeSeriesSet* contributions = new CMBTimeSeriesSet(numberofsourcesamplesets_);
 
-    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
-        contributions->setname(source_group_counter, samplesetsorder_[source_group_counter]);
-    for (unsigned int i=0; i<number_of_samples; i++)
+    // Set source names
+    for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
     {
-        SourceSinkData bootstrappeddata = RandomlyEliminateSourceSamples(percentage);
-        bootstrappeddata.InitializeParametersAndObservations(target_sample);
+        contributions->setname(source_idx, samplesetsorder_[source_idx]);
+    }
+
+    // Perform bootstrap iterations
+    for (size_t iteration = 0; iteration < num_iterations; iteration++)
+    {
+        // Create bootstrapped dataset
+        SourceSinkData bootstrapped_data = RandomlyEliminateSourceSamples(percentage);
+        bootstrapped_data.InitializeParametersAndObservations(target_sample);
+
+        // Update progress
         if (rtw_)
-            rtw_->SetProgress(double(i)/double(number_of_samples));
+        {
+            rtw_->SetProgress(double(iteration) / double(num_iterations));
+        }
 
-        if (softmax_transformation)
-            bootstrappeddata.SolveLevenberg_Marquardt(transformation::softmax);
+        // Solve CMB model
+        if (use_softmax)
+        {
+            bootstrapped_data.SolveLevenberg_Marquardt(transformation::softmax);
+        }
         else
-            bootstrappeddata.SolveLevenberg_Marquardt(transformation::linear);
+        {
+            bootstrapped_data.SolveLevenberg_Marquardt(transformation::linear);
+        }
 
-        contributions->append(i,bootstrappeddata.GetContributionVector().vec);
+        // Record contributions
+        contributions->append(iteration, bootstrapped_data.GetContributionVector().vec);
     }
-    ResultItem contributions_result_item;
-    res->SetName("Error Analysis for target sample'" + target_sample +"'");
-    contributions_result_item.SetName("Error Analysis");
-    contributions_result_item.SetResult(contributions);
-    contributions_result_item.SetType(result_type::stacked_bar_chart);
-    contributions_result_item.SetShowAsString(false);
-    contributions_result_item.SetShowTable(true);
-    if (number_of_samples<101)
-        contributions_result_item.SetShowGraph(true);
-    else
-        contributions_result_item.SetShowGraph(false);
-    contributions_result_item.SetYLimit(_range::high, 1);
-    contributions_result_item.SetXAxisMode(xaxis_mode::counter);
-    contributions_result_item.setYAxisTitle("Contribution");
-    contributions_result_item.setXAxisTitle("Sample");
-    contributions_result_item.SetYLimit(_range::low, 0);
-    res->Append(contributions_result_item);
 
-    CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
-    *dists = contributions->distribution(100,0,0);
-    ResultItem distribution_res_item;
-    distribution_res_item.SetName("Posterior Distributions");
-    distribution_res_item.SetShowAsString(false);
-    distribution_res_item.SetShowTable(true);
-    distribution_res_item.SetType(result_type::distribution);
-    distribution_res_item.SetResult(dists);
-    res->Append(distribution_res_item);
+    // ========== Result 1: Contribution Time Series ==========
+    ResultItem contributions_result;
+    results->SetName("Error Analysis for target sample '" + target_sample + "'");
+    contributions_result.SetName("Error Analysis");
+    contributions_result.SetResult(contributions);
+    contributions_result.SetType(result_type::stacked_bar_chart);
+    contributions_result.SetShowAsString(false);
+    contributions_result.SetShowTable(true);
 
-//Posterior contribution 95% intervals
-    RangeSet *contribution_credible_intervals = new RangeSet();
-    for (unsigned int i=0; i<GetSourceOrder().size(); i++)
+    // Only show graph for small sample sizes (to avoid clutter)
+    if (num_iterations < 101)
     {
-        Range range;
-        double percentile_low = contributions->at(i).percentile(0.025);
-        double percentile_high = contributions->at(i).percentile(0.975);
-        double mean = contributions->at(i).mean();
-        double median = contributions->at(i).percentile(0.5);
-        range.Set(_range::low,percentile_low);
-        range.Set(_range::high,percentile_high);
-        range.SetMean(mean);
-        range.SetMedian(median);
-        contribution_credible_intervals->operator[](contributions->getSeriesName(i)) = range;
+        contributions_result.SetShowGraph(true);
     }
-    ResultItem contribution_credible_intervals_result_item;
+    else
+    {
+        contributions_result.SetShowGraph(false);
+    }
 
-    contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
-    contribution_credible_intervals_result_item.SetShowAsString(true);
-    contribution_credible_intervals_result_item.SetShowTable(true);
-    contribution_credible_intervals_result_item.SetType(result_type::rangeset);
-    contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
-    contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::normal);
-    contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
-    contribution_credible_intervals_result_item.SetYLimit(_range::low,0);
-    res->Append(contribution_credible_intervals_result_item);
+    contributions_result.SetYLimit(_range::high, 1);
+    contributions_result.SetYLimit(_range::low, 0);
+    contributions_result.SetXAxisMode(xaxis_mode::counter);
+    contributions_result.setYAxisTitle("Contribution");
+    contributions_result.setXAxisTitle("Sample");
+    results->Append(contributions_result);
 
+    // ========== Result 2: Posterior Distributions ==========
+    CMBTimeSeriesSet* distributions = new CMBTimeSeriesSet();
+    *distributions = contributions->distribution(100, 0, 0);
+
+    ResultItem distributions_result;
+    distributions_result.SetName("Posterior Distributions");
+    distributions_result.SetShowAsString(false);
+    distributions_result.SetShowTable(true);
+    distributions_result.SetType(result_type::distribution);
+    distributions_result.SetResult(distributions);
+    results->Append(distributions_result);
+
+    // ========== Result 3: 95% Credible Intervals ==========
+    RangeSet* credible_intervals = new RangeSet();
+
+    for (size_t i = 0; i < GetSourceOrder().size(); i++)
+    {
+        Range interval;
+
+        // Compute statistics for this source
+        double percentile_2_5 = contributions->at(i).percentile(0.025);
+        double percentile_97_5 = contributions->at(i).percentile(0.975);
+        double mean_contribution = contributions->at(i).mean();
+        double median_contribution = contributions->at(i).percentile(0.5);
+
+        // Configure credible interval
+        interval.Set(_range::low, percentile_2_5);
+        interval.Set(_range::high, percentile_97_5);
+        interval.SetMean(mean_contribution);
+        interval.SetMedian(median_contribution);
+
+        (*credible_intervals)[contributions->getSeriesName(i)] = interval;
+    }
+
+    ResultItem intervals_result;
+    intervals_result.SetName("Source Contribution Credible Intervals");
+    intervals_result.SetShowAsString(true);
+    intervals_result.SetShowTable(true);
+    intervals_result.SetType(result_type::rangeset);
+    intervals_result.SetResult(credible_intervals);
+    intervals_result.SetYAxisMode(yaxis_mode::normal);
+    intervals_result.SetYLimit(_range::high, 1.0);
+    intervals_result.SetYLimit(_range::low, 0);
+    results->Append(intervals_result);
 
     return true;
-
 }
 
-CMBTimeSeriesSet SourceSinkData::VerifySource(const string &sourcegroup, bool softmax_transformation, bool sizeandorganiccorrect)
+CMBTimeSeriesSet SourceSinkData::VerifySource(
+    const string& source_group,
+    bool use_softmax,
+    bool apply_om_size_correction)
 {
+    // Initialize with first target sample (will be replaced in loop)
     InitializeParametersAndObservations(GetSampleSet(target_group_)->begin()->first);
-    CMBTimeSeriesSet result(numberofsourcesamplesets_);
 
-    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
-        result.setname(source_group_counter, samplesetsorder_[source_group_counter]);
-    int counter = 0;
-    for (map<string,Elemental_Profile>::iterator sample = at(sourcegroup).begin(); sample!=at(sourcegroup).end(); sample++)
+    // Initialize result time series
+    CMBTimeSeriesSet validation_results(numberofsourcesamplesets_);
+
+    // Set source names
+    for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
     {
+        validation_results.setname(source_idx, samplesetsorder_[source_idx]);
+    }
 
-        SourceSinkData bootstrappeddata = ReplaceSourceAsTarget(sample->first);
-        SourceSinkData correctedData = bootstrappeddata.CreateCorrectedDataset(sample->first,sizeandorganiccorrect,bootstrappeddata.GetElementInformation());
-        correctedData.SetProgressWindow(rtw_);
-        vector<string> negative_elements = correctedData.NegativeValueCheck();
+    // Perform leave-one-out validation for each sample in the source group
+    size_t valid_sample_count = 0;
+    for (map<string, Elemental_Profile>::iterator sample = at(source_group).begin();
+        sample != at(source_group).end();
+        sample++)
+    {
+        // Create dataset with this sample as target
+        SourceSinkData test_dataset = ReplaceSourceAsTarget(sample->first);
 
-        if (negative_elements.size()==0)
+        // Apply corrections if requested
+        SourceSinkData corrected_dataset = test_dataset.CreateCorrectedDataset(
+            sample->first, apply_om_size_correction, test_dataset.GetElementInformation());
+        corrected_dataset.SetProgressWindow(rtw_);
+
+        // Check for negative values (would cause problems in CMB)
+        vector<string> negative_elements = corrected_dataset.NegativeValueCheck();
+
+        if (negative_elements.size() == 0)
         {
-            bootstrappeddata.InitializeParametersAndObservations(sample->first);
+            // No negative values - proceed with CMB solution
+            test_dataset.InitializeParametersAndObservations(sample->first);
+
+            // Update progress
             if (rtw_)
-                rtw_->SetProgress(double(counter)/double(at(sourcegroup).size()));
+            {
+                rtw_->SetProgress(double(valid_sample_count) / double(at(source_group).size()));
+            }
 
-            if (softmax_transformation)
-                bootstrappeddata.SolveLevenberg_Marquardt(transformation::softmax);
+            // Solve CMB model
+            if (use_softmax)
+            {
+                test_dataset.SolveLevenberg_Marquardt(transformation::softmax);
+            }
             else
-                bootstrappeddata.SolveLevenberg_Marquardt(transformation::linear);
+            {
+                test_dataset.SolveLevenberg_Marquardt(transformation::linear);
+            }
 
-            result.append(counter,bootstrappeddata.GetContributionVector().vec);
-            result.SetLabel(counter,sample->first);
-            counter++;
+            // Record contributions and label with sample name
+            validation_results.append(valid_sample_count, test_dataset.GetContributionVector().vec);
+            validation_results.SetLabel(valid_sample_count, sample->first);
+            valid_sample_count++;
         }
         else
         {
-            for (int i=0; i<negative_elements.size(); i++)
+            // Negative values detected - skip this sample and report
+            for (size_t i = 0; i < negative_elements.size(); i++)
             {
-                qDebug()<<QString::fromStdString(negative_elements[i]);
+                qDebug() << QString::fromStdString(negative_elements[i]);
             }
         }
-
-
     }
-    return result;
+
+    return validation_results;
 }
 
-CMBTimeSeriesSet SourceSinkData::LM_Batch(transformation transform, bool om_size_correction, map<string,vector<string>> &negative_elements)
+CMBTimeSeriesSet SourceSinkData::LM_Batch(
+    transformation transform,
+    bool apply_om_size_correction,
+    map<string, vector<string>>& negative_elements)
 {
-
+    // Initialize with first target sample (will be replaced in loop)
     InitializeParametersAndObservations(GetSampleSet(target_group_)->begin()->first);
-    CMBTimeSeriesSet result(numberofsourcesamplesets_);
 
-    for (unsigned int source_group_counter=0; source_group_counter<numberofsourcesamplesets_; source_group_counter++)
-        result.setname(source_group_counter, samplesetsorder_[source_group_counter]);
-    int counter = 0;
-    for (map<string,Elemental_Profile>::iterator sample = at(target_group_).begin(); sample!=at(target_group_).end(); sample++)
+    // Initialize result time series
+    CMBTimeSeriesSet contribution_results(numberofsourcesamplesets_);
+
+    // Set source names
+    for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
     {
+        contribution_results.setname(source_idx, samplesetsorder_[source_idx]);
+    }
+
+    // Solve CMB for each target sample
+    size_t valid_sample_count = 0;
+    for (map<string, Elemental_Profile>::iterator sample = at(target_group_).begin();
+        sample != at(target_group_).end();
+        sample++)
+    {
+        // Skip samples with empty names
         if (sample->first != "")
-        {   SourceSinkData correctedData = CreateCorrectedDataset(sample->first,om_size_correction,GetElementInformation());
-            negative_elements[sample->first] = correctedData.NegativeValueCheck();
-            if (negative_elements[sample->first].size()==0)
-            {   correctedData.InitializeParametersAndObservations(sample->first);
+        {
+            // Apply corrections if requested
+            SourceSinkData corrected_dataset = CreateCorrectedDataset(
+                sample->first, apply_om_size_correction, GetElementInformation());
+
+            // Check for negative values
+            negative_elements[sample->first] = corrected_dataset.NegativeValueCheck();
+
+            if (negative_elements[sample->first].size() == 0)
+            {
+                // No negative values - proceed with CMB solution
+                corrected_dataset.InitializeParametersAndObservations(sample->first);
+
+                // Update progress with sample name
                 if (rtw_)
-                {   rtw_->SetProgress(double(counter)/double(at(target_group_).size()));
+                {
+                    rtw_->SetProgress(double(valid_sample_count) / double(at(target_group_).size()));
                     rtw_->SetLabel(QString::fromStdString(sample->first));
                 }
 
-                correctedData.SolveLevenberg_Marquardt(transform);
+                // Solve CMB model
+                corrected_dataset.SolveLevenberg_Marquardt(transform);
 
-                result.append(counter,correctedData.GetContributionVector().vec);
-                result.SetLabel(counter,sample->first);
-                counter++;
+                // Record contributions and label with sample name
+                contribution_results.append(valid_sample_count, corrected_dataset.GetContributionVector().vec);
+                contribution_results.SetLabel(valid_sample_count, sample->first);
+                valid_sample_count++;
             }
         }
-
     }
-    rtw_->SetProgress(1);
-    return result;
-}
 
+    // Set progress to 100% at completion
+    if (rtw_)
+    {
+        rtw_->SetProgress(1.0);
+    }
+
+    return contribution_results;
+}
 
 
 vector<string> SourceSinkData::AllSourceSampleNames() const
 {
-    vector<string> out;
-    for (map<string, Elemental_Profile_Set>::const_iterator profile_set=cbegin(); profile_set!=cend(); profile_set++)
+    vector<string> all_sample_names;
+
+    // Collect sample names from all source groups
+    for (map<string, Elemental_Profile_Set>::const_iterator profile_set = cbegin();
+        profile_set != cend();
+        profile_set++)
     {
-        if (profile_set->first!=target_group_)
+        // Skip target group
+        if (profile_set->first != target_group_)
         {
-            for (map<string,Elemental_Profile>::const_iterator profile = profile_set->second.cbegin(); profile!=profile_set->second.cend(); profile++)
-                out.push_back(profile->first);
+            // Add all sample names from this source group
+            for (map<string, Elemental_Profile>::const_iterator profile = profile_set->second.cbegin();
+                profile != profile_set->second.cend();
+                profile++)
+            {
+                all_sample_names.push_back(profile->first);
+            }
         }
     }
-    return out;
 
-
+    return all_sample_names;
 }
-vector<string> SourceSinkData::RandomlypickSamples(const double &percentage) const
+
+vector<string> SourceSinkData::RandomlypickSamples(const double& percentage) const
 {
-    vector<string> allsamples = AllSourceSampleNames();
-    vector<string> out;
-    for (unsigned int i=0; i<allsamples.size(); i++)
+    // Get all source sample names
+    vector<string> all_samples = AllSourceSampleNames();
+    vector<string> selected_samples;
+
+    // Perform Bernoulli sampling: each sample included independently with probability = percentage
+    for (size_t i = 0; i < all_samples.size(); i++)
     {
-        if (GADistribution::GetRndUniF(0,1)<percentage)
+        // Generate random number in [0, 1)
+        double random_value = GADistribution::GetRndUniF(0, 1);
+
+        // Include sample if random value < percentage
+        if (random_value < percentage)
         {
-            out.push_back(allsamples[i]);
+            selected_samples.push_back(all_samples[i]);
         }
     }
-    return out;
+
+    return selected_samples;
 }
 
-Results SourceSinkData::MCMC(const string &sample, map<string,string> arguments, CMCMC<SourceSinkData> *mcmc, ProgressWindow *rtw_, const string &workingfolder)
+Results SourceSinkData::MCMC(
+    const string& target_sample,
+    map<string, string> arguments,
+    CMCMC<SourceSinkData>* mcmc,
+    ProgressWindow* progress_window,
+    const string& working_folder)
 {
+    // Initialize results container
     Results results;
-    results.SetName("MCMC results for '" +sample + "'");
-    ResultItem MCMC_samples;
-    MCMC_samples.SetShowAsString(false);
-    MCMC_samples.SetType(result_type::mcmc_samples);
-    MCMC_samples.SetName("MCMC samples");
-    CMBTimeSeriesSet *samples = new CMBTimeSeriesSet();
+    results.SetName("MCMC results for '" + target_sample + "'");
 
-    bool organicnsizecorrection;
-    if (arguments["Apply size and organic matter correction"]=="true")
-    {
-        organicnsizecorrection = true;
-    }
-    else
-        organicnsizecorrection = false;
+    // Parse OM/size correction setting
+    bool apply_om_size_correction = (arguments["Apply size and organic matter correction"] == "true");
 
-    SourceSinkData correctedData = CreateCorrectedDataset(sample,organicnsizecorrection, GetElementInformation());
-    vector<string> negative_elements = correctedData.NegativeValueCheck();
-    if (negative_elements.size()>0)
+    // Apply corrections and validate
+    SourceSinkData corrected_data = CreateCorrectedDataset(
+        target_sample, apply_om_size_correction, GetElementInformation());
+    vector<string> negative_elements = corrected_data.NegativeValueCheck();
+
+    if (negative_elements.size() > 0)
     {
+        // Negative values detected - return error
         results.SetError("Negative elemental content in ");
-        for (unsigned int i=0; i<negative_elements.size(); i++)
+        for (size_t i = 0; i < negative_elements.size(); i++)
         {
-            if (i==0)
+            if (i == 0)
                 results.AppendError(negative_elements[i]);
             else
                 results.AppendError("," + negative_elements[i]);
         }
         return results;
-
     }
 
-    mcmc->Model = &correctedData;
+    // Configure MCMC sampler
+    mcmc->Model = &corrected_data;
 
-    rtw_->SetTitle("Acceptance Rate",0);
-    rtw_->SetTitle("Purturbation Factor",1);
-    rtw_->SetTitle("Log posterior value",2);
-    rtw_->SetYAxisTitle("Acceptance Rate",0);
-    rtw_->SetYAxisTitle("Purturbation Factor",1);
-    rtw_->SetYAxisTitle("Log posterior value",2);
-    rtw_->show();
-// Samples
-    qDebug()<<2;
-    correctedData.InitializeParametersAndObservations(sample);
-    mcmc->SetProperty("number_of_samples",arguments["Number of samples"]);
-    mcmc->SetProperty("number_of_chains",arguments["Number of chains"]);
-    mcmc->SetProperty("number_of_burnout_samples",arguments["Samples to be discarded (burnout)"]);
-    mcmc->SetProperty("dissolve_chains",arguments["Dissolve Chains"]);
-    qDebug()<<3;
-    mcmc->initialize(samples,true);
-    string folderpath;
+    // Setup progress window charts
+    progress_window->SetTitle("Acceptance Rate", 0);
+    progress_window->SetTitle("Purturbation Factor", 1);
+    progress_window->SetTitle("Log posterior value", 2);
+    progress_window->SetYAxisTitle("Acceptance Rate", 0);
+    progress_window->SetYAxisTitle("Purturbation Factor", 1);
+    progress_window->SetYAxisTitle("Log posterior value", 2);
+    progress_window->show();
+
+    // ========== Run MCMC Sampling ==========
+    corrected_data.InitializeParametersAndObservations(target_sample);
+
+    // Set MCMC parameters
+    mcmc->SetProperty("number_of_samples", arguments["Number of samples"]);
+    mcmc->SetProperty("number_of_chains", arguments["Number of chains"]);
+    mcmc->SetProperty("number_of_burnout_samples", arguments["Samples to be discarded (burnout)"]);
+    mcmc->SetProperty("dissolve_chains", arguments["Dissolve Chains"]);
+
+    // Initialize MCMC sampler
+    CMBTimeSeriesSet* mcmc_samples = new CMBTimeSeriesSet();
+    mcmc->initialize(mcmc_samples, true);
+
+    // Determine output file path
+    string output_path;
     if (!QString::fromStdString(arguments["Samples File Name"]).contains("/"))
-        folderpath = workingfolder+"/";
-    qDebug()<<4;
-    mcmc->step(QString::fromStdString(arguments["Number of chains"]).toInt(), QString::fromStdString(arguments["Number of samples"]).toInt(), folderpath + arguments["Samples File Name"], samples, rtw_);
-    qDebug()<<"Outside MCMC";
-    vector<string> SourceGroupNames = correctedData.SourceGroupNames();
-    qDebug()<<"Appending last contributions";
-    samples->AppendLastContribution(SourceGroupNames.size()-1,SourceGroupNames[SourceGroupNames.size()-1]+"_contribution");
-    MCMC_samples.SetResult(samples);
-    results.Append(MCMC_samples);
-// Posterior distributions
-    qDebug()<<"Posterior distributions";
-    ResultItem distribution_res_item;
-    CMBTimeSeriesSet *dists = new CMBTimeSeriesSet();
-    *dists = samples->distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    distribution_res_item.SetName("Posterior Distributions");
-    distribution_res_item.SetShowAsString(false);
-    distribution_res_item.SetShowTable(true);
-    distribution_res_item.SetType(result_type::distribution);
-    distribution_res_item.SetResult(dists);
-    results.Append(distribution_res_item);
-    qDebug()<<"Posterior distributions 95%";
-//Posterior contribution 95% intervals
-    RangeSet *contribution_credible_intervals = new RangeSet();
-    for (unsigned int i=0; i<correctedData.GetSourceOrder().size(); i++)
     {
-        Range range;
-        double percentile_low = samples->at(i).percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        double percentile_high = samples->at(i).percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        double mean = samples->at(i).mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        double median = samples->at(i).percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-        range.Set(_range::low,percentile_low);
-        range.Set(_range::high,percentile_high);
-        range.SetMean(mean);
-        range.SetMedian(median);
-        contribution_credible_intervals->operator[](samples->getSeriesName(i)) = range;
+        output_path = working_folder + "/";
     }
-    ResultItem contribution_credible_intervals_result_item;
 
-    contribution_credible_intervals_result_item.SetName("Source Contribution Credible Intervals");
-    contribution_credible_intervals_result_item.SetShowAsString(true);
-    contribution_credible_intervals_result_item.SetShowTable(true);
-    contribution_credible_intervals_result_item.SetType(result_type::rangeset);
-    contribution_credible_intervals_result_item.SetResult(contribution_credible_intervals);
-    contribution_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
-    contribution_credible_intervals_result_item.SetYLimit(_range::high,1.0);
-    results.Append(contribution_credible_intervals_result_item);
-    qDebug()<<"Predicted distributions";
-// Predicted 95% posterior distributions
+    // Run MCMC chains
+    int num_chains = QString::fromStdString(arguments["Number of chains"]).toInt();
+    int num_samples = QString::fromStdString(arguments["Number of samples"]).toInt();
+    mcmc->step(num_chains, num_samples, output_path + arguments["Samples File Name"],
+        mcmc_samples, progress_window);
+
+    // Append last contribution (computed from sum constraint)
+    vector<string> source_names = corrected_data.SourceGroupNames();
+    size_t last_source_idx = source_names.size() - 1;
+    mcmc_samples->AppendLastContribution(last_source_idx,
+        source_names[last_source_idx] + "_contribution");
+
+    // Store MCMC samples result
+    ResultItem mcmc_samples_result;
+    mcmc_samples_result.SetShowAsString(false);
+    mcmc_samples_result.SetType(result_type::mcmc_samples);
+    mcmc_samples_result.SetName("MCMC samples");
+    mcmc_samples_result.SetResult(mcmc_samples);
+    results.Append(mcmc_samples_result);
+
+    // Parse burnin parameter
+    int burnin_samples = QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt();
+
+    // ========== Result 1: Posterior Distributions for Contributions ==========
+    ResultItem posterior_distributions_result;
+    CMBTimeSeriesSet* posterior_distributions = new CMBTimeSeriesSet();
+    *posterior_distributions = mcmc_samples->distribution(100, burnin_samples);
+
+    posterior_distributions_result.SetName("Posterior Distributions");
+    posterior_distributions_result.SetShowAsString(false);
+    posterior_distributions_result.SetShowTable(true);
+    posterior_distributions_result.SetType(result_type::distribution);
+    posterior_distributions_result.SetResult(posterior_distributions);
+    results.Append(posterior_distributions_result);
+
+    // ========== Result 2: Contribution Credible Intervals ==========
+    RangeSet* contribution_credible_intervals = new RangeSet();
+
+    for (size_t i = 0; i < corrected_data.GetSourceOrder().size(); i++)
+    {
+        Range interval;
+
+        // Compute statistics (excluding burnin)
+        double percentile_2_5 = mcmc_samples->at(i).percentile(0.025, burnin_samples);
+        double percentile_97_5 = mcmc_samples->at(i).percentile(0.975, burnin_samples);
+        double mean_contribution = mcmc_samples->at(i).mean(burnin_samples);
+        double median_contribution = mcmc_samples->at(i).percentile(0.5, burnin_samples);
+
+        interval.Set(_range::low, percentile_2_5);
+        interval.Set(_range::high, percentile_97_5);
+        interval.SetMean(mean_contribution);
+        interval.SetMedian(median_contribution);
+
+        (*contribution_credible_intervals)[mcmc_samples->getSeriesName(i)] = interval;
+    }
+
+    ResultItem contribution_intervals_result;
+    contribution_intervals_result.SetName("Source Contribution Credible Intervals");
+    contribution_intervals_result.SetShowAsString(true);
+    contribution_intervals_result.SetShowTable(true);
+    contribution_intervals_result.SetType(result_type::rangeset);
+    contribution_intervals_result.SetResult(contribution_credible_intervals);
+    contribution_intervals_result.SetYAxisMode(yaxis_mode::log);
+    contribution_intervals_result.SetYLimit(_range::high, 1.0);
+    results.Append(contribution_intervals_result);
+
+    // ========== Result 3: Predicted Element Distributions ==========
     CMBTimeSeriesSet predicted_samples = mcmc->predicted;
-    CMBTimeSeriesSet predicted_samples_elems;
-    vector<string> ConstituentNames = correctedData.ElementOrder();
-    vector<string> IsotopeNames = correctedData.IsotopeOrder();
-    vector<string> AllNames = ConstituentNames;
+    vector<string> element_names = corrected_data.ElementOrder();
+    vector<string> isotope_names = corrected_data.IsotopeOrder();
+    vector<string> all_constituent_names = element_names;
+    all_constituent_names.insert(all_constituent_names.end(), isotope_names.begin(), isotope_names.end());
 
-    AllNames.insert(AllNames.end(),IsotopeNames.begin(), IsotopeNames.end());
-
-    for (int i=0; i<predicted_samples.size(); i++)
-        predicted_samples.setname(i,AllNames[i]);
-
-
-
-    for (int i=0; i<predicted_samples.size(); i++)
+    // Set constituent names
+    for (size_t i = 0; i < predicted_samples.size(); i++)
     {
-        if (correctedData.GetElementInformation(predicted_samples.getSeriesName(i))->Role==element_information::role::element)
-            predicted_samples_elems.append(predicted_samples[i],predicted_samples.getSeriesName(i));
+        predicted_samples.setname(i, all_constituent_names[i]);
     }
-    ResultItem predicted_distribution_res_item;
-    CMBTimeSeriesSet *predicted_dists_elems = new CMBTimeSeriesSet();
 
-    *predicted_dists_elems = predicted_samples_elems.distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    for (int i=0; i<predicted_samples.size(); i++)
-        predicted_dists_elems->SetObservedValue(i,correctedData.observation(i)->Value());
-
-    predicted_distribution_res_item.SetName("Posterior Predicted Constituents");
-    predicted_distribution_res_item.SetShowAsString(false);
-    predicted_distribution_res_item.SetShowTable(true);
-    predicted_distribution_res_item.SetType(result_type::distribution_with_observed);
-    predicted_distribution_res_item.SetResult(predicted_dists_elems);
-    results.Append(predicted_distribution_res_item);
-    qDebug()<<"Predicted distributions 95%";
-//predicted 95% credible intervals
-
-    RangeSet *predicted_credible_intervals = new RangeSet();
-    vector<double> percentile_low = predicted_samples.percentile(0.025,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    vector<double> percentile_high = predicted_samples.percentile(0.975,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    vector<double> mean = predicted_samples.mean(QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    vector<double> median = predicted_samples.percentile(0.5,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    for (int i=0; i<predicted_dists_elems->size(); i++)
+    // Extract element predictions only
+    CMBTimeSeriesSet predicted_elements;
+    for (size_t i = 0; i < predicted_samples.size(); i++)
     {
-        Range range;
-        range.Set(_range::low,percentile_low[i]);
-        range.Set(_range::high,percentile_high[i]);
-        range.SetMean(mean[i]);
-        range.SetMedian(median[i]);
-        predicted_credible_intervals->operator[](predicted_dists_elems->getSeriesName(i)) = range;
-        predicted_credible_intervals->operator[](predicted_dists_elems->getSeriesName(i)).SetValue(correctedData.observation(i)->Value());
+        if (corrected_data.GetElementInformation(predicted_samples.getSeriesName(i))->Role ==
+            element_information::role::element)
+        {
+            predicted_elements.append(predicted_samples[i], predicted_samples.getSeriesName(i));
+        }
     }
-    ResultItem predicted_credible_intervals_result_item;
-    predicted_credible_intervals_result_item.SetName("Predicted Samples Credible Intervals");
-    predicted_credible_intervals_result_item.SetShowAsString(true);
-    predicted_credible_intervals_result_item.SetShowTable(true);
-    predicted_credible_intervals_result_item.SetType(result_type::rangeset_with_observed);
-    predicted_credible_intervals_result_item.SetResult(predicted_credible_intervals);
-    predicted_credible_intervals_result_item.SetYAxisMode(yaxis_mode::log);
-    results.Append(predicted_credible_intervals_result_item);
-    qDebug()<<"Predicted isotope distributions";
-    // Predicted 95% posterior distributions for isotopes
-    CMBTimeSeriesSet predicted_samples_isotopes;
 
-    for (int i=0; i<predicted_samples.size(); i++)
+    // Compute posterior distributions for elements
+    CMBTimeSeriesSet* predicted_element_distributions = new CMBTimeSeriesSet();
+    *predicted_element_distributions = predicted_elements.distribution(100, burnin_samples);
+
+    // Add observed values
+    for (size_t i = 0; i < predicted_elements.size(); i++)
     {
-        if (correctedData.GetElementInformation(predicted_samples.getSeriesName(i))->Role==element_information::role::isotope)
-            predicted_samples_isotopes.append(predicted_samples[i],predicted_samples.getSeriesName(i));
+        predicted_element_distributions->SetObservedValue(i, corrected_data.observation(i)->Value());
     }
-    ResultItem predicted_distribution_iso_res_item;
-    CMBTimeSeriesSet *predicted_dists_isotopes = new CMBTimeSeriesSet();
 
-    *predicted_dists_isotopes = predicted_samples_isotopes.distribution(100,QString::fromStdString(arguments["Samples to be discarded (burnout)"]).toInt());
-    for (int i=0; i<predicted_samples_isotopes.size(); i++)
-        predicted_dists_isotopes->SetObservedValue(i,correctedData.observation(i+ConstituentNames.size())->Value());
+    ResultItem predicted_elements_result;
+    predicted_elements_result.SetName("Posterior Predicted Constituents");
+    predicted_elements_result.SetShowAsString(false);
+    predicted_elements_result.SetShowTable(true);
+    predicted_elements_result.SetType(result_type::distribution_with_observed);
+    predicted_elements_result.SetResult(predicted_element_distributions);
+    results.Append(predicted_elements_result);
 
-    predicted_distribution_iso_res_item.SetName("Posterior Predicted Isotopes");
-    predicted_distribution_iso_res_item.SetShowAsString(false);
-    predicted_distribution_iso_res_item.SetShowTable(true);
-    predicted_distribution_iso_res_item.SetType(result_type::distribution_with_observed);
-    predicted_distribution_iso_res_item.SetResult(predicted_dists_isotopes);
-    results.Append(predicted_distribution_iso_res_item);
-    qDebug()<<"Predicted isotope distributions 95%";
-    //predicted 95% credible intervals for isotopes
+    // ========== Result 4: Element Credible Intervals ==========
+    RangeSet* predicted_element_intervals = new RangeSet();
 
-    RangeSet *predicted_credible_intervals_isotopes = new RangeSet();
+    // Compute percentiles for all predictions
+    vector<double> percentile_2_5_all = predicted_samples.percentile(0.025, burnin_samples);
+    vector<double> percentile_97_5_all = predicted_samples.percentile(0.975, burnin_samples);
+    vector<double> mean_all = predicted_samples.mean(burnin_samples);
+    vector<double> median_all = predicted_samples.percentile(0.5, burnin_samples);
 
-    for (int i=0; i<predicted_dists_isotopes->size(); i++)
+    for (size_t i = 0; i < predicted_element_distributions->size(); i++)
     {
-        Range range;
-        range.Set(_range::low,percentile_low[i+correctedData.ElementOrder().size()]);
-        range.Set(_range::high,percentile_high[i+correctedData.ElementOrder().size()]);
-        range.SetMean(mean[i+correctedData.ElementOrder().size()]);
-        range.SetMedian(median[i+correctedData.ElementOrder().size()]);
-        predicted_credible_intervals_isotopes->operator[](predicted_dists_isotopes->getSeriesName(i)) = range;
-        predicted_credible_intervals_isotopes->operator[](predicted_dists_isotopes->getSeriesName(i)).SetValue(correctedData.observation(i+correctedData.ElementOrder().size())->Value());
+        Range interval;
+        interval.Set(_range::low, percentile_2_5_all[i]);
+        interval.Set(_range::high, percentile_97_5_all[i]);
+        interval.SetMean(mean_all[i]);
+        interval.SetMedian(median_all[i]);
+
+        (*predicted_element_intervals)[predicted_element_distributions->getSeriesName(i)] = interval;
+        (*predicted_element_intervals)[predicted_element_distributions->getSeriesName(i)].SetValue(
+            corrected_data.observation(i)->Value());
     }
-    ResultItem predicted_credible_intervals_isotope_result_item;
-    predicted_credible_intervals_isotope_result_item.SetName("Predicted Samples Credible Intervals for Isotopes");
-    predicted_credible_intervals_isotope_result_item.SetShowAsString(true);
-    predicted_credible_intervals_isotope_result_item.SetShowTable(true);
-    predicted_credible_intervals_isotope_result_item.SetType(result_type::rangeset_with_observed);
-    predicted_credible_intervals_isotope_result_item.SetResult(predicted_credible_intervals_isotopes);
-    predicted_credible_intervals_isotope_result_item.SetYAxisMode(yaxis_mode::normal);
-    results.Append(predicted_credible_intervals_isotope_result_item);
-    qDebug()<<"Done for sample "<< QString::fromStdString(sample);
-    rtw_->SetProgress(1);
+
+    ResultItem predicted_element_intervals_result;
+    predicted_element_intervals_result.SetName("Predicted Samples Credible Intervals");
+    predicted_element_intervals_result.SetShowAsString(true);
+    predicted_element_intervals_result.SetShowTable(true);
+    predicted_element_intervals_result.SetType(result_type::rangeset_with_observed);
+    predicted_element_intervals_result.SetResult(predicted_element_intervals);
+    predicted_element_intervals_result.SetYAxisMode(yaxis_mode::log);
+    results.Append(predicted_element_intervals_result);
+
+    // ========== Result 5: Predicted Isotope Distributions ==========
+    CMBTimeSeriesSet predicted_isotopes;
+
+    for (size_t i = 0; i < predicted_samples.size(); i++)
+    {
+        if (corrected_data.GetElementInformation(predicted_samples.getSeriesName(i))->Role ==
+            element_information::role::isotope)
+        {
+            predicted_isotopes.append(predicted_samples[i], predicted_samples.getSeriesName(i));
+        }
+    }
+
+    CMBTimeSeriesSet* predicted_isotope_distributions = new CMBTimeSeriesSet();
+    *predicted_isotope_distributions = predicted_isotopes.distribution(100, burnin_samples);
+
+    // Add observed values
+    for (size_t i = 0; i < predicted_isotopes.size(); i++)
+    {
+        predicted_isotope_distributions->SetObservedValue(
+            i, corrected_data.observation(i + element_names.size())->Value());
+    }
+
+    ResultItem predicted_isotopes_result;
+    predicted_isotopes_result.SetName("Posterior Predicted Isotopes");
+    predicted_isotopes_result.SetShowAsString(false);
+    predicted_isotopes_result.SetShowTable(true);
+    predicted_isotopes_result.SetType(result_type::distribution_with_observed);
+    predicted_isotopes_result.SetResult(predicted_isotope_distributions);
+    results.Append(predicted_isotopes_result);
+
+    // ========== Result 6: Isotope Credible Intervals ==========
+    RangeSet* predicted_isotope_intervals = new RangeSet();
+    size_t element_offset = corrected_data.ElementOrder().size();
+
+    for (size_t i = 0; i < predicted_isotope_distributions->size(); i++)
+    {
+        Range interval;
+        interval.Set(_range::low, percentile_2_5_all[i + element_offset]);
+        interval.Set(_range::high, percentile_97_5_all[i + element_offset]);
+        interval.SetMean(mean_all[i + element_offset]);
+        interval.SetMedian(median_all[i + element_offset]);
+
+        (*predicted_isotope_intervals)[predicted_isotope_distributions->getSeriesName(i)] = interval;
+        (*predicted_isotope_intervals)[predicted_isotope_distributions->getSeriesName(i)].SetValue(
+            corrected_data.observation(i + element_offset)->Value());
+    }
+
+    ResultItem predicted_isotope_intervals_result;
+    predicted_isotope_intervals_result.SetName("Predicted Samples Credible Intervals for Isotopes");
+    predicted_isotope_intervals_result.SetShowAsString(true);
+    predicted_isotope_intervals_result.SetShowTable(true);
+    predicted_isotope_intervals_result.SetType(result_type::rangeset_with_observed);
+    predicted_isotope_intervals_result.SetResult(predicted_isotope_intervals);
+    predicted_isotope_intervals_result.SetYAxisMode(yaxis_mode::normal);
+    results.Append(predicted_isotope_intervals_result);
+
+    // Set progress to 100%
+    progress_window->SetProgress(1.0);
+
     return results;
 }
 
-CMBMatrix SourceSinkData::MCMC_Batch(map<string,string> arguments, CMCMC<SourceSinkData> *mcmc, ProgressWindow *rtw_, const string &workingfolder)
+
+CMBMatrix SourceSinkData::MCMC_Batch(
+    map<string, string> arguments,
+    CMCMC<SourceSinkData>* mcmc,
+    ProgressWindow* progress_window,
+    const string& working_folder)
 {
+    // Initialize with first target sample
     InitializeParametersAndObservations(at(target_group_).begin()->first);
-    CMBMatrix contributions(numberofsourcesamplesets_*4,at(target_group_).size());
 
-    for (unsigned int i=0; i<numberofsourcesamplesets_; i++)
+    // Initialize contribution matrix: 4 columns per source (low, high, median, mean)
+    const size_t num_target_samples = at(target_group_).size();
+    const size_t num_columns = numberofsourcesamplesets_ * 4;
+    CMBMatrix contribution_statistics(num_columns, num_target_samples);
+
+    // Set column labels
+    for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
     {
-        contributions.SetColumnLabel(i*4, samplesetsorder_[i] +"-"+"low");
-        contributions.SetColumnLabel(i*4+1, samplesetsorder_[i] +"-"+"high");
-        contributions.SetColumnLabel(i*4+2, samplesetsorder_[i] +"-"+"median");
-        contributions.SetColumnLabel(i*4+3, samplesetsorder_[i] +"-"+"mean");
+        const string& source_name = samplesetsorder_[source_idx];
+        contribution_statistics.SetColumnLabel(source_idx * 4, source_name + "-low");
+        contribution_statistics.SetColumnLabel(source_idx * 4 + 1, source_name + "-high");
+        contribution_statistics.SetColumnLabel(source_idx * 4 + 2, source_name + "-median");
+        contribution_statistics.SetColumnLabel(source_idx * 4 + 3, source_name + "-mean");
     }
-    int counter = 0;
-    for (map<string,Elemental_Profile>::iterator sample = at(target_group_).begin(); sample!=at(target_group_).end(); sample++)
+
+    // Process each target sample
+    size_t sample_counter = 0;
+    for (map<string, Elemental_Profile>::iterator sample = at(target_group_).begin();
+        sample != at(target_group_).end();
+        sample++)
     {
-        qDebug()<<QString::fromStdString(sample->first)<<":"<<"Creating folder";
-        QDir dir(QString::fromStdString(workingfolder)+"/"+QString::fromStdString(sample->first));
-        if (!dir.exists())
-            dir.mkpath(".");
-        contributions.SetRowLabel(counter,sample->first);
-        rtw_->SetLabel(QString::fromStdString(sample->first));
-        qDebug()<<QString::fromStdString(sample->first)<<":"<<"Performing MCMC";
-        Results results = MCMC(sample->first, arguments, mcmc, rtw_, workingfolder);
-        qDebug()<<QString::fromStdString(sample->first)<<":"<<"Writing Result Items";
-        for (map<string,ResultItem>::iterator result_item = results.begin(); result_item!=results.end(); result_item++ )
+        const string& sample_name = sample->first;
+
+        // Create output directory for this sample
+        QDir sample_dir(QString::fromStdString(working_folder) + "/" + QString::fromStdString(sample_name));
+        if (!sample_dir.exists())
         {
-            QString file_name = dir.absolutePath()+"/"+QString::fromStdString(result_item->first)+".txt";
-            QFile file(file_name);
-            file.open(QIODevice::WriteOnly | QIODevice::Text);
-            result_item->second.Result()->writetofile(&file);
-            file.close();
-        }
-        for (unsigned int i=0; i<numberofsourcesamplesets_; i++)
-        {
-            contributions[counter][4*i] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder_[i]+"_contribution").Get(_range::low);
-            contributions[counter][4*i+1] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder_[i]+"_contribution").Get(_range::high);
-            contributions[counter][4*i+2] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder_[i]+"_contribution").Median();
-            contributions[counter][4*i+3] = static_cast<RangeSet*>(results.at("3:Source Contribution Credible Intervals").Result())->at(samplesetsorder_[i]+"_contribution").Mean();
+            sample_dir.mkpath(".");
         }
 
-        counter++;
-        rtw_->SetProgress2(double(counter)/double(at(target_group_).size()));
-        rtw_->ClearGraph(0);
-        rtw_->ClearGraph(1);
-        rtw_->ClearGraph(2);
+        // Set matrix row label
+        contribution_statistics.SetRowLabel(sample_counter, sample_name);
+
+        // Update progress label
+        progress_window->SetLabel(QString::fromStdString(sample_name));
+
+        // Run MCMC analysis for this sample
+        Results mcmc_results = MCMC(sample_name, arguments, mcmc, progress_window, working_folder);
+
+        // Save all result items to text files
+        for (map<string, ResultItem>::iterator result_item = mcmc_results.begin();
+            result_item != mcmc_results.end();
+            result_item++)
+        {
+            QString file_path = sample_dir.absolutePath() + "/" +
+                QString::fromStdString(result_item->first) + ".txt";
+            QFile output_file(file_path);
+            output_file.open(QIODevice::WriteOnly | QIODevice::Text);
+            result_item->second.Result()->writetofile(&output_file);
+            output_file.close();
+        }
+
+        // Extract contribution statistics from credible intervals
+        RangeSet* credible_intervals = static_cast<RangeSet*>(
+            mcmc_results.at("3:Source Contribution Credible Intervals").Result());
+
+        for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
+        {
+            const string contribution_name = samplesetsorder_[source_idx] + "_contribution";
+            const Range& contribution_interval = credible_intervals->at(contribution_name);
+
+            // Store statistics: low (2.5%), high (97.5%), median, mean
+            contribution_statistics[sample_counter][4 * source_idx] = contribution_interval.Get(_range::low);
+            contribution_statistics[sample_counter][4 * source_idx + 1] = contribution_interval.Get(_range::high);
+            contribution_statistics[sample_counter][4 * source_idx + 2] = contribution_interval.Median();
+            contribution_statistics[sample_counter][4 * source_idx + 3] = contribution_interval.Mean();
+        }
+
+        sample_counter++;
+
+        // Update batch progress
+        progress_window->SetProgress2(double(sample_counter) / double(num_target_samples));
+
+        // Clear MCMC progress charts for next sample
+        progress_window->ClearGraph(0);
+        progress_window->ClearGraph(1);
+        progress_window->ClearGraph(2);
     }
-    rtw_->SetProgress2(1);
-    return contributions;
+
+    // Set batch progress to 100%
+    progress_window->SetProgress2(1.0);
+
+    return contribution_statistics;
 }
-
-bool SourceSinkData::ToolsUsed(const string &toolname)
+bool SourceSinkData::ToolsUsed(const string& tool_name)
 {
-    std::list<string>::iterator iter = std::find (tools_used.begin(), tools_used.end(), toolname);
-    if (iter == tools_used.end())
-        return false;
-    else
-        return true;
+    // Search for tool in the tools_used list
+    std::list<string>::iterator iter = std::find(tools_used_.begin(), tools_used_.end(), tool_name);
+
+    // Return true if found, false if not found
+    return (iter != tools_used_.end());
 }
 
 string SourceSinkData::FirstOMConstituent()
 {
-    for (map<string,element_information>::iterator element = element_information_.begin(); element!=element_information_.end(); element++)
+    // Search for first organic carbon constituent
+    for (map<string, element_information>::iterator element = element_information_.begin();
+        element != element_information_.end();
+        element++)
     {
         if (element->second.Role == element_information::role::organic_carbon)
+        {
             return element->first;
+        }
     }
+
+    // No organic carbon constituent found
     return "";
 }
 
-
 string SourceSinkData::FirstSizeConstituent()
 {
-    for (map<string,element_information>::iterator element = element_information_.begin(); element!=element_information_.end(); element++)
+    // Search for first particle size constituent
+    for (map<string, element_information>::iterator element = element_information_.begin();
+        element != element_information_.end();
+        element++)
     {
         if (element->second.Role == element_information::role::particle_size)
+        {
             return element->first;
+        }
     }
+
+    // No particle size constituent found
     return "";
 }
 
 CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
 {
-    vector<string> elementNames = GetElementNames();
-    CMatrix CovMatr(elementNames.size());
-    int counter = 0;
-    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    vector<string> element_names = GetElementNames();
+    CMatrix within_group_covariance(element_names.size());
+
+    // Accumulate weighted covariance matrices from each source group
+    int total_degrees_of_freedom = 0;
+    for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+        source_group != end();
+        source_group++)
     {
         if (source_group->first != target_group_)
-        {   CovMatr += (source_group->second.size()-1)*source_group->second.CalculateCovarianceMatrix();
-            counter += source_group->second.size()-1;
+        {
+            // Weight by degrees of freedom (n - 1) for this group
+            int group_df = source_group->second.size() - 1;
+            within_group_covariance += group_df * source_group->second.CalculateCovarianceMatrix();
+            total_degrees_of_freedom += group_df;
         }
     }
-    return CovMatr/double(counter);
+
+    // Return pooled within-group covariance
+    return within_group_covariance / double(total_degrees_of_freedom);
 }
 
 CMatrix SourceSinkData::BetweenGroupCovarianceMatrix()
 {
-    vector<string> elementNames = GetElementNames();
-    CMatrix out(elementNames.size());
-    double count = 0;
-    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    vector<string> element_names = GetElementNames();
+    CMatrix between_group_covariance(element_names.size());
+
+    // Get overall mean across all sources
+    CMBVector overall_mean = MeanElementalContent();
+
+    // Accumulate weighted outer products of group mean deviations
+    double total_samples = 0.0;
+    for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+        source_group != end();
+        source_group++)
     {
         if (source_group->first != target_group_)
         {
-            CMBVector deviation = MeanElementalContent() - MeanElementalContent(source_group->first);
-            for (int i=0; i<elementNames.size(); i++)
-                for (int j=0; j<elementNames.size(); j++)
-                    out[i][j] += deviation[i]*deviation[j]*source_group->second.size();
-            count += source_group->second.size();
+            // Compute deviation of group mean from overall mean
+            CMBVector group_mean = MeanElementalContent(source_group->first);
+            CMBVector deviation = overall_mean - group_mean;
+
+            // Add weighted outer product: n_i × (μ_i - μ)(μ_i - μ)ᵀ
+            size_t group_size = source_group->second.size();
+            for (size_t i = 0; i < element_names.size(); i++)
+            {
+                for (size_t j = 0; j < element_names.size(); j++)
+                {
+                    between_group_covariance[i][j] += deviation[i] * deviation[j] * group_size;
+                }
+            }
+
+            total_samples += group_size;
         }
     }
-    return out/count;
+
+    // Return normalized between-group covariance
+    return between_group_covariance / total_samples;
 }
 
 CMatrix SourceSinkData::TotalScatterMatrix()
 {
-    vector<string> elementNames = GetElementNames();
-    CMatrix out(elementNames.size());
-    double count = 0;
-    CMBVector OverallMean = MeanElementalContent();
-    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    vector<string> element_names = GetElementNames();
+    CMatrix total_scatter(element_names.size());
+
+    // Get overall mean across all sources
+    CMBVector overall_mean = MeanElementalContent();
+
+    // Accumulate sum of squared deviations from overall mean
+    double total_samples = 0.0;
+    for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+        source_group != end();
+        source_group++)
     {
         if (source_group->first != target_group_)
         {
-            for (map<string,Elemental_Profile>::iterator elem_prof = source_group->second.begin(); elem_prof!=source_group->second.end(); elem_prof++ )
+            // Process each sample in this group
+            for (map<string, Elemental_Profile>::iterator sample = source_group->second.begin();
+                sample != source_group->second.end();
+                sample++)
             {
-                for (int i=0; i<elementNames.size(); i++)
-                    for (int j=0; j<elementNames.size(); j++)
-                        out[i][j] += (OverallMean[i]-elem_prof->second.at(elementNames[i]))*(OverallMean[j]-elem_prof->second.at(elementNames[j]));
+                // Add outer product of deviation: (x - μ)(x - μ)ᵀ
+                for (size_t i = 0; i < element_names.size(); i++)
+                {
+                    for (size_t j = 0; j < element_names.size(); j++)
+                    {
+                        double deviation_i = overall_mean[i] - sample->second.at(element_names[i]);
+                        double deviation_j = overall_mean[j] - sample->second.at(element_names[j]);
+                        total_scatter[i][j] += deviation_i * deviation_j;
+                    }
+                }
             }
-            count += source_group->second.size();
+
+            total_samples += source_group->second.size();
         }
     }
-    return out/count;
+
+    // Return normalized total scatter matrix
+    return total_scatter / total_samples;
 }
 
 double SourceSinkData::WilksLambda()
 {
-    CMatrix_arma S_w = WithinGroupCovarianceMatrix();
-    CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
-    CMatrix_arma S_T = S_w + S_B;
-   
-    double numerator = S_w.det();
-    double denumerator = S_T.det();
-    return fabs(numerator)/fabs(denumerator);
+    // Get covariance matrices
+    CMatrix_arma within_group_cov = WithinGroupCovarianceMatrix();
+    CMatrix_arma between_group_cov = BetweenGroupCovarianceMatrix();
+    CMatrix_arma total_cov = within_group_cov + between_group_cov;
+
+    // Compute Wilks' Lambda = |S_W| / |S_T|
+    double numerator = within_group_cov.det();
+    double denominator = total_cov.det();
+
+    // Use absolute values for numerical stability
+    return fabs(numerator) / fabs(denominator);
 }
 
 double SourceSinkData::DFA_P_Value()
 {
-    int element_count = GetElementNames().size();
-    double wilkslambda = min(WilksLambda(),1.0);
-    double ChiSquared = -(TotalNumberofSourceSamples() - 1 - (element_count+(numberofsourcesamplesets_-1.0)/2.0))*log(wilkslambda);
-    double df;
-    if (target_group_!="")
-        df = element_count*(numberofsourcesamplesets_ - 2.0);
+    int num_elements = GetElementNames().size();
+
+    // Get Wilks' Lambda (capped at 1.0)
+    double wilks_lambda = min(WilksLambda(), 1.0);
+
+    // Transform to chi-squared statistic
+    double sample_size = TotalNumberofSourceSamples();
+    double correction_factor = (num_elements + (numberofsourcesamplesets_ - 1.0)) / 2.0;
+    double chi_squared = -(sample_size - 1.0 - correction_factor) * log(wilks_lambda);
+
+    // Compute degrees of freedom
+    double degrees_of_freedom;
+    if (target_group_ != "")
+    {
+        // Target group present: exclude from group count
+        degrees_of_freedom = num_elements * (numberofsourcesamplesets_ - 2.0);
+    }
     else
-        df = element_count*(numberofsourcesamplesets_ - 1.0);
-    double p_value = gsl_cdf_chisq_Q (ChiSquared, df);
+    {
+        // No target group
+        degrees_of_freedom = num_elements * (numberofsourcesamplesets_ - 1.0);
+    }
+
+    // Compute p-value from chi-squared distribution
+    double p_value = gsl_cdf_chisq_Q(chi_squared, degrees_of_freedom);
+
     return p_value;
 }
 
 CMBVectorSet SourceSinkData::DFA_Projected()
 {
-    CMBVector eigen_vector = DFA_eigvector();
-    CMBVectorSet out;
-    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    // Get discriminant eigenvector
+    CMBVector discriminant_function = DFA_eigvector();
+
+    CMBVectorSet projected_scores;
+
+    // Project each group onto discriminant axis
+    for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+        source_group != end();
+        source_group++)
     {
-        CMBVector weighted = source_group->second.CalculateDotProduct(eigen_vector);
-        out.Append(source_group->first,weighted);
+        // Compute discriminant scores for this group
+        CMBVector group_scores = source_group->second.CalculateDotProduct(discriminant_function);
+        projected_scores.Append(source_group->first, group_scores);
     }
-    return out;
+
+    return projected_scores;
 }
 
-
-CMBVectorSet SourceSinkData::DFA_Projected(const string &source1, const string &source2)
+CMBVectorSet SourceSinkData::DFA_Projected(const string& source1, const string& source2)
 {
-    CMBVector eigen_vector = DFA_eigvector();
-    CMBVectorSet out;
-    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    // Get discriminant eigenvector
+    CMBVector discriminant_function = DFA_eigvector();
+
+    CMBVectorSet projected_scores;
+
+    // Project each group onto discriminant axis
+    // Note: Parameters source1 and source2 not currently used
+    for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+        source_group != end();
+        source_group++)
     {
-        CMBVector weighted = source_group->second.CalculateDotProduct(eigen_vector);
-        out.Append(source_group->first,weighted);
+        // Compute discriminant scores for this group
+        CMBVector group_scores = source_group->second.CalculateDotProduct(discriminant_function);
+        projected_scores.Append(source_group->first, group_scores);
     }
-    return out;
+
+    return projected_scores;
 }
 
-CMBVectorSet SourceSinkData::DFA_Projected(const string &source1, SourceSinkData *original)
+CMBVectorSet SourceSinkData::DFA_Projected(const string& source1, SourceSinkData* original)
 {
-    CMBVector eigen_vector = DFA_eigvector();
-    CMBVectorSet out;
-    for (map<string,Elemental_Profile_Set>::iterator source_group = original->begin(); source_group!=original->end(); source_group++)
+    // Get discriminant eigenvector from current (reduced) dataset
+    CMBVector discriminant_function = DFA_eigvector();
+
+    CMBVectorSet projected_scores;
+
+    // Project samples from original dataset onto discriminant axis
+    for (map<string, Elemental_Profile_Set>::iterator source_group = original->begin();
+        source_group != original->end();
+        source_group++)
     {
+        // Skip target group
         if (source_group->first != original->target_group_)
-        {   CMBVector weighted = source_group->second.CalculateDotProduct(eigen_vector);
-            out.Append(source_group->first,weighted);
+        {
+            // Compute discriminant scores for this group
+            CMBVector group_scores = source_group->second.CalculateDotProduct(discriminant_function);
+            projected_scores.Append(source_group->first, group_scores);
         }
     }
-    return out;
+
+    return projected_scores;
 }
 
 CMBVector SourceSinkData::DFA_eigvector()
 {
-    CMatrix_arma S_B = BetweenGroupCovarianceMatrix();
-    CMatrix_arma S_w = WithinGroupCovarianceMatrix();
-    CMatrix_arma InvS_w = inv(S_w);
-    if (InvS_w.getnumrows()==0)
-        return CMBVector();
-    CMatrix_arma Product = inv(S_w)*S_B;
+    // Get covariance matrices
+    CMatrix_arma between_group_cov = BetweenGroupCovarianceMatrix();
+    CMatrix_arma within_group_cov = WithinGroupCovarianceMatrix();
 
-    arma::cx_vec eigval;
-    arma::cx_mat eigvec;
-    eig_gen(eigval, eigvec, Product);
+    // Invert within-group covariance
+    CMatrix_arma inv_within_cov = inv(within_group_cov);
 
+    // Check if inversion failed (singular matrix)
+    if (inv_within_cov.getnumrows() == 0)
+    {
+        return CMBVector();  // Return empty vector
+    }
 
-    CVector_arma Eigvals = GetReal(eigval);
-    CMatrix_arma Eigvecs = GetReal(eigvec);
+    // Compute product matrix for eigenvalue problem
+    CMatrix_arma product_matrix = inv_within_cov * between_group_cov;
 
-    
-    CVector_arma EigvalsImg = GetImg(eigval);
-    CMatrix_arma EigvecsImg = GetImg(eigvec);
-    //Eigvecs.writetofile("Eigvecs.txt");
-    //Eigvals.writetofile("Eigvals.txt");
-    //EigvalsImg.writetofile("EigvalsImg.txt");
-    //EigvecsImg.writetofile("EigvecsImg.txt");
-    
+    // Solve eigenvalue problem
+    arma::cx_vec eigenvalues;
+    arma::cx_mat eigenvectors;
+    eig_gen(eigenvalues, eigenvectors, product_matrix);
 
-    CMBVector out = CVector_arma(Eigvecs.getcol(Eigvals.abs_max_elems()));
-    
-    vector<string> elementNames = GetElementNames();
-    out.SetLabels(elementNames);
-    return out;
+    // Extract real parts
+    CVector_arma real_eigenvalues = GetReal(eigenvalues);
+    CMatrix_arma real_eigenvectors = GetReal(eigenvectors);
+
+    // Find eigenvector corresponding to largest eigenvalue (by absolute value)
+    size_t max_eigenvalue_index = real_eigenvalues.abs_max_elems();
+    CMBVector discriminant_function = CVector_arma(real_eigenvectors.getcol(max_eigenvalue_index));
+
+    // Label with element names
+    vector<string> element_names = GetElementNames();
+    discriminant_function.SetLabels(element_names);
+
+    return discriminant_function;
 }
 
-CMBVector SourceSinkData::DFA_weight_vector(const string &source1, const string &source2)
+CMBVector SourceSinkData::DFA_weight_vector(const string& source1, const string& source2)
 {
-    CMatrix_arma Sigma1 = at(source1).CalculateCovarianceMatrix();
-    CMatrix_arma Sigma2 = at(source2).CalculateCovarianceMatrix();
-    //Sigma1.writetofile("Sigma1.txt");
-    //Sigma2.writetofile("Sigma2.txt");
-    CMatrix_arma Sigma = Sigma1 + Sigma2;
-    //Invert(Sigma).writetofile("Inv_Sigma.txt");
-    CVector mu1_vec = at(source1).CalculateElementMeans();
-    CVector mu2_vec = at(source2).CalculateElementMeans();
-    CVector_arma mu1 = mu1_vec;
-    CVector_arma mu2 = mu2_vec;
-    CVector out_arma = (mu2-mu1)/(Sigma1+Sigma2);
-    CMBVector out = out_arma;
-    out = out/out.norm2();
-    out.SetLabels(GetElementNames());
-    return out;
+    // Get covariance matrices for both groups
+    CMatrix_arma cov_matrix1 = at(source1).CalculateCovarianceMatrix();
+    CMatrix_arma cov_matrix2 = at(source2).CalculateCovarianceMatrix();
+
+    // Get mean vectors for both groups
+    CVector mean_vector1 = at(source1).CalculateElementMeans();
+    CVector mean_vector2 = at(source2).CalculateElementMeans();
+    CVector_arma mean1 = mean_vector1;
+    CVector_arma mean2 = mean_vector2;
+
+    // Compute Fisher's linear discriminant: w = (μ₂ - μ₁) / (Σ₁ + Σ₂)
+    CMatrix_arma pooled_cov = cov_matrix1 + cov_matrix2;
+    CVector weight_vector_arma = (mean2 - mean1) / pooled_cov;
+
+    // Convert to CMBVector and normalize
+    CMBVector weight_vector = weight_vector_arma;
+    weight_vector = weight_vector / weight_vector.norm2();
+
+    // Label with element names
+    weight_vector.SetLabels(GetElementNames());
+
+    return weight_vector;
 }
 
-CMBVector SourceSinkData::MeanElementalContent(const string &group_name)
+CMBVector SourceSinkData::MeanElementalContent(const string& group_name)
 {
-    CMBVector out;
-    if (count(group_name)==0)
-        return out;
-    vector<string> elementNames = GetElementNames();
-    out = at(group_name).CalculateElementMeans();
-    out.SetLabels(elementNames);
-    return out;
+    // Check if group exists
+    if (count(group_name) == 0)
+    {
+        return CMBVector();  // Return empty vector
+    }
+
+    // Compute mean concentrations for this group
+    vector<string> element_names = GetElementNames();
+    CMBVector group_mean = at(group_name).CalculateElementMeans();
+    group_mean.SetLabels(element_names);
+
+    return group_mean;
 }
 
 CMBVector SourceSinkData::MeanElementalContent()
 {
-    vector<string> elementNames = GetElementNames();
-    CMBVector out(elementNames.size());
-    double count = 0;
-    for (map<string,Elemental_Profile_Set>::iterator source_group = begin(); source_group!=end(); source_group++)
+    vector<string> element_names = GetElementNames();
+    CMBVector weighted_mean(element_names.size());
+
+    // Accumulate weighted means from each source group
+    double total_samples = 0.0;
+    for (map<string, Elemental_Profile_Set>::iterator source_group = begin();
+        source_group != end();
+        source_group++)
     {
+        // Skip target group
         if (source_group->first != target_group_)
         {
-            out += double(source_group->second.size())*MeanElementalContent(source_group->first);
-            count += double(source_group->second.size());
+            // Weight group mean by sample size
+            size_t group_size = source_group->second.size();
+            CMBVector group_mean = MeanElementalContent(source_group->first);
+
+            weighted_mean += double(group_size) * group_mean;
+            total_samples += double(group_size);
         }
     }
-    out.SetLabels(element_order_);
-    return out/count;
+
+    // Set labels and normalize by total sample count
+    weighted_mean.SetLabels(element_order_);
+
+    return weighted_mean / total_samples;
 }
 
-vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1, const string &source2)
+vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(
+    const string& source1,
+    const string& source2)
 {
-    vector<CMBVector> out(3);
-    vector<string> elemnames = GetElementNames();
-    vector<string> selected_labels;
-    for (unsigned int i=0; i<elemnames.size(); i++)
+    // Initialize result vectors: [0]=p-values, [1]=Wilks' Lambda, [2]=F-test p-values
+    vector<CMBVector> stepwise_results(3);
+
+    vector<string> element_names = GetElementNames();
+    vector<string> selected_elements;
+
+    // Forward selection: add one element at a time
+    for (size_t step = 0; step < element_names.size(); step++)
     {
+        // Update progress
         if (rtw_)
-            rtw_->SetProgress(double(i + 1) / double(elemnames.size()));
-        double min_P = 100;
-        string highestimproved;
-        double wilkslambda;
-        double F_test_p_value;
-        for (unsigned int j=0; j<elemnames.size(); j++)
         {
-            vector<string> selected_labels_temp = selected_labels;
-            if (lookup(selected_labels,elemnames[j])==-1)
+            rtw_->SetProgress(double(step + 1) / double(element_names.size()));
+        }
+
+        // Find best element to add next
+        double best_p_value = 100.0;
+        string best_element;
+        double best_wilks_lambda;
+        double best_f_test_p_value;
+
+        // Test each unselected element
+        for (size_t j = 0; j < element_names.size(); j++)
+        {
+            // Skip if already selected
+            if (lookup(selected_elements, element_names[j]) == -1)
             {
-                selected_labels_temp.push_back(elemnames[j]);
-                SourceSinkData tobeanalysed = ExtractSpecificElements(selected_labels_temp);
-                DFA_result thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1,source2);
-                if (thisDFAresults.eigen_vectors.size()==0)
-                    return out;
-                if (thisDFAresults.p_values[0]<min_P)
+                // Create candidate selection with this element added
+                vector<string> candidate_elements = selected_elements;
+                candidate_elements.push_back(element_names[j]);
+
+                // Extract dataset with only candidate elements
+                SourceSinkData candidate_dataset = ExtractSpecificElements(candidate_elements);
+
+                // Perform DFA on candidate dataset
+                DFA_result candidate_dfa = candidate_dataset.DiscriminantFunctionAnalysis(source1, source2);
+
+                // Check if DFA succeeded
+                if (candidate_dfa.eigen_vectors.size() == 0)
                 {
-                    highestimproved = elemnames[j];
-                    min_P = thisDFAresults.p_values[0];
-                    wilkslambda = thisDFAresults.wilkslambda[0];
-                    F_test_p_value = thisDFAresults.F_test_P_value[0];
+                    return stepwise_results;  // Return empty results on failure
+                }
+
+                // Update best if this element improves discrimination
+                if (candidate_dfa.p_values[0] < best_p_value)
+                {
+                    best_element = element_names[j];
+                    best_p_value = candidate_dfa.p_values[0];
+                    best_wilks_lambda = candidate_dfa.wilkslambda[0];
+                    best_f_test_p_value = candidate_dfa.F_test_P_value[0];
                 }
             }
         }
-        out[0].append(highestimproved,min_P);
-        out[1].append(highestimproved,wilkslambda);
-        out[2].append(highestimproved,F_test_p_value);
-        selected_labels.push_back(highestimproved);
 
+        // Record statistics for best element at this step
+        stepwise_results[0].append(best_element, best_p_value);
+        stepwise_results[1].append(best_element, best_wilks_lambda);
+        stepwise_results[2].append(best_element, best_f_test_p_value);
+
+        // Add best element to selection
+        selected_elements.push_back(best_element);
     }
-    return out;
+
+    return stepwise_results;
 }
 
 vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis()
 {
-    vector<CMBVector> out(3);
-    vector<string> elemnames = GetElementNames();
-    vector<string> selected_labels;
-    for (unsigned int i=0; i<elemnames.size(); i++)
-    {
-        if (rtw_)
-            rtw_->SetProgress(double(i + 1) / double(elemnames.size()));
-        double min_P = 100;
-        string highestimproved;
-        double wilkslambda;
-        double F_test_p_value;
-        for (unsigned int j=0; j<elemnames.size(); j++)
-        {
-            vector<string> selected_labels_temp = selected_labels;
-            if (lookup(selected_labels,elemnames[j])==-1)
-            {
-                selected_labels_temp.push_back(elemnames[j]);
-                SourceSinkData tobeanalysed = ExtractSpecificElements(selected_labels_temp);
-                double p_value = tobeanalysed.DFA_P_Value();
+    // Initialize result vectors: [0]=p-values, [1]=Wilks' Lambda, [2]=F-test p-values
+    vector<CMBVector> stepwise_results(3);
 
-                if (p_value<min_P)
+    vector<string> element_names = GetElementNames();
+    vector<string> selected_elements;
+
+    // Forward selection: add one element at a time
+    for (size_t step = 0; step < element_names.size(); step++)
+    {
+        // Update progress
+        if (rtw_)
+        {
+            rtw_->SetProgress(double(step + 1) / double(element_names.size()));
+        }
+
+        // Find best element to add next
+        double best_p_value = 100.0;
+        string best_element;
+        double best_wilks_lambda;
+        double best_f_test_p_value;
+
+        // Test each unselected element
+        for (size_t j = 0; j < element_names.size(); j++)
+        {
+            // Skip if already selected
+            if (lookup(selected_elements, element_names[j]) == -1)
+            {
+                // Create candidate selection with this element added
+                vector<string> candidate_elements = selected_elements;
+                candidate_elements.push_back(element_names[j]);
+
+                // Extract dataset with only candidate elements
+                SourceSinkData candidate_dataset = ExtractSpecificElements(candidate_elements);
+
+                // Compute multi-group DFA statistics
+                double p_value = candidate_dataset.DFA_P_Value();
+
+                // Update best if this element improves discrimination
+                if (p_value < best_p_value)
                 {
-                    highestimproved = elemnames[j];
-                    min_P = p_value;
-                    wilkslambda = tobeanalysed.WilksLambda();
-                    CMBVectorSet projected = tobeanalysed.DFA_Projected();
-                    F_test_p_value = projected.FTest_p_value();
+                    best_element = element_names[j];
+                    best_p_value = p_value;
+                    best_wilks_lambda = candidate_dataset.WilksLambda();
+
+                    // Compute F-test p-value from projections
+                    CMBVectorSet projected = candidate_dataset.DFA_Projected();
+                    best_f_test_p_value = projected.FTest_p_value();
                 }
             }
         }
-        out[0].append(highestimproved,min_P);
-        out[1].append(highestimproved,wilkslambda);
-        out[2].append(highestimproved,F_test_p_value);
-        selected_labels.push_back(highestimproved);
 
+        // Record statistics for best element at this step
+        stepwise_results[0].append(best_element, best_p_value);
+        stepwise_results[1].append(best_element, best_wilks_lambda);
+        stepwise_results[2].append(best_element, best_f_test_p_value);
+
+        // Add best element to selection
+        selected_elements.push_back(best_element);
     }
+
+    return stepwise_results;
+}
+
+vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string& source1)
+{
+    // Initialize result vectors: [0]=p-values, [1]=Wilks' Lambda, [2]=F-test p-values
+    vector<CMBVector> stepwise_results(3);
+
+    vector<string> element_names = GetElementNames();
+    vector<string> selected_elements;
+
+    // Forward selection: add one element at a time
+    for (size_t step = 0; step < element_names.size(); step++)
+    {
+        // Update progress
+        if (rtw_)
+        {
+            rtw_->SetProgress(double(step + 1) / double(element_names.size()));
+        }
+
+        // Find best element to add next
+        double best_p_value = 100.0;
+        string best_element;
+        double best_wilks_lambda;
+        double best_f_test_p_value;
+
+        // Test each unselected element
+        for (size_t j = 0; j < element_names.size(); j++)
+        {
+            // Skip if already selected
+            if (lookup(selected_elements, element_names[j]) == -1)
+            {
+                // Create candidate selection with this element added
+                vector<string> candidate_elements = selected_elements;
+                candidate_elements.push_back(element_names[j]);
+
+                // Extract dataset with only candidate elements
+                SourceSinkData candidate_dataset = ExtractSpecificElements(candidate_elements);
+
+                // Perform one-vs-rest DFA on candidate dataset
+                DFA_result candidate_dfa = candidate_dataset.DiscriminantFunctionAnalysis(source1);
+
+                // Update best if this element improves discrimination
+                if (candidate_dfa.p_values[0] < best_p_value)
+                {
+                    best_element = element_names[j];
+                    best_p_value = candidate_dfa.p_values[0];
+                    best_wilks_lambda = candidate_dfa.wilkslambda[0];
+                    best_f_test_p_value = candidate_dfa.F_test_P_value[0];
+                }
+            }
+        }
+
+        // Record statistics for best element at this step
+        stepwise_results[0].append(best_element, best_p_value);
+        stepwise_results[1].append(best_element, best_wilks_lambda);
+        stepwise_results[2].append(best_element, best_f_test_p_value);
+
+        // Add best element to selection
+        selected_elements.push_back(best_element);
+    }
+
+    return stepwise_results;
+}
+
+// ========================================
+// METHOD DEFINITIONS TO MOVE TO sourcesinkdata.cpp
+// ========================================
+// These were previously inline in the header and should now be implemented in the .cpp file
+
+// ========== Accessors ==========
+
+vector<Parameter>& SourceSinkData::Parameters()
+{
+    return parameters_;
+}
+
+size_t SourceSinkData::ParametersCount()
+{
+    return parameters_.size();
+}
+
+size_t SourceSinkData::ObservationsCount()
+{
+    return observations_.size();
+}
+
+Parameter* SourceSinkData::parameter(size_t i)
+{
+    if (i >= 0 && i < parameters_.size())
+        return &parameters_[i];
+    else
+        return nullptr;
+}
+
+const Parameter* SourceSinkData::parameter(size_t i) const
+{
+    if (i >= 0 && i < parameters_.size())
+        return &parameters_[i];
+    else
+        return nullptr;
+}
+
+Observation* SourceSinkData::observation(size_t i)
+{
+    if (i >= 0 && i < observations_.size())
+        return &observations_[i];
+    else
+        return nullptr;
+}
+
+bool SourceSinkData::SetTargetGroup(const string& targroup)
+{
+    target_group_ = targroup;
+    return true;
+}
+
+string SourceSinkData::GetTargetGroup()
+{
+    return target_group_;
+}
+
+void SourceSinkData::SetParameterEstimationMode(estimation_mode est_mode)
+{
+    parameter_estimation_mode_ = est_mode;
+}
+
+estimation_mode SourceSinkData::ParameterEstimationMode()
+{
+    return parameter_estimation_mode_;
+}
+
+void SourceSinkData::SetProgressWindow(ProgressWindow* _rtw)
+{
+    rtw_ = _rtw;
+}
+
+map<string, element_information>* SourceSinkData::GetElementInformation()
+{
+    return &element_information_;
+}
+
+element_information* SourceSinkData::GetElementInformation(const string& element_name)
+{
+    if (element_information_.count(element_name))
+        return &element_information_.at(element_name);
+    else
+        return nullptr;
+}
+
+ConcentrationSet* SourceSinkData::GetElementDistribution(const string& element_name)
+{
+    if (element_distributions_.count(element_name))
+        return &element_distributions_.at(element_name);
+    else
+        return nullptr;
+}
+
+ConcentrationSet* SourceSinkData::GetElementDistribution(const string& element_name, const string& sample_group)
+{
+    if (!GetSampleSet(sample_group))
+    {
+        cout << "Sample Group '" + sample_group + "' does not exist!" << std::endl;
+        return nullptr;
+    }
+    if (!GetSampleSet(sample_group)->GetElementDistribution(element_name))
+    {
+        cout << "Element '" + element_name + "' does not exist!" << std::endl;
+        return nullptr;
+    }
+    return GetSampleSet(sample_group)->GetElementDistribution(element_name);
+}
+
+// ========== Ordering Accessors ==========
+
+vector<string> SourceSinkData::GetSourceOrder() const
+{
+    return samplesetsorder_;
+}
+
+vector<string> SourceSinkData::SamplesetsOrder()
+{
+    return samplesetsorder_;
+}
+
+vector<string> SourceSinkData::ConstituentOrder()
+{
+    return constituent_order_;
+}
+
+vector<string> SourceSinkData::ElementOrder()
+{
+    return element_order_;
+}
+
+vector<string> SourceSinkData::IsotopeOrder()
+{
+    return isotope_order_;
+}
+
+vector<string> SourceSinkData::SizeOMOrder()
+{
+    return size_om_order_;
+}
+
+// ========== OM/Size Constituent Management ==========
+
+void SourceSinkData::SetOMandSizeConstituents(const string& _omconstituent, const string& _sizeconsituent)
+{
+    omconstituent_ = _omconstituent;
+    sizeconsituent_ = _sizeconsituent;
+}
+
+void SourceSinkData::SetOMandSizeConstituents(const vector<string>& _omsizeconstituents)
+{
+    if (_omsizeconstituents.size() == 0)
+        return;
+    else if (_omsizeconstituents.size() == 1)
+        omconstituent_ = _omsizeconstituents[0];
+    else if (_omsizeconstituents.size() == 2)
+    {
+        omconstituent_ = _omsizeconstituents[0];
+        sizeconsituent_ = _omsizeconstituents[1];
+    }
+}
+
+vector<string> SourceSinkData::OMandSizeConstituents()
+{
+    vector<string> out;
+    out.push_back(omconstituent_);
+    out.push_back(sizeconsituent_);
     return out;
 }
 
-vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const string &source1)
-{
-    vector<CMBVector> out(3);
-    vector<string> elemnames = GetElementNames();
-    vector<string> selected_labels;
-    for (unsigned int i=0; i<elemnames.size(); i++)
-    {
-        if (rtw_)
-            rtw_->SetProgress(double(i + 1) / double(elemnames.size()));
-        double min_P = 100;
-        string highestimproved;
-        double wilkslambda;
-        double F_test_p_value;
-        for (unsigned int j=0; j<elemnames.size(); j++)
-        {
-            vector<string> selected_labels_temp = selected_labels;
-            if (lookup(selected_labels,elemnames[j])==-1)
-            {
-                selected_labels_temp.push_back(elemnames[j]);
-                SourceSinkData tobeanalysed = ExtractSpecificElements(selected_labels_temp);
-                DFA_result thisDFAresults = tobeanalysed.DiscriminantFunctionAnalysis(source1);
-                if (thisDFAresults.p_values[0]<min_P)
-                {
-                    highestimproved = elemnames[j];
-                    min_P = thisDFAresults.p_values[0];
-                    wilkslambda = thisDFAresults.wilkslambda[0];
-                    F_test_p_value = thisDFAresults.F_test_P_value[0];
-                }
-            }
-        }
-        out[0].append(highestimproved,min_P);
-        out[1].append(highestimproved,wilkslambda);
-        out[2].append(highestimproved,F_test_p_value);
-        selected_labels.push_back(highestimproved);
+// ========== Options Management ==========
 
-    }
-    return out;
+QMap<QString, double>* SourceSinkData::GetOptions()
+{
+    return &options_;
+}
+
+// ========== Output Path Management ==========
+
+string SourceSinkData::GetOutputPath() const
+{
+    return outputpath_;
+}
+
+bool SourceSinkData::SetOutputPath(const string& output_path)
+{
+    outputpath_ = output_path;
+    return true;
+}
+
+// ========== Selected Target Sample Management ==========
+
+bool SourceSinkData::SetSelectedTargetSample(const string& sample_name)
+{
+    // Validate that sample exists in target group
+    if (count(target_group_) == 0)
+        return false;
+
+    if (at(target_group_).count(sample_name) == 0)
+        return false;
+
+    selected_target_sample_ = sample_name;
+    return true;
+}
+
+string SourceSinkData::SelectedTargetSample() const
+{
+    return selected_target_sample_;
 }
