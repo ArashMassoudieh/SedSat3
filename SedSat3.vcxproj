@@ -166,7 +166,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="cmbvector.cpp" />
     <ClCompile Include="cmbvectorset.cpp" />
     <ClCompile Include="contribution.cpp" />
-    <ClCompile Include="customplotbar.cpp" />
     <ClCompile Include="dialogchooseexcelsheets.cpp" />
     <ClCompile Include="drand.cpp" />
     <ClCompile Include="elementstablemodel.cpp" />
@@ -185,6 +184,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="optionsdialog.h" />
+    <ClInclude Include="testmcmc.h" />
     <ClInclude Include="Utilities\TimeSeries.h" />
     <ClInclude Include="Utilities\TimeSeries.hpp" />
     <ClInclude Include="Utilities\TimeSeriesSet.h" />
@@ -206,7 +206,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="cmbvectorset.h" />
     <ClInclude Include="cmbvectorsetset.h" />
     <ClInclude Include="contribution.h" />
-    <ClInclude Include="customplotbar.h" />
     <ClInclude Include="generalplotter.h" />
     <ClInclude Include="include\cmbdistribution.h" />
     <ClInclude Include="include\concentrationset.h" />
@@ -233,7 +232,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="results.h" />
     <ClInclude Include="resultsetitem.h" />
     <ClInclude Include="selectsampledelegate.h" />
-    <ClInclude Include="testmcmc.h" />
     <ClInclude Include="toolboxitem.h" />
     <QtMoc Include="selectsampletablemodel.h" />
     <QtMoc Include="selectsamples.h" />
@@ -254,7 +252,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <QtMoc Include="dialogchooseexcelsheets.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="aboutdialog.ui" />
     <QtUic Include="dialogchooseexcelsheets.ui" />
     <QtUic Include="formelementinformation.ui" />
     <QtUic Include="generalchart.ui" />

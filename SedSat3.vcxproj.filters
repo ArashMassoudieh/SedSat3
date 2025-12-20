@@ -55,9 +55,6 @@
     <ClCompile Include="contribution.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="customplotbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dialogchooseexcelsheets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     <ClCompile Include="selectsampletablemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testmcmc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="toolboxitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -212,6 +206,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="optionsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testmcmc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -302,9 +299,6 @@
     <ClInclude Include="contribution.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="customplotbar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="generalplotter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -330,9 +324,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="selectsampledelegate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="testmcmc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="toolboxitem.h">
@@ -425,11 +416,11 @@
     <ClInclude Include=".\Utilities\Vector_arma.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="testmcmc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="aboutdialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="dialogchooseexcelsheets.ui">
       <Filter>Form Files</Filter>
     </QtUic>
