@@ -1,0 +1,850 @@
+\doxysection{CMCMC\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classCMCMC}{}\label{classCMCMC}\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+
+
+{\ttfamily \#include $<$MCMC/\+MCMC.\+h$>$}
+
+
+
+Inheritance diagram for CMCMC\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMCMC__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CMCMC\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMCMC__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{CMCMC}} (void)
+\item 
+\mbox{\hyperlink{classCMCMC_a4d2f70d007b71e970a6f0422252eac6a}{CMCMC}} (int nn, int nn\+\_\+chains)
+\item 
+\mbox{\hyperlink{classCMCMC_aa094bb7e570b0b9e578697ebe92b03c7}{CMCMC}} (T \texorpdfstring{$\ast$}{*}system)
+\item 
+bool \mbox{\hyperlink{classCMCMC_a33e1d8651f8c8561843fceedafab06fd}{Set\+Property}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&varname, const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&value)
+\item 
+\mbox{\hyperlink{classCMCMC_afc71e62174c3a20bed892e5056579d9f}{\texorpdfstring{$\sim$}{\string~}\+CMCMC}} (void)
+\item 
+void \mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{initialize}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}results, bool random=false)
+\item 
+void \mbox{\hyperlink{classCMCMC_aa27032a71de7207fcaefd43210e58745}{initialize}} (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par)
+\item 
+bool \mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{step}} (int k, int chain\+\_\+counter)
+\item 
+bool \mbox{\hyperlink{classCMCMC_ae6fc398641269125cc9666d2d91b9c15}{step}} (int k, int nsamps, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename, \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}results=nullptr, \mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*}\+\_\+rtw=0)
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a}{purturb}} (int k)
+\item 
+void \mbox{\hyperlink{classCMCMC_ab5fd1abc53e638253563dbb177ae1f14}{writeoutput}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename)
+\item 
+double \mbox{\hyperlink{classCMCMC_a92f06a89486b649700c812bfe0517ece}{posterior}} (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par, int chain\+\_\+counter)
+\item 
+void \mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{model}} (T \texorpdfstring{$\ast$}{*}Model1, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par)
+\item 
+int \mbox{\hyperlink{classCMCMC_ac1d37673d46f371de2556ac1e9417a3b}{getparamno}} (int i, int ts) const
+\item 
+int \mbox{\hyperlink{classCMCMC_a77d3ca28c0463f1503d2db78a71d5d64}{get\+\_\+act\+\_\+paramno}} (int i)
+\item 
+int \mbox{\hyperlink{classCMCMC_a2a1eec3e95888b8ca9ff066156057995}{get\+\_\+time\+\_\+series}} (int i)
+\item 
+\mbox{\hyperlink{classParameter}{Parameter}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6}{parameter}} (int i)
+\item 
+\mbox{\hyperlink{classObservation}{Observation}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC_a46c0379bf73cef8d753fe6b15023869b}{observation}} (int i)
+\item 
+CVector \mbox{\hyperlink{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4}{sensitivity}} (double d, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par)
+\item 
+CVector \mbox{\hyperlink{classCMCMC_ac52f936022260b65893e35a3a7b9b46b}{sensitivity\+\_\+ln}} (double d, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par)
+\item 
+CMatrix \mbox{\hyperlink{classCMCMC_ab4880c86996dfdf9da895bf6050b8720}{sensitivity\+\_\+mat\+\_\+lumped}} (double d, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par)
+\item 
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6}{prior\+\_\+distribution}} (int n\+\_\+bins)
+\item 
+int \mbox{\hyperlink{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a}{readfromfile}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename)
+\item 
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC_a730f1945ab771ee1e6faf64d3eb47416}{model}} (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ par)
+\item 
+void \mbox{\hyperlink{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a}{Produce\+Realizations}} (Time\+Series\+Set$<$ double $>$ \&MCMCout)
+\item 
+void \mbox{\hyperlink{classCMCMC_ab2e01f222e9b37384e49cf29194a4514}{get\+\_\+outputpercentiles}} (Time\+Series\+Set$<$ double $>$ \&MCMCout)
+\item 
+void \mbox{\hyperlink{classCMCMC_af730c4f77d698e62f055b8e376685a93}{Set\+Run\+Time\+Window}} (\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*}\+\_\+rtw)
+\item 
+void \mbox{\hyperlink{classCMCMC_a9319f2b475594347f51491601ac1babf}{Perform}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC_a7d2ef49fdf418a9a2a3856f5402d0195}{Model}}
+\item 
+T \mbox{\hyperlink{classCMCMC_aefd76524110c3d3fe2c09bfd7e72a98a}{Model\+\_\+out}}
+\item 
+\mbox{\hyperlink{struct__MCMC__settings}{\+\_\+\+MCMC\+\_\+settings}} \mbox{\hyperlink{classCMCMC_aa1371f78972e014d744d808051e9b309}{MCMC\+\_\+\+Settings}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \mbox{\hyperlink{classCMCMC_ac7fd6e03329fba5ea3262c8b5e104e35}{Params}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC_a2d83e05e35fbf9207e0959a8f688e91a}{pertcoeff}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC_a5002c74f59b81234d79b9ca2536d3c88}{logp}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC_a00c947ff08cc48740679c96baff164b5}{logp1}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC_ac7137054f78cb874bc353f4063a42932}{u}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ CVector $>$ \mbox{\hyperlink{classCMCMC_a323780c636a0c1e7cff7c70144a67131}{temp\+\_\+predicted}}
+\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \mbox{\hyperlink{classCMCMC_a2b7ed32c012aec9d4bdd098db796a325}{predicted}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ T $>$ \mbox{\hyperlink{classCMCMC_a30a24c11afc07e833328ed138490b455}{Copied\+Models}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ int $>$ \mbox{\hyperlink{classCMCMC_ae8a1b3c80cf8f1ac70cfd1eb40d76931}{params}}
+\item 
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC_a78b0e280493777a163847b31c6f3a646}{MData}}
+\item 
+\mbox{\hyperlink{struct__MCMC__file__names}{\+\_\+\+MCMC\+\_\+file\+\_\+names}} \mbox{\hyperlink{classCMCMC_a0717cdfe3c2b9ff392f5a2f13ff9b3e1}{File\+Information}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ bool $>$ \mbox{\hyperlink{classCMCMC_a5b1d0c353a03465f86a633a0479717ac}{apply\+\_\+to\+\_\+all}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classParameter}{Parameter}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC_a4a4188a932db5bc00d7bd0714cf6b958}{parameters}} = nullptr
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classObservation}{Observation}} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC_abe18b7246e413ae49e46ee59da40ff0d}{observations}} = nullptr
+\item 
+\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC_ab1540f4ed1b79842cdafeefe067f6781}{rtw}} =nullptr
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ Time\+Series\+Set$<$ double $>$ $>$ $>$ \mbox{\hyperlink{classCMCMC_a2d978b0ecfd5ce976632e1586773432d}{BTCout\+\_\+obs}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ Time\+Series\+Set$<$ double $>$ $>$ $>$ \mbox{\hyperlink{classCMCMC_a34a9e232656a26b8f4b99f66b5f2589e}{BTCout\+\_\+obs\+\_\+noise}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ Time\+Series\+Set$<$ double $>$ $>$ $>$ \mbox{\hyperlink{classCMCMC_a3569f2b938ac0df0db11ac52c6552f1c}{BTCout\+\_\+obs\+\_\+prcntle}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ Time\+Series\+Set$<$ double $>$ $>$ $>$ \mbox{\hyperlink{classCMCMC_a7a9fa4526df8db196a8dea8bceabcd61}{BTCout\+\_\+obs\+\_\+prcntle\+\_\+noise}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ CMatrix $>$ \mbox{\hyperlink{classCMCMC_aceb09d47a2d3ec6b8de9b24f321517c2}{global\+\_\+sens\+\_\+lumped}}
+\item 
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC_afb6e599c89dadd6e2e585641a12c8a55}{params\+List}}
+\item 
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC_acc8f8fd81c1ea8b960a65743da848830}{realized\+\_\+params\+List}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC_afc637ec62d02b88e9ce96617343e8d6f}{calc\+\_\+output\+\_\+percentiles}}
+\item 
+double \mbox{\hyperlink{classCMCMC_a02ea3757621c608133bf8efa568cdac7}{accepted\+\_\+count}} =0
+\item 
+double \mbox{\hyperlink{classCMCMC_a3cb3f9aae3876bc47081544c8943069a}{total\+\_\+count}} =0
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMCMC_afdc0bbeef6af44e9da5f4fb1b05bbc12}{last\+\_\+error}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structint__value__pair}{int\+\_\+value\+\_\+pair}} \mbox{\hyperlink{classCMCMC_aad302d32046828f04d7072d9818678de}{Min}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&vec, int current\+\_\+counter, int n\+\_\+chains)
+\item 
+\mbox{\hyperlink{structint__value__pair}{int\+\_\+value\+\_\+pair}} \mbox{\hyperlink{classCMCMC_a8aab3f0befdfa07636083519e391f4bf}{Max}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&vec, int current\+\_\+counter, int n\+\_\+chains)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class CMCMC$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00069}{69}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}\label{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!CMCMC@{CMCMC}}
+\index{CMCMC@{CMCMC}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CMCMC()}{CMCMC()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\mbox{\hyperlink{classCMCMC}{\+::\+CMCMC}} (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a4d2f70d007b71e970a6f0422252eac6a}\label{classCMCMC_a4d2f70d007b71e970a6f0422252eac6a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!CMCMC@{CMCMC}}
+\index{CMCMC@{CMCMC}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CMCMC()}{CMCMC()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\mbox{\hyperlink{classCMCMC}{\+::\+CMCMC}} (\begin{DoxyParamCaption}\item[{int}]{nn,  }\item[{int}]{nn\+\_\+chains }\end{DoxyParamCaption})}
+
+\Hypertarget{classCMCMC_aa094bb7e570b0b9e578697ebe92b03c7}\label{classCMCMC_aa094bb7e570b0b9e578697ebe92b03c7} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!CMCMC@{CMCMC}}
+\index{CMCMC@{CMCMC}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CMCMC()}{CMCMC()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\mbox{\hyperlink{classCMCMC}{\+::\+CMCMC}} (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{system }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00536}{536}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_afc71e62174c3a20bed892e5056579d9f}\label{classCMCMC_afc71e62174c3a20bed892e5056579d9f} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!````~CMCMC@{\texorpdfstring{$\sim$}{\string~}CMCMC}}
+\index{````~CMCMC@{\texorpdfstring{$\sim$}{\string~}CMCMC}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}CMCMC()}{\string~CMCMC()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{classCMCMC}{CMCMC}} (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00024}{24}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCMCMC_a77d3ca28c0463f1503d2db78a71d5d64}\label{classCMCMC_a77d3ca28c0463f1503d2db78a71d5d64} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!get\_act\_paramno@{get\_act\_paramno}}
+\index{get\_act\_paramno@{get\_act\_paramno}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_act\_paramno()}{get\_act\_paramno()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::get\+\_\+act\+\_\+paramno (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+\Hypertarget{classCMCMC_ab2e01f222e9b37384e49cf29194a4514}\label{classCMCMC_ab2e01f222e9b37384e49cf29194a4514} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!get\_outputpercentiles@{get\_outputpercentiles}}
+\index{get\_outputpercentiles@{get\_outputpercentiles}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_outputpercentiles()}{get\_outputpercentiles()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::get\+\_\+outputpercentiles (\begin{DoxyParamCaption}\item[{Time\+Series\+Set$<$ double $>$ \&}]{MCMCout }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00696}{696}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a2a1eec3e95888b8ca9ff066156057995}\label{classCMCMC_a2a1eec3e95888b8ca9ff066156057995} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!get\_time\_series@{get\_time\_series}}
+\index{get\_time\_series@{get\_time\_series}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_time\_series()}{get\_time\_series()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::get\+\_\+time\+\_\+series (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+\Hypertarget{classCMCMC_ac1d37673d46f371de2556ac1e9417a3b}\label{classCMCMC_ac1d37673d46f371de2556ac1e9417a3b} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!getparamno@{getparamno}}
+\index{getparamno@{getparamno}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getparamno()}{getparamno()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::getparamno (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{ts }\end{DoxyParamCaption}) const}
+
+\Hypertarget{classCMCMC_aa1479a997069b4a313c163783a780be1}\label{classCMCMC_aa1479a997069b4a313c163783a780be1} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!initialize@{initialize}}
+\index{initialize@{initialize}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{results,  }\item[{bool}]{random = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00200}{200}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, and \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classCMCMC_aa27032a71de7207fcaefd43210e58745}\label{classCMCMC_aa27032a71de7207fcaefd43210e58745} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!initialize@{initialize}}
+\index{initialize@{initialize}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00278}{278}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, and \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}.
+
+\Hypertarget{classCMCMC_a8aab3f0befdfa07636083519e391f4bf}\label{classCMCMC_a8aab3f0befdfa07636083519e391f4bf} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!Max@{Max}}
+\index{Max@{Max}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Max()}{Max()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{structint__value__pair}{int\+\_\+value\+\_\+pair}} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Max (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{vec,  }\item[{int}]{current\+\_\+counter,  }\item[{int}]{n\+\_\+chains }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00787}{787}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{MCMC_8h_source_l00063}{int\+\_\+value\+\_\+pair\+::counter}}, and \mbox{\hyperlink{MCMC_8h_source_l00064}{int\+\_\+value\+\_\+pair\+::value}}.
+
+\Hypertarget{classCMCMC_aad302d32046828f04d7072d9818678de}\label{classCMCMC_aad302d32046828f04d7072d9818678de} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!Min@{Min}}
+\index{Min@{Min}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Min()}{Min()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{structint__value__pair}{int\+\_\+value\+\_\+pair}} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Min (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{vec,  }\item[{int}]{current\+\_\+counter,  }\item[{int}]{n\+\_\+chains }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00771}{771}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{MCMC_8h_source_l00063}{int\+\_\+value\+\_\+pair\+::counter}}, and \mbox{\hyperlink{MCMC_8h_source_l00064}{int\+\_\+value\+\_\+pair\+::value}}.
+
+\Hypertarget{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}\label{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!model@{model}}
+\index{model@{model}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{model()}{model()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::model (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{Model1,  }\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00182}{182}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a730f1945ab771ee1e6faf64d3eb47416}\label{classCMCMC_a730f1945ab771ee1e6faf64d3eb47416} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!model@{model}}
+\index{model@{model}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{model()}{model()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00046}{46}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a46c0379bf73cef8d753fe6b15023869b}\label{classCMCMC_a46c0379bf73cef8d753fe6b15023869b} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!observation@{observation}}
+\index{observation@{observation}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{observation()}{observation()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classObservation}{Observation}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::observation (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00040}{40}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6}\label{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!parameter@{parameter}}
+\index{parameter@{parameter}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{parameter()}{parameter()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classParameter}{Parameter}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::parameter (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00033}{33}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a9319f2b475594347f51491601ac1babf}\label{classCMCMC_a9319f2b475594347f51491601ac1babf} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!Perform@{Perform}}
+\index{Perform@{Perform}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Perform()}{Perform()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Perform (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00725}{725}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a92f06a89486b649700c812bfe0517ece}\label{classCMCMC_a92f06a89486b649700c812bfe0517ece} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!posterior@{posterior}}
+\index{posterior@{posterior}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{posterior()}{posterior()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::posterior (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par,  }\item[{int}]{chain\+\_\+counter }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00164}{164}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6}\label{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!prior\_distribution@{prior\_distribution}}
+\index{prior\_distribution@{prior\_distribution}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{prior\_distribution()}{prior\_distribution()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+Time\+Series\+Set$<$ double $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::prior\+\_\+distribution (\begin{DoxyParamCaption}\item[{int}]{n\+\_\+bins }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00610}{610}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}.
+
+\Hypertarget{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a}\label{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!ProduceRealizations@{ProduceRealizations}}
+\index{ProduceRealizations@{ProduceRealizations}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ProduceRealizations()}{ProduceRealizations()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Produce\+Realizations (\begin{DoxyParamCaption}\item[{Time\+Series\+Set$<$ double $>$ \&}]{MCMCout }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00652}{652}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a}\label{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!purturb@{purturb}}
+\index{purturb@{purturb}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{purturb()}{purturb()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::purturb (\begin{DoxyParamCaption}\item[{int}]{k }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00377}{377}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a}\label{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!readfromfile@{readfromfile}}
+\index{readfromfile@{readfromfile}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{readfromfile()}{readfromfile()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::readfromfile (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00584}{584}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4}\label{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!sensitivity@{sensitivity}}
+\index{sensitivity@{sensitivity}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sensitivity()}{sensitivity()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+CVector \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::sensitivity (\begin{DoxyParamCaption}\item[{double}]{d,  }\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00554}{554}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_ac52f936022260b65893e35a3a7b9b46b}\label{classCMCMC_ac52f936022260b65893e35a3a7b9b46b} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!sensitivity\_ln@{sensitivity\_ln}}
+\index{sensitivity\_ln@{sensitivity\_ln}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sensitivity\_ln()}{sensitivity\_ln()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+CVector \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::sensitivity\+\_\+ln (\begin{DoxyParamCaption}\item[{double}]{d,  }\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00572}{572}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_ab4880c86996dfdf9da895bf6050b8720}\label{classCMCMC_ab4880c86996dfdf9da895bf6050b8720} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!sensitivity\_mat\_lumped@{sensitivity\_mat\_lumped}}
+\index{sensitivity\_mat\_lumped@{sensitivity\_mat\_lumped}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sensitivity\_mat\_lumped()}{sensitivity\_mat\_lumped()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+CMatrix \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::sensitivity\+\_\+mat\+\_\+lumped (\begin{DoxyParamCaption}\item[{double}]{d,  }\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{par }\end{DoxyParamCaption})}
+
+\Hypertarget{classCMCMC_a33e1d8651f8c8561843fceedafab06fd}\label{classCMCMC_a33e1d8651f8c8561843fceedafab06fd} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!SetProperty@{SetProperty}}
+\index{SetProperty@{SetProperty}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetProperty()}{SetProperty()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Set\+Property (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{varname,  }\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00068}{68}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classCMCMC_af730c4f77d698e62f055b8e376685a93}\label{classCMCMC_af730c4f77d698e62f055b8e376685a93} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!SetRunTimeWindow@{SetRunTimeWindow}}
+\index{SetRunTimeWindow@{SetRunTimeWindow}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetRunTimeWindow()}{SetRunTimeWindow()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Set\+Run\+Time\+Window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*}}]{\+\_\+rtw }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00530}{530}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+\Hypertarget{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}\label{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!step@{step}}
+\index{step@{step}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::step (\begin{DoxyParamCaption}\item[{int}]{k,  }\item[{int}]{chain\+\_\+counter }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00337}{337}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classCMCMC_ae6fc398641269125cc9666d2d91b9c15}\label{classCMCMC_ae6fc398641269125cc9666d2d91b9c15} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!step@{step}}
+\index{step@{step}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::step (\begin{DoxyParamCaption}\item[{int}]{k,  }\item[{int}]{nsamps,  }\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename,  }\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{results = {\ttfamily nullptr},  }\item[{\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*}}]{\+\_\+rtw = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8hpp_source_l00393}{393}} of file \mbox{\hyperlink{MCMC_8hpp_source}{MCMC.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8cpp_source_l00069}{Progress\+Window\+::\+Append\+Point()}}, \mbox{\hyperlink{MCMC_8h_source_l00063}{int\+\_\+value\+\_\+pair\+::counter}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{Progress\+Window\+::\+Set\+Progress()}}, and \mbox{\hyperlink{MCMC_8h_source_l00064}{int\+\_\+value\+\_\+pair\+::value}}.
+
+\Hypertarget{classCMCMC_ab5fd1abc53e638253563dbb177ae1f14}\label{classCMCMC_ab5fd1abc53e638253563dbb177ae1f14} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!writeoutput@{writeoutput}}
+\index{writeoutput@{writeoutput}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{writeoutput()}{writeoutput()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::writeoutput (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCMCMC_a02ea3757621c608133bf8efa568cdac7}\label{classCMCMC_a02ea3757621c608133bf8efa568cdac7} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!accepted\_count@{accepted\_count}}
+\index{accepted\_count@{accepted\_count}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{accepted\_count}{accepted\_count}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::accepted\+\_\+count =0}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00132}{132}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a5b1d0c353a03465f86a633a0479717ac}\label{classCMCMC_a5b1d0c353a03465f86a633a0479717ac} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!apply\_to\_all@{apply\_to\_all}}
+\index{apply\_to\_all@{apply\_to\_all}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{apply\_to\_all}{apply\_to\_all}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$bool$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::apply\+\_\+to\+\_\+all}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00105}{105}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a2d978b0ecfd5ce976632e1586773432d}\label{classCMCMC_a2d978b0ecfd5ce976632e1586773432d} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!BTCout\_obs@{BTCout\_obs}}
+\index{BTCout\_obs@{BTCout\_obs}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BTCout\_obs}{BTCout\_obs}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$Time\+Series\+Set$<$double$>$ $>$ $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+BTCout\+\_\+obs}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00120}{120}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a34a9e232656a26b8f4b99f66b5f2589e}\label{classCMCMC_a34a9e232656a26b8f4b99f66b5f2589e} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!BTCout\_obs\_noise@{BTCout\_obs\_noise}}
+\index{BTCout\_obs\_noise@{BTCout\_obs\_noise}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BTCout\_obs\_noise}{BTCout\_obs\_noise}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$Time\+Series\+Set$<$double$>$ $>$ $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+BTCout\+\_\+obs\+\_\+noise}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00121}{121}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a3569f2b938ac0df0db11ac52c6552f1c}\label{classCMCMC_a3569f2b938ac0df0db11ac52c6552f1c} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!BTCout\_obs\_prcntle@{BTCout\_obs\_prcntle}}
+\index{BTCout\_obs\_prcntle@{BTCout\_obs\_prcntle}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BTCout\_obs\_prcntle}{BTCout\_obs\_prcntle}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$Time\+Series\+Set$<$double$>$ $>$ $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+BTCout\+\_\+obs\+\_\+prcntle}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00122}{122}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a7a9fa4526df8db196a8dea8bceabcd61}\label{classCMCMC_a7a9fa4526df8db196a8dea8bceabcd61} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!BTCout\_obs\_prcntle\_noise@{BTCout\_obs\_prcntle\_noise}}
+\index{BTCout\_obs\_prcntle\_noise@{BTCout\_obs\_prcntle\_noise}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{BTCout\_obs\_prcntle\_noise}{BTCout\_obs\_prcntle\_noise}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$Time\+Series\+Set$<$double$>$ $>$ $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+BTCout\+\_\+obs\+\_\+prcntle\+\_\+noise}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00123}{123}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_afc637ec62d02b88e9ce96617343e8d6f}\label{classCMCMC_afc637ec62d02b88e9ce96617343e8d6f} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!calc\_output\_percentiles@{calc\_output\_percentiles}}
+\index{calc\_output\_percentiles@{calc\_output\_percentiles}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{calc\_output\_percentiles}{calc\_output\_percentiles}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::calc\+\_\+output\+\_\+percentiles}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00130}{130}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a30a24c11afc07e833328ed138490b455}\label{classCMCMC_a30a24c11afc07e833328ed138490b455} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!CopiedModels@{CopiedModels}}
+\index{CopiedModels@{CopiedModels}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CopiedModels}{CopiedModels}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$T$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Copied\+Models}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00095}{95}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a0717cdfe3c2b9ff392f5a2f13ff9b3e1}\label{classCMCMC_a0717cdfe3c2b9ff392f5a2f13ff9b3e1} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!FileInformation@{FileInformation}}
+\index{FileInformation@{FileInformation}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{FileInformation}{FileInformation}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{struct__MCMC__file__names}{\+\_\+\+MCMC\+\_\+file\+\_\+names}} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+File\+Information}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00099}{99}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_aceb09d47a2d3ec6b8de9b24f321517c2}\label{classCMCMC_aceb09d47a2d3ec6b8de9b24f321517c2} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!global\_sens\_lumped@{global\_sens\_lumped}}
+\index{global\_sens\_lumped@{global\_sens\_lumped}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{global\_sens\_lumped}{global\_sens\_lumped}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$CMatrix$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::global\+\_\+sens\+\_\+lumped}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00124}{124}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_afdc0bbeef6af44e9da5f4fb1b05bbc12}\label{classCMCMC_afdc0bbeef6af44e9da5f4fb1b05bbc12} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!last\_error@{last\_error}}
+\index{last\_error@{last\_error}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{last\_error}{last\_error}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::last\+\_\+error}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00133}{133}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a5002c74f59b81234d79b9ca2536d3c88}\label{classCMCMC_a5002c74f59b81234d79b9ca2536d3c88} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!logp@{logp}}
+\index{logp@{logp}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{logp}{logp}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::logp}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00084}{84}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a00c947ff08cc48740679c96baff164b5}\label{classCMCMC_a00c947ff08cc48740679c96baff164b5} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!logp1@{logp1}}
+\index{logp1@{logp1}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{logp1}{logp1}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::logp1}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00085}{85}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_aa1371f78972e014d744d808051e9b309}\label{classCMCMC_aa1371f78972e014d744d808051e9b309} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!MCMC\_Settings@{MCMC\_Settings}}
+\index{MCMC\_Settings@{MCMC\_Settings}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{MCMC\_Settings}{MCMC\_Settings}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{struct__MCMC__settings}{\+\_\+\+MCMC\+\_\+settings}} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+MCMC\+\_\+\+Settings}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00080}{80}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a78b0e280493777a163847b31c6f3a646}\label{classCMCMC_a78b0e280493777a163847b31c6f3a646} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!MData@{MData}}
+\index{MData@{MData}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{MData}{MData}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+Time\+Series\+Set$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+MData}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00098}{98}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a7d2ef49fdf418a9a2a3856f5402d0195}\label{classCMCMC_a7d2ef49fdf418a9a2a3856f5402d0195} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!Model@{Model}}
+\index{Model@{Model}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Model}{Model}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Model}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00073}{73}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classCMCMC_aefd76524110c3d3fe2c09bfd7e72a98a}\label{classCMCMC_aefd76524110c3d3fe2c09bfd7e72a98a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!Model\_out@{Model\_out}}
+\index{Model\_out@{Model\_out}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Model\_out}{Model\_out}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Model\+\_\+out}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00074}{74}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_abe18b7246e413ae49e46ee59da40ff0d}\label{classCMCMC_abe18b7246e413ae49e46ee59da40ff0d} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!observations@{observations}}
+\index{observations@{observations}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{observations}{observations}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{classObservation}{Observation}}$>$\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::observations = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00107}{107}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a4a4188a932db5bc00d7bd0714cf6b958}\label{classCMCMC_a4a4188a932db5bc00d7bd0714cf6b958} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!parameters@{parameters}}
+\index{parameters@{parameters}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{parameters}{parameters}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{classParameter}{Parameter}}$>$\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::parameters = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00106}{106}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_ac7fd6e03329fba5ea3262c8b5e104e35}\label{classCMCMC_ac7fd6e03329fba5ea3262c8b5e104e35} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!Params@{Params}}
+\index{Params@{Params}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Params}{Params}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ $>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::\+Params}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00082}{82}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_ae8a1b3c80cf8f1ac70cfd1eb40d76931}\label{classCMCMC_ae8a1b3c80cf8f1ac70cfd1eb40d76931} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!params@{params}}
+\index{params@{params}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{params}{params}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$int$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::params}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00097}{97}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_afb6e599c89dadd6e2e585641a12c8a55}\label{classCMCMC_afb6e599c89dadd6e2e585641a12c8a55} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!paramsList@{paramsList}}
+\index{paramsList@{paramsList}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{paramsList}{paramsList}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+Time\+Series\+Set$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::params\+List}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00125}{125}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a2d83e05e35fbf9207e0959a8f688e91a}\label{classCMCMC_a2d83e05e35fbf9207e0959a8f688e91a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!pertcoeff@{pertcoeff}}
+\index{pertcoeff@{pertcoeff}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{pertcoeff}{pertcoeff}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::pertcoeff}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00083}{83}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a2b7ed32c012aec9d4bdd098db796a325}\label{classCMCMC_a2b7ed32c012aec9d4bdd098db796a325} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!predicted@{predicted}}
+\index{predicted@{predicted}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{predicted}{predicted}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::predicted}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00094}{94}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classCMCMC_acc8f8fd81c1ea8b960a65743da848830}\label{classCMCMC_acc8f8fd81c1ea8b960a65743da848830} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!realized\_paramsList@{realized\_paramsList}}
+\index{realized\_paramsList@{realized\_paramsList}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{realized\_paramsList}{realized\_paramsList}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+Time\+Series\+Set$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::realized\+\_\+params\+List}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00126}{126}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_ab1540f4ed1b79842cdafeefe067f6781}\label{classCMCMC_ab1540f4ed1b79842cdafeefe067f6781} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!rtw@{rtw}}
+\index{rtw@{rtw}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{rtw}{rtw}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classProgressWindow}{Progress\+Window}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::rtw =nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00113}{113}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a323780c636a0c1e7cff7c70144a67131}\label{classCMCMC_a323780c636a0c1e7cff7c70144a67131} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!temp\_predicted@{temp\_predicted}}
+\index{temp\_predicted@{temp\_predicted}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{temp\_predicted}{temp\_predicted}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$CVector$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::temp\+\_\+predicted}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00093}{93}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_a3cb3f9aae3876bc47081544c8943069a}\label{classCMCMC_a3cb3f9aae3876bc47081544c8943069a} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!total\_count@{total\_count}}
+\index{total\_count@{total\_count}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{total\_count}{total\_count}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::total\+\_\+count =0}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00132}{132}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+\Hypertarget{classCMCMC_ac7137054f78cb874bc353f4063a42932}\label{classCMCMC_ac7137054f78cb874bc353f4063a42932} 
+\index{CMCMC$<$ T $>$@{CMCMC$<$ T $>$}!u@{u}}
+\index{u@{u}!CMCMC$<$ T $>$@{CMCMC$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{u}{u}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ T $>$\+::u}
+
+
+
+Definition at line \mbox{\hyperlink{MCMC_8h_source_l00086}{86}} of file \mbox{\hyperlink{MCMC_8h_source}{MCMC.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+MCMC/\mbox{\hyperlink{MCMC_8h}{MCMC.\+h}}\item 
+MCMC/\mbox{\hyperlink{MCMC_8hpp}{MCMC.\+hpp}}\end{DoxyCompactItemize}

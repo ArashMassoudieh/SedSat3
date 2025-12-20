@@ -1,0 +1,329 @@
+\doxysection{CMBTime\+Series Class Reference}
+\hypertarget{classCMBTimeSeries}{}\label{classCMBTimeSeries}\index{CMBTimeSeries@{CMBTimeSeries}}
+
+
+Time series data container with \doxylink{classInterface}{Interface} support.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/cmbtimeseries.\+h$>$}
+
+
+
+Inheritance diagram for CMBTime\+Series\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBTimeSeries__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CMBTime\+Series\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBTimeSeries__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCMBTimeSeries_abe44bd316302a05488162f61484ce7c1}{CMBTime\+Series}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor -\/ creates an empty time series. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeries_a4cda9de36c2fe241be0fd2d2787771d3}{CMBTime\+Series}} (int n)
+\begin{DoxyCompactList}\small\item\em Constructs a time series with given capacity. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeries_a9eec210e6900e8408a23105e26bd7613}{CMBTime\+Series}} (const \mbox{\hyperlink{classCMBTimeSeries}{CMBTime\+Series}} \&mp)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeries}{CMBTime\+Series}} \& \mbox{\hyperlink{classCMBTimeSeries_a41f1c4265c4479a802278818f9bd1c8b}{operator=}} (const \mbox{\hyperlink{classCMBTimeSeries}{CMBTime\+Series}} \&mp)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classCMBTimeSeries_a9175810d151e40686ae069781e6152f9}{to\+Json\+Object}} () const override
+\begin{DoxyCompactList}\small\item\em Serializes time series to JSON format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBTimeSeries_a20d086d44d2a573e04d3364baa97a30f}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\begin{DoxyCompactList}\small\item\em Deserializes time series from JSON format. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBTimeSeries_add4f30dff6138071cae4dfde8a798c2c}{To\+String}} () const override
+\begin{DoxyCompactList}\small\item\em Converts time series to CSV-\/formatted string. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBTimeSeries_a6976722f7e30dba9f07e4dd9eee375ad}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}) override
+\begin{DoxyCompactList}\small\item\em Writes time series to file. \end{DoxyCompactList}\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMBTimeSeries_ad595f1f53e16418cce5fb54a74a03f24}{To\+Table}} () override
+\begin{DoxyCompactList}\small\item\em Creates a QTable\+Widget for displaying time series data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Time series data container with \doxylink{classInterface}{Interface} support. 
+
+Extends Time\+Series$<$double$>$ with JSON serialization, file I/O, and table widget generation. Used for storing time-\/indexed data such as concentration profiles or temporal distributions. 
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8h_source_l00014}{14}} of file \mbox{\hyperlink{cmbtimeseries_8h_source}{cmbtimeseries.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCMBTimeSeries_abe44bd316302a05488162f61484ce7c1}\label{classCMBTimeSeries_abe44bd316302a05488162f61484ce7c1} 
+\index{CMBTimeSeries@{CMBTimeSeries}!CMBTimeSeries@{CMBTimeSeries}}
+\index{CMBTimeSeries@{CMBTimeSeries}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeries()}{CMBTimeSeries()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily CMBTime\+Series\+::\+CMBTime\+Series (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor -\/ creates an empty time series. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+\Hypertarget{classCMBTimeSeries_a4cda9de36c2fe241be0fd2d2787771d3}\label{classCMBTimeSeries_a4cda9de36c2fe241be0fd2d2787771d3} 
+\index{CMBTimeSeries@{CMBTimeSeries}!CMBTimeSeries@{CMBTimeSeries}}
+\index{CMBTimeSeries@{CMBTimeSeries}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeries()}{CMBTimeSeries()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily CMBTime\+Series\+::\+CMBTime\+Series (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Constructs a time series with given capacity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Initial capacity \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+\Hypertarget{classCMBTimeSeries_a9eec210e6900e8408a23105e26bd7613}\label{classCMBTimeSeries_a9eec210e6900e8408a23105e26bd7613} 
+\index{CMBTimeSeries@{CMBTimeSeries}!CMBTimeSeries@{CMBTimeSeries}}
+\index{CMBTimeSeries@{CMBTimeSeries}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeries()}{CMBTimeSeries()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily CMBTime\+Series\+::\+CMBTime\+Series (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBTimeSeries}{CMBTime\+Series}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Time series to copy from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCMBTimeSeries_a41f1c4265c4479a802278818f9bd1c8b}\label{classCMBTimeSeries_a41f1c4265c4479a802278818f9bd1c8b} 
+\index{CMBTimeSeries@{CMBTimeSeries}!operator=@{operator=}}
+\index{operator=@{operator=}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBTimeSeries}{CMBTime\+Series}} \& CMBTime\+Series\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBTimeSeries}{CMBTime\+Series}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Time series to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this time series 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00021}{operator=()}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00021}{operator=()}}.
+
+\Hypertarget{classCMBTimeSeries_a20d086d44d2a573e04d3364baa97a30f}\label{classCMBTimeSeries_a20d086d44d2a573e04d3364baa97a30f} 
+\index{CMBTimeSeries@{CMBTimeSeries}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool CMBTime\+Series\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Deserializes time series from JSON format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em jsonobject} & JSON object to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+\Hypertarget{classCMBTimeSeries_a9175810d151e40686ae069781e6152f9}\label{classCMBTimeSeries_a9175810d151e40686ae069781e6152f9} 
+\index{CMBTimeSeries@{CMBTimeSeries}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object CMBTime\+Series\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Serializes time series to JSON format. 
+
+\begin{DoxyReturn}{Returns}
+JSON object containing time and value arrays 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+\Hypertarget{classCMBTimeSeries_add4f30dff6138071cae4dfde8a798c2c}\label{classCMBTimeSeries_add4f30dff6138071cae4dfde8a798c2c} 
+\index{CMBTimeSeries@{CMBTimeSeries}!ToString@{ToString}}
+\index{ToString@{ToString}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBTime\+Series\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Converts time series to CSV-\/formatted string. 
+
+\begin{DoxyReturn}{Returns}
+String representation with time,value pairs 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00059}{writetofile()}}.
+
+\Hypertarget{classCMBTimeSeries_ad595f1f53e16418cce5fb54a74a03f24}\label{classCMBTimeSeries_ad595f1f53e16418cce5fb54a74a03f24} 
+\index{CMBTimeSeries@{CMBTimeSeries}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} CMBTime\+Series\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Creates a QTable\+Widget for displaying time series data. 
+
+Generates a single-\/column table with time values as row labels and values in the column. Highlights values outside limit range if highlighting is enabled.
+
+\begin{DoxyReturn}{Returns}
+Pointer to newly created QTable\+Widget (caller takes ownership) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00065}{65}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00050}{Interface\+::highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::highlimit}}, and \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::lowlimit}}.
+
+\Hypertarget{classCMBTimeSeries_a6976722f7e30dba9f07e4dd9eee375ad}\label{classCMBTimeSeries_a6976722f7e30dba9f07e4dd9eee375ad} 
+\index{CMBTimeSeries@{CMBTimeSeries}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!CMBTimeSeries@{CMBTimeSeries}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool CMBTime\+Series\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Writes time series to file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File pointer to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{cmbtimeseries_8cpp_source}{cmbtimeseries.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00048}{To\+String()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cmbtimeseries_8h}{cmbtimeseries.\+h}}\item 
+\mbox{\hyperlink{cmbtimeseries_8cpp}{cmbtimeseries.\+cpp}}\end{DoxyCompactItemize}

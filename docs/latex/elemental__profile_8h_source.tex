@@ -1,0 +1,171 @@
+\doxysection{elemental\+\_\+profile.\+h}
+\hypertarget{elemental__profile_8h_source}{}\label{elemental__profile_8h_source}\mbox{\hyperlink{elemental__profile_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00022}00022\ \textcolor{preprocessor}{\#ifndef\ ELEMENTAL\_PROFILE\_H}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00023}00023\ \textcolor{preprocessor}{\#define\ ELEMENTAL\_PROFILE\_H}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00026}00026\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interface_8h}{interface.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00030}00030\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{multiplelinearregressionset_8h}{multiplelinearregressionset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00032}00032\ \ \textcolor{comment}{//\ Bring\ std\ types\ into\ scope\ for\ compatibility}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00033}00033\ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00034}00034\ \textcolor{keyword}{using\ }std::vector;}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00035}00035\ \textcolor{keyword}{using\ }std::map;}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00037}00037\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00038}00038\ \textcolor{keyword}{class\ }QTableWidget;}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00039}00039\ \textcolor{keyword}{class\ }QJsonObject;}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00040}00040\ \textcolor{keyword}{class\ }QFile;}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00041}00041\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCMBVector}{CMBVector}};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00050}\mbox{\hyperlink{structelement__information}{00050}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structelement__information}{element\_information}}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00051}00051\ \{}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00056}\mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{00056}}\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{role}}\ \{}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{do\_not\_include}},\ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{isotope}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{particle\_size}},\ \ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element}},\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{organic\_carbon}}\ \ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00062}\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{00062}}\ \ \ \ \ \}\ \mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{role::element}};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00064}\mbox{\hyperlink{structelement__information_a056c8f0e1ae1fd21a11dddb990c83dcd}{00064}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structelement__information_a056c8f0e1ae1fd21a11dddb990c83dcd}{standard\_ratio}};\ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00065}\mbox{\hyperlink{structelement__information_afe23057d4978b38c0acef67198a45117}{00065}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{structelement__information_afe23057d4978b38c0acef67198a45117}{base\_element}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00066}\mbox{\hyperlink{structelement__information_ac50ec2cd0b5510b23e917db405b2a62d}{00066}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structelement__information_ac50ec2cd0b5510b23e917db405b2a62d}{include\_in\_analysis}}\ =\ \textcolor{keyword}{true};\ \ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00067}00067\ \};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00113}\mbox{\hyperlink{classElemental__Profile}{00113}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ :\ \textcolor{keyword}{public}\ map<string,\ double>,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classInterface}{Interface}}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00114}00114\ \{}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00115}00115\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00116}00116\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00117}00117\ \ \ \ \ \textcolor{comment}{//\ CONSTRUCTION\ AND\ ASSIGNMENT}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00118}00118\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}{Elemental\_Profile}}();}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00132}00132\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}{Elemental\_Profile}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00140}00140\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\&\ \mbox{\hyperlink{classElemental__Profile_a0081cfc8b373ed0f6111d866361181e8}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00142}00142\ \ \ \ \ \textcolor{comment}{//\ Default\ destructor\ is\ sufficient\ (Rule\ of\ Zero\ for\ other\ members)}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00144}00144\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00145}00145\ \ \ \ \ \textcolor{comment}{//\ ELEMENT\ ACCESS\ AND\ MODIFICATION}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00146}00146\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00163}00163\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_ac022b9ee818190fde138a0a5cbbed9b0}{GetValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00179}00179\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}{SetValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}},\ \textcolor{keywordtype}{double}\ val);}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00194}00194\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}},\ \textcolor{keywordtype}{double}\ val\ =\ 0.0);}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00201}00201\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af7ee759943443d6251d30927f51847f9}{Contains}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00208}00208\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classElemental__Profile_a7a155e3385f47495fc9cf8b317c2b6e4}{GetAllValues}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00214}00214\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classElemental__Profile_a295397bcb07225d953471aa26b367cdd}{GetElementNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00216}00216\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00217}00217\ \ \ \ \ \textcolor{comment}{//\ QUALITY\ CONTROL\ -\/\ MARKING\ SYSTEM}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00218}00218\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00233}00233\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_a82cc77b68f773d9c3214e6b20f3ded55}{SetMarked}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}},\ \textcolor{keywordtype}{bool}\ marked);}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00241}00241\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_a1e87fa1b1f3782d18cc7456943e99be7}{IsMarked}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00243}00243\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00244}00244\ \ \ \ \ \textcolor{comment}{//\ STATISTICAL\ OPERATIONS}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00245}00245\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00253}00253\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_a5007d301571db4ce04f2430635694710}{GetMinimum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00261}00261\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_a28feb4c1d0486aa25c6602f33b7d3d9a}{GetMaximum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00275}00275\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_a2b81a2859a02a4ac85df7eb243f594c3}{CalculateDotProduct}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ weights)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00284}00284\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classElemental__Profile_a3353e492c0cd55969e72d6e990cda355}{SortByConcentration}}(\textcolor{keywordtype}{bool}\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00297}00297\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classElemental__Profile_ac612e5ce6ee3566ace1a718dda5e4c7d}{SelectTopElements}}(\textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{bool}\ ascending\ =\ \textcolor{keyword}{true})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00299}00299\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00300}00300\ \ \ \ \ \textcolor{comment}{//\ PROFILE\ EXTRACTION\ AND\ FILTERING}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00301}00301\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00315}00315\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780}{CreateAnalysisProfile}}(}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00316}00316\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ elementinfo\ =\ \textcolor{keyword}{nullptr})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00325}00325\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a0541b570dda666bf2a3ddea2d6366c54}{ExtractChemicalElements}}(}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00326}00326\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ elementinfo,}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00327}00327\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ include\_isotopes\ =\ \textcolor{keyword}{false})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00328}00328\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00337}00337\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a149f46abf0285a5c7b9f2c823479b1d8}{ExtractElements}}(\textcolor{keyword}{const}\ vector<string>\&\ element\_names)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00338}00338\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00339}00339\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00340}00340\ \ \ \ \ \textcolor{comment}{//\ CORRECTIONS\ AND\ TRANSFORMATIONS}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00341}00341\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00342}00342\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00365}00365\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a1ae3b2f72eb66fb5ac7f195324f1dd41}{ApplyOrganicMatterAndSizeCorrections}}(}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00366}00366\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector<double>\&\ reference\_om\_size,}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00367}00367\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}*\ regression\_models,}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00368}00368\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ elementinfo\ =\ \textcolor{keyword}{nullptr})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00384}00384\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_ab22dbed07fdb56b97cf9bccab22545cc}{CreateCorrectedProfile}}(}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00385}00385\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ exclude\_elements,}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00386}00386\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ apply\_corrections,}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00387}00387\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector<double>\&\ reference\_om\_size,}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00388}00388\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}*\ regression\_models\ =\ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00389}00389\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ elementinfo\ =\ \textcolor{keyword}{nullptr})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00391}00391\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00392}00392\ \ \ \ \ \textcolor{comment}{//\ ANALYSIS\ INCLUSION\ FLAGS}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00393}00393\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00399}\mbox{\hyperlink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{00399}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{IsIncludedInAnalysis}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}};\ \}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00400}00400\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00406}\mbox{\hyperlink{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}{00406}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}{SetIncludedInAnalysis}}(\textcolor{keywordtype}{bool}\ included)\ \{\ \mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}}\ =\ included;\ \}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00408}00408\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00409}00409\ \ \ \ \ \textcolor{comment}{//\ SERIALIZATION\ AND\ I/O\ (from\ Interface\ base\ class)}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00410}00410\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00411}00411\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00417}00417\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e}{ToString}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00418}00418\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00428}00428\ \ \ \ \ QTableWidget*\ \mbox{\hyperlink{classElemental__Profile_a9339549be3522fda11453bf97d405ce0}{ToTable}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00429}00429\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00435}\mbox{\hyperlink{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872}{00435}}\ \ \ \ \ std::unique\_ptr<QTableWidget>\ \mbox{\hyperlink{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872}{CreateTableUnique}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00436}00436\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00442}00442\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_adff28a214b4cd5d4abef75d7067fc942}{writetofile}}(QFile*\ file)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00443}00443\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00449}00449\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af63837f23db8c25fbd1414451c367403}{Read}}(\textcolor{keyword}{const}\ QStringList\&\ string\_list)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00450}00450\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00455}00455\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classElemental__Profile_ae6d76197a4334b6db6160b19610d3c9d}{toJsonObject}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00456}00456\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00463}00463\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ json)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00464}00464\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00465}00465\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00466}00466\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00467}00467\ \ \ \ \ \textcolor{comment}{//\ PRIVATE\ MEMBER\ VARIABLES}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00468}00468\ \ \ \ \ \textcolor{comment}{//\ =========================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00469}00469\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00476}\mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{00476}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00477}00477\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00484}\mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{00484}}\ \ \ \ \ map<string,\ bool>\ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00485}00485\ \};}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00486}00486\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00487}00487\ \textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00488}00488\ \textcolor{comment}{//\ DEPRECATED\ METHOD\ ALIASES\ (for\ backward\ compatibility)}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00489}00489\ \textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00490}00490\ \textcolor{comment}{//\ These\ will\ be\ removed\ in\ v3.0}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00491}00491\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00492}00492\ \textcolor{keyword}{namespace\ }\{}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00493}00493\ \ \ \ \ \textcolor{comment}{//\ Provide\ deprecated\ aliases\ during\ transition\ period}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00494}00494\ \ \ \ \ \textcolor{comment}{//\ Usage:\ auto\ val\ =\ profile.Val("{}Al"{});\ \ //\ Warns\ but\ works}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00495}00495\ \}}
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00496}00496\ }
+\DoxyCodeLine{\Hypertarget{elemental__profile_8h_source_l00497}00497\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ELEMENTAL\_PROFILE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,120 @@
+\doxysection{concentrationset.\+h}
+\hypertarget{concentrationset_8h_source}{}\label{concentrationset_8h_source}\mbox{\hyperlink{concentrationset_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ CONCENTRATIONSET\_H}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ CONCENTRATIONSET\_H}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}Distribution.h"{}}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbtimeseries_8h}{cmbtimeseries.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbtimeseriesset_8h}{cmbtimeseriesset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00010}00010\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00022}\mbox{\hyperlink{classConcentrationSet}{00022}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}<double>}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00023}00023\ \{}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00024}00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//\ ==========\ Construction\ and\ Assignment\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet_a0d91dc4ce2c5687016e85d07c572c6ea}{ConcentrationSet}}();}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet_a0d91dc4ce2c5687016e85d07c572c6ea}{ConcentrationSet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet_a0d91dc4ce2c5687016e85d07c572c6ea}{ConcentrationSet}}(\textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\&\ \mbox{\hyperlink{classConcentrationSet_acaab8210aae5e80114c19c1602b1209a}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ ==========\ Data\ Management\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classConcentrationSet_abce941009a6a9d06c5ee696545ebe49e}{AppendValue}}(\textcolor{keywordtype}{double}\ value);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classConcentrationSet_a96474fc19a5b1e534fb614f0e85e7289}{AppendSet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classConcentrationSet_a96474fc19a5b1e534fb614f0e85e7289}{AppendSet}}(\mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}*\ other);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//\ ==========\ Basic\ Statistics\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a052c56dc3e99c21710813762497576fb}{CalculateMean}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_af5e08ff71a2ae6e4a119207db9fd841b}{CalculateStdDev}}(\textcolor{keywordtype}{double}\ mean\_value\ =\ -\/999)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a4313e6fe9182fb526a588c1bcc7ddd69}{CalculateMeanLog}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00067}00067\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a1456ecab7d32c37b3889c515bc4d43e8}{CalculateStdDevLog}}(\textcolor{keywordtype}{double}\ mean\_value\ =\ -\/999)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a019d1cd6acd178c3ab38d92baa3623db}{CalculateSSE}}(\textcolor{keywordtype}{double}\ mean\_value\ =\ -\/999)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00077}00077\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_adbb1e1ce6364503039c010821a05c188}{CalculateSSELog}}(\textcolor{keywordtype}{double}\ mean\_value\ =\ -\/999)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00082}00082\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_ab58fbb5f2a0e4e73c4882636b8378a1f}{CalculateNorm}}(\textcolor{keywordtype}{double}\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa62cd275989e78ee56a81f0265a87562e}{power}}\ =\ 2.0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a57565c09536f63efae68de6a714c5566}{CalculateNormLog}}(\textcolor{keywordtype}{double}\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa62cd275989e78ee56a81f0265a87562e}{power}}\ =\ 2.0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00092}00092\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a97f669decee2c9d3fadcb2eed3e2c1ce}{GetMinimum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00097}00097\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a862c9242fafcb5c951175feb2299c283}{GetMaximum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00099}00099\ \ \ \ \ \textcolor{comment}{//\ ==========\ Distribution\ Fitting\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00106}00106\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classConcentrationSet_a1ce6c8aeec77d1764cf90d86e6e6a613}{EstimateDistributionParameters}}(}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\_type}}\ dist\_type\ =\ \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8}{distribution\_type::none}}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00108}00108\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00116}00116\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a05f6de5ae5b2d059b6736913db05a8d3}{CalculateLogLikelihood}}(}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ vector<double>\&\ params\ =\ vector<double>(),}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00118}00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\_type}}\ dist\_type\ =\ \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8}{distribution\_type::none}}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00119}00119\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\_type}}\ \mbox{\hyperlink{classConcentrationSet_a901a7fcd6e7b23612fb7e2dc0ac85ef6}{SelectBestDistribution}}();}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00130}\mbox{\hyperlink{classConcentrationSet_aba344ca9f8e0ba91b471ca8735e73a74}{00130}}\ \ \ \ \ \mbox{\hyperlink{classDistribution}{Distribution}}*\ \mbox{\hyperlink{classConcentrationSet_aba344ca9f8e0ba91b471ca8735e73a74}{GetFittedDistribution}}()\ \{\ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classConcentrationSet_af941a001f82ce8da9935a7af47fcf73a}{fitted\_distribution\_}};\ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00131}\mbox{\hyperlink{classConcentrationSet_ad9558ff52df0ad10cadcce784575b000}{00131}}\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classDistribution}{Distribution}}*\ \mbox{\hyperlink{classConcentrationSet_ad9558ff52df0ad10cadcce784575b000}{GetFittedDistribution}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classConcentrationSet_af941a001f82ce8da9935a7af47fcf73a}{fitted\_distribution\_}};\ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00136}\mbox{\hyperlink{classConcentrationSet_a1132cabf9ace5ec85d053dbe1130fd13}{00136}}\ \ \ \ \ \mbox{\hyperlink{classDistribution}{Distribution}}*\ \mbox{\hyperlink{classConcentrationSet_a1132cabf9ace5ec85d053dbe1130fd13}{GetEstimatedDistribution}}()\ \{\ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}};\ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00137}\mbox{\hyperlink{classConcentrationSet_ac199c57c9b922d0716ec1fbc914a2a12}{00137}}\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classDistribution}{Distribution}}*\ \mbox{\hyperlink{classConcentrationSet_ac199c57c9b922d0716ec1fbc914a2a12}{GetEstimatedDistribution}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}};\ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00142}\mbox{\hyperlink{classConcentrationSet_a8076aa6d6ef6b0bba2d0fa4e7358b3f2}{00142}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a8076aa6d6ef6b0bba2d0fa4e7358b3f2}{GetEstimatedMu}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}.size()\ >\ 0\ ?\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}[0]\ :\ 0.0;\ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00143}\mbox{\hyperlink{classConcentrationSet_a4d76226ba4441d14b42e5c328db85055}{00143}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classConcentrationSet_a4d76226ba4441d14b42e5c328db85055}{SetEstimatedMu}}(\textcolor{keywordtype}{double}\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}.empty())\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}.resize(2);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}[0]\ =\ value;}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00146}00146\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00151}\mbox{\hyperlink{classConcentrationSet_a9feb4cb4ef1e2e01d0894741826d7c7c}{00151}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a9feb4cb4ef1e2e01d0894741826d7c7c}{GetEstimatedSigma}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}.size()\ >\ 1\ ?\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}[1]\ :\ 0.0;\ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00152}\mbox{\hyperlink{classConcentrationSet_a11cc0ddeade2e65abdfcf7b4fcc0b3b7}{00152}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classConcentrationSet_a11cc0ddeade2e65abdfcf7b4fcc0b3b7}{SetEstimatedSigma}}(\textcolor{keywordtype}{double}\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00153}00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}.empty())\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}.resize(2);}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00154}00154\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}}.\mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}[1]\ =\ value;}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00155}00155\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00157}00157\ \ \ \ \ \textcolor{comment}{//\ ==========\ Goodness-\/of-\/Fit\ Testing\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00162}00162\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeries}{CMBTimeSeries}}\ \mbox{\hyperlink{classConcentrationSet_a3271cea1667c4db4c86c77ed8171ebf6}{CreateDataCDF}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00167}00167\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \mbox{\hyperlink{classConcentrationSet_a0c70982b7806923ea766d1bd2a79125e}{CreateCDFComparison}}(\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\_type}}\ dist\_type)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00172}00172\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \mbox{\hyperlink{classConcentrationSet_ac055799b2291928e46a3fbdb92bda7bb}{CreateFittedDistribution}}(\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\_type}}\ dist\_type)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00177}00177\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a6489897ec3417b14395ad0401c224e64}{CalculateKolmogorovSmirnovStatistic}}(\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\_type}}\ dist\_type)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00179}00179\ \ \ \ \ \textcolor{comment}{//\ ==========\ Transformations\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00184}00184\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\ \mbox{\hyperlink{classConcentrationSet_a028f6d7c154b94d95ca33849c081f76c}{CreateLogTransformed}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00189}00189\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a5640a3b263235bf1c9659989ca9a3afe}{CalculateBoxCoxLogLikelihood}}(\textcolor{keywordtype}{double}\ lambda)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00196}00196\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}\ \mbox{\hyperlink{classConcentrationSet_aa7c9b13418e8ef394245c8a6a9cb5a3a}{ApplyBoxCoxTransform}}(\textcolor{keywordtype}{double}\ lambda,\ \textcolor{keywordtype}{bool}\ normalize)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00205}00205\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classConcentrationSet_a9a05fd1a2946e1201c2c6ac65e930fe1}{FindOptimalBoxCoxParameter}}(}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ min\_lambda,}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ max\_lambda,}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\_intervals}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00209}00209\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00211}00211\ \ \ \ \ \textcolor{comment}{//\ ==========\ Utility\ Functions\ ==========}}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00216}00216\ \ \ \ \ vector<unsigned\ int>\ \mbox{\hyperlink{classConcentrationSet_a74ebb8e999f0db21501fb0de991b8db1}{CalculateRanks}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00218}00218\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00219}\mbox{\hyperlink{classConcentrationSet_af941a001f82ce8da9935a7af47fcf73a}{00219}}\ \ \ \ \ \mbox{\hyperlink{classDistribution}{Distribution}}\ \mbox{\hyperlink{classConcentrationSet_af941a001f82ce8da9935a7af47fcf73a}{fitted\_distribution\_}};\ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00220}\mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{00220}}\ \ \ \ \ \mbox{\hyperlink{classDistribution}{Distribution}}\ \mbox{\hyperlink{classConcentrationSet_a26c45960c0fb568486a95e824372b72b}{estimated\_distribution\_}};\ \ \ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00221}00221\ \};}
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{concentrationset_8h_source_l00223}00223\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CONCENTRATIONSET\_H}}
+
+\end{DoxyCode}

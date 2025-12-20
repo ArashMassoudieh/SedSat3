@@ -1,0 +1,122 @@
+\doxysection{mainwindow.\+cpp File Reference}
+\hypertarget{mainwindow_8cpp}{}\label{mainwindow_8cpp}\index{mainwindow.cpp@{mainwindow.cpp}}
+{\ttfamily \#include "{}mainwindow.\+h"{}}\newline
+{\ttfamily \#include "{}ui\+\_\+mainwindow.\+h"{}}\newline
+{\ttfamily \#include "{}QDebug"{}}\newline
+{\ttfamily \#include "{}QFile\+Dialog"{}}\newline
+{\ttfamily \#include "{}QDir"{}}\newline
+{\ttfamily \#include "{}sourcesinkdata.\+h"{}}\newline
+{\ttfamily \#include "{}xlsxdocument.\+h"{}}\newline
+{\ttfamily \#include "{}xlsxchartsheet.\+h"{}}\newline
+{\ttfamily \#include "{}xlsxcellrange.\+h"{}}\newline
+{\ttfamily \#include "{}xlsxchart.\+h"{}}\newline
+{\ttfamily \#include "{}xlsxrichstring.\+h"{}}\newline
+{\ttfamily \#include "{}xlsxworkbook.\+h"{}}\newline
+{\ttfamily \#include "{}indicatesheetsdialog.\+h"{}}\newline
+{\ttfamily \#include "{}plotwindow.\+h"{}}\newline
+{\ttfamily \#include "{}QMessage\+Box"{}}\newline
+{\ttfamily \#include "{}Utilities.\+h"{}}\newline
+{\ttfamily \#include "{}QMap"{}}\newline
+{\ttfamily \#include "{}QJson\+Document"{}}\newline
+{\ttfamily \#include "{}formelementinformation.\+h"{}}\newline
+{\ttfamily \#include "{}elementstablemodel.\+h"{}}\newline
+{\ttfamily \#include "{}elementtabledelegate.\+h"{}}\newline
+{\ttfamily \#include "{}GA.\+h"{}}\newline
+{\ttfamily \#include "{}genericform.\+h"{}}\newline
+{\ttfamily \#include "{}Progress\+Window.\+h"{}}\newline
+{\ttfamily \#include "{}resultswindow.\+h"{}}\newline
+{\ttfamily \#include "{}aboutdialog.\+h"{}}\newline
+{\ttfamily \#include "{}resultsetitem.\+h"{}}\newline
+{\ttfamily \#include "{}resultitem.\+h"{}}\newline
+{\ttfamily \#include "{}selectsamples.\+h"{}}\newline
+{\ttfamily \#include "{}dialogchooseexcelsheets.\+h"{}}\newline
+{\ttfamily \#include "{}toolboxitem.\+h"{}}\newline
+{\ttfamily \#include "{}resulttableviewer.\+h"{}}\newline
+{\ttfamily \#include "{}optionsdialog.\+h"{}}\newline
+Include dependency graph for mainwindow.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mainwindow_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{mainwindow_8cpp_a30929f06c3e6808da0bd26da88938e82}{RECENT}}~"{}Sed\+Satrecent\+Files.\+txt"{}
+\item 
+\#define \mbox{\hyperlink{mainwindow_8cpp_a6ecef927dddf964ceb29d8a7f2ea2d67}{max\+\_\+num\+\_\+recent\+\_\+files}}~15
+\item 
+\#define \mbox{\hyperlink{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}{version}}~"{}1.\+1.\+3"{}
+\item 
+\#define \mbox{\hyperlink{mainwindow_8cpp_a5110bf7b85b780daf5f1f7387b1c5a36}{date\+\_\+compiled}}~"{}12/20/2025"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{mainwindow_8cpp_a80cbd2f4e34e7b0a900b759634152457}{local\+App\+Folder\+Address}} ()
+\begin{DoxyCompactList}\small\item\em Returns the local application folder address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{mainwindow_8cpp_a5110bf7b85b780daf5f1f7387b1c5a36}\label{mainwindow_8cpp_a5110bf7b85b780daf5f1f7387b1c5a36} 
+\index{mainwindow.cpp@{mainwindow.cpp}!date\_compiled@{date\_compiled}}
+\index{date\_compiled@{date\_compiled}!mainwindow.cpp@{mainwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{date\_compiled}{date\_compiled}}
+{\footnotesize\ttfamily \#define date\+\_\+compiled~"{}12/20/2025"{}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+\Hypertarget{mainwindow_8cpp_a6ecef927dddf964ceb29d8a7f2ea2d67}\label{mainwindow_8cpp_a6ecef927dddf964ceb29d8a7f2ea2d67} 
+\index{mainwindow.cpp@{mainwindow.cpp}!max\_num\_recent\_files@{max\_num\_recent\_files}}
+\index{max\_num\_recent\_files@{max\_num\_recent\_files}!mainwindow.cpp@{mainwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{max\_num\_recent\_files}{max\_num\_recent\_files}}
+{\footnotesize\ttfamily \#define max\+\_\+num\+\_\+recent\+\_\+files~15}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+\Hypertarget{mainwindow_8cpp_a30929f06c3e6808da0bd26da88938e82}\label{mainwindow_8cpp_a30929f06c3e6808da0bd26da88938e82} 
+\index{mainwindow.cpp@{mainwindow.cpp}!RECENT@{RECENT}}
+\index{RECENT@{RECENT}!mainwindow.cpp@{mainwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{RECENT}{RECENT}}
+{\footnotesize\ttfamily \#define RECENT~"{}Sed\+Satrecent\+Files.\+txt"{}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+\Hypertarget{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}\label{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2} 
+\index{mainwindow.cpp@{mainwindow.cpp}!version@{version}}
+\index{version@{version}!mainwindow.cpp@{mainwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{version}{version}}
+{\footnotesize\ttfamily \#define version~"{}1.\+1.\+3"{}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{mainwindow_8cpp_a80cbd2f4e34e7b0a900b759634152457}\label{mainwindow_8cpp_a80cbd2f4e34e7b0a900b759634152457} 
+\index{mainwindow.cpp@{mainwindow.cpp}!localAppFolderAddress@{localAppFolderAddress}}
+\index{localAppFolderAddress@{localAppFolderAddress}!mainwindow.cpp@{mainwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{localAppFolderAddress()}{localAppFolderAddress()}}
+{\footnotesize\ttfamily QString local\+App\+Folder\+Address (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the local application folder address. 
+
+\begin{DoxyReturn}{Returns}
+Path to local application data folder 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01453}{1453}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+

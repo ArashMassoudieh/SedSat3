@@ -1,0 +1,284 @@
+\doxysection{Multiple\+Linear\+Regression\+Set Class Reference}
+\hypertarget{classMultipleLinearRegressionSet}{}\label{classMultipleLinearRegressionSet}\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/multiplelinearregressionset.\+h$>$}
+
+
+
+Inheritance diagram for Multiple\+Linear\+Regression\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classMultipleLinearRegressionSet__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Multiple\+Linear\+Regression\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classMultipleLinearRegressionSet__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet_adb13d63f252c992b351cf909eec884f8}{Multiple\+Linear\+Regression\+Set}} ()
+\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet_a6dd69fdf97ffe5b27edf8e4a699c475a}{Multiple\+Linear\+Regression\+Set}} (const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \&mp)
+\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \& \mbox{\hyperlink{classMultipleLinearRegressionSet_a1b27e357816d0c00e02265c8aad72a0a}{operator=}} (const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \&mp)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classMultipleLinearRegressionSet_a549de598f07741da493baa2f940df0fd}{To\+String}} () const override
+\item 
+QJson\+Object \mbox{\hyperlink{classMultipleLinearRegressionSet_a9379678d44cb047cac943710f1dff514}{to\+Json\+Object}} () const override
+\item 
+bool \mbox{\hyperlink{classMultipleLinearRegressionSet_a1ac51ba3e71a8d67f2196c90b57a22f5}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\item 
+bool \mbox{\hyperlink{classMultipleLinearRegressionSet_af68ffede5dae787abc0d367a0f565053}{Append}} (QString key, const \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \&MLR)
+\item 
+void \mbox{\hyperlink{classMultipleLinearRegressionSet_ad2aded232ca6656349195943b22865aa}{Set\+Source}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&source)
+\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMultipleLinearRegressionSet_a60ad63f334b5b570eb565aeaf4652d82}{To\+Table}} () override
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classMultipleLinearRegressionSet_aece7fcc872ba79858cf2577aadfd7377}{Key}} (int i)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classMultipleLinearRegressionSet_a1842a8c97b2e4db38658c8da3c2de02b}{Source}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00007}{7}} of file \mbox{\hyperlink{multiplelinearregressionset_8h_source}{multiplelinearregressionset.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMultipleLinearRegressionSet_adb13d63f252c992b351cf909eec884f8}\label{classMultipleLinearRegressionSet_adb13d63f252c992b351cf909eec884f8} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{MultipleLinearRegressionSet()}{MultipleLinearRegressionSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Multiple\+Linear\+Regression\+Set\+::\+Multiple\+Linear\+Regression\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_a6dd69fdf97ffe5b27edf8e4a699c475a}\label{classMultipleLinearRegressionSet_a6dd69fdf97ffe5b27edf8e4a699c475a} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{MultipleLinearRegressionSet()}{MultipleLinearRegressionSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Multiple\+Linear\+Regression\+Set\+::\+Multiple\+Linear\+Regression\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00022}{Source}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMultipleLinearRegressionSet_af68ffede5dae787abc0d367a0f565053}\label{classMultipleLinearRegressionSet_af68ffede5dae787abc0d367a0f565053} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!Append@{Append}}
+\index{Append@{Append}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{Append()}{Append()}}
+{\footnotesize\ttfamily bool Multiple\+Linear\+Regression\+Set\+::\+Append (\begin{DoxyParamCaption}\item[{QString}]{key,  }\item[{const \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \&}]{MLR }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_aece7fcc872ba79858cf2577aadfd7377}\label{classMultipleLinearRegressionSet_aece7fcc872ba79858cf2577aadfd7377} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!Key@{Key}}
+\index{Key@{Key}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{Key()}{Key()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Multiple\+Linear\+Regression\+Set\+::\+Key (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00100}{100}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}.
+
+
+
+Referenced by \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00011}{Om\+Size\+Correction\+Table\+Model\+::column\+Count()}}, \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00018}{Om\+Size\+Correction\+Table\+Model\+::data()}}, \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00082}{Om\+Size\+Correction\+Table\+Model\+::header\+Data()}}, and \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00123}{Om\+Size\+Correction\+Table\+Model\+::set\+Data()}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_a1b27e357816d0c00e02265c8aad72a0a}\label{classMultipleLinearRegressionSet_a1b27e357816d0c00e02265c8aad72a0a} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!operator=@{operator=}}
+\index{operator=@{operator=}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \& Multiple\+Linear\+Regression\+Set\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}, and \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00022}{Source}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_a1ac51ba3e71a8d67f2196c90b57a22f5}\label{classMultipleLinearRegressionSet_a1ac51ba3e71a8d67f2196c90b57a22f5} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Multiple\+Linear\+Regression\+Set\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Multiple\+Linear\+Regression\+::\+Read\+From\+Json\+Object()}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_ad2aded232ca6656349195943b22865aa}\label{classMultipleLinearRegressionSet_ad2aded232ca6656349195943b22865aa} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!SetSource@{SetSource}}
+\index{SetSource@{SetSource}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{SetSource()}{SetSource()}}
+{\footnotesize\ttfamily void Multiple\+Linear\+Regression\+Set\+::\+Set\+Source (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00017}{17}} of file \mbox{\hyperlink{multiplelinearregressionset_8h_source}{multiplelinearregressionset.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00022}{Source}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_a9379678d44cb047cac943710f1dff514}\label{classMultipleLinearRegressionSet_a9379678d44cb047cac943710f1dff514} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Multiple\+Linear\+Regression\+Set\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_a549de598f07741da493baa2f940df0fd}\label{classMultipleLinearRegressionSet_a549de598f07741da493baa2f940df0fd} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!ToString@{ToString}}
+\index{ToString@{ToString}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Multiple\+Linear\+Regression\+Set\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00049}{49}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{Multiple\+Linear\+Regression\+::\+To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegressionSet_a60ad63f334b5b570eb565aeaf4652d82}\label{classMultipleLinearRegressionSet_a60ad63f334b5b570eb565aeaf4652d82} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} Multiple\+Linear\+Regression\+Set\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00061}{61}} of file \mbox{\hyperlink{multiplelinearregressionset_8cpp_source}{multiplelinearregressionset.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classMultipleLinearRegressionSet_a1842a8c97b2e4db38658c8da3c2de02b}\label{classMultipleLinearRegressionSet_a1842a8c97b2e4db38658c8da3c2de02b} 
+\index{MultipleLinearRegressionSet@{MultipleLinearRegressionSet}!Source@{Source}}
+\index{Source@{Source}!MultipleLinearRegressionSet@{MultipleLinearRegressionSet}}
+\doxysubsubsection{\texorpdfstring{Source}{Source}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Multiple\+Linear\+Regression\+Set\+::\+Source\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00022}{22}} of file \mbox{\hyperlink{multiplelinearregressionset_8h_source}{multiplelinearregressionset.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00008}{Multiple\+Linear\+Regression\+Set()}}, \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00012}{operator=()}}, and \mbox{\hyperlink{multiplelinearregressionset_8h_source_l00017}{Set\+Source()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{multiplelinearregressionset_8h}{multiplelinearregressionset.\+h}}\item 
+\mbox{\hyperlink{multiplelinearregressionset_8cpp}{multiplelinearregressionset.\+cpp}}\end{DoxyCompactItemize}

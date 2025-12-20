@@ -1,0 +1,144 @@
+\doxysection{GA.\+h}
+\hypertarget{GA_8h_source}{}\label{GA_8h_source}\index{GA/GA.h@{GA/GA.h}}
+\mbox{\hyperlink{GA_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Individual_8h}{Individual.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{GADistribution_8h}{GADistribution.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}math.h"{}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00009}00009\ \textcolor{preprocessor}{\#ifndef\ mac\_version}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00011}00011\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00014}00014\ \textcolor{comment}{//GUI}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00015}00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classProgressWindow}{ProgressWindow}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00017}\mbox{\hyperlink{structGA__Twiking__parameters}{00017}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structGA__Twiking__parameters}{GA\_Twiking\_parameters}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00019}\mbox{\hyperlink{structGA__Twiking__parameters_acbb45bbe58a0710fec2818358d681b24}{00019}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_acbb45bbe58a0710fec2818358d681b24}{totnumparams}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00020}\mbox{\hyperlink{structGA__Twiking__parameters_a0e1586c22d465813f8da02037fe645a2}{00020}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_a0e1586c22d465813f8da02037fe645a2}{maxpop}}=2;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00021}\mbox{\hyperlink{structGA__Twiking__parameters_a68df164c4f0449585470d237a80a8665}{00021}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_a68df164c4f0449585470d237a80a8665}{nParam}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00022}\mbox{\hyperlink{structGA__Twiking__parameters_ace042d02cc08fc76806c283ed08e412d}{00022}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_ab45f62a455e300dc96ec37d9789b707a}{numenhancements}},\ \mbox{\hyperlink{structGA__Twiking__parameters_ace042d02cc08fc76806c283ed08e412d}{num\_enh}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00023}\mbox{\hyperlink{structGA__Twiking__parameters_ad22f25876be7a056249ecd4fc3217178}{00023}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_ad22f25876be7a056249ecd4fc3217178}{nGen}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00024}\mbox{\hyperlink{structGA__Twiking__parameters_a229f9c7c53bc5c673ee5e99ca2817a95}{00024}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_a229f9c7c53bc5c673ee5e99ca2817a95}{cross\_over\_type}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00025}\mbox{\hyperlink{structGA__Twiking__parameters_aec325a0da7ad40293b6f24fc79e76a96}{00025}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structGA__Twiking__parameters_aec325a0da7ad40293b6f24fc79e76a96}{no\_bins}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00026}\mbox{\hyperlink{structGA__Twiking__parameters_a650486f4f5267f97f5aaa4b49b13da8a}{00026}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structGA__Twiking__parameters_a650486f4f5267f97f5aaa4b49b13da8a}{sens\_out}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00027}\mbox{\hyperlink{structGA__Twiking__parameters_ada9414ad61cb3a7b96e5b04f1fa92b9f}{00027}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structGA__Twiking__parameters_ada9414ad61cb3a7b96e5b04f1fa92b9f}{RCGA}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00028}\mbox{\hyperlink{structGA__Twiking__parameters_ac042205263ec0c88d43da6db2569ea5f}{00028}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structGA__Twiking__parameters_ac042205263ec0c88d43da6db2569ea5f}{readfromgafile}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00029}\mbox{\hyperlink{structGA__Twiking__parameters_aa0ac60fba09dc9ab1b94ad8e726fa431}{00029}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structGA__Twiking__parameters_aa0ac60fba09dc9ab1b94ad8e726fa431}{Steepest\_Descent}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00030}\mbox{\hyperlink{structGA__Twiking__parameters_a249012c7ac32104e49fe845344720790}{00030}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structGA__Twiking__parameters_a249012c7ac32104e49fe845344720790}{N}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00031}\mbox{\hyperlink{structGA__Twiking__parameters_ab1f0374a89f8fa82bee37895404ec225}{00031}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structGA__Twiking__parameters_ab1f0374a89f8fa82bee37895404ec225}{pcross}}=1;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00032}\mbox{\hyperlink{structGA__Twiking__parameters_a62937061b4fd324b8b0b1ba658d732f4}{00032}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structGA__Twiking__parameters_a62937061b4fd324b8b0b1ba658d732f4}{pmute}}=0.02;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00033}\mbox{\hyperlink{structGA__Twiking__parameters_a8e1904b782546b7255d14c498ccb8c99}{00033}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structGA__Twiking__parameters_a8e1904b782546b7255d14c498ccb8c99}{exponentcoeff}}=1;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00034}\mbox{\hyperlink{structGA__Twiking__parameters_a263cdf30949fe9825f196c5818552e05}{00034}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structGA__Twiking__parameters_a263cdf30949fe9825f196c5818552e05}{shakescale}}=0.05;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00035}\mbox{\hyperlink{structGA__Twiking__parameters_ab36023f24325a8ec16b471cf4f108fb9}{00035}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structGA__Twiking__parameters_ab36023f24325a8ec16b471cf4f108fb9}{shakescalered}}=0.75;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00036}\mbox{\hyperlink{structGA__Twiking__parameters_a2614cc150657362acd4de735ac8d667a}{00036}}\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structGA__Twiking__parameters_a2614cc150657362acd4de735ac8d667a}{fitnesstype}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00037}00037\ \};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00039}\mbox{\hyperlink{struct__filenames}{00039}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct__filenames}{\_filenames}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00040}00040\ \{}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00041}\mbox{\hyperlink{struct__filenames_a40aa89ee424588873090c624197b180f}{00041}}\ \ \ \ \ std::string\ \mbox{\hyperlink{struct__filenames_a40aa89ee424588873090c624197b180f}{initialpopfilemame}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00042}\mbox{\hyperlink{struct__filenames_aaf828d3d0c880e60ab11a1189c2cc95f}{00042}}\ \ \ \ \ std::string\ \mbox{\hyperlink{struct__filenames_aaf828d3d0c880e60ab11a1189c2cc95f}{pathname}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00043}\mbox{\hyperlink{struct__filenames_a17c6269fa4c94e591d14e5887a312c8c}{00043}}\ \ \ \ \ std::string\ \mbox{\hyperlink{struct__filenames_a17c6269fa4c94e591d14e5887a312c8c}{getfromfilename}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00044}\mbox{\hyperlink{struct__filenames_a23a6737969631dce6106ff9688b3f1db}{00044}}\ \ \ \ \ std::string\ \mbox{\hyperlink{struct__filenames_a23a6737969631dce6106ff9688b3f1db}{outputfilename}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00045}00045\ \};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00047}00047\ \textcolor{comment}{//using\ namespace\ std;}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00049}00049\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00050}\mbox{\hyperlink{classCGA}{00050}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCGA}{CGA}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00051}00051\ \{}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00052}00052\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00054}\mbox{\hyperlink{classCGA_a5a93c1487806ec2b200fe6b4eb3640cf}{00054}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a5a93c1487806ec2b200fe6b4eb3640cf}{sumfitness}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00055}\mbox{\hyperlink{classCGA_a03cd49fcce9e818b6643e625d1ac17c8}{00055}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a03cd49fcce9e818b6643e625d1ac17c8}{MaxFitness}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00056}\mbox{\hyperlink{classCGA_a8683bf1edf7fa4e01096691a9d9285e0}{00056}}\ \ \ \ \ \mbox{\hyperlink{structGA__Twiking__parameters}{GA\_Twiking\_parameters}}\ \mbox{\hyperlink{classCGA_a8683bf1edf7fa4e01096691a9d9285e0}{GA\_params}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00057}\mbox{\hyperlink{classCGA_afe18aad1d9ca86eb4d0f03b2966dbb7d}{00057}}\ \ \ \ \ \mbox{\hyperlink{struct__filenames}{\_filenames}}\ \mbox{\hyperlink{classCGA_afe18aad1d9ca86eb4d0f03b2966dbb7d}{filenames}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00058}\mbox{\hyperlink{classCGA_a12b2a15a33592b03863a1226fb096547}{00058}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCGA_a12b2a15a33592b03863a1226fb096547}{calc\_output\_percentiles}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00059}\mbox{\hyperlink{classCGA_a7adcaa510efe6d2ccc42ee2462e5dae8}{00059}}\ \ \ \ \ vector<vector<double>>\ \mbox{\hyperlink{classCGA_a7adcaa510efe6d2ccc42ee2462e5dae8}{initial\_pop}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00060}\mbox{\hyperlink{classCGA_ac1717eb7de3fc3c1b17c34c5ae363a9a}{00060}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCGA_ac1717eb7de3fc3c1b17c34c5ae363a9a}{final\_params}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00061}\mbox{\hyperlink{classCGA_a58ab54945f47697d13ceecee8d314b80}{00061}}\ \ \ \ \ vector<int>\ \mbox{\hyperlink{classCGA_a58ab54945f47697d13ceecee8d314b80}{params}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00062}\mbox{\hyperlink{classCGA_adaccfb638a0fa94ee51fe00152699382}{00062}}\ \ \ \ \ vector<int>\ \mbox{\hyperlink{classCGA_adaccfb638a0fa94ee51fe00152699382}{loged}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00063}\mbox{\hyperlink{classCGA_adbc2ed91c9187c21484c692bfbcf868e}{00063}}\ \ \ \ \ vector<int>\ \mbox{\hyperlink{classCGA_adbc2ed91c9187c21484c692bfbcf868e}{to\_ts}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00064}\mbox{\hyperlink{classCGA_a8c7850c2caf9dce2a233a66bcb56795f}{00064}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCGA_a8c7850c2caf9dce2a233a66bcb56795f}{fixedinputvale}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00065}\mbox{\hyperlink{classCGA_adfefccaa1fdb5682a2515530c8ef8798}{00065}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCGA_a7378e78172071776ac9e61682217d2ec}{minval}},\ \mbox{\hyperlink{classCGA_adfefccaa1fdb5682a2515530c8ef8798}{maxval}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00066}\mbox{\hyperlink{classCGA_a2de45fbfceefc8909a7886ad1a06e101}{00066}}\ \ \ \ \ vector<bool>\ \mbox{\hyperlink{classCGA_a2de45fbfceefc8909a7886ad1a06e101}{apply\_to\_all}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00067}\mbox{\hyperlink{classCGA_abcd4e2c32b97210d245ac742d3e5b5ea}{00067}}\ \ \ \ \ vector<vector<int>>\ \mbox{\hyperlink{classCGA_abcd4e2c32b97210d245ac742d3e5b5ea}{outcompare}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00068}\mbox{\hyperlink{classCGA_a998ca31a227a23bf70ecacb256f10535}{00068}}\ \ \ \ \ vector<CIndividual>\ \mbox{\hyperlink{classCGA_a998ca31a227a23bf70ecacb256f10535}{Ind}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00069}\mbox{\hyperlink{classCGA_a086382c6293291a744bfe3eda41338de}{00069}}\ \ \ \ \ vector<CIndividual>\ \mbox{\hyperlink{classCGA_a086382c6293291a744bfe3eda41338de}{Ind\_old}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00070}\mbox{\hyperlink{classCGA_a47ccc8e1a654b701720366af905d19f2}{00070}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classCGA_a47ccc8e1a654b701720366af905d19f2}{paramname}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00071}\mbox{\hyperlink{classCGA_a423c307f000c4cb4ae00dd1cae9c255b}{00071}}\ \ \ \ \ vector<T>\ \mbox{\hyperlink{classCGA_a423c307f000c4cb4ae00dd1cae9c255b}{Models}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00072}\mbox{\hyperlink{classCGA_a87c7af73db61205481da9a2ba7e3e520}{00072}}\ \ \ \ \ T\ \mbox{\hyperlink{classCGA_a87c7af73db61205481da9a2ba7e3e520}{Model\_out}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00073}\mbox{\hyperlink{classCGA_a13c3a854eb49b2797cd98dd3873be44a}{00073}}\ \ \ \ \ T\ *\mbox{\hyperlink{classCGA_a13c3a854eb49b2797cd98dd3873be44a}{Model}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{classCGA_a7048e1195bed1e4bf6c0fc7493301795}{CGA}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00076}00076\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classCGA_a484e829285d19300cc576eafbd848475}{\string~CGA}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00077}00077\ \ \ \ \ \mbox{\hyperlink{classCGA_a7048e1195bed1e4bf6c0fc7493301795}{CGA}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCGA}{CGA}}\ \&C);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00078}00078\ \ \ \ \ \mbox{\hyperlink{classCGA}{CGA}}\ \mbox{\hyperlink{classCGA_a5f879d23bf89218da703c8f8b5d3d16d}{operator=}}(\mbox{\hyperlink{classCGA}{CGA}}\ \&C);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00079}00079\ \ \ \ \ \mbox{\hyperlink{classCGA_a7048e1195bed1e4bf6c0fc7493301795}{CGA}}(\textcolor{keywordtype}{string}\ filename,\ \textcolor{keyword}{const}\ T\&);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00080}00080\ \ \ \ \ \mbox{\hyperlink{classCGA_a7048e1195bed1e4bf6c0fc7493301795}{CGA}}(T*);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00081}00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_ab443f6c69f6f4a57b1a4d267dadc3656}{initialize}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00082}00082\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a5063df3a1ccb9dbb5cfd3447c7480f3c}{getfromoutput}}(\textcolor{keywordtype}{string}\ filename);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00083}00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_ae8e1155afbb3a650cfcb779328a6a922}{getinifromoutput}}(\textcolor{keywordtype}{string}\ filename);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a906b9f9691fe66909203164ca1fbc3ab}{getinitialpop}}(\textcolor{keywordtype}{string}\ filename);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_a86986bd512fe45c6d1534db8517c38a8}{optimize}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00086}00086\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCGA_af65cc470a4395e78b5f3831ceba5cc90}{SetProperty}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&varname,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00087}00087\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCGA_ab49fb0070fb9fed7fc660173d57a654e}{SetProperties}}(\textcolor{keyword}{const}\ map<string,string>\ \&arguments);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_adf976df2e1592206d5089205d93f1fab}{InitiatePopulation}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00089}\mbox{\hyperlink{classCGA_a923cea7a8f170a8c7ce4c716d3f992dc}{00089}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCGA_a923cea7a8f170a8c7ce4c716d3f992dc}{last\_error}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00090}00090\ \textcolor{preprocessor}{\#ifdef\ Q\_GUI\_SUPPORT}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00091}\mbox{\hyperlink{classCGA_a257b7f7a8d39c36851b9ade4aa12b461}{00091}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a257b7f7a8d39c36851b9ade4aa12b461}{SetRunTimeWindow}}(\mbox{\hyperlink{classProgressWindow}{ProgressWindow}}\ *\_rtw)\ \{\mbox{\hyperlink{classCGA_adc111546d2a3a199d63a00cc915a7295}{rtw}}=\_rtw;\}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00092}00092\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00093}00093\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a6c523af9d43762633e2f33504a2e084e}{Setminmax}}(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{double}\ minrange,\ \textcolor{keywordtype}{double}\ maxrange,\ \textcolor{keywordtype}{int}\ prec);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00095}\mbox{\hyperlink{classCGA_aa50bce2a5d717a37d6e7f7448f33ae3b}{00095}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_aa50bce2a5d717a37d6e7f7448f33ae3b}{fitnessdistini}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00096}00096\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_abca61d1426b7da21232c1ae5a01f0eff}{crossover}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00097}00097\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_ae43684eb49a3d62194ce3c586d5902c7}{avgfitness}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00098}00098\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_aa6c9f602ff66f1267c5b9750d5fe673a}{mutate}}(\textcolor{keywordtype}{double}\ mu);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00099}00099\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a80354318026f5570239903a20065883b}{assignfitnesses}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00100}00100\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_a1396ca02e98954f007215747200884bc}{maxfitness}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00101}00101\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_ad613d910b0b69ebdb3cdb623207963ce}{variancefitness}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00102}00102\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a963420b83f23b27cfcd334e2b507f831}{stdfitness}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00103}00103\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a23e8a0f6e44ae981eef152407c4892fa}{avg\_actual\_fitness}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_ae1427388d4b63d5bdd424eaf99ce64fe}{write\_to\_detailed\_GA}}(\textcolor{keywordtype}{string}\ s);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00105}00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a6641710765b4b2a52ca663cb206af611}{setnumpop}}(\textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00106}00106\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a6ddda08d40d267e93b1591209f9e0d2d}{avg\_inv\_actual\_fitness}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00107}\mbox{\hyperlink{classCGA_a26861c27bbb345e1a2a77fe6b3352639}{00107}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_a26861c27bbb345e1a2a77fe6b3352639}{optimize}}(\textcolor{keywordtype}{int}\ nGens,\ \textcolor{keywordtype}{char}\ DefOutPutFileName[]);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00108}00108\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a80b40099fdd339c653f46bf8378d0254}{setnparams}}(\textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00109}\mbox{\hyperlink{classCGA_afbfb3354346fffa29c98c1d9c48502d0}{00109}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_afbfb3354346fffa29c98c1d9c48502d0}{assignfixedvalues}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00110}00110\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a1c7bebbed88c608337decf0913c19189}{assignrank}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00111}00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_ae30b9e738da2a445f00151168ac9cb36}{assignfitness\_rank}}(\textcolor{keywordtype}{double}\ N);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a420d4ea55847628fb81263b66440b145}{shake}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00113}00113\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a704087f884d6e08baa74708b6bd3c862}{crossoverRC}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00114}\mbox{\hyperlink{classCGA_ac017b8d18512b829f2d74489dd3bd14b}{00114}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_ac017b8d18512b829f2d74489dd3bd14b}{getfromfile}}(\textcolor{keywordtype}{char}\ filename[]);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00115}00115\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCGA_a03ea84782e1569f53be13a5ffbdda820}{fillfitdist}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00116}00116\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a80354318026f5570239903a20065883b}{assignfitnesses}}(vector<double>\ inp);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00117}\mbox{\hyperlink{classCGA_a060ea9a00aa7d57d55ea282b7f5fbb26}{00117}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a060ea9a00aa7d57d55ea282b7f5fbb26}{Gradient\_Descent}}(vector<double>\ inp);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00118}00118\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_aa39ee39e595a0117b43f82bfafd7562d}{getparamno}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ ts);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00119}\mbox{\hyperlink{classCGA_addf72af0a9d378fde4f6658481077603}{00119}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_addf72af0a9d378fde4f6658481077603}{get\_act\_paramno}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00120}00120\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_a21bddbab65da31a5d42a7d0f4d49cb7f}{get\_time\_series}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00121}00121\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_a6671fb178a0790c7a9a397dd929e423d}{evaluateforward}}();}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00122}\mbox{\hyperlink{classCGA_ad12526c03ec6dba6d3d88e933e6e51df}{00122}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCGA_ad12526c03ec6dba6d3d88e933e6e51df}{evaluateforward\_mixed}}(vector<double>\ v);}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00123}\mbox{\hyperlink{classCGA_a8464fc9835d8033dd9b60e5ca324d6f7}{00123}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_a8464fc9835d8033dd9b60e5ca324d6f7}{current\_generation}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00124}\mbox{\hyperlink{classCGA_a5d1c4c793a9d5dbc62c50a45cd743baf}{00124}}\ \ \ \ \ \mbox{\hyperlink{classGADistribution}{GADistribution}}\ \mbox{\hyperlink{classCGA_a5d1c4c793a9d5dbc62c50a45cd743baf}{fitdist}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00125}\mbox{\hyperlink{classCGA_ac3609bac5bfe4364d88aeecc5f821e92}{00125}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCGA_ac3609bac5bfe4364d88aeecc5f821e92}{numberOfThreads}};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00126}00126\ \ \ \ \ \textcolor{comment}{//\ GUI}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00128}00128\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ Q\_GUI\_SUPPORT}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00129}\mbox{\hyperlink{classCGA_adc111546d2a3a199d63a00cc915a7295}{00129}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}\ *\mbox{\hyperlink{classCGA_adc111546d2a3a199d63a00cc915a7295}{rtw}}=\textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00130}00130\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ QT\_version}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00133}00133\ \};}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00135}00135\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{GA_8hpp}{GA.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{GA_8h_source_l00138}00138\ }
+
+\end{DoxyCode}

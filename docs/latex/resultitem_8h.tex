@@ -1,0 +1,215 @@
+\doxysection{resultitem.\+h File Reference}
+\hypertarget{resultitem_8h}{}\label{resultitem_8h}\index{resultitem.h@{resultitem.h}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include "{}parameter.\+h"{}}\newline
+{\ttfamily \#include "{}interface.\+h"{}}\newline
+Include dependency graph for resultitem.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{resultitem_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{resultitem_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classResultItem}{Result\+Item}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7}{result\+\_\+type}} \{ \newline
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}{timeseries}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2362fc0586e229c43de092b032e0081a}{distribution\+\_\+set}}
+, \newline
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843}{timeseries\+\_\+set}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{predicted\+\_\+concentration}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{elemental\+\_\+profile\+\_\+set}}
+, \newline
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}
+, \newline
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84}{mcmc\+\_\+samples}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa3ca99b9a7fdb189d57aa337bcdb86c4}{timeseries\+\_\+set\+\_\+first\+\_\+symbol}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aeb53ab63cb9a18d656f32e047de9a7a1}{timeseries\+\_\+set\+\_\+all\+\_\+symbol}}
+, \newline
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9}{distribution\+\_\+with\+\_\+observed}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920}{rangeset\+\_\+with\+\_\+observed}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a51292102a4c6b0d6bf7029cfaf800ed5}{matrix1vs1}}
+, \newline
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{stacked\+\_\+bar\+\_\+chart}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}{vectorset\+\_\+groups}}
+, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d}{dfa\+\_\+vectorsetset}}
+ \}
+\item 
+enum class \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278}{yaxis\+\_\+mode}} \{ \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}
+, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}
+ \}
+\item 
+enum class \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebe}{xaxis\+\_\+mode}} \{ \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea4bca24304861acde5770fdbe3cc2503b}{real}}
+, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7} 
+\index{resultitem.h@{resultitem.h}!result\_type@{result\_type}}
+\index{result\_type@{result\_type}!resultitem.h@{resultitem.h}}
+\doxysubsubsection{\texorpdfstring{result\_type}{result\_type}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7}{result\+\_\+type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{timeseries@{timeseries}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!timeseries@{timeseries}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11} 
+timeseries&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{contribution@{contribution}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!contribution@{contribution}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace} 
+contribution&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{distribution@{distribution}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!distribution@{distribution}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e} 
+distribution&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{distribution\_set@{distribution\_set}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!distribution\_set@{distribution\_set}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2362fc0586e229c43de092b032e0081a}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2362fc0586e229c43de092b032e0081a} 
+distribution\+\_\+set&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{timeseries\_set@{timeseries\_set}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!timeseries\_set@{timeseries\_set}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843} 
+timeseries\+\_\+set&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{samples@{samples}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!samples@{samples}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7} 
+samples&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{predicted\_concentration@{predicted\_concentration}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!predicted\_concentration@{predicted\_concentration}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98} 
+predicted\+\_\+concentration&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{elemental\_profile\_set@{elemental\_profile\_set}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!elemental\_profile\_set@{elemental\_profile\_set}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f} 
+elemental\+\_\+profile\+\_\+set&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mlrset@{mlrset}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!mlrset@{mlrset}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f} 
+mlrset&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mlr@{mlr}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!mlr@{mlr}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0} 
+mlr&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{matrix@{matrix}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!matrix@{matrix}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6} 
+matrix&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{vector@{vector}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!vector@{vector}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef} 
+vector&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{vectorset@{vectorset}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!vectorset@{vectorset}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56} 
+vectorset&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{mcmc\_samples@{mcmc\_samples}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!mcmc\_samples@{mcmc\_samples}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84} 
+mcmc\+\_\+samples&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{timeseries\_set\_first\_symbol@{timeseries\_set\_first\_symbol}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!timeseries\_set\_first\_symbol@{timeseries\_set\_first\_symbol}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa3ca99b9a7fdb189d57aa337bcdb86c4}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa3ca99b9a7fdb189d57aa337bcdb86c4} 
+timeseries\+\_\+set\+\_\+first\+\_\+symbol&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{timeseries\_set\_all\_symbol@{timeseries\_set\_all\_symbol}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!timeseries\_set\_all\_symbol@{timeseries\_set\_all\_symbol}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aeb53ab63cb9a18d656f32e047de9a7a1}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aeb53ab63cb9a18d656f32e047de9a7a1} 
+timeseries\+\_\+set\+\_\+all\+\_\+symbol&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{distribution\_with\_observed@{distribution\_with\_observed}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!distribution\_with\_observed@{distribution\_with\_observed}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9} 
+distribution\+\_\+with\+\_\+observed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{rangeset@{rangeset}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!rangeset@{rangeset}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414} 
+rangeset&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{rangeset\_with\_observed@{rangeset\_with\_observed}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!rangeset\_with\_observed@{rangeset\_with\_observed}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920} 
+rangeset\+\_\+with\+\_\+observed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{matrix1vs1@{matrix1vs1}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!matrix1vs1@{matrix1vs1}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a51292102a4c6b0d6bf7029cfaf800ed5}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a51292102a4c6b0d6bf7029cfaf800ed5} 
+matrix1vs1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{stacked\_bar\_chart@{stacked\_bar\_chart}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!stacked\_bar\_chart@{stacked\_bar\_chart}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28} 
+stacked\+\_\+bar\+\_\+chart&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{vectorset\_groups@{vectorset\_groups}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!vectorset\_groups@{vectorset\_groups}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6} 
+vectorset\+\_\+groups&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{dfa\_vectorsetset@{dfa\_vectorsetset}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!dfa\_vectorsetset@{dfa\_vectorsetset}}}\Hypertarget{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d}\label{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d} 
+dfa\+\_\+vectorsetset&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{resultitem_8h_source_l00006}{6}} of file \mbox{\hyperlink{resultitem_8h_source}{resultitem.\+h}}.
+
+\Hypertarget{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebe}\label{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebe} 
+\index{resultitem.h@{resultitem.h}!xaxis\_mode@{xaxis\_mode}}
+\index{xaxis\_mode@{xaxis\_mode}!resultitem.h@{resultitem.h}}
+\doxysubsubsection{\texorpdfstring{xaxis\_mode}{xaxis\_mode}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebe}{xaxis\+\_\+mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{real@{real}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!real@{real}}}\Hypertarget{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea4bca24304861acde5770fdbe3cc2503b}\label{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea4bca24304861acde5770fdbe3cc2503b} 
+real&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{counter@{counter}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!counter@{counter}}}\Hypertarget{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}\label{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238} 
+counter&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{resultitem_8h_source_l00008}{8}} of file \mbox{\hyperlink{resultitem_8h_source}{resultitem.\+h}}.
+
+\Hypertarget{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278}\label{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278} 
+\index{resultitem.h@{resultitem.h}!yaxis\_mode@{yaxis\_mode}}
+\index{yaxis\_mode@{yaxis\_mode}!resultitem.h@{resultitem.h}}
+\doxysubsubsection{\texorpdfstring{yaxis\_mode}{yaxis\_mode}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278}{yaxis\+\_\+mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{normal@{normal}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!normal@{normal}}}\Hypertarget{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}\label{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555} 
+normal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{log@{log}!resultitem.h@{resultitem.h}}\index{resultitem.h@{resultitem.h}!log@{log}}}\Hypertarget{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}\label{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f} 
+log&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{resultitem_8h_source_l00007}{7}} of file \mbox{\hyperlink{resultitem_8h_source}{resultitem.\+h}}.
+

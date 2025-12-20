@@ -1,0 +1,141 @@
+\doxysection{Progress\+Window.\+cpp}
+\hypertarget{ProgressWindow_8cpp_source}{}\label{ProgressWindow_8cpp_source}\mbox{\hyperlink{ProgressWindow_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ProgressWindow_8h}{ProgressWindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00005}\mbox{\hyperlink{classProgressWindow_a47f70efe628537c018449c440c698efc}{00005}}\ \mbox{\hyperlink{classProgressWindow_a47f70efe628537c018449c440c698efc}{ProgressWindow::ProgressWindow}}(QWidget\ *parent,\ \textcolor{keywordtype}{int}\ number\_of\_panels,\ \textcolor{keywordtype}{bool}\ extra\_label\_and\_progressbar)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00006}00006\ \ \ \ \ :\ QDialog(parent)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}.resize(number\_of\_panels);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_ad0dee0487688849664850affccc1a0c6}{charttitles}}.resize(number\_of\_panels);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (!extra\_label\_and\_progressbar)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00012}00012\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.progressBar\_2-\/>setVisible(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.label-\/>setVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00017}00017\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.progressBar\_2-\/>setVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.label-\/>setVisible(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (number\_of\_panels==0)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ resize(475,\ 100);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<number\_of\_panels;\ i++)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00025}00025\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series\ =\ \textcolor{keyword}{new}\ QLineSeries();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart\ =\ \textcolor{keyword}{new}\ QChart();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart-\/>legend()-\/>hide();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart-\/>setTitle(\textcolor{stringliteral}{"{}Optimization\ progress"{}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].areaseries\ =\ \textcolor{keyword}{new}\ QAreaSeries(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chartView\ =\ \textcolor{keyword}{new}\ QChartView(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chartView-\/>setRenderHint(QPainter::Antialiasing);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart-\/>addSeries(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].areaseries);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart-\/>addSeries(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ QPen\ pen(0x059605);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ pen.setWidth(3);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series-\/>setPen(pen);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ QLinearGradient\ gradient(QPointF(0,\ 0),\ QPointF(0,\ 1));}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ gradient.setColorAt(0.0,\ 0x3cc63c);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ gradient.setColorAt(1.0,\ 0x26f626);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//gradient.setCoordinateMode(QGradient::ObjectBoundingMode);}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series-\/>setBrush(gradient);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].yaxis\ =\ \textcolor{keyword}{new}\ QValueAxis();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].xaxis\ =\ \textcolor{keyword}{new}\ QValueAxis();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart-\/>addAxis(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].xaxis,Qt::AlignBottom);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chart-\/>addAxis(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].yaxis,Qt::AlignLeft);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series-\/>attachAxis(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].xaxis);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].series-\/>attachAxis(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].yaxis);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].areaseries-\/>attachAxis(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].xaxis);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].areaseries-\/>attachAxis(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].yaxis);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.verticalLayout\_2-\/>addWidget(\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[i].chartView);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00057}00057\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00058}00058\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00060}\mbox{\hyperlink{classProgressWindow_ac61e96c41b8fbb87f02d8cd5d438cf7b}{00060}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_ac61e96c41b8fbb87f02d8cd5d438cf7b}{ProgressWindow::SetTitle}}(\textcolor{keyword}{const}\ QString\ \&title,\ \textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00061}00061\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].chart-\/>setTitle(title);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00065}\mbox{\hyperlink{classProgressWindow_abc292c67ca9d70e6e3f36cf7557da3c2}{00065}}\ \mbox{\hyperlink{classProgressWindow_abc292c67ca9d70e6e3f36cf7557da3c2}{ProgressWindow::\string~ProgressWindow}}()}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00066}00066\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00067}00067\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00069}\mbox{\hyperlink{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}{00069}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}{ProgressWindow::AppendPoint}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ \textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00070}00070\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].series-\/>count()==0)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00072}00072\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setMin(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}-\/0.01);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setMax(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}+0.01);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00075}00075\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00076}00076\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].series-\/>append(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}},\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}<\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>min())}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setMin(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}>\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>max())}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setMax(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00081}00081\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}<\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>min())}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>setMin(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}>\mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>max())}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>setMax(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].chartView-\/>update();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00087}00087\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00089}\mbox{\hyperlink{classProgressWindow_a906a82fd66c5e67c3da0fa519f4066c7}{00089}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a906a82fd66c5e67c3da0fa519f4066c7}{ProgressWindow::ClearGraph}}(\textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00090}00090\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00091}00091\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].series-\/>clear();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00092}00092\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00094}\mbox{\hyperlink{classProgressWindow_a8d4ea0027007ff871962e33689a63d13}{00094}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a8d4ea0027007ff871962e33689a63d13}{ProgressWindow::SetProgress}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ prog)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00095}00095\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.progressBar-\/>setValue(prog\ *\ 100);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00097}00097\ \ \ \ \ QCoreApplication::processEvents();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00098}00098\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00100}\mbox{\hyperlink{classProgressWindow_a00a1ad34901a0f57cad2f7c42141f1be}{00100}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a00a1ad34901a0f57cad2f7c42141f1be}{ProgressWindow::SetProgress2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ prog)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00101}00101\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00102}00102\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.progressBar\_2-\/>setValue(prog\ *\ 100);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00103}00103\ \ \ \ \ QCoreApplication::processEvents();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00104}00104\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00106}\mbox{\hyperlink{classProgressWindow_ad4637c721fa053b31ad907b6bc724bcd}{00106}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_ad4637c721fa053b31ad907b6bc724bcd}{ProgressWindow::SetLabel}}(\textcolor{keyword}{const}\ QString\&\ label)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00107}00107\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00108}00108\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}.label-\/>setText(label);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00109}00109\ \ \ \ \ QCoreApplication::processEvents();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00110}00110\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00113}\mbox{\hyperlink{classProgressWindow_a586cab300f9f6b1632948dc0117bac81}{00113}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a586cab300f9f6b1632948dc0117bac81}{ProgressWindow::SetYRange}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&y0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&y1,\ \textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00114}00114\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00115}00115\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setMin(y0);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00116}00116\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setMax(y1);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00117}00117\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].chartView-\/>update();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00118}00118\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00119}00119\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00121}\mbox{\hyperlink{classProgressWindow_a6008666b00f8f5924a34927cb9f1885d}{00121}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a6008666b00f8f5924a34927cb9f1885d}{ProgressWindow::SetXRange}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&x0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&x1,\ \textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00122}00122\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00123}00123\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>setMin(x0);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00124}00124\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>setMax(x1);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>setTitleText(\textcolor{stringliteral}{"{}Generation"{}});}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00126}00126\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].chartView-\/>update();}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00127}00127\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00129}\mbox{\hyperlink{classProgressWindow_aa6cd405c224f6a6981837d3545142560}{00129}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_aa6cd405c224f6a6981837d3545142560}{ProgressWindow::SetXAxisTitle}}(\textcolor{keyword}{const}\ QString\ \&title,\ \textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00130}00130\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00131}00131\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].xaxis-\/>setTitleText(title);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00132}00132\ \}}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00133}\mbox{\hyperlink{classProgressWindow_a13752e51360fccd4ecf5c95fa5a4aaa7}{00133}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classProgressWindow_a13752e51360fccd4ecf5c95fa5a4aaa7}{ProgressWindow::SetYAxisTitle}}(\textcolor{keyword}{const}\ QString\ \&title,\ \textcolor{keywordtype}{int}\ chart)}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00134}00134\ \{}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00135}00135\ \ \ \ \ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{ChartItems}}[chart].yaxis-\/>setTitleText(title);}
+\DoxyCodeLine{\Hypertarget{ProgressWindow_8cpp_source_l00136}00136\ \}}
+
+\end{DoxyCode}

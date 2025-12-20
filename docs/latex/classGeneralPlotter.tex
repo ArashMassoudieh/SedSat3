@@ -1,0 +1,492 @@
+\doxysection{General\+Plotter Class Reference}
+\hypertarget{classGeneralPlotter}{}\label{classGeneralPlotter}\index{GeneralPlotter@{GeneralPlotter}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/generalplotter.\+h$>$}
+
+
+
+Inheritance diagram for General\+Plotter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classGeneralPlotter__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for General\+Plotter\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classGeneralPlotter__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGeneralPlotter_af0a6d72209c771d21680154c6b00b02e}{General\+Plotter}} (QWidget \texorpdfstring{$\ast$}{*}parent=0)
+\item 
+virtual \mbox{\hyperlink{classGeneralPlotter_a5816b92282b7674c86ae8997461166e3}{\texorpdfstring{$\sim$}{\string~}\+General\+Plotter}} ()
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_a8e40c24e568d8120c3b4c66f2b0aad71}{Clear}} ()
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a96fd1243c265797385562d80ca55e955}{Add\+Scatter}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, const QCPScatter\+Style \&symbol=QCPScatter\+Style\+::ss\+Disc)
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a0349641ac1124106dfa0ac2227c811ce}{Add\+Scatter}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, const QCPScatter\+Style \&symbol=QCPScatter\+Style\+::ss\+Disc)
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a21177fbfe35c3bf8ecb7d10cfd176078}{Add\+Scatters}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ names, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}})
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a733ef8a8c74a4278591ff67aa676bf54}{Add\+Scatters}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ names, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}})
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a5ef72423adf3969c917e4b8912d1fea7}{Add\+None\+Uniform\+Scatter}} (const map$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&data, int shape\+\_\+counter=0)
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_acfcf8e5d7c7aefbb36055854dd762ff1}{Add\+Time\+Series}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}})
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_aa5349b40f67a5eba24255be97466c806}{Add\+Time\+Series\+Set}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}})
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a4d340d2145122624fe0f05df511961a9}{Set\+YAxis\+Scale\+Type}} (\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895d}{Axis\+Scale}} axisscale)
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_a28ebc5fb3aa7a44ece1db67f4989a60e}{set\+Zoom\+Mode}} (bool \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167}{mode}})
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_ac989b3c103151d2f367531beff9a6648}{Zoom\+Extends}} ()
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_ac13b33a6d8cc178458c70d9568b511c5}{Set\+Range}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&range, const \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8e}{Axis}} \&whichaxis)
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_a90269b6c3693fc698e1a4bf3e8ac14ea}{Set\+Legend}} (bool onoff)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_afbf64d72366898fc37bfaa01943fb4a1}{mouse\+Press\+Event}} (QMouse\+Event \texorpdfstring{$\ast$}{*}event) override
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_aa4deed5a51b471f47323bb92c69dd223}{mouse\+Move\+Event}} (QMouse\+Event \texorpdfstring{$\ast$}{*}event) override
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_ae1684c07963c71c1175d11942a797f92}{wheel\+Event}} (QWheel\+Event \texorpdfstring{$\ast$}{*}event)
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_a8df18ebbd1ee7123c21af1b54b05e859}{mouse\+Release\+Event}} (QMouse\+Event \texorpdfstring{$\ast$}{*}event) override
+\item 
+void \mbox{\hyperlink{classGeneralPlotter_a4270e365b60493b5ab279393aaeb8a3a}{axis\+Double\+Click}} (QCPAxis \texorpdfstring{$\ast$}{*}axis, QCPAxis\+::\+Selectable\+Part part, QMouse\+Event \texorpdfstring{$\ast$}{*}event)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classGeneralPlotter_ad8bde188f336fd06045b54c8e73ed787}{x\+\_\+max\+\_\+min\+\_\+range}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classGeneralPlotter_aea4489726944f3a115355182c6c8977e}{y\+\_\+max\+\_\+min\+\_\+range}}
+\item 
+bool \mbox{\hyperlink{classGeneralPlotter_a0e14b6e2af8b7bdaf459ef2f348b386b}{m\+Zoom\+Mode}}
+\item 
+QRubber\+Band \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralPlotter_a1f05abfc64a7ae4df966236457ef6510}{m\+Rubber\+Band}}
+\item 
+QPoint \mbox{\hyperlink{classGeneralPlotter_a0ab4d678105da55bf6888341df842cfa}{m\+Origin}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static QVector$<$ QCPScatter\+Style\+::\+Scatter\+Shape $>$ \mbox{\hyperlink{classGeneralPlotter_a2119f82699a6eec1fa9a3dfb32b6ae32}{shapes}} = \mbox{\hyperlink{generalplotter_8h_ae0c659451c83fc2e7c63bf197ee255cb}{Make\+\_\+\+Shapes}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00021}{21}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classGeneralPlotter_af0a6d72209c771d21680154c6b00b02e}\label{classGeneralPlotter_af0a6d72209c771d21680154c6b00b02e} 
+\index{GeneralPlotter@{GeneralPlotter}!GeneralPlotter@{GeneralPlotter}}
+\index{GeneralPlotter@{GeneralPlotter}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{GeneralPlotter()}{GeneralPlotter()}}
+{\footnotesize\ttfamily General\+Plotter\+::\+General\+Plotter (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_source_l00045}{x\+\_\+max\+\_\+min\+\_\+range}}, and \mbox{\hyperlink{generalplotter_8h_source_l00046}{y\+\_\+max\+\_\+min\+\_\+range}}.
+
+\Hypertarget{classGeneralPlotter_a5816b92282b7674c86ae8997461166e3}\label{classGeneralPlotter_a5816b92282b7674c86ae8997461166e3} 
+\index{GeneralPlotter@{GeneralPlotter}!````~GeneralPlotter@{\texorpdfstring{$\sim$}{\string~}GeneralPlotter}}
+\index{````~GeneralPlotter@{\texorpdfstring{$\sim$}{\string~}GeneralPlotter}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GeneralPlotter()}{\string~GeneralPlotter()}}
+{\footnotesize\ttfamily General\+Plotter\+::\texorpdfstring{$\sim$}{\string~}\+General\+Plotter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_source_l00057}{m\+Rubber\+Band}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGeneralPlotter_a5ef72423adf3969c917e4b8912d1fea7}\label{classGeneralPlotter_a5ef72423adf3969c917e4b8912d1fea7} 
+\index{GeneralPlotter@{GeneralPlotter}!AddNoneUniformScatter@{AddNoneUniformScatter}}
+\index{AddNoneUniformScatter@{AddNoneUniformScatter}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddNoneUniformScatter()}{AddNoneUniformScatter()}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+None\+Uniform\+Scatter (\begin{DoxyParamCaption}\item[{const map$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{data,  }\item[{int}]{shape\+\_\+counter = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00308}{308}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8cpp_source_l00272}{Set\+Range()}}, \mbox{\hyperlink{generalplotter_8h_source_l00047}{shapes}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, \mbox{\hyperlink{generalplotter_8h_source_l00045}{x\+\_\+max\+\_\+min\+\_\+range}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, and \mbox{\hyperlink{generalplotter_8h_source_l00046}{y\+\_\+max\+\_\+min\+\_\+range}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{Main\+Window\+::on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classGeneralPlotter_a96fd1243c265797385562d80ca55e955}\label{classGeneralPlotter_a96fd1243c265797385562d80ca55e955} 
+\index{GeneralPlotter@{GeneralPlotter}!AddScatter@{AddScatter}}
+\index{AddScatter@{AddScatter}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddScatter()}{AddScatter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+Scatter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{name,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{y,  }\item[{const QCPScatter\+Style \&}]{symbol = {\ttfamily QCPScatterStyle\+:\+:ssDisc} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00123}{123}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00272}{Set\+Range()}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, \mbox{\hyperlink{generalplotter_8h_source_l00045}{x\+\_\+max\+\_\+min\+\_\+range}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, and \mbox{\hyperlink{generalplotter_8h_source_l00046}{y\+\_\+max\+\_\+min\+\_\+range}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00207}{Add\+Scatters()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00194}{Add\+Scatters()}}.
+
+\Hypertarget{classGeneralPlotter_a0349641ac1124106dfa0ac2227c811ce}\label{classGeneralPlotter_a0349641ac1124106dfa0ac2227c811ce} 
+\index{GeneralPlotter@{GeneralPlotter}!AddScatter@{AddScatter}}
+\index{AddScatter@{AddScatter}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddScatter()}{AddScatter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+Scatter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{name,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{y,  }\item[{const QCPScatter\+Style \&}]{symbol = {\ttfamily QCPScatterStyle\+:\+:ssDisc} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00148}{148}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00272}{Set\+Range()}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, \mbox{\hyperlink{generalplotter_8h_source_l00045}{x\+\_\+max\+\_\+min\+\_\+range}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, and \mbox{\hyperlink{generalplotter_8h_source_l00046}{y\+\_\+max\+\_\+min\+\_\+range}}.
+
+\Hypertarget{classGeneralPlotter_a733ef8a8c74a4278591ff67aa676bf54}\label{classGeneralPlotter_a733ef8a8c74a4278591ff67aa676bf54} 
+\index{GeneralPlotter@{GeneralPlotter}!AddScatters@{AddScatters}}
+\index{AddScatters@{AddScatters}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddScatters()}{AddScatters()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+Scatters (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$}]{names,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00207}{207}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8cpp_source_l00123}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8h_source_l00047}{shapes}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+\Hypertarget{classGeneralPlotter_a21177fbfe35c3bf8ecb7d10cfd176078}\label{classGeneralPlotter_a21177fbfe35c3bf8ecb7d10cfd176078} 
+\index{GeneralPlotter@{GeneralPlotter}!AddScatters@{AddScatters}}
+\index{AddScatters@{AddScatters}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddScatters()}{AddScatters()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+Scatters (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$}]{names,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00194}{194}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8cpp_source_l00123}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8h_source_l00047}{shapes}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{Main\+Window\+::on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classGeneralPlotter_acfcf8e5d7c7aefbb36055854dd762ff1}\label{classGeneralPlotter_acfcf8e5d7c7aefbb36055854dd762ff1} 
+\index{GeneralPlotter@{GeneralPlotter}!AddTimeSeries@{AddTimeSeries}}
+\index{AddTimeSeries@{AddTimeSeries}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddTimeSeries()}{AddTimeSeries()}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+Time\+Series (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{name,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00220}{220}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00272}{Set\+Range()}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, \mbox{\hyperlink{generalplotter_8h_source_l00045}{x\+\_\+max\+\_\+min\+\_\+range}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, and \mbox{\hyperlink{generalplotter_8h_source_l00046}{y\+\_\+max\+\_\+min\+\_\+range}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{Main\+Window\+::showdistributionsforelements()}}.
+
+\Hypertarget{classGeneralPlotter_aa5349b40f67a5eba24255be97466c806}\label{classGeneralPlotter_aa5349b40f67a5eba24255be97466c806} 
+\index{GeneralPlotter@{GeneralPlotter}!AddTimeSeriesSet@{AddTimeSeriesSet}}
+\index{AddTimeSeriesSet@{AddTimeSeriesSet}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{AddTimeSeriesSet()}{AddTimeSeriesSet()}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Add\+Time\+Series\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{name,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00251}{251}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+\Hypertarget{classGeneralPlotter_a4270e365b60493b5ab279393aaeb8a3a}\label{classGeneralPlotter_a4270e365b60493b5ab279393aaeb8a3a} 
+\index{GeneralPlotter@{GeneralPlotter}!axisDoubleClick@{axisDoubleClick}}
+\index{axisDoubleClick@{axisDoubleClick}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{axisDoubleClick()}{axisDoubleClick()}}
+{\footnotesize\ttfamily void General\+Plotter\+::axis\+Double\+Click (\begin{DoxyParamCaption}\item[{QCPAxis \texorpdfstring{$\ast$}{*}}]{axis,  }\item[{QCPAxis\+::\+Selectable\+Part}]{part,  }\item[{QMouse\+Event \texorpdfstring{$\ast$}{*}}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+\Hypertarget{classGeneralPlotter_a8e40c24e568d8120c3b4c66f2b0aad71}\label{classGeneralPlotter_a8e40c24e568d8120c3b4c66f2b0aad71} 
+\index{GeneralPlotter@{GeneralPlotter}!Clear@{Clear}}
+\index{Clear@{Clear}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily void General\+Plotter\+::\+Clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00302}{302}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{Main\+Window\+::on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classGeneralPlotter_aa4deed5a51b471f47323bb92c69dd223}\label{classGeneralPlotter_aa4deed5a51b471f47323bb92c69dd223} 
+\index{GeneralPlotter@{GeneralPlotter}!mouseMoveEvent@{mouseMoveEvent}}
+\index{mouseMoveEvent@{mouseMoveEvent}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{mouseMoveEvent()}{mouseMoveEvent()}}
+{\footnotesize\ttfamily void General\+Plotter\+::mouse\+Move\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event \texorpdfstring{$\ast$}{*}}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_source_l00058}{m\+Origin}}, and \mbox{\hyperlink{generalplotter_8h_source_l00057}{m\+Rubber\+Band}}.
+
+\Hypertarget{classGeneralPlotter_afbf64d72366898fc37bfaa01943fb4a1}\label{classGeneralPlotter_afbf64d72366898fc37bfaa01943fb4a1} 
+\index{GeneralPlotter@{GeneralPlotter}!mousePressEvent@{mousePressEvent}}
+\index{mousePressEvent@{mousePressEvent}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{mousePressEvent()}{mousePressEvent()}}
+{\footnotesize\ttfamily void General\+Plotter\+::mouse\+Press\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event \texorpdfstring{$\ast$}{*}}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00034}{34}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_source_l00058}{m\+Origin}}, \mbox{\hyperlink{generalplotter_8h_source_l00057}{m\+Rubber\+Band}}, and \mbox{\hyperlink{generalplotter_8h_source_l00056}{m\+Zoom\+Mode}}.
+
+\Hypertarget{classGeneralPlotter_a8df18ebbd1ee7123c21af1b54b05e859}\label{classGeneralPlotter_a8df18ebbd1ee7123c21af1b54b05e859} 
+\index{GeneralPlotter@{GeneralPlotter}!mouseReleaseEvent@{mouseReleaseEvent}}
+\index{mouseReleaseEvent@{mouseReleaseEvent}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{mouseReleaseEvent()}{mouseReleaseEvent()}}
+{\footnotesize\ttfamily void General\+Plotter\+::mouse\+Release\+Event (\begin{DoxyParamCaption}\item[{QMouse\+Event \texorpdfstring{$\ast$}{*}}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_source_l00057}{m\+Rubber\+Band}}.
+
+\Hypertarget{classGeneralPlotter_a90269b6c3693fc698e1a4bf3e8ac14ea}\label{classGeneralPlotter_a90269b6c3693fc698e1a4bf3e8ac14ea} 
+\index{GeneralPlotter@{GeneralPlotter}!SetLegend@{SetLegend}}
+\index{SetLegend@{SetLegend}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{SetLegend()}{SetLegend()}}
+{\footnotesize\ttfamily void General\+Plotter\+::\+Set\+Legend (\begin{DoxyParamCaption}\item[{bool}]{onoff }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00288}{288}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{Main\+Window\+::showdistributionsforelements()}}.
+
+\Hypertarget{classGeneralPlotter_ac13b33a6d8cc178458c70d9568b511c5}\label{classGeneralPlotter_ac13b33a6d8cc178458c70d9568b511c5} 
+\index{GeneralPlotter@{GeneralPlotter}!SetRange@{SetRange}}
+\index{SetRange@{SetRange}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{SetRange()}{SetRange()}}
+{\footnotesize\ttfamily void General\+Plotter\+::\+Set\+Range (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{range,  }\item[{const \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8e}{Axis}} \&}]{whichaxis }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00272}{272}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00308}{Add\+None\+Uniform\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00123}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00148}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00220}{Add\+Time\+Series()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00187}{Zoom\+Extends()}}.
+
+\Hypertarget{classGeneralPlotter_a4d340d2145122624fe0f05df511961a9}\label{classGeneralPlotter_a4d340d2145122624fe0f05df511961a9} 
+\index{GeneralPlotter@{GeneralPlotter}!SetYAxisScaleType@{SetYAxisScaleType}}
+\index{SetYAxisScaleType@{SetYAxisScaleType}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{SetYAxisScaleType()}{SetYAxisScaleType()}}
+{\footnotesize\ttfamily bool General\+Plotter\+::\+Set\+YAxis\+Scale\+Type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895d}{Axis\+Scale}}}]{axisscale }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00255}{255}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{Main\+Window\+::on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classGeneralPlotter_a28ebc5fb3aa7a44ece1db67f4989a60e}\label{classGeneralPlotter_a28ebc5fb3aa7a44ece1db67f4989a60e} 
+\index{GeneralPlotter@{GeneralPlotter}!setZoomMode@{setZoomMode}}
+\index{setZoomMode@{setZoomMode}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{setZoomMode()}{setZoomMode()}}
+{\footnotesize\ttfamily void General\+Plotter\+::set\+Zoom\+Mode (\begin{DoxyParamCaption}\item[{bool}]{mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_source_l00056}{m\+Zoom\+Mode}}.
+
+\Hypertarget{classGeneralPlotter_ae1684c07963c71c1175d11942a797f92}\label{classGeneralPlotter_ae1684c07963c71c1175d11942a797f92} 
+\index{GeneralPlotter@{GeneralPlotter}!wheelEvent@{wheelEvent}}
+\index{wheelEvent@{wheelEvent}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{wheelEvent()}{wheelEvent()}}
+{\footnotesize\ttfamily void General\+Plotter\+::wheel\+Event (\begin{DoxyParamCaption}\item[{QWheel\+Event \texorpdfstring{$\ast$}{*}}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+\Hypertarget{classGeneralPlotter_ac989b3c103151d2f367531beff9a6648}\label{classGeneralPlotter_ac989b3c103151d2f367531beff9a6648} 
+\index{GeneralPlotter@{GeneralPlotter}!ZoomExtends@{ZoomExtends}}
+\index{ZoomExtends@{ZoomExtends}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{ZoomExtends()}{ZoomExtends()}}
+{\footnotesize\ttfamily void General\+Plotter\+::\+Zoom\+Extends (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8cpp_source_l00187}{187}} of file \mbox{\hyperlink{generalplotter_8cpp_source}{generalplotter.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8cpp_source_l00272}{Set\+Range()}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, \mbox{\hyperlink{generalplotter_8h_source_l00045}{x\+\_\+max\+\_\+min\+\_\+range}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, and \mbox{\hyperlink{generalplotter_8h_source_l00046}{y\+\_\+max\+\_\+min\+\_\+range}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01607}{Main\+Window\+::on\+\_\+\+Zoom\+Extends()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classGeneralPlotter_a0ab4d678105da55bf6888341df842cfa}\label{classGeneralPlotter_a0ab4d678105da55bf6888341df842cfa} 
+\index{GeneralPlotter@{GeneralPlotter}!mOrigin@{mOrigin}}
+\index{mOrigin@{mOrigin}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{mOrigin}{mOrigin}}
+{\footnotesize\ttfamily QPoint General\+Plotter\+::m\+Origin\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00058}{58}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00048}{mouse\+Move\+Event()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00034}{mouse\+Press\+Event()}}.
+
+\Hypertarget{classGeneralPlotter_a1f05abfc64a7ae4df966236457ef6510}\label{classGeneralPlotter_a1f05abfc64a7ae4df966236457ef6510} 
+\index{GeneralPlotter@{GeneralPlotter}!mRubberBand@{mRubberBand}}
+\index{mRubberBand@{mRubberBand}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{mRubberBand}{mRubberBand}}
+{\footnotesize\ttfamily QRubber\+Band\texorpdfstring{$\ast$}{*} General\+Plotter\+::m\+Rubber\+Band\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00057}{57}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00024}{\texorpdfstring{$\sim$}{\string~}\+General\+Plotter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00048}{mouse\+Move\+Event()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00034}{mouse\+Press\+Event()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00064}{mouse\+Release\+Event()}}.
+
+\Hypertarget{classGeneralPlotter_a0e14b6e2af8b7bdaf459ef2f348b386b}\label{classGeneralPlotter_a0e14b6e2af8b7bdaf459ef2f348b386b} 
+\index{GeneralPlotter@{GeneralPlotter}!mZoomMode@{mZoomMode}}
+\index{mZoomMode@{mZoomMode}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{mZoomMode}{mZoomMode}}
+{\footnotesize\ttfamily bool General\+Plotter\+::m\+Zoom\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00056}{56}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00034}{mouse\+Press\+Event()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00029}{set\+Zoom\+Mode()}}.
+
+\Hypertarget{classGeneralPlotter_a2119f82699a6eec1fa9a3dfb32b6ae32}\label{classGeneralPlotter_a2119f82699a6eec1fa9a3dfb32b6ae32} 
+\index{GeneralPlotter@{GeneralPlotter}!shapes@{shapes}}
+\index{shapes@{shapes}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{shapes}{shapes}}
+{\footnotesize\ttfamily QVector$<$ QCPScatter\+Style\+::\+Scatter\+Shape $>$ General\+Plotter\+::shapes = \mbox{\hyperlink{generalplotter_8h_ae0c659451c83fc2e7c63bf197ee255cb}{Make\+\_\+\+Shapes}}()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00047}{47}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00308}{Add\+None\+Uniform\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00207}{Add\+Scatters()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00194}{Add\+Scatters()}}.
+
+\Hypertarget{classGeneralPlotter_ad8bde188f336fd06045b54c8e73ed787}\label{classGeneralPlotter_ad8bde188f336fd06045b54c8e73ed787} 
+\index{GeneralPlotter@{GeneralPlotter}!x\_max\_min\_range@{x\_max\_min\_range}}
+\index{x\_max\_min\_range@{x\_max\_min\_range}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{x\_max\_min\_range}{x\_max\_min\_range}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ General\+Plotter\+::x\+\_\+max\+\_\+min\+\_\+range\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00045}{45}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00013}{General\+Plotter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00308}{Add\+None\+Uniform\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00123}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00148}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00220}{Add\+Time\+Series()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00187}{Zoom\+Extends()}}.
+
+\Hypertarget{classGeneralPlotter_aea4489726944f3a115355182c6c8977e}\label{classGeneralPlotter_aea4489726944f3a115355182c6c8977e} 
+\index{GeneralPlotter@{GeneralPlotter}!y\_max\_min\_range@{y\_max\_min\_range}}
+\index{y\_max\_min\_range@{y\_max\_min\_range}!GeneralPlotter@{GeneralPlotter}}
+\doxysubsubsection{\texorpdfstring{y\_max\_min\_range}{y\_max\_min\_range}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ General\+Plotter\+::y\+\_\+max\+\_\+min\+\_\+range\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalplotter_8h_source_l00046}{46}} of file \mbox{\hyperlink{generalplotter_8h_source}{generalplotter.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalplotter_8cpp_source_l00013}{General\+Plotter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00308}{Add\+None\+Uniform\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00123}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00148}{Add\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00220}{Add\+Time\+Series()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00187}{Zoom\+Extends()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{generalplotter_8h}{generalplotter.\+h}}\item 
+\mbox{\hyperlink{generalplotter_8cpp}{generalplotter.\+cpp}}\end{DoxyCompactItemize}

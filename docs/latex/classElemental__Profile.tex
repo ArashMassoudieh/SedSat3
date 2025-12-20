@@ -1,0 +1,1509 @@
+\doxysection{Elemental\+\_\+\+Profile Class Reference}
+\hypertarget{classElemental__Profile}{}\label{classElemental__Profile}\index{Elemental\_Profile@{Elemental\_Profile}}
+
+
+Container for elemental concentration data of a single sediment sample.  
+
+
+
+
+{\ttfamily \#include $<$elemental\+\_\+profile.\+h$>$}
+
+
+
+Inheritance diagram for Elemental\+\_\+\+Profile\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classElemental__Profile__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Elemental\+\_\+\+Profile\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classElemental__Profile__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}{Elemental\+\_\+\+Profile}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor -\/ creates empty profile. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile_ad264778f5f64a4be56f0b76ff0f558e1}{Elemental\+\_\+\+Profile}} (const \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy constructor -\/ deep copy of profile. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \& \mbox{\hyperlink{classElemental__Profile_a0081cfc8b373ed0f6111d866361181e8}{operator=}} (const \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \&other)
+\begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile_ac022b9ee818190fde138a0a5cbbed9b0}{Get\+Value}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}) const
+\begin{DoxyCompactList}\small\item\em Get element concentration by name. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}{Set\+Value}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, double val)
+\begin{DoxyCompactList}\small\item\em Set concentration value for existing element. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{Append\+Element}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, double val=0.\+0)
+\begin{DoxyCompactList}\small\item\em Add new element to profile. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_af7ee759943443d6251d30927f51847f9}{Contains}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}) const
+\begin{DoxyCompactList}\small\item\em Check if element exists in profile. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{classElemental__Profile_a7a155e3385f47495fc9cf8b317c2b6e4}{Get\+All\+Values}} () const
+\begin{DoxyCompactList}\small\item\em Get all concentration values as vector. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{classElemental__Profile_a295397bcb07225d953471aa26b367cdd}{Get\+Element\+Names}} () const
+\begin{DoxyCompactList}\small\item\em Get list of all element names. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_a82cc77b68f773d9c3214e6b20f3ded55}{Set\+Marked}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, bool marked)
+\begin{DoxyCompactList}\small\item\em Set marked status for an element. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_a1e87fa1b1f3782d18cc7456943e99be7}{Is\+Marked}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}) const
+\begin{DoxyCompactList}\small\item\em Check if element is marked. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile_a5007d301571db4ce04f2430635694710}{Get\+Minimum}} () const
+\begin{DoxyCompactList}\small\item\em Get minimum concentration value. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile_a28feb4c1d0486aa25c6602f33b7d3d9a}{Get\+Maximum}} () const
+\begin{DoxyCompactList}\small\item\em Get maximum concentration value. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile_a2b81a2859a02a4ac85df7eb243f594c3}{Calculate\+Dot\+Product}} (const \mbox{\hyperlink{classCMBVector}{CMBVector}} \&weights) const
+\begin{DoxyCompactList}\small\item\em Calculate dot product with weight vector. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{classElemental__Profile_a3353e492c0cd55969e72d6e990cda355}{Sort\+By\+Concentration}} (bool ascending=true) const
+\begin{DoxyCompactList}\small\item\em Sort elements by concentration value. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{classElemental__Profile_ac612e5ce6ee3566ace1a718dda5e4c7d}{Select\+Top\+Elements}} (int n, bool ascending=true) const
+\begin{DoxyCompactList}\small\item\em Select top N elements by concentration. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780}{Create\+Analysis\+Profile}} (const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr) const
+\begin{DoxyCompactList}\small\item\em Create profile with only analyzed elements. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile_a0541b570dda666bf2a3ddea2d6366c54}{Extract\+Chemical\+Elements}} (const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo, bool include\+\_\+isotopes=false) const
+\begin{DoxyCompactList}\small\item\em Extract chemical elements only (exclude isotopes, metadata) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile_a149f46abf0285a5c7b9f2c823479b1d8}{Extract\+Elements}} (const vector$<$ string $>$ \&element\+\_\+names) const
+\begin{DoxyCompactList}\small\item\em Extract subset of specified elements. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile_a1ae3b2f72eb66fb5ac7f195324f1dd41}{Apply\+Organic\+Matter\+And\+Size\+Corrections}} (const vector$<$ double $>$ \&reference\+\_\+om\+\_\+size, const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}regression\+\_\+models, const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr) const
+\begin{DoxyCompactList}\small\item\em Apply organic matter and particle size corrections. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile_ab22dbed07fdb56b97cf9bccab22545cc}{Create\+Corrected\+Profile}} (bool exclude\+\_\+elements, bool apply\+\_\+corrections, const vector$<$ double $>$ \&reference\+\_\+om\+\_\+size, const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}regression\+\_\+models=nullptr, const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr) const
+\begin{DoxyCompactList}\small\item\em Create corrected profile with filtering and corrections. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{Is\+Included\+In\+Analysis}} () const
+\begin{DoxyCompactList}\small\item\em Check if profile is included in analysis. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}{Set\+Included\+In\+Analysis}} (bool included)
+\begin{DoxyCompactList}\small\item\em Set analysis inclusion status. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e}{To\+String}} () const override
+\begin{DoxyCompactList}\small\item\em Convert profile to string representation. \end{DoxyCompactList}\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile_a9339549be3522fda11453bf97d405ce0}{To\+Table}} () override
+\begin{DoxyCompactList}\small\item\em Create Qt table widget representation. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ QTable\+Widget $>$ \mbox{\hyperlink{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872}{Create\+Table\+Unique}} () const
+\begin{DoxyCompactList}\small\item\em Create table widget with automatic memory management. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_adff28a214b4cd5d4abef75d7067fc942}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file) override
+\begin{DoxyCompactList}\small\item\em Write profile to file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_af63837f23db8c25fbd1414451c367403}{Read}} (const QString\+List \&string\+\_\+list) override
+\begin{DoxyCompactList}\small\item\em Read profile from string list. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classElemental__Profile_ae6d76197a4334b6db6160b19610d3c9d}{to\+Json\+Object}} () const override
+\begin{DoxyCompactList}\small\item\em Serialize to JSON object. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{Read\+From\+Json\+Object}} (const QJson\+Object \&json) override
+\begin{DoxyCompactList}\small\item\em Deserialize from JSON object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\+\_\+in\+\_\+analysis\+\_\+}} = true
+\begin{DoxyCompactList}\small\item\em Whether profile should be included in analysis. \end{DoxyCompactList}\item 
+map$<$ string, bool $>$ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\+\_\+elements\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Map tracking marked elements for quality control. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container for elemental concentration data of a single sediment sample. 
+
+Stores and manipulates elemental concentration data ("{}fingerprint"{}) for one sediment sample. Inherits from std\+::map$<$string,double$>$ to provide map-\/like access where keys are element names and values are concentrations.
+
+Key capabilities\+:
+\begin{DoxyItemize}
+\item Storage of element concentrations (ppm, \%, or other units)
+\item Quality control marking system for flagging outliers
+\item Statistical operations (sorting, ranking, dot products)
+\item Correction algorithms (organic matter, particle size effects)
+\item Multiple export formats (JSON, table, text)
+\item Subsetting and filtering operations
+\end{DoxyItemize}\hypertarget{classElemental__Profile_usage}{}\doxysubsection{\texorpdfstring{Usage Example}{Usage Example}}\label{classElemental__Profile_usage}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ Create\ profile\ for\ a\ sediment\ sample}}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ sample;}
+\DoxyCodeLine{sample.\mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{stringliteral}{"{}Al"{}},\ 8.5);\ \ \ \textcolor{comment}{//\ 8.5\%\ aluminum}}
+\DoxyCodeLine{sample.\mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{stringliteral}{"{}Fe"{}},\ 4.2);\ \ \ \textcolor{comment}{//\ 4.2\%\ iron}}
+\DoxyCodeLine{sample.\mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{stringliteral}{"{}Pb"{}},\ 25.3);\ \ \textcolor{comment}{//\ 25.3\ ppm\ lead}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Check\ element\ existence\ and\ retrieve\ value}}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (sample.\mbox{\hyperlink{classElemental__Profile_af7ee759943443d6251d30927f51847f9}{Contains}}(\textcolor{stringliteral}{"{}Al"{}}))\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{double}\ al\ =\ sample.\mbox{\hyperlink{classElemental__Profile_ac022b9ee818190fde138a0a5cbbed9b0}{GetValue}}(\textcolor{stringliteral}{"{}Al"{}});}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Flag\ suspicious\ value}}
+\DoxyCodeLine{sample.\mbox{\hyperlink{classElemental__Profile_a82cc77b68f773d9c3214e6b20f3ded55}{SetMarked}}(\textcolor{stringliteral}{"{}Pb"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Extract\ subset}}
+\DoxyCodeLine{vector<string>\ metals\ =\ \{\textcolor{stringliteral}{"{}Fe"{}},\ \textcolor{stringliteral}{"{}Pb"{}},\ \textcolor{stringliteral}{"{}Cu"{}},\ \textcolor{stringliteral}{"{}Zn"{}}\};}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ metals\_only\ =\ sample.\mbox{\hyperlink{classElemental__Profile_a149f46abf0285a5c7b9f2c823479b1d8}{ExtractElements}}(metals);}
+
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+Thread Safety\+: This class is NOT thread-\/safe. External synchronization required for concurrent access.
+
+Future versions will replace public inheritance with composition to avoid issues with std\+::map\textquotesingle{}s non-\/virtual destructor. 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00113}{113}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}\label{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a} 
+\index{Elemental\_Profile@{Elemental\_Profile}!Elemental\_Profile@{Elemental\_Profile}}
+\index{Elemental\_Profile@{Elemental\_Profile}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{Elemental\_Profile()}{Elemental\_Profile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Elemental\+\_\+\+Profile\+::\+Elemental\+\_\+\+Profile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor -\/ creates empty profile. 
+
+Default constructor -\/ creates empty elemental profile.
+
+\begin{DoxyPostcond}{Postcondition}
+Profile is empty (size() == 0) 
+
+Profile included in analysis (\doxylink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{Is\+Included\+In\+Analysis()} == true)
+\end{DoxyPostcond}
+Initializes an empty profile with no elements.\+The profile is marked as included in analysis by default.
+
+\begin{DoxyPostcond}{Postcondition}
+size() == 0 
+
+\doxylink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{Is\+Included\+In\+Analysis()} == true 
+
+No elements are marked
+\end{DoxyPostcond}
+\begin{DoxyNote}{Note}
+Uses member initializer list for efficiency 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00330}{Extract\+Chemical\+Elements()}}.
+
+\Hypertarget{classElemental__Profile_ad264778f5f64a4be56f0b76ff0f558e1}\label{classElemental__Profile_ad264778f5f64a4be56f0b76ff0f558e1} 
+\index{Elemental\_Profile@{Elemental\_Profile}!Elemental\_Profile@{Elemental\_Profile}}
+\index{Elemental\_Profile@{Elemental\_Profile}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{Elemental\_Profile()}{Elemental\_Profile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Elemental\+\_\+\+Profile\+::\+Elemental\+\_\+\+Profile (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy constructor -\/ deep copy of profile. 
+
+Copy constructor -\/ creates deep copy of profile.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Profile to copy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPostcond}{Postcondition}
+\texorpdfstring{$\ast$}{*}this is independent copy of other
+\end{DoxyPostcond}
+Creates an independent copy of another profile, including all element concentrations, marked status flags, and analysis inclusion setting.
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Profile to copy from\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPostcond}{Postcondition}
+\texorpdfstring{$\ast$}{*}this contains all data from other 
+
+size() == other.\+size() 
+
+\doxylink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{Is\+Included\+In\+Analysis()} == other.\+Is\+Included\+In\+Analysis() 
+
+Modifications to \texorpdfstring{$\ast$}{*}this do not affect other
+\end{DoxyPostcond}
+\begin{DoxyNote}{Note}
+Copy constructor calls base class copy constructors first, then copies member variables 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00057}{57}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}\label{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3} 
+\index{Elemental\_Profile@{Elemental\_Profile}!AppendElement@{AppendElement}}
+\index{AppendElement@{AppendElement}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{AppendElement()}{AppendElement()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Append\+Element (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name,  }\item[{double}]{value = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+
+
+Add new element to profile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Element name (must be unique) \\
+\hline
+{\em val} & Initial concentration (default\+: 0.\+0) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if added, false if element already exists
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Element must not exist\+: Contains(name) == false 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+If successful\+: Contains(name) == true \&\& Get\+Value(name) == val 
+
+If successful\+: Is\+Marked(name) == false
+\end{DoxyPostcond}
+\begin{DoxyWarning}{Warning}
+Logs error to console if element already exists
+\end{DoxyWarning}
+Adds a new element with its concentration to the profile. The element must not already exist. Use \doxylink{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}{Set\+Value()} to update existing elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+name} & Name of the element (must be unique) \\
+\hline
+{\em value} & Initial concentration value (default\+: 0.\+0) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if added successfully, false if element already exists
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+If successful\+: Contains(element\+\_\+name) == true 
+
+If successful\+: Get\+Value(element\+\_\+name) == value 
+
+If successful\+: Is\+Marked(element\+\_\+name) == false
+\end{DoxyPostcond}
+\begin{DoxyNote}{Note}
+To update existing elements, use \doxylink{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}{Set\+Value()} instead 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00552}{552}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00484}{marked\+\_\+elements\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03256}{Source\+Sink\+Data\+::\+Differentiation\+Power()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03319}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+Percentage()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02396}{Source\+Sink\+Data\+::\+Get\+Calculated\+Element\+Means()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02479}{Source\+Sink\+Data\+::\+Get\+Calculated\+Element\+Mu()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02420}{Source\+Sink\+Data\+::\+Get\+Calculated\+Element\+Sigma()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02527}{Source\+Sink\+Data\+::\+Get\+Estimated\+Element\+Mean()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02503}{Source\+Sink\+Data\+::\+Get\+Estimated\+Element\+Mu()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02553}{Source\+Sink\+Data\+::\+Get\+Estimated\+Element\+Sigma()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02350}{Source\+Sink\+Data\+::\+Get\+Observed\+Elemental\+Profile()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02373}{Source\+Sink\+Data\+::\+Get\+Observed\+Elemental\+Profile\+\_\+\+Isotope()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02220}{Source\+Sink\+Data\+::\+Get\+Predicted\+Elemental\+Profile()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02257}{Source\+Sink\+Data\+::\+Get\+Predicted\+Elemental\+Profile\+\_\+\+Isotope()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00753}{Read()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{Main\+Window\+::\+Read\+Excel()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00954}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Select\+Top\+Elements\+Aggregate()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03204}{Source\+Sink\+Data\+::t\+\_\+\+Test\+PValue()}}.
+
+\Hypertarget{classElemental__Profile_a1ae3b2f72eb66fb5ac7f195324f1dd41}\label{classElemental__Profile_a1ae3b2f72eb66fb5ac7f195324f1dd41} 
+\index{Elemental\_Profile@{Elemental\_Profile}!ApplyOrganicMatterAndSizeCorrections@{ApplyOrganicMatterAndSizeCorrections}}
+\index{ApplyOrganicMatterAndSizeCorrections@{ApplyOrganicMatterAndSizeCorrections}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{ApplyOrganicMatterAndSizeCorrections()}{ApplyOrganicMatterAndSizeCorrections()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+::\+Apply\+Organic\+Matter\+And\+Size\+Corrections (\begin{DoxyParamCaption}\item[{const vector$<$ double $>$ \&}]{reference\+\_\+om\+\_\+size,  }\item[{const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}}]{regression\+\_\+models,  }\item[{const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{element\+\_\+info = {\ttfamily nullptr} }\end{DoxyParamCaption}) const}
+
+
+
+Apply organic matter and particle size corrections. 
+
+Corrects element concentrations for organic matter content and particle size effects using multiple linear regression models. Critical for ensuring differences reflect source variation rather than sample characteristics.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reference\+\_\+om\+\_\+size} & Vector\+: \mbox{[}organic\+\_\+matter\+\_\+\%, mean\+\_\+particle\+\_\+size\+\_\+um\mbox{]} \\
+\hline
+{\em regression\+\_\+models} & MLR models\+: element\+\_\+name -\/\texorpdfstring{$>$}{>} MLR(\+OM, size) \\
+\hline
+{\em elementinfo} & Element metadata to identify OM and size elements \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New profile with corrected concentrations
+\end{DoxyReturn}
+For each element with a regression model\+:
+\begin{DoxyItemize}
+\item Linear\+: C\+\_\+corrected = C + (OM\+\_\+ref -\/ OM)\texorpdfstring{$\ast$}{*}beta1 + (size\+\_\+ref -\/ size)\texorpdfstring{$\ast$}{*}beta2
+\item Power\+: C\+\_\+corrected = C \texorpdfstring{$\ast$}{*} (OM\+\_\+ref/\+OM)\texorpdfstring{$^\wedge$}{\string^}beta1 \texorpdfstring{$\ast$}{*} (size\+\_\+ref/size)\texorpdfstring{$^\wedge$}{\string^}beta2
+\end{DoxyItemize}
+
+\begin{DoxyWarning}{Warning}
+Negative corrected values indicate problems with correction model
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Reference\+: Collins \& Walling (2002) -\/ Selecting fingerprint properties for discriminating sediment sources. J. Hydrology, 261, 218-\/244.
+\end{DoxyNote}
+Corrects element concentrations for organic matter content and particle size effects using multiple linear regression models. Critical for ensuring differences reflect source variation rather than sample characteristics.
+
+
+\begin{DoxyParams}{Parameters}
+{\em reference\+\_\+om\+\_\+size} & Vector\+: \mbox{[}organic\+\_\+matter\+\_\+\%, mean\+\_\+particle\+\_\+size\+\_\+um\mbox{]} \\
+\hline
+{\em regression\+\_\+models} & MLR models\+: element\+\_\+name -\/\texorpdfstring{$>$}{>} MLR(\+OM, size) \\
+\hline
+{\em element\+\_\+info} & Element metadata to identify OM and size elements \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New profile with corrected concentrations
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Organic carbon and particle size elements are excluded from output 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Negative corrected values indicate problems with correction model 
+\end{DoxyWarning}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00878}{878}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\+\_\+information\+::isotope}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}, and \mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{element\+\_\+information\+::\+Role}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00772}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00240}{Create\+Corrected\+Profile()}}.
+
+\Hypertarget{classElemental__Profile_a2b81a2859a02a4ac85df7eb243f594c3}\label{classElemental__Profile_a2b81a2859a02a4ac85df7eb243f594c3} 
+\index{Elemental\_Profile@{Elemental\_Profile}!CalculateDotProduct@{CalculateDotProduct}}
+\index{CalculateDotProduct@{CalculateDotProduct}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{CalculateDotProduct()}{CalculateDotProduct()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+::\+Calculate\+Dot\+Product (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBVector}{CMBVector}} \&}]{weights }\end{DoxyParamCaption}) const}
+
+
+
+Calculate dot product with weight vector. 
+
+Computes sum(concentration\mbox{[}i\mbox{]} \texorpdfstring{$\ast$}{*} weights\mbox{[}i\mbox{]}) for all elements. Used in chemical mass balance and discriminant analysis.
+
+
+\begin{DoxyParams}{Parameters}
+{\em weights} & Weight vector (must match profile size) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Dot product value 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Returns -\/999 if size mismatch (should throw exception)
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Used in fingerprinting source contribution calculations
+\end{DoxyNote}
+Computes sum(concentration\mbox{[}i\mbox{]} \texorpdfstring{$\ast$}{*} weights\mbox{[}i\mbox{]}) for all elements. Used in chemical mass balance and discriminant analysis calculations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em weights} & Weight vector (must match profile size) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Dot product value, or -\/999 if size mismatch
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Returns -\/999 for size mismatch (should throw exception instead) 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Element order matches map iterator order (alphabetical)
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000003}{Todo}}]Replace magic number with exception for size mismatch \end{DoxyRefDesc}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00959}{959}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+\Hypertarget{classElemental__Profile_af7ee759943443d6251d30927f51847f9}\label{classElemental__Profile_af7ee759943443d6251d30927f51847f9} 
+\index{Elemental\_Profile@{Elemental\_Profile}!Contains@{Contains}}
+\index{Contains@{Contains}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{Contains()}{Contains()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Contains (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Check if element exists in profile. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Element name to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if element exists, false otherwise
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+name} & Name of element to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if element exists, false otherwise 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00857}{857}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+\Hypertarget{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780}\label{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780} 
+\index{Elemental\_Profile@{Elemental\_Profile}!CreateAnalysisProfile@{CreateAnalysisProfile}}
+\index{CreateAnalysisProfile@{CreateAnalysisProfile}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{CreateAnalysisProfile()}{CreateAnalysisProfile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+::\+Create\+Analysis\+Profile (\begin{DoxyParamCaption}\item[{const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo = {\ttfamily nullptr} }\end{DoxyParamCaption}) const}
+
+
+
+Create profile with only analyzed elements. 
+
+Filters based on \doxylink{structelement__information}{element\+\_\+information} metadata, excluding\+:
+\begin{DoxyItemize}
+\item Elements with include\+\_\+in\+\_\+analysis = false
+\item Elements with role = do\+\_\+not\+\_\+include
+\item Particle size indicators
+\item Organic carbon measures
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em elementinfo} & Element metadata (nullptr includes all) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New filtered profile 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{145}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\+\_\+information\+::do\+\_\+not\+\_\+include}}, \mbox{\hyperlink{elemental__profile_8h_source_l00066}{element\+\_\+information\+::include\+\_\+in\+\_\+analysis}}, \mbox{\hyperlink{elemental__profile_8h_source_l00476}{included\+\_\+in\+\_\+analysis\+\_\+}}, \mbox{\hyperlink{elemental__profile_8h_source_l00484}{marked\+\_\+elements\+\_\+}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}, and \mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{element\+\_\+information\+::\+Role}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Append\+Profile()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00240}{Create\+Corrected\+Profile()}}.
+
+\Hypertarget{classElemental__Profile_ab22dbed07fdb56b97cf9bccab22545cc}\label{classElemental__Profile_ab22dbed07fdb56b97cf9bccab22545cc} 
+\index{Elemental\_Profile@{Elemental\_Profile}!CreateCorrectedProfile@{CreateCorrectedProfile}}
+\index{CreateCorrectedProfile@{CreateCorrectedProfile}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{CreateCorrectedProfile()}{CreateCorrectedProfile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+::\+Create\+Corrected\+Profile (\begin{DoxyParamCaption}\item[{bool}]{exclude\+\_\+elements,  }\item[{bool}]{apply\+\_\+corrections,  }\item[{const vector$<$ double $>$ \&}]{reference\+\_\+om\+\_\+size,  }\item[{const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}}]{regression\+\_\+models = {\ttfamily nullptr},  }\item[{const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo = {\ttfamily nullptr} }\end{DoxyParamCaption}) const}
+
+
+
+Create corrected profile with filtering and corrections. 
+
+Comprehensive transformation combining element filtering and corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em exclude\+\_\+elements} & If true, apply \doxylink{structelement__information}{element\+\_\+information} filters \\
+\hline
+{\em apply\+\_\+corrections} & If true, apply OM/size corrections \\
+\hline
+{\em reference\+\_\+om\+\_\+size} & Reference \mbox{[}OM\%, size\mbox{]} for corrections \\
+\hline
+{\em regression\+\_\+models} & MLR models for corrections \\
+\hline
+{\em elementinfo} & Element metadata for filtering \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New corrected and filtered profile
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Consider using separate operations for clarity 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00240}{240}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00878}{Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{Create\+Analysis\+Profile()}}.
+
+\Hypertarget{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872}\label{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872} 
+\index{Elemental\_Profile@{Elemental\_Profile}!CreateTableUnique@{CreateTableUnique}}
+\index{CreateTableUnique@{CreateTableUnique}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{CreateTableUnique()}{CreateTableUnique()}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$ QTable\+Widget $>$ Elemental\+\_\+\+Profile\+::\+Create\+Table\+Unique (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Create table widget with automatic memory management. 
+
+\begin{DoxyReturn}{Returns}
+std\+::unique\+\_\+ptr to QTable\+Widget 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Preferred over Create\+Table() for automatic cleanup 
+\end{DoxyNote}
+\Hypertarget{classElemental__Profile_a0541b570dda666bf2a3ddea2d6366c54}\label{classElemental__Profile_a0541b570dda666bf2a3ddea2d6366c54} 
+\index{Elemental\_Profile@{Elemental\_Profile}!ExtractChemicalElements@{ExtractChemicalElements}}
+\index{ExtractChemicalElements@{ExtractChemicalElements}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{ExtractChemicalElements()}{ExtractChemicalElements()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+::\+Extract\+Chemical\+Elements (\begin{DoxyParamCaption}\item[{const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo,  }\item[{bool}]{include\+\_\+isotopes = {\ttfamily false} }\end{DoxyParamCaption}) const}
+
+
+
+Extract chemical elements only (exclude isotopes, metadata) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em elementinfo} & Element metadata for role classification \\
+\hline
+{\em include\+\_\+isotopes} & true to include isotopes, false to exclude \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Profile with only element/isotope data 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00330}{330}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00030}{Elemental\+\_\+\+Profile()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\+\_\+information\+::element}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\+\_\+information\+::isotope}}, and \mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{element\+\_\+information\+::\+Role}}.
+
+\Hypertarget{classElemental__Profile_a149f46abf0285a5c7b9f2c823479b1d8}\label{classElemental__Profile_a149f46abf0285a5c7b9f2c823479b1d8} 
+\index{Elemental\_Profile@{Elemental\_Profile}!ExtractElements@{ExtractElements}}
+\index{ExtractElements@{ExtractElements}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{ExtractElements()}{ExtractElements()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+::\+Extract\+Elements (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{element\+\_\+names }\end{DoxyParamCaption}) const}
+
+
+
+Extract subset of specified elements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+names} & Elements to extract \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New profile with requested elements 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Elements not in profile are silently skipped 
+\end{DoxyNote}
+\begin{DoxyPostcond}{Postcondition}
+Return size \texorpdfstring{$<$}{<}= element\+\_\+names.\+size() 
+\end{DoxyPostcond}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00421}{421}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+\Hypertarget{classElemental__Profile_a7a155e3385f47495fc9cf8b317c2b6e4}\label{classElemental__Profile_a7a155e3385f47495fc9cf8b317c2b6e4} 
+\index{Elemental\_Profile@{Elemental\_Profile}!GetAllValues@{GetAllValues}}
+\index{GetAllValues@{GetAllValues}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{GetAllValues()}{GetAllValues()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Elemental\+\_\+\+Profile\+::\+Get\+All\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get all concentration values as vector. 
+
+Get all concentration values as a vector.
+
+\begin{DoxyReturn}{Returns}
+Vector of all concentration values in map order 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Order matches iterator order (typically alphabetical)
+\end{DoxyNote}
+Extracts all concentration values in map order (typically alphabetical by element name). Element names are not included -\/ use \doxylink{classElemental__Profile_a295397bcb07225d953471aa26b367cdd}{Get\+Element\+Names()} to get corresponding names.
+
+\begin{DoxyReturn}{Returns}
+Vector of all concentration values
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Order matches iterator order of underlying map 
+
+To get element names in same order, use \doxylink{classElemental__Profile_a295397bcb07225d953471aa26b367cdd}{Get\+Element\+Names()} 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00575}{575}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+\Hypertarget{classElemental__Profile_a295397bcb07225d953471aa26b367cdd}\label{classElemental__Profile_a295397bcb07225d953471aa26b367cdd} 
+\index{Elemental\_Profile@{Elemental\_Profile}!GetElementNames@{GetElementNames}}
+\index{GetElementNames@{GetElementNames}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{GetElementNames()}{GetElementNames()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Elemental\+\_\+\+Profile\+::\+Get\+Element\+Names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get list of all element names. 
+
+\begin{DoxyReturn}{Returns}
+Vector of element names in map order
+
+Vector of element names in map order (typically alphabetical) 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00839}{839}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l02151}{Conductor\+::\+Execute\+Auto\+Select()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00434}{General\+Chart\+::\+Plot\+Predicted\+Concentration()}}.
+
+\Hypertarget{classElemental__Profile_a28feb4c1d0486aa25c6602f33b7d3d9a}\label{classElemental__Profile_a28feb4c1d0486aa25c6602f33b7d3d9a} 
+\index{Elemental\_Profile@{Elemental\_Profile}!GetMaximum@{GetMaximum}}
+\index{GetMaximum@{GetMaximum}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{GetMaximum()}{GetMaximum()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+::\+Get\+Maximum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get maximum concentration value. 
+
+\begin{DoxyReturn}{Returns}
+Maximum concentration across all elements 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::logic\+\_\+error} & if profile is empty (after refactoring) \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyWarning}{Warning}
+Current implementation returns -\/1e12 if empty (should be fixed)
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+Maximum concentration across all elements 
+
+-\/1e12 if profile is empty (should be fixed to throw exception)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns arbitrary minimum if profile is empty 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]Consider throwing std\+::logic\+\_\+error if empty \end{DoxyRefDesc}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00793}{793}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00434}{General\+Chart\+::\+Plot\+Predicted\+Concentration()}}.
+
+\Hypertarget{classElemental__Profile_a5007d301571db4ce04f2430635694710}\label{classElemental__Profile_a5007d301571db4ce04f2430635694710} 
+\index{Elemental\_Profile@{Elemental\_Profile}!GetMinimum@{GetMinimum}}
+\index{GetMinimum@{GetMinimum}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{GetMinimum()}{GetMinimum()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+::\+Get\+Minimum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get minimum concentration value. 
+
+\begin{DoxyReturn}{Returns}
+Minimum concentration across all elements 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::logic\+\_\+error} & if profile is empty (after refactoring) \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyWarning}{Warning}
+Current implementation returns 1e12 if empty (should be fixed)
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+Minimum concentration across all elements 
+
+1e12 if profile is empty (should be fixed to throw exception)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns arbitrary maximum if profile is empty 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000002}{Todo}}]Consider throwing std\+::logic\+\_\+error if empty \end{DoxyRefDesc}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00818}{818}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00434}{General\+Chart\+::\+Plot\+Predicted\+Concentration()}}.
+
+\Hypertarget{classElemental__Profile_ac022b9ee818190fde138a0a5cbbed9b0}\label{classElemental__Profile_ac022b9ee818190fde138a0a5cbbed9b0} 
+\index{Elemental\_Profile@{Elemental\_Profile}!GetValue@{GetValue}}
+\index{GetValue@{GetValue}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{GetValue()}{GetValue()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+::\+Get\+Value (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Get element concentration by name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Element name (e.\+g., "{}\+Al"{}, "{}\+Fe"{}, "{}206\+Pb/207\+Pb"{}) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Concentration value, or -\/1 if element not found
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Returns -\/1 for missing elements. Use \doxylink{classElemental__Profile_af7ee759943443d6251d30927f51847f9}{Contains()} to check first, or consider using at() which throws on missing elements. 
+
+Logs error to console if element not found (not ideal for library)
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Prefer\+: if (Contains(name)) \{ double v = Get\+Value(name); \}
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classElemental__Profile_af7ee759943443d6251d30927f51847f9}{Contains()} to check existence 
+
+\doxylink{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}{Set\+Value()} to modify value
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+name} & Name of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Element concentration 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & if element does not exist \\
+\hline
+\end{DoxyExceptions}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00450}{450}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00981}{Source\+Sink\+Data\+::\+Observed\+Datafor\+Selected\+Sample()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00993}{Source\+Sink\+Data\+::\+Observed\+Datafor\+Selected\+Sample\+\_\+\+Isotope()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01006}{Source\+Sink\+Data\+::\+Observed\+Datafor\+Selected\+Sample\+\_\+\+Isotope\+\_\+delta()}}.
+
+\Hypertarget{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}\label{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7} 
+\index{Elemental\_Profile@{Elemental\_Profile}!IsIncludedInAnalysis@{IsIncludedInAnalysis}}
+\index{IsIncludedInAnalysis@{IsIncludedInAnalysis}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{IsIncludedInAnalysis()}{IsIncludedInAnalysis()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Is\+Included\+In\+Analysis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if profile is included in analysis. 
+
+\begin{DoxyReturn}{Returns}
+true if profile should be included in fingerprinting 
+\end{DoxyReturn}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00399}{399}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00476}{included\+\_\+in\+\_\+analysis\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00015}{Select\+Sample\+Table\+Model\+::data()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00674}{to\+Json\+Object()}}.
+
+\Hypertarget{classElemental__Profile_a1e87fa1b1f3782d18cc7456943e99be7}\label{classElemental__Profile_a1e87fa1b1f3782d18cc7456943e99be7} 
+\index{Elemental\_Profile@{Elemental\_Profile}!IsMarked@{IsMarked}}
+\index{IsMarked@{IsMarked}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{IsMarked()}{IsMarked()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Is\+Marked (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Check if element is marked. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Element name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if marked, false if unmarked or doesn\textquotesingle{}t exist 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Returns false for both unmarked AND non-\/existent elements
+\end{DoxyWarning}
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+name} & Name of the element \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if marked, false if unmarked or doesn\textquotesingle{}t exist
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns false for both unmarked elements and non-\/existent elements 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00525}{525}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00484}{marked\+\_\+elements\+\_\+}}.
+
+\Hypertarget{classElemental__Profile_a0081cfc8b373ed0f6111d866361181e8}\label{classElemental__Profile_a0081cfc8b373ed0f6111d866361181e8} 
+\index{Elemental\_Profile@{Elemental\_Profile}!operator=@{operator=}}
+\index{operator=@{operator=}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \& Elemental\+\_\+\+Profile\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Copy assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & Profile to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to \texorpdfstring{$\ast$}{*}this 
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+\texorpdfstring{$\ast$}{*}this contains copy of other\textquotesingle{}s data 
+\end{DoxyPostcond}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00083}{83}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00476}{included\+\_\+in\+\_\+analysis\+\_\+}}, \mbox{\hyperlink{elemental__profile_8h_source_l00484}{marked\+\_\+elements\+\_\+}}, and \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}.
+
+\Hypertarget{classElemental__Profile_af63837f23db8c25fbd1414451c367403}\label{classElemental__Profile_af63837f23db8c25fbd1414451c367403} 
+\index{Elemental\_Profile@{Elemental\_Profile}!Read@{Read}}
+\index{Read@{Read}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Read (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{string\+\_\+list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Read profile from string list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string\+\_\+list} & List of "{}\+Element\+:\+Value"{} strings \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Interface}}.
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00753}{753}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00552}{Append\+Element()}}.
+
+\Hypertarget{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}\label{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333} 
+\index{Elemental\_Profile@{Elemental\_Profile}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{json\+\_\+object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Deserialize from JSON object. 
+
+Deserialize profile from JSON object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & JSON representation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success 
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+Profile cleared and repopulated from JSON
+\end{DoxyPostcond}
+Loads profile data from JSON, supporting two formats\+:
+\begin{DoxyEnumerate}
+\item Full format with "{}\+Include"{} and "{}\+Element Contents"{} fields
+\item Legacy format with elements directly in root object
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em json\+\_\+object} & JSON representation of profile \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success (always succeeds currently)
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+Profile is cleared and repopulated from JSON 
+
+Marked elements are reset (not stored in JSON)
+\end{DoxyPostcond}
+\begin{DoxyNote}{Note}
+Bug fixed\+: YAxis\+Label was being set to XAxis\+Label value 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00707}{707}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00406}{Set\+Included\+In\+Analysis()}}, \mbox{\hyperlink{interface_8h_source_l00077}{Interface\+::\+Set\+XAxis\+Label()}}, and \mbox{\hyperlink{interface_8h_source_l00078}{Interface\+::\+Set\+YAxis\+Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00311}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Read\+From\+Json\+Object()}}.
+
+\Hypertarget{classElemental__Profile_ac612e5ce6ee3566ace1a718dda5e4c7d}\label{classElemental__Profile_ac612e5ce6ee3566ace1a718dda5e4c7d} 
+\index{Elemental\_Profile@{Elemental\_Profile}!SelectTopElements@{SelectTopElements}}
+\index{SelectTopElements@{SelectTopElements}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{SelectTopElements()}{SelectTopElements()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Elemental\+\_\+\+Profile\+::\+Select\+Top\+Elements (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{bool}]{ascending = {\ttfamily true} }\end{DoxyParamCaption}) const}
+
+
+
+Select top N elements by concentration. 
+
+Identifies highest (or lowest) concentrated elements. Useful for focusing analysis on dominant tracers.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of elements to select \\
+\hline
+{\em ascending} & true to select lowest, false for highest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of element names 
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+Return size \texorpdfstring{$<$}{<}= min(n, profile.\+size())
+\end{DoxyPostcond}
+Returns the N highest (or lowest) concentrated elements. Useful for focusing analysis on dominant tracers.
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of elements to select \\
+\hline
+{\em ascending} & true to select lowest values, false for highest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of element names (up to N elements)
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+Return size \texorpdfstring{$<$}{<}= min(n, profile.\+size()) 
+\end{DoxyPostcond}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l01032}{1032}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvector_8h_source_l00118}{CMBVector\+::\+Label()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00988}{Sort\+By\+Concentration()}}.
+
+\Hypertarget{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}\label{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652} 
+\index{Elemental\_Profile@{Elemental\_Profile}!SetIncludedInAnalysis@{SetIncludedInAnalysis}}
+\index{SetIncludedInAnalysis@{SetIncludedInAnalysis}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{SetIncludedInAnalysis()}{SetIncludedInAnalysis()}}
+{\footnotesize\ttfamily void Elemental\+\_\+\+Profile\+::\+Set\+Included\+In\+Analysis (\begin{DoxyParamCaption}\item[{bool}]{included }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set analysis inclusion status. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em included} & true to include, false to exclude \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Excluded profiles retained in dataset but skipped in calculations 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00406}{406}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00476}{included\+\_\+in\+\_\+analysis\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00707}{Read\+From\+Json\+Object()}}, and \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00077}{Select\+Sample\+Table\+Model\+::set\+Data()}}.
+
+\Hypertarget{classElemental__Profile_a82cc77b68f773d9c3214e6b20f3ded55}\label{classElemental__Profile_a82cc77b68f773d9c3214e6b20f3ded55} 
+\index{Elemental\_Profile@{Elemental\_Profile}!SetMarked@{SetMarked}}
+\index{SetMarked@{SetMarked}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{SetMarked()}{SetMarked()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Set\+Marked (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name,  }\item[{bool}]{marked }\end{DoxyParamCaption})}
+
+
+
+Set marked status for an element. 
+
+Marking system allows flagging suspicious values without removing them. Marked elements can be filtered in downstream analyses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Element name \\
+\hline
+{\em marked} & true to mark, false to unmark \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false if element doesn\textquotesingle{}t exist
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Element must exist 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+If successful\+: Is\+Marked(name) == marked
+\end{DoxyPostcond}
+Marks or unmarks an element for quality control purposes. Marked elements can be filtered in downstream analyses without removing them from the profile.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+name} & Name of the element \\
+\hline
+{\em marked} & true to mark, false to unmark \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false if element doesn\textquotesingle{}t exist
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Element must exist in profile before it can be marked 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00507}{507}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00484}{marked\+\_\+elements\+\_\+}}.
+
+\Hypertarget{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}\label{classElemental__Profile_af33d23d19061776c4f20120395c4ca35} 
+\index{Elemental\_Profile@{Elemental\_Profile}!SetValue@{SetValue}}
+\index{SetValue@{SetValue}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{SetValue()}{SetValue()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::\+Set\+Value (\begin{DoxyParamCaption}\item[{const string \&}]{name,  }\item[{double}]{val }\end{DoxyParamCaption})}
+
+
+
+Set concentration value for existing element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Element name (must already exist) \\
+\hline
+{\em val} & New concentration value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false if element doesn\textquotesingle{}t exist
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Element must exist\+: Contains(name) == true 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+If successful\+: Get\+Value(name) == val
+\end{DoxyPostcond}
+\begin{DoxyWarning}{Warning}
+Logs error to console if element not found
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{Append\+Element()} to add new elements 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00484}{484}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+\Hypertarget{classElemental__Profile_a3353e492c0cd55969e72d6e990cda355}\label{classElemental__Profile_a3353e492c0cd55969e72d6e990cda355} 
+\index{Elemental\_Profile@{Elemental\_Profile}!SortByConcentration@{SortByConcentration}}
+\index{SortByConcentration@{SortByConcentration}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{SortByConcentration()}{SortByConcentration()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} Elemental\+\_\+\+Profile\+::\+Sort\+By\+Concentration (\begin{DoxyParamCaption}\item[{bool}]{ascending = {\ttfamily true} }\end{DoxyParamCaption}) const}
+
+
+
+Sort elements by concentration value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ascending} & true for ascending order, false for descending \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classCMBVector}{CMBVector} with sorted element names and values 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Returns new object; original profile unchanged
+\end{DoxyNote}
+Creates a \doxylink{classCMBVector}{CMBVector} containing elements sorted by their concentration. Uses selection sort algorithm (O(n²) -\/ consider std\+::sort for large profiles).
+
+
+\begin{DoxyParams}{Parameters}
+{\em ascending} & true for ascending order (low to high), false for descending \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classCMBVector}{CMBVector} with sorted element names and values
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Original profile unchanged (const method) 
+
+Performance\+: O(n²) -\/ fine for typical profile sizes (\texorpdfstring{$<$}{<}100 elements) 
+\end{DoxyNote}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00988}{988}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvector_8cpp_source_l00272}{CMBVector\+::append()}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l01032}{Select\+Top\+Elements()}}.
+
+\Hypertarget{classElemental__Profile_ae6d76197a4334b6db6160b19610d3c9d}\label{classElemental__Profile_ae6d76197a4334b6db6160b19610d3c9d} 
+\index{Elemental\_Profile@{Elemental\_Profile}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Elemental\+\_\+\+Profile\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Serialize to JSON object. 
+
+Serialize profile to JSON object.
+
+\begin{DoxyReturn}{Returns}
+QJson\+Object containing profile data
+\end{DoxyReturn}
+Creates a JSON representation including element concentrations, analysis inclusion flag, and axis labels.
+
+\begin{DoxyReturn}{Returns}
+QJson\+Object containing profile data
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Format\+: \{"{}\+Include"{}\+: bool, "{}\+Element Contents"{}\+: \{name\+: value, ...\}, "{}\+XAxis\+Label"{}\+: string, "{}\+YAxis\+Label"{}\+: string\} 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00674}{674}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8h_source_l00399}{Is\+Included\+In\+Analysis()}}, \mbox{\hyperlink{interface_8h_source_l00075}{Interface\+::\+XAxis\+Label()}}, and \mbox{\hyperlink{interface_8h_source_l00076}{Interface\+::\+YAxis\+Label()}}.
+
+\Hypertarget{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e}\label{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e} 
+\index{Elemental\_Profile@{Elemental\_Profile}!ToString@{ToString}}
+\index{ToString@{ToString}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily string Elemental\+\_\+\+Profile\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Convert profile to string representation. 
+
+\begin{DoxyReturn}{Returns}
+String with "{}\+Element\+:\+Value"{} pairs separated by newlines 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Format\+: "{}\+Al\+:8.\+5\textbackslash{}n\+Fe\+:4.\+2\textbackslash{}n..."{} 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00599}{599}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00778}{writetofile()}}.
+
+\Hypertarget{classElemental__Profile_a9339549be3522fda11453bf97d405ce0}\label{classElemental__Profile_a9339549be3522fda11453bf97d405ce0} 
+\index{Elemental\_Profile@{Elemental\_Profile}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Create Qt table widget representation. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to new QTable\+Widget 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+CALLER TAKES OWNERSHIP -\/ must delete or set Qt parent 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Consider using \doxylink{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872}{Create\+Table\+Unique()} for automatic memory management
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classElemental__Profile_af521f9252b6c6571874f6b2fc4064872}{Create\+Table\+Unique()} for smart pointer \doxylink{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}{version} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00632}{632}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00050}{Interface\+::highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::highlimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::lowlimit}}, and \mbox{\hyperlink{interface_8h_source_l00076}{Interface\+::\+YAxis\+Label()}}.
+
+\Hypertarget{classElemental__Profile_adff28a214b4cd5d4abef75d7067fc942}\label{classElemental__Profile_adff28a214b4cd5d4abef75d7067fc942} 
+\index{Elemental\_Profile@{Elemental\_Profile}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Write profile to file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & Open QFile for writing \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success
+\end{DoxyReturn}
+Writes the string representation of the profile to an open file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & Pointer to open QFile for writing \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success (always succeeds currently)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+File must be opened for writing before calling this method 
+
+Writes in "{}\+Element\+:\+Value\textbackslash{}n"{} format for each element 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8cpp_source_l00778}{778}} of file \mbox{\hyperlink{elemental__profile_8cpp_source}{elemental\+\_\+profile.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00599}{To\+String()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}\label{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a} 
+\index{Elemental\_Profile@{Elemental\_Profile}!included\_in\_analysis\_@{included\_in\_analysis\_}}
+\index{included\_in\_analysis\_@{included\_in\_analysis\_}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{included\_in\_analysis\_}{included\_in\_analysis\_}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+::included\+\_\+in\+\_\+analysis\+\_\+ = true\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Whether profile should be included in analysis. 
+
+Used for quality control -\/ allows excluding problematic samples without deleting them from dataset. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00476}{476}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{Create\+Analysis\+Profile()}}, \mbox{\hyperlink{elemental__profile_8h_source_l00399}{Is\+Included\+In\+Analysis()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00083}{operator=()}}, and \mbox{\hyperlink{elemental__profile_8h_source_l00406}{Set\+Included\+In\+Analysis()}}.
+
+\Hypertarget{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}\label{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764} 
+\index{Elemental\_Profile@{Elemental\_Profile}!marked\_elements\_@{marked\_elements\_}}
+\index{marked\_elements\_@{marked\_elements\_}!Elemental\_Profile@{Elemental\_Profile}}
+\doxysubsubsection{\texorpdfstring{marked\_elements\_}{marked\_elements\_}}
+{\footnotesize\ttfamily map$<$string, bool$>$ Elemental\+\_\+\+Profile\+::marked\+\_\+elements\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Map tracking marked elements for quality control. 
+
+Elements can be flagged as outliers or requiring attention without removing them from the profile. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00484}{484}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00552}{Append\+Element()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{Create\+Analysis\+Profile()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00525}{Is\+Marked()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00083}{operator=()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00507}{Set\+Marked()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{elemental__profile_8h}{elemental\+\_\+profile.\+h}}\item 
+\mbox{\hyperlink{elemental__profile_8cpp}{elemental\+\_\+profile.\+cpp}}\end{DoxyCompactItemize}

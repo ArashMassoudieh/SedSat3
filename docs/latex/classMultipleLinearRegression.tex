@@ -1,0 +1,738 @@
+\doxysection{Multiple\+Linear\+Regression Class Reference}
+\hypertarget{classMultipleLinearRegression}{}\label{classMultipleLinearRegression}\index{MultipleLinearRegression@{MultipleLinearRegression}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/multiplelinearregression.\+h$>$}
+
+
+
+Inheritance diagram for Multiple\+Linear\+Regression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classMultipleLinearRegression__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Multiple\+Linear\+Regression\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classMultipleLinearRegression__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMultipleLinearRegression_a0284341b84ecab694690ba857e7dd21b}{Multiple\+Linear\+Regression}} ()
+\item 
+\mbox{\hyperlink{classMultipleLinearRegression_a492c8ef9b5885a50858c0ece5c5f989b}{Multiple\+Linear\+Regression}} (const \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \&mp)
+\item 
+\mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \& \mbox{\hyperlink{classMultipleLinearRegression_a332f83cac77f3c9dc442084b585f95e2}{operator=}} (const \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \&mp)
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_ac989cf62f3745b53849a4597441b1642}{Regress}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&independent, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ dependent, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&indep\+\_\+vars\+\_\+names)
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_a8c69e2229173c5669bd69ab200cb0c90}{SSE\+\_\+reduced\+\_\+model}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&independent, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ dependent, int eliminated\+\_\+var)
+\item 
+QJson\+Object \mbox{\hyperlink{classMultipleLinearRegression_a1adb6f0d901a5ab97971a2c04476425d}{to\+Json\+Object}} () const override
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classMultipleLinearRegression_ab68a76599eb9a701fd280a11e79310ec}{To\+String}} () const override
+\item 
+bool \mbox{\hyperlink{classMultipleLinearRegression_ad4aff860f70c3a01d6fe5fce3278b9f1}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classMultipleLinearRegression_ad4415c3c95e05d20e7d41d81469ec909}{Coefficients\+Intercept}} () const
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \& \mbox{\hyperlink{classMultipleLinearRegression_a163b5a07c27f3ff1efde013aca2d277e}{Get\+Independent\+Variable\+Names}} ()
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classMultipleLinearRegression_a2788c93c575d96c543d997e480126859}{Get\+Independent\+Variable\+Names}} () const
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \& \mbox{\hyperlink{classMultipleLinearRegression_a2151cb47ae6af9d4d581d1821c58d04a}{Independent\+Data}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&var\+\_\+name)
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \& \mbox{\hyperlink{classMultipleLinearRegression_a8acfa9705e46c58cdd7721b17e71e94a}{Dependent\+Data}} ()
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_a5573d3d6ce38a733dd70ad3b2b9f1c6f}{Mean\+Independent\+Var}} (int i)
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_afc85ea2e3d4ca1c2cc550a50e72195c1}{Geo\+Mean\+Independent\+Var}} (int i)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classMultipleLinearRegression_a61f13d1be3034e240a01c4134ffd23bc}{Dependent\+Variable\+Name}} ()
+\item 
+void \mbox{\hyperlink{classMultipleLinearRegression_a44a22f07f897f8ca5ac74ddc1a6ee654}{Set\+Dependent\+Variable\+Name}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classMultipleLinearRegression_ac9578214ded06d6f2844e4d59c826cc1}{P\+\_\+\+Value}} ()
+\item 
+void \mbox{\hyperlink{classMultipleLinearRegression_aca7560303659b72c1d5018991327ee1d}{Set\+Effective}} (int i, bool eff)
+\item 
+bool \mbox{\hyperlink{classMultipleLinearRegression_aed9f6643ae7bd0cc934f5eca7d3928b3}{Effective}} (int i) const
+\item 
+\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} \mbox{\hyperlink{classMultipleLinearRegression_a02f2569e133f087ac14b294a66ff3096}{Equation}} () const
+\item 
+void \mbox{\hyperlink{classMultipleLinearRegression_ad99e8361666def1487af32bc271da617}{Set\+Equation}} (\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} form)
+\item 
+void \mbox{\hyperlink{classMultipleLinearRegression_a93f01a797675b84719d95e6e49f993f1}{Set\+PValue\+Threshold}} (const double \&p)
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_a8bc704f55b185a863cd1b0808c8d441b}{PValue\+Threshold}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+virtual QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{To\+Table}} ()
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\+\_\+intercept\+\_\+}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\+\_\+data}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\+\_\+data}}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}{dependent\+\_\+variable\+\_\+name}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\+\_\+variables\+\_\+names}}
+\item 
+\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\+\_\+matrix\+\_\+}}
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}}
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\+\_\+adj}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\+\_\+value}}
+\item 
+double \mbox{\hyperlink{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}{p\+\_\+value\+\_\+threshold}} = 0.\+05
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ bool $>$ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\+\_\+effective}}
+\item 
+\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} \mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regression\+Equation}} = \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00009}{9}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMultipleLinearRegression_a0284341b84ecab694690ba857e7dd21b}\label{classMultipleLinearRegression_a0284341b84ecab694690ba857e7dd21b} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!MultipleLinearRegression@{MultipleLinearRegression}}
+\index{MultipleLinearRegression@{MultipleLinearRegression}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{MultipleLinearRegression()}{MultipleLinearRegression()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Multiple\+Linear\+Regression\+::\+Multiple\+Linear\+Regression (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+\Hypertarget{classMultipleLinearRegression_a492c8ef9b5885a50858c0ece5c5f989b}\label{classMultipleLinearRegression_a492c8ef9b5885a50858c0ece5c5f989b} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!MultipleLinearRegression@{MultipleLinearRegression}}
+\index{MultipleLinearRegression@{MultipleLinearRegression}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{MultipleLinearRegression()}{MultipleLinearRegression()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Multiple\+Linear\+Regression\+::\+Multiple\+Linear\+Regression (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{chisq}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00057}{correlation\+\_\+matrix\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{dependent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00055}{dependent\+\_\+variable\+\_\+name}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{make\+\_\+effective}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00060}{p\+\_\+value\+\_\+threshold}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2\+\_\+adj}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMultipleLinearRegression_ad4415c3c95e05d20e7d41d81469ec909}\label{classMultipleLinearRegression_ad4415c3c95e05d20e7d41d81469ec909} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!CoefficientsIntercept@{CoefficientsIntercept}}
+\index{CoefficientsIntercept@{CoefficientsIntercept}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{CoefficientsIntercept()}{CoefficientsIntercept()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ Multiple\+Linear\+Regression\+::\+Coefficients\+Intercept (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00298}{298}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}.
+
+\Hypertarget{classMultipleLinearRegression_a8acfa9705e46c58cdd7721b17e71e94a}\label{classMultipleLinearRegression_a8acfa9705e46c58cdd7721b17e71e94a} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!DependentData@{DependentData}}
+\index{DependentData@{DependentData}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{DependentData()}{DependentData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \& Multiple\+Linear\+Regression\+::\+Dependent\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00029}{29}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{dependent\+\_\+data}}.
+
+\Hypertarget{classMultipleLinearRegression_a61f13d1be3034e240a01c4134ffd23bc}\label{classMultipleLinearRegression_a61f13d1be3034e240a01c4134ffd23bc} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!DependentVariableName@{DependentVariableName}}
+\index{DependentVariableName@{DependentVariableName}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{DependentVariableName()}{DependentVariableName()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Multiple\+Linear\+Regression\+::\+Dependent\+Variable\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00035}{35}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00055}{dependent\+\_\+variable\+\_\+name}}.
+
+\Hypertarget{classMultipleLinearRegression_aed9f6643ae7bd0cc934f5eca7d3928b3}\label{classMultipleLinearRegression_aed9f6643ae7bd0cc934f5eca7d3928b3} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!Effective@{Effective}}
+\index{Effective@{Effective}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{Effective()}{Effective()}}
+{\footnotesize\ttfamily bool Multiple\+Linear\+Regression\+::\+Effective (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00039}{39}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{make\+\_\+effective}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}.
+
+\Hypertarget{classMultipleLinearRegression_a02f2569e133f087ac14b294a66ff3096}\label{classMultipleLinearRegression_a02f2569e133f087ac14b294a66ff3096} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!Equation@{Equation}}
+\index{Equation@{Equation}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{Equation()}{Equation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} Multiple\+Linear\+Regression\+::\+Equation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00040}{40}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+\Hypertarget{classMultipleLinearRegression_afc85ea2e3d4ca1c2cc550a50e72195c1}\label{classMultipleLinearRegression_afc85ea2e3d4ca1c2cc550a50e72195c1} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!GeoMeanIndependentVar@{GeoMeanIndependentVar}}
+\index{GeoMeanIndependentVar@{GeoMeanIndependentVar}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{GeoMeanIndependentVar()}{GeoMeanIndependentVar()}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+Geo\+Mean\+Independent\+Var (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00309}{309}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}.
+
+\Hypertarget{classMultipleLinearRegression_a163b5a07c27f3ff1efde013aca2d277e}\label{classMultipleLinearRegression_a163b5a07c27f3ff1efde013aca2d277e} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!GetIndependentVariableNames@{GetIndependentVariableNames}}
+\index{GetIndependentVariableNames@{GetIndependentVariableNames}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{GetIndependentVariableNames()}{GetIndependentVariableNames()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \& Multiple\+Linear\+Regression\+::\+Get\+Independent\+Variable\+Names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00021}{21}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}.
+
+\Hypertarget{classMultipleLinearRegression_a2788c93c575d96c543d997e480126859}\label{classMultipleLinearRegression_a2788c93c575d96c543d997e480126859} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!GetIndependentVariableNames@{GetIndependentVariableNames}}
+\index{GetIndependentVariableNames@{GetIndependentVariableNames}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{GetIndependentVariableNames()}{GetIndependentVariableNames()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ Multiple\+Linear\+Regression\+::\+Get\+Independent\+Variable\+Names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00024}{24}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}.
+
+\Hypertarget{classMultipleLinearRegression_a2151cb47ae6af9d4d581d1821c58d04a}\label{classMultipleLinearRegression_a2151cb47ae6af9d4d581d1821c58d04a} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!IndependentData@{IndependentData}}
+\index{IndependentData@{IndependentData}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{IndependentData()}{IndependentData()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \& Multiple\+Linear\+Regression\+::\+Independent\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{var\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00340}{340}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}.
+
+\Hypertarget{classMultipleLinearRegression_a5573d3d6ce38a733dd70ad3b2b9f1c6f}\label{classMultipleLinearRegression_a5573d3d6ce38a733dd70ad3b2b9f1c6f} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!MeanIndependentVar@{MeanIndependentVar}}
+\index{MeanIndependentVar@{MeanIndependentVar}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{MeanIndependentVar()}{MeanIndependentVar()}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+Mean\+Independent\+Var (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00304}{304}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}.
+
+\Hypertarget{classMultipleLinearRegression_a332f83cac77f3c9dc442084b585f95e2}\label{classMultipleLinearRegression_a332f83cac77f3c9dc442084b585f95e2} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!operator=@{operator=}}
+\index{operator=@{operator=}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \& Multiple\+Linear\+Regression\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{chisq}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00057}{correlation\+\_\+matrix\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{dependent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00055}{dependent\+\_\+variable\+\_\+name}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{make\+\_\+effective}}, \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00060}{p\+\_\+value\+\_\+threshold}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2\+\_\+adj}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+\Hypertarget{classMultipleLinearRegression_ac9578214ded06d6f2844e4d59c826cc1}\label{classMultipleLinearRegression_ac9578214ded06d6f2844e4d59c826cc1} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!P\_Value@{P\_Value}}
+\index{P\_Value@{P\_Value}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{P\_Value()}{P\_Value()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ Multiple\+Linear\+Regression\+::\+P\+\_\+\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00037}{37}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}.
+
+\Hypertarget{classMultipleLinearRegression_a8bc704f55b185a863cd1b0808c8d441b}\label{classMultipleLinearRegression_a8bc704f55b185a863cd1b0808c8d441b} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!PValueThreshold@{PValueThreshold}}
+\index{PValueThreshold@{PValueThreshold}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{PValueThreshold()}{PValueThreshold()}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+PValue\+Threshold (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00047}{47}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00060}{p\+\_\+value\+\_\+threshold}}.
+
+\Hypertarget{classMultipleLinearRegression_ad4aff860f70c3a01d6fe5fce3278b9f1}\label{classMultipleLinearRegression_ad4aff860f70c3a01d6fe5fce3278b9f1} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Multiple\+Linear\+Regression\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{246}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{chisq}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{dependent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{make\+\_\+effective}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa62cd275989e78ee56a81f0265a87562e}{power}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2\+\_\+adj}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00028}{Multiple\+Linear\+Regression\+Set\+::\+Read\+From\+Json\+Object()}}.
+
+\Hypertarget{classMultipleLinearRegression_ac989cf62f3745b53849a4597441b1642}\label{classMultipleLinearRegression_ac989cf62f3745b53849a4597441b1642} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!Regress@{Regress}}
+\index{Regress@{Regress}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{Regress()}{Regress()}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+Regress (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{independent,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{dependent,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&}]{indep\+\_\+vars\+\_\+names }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{114}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{chisq}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00057}{correlation\+\_\+matrix\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{dependent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00055}{dependent\+\_\+variable\+\_\+name}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{make\+\_\+effective}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00060}{p\+\_\+value\+\_\+threshold}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2\+\_\+adj}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00050}{SSE\+\_\+reduced\+\_\+model()}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Build\+Regression\+Model()}}.
+
+\Hypertarget{classMultipleLinearRegression_a44a22f07f897f8ca5ac74ddc1a6ee654}\label{classMultipleLinearRegression_a44a22f07f897f8ca5ac74ddc1a6ee654} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!SetDependentVariableName@{SetDependentVariableName}}
+\index{SetDependentVariableName@{SetDependentVariableName}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{SetDependentVariableName()}{SetDependentVariableName()}}
+{\footnotesize\ttfamily void Multiple\+Linear\+Regression\+::\+Set\+Dependent\+Variable\+Name (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00036}{36}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00055}{dependent\+\_\+variable\+\_\+name}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Build\+Regression\+Model()}}.
+
+\Hypertarget{classMultipleLinearRegression_aca7560303659b72c1d5018991327ee1d}\label{classMultipleLinearRegression_aca7560303659b72c1d5018991327ee1d} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!SetEffective@{SetEffective}}
+\index{SetEffective@{SetEffective}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{SetEffective()}{SetEffective()}}
+{\footnotesize\ttfamily void Multiple\+Linear\+Regression\+::\+Set\+Effective (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{bool}]{eff }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00038}{38}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{make\+\_\+effective}}.
+
+\Hypertarget{classMultipleLinearRegression_ad99e8361666def1487af32bc271da617}\label{classMultipleLinearRegression_ad99e8361666def1487af32bc271da617} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!SetEquation@{SetEquation}}
+\index{SetEquation@{SetEquation}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{SetEquation()}{SetEquation()}}
+{\footnotesize\ttfamily void Multiple\+Linear\+Regression\+::\+Set\+Equation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}}}]{form }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00041}{41}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Build\+Regression\+Model()}}.
+
+\Hypertarget{classMultipleLinearRegression_a93f01a797675b84719d95e6e49f993f1}\label{classMultipleLinearRegression_a93f01a797675b84719d95e6e49f993f1} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!SetPValueThreshold@{SetPValueThreshold}}
+\index{SetPValueThreshold@{SetPValueThreshold}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{SetPValueThreshold()}{SetPValueThreshold()}}
+{\footnotesize\ttfamily void Multiple\+Linear\+Regression\+::\+Set\+PValue\+Threshold (\begin{DoxyParamCaption}\item[{const double \&}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00044}{44}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00060}{p\+\_\+value\+\_\+threshold}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Build\+Regression\+Model()}}.
+
+\Hypertarget{classMultipleLinearRegression_a8c69e2229173c5669bd69ab200cb0c90}\label{classMultipleLinearRegression_a8c69e2229173c5669bd69ab200cb0c90} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!SSE\_reduced\_model@{SSE\_reduced\_model}}
+\index{SSE\_reduced\_model@{SSE\_reduced\_model}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{SSE\_reduced\_model()}{SSE\_reduced\_model()}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+SSE\+\_\+reduced\+\_\+model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \&}]{independent,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{dependent,  }\item[{int}]{eliminated\+\_\+var }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}.
+
+\Hypertarget{classMultipleLinearRegression_a1adb6f0d901a5ab97971a2c04476425d}\label{classMultipleLinearRegression_a1adb6f0d901a5ab97971a2c04476425d} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Multiple\+Linear\+Regression\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{201}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{chisq}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{dependent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00039}{Effective()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{independent\+\_\+data}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2\+\_\+adj}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+\Hypertarget{classMultipleLinearRegression_ab68a76599eb9a701fd280a11e79310ec}\label{classMultipleLinearRegression_ab68a76599eb9a701fd280a11e79310ec} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!ToString@{ToString}}
+\index{ToString@{ToString}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Multiple\+Linear\+Regression\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{313}} of file \mbox{\hyperlink{multiplelinearregression_8cpp_source}{multiplelinearregression.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{chisq}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{coefficients\+\_\+intercept\+\_\+}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{independent\+\_\+variables\+\_\+names}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{p\+\_\+value}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{R2\+\_\+adj}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{regression\+Equation}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00049}{Multiple\+Linear\+Regression\+Set\+::\+To\+String()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}\label{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!chisq@{chisq}}
+\index{chisq@{chisq}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{chisq}{chisq}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::chisq\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{58}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}\label{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!coefficients\_intercept\_@{coefficients\_intercept\_}}
+\index{coefficients\_intercept\_@{coefficients\_intercept\_}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{coefficients\_intercept\_}{coefficients\_intercept\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ Multiple\+Linear\+Regression\+::coefficients\+\_\+intercept\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00052}{52}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00298}{Coefficients\+Intercept()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}\label{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!correlation\_matrix\_@{correlation\_matrix\_}}
+\index{correlation\_matrix\_@{correlation\_matrix\_}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{correlation\_matrix\_}{correlation\_matrix\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} Multiple\+Linear\+Regression\+::correlation\+\_\+matrix\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00057}{57}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}.
+
+\Hypertarget{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}\label{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!dependent\_data@{dependent\_data}}
+\index{dependent\_data@{dependent\_data}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{dependent\_data}{dependent\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ Multiple\+Linear\+Regression\+::dependent\+\_\+data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00054}{54}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00029}{Dependent\+Data()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}.
+
+\Hypertarget{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}\label{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!dependent\_variable\_name@{dependent\_variable\_name}}
+\index{dependent\_variable\_name@{dependent\_variable\_name}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{dependent\_variable\_name}{dependent\_variable\_name}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Multiple\+Linear\+Regression\+::dependent\+\_\+variable\+\_\+name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00055}{55}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00035}{Dependent\+Variable\+Name()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00036}{Set\+Dependent\+Variable\+Name()}}.
+
+\Hypertarget{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}\label{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!independent\_data@{independent\_data}}
+\index{independent\_data@{independent\_data}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{independent\_data}{independent\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ $>$ Multiple\+Linear\+Regression\+::independent\+\_\+data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00053}{53}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00309}{Geo\+Mean\+Independent\+Var()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00340}{Independent\+Data()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00304}{Mean\+Independent\+Var()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}.
+
+\Hypertarget{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}\label{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!independent\_variables\_names@{independent\_variables\_names}}
+\index{independent\_variables\_names@{independent\_variables\_names}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{independent\_variables\_names}{independent\_variables\_names}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}$>$ Multiple\+Linear\+Regression\+::independent\+\_\+variables\+\_\+names\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00056}{56}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00021}{Get\+Independent\+Variable\+Names()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00024}{Get\+Independent\+Variable\+Names()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00340}{Independent\+Data()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}\label{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!make\_effective@{make\_effective}}
+\index{make\_effective@{make\_effective}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{make\_effective}{make\_effective}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$bool$>$ Multiple\+Linear\+Regression\+::make\+\_\+effective\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00061}{61}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00039}{Effective()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00038}{Set\+Effective()}}.
+
+\Hypertarget{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}\label{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!p\_value@{p\_value}}
+\index{p\_value@{p\_value}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{p\_value}{p\_value}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ Multiple\+Linear\+Regression\+::p\+\_\+value\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00059}{59}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00037}{P\+\_\+\+Value()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}\label{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!p\_value\_threshold@{p\_value\_threshold}}
+\index{p\_value\_threshold@{p\_value\_threshold}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{p\_value\_threshold}{p\_value\_threshold}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::p\+\_\+value\+\_\+threshold = 0.\+05\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00060}{60}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00047}{PValue\+Threshold()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00044}{Set\+PValue\+Threshold()}}.
+
+\Hypertarget{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}\label{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!R2@{R2}}
+\index{R2@{R2}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{R2}{R2}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+R2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{58}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}\label{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!R2\_adj@{R2\_adj}}
+\index{R2\_adj@{R2\_adj}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{R2\_adj}{R2\_adj}}
+{\footnotesize\ttfamily double Multiple\+Linear\+Regression\+::\+R2\+\_\+adj\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00058}{58}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+\Hypertarget{classMultipleLinearRegression_a284676916574695867958825f0596872}\label{classMultipleLinearRegression_a284676916574695867958825f0596872} 
+\index{MultipleLinearRegression@{MultipleLinearRegression}!regressionEquation@{regressionEquation}}
+\index{regressionEquation@{regressionEquation}!MultipleLinearRegression@{MultipleLinearRegression}}
+\doxysubsubsection{\texorpdfstring{regressionEquation}{regressionEquation}}
+{\footnotesize\ttfamily \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} Multiple\+Linear\+Regression\+::regression\+Equation = \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multiplelinearregression_8h_source_l00062}{62}} of file \mbox{\hyperlink{multiplelinearregression_8h_source}{multiplelinearregression.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00014}{Multiple\+Linear\+Regression()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00040}{Equation()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00246}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Regress()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00041}{Set\+Equation()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00050}{SSE\+\_\+reduced\+\_\+model()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00201}{to\+Json\+Object()}}, and \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00313}{To\+String()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{multiplelinearregression_8h}{multiplelinearregression.\+h}}\item 
+\mbox{\hyperlink{multiplelinearregression_8cpp}{multiplelinearregression.\+cpp}}\end{DoxyCompactItemize}

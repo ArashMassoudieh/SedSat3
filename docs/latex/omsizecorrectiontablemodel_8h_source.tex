@@ -1,0 +1,36 @@
+\doxysection{omsizecorrectiontablemodel.\+h}
+\hypertarget{omsizecorrectiontablemodel_8h_source}{}\label{omsizecorrectiontablemodel_8h_source}\mbox{\hyperlink{omsizecorrectiontablemodel_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ OMSIZECORRECTIONTABLEMODEL\_H}}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ OMSIZECORRECTIONTABLEMODEL\_H}}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QAbstractTableModel>}}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{multiplelinearregressionset_8h}{multiplelinearregressionset.h}}>}}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00008}\mbox{\hyperlink{classOmSizeCorrectionTableModel}{00008}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classOmSizeCorrectionTableModel}{OmSizeCorrectionTableModel}}:\ \textcolor{keyword}{public}\ QAbstractTableModel}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00010}00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00011}00011\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00014}00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classOmSizeCorrectionTableModel}{OmSizeCorrectionTableModel}}(\mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}\ *\mbox{\hyperlink{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae}{MLRset}},\ QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_a3aa52b3730ad00a7dbdffaf9bc00c9e4}{rowCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_a9c60fed9c24425d3d3318bf01447be94}{columnCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00018}00018\ \ \ \ \ QVariant\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_a683f92c0513c14a6b0a3781c87528b8d}{data}}(\textcolor{keyword}{const}\ QModelIndex\ \&index,\ \textcolor{keywordtype}{int}\ role\ =\ Qt::DisplayRole)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00019}00019\ \ \ \ \ QVariant\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_ad990797fc95873529785d3f14beb567a}{headerData}}(\textcolor{keywordtype}{int}\ section,\ Qt::Orientation\ orientation,\ \textcolor{keywordtype}{int}\ role)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_a26820ba797081c631d7d33cb4f3533f7}{setData}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index,\ \textcolor{keyword}{const}\ QVariant\ \&\ value,\ \textcolor{keywordtype}{int}\ role\ =\ Qt::EditRole)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00021}00021\ \ \ \ \ Qt::ItemFlags\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_ab64a6f18c5da9cc9483c731dfd3305c9}{flags}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00022}\mbox{\hyperlink{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae}{00022}}\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}\ *\mbox{\hyperlink{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae}{MLRset}};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00023}00023\ signals:}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00024}\mbox{\hyperlink{classOmSizeCorrectionTableModel_a6c2525612dfa3f2a072ad9a2cd8d0062}{00024}}\ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classOmSizeCorrectionTableModel_a6c2525612dfa3f2a072ad9a2cd8d0062}{editCompleted}}(\textcolor{keyword}{const}\ QString\ \&);}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00026}00026\ \};}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00028}00028\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ OMSIZECORRECTIONTABLEMODEL\_H}}
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{omsizecorrectiontablemodel_8h_source_l00031}00031\ }
+
+\end{DoxyCode}

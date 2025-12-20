@@ -1,0 +1,330 @@
+\doxysection{Contribution Class Reference}
+\hypertarget{classContribution}{}\label{classContribution}\index{Contribution@{Contribution}}
+
+
+Source contribution container for Chemical Mass Balance results.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/contribution.\+h$>$}
+
+
+
+Inheritance diagram for Contribution\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classContribution__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Contribution\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classContribution__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classContribution_a59775497d673b49ac00b19f525bc1b05}{Contribution}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor -\/ creates an empty contribution set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classContribution_a86cbe34c23f957d3e9bc4ec81a0ab8bc}{Contribution}} (const \mbox{\hyperlink{classContribution}{Contribution}} \&rhs)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classContribution}{Contribution}} \& \mbox{\hyperlink{classContribution_ada54c167fb5fc61ed3b12196ba154e75}{operator=}} (const \mbox{\hyperlink{classContribution}{Contribution}} \&rhs)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classContribution_a529de1fba55974ab913a5e34c09ceec1}{to\+Json\+Object}} () const override
+\begin{DoxyCompactList}\small\item\em Serializes contributions to JSON format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classContribution_a2d8dddc79dd2a69dae3e83324652b845}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\begin{DoxyCompactList}\small\item\em Deserializes contributions from JSON format. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}{To\+String}} () const override
+\begin{DoxyCompactList}\small\item\em Converts contributions to colon-\/separated string format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classContribution_a9f0b8cd1d881e3fe13665d80e738002d}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}) override
+\begin{DoxyCompactList}\small\item\em Writes contributions to file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f}{Read}} (const QString\+List \&strlist) override
+\begin{DoxyCompactList}\small\item\em Reads contributions from string list. \end{DoxyCompactList}\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classContribution_a0d955eb0c9d0727e54eab577af30c088}{To\+Table}} () override
+\begin{DoxyCompactList}\small\item\em Creates a QTable\+Widget for displaying contributions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Source contribution container for Chemical Mass Balance results. 
+
+Stores source contributions as name-\/value pairs (map$<$string, double$>$). Provides JSON serialization, file I/O, and table widget generation. Used to represent the fractional or absolute contribution of each identified pollution source to a receptor site. 
+
+Definition at line \mbox{\hyperlink{contribution_8h_source_l00021}{21}} of file \mbox{\hyperlink{contribution_8h_source}{contribution.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classContribution_a59775497d673b49ac00b19f525bc1b05}\label{classContribution_a59775497d673b49ac00b19f525bc1b05} 
+\index{Contribution@{Contribution}!Contribution@{Contribution}}
+\index{Contribution@{Contribution}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{Contribution()}{Contribution()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Contribution\+::\+Contribution (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor -\/ creates an empty contribution set. 
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+\Hypertarget{classContribution_a86cbe34c23f957d3e9bc4ec81a0ab8bc}\label{classContribution_a86cbe34c23f957d3e9bc4ec81a0ab8bc} 
+\index{Contribution@{Contribution}!Contribution@{Contribution}}
+\index{Contribution@{Contribution}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{Contribution()}{Contribution()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Contribution\+::\+Contribution (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classContribution}{Contribution}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & \doxylink{classContribution}{Contribution} object to copy from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classContribution_ada54c167fb5fc61ed3b12196ba154e75}\label{classContribution_ada54c167fb5fc61ed3b12196ba154e75} 
+\index{Contribution@{Contribution}!operator=@{operator=}}
+\index{operator=@{operator=}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classContribution}{Contribution}} \& Contribution\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classContribution}{Contribution}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rhs} & \doxylink{classContribution}{Contribution} object to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this contribution object 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}.
+
+\Hypertarget{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f}\label{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f} 
+\index{Contribution@{Contribution}!Read@{Read}}
+\index{Read@{Read}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily bool Contribution\+::\+Read (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{strlist }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reads contributions from string list. 
+
+Expected format\+: Each string is "{}source\+\_\+name\+:contribution\+\_\+value"{}
+
+
+\begin{DoxyParams}{Parameters}
+{\em strlist} & List of colon-\/separated source\+:value strings \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+\Hypertarget{classContribution_a2d8dddc79dd2a69dae3e83324652b845}\label{classContribution_a2d8dddc79dd2a69dae3e83324652b845} 
+\index{Contribution@{Contribution}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Contribution\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Deserializes contributions from JSON format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em jsonobject} & JSON object to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+\Hypertarget{classContribution_a529de1fba55974ab913a5e34c09ceec1}\label{classContribution_a529de1fba55974ab913a5e34c09ceec1} 
+\index{Contribution@{Contribution}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Contribution\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Serializes contributions to JSON format. 
+
+\begin{DoxyReturn}{Returns}
+JSON object with source names as keys and contributions as values 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+\Hypertarget{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}\label{classContribution_a9c80795d1e46124a4a3f2435720eb0d2} 
+\index{Contribution@{Contribution}!ToString@{ToString}}
+\index{ToString@{ToString}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Contribution\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Converts contributions to colon-\/separated string format. 
+
+Format\+: "{}source\+\_\+name\+:contribution\+\_\+value\textbackslash{}n"{} for each source
+
+\begin{DoxyReturn}{Returns}
+String representation with one source per line 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{contribution_8cpp_source_l00031}{writetofile()}}.
+
+\Hypertarget{classContribution_a0d955eb0c9d0727e54eab577af30c088}\label{classContribution_a0d955eb0c9d0727e54eab577af30c088} 
+\index{Contribution@{Contribution}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} Contribution\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Creates a QTable\+Widget for displaying contributions. 
+
+Generates a read-\/only single-\/column table with source names as row labels and contribution values in the column.
+
+\begin{DoxyReturn}{Returns}
+Pointer to newly created QTable\+Widget (caller takes ownership) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+\Hypertarget{classContribution_a9f0b8cd1d881e3fe13665d80e738002d}\label{classContribution_a9f0b8cd1d881e3fe13665d80e738002d} 
+\index{Contribution@{Contribution}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!Contribution@{Contribution}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool Contribution\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Writes contributions to file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File pointer to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{contribution_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{contribution_8cpp_source}{contribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{contribution_8cpp_source_l00021}{To\+String()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{contribution_8h}{contribution.\+h}}\item 
+\mbox{\hyperlink{contribution_8cpp}{contribution.\+cpp}}\end{DoxyCompactItemize}

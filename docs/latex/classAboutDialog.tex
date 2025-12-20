@@ -1,0 +1,376 @@
+\doxysection{About\+Dialog Class Reference}
+\hypertarget{classAboutDialog}{}\label{classAboutDialog}\index{AboutDialog@{AboutDialog}}
+
+
+Professional about dialog for Sed\+Sat3 application.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/aboutdialog.\+h$>$}
+
+
+
+Inheritance diagram for About\+Dialog\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{classAboutDialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for About\+Dialog\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{classAboutDialog__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAboutDialog_a66647a6ddd09e3a000e96bd25a835799}{About\+Dialog}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructs the about dialog. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classAboutDialog_a3bc1c8623ef9e819aba26bea12b73d25}{\texorpdfstring{$\sim$}{\string~}\+About\+Dialog}} () override=default
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAboutDialog_a2f4720983102050bb6e30d392a836df7}{set\+Version}} (const QString \&\mbox{\hyperlink{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}{version}})
+\begin{DoxyCompactList}\small\item\em Sets the application version. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAboutDialog_afd45defb6d940f64730b19e39d5cf309}{set\+Build\+Date}} (const QString \&date)
+\begin{DoxyCompactList}\small\item\em Sets the build date. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAboutDialog_ad47fe9e184d788cc9a0a2bb120ff4699}{append\+Text}} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Appends additional text to the description area. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAboutDialog_aee3b296ee6e293706f42f269b2e63af5}{clear\+Text}} ()
+\begin{DoxyCompactList}\small\item\em Clears all text from the description area. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0}{setup\+UI}} ()
+\begin{DoxyCompactList}\small\item\em Sets up the dialog UI. \end{DoxyCompactList}\item 
+QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2}{create\+Header}} ()
+\begin{DoxyCompactList}\small\item\em Creates the header section with logo and title. \end{DoxyCompactList}\item 
+QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13}{create\+Info\+Section}} ()
+\begin{DoxyCompactList}\small\item\em Creates the information section with version and authors. \end{DoxyCompactList}\item 
+QText\+Browser \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_ac7931d6dde55061b63316e46c982e74e}{create\+Description\+Section}} ()
+\begin{DoxyCompactList}\small\item\em Creates the description text browser. \end{DoxyCompactList}\item 
+QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4}{create\+Footer}} ()
+\begin{DoxyCompactList}\small\item\em Creates the footer with copyright and buttons. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{version\+Label}}
+\item 
+QLabel \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{build\+Date\+Label}}
+\item 
+QText\+Browser \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{description\+Browser}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Professional about dialog for Sed\+Sat3 application. 
+
+Displays application information including version, authors, description, and copyright information. Built entirely in code without .ui file. 
+
+Definition at line \mbox{\hyperlink{aboutdialog_8h_source_l00019}{19}} of file \mbox{\hyperlink{aboutdialog_8h_source}{aboutdialog.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classAboutDialog_a66647a6ddd09e3a000e96bd25a835799}\label{classAboutDialog_a66647a6ddd09e3a000e96bd25a835799} 
+\index{AboutDialog@{AboutDialog}!AboutDialog@{AboutDialog}}
+\index{AboutDialog@{AboutDialog}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{AboutDialog()}{AboutDialog()}}
+{\footnotesize\ttfamily About\+Dialog\+::\+About\+Dialog (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs the about dialog. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Parent widget \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8cpp_source_l00016}{setup\+UI()}}.
+
+\Hypertarget{classAboutDialog_a3bc1c8623ef9e819aba26bea12b73d25}\label{classAboutDialog_a3bc1c8623ef9e819aba26bea12b73d25} 
+\index{AboutDialog@{AboutDialog}!````~AboutDialog@{\texorpdfstring{$\sim$}{\string~}AboutDialog}}
+\index{````~AboutDialog@{\texorpdfstring{$\sim$}{\string~}AboutDialog}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AboutDialog()}{\string~AboutDialog()}}
+{\footnotesize\ttfamily About\+Dialog\+::\texorpdfstring{$\sim$}{\string~}\+About\+Dialog (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [default]}}
+
+
+
+Destructor. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classAboutDialog_ad47fe9e184d788cc9a0a2bb120ff4699}\label{classAboutDialog_ad47fe9e184d788cc9a0a2bb120ff4699} 
+\index{AboutDialog@{AboutDialog}!appendText@{appendText}}
+\index{appendText@{appendText}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{appendText()}{appendText()}}
+{\footnotesize\ttfamily void About\+Dialog\+::append\+Text (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})}
+
+
+
+Appends additional text to the description area. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & Text to append \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00225}{225}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8h_source_l00091}{description\+Browser}}.
+
+\Hypertarget{classAboutDialog_aee3b296ee6e293706f42f269b2e63af5}\label{classAboutDialog_aee3b296ee6e293706f42f269b2e63af5} 
+\index{AboutDialog@{AboutDialog}!clearText@{clearText}}
+\index{clearText@{clearText}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{clearText()}{clearText()}}
+{\footnotesize\ttfamily void About\+Dialog\+::clear\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears all text from the description area. 
+
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00233}{233}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8h_source_l00091}{description\+Browser}}.
+
+\Hypertarget{classAboutDialog_ac7931d6dde55061b63316e46c982e74e}\label{classAboutDialog_ac7931d6dde55061b63316e46c982e74e} 
+\index{AboutDialog@{AboutDialog}!createDescriptionSection@{createDescriptionSection}}
+\index{createDescriptionSection@{createDescriptionSection}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{createDescriptionSection()}{createDescriptionSection()}}
+{\footnotesize\ttfamily QText\+Browser \texorpdfstring{$\ast$}{*} About\+Dialog\+::create\+Description\+Section (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates the description text browser. 
+
+\begin{DoxyReturn}{Returns}
+Text browser widget 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00127}{127}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8h_source_l00091}{description\+Browser}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00016}{setup\+UI()}}.
+
+\Hypertarget{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4}\label{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4} 
+\index{AboutDialog@{AboutDialog}!createFooter@{createFooter}}
+\index{createFooter@{createFooter}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{createFooter()}{createFooter()}}
+{\footnotesize\ttfamily QWidget \texorpdfstring{$\ast$}{*} About\+Dialog\+::create\+Footer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates the footer with copyright and buttons. 
+
+\begin{DoxyReturn}{Returns}
+Footer widget 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00155}{155}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00016}{setup\+UI()}}.
+
+\Hypertarget{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2}\label{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2} 
+\index{AboutDialog@{AboutDialog}!createHeader@{createHeader}}
+\index{createHeader@{createHeader}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{createHeader()}{createHeader()}}
+{\footnotesize\ttfamily QWidget \texorpdfstring{$\ast$}{*} About\+Dialog\+::create\+Header (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates the header section with logo and title. 
+
+\begin{DoxyReturn}{Returns}
+Header widget 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00016}{setup\+UI()}}.
+
+\Hypertarget{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13}\label{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13} 
+\index{AboutDialog@{AboutDialog}!createInfoSection@{createInfoSection}}
+\index{createInfoSection@{createInfoSection}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{createInfoSection()}{createInfoSection()}}
+{\footnotesize\ttfamily QWidget \texorpdfstring{$\ast$}{*} About\+Dialog\+::create\+Info\+Section (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Creates the information section with version and authors. 
+
+\begin{DoxyReturn}{Returns}
+Information widget 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00077}{77}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8h_source_l00090}{build\+Date\+Label}}, and \mbox{\hyperlink{aboutdialog_8h_source_l00089}{version\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00016}{setup\+UI()}}.
+
+\Hypertarget{classAboutDialog_afd45defb6d940f64730b19e39d5cf309}\label{classAboutDialog_afd45defb6d940f64730b19e39d5cf309} 
+\index{AboutDialog@{AboutDialog}!setBuildDate@{setBuildDate}}
+\index{setBuildDate@{setBuildDate}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{setBuildDate()}{setBuildDate()}}
+{\footnotesize\ttfamily void About\+Dialog\+::set\+Build\+Date (\begin{DoxyParamCaption}\item[{const QString \&}]{date }\end{DoxyParamCaption})}
+
+
+
+Sets the build date. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em date} & Date string (e.\+g., "{}\+December 20, 2025"{}) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00217}{217}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8h_source_l00090}{build\+Date\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01263}{Main\+Window\+::on\+About\+Triggered()}}.
+
+\Hypertarget{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0}\label{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0} 
+\index{AboutDialog@{AboutDialog}!setupUI@{setupUI}}
+\index{setupUI@{setupUI}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{setupUI()}{setupUI()}}
+{\footnotesize\ttfamily void About\+Dialog\+::setup\+UI (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets up the dialog UI. 
+
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{aboutdialog_8cpp_source_l00127}{create\+Description\+Section()}}, \mbox{\hyperlink{aboutdialog_8cpp_source_l00155}{create\+Footer()}}, \mbox{\hyperlink{aboutdialog_8cpp_source_l00037}{create\+Header()}}, and \mbox{\hyperlink{aboutdialog_8cpp_source_l00077}{create\+Info\+Section()}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00007}{About\+Dialog()}}.
+
+\Hypertarget{classAboutDialog_a2f4720983102050bb6e30d392a836df7}\label{classAboutDialog_a2f4720983102050bb6e30d392a836df7} 
+\index{AboutDialog@{AboutDialog}!setVersion@{setVersion}}
+\index{setVersion@{setVersion}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{setVersion()}{setVersion()}}
+{\footnotesize\ttfamily void About\+Dialog\+::set\+Version (\begin{DoxyParamCaption}\item[{const QString \&}]{version }\end{DoxyParamCaption})}
+
+
+
+Sets the application version. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em version} & Version string (e.\+g., "{}1.\+1.\+3"{}) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8cpp_source_l00209}{209}} of file \mbox{\hyperlink{aboutdialog_8cpp_source}{aboutdialog.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00051}{version}}, and \mbox{\hyperlink{aboutdialog_8h_source_l00089}{version\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01263}{Main\+Window\+::on\+About\+Triggered()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}\label{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4} 
+\index{AboutDialog@{AboutDialog}!buildDateLabel@{buildDateLabel}}
+\index{buildDateLabel@{buildDateLabel}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{buildDateLabel}{buildDateLabel}}
+{\footnotesize\ttfamily QLabel\texorpdfstring{$\ast$}{*} About\+Dialog\+::build\+Date\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8h_source_l00090}{90}} of file \mbox{\hyperlink{aboutdialog_8h_source}{aboutdialog.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00077}{create\+Info\+Section()}}, and \mbox{\hyperlink{aboutdialog_8cpp_source_l00217}{set\+Build\+Date()}}.
+
+\Hypertarget{classAboutDialog_a7120552e15f140a2256b751fdf257d78}\label{classAboutDialog_a7120552e15f140a2256b751fdf257d78} 
+\index{AboutDialog@{AboutDialog}!descriptionBrowser@{descriptionBrowser}}
+\index{descriptionBrowser@{descriptionBrowser}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{descriptionBrowser}{descriptionBrowser}}
+{\footnotesize\ttfamily QText\+Browser\texorpdfstring{$\ast$}{*} About\+Dialog\+::description\+Browser\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8h_source_l00091}{91}} of file \mbox{\hyperlink{aboutdialog_8h_source}{aboutdialog.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00225}{append\+Text()}}, \mbox{\hyperlink{aboutdialog_8cpp_source_l00233}{clear\+Text()}}, and \mbox{\hyperlink{aboutdialog_8cpp_source_l00127}{create\+Description\+Section()}}.
+
+\Hypertarget{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}\label{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb} 
+\index{AboutDialog@{AboutDialog}!versionLabel@{versionLabel}}
+\index{versionLabel@{versionLabel}!AboutDialog@{AboutDialog}}
+\doxysubsubsection{\texorpdfstring{versionLabel}{versionLabel}}
+{\footnotesize\ttfamily QLabel\texorpdfstring{$\ast$}{*} About\+Dialog\+::version\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{aboutdialog_8h_source_l00089}{89}} of file \mbox{\hyperlink{aboutdialog_8h_source}{aboutdialog.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{aboutdialog_8cpp_source_l00077}{create\+Info\+Section()}}, and \mbox{\hyperlink{aboutdialog_8cpp_source_l00209}{set\+Version()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{aboutdialog_8h}{aboutdialog.\+h}}\item 
+\mbox{\hyperlink{aboutdialog_8cpp}{aboutdialog.\+cpp}}\end{DoxyCompactItemize}

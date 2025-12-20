@@ -1,0 +1,211 @@
+\doxysection{cmbtimeseriesset.\+cpp}
+\hypertarget{cmbtimeseriesset_8cpp_source}{}\label{cmbtimeseriesset_8cpp_source}\mbox{\hyperlink{cmbtimeseriesset_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbtimeseriesset_8h}{cmbtimeseriesset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <QJsonArray>}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <QFile>}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}Vector.h"{}}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00006}\mbox{\hyperlink{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}{00006}}\ \mbox{\hyperlink{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}{CMBTimeSeriesSet::CMBTimeSeriesSet}}():TimeSeriesSet<double>(),\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00011}\mbox{\hyperlink{classCMBTimeSeriesSet_a03b3362586ab5f25dbaf6173aacef724}{00011}}\ \mbox{\hyperlink{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}{CMBTimeSeriesSet::CMBTimeSeriesSet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\&\ mp):TimeSeriesSet<double>(mp)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00013}00013\ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}\ =\ mp.\mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00014}00014\ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}}\ =\ mp.\mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00017}\mbox{\hyperlink{classCMBTimeSeriesSet_a9575a6627e5d2eed725c14ee54d53cf7}{00017}}\ \mbox{\hyperlink{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}{CMBTimeSeriesSet::CMBTimeSeriesSet}}(\textcolor{keywordtype}{int}\ n):TimeSeriesSet<double>(n),\ \mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}.resize(n);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00020}00020\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00022}\mbox{\hyperlink{classCMBTimeSeriesSet_a1632549804e5b226828449b9313857ec}{00022}}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\&\ \mbox{\hyperlink{classCMBTimeSeriesSet_a1632549804e5b226828449b9313857ec}{CMBTimeSeriesSet::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \&mp)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00023}00023\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00024}00024\ \ \ \ \ TimeSeriesSet<double>::operator=(mp);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}\ =\ mp.\mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}}\ =\ mp.\mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00030}\mbox{\hyperlink{classCMBTimeSeriesSet_a0d4ac763044c50194548801f98b0c48f}{00030}}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\&\ \mbox{\hyperlink{classCMBTimeSeriesSet_a1632549804e5b226828449b9313857ec}{CMBTimeSeriesSet::operator=}}(\textcolor{keyword}{const}\ TimeSeriesSet<double>\ \&mp)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00031}00031\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00032}00032\ \ \ \ \ TimeSeriesSet<double>::operator=(mp);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}.resize(size());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00036}\mbox{\hyperlink{classCMBTimeSeriesSet_a5af9082267f931a9341adc10e923a61e}{00036}}\ \mbox{\hyperlink{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}{CMBTimeSeriesSet::CMBTimeSeriesSet}}(\textcolor{keyword}{const}\ TimeSeriesSet<double>\&\ mp):TimeSeriesSet<double>(mp)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00037}00037\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}.resize(size());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00039}00039\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00041}\mbox{\hyperlink{classCMBTimeSeriesSet_a92f6681f8145b4582de54347e2de65c7}{00041}}\ QJsonObject\ \mbox{\hyperlink{classCMBTimeSeriesSet_a92f6681f8145b4582de54347e2de65c7}{CMBTimeSeriesSet::toJsonObject}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00042}00042\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00043}00043\ \ \ \ \ QJsonObject\ out;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00044}00044\ \ \ \ \ QJsonArray\ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00045}00045\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<maxnumpoints();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}}.append(QString::fromStdString(\mbox{\hyperlink{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8}{Label}}(j)));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00049}00049\ \ \ \ \ out[\textcolor{stringliteral}{"{}labels"{}}]\ =\ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00051}00051\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ QJsonObject\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}{timeseries}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ QJsonArray\ t\_values;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ QJsonArray\ C\_values;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<at(i).size();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ t\_values.append(at(i).getTime(j));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ C\_values.append(at(i).getValue(j));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}{timeseries}}[\textcolor{stringliteral}{"{}time"{}}]\ =\ t\_values;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}{timeseries}}[\textcolor{stringliteral}{"{}value"{}}]\ =\ C\_values;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ out[QString::fromStdString(getSeriesName(i))]\ =\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}{timeseries}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00064}00064\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00065}00065\ \ \ \ \ QJsonArray\ Jobserved\_values;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ Jobserved\_values.append(\mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}[i]);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00068}00068\ \ \ \ \ out[\textcolor{stringliteral}{"{}Observed\ Values"{}}]\ =\ Jobserved\_values;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00071}\mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{00071}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{CMBTimeSeriesSet::ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00072}00072\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00073}00073\ \ \ \ \ clear();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00074}00074\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}.clear();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{for}\ (QString\ key:\ jsonobject.keys())}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00076}00076\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key==\textcolor{stringliteral}{"{}Observed\ Values"{}})}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ QJsonArray\ observed\_value\_JArray\ =\ jsonobject[key].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<observed\_value\_JArray.count();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\_value}}.push\_back(observed\_value\_JArray[i].toDouble());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key==\textcolor{stringliteral}{"{}labels"{}})}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ QJsonArray\ labels\_JArray\ =\ jsonobject[key].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<labels\_JArray.count();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}}.push\_back(labels\_JArray[i].toString().toStdString());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ QString\ SeriesName\ =\ key;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ QJsonArray\ TimeJArray\ =\ jsonobject[key].toObject()[\textcolor{stringliteral}{"{}time"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ QJsonArray\ ValueJArray\ =\ jsonobject[key].toObject()[\textcolor{stringliteral}{"{}value"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ TimeSeries<double>\ this\_series;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<TimeJArray.count();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this\_series.append(TimeJArray[i].toDouble(),\ ValueJArray[i].toDouble());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ append(this\_series,SeriesName.toStdString());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00099}00099\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00100}00100\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00105}\mbox{\hyperlink{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76}{00105}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76}{CMBTimeSeriesSet::ToString}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00106}00106\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00108}00108\ \ \ \ \ \textcolor{keywordtype}{string}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ +\ getSeriesName(i);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00111}00111\ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<maxnumpoints();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00113}00113\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i>0)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{},\ "{}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j<at(i).size())}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out+=\ \mbox{\hyperlink{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8}{Label}}(j,i)\ +\ \textcolor{stringliteral}{"{},"{}}\ +\ QString::number(at(i).getValue(j)).toStdString();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out+=\ \textcolor{stringliteral}{"{},\ "{}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00127}00127\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00129}00129\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00131}\mbox{\hyperlink{classCMBTimeSeriesSet_a4b250708074517799b94809a63b9bab0}{00131}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBTimeSeriesSet_a4b250708074517799b94809a63b9bab0}{CMBTimeSeriesSet::writetofile}}(QFile*\ file)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00132}00132\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00133}00133\ \ \ \ \ file-\/>write(QString::fromStdString(\mbox{\hyperlink{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76}{ToString}}()).toUtf8());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00135}00135\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00137}\mbox{\hyperlink{classCMBTimeSeriesSet_ac5bedddc3150b5a79767dd28bcf14b82}{00137}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMBTimeSeriesSet_ac5bedddc3150b5a79767dd28bcf14b82}{CMBTimeSeriesSet::AppendLastContribution}}(\textcolor{keywordtype}{int}\ colnumber,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00138}00138\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00139}00139\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00140}00140\ \ \ \ \ TimeSeries<double>\ last\_contribution;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<maxnumpoints();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00142}00142\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<colnumber;\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ sum+=at(i).getValue(j);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (1.0-\/sum<0)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ cout<<\textcolor{stringliteral}{"{}Negative\ contribution!"{}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ last\_contribution.append(j,1.0-\/sum);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00153}00153\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i<colnumber;\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00155}00155\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ out.append(at(i),getSeriesName(i));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00157}00157\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00158}00158\ \ \ \ \ out.append(last\_contribution,\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}});}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=colnumber;\ i<size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00160}00160\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ out.append(at(i),getSeriesName(i));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00162}00162\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00163}00163\ \ \ \ \ *\textcolor{keyword}{this}\ =\ out;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00165}00165\ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00166}00166\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00167}\mbox{\hyperlink{classCMBTimeSeriesSet_aca318fabba7532a390a23a225d87f984}{00167}}\ QTableWidget\ *\mbox{\hyperlink{classCMBTimeSeriesSet_aca318fabba7532a390a23a225d87f984}{CMBTimeSeriesSet::ToTable}}()}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00168}00168\ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00169}00169\ \ \ \ \ QTableWidget\ *tablewidget\ =\ \textcolor{keyword}{new}\ QTableWidget();}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00170}00170\ \ \ \ \ tablewidget-\/>setEditTriggers(QAbstractItemView::NoEditTriggers);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00171}00171\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Interface::Option}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}}))}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00172}00172\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ tablewidget-\/>setColumnCount(size());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00174}00174\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00175}00175\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00176}00176\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ tablewidget-\/>setColumnCount(size()*2);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00178}00178\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00179}00179\ \ \ \ \ tablewidget-\/>setRowCount(maxnumpoints());}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00180}00180\ \ \ \ \ QStringList\ headers;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00181}00181\ \ \ \ \ QStringList\ rowlabels;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00183}00183\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<size();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00184}00184\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Interface::Option}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}}))}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ headers\ <<\ QString::fromStdString(getSeriesName(j))\ +\ \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a753501ec8fbfcb20059084b4db149870}{Y\_suffix}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ headers\ <<\ QString::fromStdString(getSeriesName(j))\ +\ \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a1a3144925ce8951b685b4e518d1c1ef3}{X\_suffix}}\ <<\ QString::fromStdString(getSeriesName(j))+\ \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a753501ec8fbfcb20059084b4db149870}{Y\_suffix}};}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<at(j).size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Interface::Option}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}}))}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (j==0)\ rowlabels<<QString::number(i);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(i,j*2,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::fromStdString(\mbox{\hyperlink{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8}{Label}}(i,j))));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(i,j*2+1,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(at(j).getValue(i))));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (j==0)\ rowlabels<<QString::fromStdString(\mbox{\hyperlink{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8}{Label}}(i,j));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(i,j,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(at(j).getValue(i))));}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00201}00201\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00203}00203\ \ \ \ \ tablewidget-\/>setHorizontalHeaderLabels(headers);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00204}00204\ \ \ \ \ tablewidget-\/>setVerticalHeaderLabels(rowlabels);}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00205}00205\ \ \ \ \ \textcolor{keywordflow}{return}\ tablewidget;}
+\DoxyCodeLine{\Hypertarget{cmbtimeseriesset_8cpp_source_l00206}00206\ \}}
+
+\end{DoxyCode}

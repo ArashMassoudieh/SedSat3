@@ -1,0 +1,680 @@
+\doxysection{CMBTime\+Series\+Set Class Reference}
+\hypertarget{classCMBTimeSeriesSet}{}\label{classCMBTimeSeriesSet}\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+
+
+Collection of time series with labels and observed values.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/cmbtimeseriesset.\+h$>$}
+
+
+
+Inheritance diagram for CMBTime\+Series\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBTimeSeriesSet__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CMBTime\+Series\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBTimeSeriesSet__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}{CMBTime\+Series\+Set}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor -\/ creates an empty time series set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet_a9575a6627e5d2eed725c14ee54d53cf7}{CMBTime\+Series\+Set}} (int n)
+\begin{DoxyCompactList}\small\item\em Constructs a time series set with given capacity. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet_ac4e60c11ada7765c31ae2ad2da3f45ea}{CMBTime\+Series\+Set}} (int n, int m)
+\begin{DoxyCompactList}\small\item\em Constructs with specified number of series and points. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet_a03b3362586ab5f25dbaf6173aacef724}{CMBTime\+Series\+Set}} (const \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \&mp)
+\begin{DoxyCompactList}\small\item\em Copy constructor from \doxylink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \& \mbox{\hyperlink{classCMBTimeSeriesSet_a1632549804e5b226828449b9313857ec}{operator=}} (const \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \&mp)
+\begin{DoxyCompactList}\small\item\em Assignment operator from \doxylink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \& \mbox{\hyperlink{classCMBTimeSeriesSet_a0d4ac763044c50194548801f98b0c48f}{operator=}} (const Time\+Series\+Set$<$ double $>$ \&mp)
+\begin{DoxyCompactList}\small\item\em Assignment operator from base Time\+Series\+Set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBTimeSeriesSet_a5af9082267f931a9341adc10e923a61e}{CMBTime\+Series\+Set}} (const Time\+Series\+Set$<$ double $>$ \&mp)
+\begin{DoxyCompactList}\small\item\em Constructs from base Time\+Series\+Set. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classCMBTimeSeriesSet_a92f6681f8145b4582de54347e2de65c7}{to\+Json\+Object}} () const override
+\begin{DoxyCompactList}\small\item\em Serializes time series set to JSON format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\begin{DoxyCompactList}\small\item\em Deserializes time series set from JSON format. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76}{To\+String}} () const override
+\begin{DoxyCompactList}\small\item\em Converts time series set to CSV-\/formatted string. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBTimeSeriesSet_a4b250708074517799b94809a63b9bab0}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}) override
+\begin{DoxyCompactList}\small\item\em Writes time series set to file. \end{DoxyCompactList}\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMBTimeSeriesSet_aca318fabba7532a390a23a225d87f984}{To\+Table}} () override
+\begin{DoxyCompactList}\small\item\em Creates a QTable\+Widget for displaying time series set data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBTimeSeriesSet_ac5bedddc3150b5a79767dd28bcf14b82}{Append\+Last\+Contribution}} (int colnumber, const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})
+\begin{DoxyCompactList}\small\item\em Appends a final contribution series calculated from existing series. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBTimeSeriesSet_ad92fc12f24a871a623b2f3e48adb505f}{Set\+Observed\+Value}} (int i, const double \&value)
+\begin{DoxyCompactList}\small\item\em Sets observed value for comparison at specified index. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBTimeSeriesSet_afa2e9b062acbe211cd4f2bcd2c17e61f}{Observed\+Value}} (int i)
+\begin{DoxyCompactList}\small\item\em Gets observed value at specified index. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBTimeSeriesSet_ab024a88161aa219d6b16b296a3d21d4d}{Observed\+Value}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} variable\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Gets observed value for named series. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8}{Label}} (unsigned int i) const
+\begin{DoxyCompactList}\small\item\em Gets label for time point (uses custom labels if set) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBTimeSeriesSet_a0c2a9da46589436c48d9472c174d6bdb}{Label}} (unsigned int i, unsigned int j) const
+\begin{DoxyCompactList}\small\item\em Gets label for time point in specific series. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBTimeSeriesSet_a27e500afc621538c2febf2c88c78873d}{Set\+Label}} (unsigned int i, const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&label)
+\begin{DoxyCompactList}\small\item\em Sets custom label for time point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}{observed\+\_\+value}}
+\begin{DoxyCompactList}\small\item\em Observed values for comparison with modeled series. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}{labels}}
+\begin{DoxyCompactList}\small\item\em Custom labels for time points. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Collection of time series with labels and observed values. 
+
+Extends Time\+Series\+Set$<$double$>$ with custom labels for time points, observed values for comparison, JSON serialization, and table generation. Used for organizing multiple time series data such as contribution time series from different sources or fitted vs observed distributions. 
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00016}{16}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b}\label{classCMBTimeSeriesSet_a412139ee9fe4244452d4076ef9140b5b} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeriesSet()}{CMBTimeSeriesSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily CMBTime\+Series\+Set\+::\+CMBTime\+Series\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor -\/ creates an empty time series set. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a9575a6627e5d2eed725c14ee54d53cf7}\label{classCMBTimeSeriesSet_a9575a6627e5d2eed725c14ee54d53cf7} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeriesSet()}{CMBTimeSeriesSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily CMBTime\+Series\+Set\+::\+CMBTime\+Series\+Set (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Constructs a time series set with given capacity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Initial number of series \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+\Hypertarget{classCMBTimeSeriesSet_ac4e60c11ada7765c31ae2ad2da3f45ea}\label{classCMBTimeSeriesSet_ac4e60c11ada7765c31ae2ad2da3f45ea} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeriesSet()}{CMBTimeSeriesSet()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily CMBTime\+Series\+Set\+::\+CMBTime\+Series\+Set (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int}]{m }\end{DoxyParamCaption})}
+
+
+
+Constructs with specified number of series and points. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of series \\
+\hline
+{\em m} & Number of points per series \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classCMBTimeSeriesSet_a03b3362586ab5f25dbaf6173aacef724}\label{classCMBTimeSeriesSet_a03b3362586ab5f25dbaf6173aacef724} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeriesSet()}{CMBTimeSeriesSet()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily CMBTime\+Series\+Set\+::\+CMBTime\+Series\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Copy constructor from \doxylink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Time series set to copy from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}, and \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a5af9082267f931a9341adc10e923a61e}\label{classCMBTimeSeriesSet_a5af9082267f931a9341adc10e923a61e} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{CMBTimeSeriesSet()}{CMBTimeSeriesSet()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily CMBTime\+Series\+Set\+::\+CMBTime\+Series\+Set (\begin{DoxyParamCaption}\item[{const Time\+Series\+Set$<$ double $>$ \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Constructs from base Time\+Series\+Set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Time series set to copy from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCMBTimeSeriesSet_ac5bedddc3150b5a79767dd28bcf14b82}\label{classCMBTimeSeriesSet_ac5bedddc3150b5a79767dd28bcf14b82} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!AppendLastContribution@{AppendLastContribution}}
+\index{AppendLastContribution@{AppendLastContribution}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{AppendLastContribution()}{AppendLastContribution()}}
+{\footnotesize\ttfamily void CMBTime\+Series\+Set\+::\+Append\+Last\+Contribution (\begin{DoxyParamCaption}\item[{int}]{colnumber,  }\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Appends a final contribution series calculated from existing series. 
+
+Calculates the remaining contribution (1 -\/ sum of first colnumber series) and inserts it at position colnumber in the set.
+
+
+\begin{DoxyParams}{Parameters}
+{\em colnumber} & Number of existing contribution series \\
+\hline
+{\em name} & Name for the final contribution series \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00137}{137}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}.
+
+\Hypertarget{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8}\label{classCMBTimeSeriesSet_aa120f81e180cbee7774476d8e9cf26b8} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!Label@{Label}}
+\index{Label@{Label}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{Label()}{Label()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBTime\+Series\+Set\+::\+Label (\begin{DoxyParamCaption}\item[{unsigned int}]{i }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets label for time point (uses custom labels if set) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Time point index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Custom label if available, otherwise formatted time value 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{155}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l01352}{General\+Chart\+::\+Plot\+Time\+Series\+Set\+\_\+\+A()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01286}{General\+Chart\+::\+Plot\+Time\+Series\+Set\+\_\+\+M()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01400}{General\+Chart\+::\+Plot\+Time\+Series\+Set\+\_\+\+Stacked()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00041}{to\+Json\+Object()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00105}{To\+String()}}, and \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00167}{To\+Table()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a0c2a9da46589436c48d9472c174d6bdb}\label{classCMBTimeSeriesSet_a0c2a9da46589436c48d9472c174d6bdb} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!Label@{Label}}
+\index{Label@{Label}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{Label()}{Label()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBTime\+Series\+Set\+::\+Label (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{unsigned int}]{j }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets label for time point in specific series. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Time point index \\
+\hline
+{\em j} & Series index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Custom label if available, otherwise formatted time value from series j 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00171}{171}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}.
+
+\Hypertarget{classCMBTimeSeriesSet_afa2e9b062acbe211cd4f2bcd2c17e61f}\label{classCMBTimeSeriesSet_afa2e9b062acbe211cd4f2bcd2c17e61f} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!ObservedValue@{ObservedValue}}
+\index{ObservedValue@{ObservedValue}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{ObservedValue()}{ObservedValue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double CMBTime\+Series\+Set\+::\+Observed\+Value (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets observed value at specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Series index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Observed value, or 0 if index out of range 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00127}{127}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l01057}{General\+Chart\+::\+Plot\+Distribution()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_ab024a88161aa219d6b16b296a3d21d4d}\label{classCMBTimeSeriesSet_ab024a88161aa219d6b16b296a3d21d4d} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!ObservedValue@{ObservedValue}}
+\index{ObservedValue@{ObservedValue}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{ObservedValue()}{ObservedValue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily double CMBTime\+Series\+Set\+::\+Observed\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{variable\+\_\+name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets observed value for named series. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em variable\+\_\+name} & Name of the series \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Observed value, or 0 if series not found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00140}{140}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a1632549804e5b226828449b9313857ec}\label{classCMBTimeSeriesSet_a1632549804e5b226828449b9313857ec} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!operator=@{operator=}}
+\index{operator=@{operator=}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \& CMBTime\+Series\+Set\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Assignment operator from \doxylink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Time series set to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this time series set 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}, and \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a0d4ac763044c50194548801f98b0c48f}\label{classCMBTimeSeriesSet_a0d4ac763044c50194548801f98b0c48f} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!operator=@{operator=}}
+\index{operator=@{operator=}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \& CMBTime\+Series\+Set\+::operator= (\begin{DoxyParamCaption}\item[{const Time\+Series\+Set$<$ double $>$ \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Assignment operator from base Time\+Series\+Set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Time series set to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this time series set 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}\label{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool CMBTime\+Series\+Set\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Deserializes time series set from JSON format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em jsonobject} & JSON object to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00071}{71}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}, and \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a27e500afc621538c2febf2c88c78873d}\label{classCMBTimeSeriesSet_a27e500afc621538c2febf2c88c78873d} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!SetLabel@{SetLabel}}
+\index{SetLabel@{SetLabel}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{SetLabel()}{SetLabel()}}
+{\footnotesize\ttfamily void CMBTime\+Series\+Set\+::\+Set\+Label (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets custom label for time point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Time point index \\
+\hline
+{\em label} & Label string to set \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00186}{186}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03934}{Source\+Sink\+Data\+::\+LM\+\_\+\+Batch()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03861}{Source\+Sink\+Data\+::\+Verify\+Source()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_ad92fc12f24a871a623b2f3e48adb505f}\label{classCMBTimeSeriesSet_ad92fc12f24a871a623b2f3e48adb505f} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!SetObservedValue@{SetObservedValue}}
+\index{SetObservedValue@{SetObservedValue}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{SetObservedValue()}{SetObservedValue()}}
+{\footnotesize\ttfamily void CMBTime\+Series\+Set\+::\+Set\+Observed\+Value (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{const double \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets observed value for comparison at specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Series index \\
+\hline
+{\em value} & Observed value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00116}{116}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a92f6681f8145b4582de54347e2de65c7}\label{classCMBTimeSeriesSet_a92f6681f8145b4582de54347e2de65c7} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object CMBTime\+Series\+Set\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Serializes time series set to JSON format. 
+
+\begin{DoxyReturn}{Returns}
+JSON object containing all series, labels, and observed values 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{Label()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{labels}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{observed\+\_\+value}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a7affab7aaa3018479fc24f836a9ade11}{timeseries}}.
+
+\Hypertarget{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76}\label{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!ToString@{ToString}}
+\index{ToString@{ToString}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBTime\+Series\+Set\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Converts time series set to CSV-\/formatted string. 
+
+\begin{DoxyReturn}{Returns}
+String representation with all series 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00105}{105}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00131}{writetofile()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_aca318fabba7532a390a23a225d87f984}\label{classCMBTimeSeriesSet_aca318fabba7532a390a23a225d87f984} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} CMBTime\+Series\+Set\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Creates a QTable\+Widget for displaying time series set data. 
+
+Generates either a table with separate time columns for each series, or a single time column with multiple value columns, depending on the single\+\_\+column\+\_\+x option.
+
+\begin{DoxyReturn}{Returns}
+Pointer to newly created QTable\+Widget (caller takes ownership) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00167}{167}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00071}{Interface\+::\+Get\+Options()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{Label()}}, \mbox{\hyperlink{interface_8h_source_l00064}{Interface\+::\+Option()}}, \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\+\_\+column\+\_\+x}}, \mbox{\hyperlink{interface_8h_source_l00020}{options\+::\+X\+\_\+suffix}}, and \mbox{\hyperlink{interface_8h_source_l00021}{options\+::\+Y\+\_\+suffix}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a4b250708074517799b94809a63b9bab0}\label{classCMBTimeSeriesSet_a4b250708074517799b94809a63b9bab0} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool CMBTime\+Series\+Set\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Writes time series set to file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File pointer to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00131}{131}} of file \mbox{\hyperlink{cmbtimeseriesset_8cpp_source}{cmbtimeseriesset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00105}{To\+String()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904}\label{classCMBTimeSeriesSet_a6af5585896eec82b97905f1119031904} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!labels@{labels}}
+\index{labels@{labels}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{labels}{labels}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}$>$ CMBTime\+Series\+Set\+::labels\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Custom labels for time points. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00199}{199}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00011}{CMBTime\+Series\+Set()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{Label()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00171}{Label()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00022}{operator=()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00071}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00186}{Set\+Label()}}, and \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00041}{to\+Json\+Object()}}.
+
+\Hypertarget{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966}\label{classCMBTimeSeriesSet_a8d327b5a86641eaec1ecfb1a92a67966} 
+\index{CMBTimeSeriesSet@{CMBTimeSeriesSet}!observed\_value@{observed\_value}}
+\index{observed\_value@{observed\_value}!CMBTimeSeriesSet@{CMBTimeSeriesSet}}
+\doxysubsubsection{\texorpdfstring{observed\_value}{observed\_value}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ CMBTime\+Series\+Set\+::observed\+\_\+value\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Observed values for comparison with modeled series. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00198}{198}} of file \mbox{\hyperlink{cmbtimeseriesset_8h_source}{cmbtimeseriesset.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00011}{CMBTime\+Series\+Set()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00036}{CMBTime\+Series\+Set()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00017}{CMBTime\+Series\+Set()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00127}{Observed\+Value()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00140}{Observed\+Value()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00022}{operator=()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00030}{operator=()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00071}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00116}{Set\+Observed\+Value()}}, and \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00041}{to\+Json\+Object()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cmbtimeseriesset_8h}{cmbtimeseriesset.\+h}}\item 
+\mbox{\hyperlink{cmbtimeseriesset_8cpp}{cmbtimeseriesset.\+cpp}}\end{DoxyCompactItemize}

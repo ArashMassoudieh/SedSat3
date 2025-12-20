@@ -1,0 +1,153 @@
+\doxysection{elementstablemodel.\+cpp}
+\hypertarget{elementstablemodel_8cpp_source}{}\label{elementstablemodel_8cpp_source}\mbox{\hyperlink{elementstablemodel_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{elementstablemodel_8h}{elementstablemodel.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00003}\mbox{\hyperlink{classElementTableModel_a14c902b8a4f9ce9bf155ed79f9831d64}{00003}}\ \mbox{\hyperlink{classElementTableModel_a14c902b8a4f9ce9bf155ed79f9831d64}{ElementTableModel::ElementTableModel}}(\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\_data,\ QObject\ *parent)\ :\ QAbstractTableModel(parent)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00004}00004\ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00005}00005\ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}\ =\ \_data;}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00007}\mbox{\hyperlink{classElementTableModel_a85e9dd7ee6267cbf8e586b72d3c2d40a}{00007}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classElementTableModel_a85e9dd7ee6267cbf8e586b72d3c2d40a}{ElementTableModel::rowCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00008}00008\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}().size();;}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00010}00010\ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00011}\mbox{\hyperlink{classElementTableModel_a2c52d320eefffb52a40d3c1a94edb5d4}{00011}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classElementTableModel_a2c52d320eefffb52a40d3c1a94edb5d4}{ElementTableModel::columnCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00012}00012\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{return}\ 5;}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00015}\mbox{\hyperlink{classElementTableModel_a9d8ccceb27fb7a314b893bf22285b650}{00015}}\ QVariant\ \mbox{\hyperlink{classElementTableModel_a9d8ccceb27fb7a314b893bf22285b650}{ElementTableModel::data}}(\textcolor{keyword}{const}\ QModelIndex\ \&index,\ \textcolor{keywordtype}{int}\ role)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00016}00016\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::DisplayRole)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00018}00018\ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (index.column()==0)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QString::fromStdString(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()]);}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==1)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\_information::role::do\_not\_include}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Exclude"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\_information::role::element}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Element"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Isotope"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\_information::role::particle\_size}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Particle\ Size"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\_information::role::organic\_carbon}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Organic\ Carbon"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==2)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QString::fromStdString(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>base\_element);}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==3)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QString::number(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>standard\_ratio);}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==4)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>include\_in\_analysis)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Yes"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}No"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::ItemIsEnabled)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00059}00059\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==2\ ||\ index.column()==3)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()])-\/>Role\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00066}00066\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{return}\ QVariant();}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00069}00069\ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00070}\mbox{\hyperlink{classElementTableModel_a250a9add019e80b168846b3365be9050}{00070}}\ QVariant\ \mbox{\hyperlink{classElementTableModel_a250a9add019e80b168846b3365be9050}{ElementTableModel::headerData}}(\textcolor{keywordtype}{int}\ section,\ Qt::Orientation\ orientation,\ \textcolor{keywordtype}{int}\ role)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00071}00071\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::DisplayRole)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00073}00073\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (orientation\ ==\ Qt::Horizontal)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (section==0)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Constituent"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (section==1)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Constituent\ Type"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (section==2)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Base\ Element"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (section==3)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Standard\ isotope\ ratio"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (section==4)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Include\ in\ analysis"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00096}00096\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{return}\ QVariant();}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00098}00098\ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00099}\mbox{\hyperlink{classElementTableModel_a02785ad1d450ce27971d085f770a9af7}{00099}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElementTableModel_a02785ad1d450ce27971d085f770a9af7}{ElementTableModel::setData}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index,\ \textcolor{keyword}{const}\ QVariant\ \&\ value,\ \textcolor{keywordtype}{int}\ role)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00100}00100\ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{if}\ (role==Qt::EditRole)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00102}00102\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ element\ =\ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()[index.row()];}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==1)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Element"{}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\_information::role::element}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Isotope"{}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Exclude"{}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\_information::role::do\_not\_include}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Particle\ Size"{}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\_information::role::particle\_size}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Organic\ Carbon"{}})}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\_information::role::organic\_carbon}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==2)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>base\_element\ =\ value.toString().toStdString();}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==3)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>standard\_ratio\ =\ value.toDouble();}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==4)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Yes"{}}\ ||\ value.toBool())}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>include\_in\_analysis\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(element)-\/>include\_in\_analysis\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00135}00135\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00136}00136\ \ \ \ \ QString\ result\ =\ \textcolor{stringliteral}{"{}Done"{}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00137}00137\ \ \ \ \ emit\ \mbox{\hyperlink{classElementTableModel_a897a69a1b350d947c449b936e9f57175}{editCompleted}}(result);}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00139}00139\ \}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00140}\mbox{\hyperlink{classElementTableModel_a8318b3b34b22bf8f13de9884601297f0}{00140}}\ Qt::ItemFlags\ \mbox{\hyperlink{classElementTableModel_a8318b3b34b22bf8f13de9884601297f0}{ElementTableModel::flags}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00141}00141\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00142}00142\ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()!=0\ \&\&\ index.column()!=4)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Qt::ItemIsSelectable\ |\ \ Qt::ItemIsEditable\ |\ Qt::ItemIsEnabled\ ;}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (index.column()==4)}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Qt::ItemIsSelectable\ |\ \ Qt::ItemFlag::ItemIsUserCheckable\ |\ Qt::ItemIsEnabled\ |\ Qt::ItemIsEditable\ ;}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Qt::ItemIsSelectable\ |\ \ Qt::ItemIsEnabled\ ;}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8cpp_source_l00148}00148\ \}}
+
+\end{DoxyCode}

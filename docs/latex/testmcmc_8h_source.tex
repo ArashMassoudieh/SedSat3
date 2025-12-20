@@ -1,0 +1,29 @@
+\doxysection{testmcmc.\+h}
+\hypertarget{testmcmc_8h_source}{}\label{testmcmc_8h_source}\mbox{\hyperlink{testmcmc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ TESTMCMC\_H}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ TESTMCMC\_H}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{parameter_8h}{parameter.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00007}00007\ \textcolor{comment}{//using\ namespace\ std;}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00009}\mbox{\hyperlink{classTestMCMC}{00009}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTestMCMC}{TestMCMC}}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00011}00011\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{classTestMCMC_a4e18a2af29cb2d5cba35b09c257a6a7a}{TestMCMC}}();}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00013}00013\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTestMCMC_a3c9a0f744972b7122297a586919004e6}{InitializeParametersObservations}}(\textcolor{keyword}{const}\ vector<double>\ \&mins,\ \textcolor{keyword}{const}\ vector<double>\ \&maxs);}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00014}\mbox{\hyperlink{classTestMCMC_a8f712f367753cdb4c9f8ec4599cedff4}{00014}}\ \ \ \ \ vector<Parameter>\ \&\mbox{\hyperlink{classTestMCMC_a8f712f367753cdb4c9f8ec4599cedff4}{Parameters}}()\ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTestMCMC_ab9df3932e6f347e4d89ea08c61c3e9f2}{parameters}};\}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00015}00015\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTestMCMC_a22c9e08f6d3a87fb538fed6117b8db39}{SetParameterValue}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{double}\ value);\ \textcolor{comment}{//set\ the\ parameter\ values\ for\ estimation}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classTestMCMC_ae3d3adad147a8662abd34be5a28e9992}{GetObjectiveFunctionValue}}();}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00017}00017\ \ \ \ \ CVector\ \mbox{\hyperlink{classTestMCMC_a1265f7ae0f60b0b8bd59c8b7346cd286}{GetPredictedValues}}();\ \textcolor{comment}{//\ copied\ the\ predicted\ constituents\ and\ isotopes\ from\ observations\ into\ a\ vector}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00018}\mbox{\hyperlink{classTestMCMC_a9c1bc7f33261ddf88da730c72b7652c4}{00018}}\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classTestMCMC_a9c1bc7f33261ddf88da730c72b7652c4}{ObservationsCount}}()\ \{\textcolor{keywordflow}{return}\ 0;\ \}}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00020}00020\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00021}\mbox{\hyperlink{classTestMCMC_ab9df3932e6f347e4d89ea08c61c3e9f2}{00021}}\ \ \ \ \ vector<Parameter>\ \mbox{\hyperlink{classTestMCMC_ab9df3932e6f347e4d89ea08c61c3e9f2}{parameters}};}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00022}00022\ \};}
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{testmcmc_8h_source_l00024}00024\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TESTMCMC\_H}}
+
+\end{DoxyCode}

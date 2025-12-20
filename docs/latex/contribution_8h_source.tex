@@ -1,0 +1,39 @@
+\doxysection{contribution.\+h}
+\hypertarget{contribution_8h_source}{}\label{contribution_8h_source}\mbox{\hyperlink{contribution_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ CONTRIBUTION\_H}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ CONTRIBUTION\_H}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interface_8h}{interface.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00008}00008\ \textcolor{comment}{//using\ namespace\ std;}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00010}00010\ \textcolor{keyword}{class\ }QFile;}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00021}\mbox{\hyperlink{classContribution}{00021}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classContribution}{Contribution}}\ :\ \textcolor{keyword}{public}\ map<string,\ double>,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classInterface}{Interface}}}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00023}00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{classContribution_a59775497d673b49ac00b19f525bc1b05}{Contribution}}();}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{classContribution_a59775497d673b49ac00b19f525bc1b05}{Contribution}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classContribution}{Contribution}}\&\ rhs);}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{classContribution}{Contribution}}\&\ \mbox{\hyperlink{classContribution_ada54c167fb5fc61ed3b12196ba154e75}{operator\ =\ }}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classContribution}{Contribution}}\&\ rhs);}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00046}00046\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classContribution_a529de1fba55974ab913a5e34c09ceec1}{toJsonObject}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classContribution_a2d8dddc79dd2a69dae3e83324652b845}{ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ jsonobject)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}{ToString}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00069}00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classContribution_a9f0b8cd1d881e3fe13665d80e738002d}{writetofile}}(QFile*)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f}{Read}}(\textcolor{keyword}{const}\ QStringList\&\ strlist)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00089}00089\ \ \ \ \ QTableWidget*\ \mbox{\hyperlink{classContribution_a0d955eb0c9d0727e54eab577af30c088}{ToTable}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00090}00090\ \};}
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{contribution_8h_source_l00092}00092\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CONTRIBUTION\_H}}
+
+\end{DoxyCode}

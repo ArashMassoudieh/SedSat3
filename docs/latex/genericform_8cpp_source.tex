@@ -1,0 +1,218 @@
+\doxysection{genericform.\+cpp}
+\hypertarget{genericform_8cpp_source}{}\label{genericform_8cpp_source}\mbox{\hyperlink{genericform_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{genericform_8h}{genericform.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}ui\_genericform.h"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}QLabel"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mainwindow_8h}{mainwindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00006}\mbox{\hyperlink{classGenericForm_aa27c907869afbf145201b7379b53ea71}{00006}}\ \mbox{\hyperlink{classGenericForm_aa27c907869afbf145201b7379b53ea71}{GenericForm::GenericForm}}(QJsonObject\ *formdata,\ QWidget\ *parent,\ \mbox{\hyperlink{classMainWindow}{MainWindow}}\ *\_mainwindow)\ :}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00007}00007\ \ \ \ \ QWidget(parent),}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00008}00008\ \ \ \ \ ui(new\ \mbox{\hyperlink{namespaceUi}{Ui}}::\mbox{\hyperlink{classGenericForm}{GenericForm}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}{mainWindow}}\ =\ \_mainwindow;\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<formdata-\/>keys().size();\ i++)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00014}00014\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (formdata-\/>value(formdata-\/>keys()[i]).isObject())}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ QJsonObject\ \textcolor{keywordtype}{object}\ =\ formdata-\/>value(formdata-\/>keys()[i]).toObject();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ formdata-\/>value(formdata-\/>keys()[i]).toObject();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structparameter__property}{parameter\_property}}\ parameter\_prop;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a2e56c9ff704efbbf41ab00d82efa884c}{Discription}}\ =\ formdata-\/>keys()[i];}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_aca188ea3d2d43d7864c75e7829a8d7f9}{DefaultValue}}\ =\ \textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.contains(\textcolor{stringliteral}{"{}type"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}[\textcolor{stringliteral}{"{}type"{}}].toString()!=\textcolor{stringliteral}{"{}Description"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QLabel\ *label\ =\ \textcolor{keyword}{new}\ QLabel(parameter\_prop.\mbox{\hyperlink{structparameter__property_a2e56c9ff704efbbf41ab00d82efa884c}{Discription}},\ \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QString\ typeval\ =\ \textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}spinBox"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adaecb37eb700be076338f2598d896da7db}{delegate\_type::SpinBox}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QSpinBox\ *spinbox\ =\ \textcolor{keyword}{new}\ QSpinBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.contains(\textcolor{stringliteral}{"{}minimum"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spinbox-\/>setMinimum(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}minimum"{}}).toString().toInt());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.contains(\textcolor{stringliteral}{"{}maximum"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spinbox-\/>setMaximum(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}maximum"{}}).toString().toInt());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spinbox-\/>setValue(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString().toInt());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,spinbox);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ spinbox;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}lineEdit"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada3b4def7eae2ce0235f1e056353572486}{delegate\_type::LineEdit}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QLineEdit\ *lineedit\ =\ \textcolor{keyword}{new}\ QLineEdit(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lineedit-\/>setText(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,lineedit);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ lineedit;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}comboBox"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adafd249a0c28275ebf9d4c8464ca2225cf}{delegate\_type::ComboBox}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QComboBox\ *combobox\ =\ \textcolor{keyword}{new}\ QComboBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>setCurrentText(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,combobox);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ combobox;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}Blank"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>addItem(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}TargetSamplesList"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vector<string>\ names\ =\ \mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>\mbox{\hyperlink{classMainWindow_a0e4849de10342238c2a91304de641386}{Data}}()-\/>\mbox{\hyperlink{classSourceSinkData_aaa31775b3d948b8a29dbc0c45ed1c081}{GetSampleNames}}(\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>Data()-\/>GetTargetGroup());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<names.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>addItem(QString::fromStdString(names[i]));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}ElementsList"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vector<string>\ names\ =\ \mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>\mbox{\hyperlink{classMainWindow_a0e4849de10342238c2a91304de641386}{Data}}()-\/>\mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<names.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>addItem(QString::fromStdString(names[i]),QString::fromStdString(names[i]));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}SourceList"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ vector<string>\ names\ =\ \mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>\mbox{\hyperlink{classMainWindow_a0e4849de10342238c2a91304de641386}{Data}}()-\/>\mbox{\hyperlink{classSourceSinkData_a5592437cfe871bb362ea78f1a89dbdf7}{SourceGroupNames}}();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<names.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>addItem(QString::fromStdString(names[i]),QString::fromStdString(names[i]));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}Items:"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QStringList\ items\ =\ \textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().split(\textcolor{stringliteral}{"{}:"{}})[1].split(\textcolor{stringliteral}{"{},"{}});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>addItems(items);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}OM"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QString\ element\ =\ QString::fromStdString(\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>Data()-\/>FirstOMConstituent());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (element!=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>setCurrentIndex(combobox-\/>findText(element));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ combobox-\/>findText(element);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()\ <<\ i;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}source"{}}).toString().contains(\textcolor{stringliteral}{"{}Size"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QString\ element\ =\ QString::fromStdString(\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>Data()-\/>FirstSizeConstituent());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (element!=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combobox-\/>setCurrentIndex(combobox-\/>findText(element));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ combobox-\/>findText(element);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()\ <<\ i;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}fileBrowser\_Save"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada1b34cd3140f56af738be5b0275d2f8f7}{delegate\_type::FileBrowser}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFileBrowserPushButtom}{FileBrowserPushButtom}}\ *filebrowserpushbuttom\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFileBrowserPushButtom}{FileBrowserPushButtom}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filebrowserpushbuttom-\/>\mbox{\hyperlink{classFileBrowserPushButtom_a12535a37c91219165c2bb30c3497f6b5}{dialog\_use}}\ =\ \mbox{\hyperlink{filebrowserpushbuttom_8h_a7aff7bb81bbcfcd49614760a2388b7bba43781db5c40ecc39fd718685594f0956}{save\_open::save}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filebrowserpushbuttom-\/>setText(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,filebrowserpushbuttom);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ filebrowserpushbuttom;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}fileBrowser\_Open"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada1b34cd3140f56af738be5b0275d2f8f7}{delegate\_type::FileBrowser}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFileBrowserPushButtom}{FileBrowserPushButtom}}\ *filebrowserpushbuttom\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classFileBrowserPushButtom}{FileBrowserPushButtom}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filebrowserpushbuttom-\/>\mbox{\hyperlink{classFileBrowserPushButtom_a12535a37c91219165c2bb30c3497f6b5}{dialog\_use}}\ =\ \mbox{\hyperlink{filebrowserpushbuttom_8h_a7aff7bb81bbcfcd49614760a2388b7bba7cef8a734855777c2a9d0caf42666e69}{save\_open::open}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filebrowserpushbuttom-\/>setText(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,filebrowserpushbuttom);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ filebrowserpushbuttom;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}checkBox"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada7ea0f1332ade5b23b34502a3bfe715a2}{delegate\_type::CheckBox}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QCheckBox\ *checkbox\ =\ \textcolor{keyword}{new}\ QCheckBox(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString().toLower()==\textcolor{stringliteral}{"{}true"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ checkbox-\/>setCheckState(Qt::CheckState::Checked);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ checkbox-\/>setCheckState(Qt::CheckState::Unchecked);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,checkbox);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ checkbox;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\_Properties}}.append(parameter\_prop);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00139}00139\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<formdata-\/>keys().size();\ i++)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00142}00142\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (formdata-\/>value(formdata-\/>keys()[i]).isObject())}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ QJsonObject\ \textcolor{keywordtype}{object}\ =\ formdata-\/>value(formdata-\/>keys()[i]).toObject();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ formdata-\/>value(formdata-\/>keys()[i]).toObject();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structparameter__property}{parameter\_property}}\ parameter\_prop;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a2e56c9ff704efbbf41ab00d82efa884c}{Discription}}\ =\ formdata-\/>keys()[i];}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_aca188ea3d2d43d7864c75e7829a8d7f9}{DefaultValue}}\ =\ \textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.contains(\textcolor{stringliteral}{"{}type"{}}))}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QLabel\ *label;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}[\textcolor{stringliteral}{"{}type"{}}].toString()==\textcolor{stringliteral}{"{}Description"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ label\ =\ \textcolor{keyword}{new}\ QLabel(parameter\_prop.\mbox{\hyperlink{structparameter__property_a2e56c9ff704efbbf41ab00d82efa884c}{Discription}},\ \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QString\ typeval\ =\ \textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}type"{}}).toString()==\textcolor{stringliteral}{"{}Description"{}})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adab5a7adde1af5c87d7fd797b6245c2a39}{delegate\_type::Description}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QTextBrowser\ *textBrowswer\ =\ \textcolor{keyword}{new}\ QTextBrowser(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ textBrowswer-\/>insertHtml(\textcolor{keywordtype}{object}.value(\textcolor{stringliteral}{"{}default"{}}).toString());}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>formLayout-\/>addRow(label,textBrowswer);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parameter\_prop.\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}\ =\ textBrowswer;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00167}00167\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00169}00169\ \ \ \ \ \mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{buttonOk}}\ =\ \textcolor{keyword}{new}\ QPushButton(\textcolor{stringliteral}{"{}Ok"{}},\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00170}00170\ \ \ \ \ QIcon\ iconOk\ =\ QIcon(qApp-\/>applicationDirPath()+\textcolor{stringliteral}{"{}/../../resources/Icons/Proceed.png"{}});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00171}00171\ \ \ \ \ \mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{buttonOk}}-\/>setIcon(iconOk);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00172}00172\ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>horizontalLayout-\/>addWidget(\mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{buttonOk}});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00173}00173\ \ \ \ \ connect(\mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{buttonOk}},SIGNAL(clicked()),\textcolor{keyword}{this},SLOT(\mbox{\hyperlink{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d}{onProceed}}()));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00174}00174\ \ \ \ \ \mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{buttonCancel}}\ =\ \textcolor{keyword}{new}\ QPushButton(\textcolor{stringliteral}{"{}Cancel"{}},\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00175}00175\ \ \ \ \ QIcon\ iconCancel\ =\ QIcon(qApp-\/>applicationDirPath()+\textcolor{stringliteral}{"{}/../../resources/Icons/Cancel.png"{}});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00176}00176\ \ \ \ \ \mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{buttonCancel}}-\/>setIcon(iconCancel);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00177}00177\ \ \ \ \ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}-\/>horizontalLayout-\/>addWidget(\mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{buttonCancel}});}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00178}00178\ \ \ \ \ connect(\mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{buttonCancel}},SIGNAL(clicked()),\textcolor{keyword}{this},SLOT(\mbox{\hyperlink{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2}{onCancel}}()));}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00180}00180\ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00182}\mbox{\hyperlink{classGenericForm_ab72de58d7ddf4b10f17b13228fa17e4b}{00182}}\ \mbox{\hyperlink{classGenericForm_ab72de58d7ddf4b10f17b13228fa17e4b}{GenericForm::\string~GenericForm}}()}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00183}00183\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00184}00184\ \ \ \ \ \mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\_Properties}}.clear();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00185}00185\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00186}00186\ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00188}\mbox{\hyperlink{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d}{00188}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d}{GenericForm::onProceed}}()}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00189}00189\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00190}00190\ \ \ \ \ map<string,string>\ arguments;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\_Properties}}.count();\ i++)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00192}00192\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ arguments[\mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\_Properties}}[i].Discription.toStdString()]\ =\ \mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\_Properties}}[i].value().toStdString();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00194}00194\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00195}00195\ \ \ \ \ \mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}()-\/>\mbox{\hyperlink{classMainWindow_af23e2c1e63ec9afc7a3e2df624681281}{Execute}}(\mbox{\hyperlink{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e}{command}}.toStdString(),arguments);}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00197}00197\ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00198}\mbox{\hyperlink{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2}{00198}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2}{GenericForm::onCancel}}()}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00199}00199\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00200}00200\ \ \ \ \ this-\/>close();}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00201}00201\ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00203}\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{00203}}\ \mbox{\hyperlink{classMainWindow}{MainWindow}}\ *\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{GenericForm::mainwindow}}()}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00204}00204\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00205}00205\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}{mainWindow}}!=\textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}{mainWindow}};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00207}00207\ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00209}\mbox{\hyperlink{classGenericForm_aa31d94bbd2d1edfb1681675666b04605}{00209}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGenericForm_aa31d94bbd2d1edfb1681675666b04605}{GenericForm::SetCommand}}(\textcolor{keyword}{const}\ QString\ \&cmd)}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00210}00210\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00211}00211\ \ \ \ \ \mbox{\hyperlink{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e}{command}}\ =\ cmd;}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{genericform_8cpp_source_l00213}00213\ \}}
+
+\end{DoxyCode}

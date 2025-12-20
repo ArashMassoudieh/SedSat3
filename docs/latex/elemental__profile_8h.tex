@@ -1,0 +1,58 @@
+\doxysection{elemental\+\_\+profile.\+h File Reference}
+\hypertarget{elemental__profile_8h}{}\label{elemental__profile_8h}\index{elemental\_profile.h@{elemental\_profile.h}}
+
+
+Elemental concentration profile for sediment source fingerprinting.  
+
+
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include "{}interface.\+h"{}}\newline
+{\ttfamily \#include "{}multiplelinearregressionset.\+h"{}}\newline
+Include dependency graph for elemental\+\_\+profile.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{elemental__profile_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{elemental__profile_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structelement__information}{element\+\_\+information}}
+\begin{DoxyCompactList}\small\item\em Metadata describing an element\textquotesingle{}s role and properties in analysis. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}}
+\begin{DoxyCompactList}\small\item\em Container for elemental concentration data of a single sediment sample. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Elemental concentration profile for sediment source fingerprinting. 
+
+\begin{DoxyAuthor}{Author}
+USGS Sediment Fingerprinting Project 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+December 2025
+\end{DoxyDate}
+\hypertarget{elemental__profile_8h_description}{}\doxysubsection{\texorpdfstring{Description}{Description}}\label{elemental__profile_8h_description}
+Defines the \doxylink{classElemental__Profile}{Elemental\+\_\+\+Profile} class for storing and manipulating elemental composition data used in sediment source fingerprinting analysis.\hypertarget{elemental__profile_8h_scientific_background}{}\doxysubsection{\texorpdfstring{Scientific Background}{Scientific Background}}\label{elemental__profile_8h_scientific_background}
+Sediment source fingerprinting uses geochemical signatures (elemental concentrations) to trace sediment origins. This class represents a single sample\textquotesingle{}s complete elemental "{}fingerprint."{}
+
+\begin{DoxyWarning}{Warning}
+This class publicly inherits from std\+::map, which has a non-\/virtual destructor. Avoid polymorphic deletion through std\+::map pointer. This design issue will be addressed in future major version. 
+\end{DoxyWarning}
+
+
+Definition in file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+

@@ -1,0 +1,158 @@
+\doxysection{resultswindow.\+cpp}
+\hypertarget{resultswindow_8cpp_source}{}\label{resultswindow_8cpp_source}\mbox{\hyperlink{resultswindow_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{resultswindow_8h}{resultswindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}ui\_resultswindow.h"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}QTextBrowser"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}QDebug"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}QPushButton"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{generalchart_8h}{generalchart.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{resultitem_8h}{resultitem.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{resulttableviewer_8h}{resulttableviewer.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <QFileDialog>}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00013}\mbox{\hyperlink{classResultsWindow_ab5eed3b399c8a305f588d4a98fb3a9ed}{00013}}\ \mbox{\hyperlink{classResultsWindow_ab5eed3b399c8a305f588d4a98fb3a9ed}{ResultsWindow::ResultsWindow}}(QWidget\ *parent)\ :}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00014}00014\ \ \ \ \ QDialog(parent),}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00015}00015\ \ \ \ \ ui(new\ \mbox{\hyperlink{namespaceUi}{Ui}}::\mbox{\hyperlink{classResultsWindow}{ResultsWindow}})}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00019}00019\ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00021}\mbox{\hyperlink{classResultsWindow_a2b320802242dbf6ac6b779480a30b86c}{00021}}\ \mbox{\hyperlink{classResultsWindow_a2b320802242dbf6ac6b779480a30b86c}{ResultsWindow::\string~ResultsWindow}}()}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00022}00022\ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}};}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00026}00026\ \textcolor{comment}{//void\ ResultsWindow::AppendText(const\ string\ \&text)}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00027}00027\ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00028}00028\ \textcolor{comment}{//\ \ \ \ ui-\/>textBrowser-\/>append(QString::fromStdString(text));}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00029}00029\ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00031}\mbox{\hyperlink{classResultsWindow_a3dff3106b9533532b4b215ebca85e3d7}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classResultsWindow_a3dff3106b9533532b4b215ebca85e3d7}{ResultsWindow::AppendResult}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \&resultitem)}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}{result\_item\_counter}}++;}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00035}00035\ \ \ \ \ QTextBrowser\ *textBrowser\ =\ \textcolor{keyword}{new}\ QTextBrowser(\mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>scrollAreaWidgetContents);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00036}00036\ \ \ \ \ textBrowser-\/>setObjectName(QString::number(\mbox{\hyperlink{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}{result\_item\_counter}})+\textcolor{stringliteral}{"{}:"{}}+QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//textBrowser-\/>setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00038}00038\ \ \ \ \ textBrowser-\/>setTextColor(Qt::red);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00039}00039\ \ \ \ \ textBrowser-\/>append(QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}())+\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00040}00040\ \ \ \ \ textBrowser-\/>setTextColor(Qt::black);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00041}00041\ \ \ \ \ textBrowser-\/>setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00042}00042\ \ \ \ \ QString\ str;}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (resultitem.\mbox{\hyperlink{classResultItem_a35914168a16a3fe126aae05b4c57739a}{ShowAsString}}())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ str\ =\ QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_aa053bf6933bae3d1057b574d85da5b26}{Result}}()-\/>\mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{ToString}}());}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00046}00046\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (resultitem.\mbox{\hyperlink{classResultItem_a0dfc04923287a4f4346358d4d9cba9be}{ShowGraph}}()\ \&\&\ resultitem.\mbox{\hyperlink{classResultItem_a57b24db882f5ba22fb43294cb4235744}{ShowTable}}())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ str\ =\ QString::fromStdString(\textcolor{stringliteral}{"{}Push\ the\ graph\ or\ table\ button"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (resultitem.\mbox{\hyperlink{classResultItem_a0dfc04923287a4f4346358d4d9cba9be}{ShowGraph}}())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ str\ =\ QString::fromStdString(\textcolor{stringliteral}{"{}Push\ the\ graph\ button"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (resultitem.\mbox{\hyperlink{classResultItem_a57b24db882f5ba22fb43294cb4235744}{ShowTable}}())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ str\ =\ QString::fromStdString(\textcolor{stringliteral}{"{}Push\ the\ table\ button"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00054}00054\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00056}00056\ \ \ \ \ textBrowser-\/>append(str);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;i\ <\ str.length();i++)}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(str.at(i).cell()\ ==\ \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00061}00061\ \ \ \ \ textBrowser-\/>setMaximumHeight(textBrowser-\/>fontMetrics().height()\ *\ (count+3));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00062}00062\ \ \ \ \ textBrowser-\/>setMinimumHeight(textBrowser-\/>fontMetrics().height()\ *\ (count+2));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00063}00063\ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>setAlignment(Qt::AlignTop);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00064}00064\ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>addWidget(textBrowser,\mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>rowCount(),0);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (resultitem.\mbox{\hyperlink{classResultItem_a0dfc04923287a4f4346358d4d9cba9be}{ShowGraph}}())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00066}00066\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ QPushButton\ *pushButtonGraph\ =\ \textcolor{keyword}{new}\ QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ QIcon\ iconGraph\ =\ QIcon(qApp-\/>applicationDirPath()+\textcolor{stringliteral}{"{}/../../resources/Icons/Graph.png"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ pushButtonGraph-\/>setIcon(iconGraph);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//pushButton-\/>setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ pushButtonGraph-\/>setMaximumWidth(20);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()).contains(\textcolor{stringliteral}{"{}:"{}}))}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ pushButtonGraph-\/>setObjectName(QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ pushButtonGraph-\/>setObjectName(QString::number(\mbox{\hyperlink{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}{result\_item\_counter}})\ +\ \textcolor{stringliteral}{"{}:"{}}\ +\ QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>addWidget(pushButtonGraph,\mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>rowCount()-\/1,1,1,1,Qt::AlignTop);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ connect(pushButtonGraph,SIGNAL(clicked()),\textcolor{keyword}{this},SLOT(\mbox{\hyperlink{classResultsWindow_a539ce1215cb3aa1e3ec6c808f8e8edd2}{on\_result\_graph\_clicked}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00080}00080\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00082}00082\ \ \ \ \ QPushButton\ *pushButtonExport\ =\ \textcolor{keyword}{new}\ QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00083}00083\ \ \ \ \ QIcon\ iconExport\ =\ QIcon(qApp-\/>applicationDirPath()+\textcolor{stringliteral}{"{}/../../resources/Icons/export.png"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00084}00084\ \ \ \ \ pushButtonExport-\/>setIcon(iconExport);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//pushButton-\/>setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00086}00086\ \ \ \ \ pushButtonExport-\/>setMaximumWidth(20);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00087}00087\ \ \ \ \ pushButtonExport-\/>setObjectName(QString::number(\mbox{\hyperlink{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}{result\_item\_counter}})+\textcolor{stringliteral}{"{}:"{}}+QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00088}00088\ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>addWidget(pushButtonExport,\mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>rowCount()-\/1,2,1,1,Qt::AlignTop);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00089}00089\ \ \ \ \ connect(pushButtonExport,SIGNAL(clicked()),\textcolor{keyword}{this},SLOT(\mbox{\hyperlink{classResultsWindow_ac4273b2478e0a48a82913f51f4f1a6c5}{on\_result\_export\_clicked}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (resultitem.\mbox{\hyperlink{classResultItem_a57b24db882f5ba22fb43294cb4235744}{ShowTable}}())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00093}00093\ \ \ \ \ \{\ \ \ QPushButton\ *pushButtonTable\ =\ \textcolor{keyword}{new}\ QPushButton(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ QIcon\ iconTable\ =\ QIcon(qApp-\/>applicationDirPath()+\textcolor{stringliteral}{"{}/../../resources/Icons/table.png"{}});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ pushButtonTable-\/>setIcon(iconTable);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{comment}{//pushButton-\/>setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Maximum);}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ pushButtonTable-\/>setMaximumWidth(20);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()).contains(\textcolor{stringliteral}{"{}:"{}}))}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ pushButtonTable-\/>setObjectName(QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ pushButtonTable-\/>setObjectName(QString::number(\mbox{\hyperlink{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}{result\_item\_counter}})\ +\ \textcolor{stringliteral}{"{}:"{}}\ +\ QString::fromStdString(resultitem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>addWidget(pushButtonTable,\mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}-\/>gridLayout-\/>rowCount()-\/1,3,1,1,Qt::AlignTop);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ connect(pushButtonTable,SIGNAL(clicked()),\textcolor{keyword}{this},SLOT(\mbox{\hyperlink{classResultsWindow_add122bea33d77a678f56e3e74a89929a}{on\_result\_table\_clicked}}()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00104}00104\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00106}00106\ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00109}\mbox{\hyperlink{classResultsWindow_a539ce1215cb3aa1e3ec6c808f8e8edd2}{00109}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classResultsWindow_a539ce1215cb3aa1e3ec6c808f8e8edd2}{ResultsWindow::on\_result\_graph\_clicked}}()}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00110}00110\ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00111}00111\ \ \ \ \ qDebug()<<sender()-\/>objectName();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00112}00112\ \ \ \ \ \mbox{\hyperlink{classGeneralChart}{GeneralChart}}\ *resultgraph\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classGeneralChart}{GeneralChart}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00113}00113\ \ \ \ \ resultgraph-\/>setWindowFlag(Qt::WindowMinMaxButtonsHint);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00114}00114\ \ \ \ \ resultgraph-\/>setWindowTitle(QString::fromStdString(\mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()).Name()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00115}00115\ \ \ \ \ resultgraph-\/>\mbox{\hyperlink{classGeneralChart_aa41242920bcfcf27fd3c7d8dfa655780}{Plot}}(\&\mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00116}00116\ \ \ \ \ resultgraph-\/>show();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00117}00117\ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00120}\mbox{\hyperlink{classResultsWindow_add122bea33d77a678f56e3e74a89929a}{00120}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classResultsWindow_add122bea33d77a678f56e3e74a89929a}{ResultsWindow::on\_result\_table\_clicked}}()}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00121}00121\ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00122}00122\ \ \ \ \ qDebug()<<sender()-\/>objectName();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00123}00123\ \ \ \ \ \mbox{\hyperlink{classResultTableViewer}{ResultTableViewer}}\ *tableviewer\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classResultTableViewer}{ResultTableViewer}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00124}00124\ \ \ \ \ tableviewer-\/>setWindowFlag(Qt::WindowMinMaxButtonsHint);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00125}00125\ \ \ \ \ QTableWidget\ *tablewidget\ =\ \mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()).Result()-\/>ToTable();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00126}00126\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()).TableTitle()\ ==\ \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ tableviewer-\/>setWindowTitle(QString::fromStdString(\mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()).Name()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ tableviewer-\/>setWindowTitle(QString::fromStdString(\mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()).TableTitle()));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00130}00130\ \ \ \ \ tableviewer-\/>\mbox{\hyperlink{classResultTableViewer_a54d139ca4fb8bdf18646b4b1e797e642}{SetTable}}(tablewidget);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00131}00131\ \ \ \ \ tableviewer-\/>show();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00132}00132\ \}}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00134}\mbox{\hyperlink{classResultsWindow_ac4273b2478e0a48a82913f51f4f1a6c5}{00134}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classResultsWindow_ac4273b2478e0a48a82913f51f4f1a6c5}{ResultsWindow::on\_result\_export\_clicked}}()}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00135}00135\ \{}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00136}00136\ \ \ \ \ qDebug()<<sender()-\/>objectName();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00137}00137\ \ \ \ \ QString\ fileName\ =\ QFileDialog::getSaveFileName(\textcolor{keyword}{this},}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}Save"{}}),\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}text\ file\ (*.txt)"{}}));}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{keywordflow}{if}\ (!fileName.contains(\textcolor{stringliteral}{"{}."{}}))}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ fileName+=\textcolor{stringliteral}{"{}.txt"{}};}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00143}00143\ \ \ \ \ QFile\ file(fileName);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00145}00145\ \ \ \ \ file.open(QIODevice::WriteOnly\ |\ QIODevice::Text);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.isOpen())}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00148}00148\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00149}00149\ \ \ \ \ \mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}}-\/>operator[](sender()-\/>objectName().toStdString()).Result()-\/>writetofile(\&file);}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00151}00151\ \ \ \ \ file.close();}
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00152}00152\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{resultswindow_8cpp_source_l00153}00153\ \}}
+
+\end{DoxyCode}

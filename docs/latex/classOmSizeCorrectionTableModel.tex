@@ -1,0 +1,190 @@
+\doxysection{Om\+Size\+Correction\+Table\+Model Class Reference}
+\hypertarget{classOmSizeCorrectionTableModel}{}\label{classOmSizeCorrectionTableModel}\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/omsizecorrectiontablemodel.\+h$>$}
+
+
+
+Inheritance diagram for Om\+Size\+Correction\+Table\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{classOmSizeCorrectionTableModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Om\+Size\+Correction\+Table\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classOmSizeCorrectionTableModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classOmSizeCorrectionTableModel_ac75200d399358387a80d1ab84e669fcc}{Om\+Size\+Correction\+Table\+Model}} (\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae}{MLRset}}, QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+int \mbox{\hyperlink{classOmSizeCorrectionTableModel_a3aa52b3730ad00a7dbdffaf9bc00c9e4}{row\+Count}} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+int \mbox{\hyperlink{classOmSizeCorrectionTableModel_a9c60fed9c24425d3d3318bf01447be94}{column\+Count}} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+QVariant \mbox{\hyperlink{classOmSizeCorrectionTableModel_a683f92c0513c14a6b0a3781c87528b8d}{data}} (const QModel\+Index \&index, int role=Qt\+::\+Display\+Role) const override
+\item 
+QVariant \mbox{\hyperlink{classOmSizeCorrectionTableModel_ad990797fc95873529785d3f14beb567a}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\item 
+bool \mbox{\hyperlink{classOmSizeCorrectionTableModel_a26820ba797081c631d7d33cb4f3533f7}{set\+Data}} (const QModel\+Index \&index, const QVariant \&value, int role=Qt\+::\+Edit\+Role) override
+\item 
+Qt\+::\+Item\+Flags \mbox{\hyperlink{classOmSizeCorrectionTableModel_ab64a6f18c5da9cc9483c731dfd3305c9}{flags}} (const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classOmSizeCorrectionTableModel_a6c2525612dfa3f2a072ad9a2cd8d0062}{edit\+Completed}} (const QString \&)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae}{MLRset}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00008}{8}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source}{omsizecorrectiontablemodel.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classOmSizeCorrectionTableModel_ac75200d399358387a80d1ab84e669fcc}\label{classOmSizeCorrectionTableModel_ac75200d399358387a80d1ab84e669fcc} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{OmSizeCorrectionTableModel()}{OmSizeCorrectionTableModel()}}
+{\footnotesize\ttfamily Om\+Size\+Correction\+Table\+Model\+::\+Om\+Size\+Correction\+Table\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}}]{MLRset,  }\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{MLRset}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classOmSizeCorrectionTableModel_a9c60fed9c24425d3d3318bf01447be94}\label{classOmSizeCorrectionTableModel_a9c60fed9c24425d3d3318bf01447be94} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Om\+Size\+Correction\+Table\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{parent = {\ttfamily QModelIndex()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00100}{Multiple\+Linear\+Regression\+Set\+::\+Key()}}, and \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{MLRset}}.
+
+\Hypertarget{classOmSizeCorrectionTableModel_a683f92c0513c14a6b0a3781c87528b8d}\label{classOmSizeCorrectionTableModel_a683f92c0513c14a6b0a3781c87528b8d} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!data@{data}}
+\index{data@{data}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily QVariant Om\+Size\+Correction\+Table\+Model\+::data (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index,  }\item[{int}]{role = {\ttfamily Qt\+:\+:DisplayRole} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00100}{Multiple\+Linear\+Regression\+Set\+::\+Key()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}, and \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{MLRset}}.
+
+\Hypertarget{classOmSizeCorrectionTableModel_a6c2525612dfa3f2a072ad9a2cd8d0062}\label{classOmSizeCorrectionTableModel_a6c2525612dfa3f2a072ad9a2cd8d0062} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!editCompleted@{editCompleted}}
+\index{editCompleted@{editCompleted}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{editCompleted()}{editCompleted()}}
+{\footnotesize\ttfamily void Om\+Size\+Correction\+Table\+Model\+::edit\+Completed (\begin{DoxyParamCaption}\item[{const QString \&}]{ }\end{DoxyParamCaption})}
+
+
+
+Referenced by \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00123}{set\+Data()}}.
+
+\Hypertarget{classOmSizeCorrectionTableModel_ab64a6f18c5da9cc9483c731dfd3305c9}\label{classOmSizeCorrectionTableModel_ab64a6f18c5da9cc9483c731dfd3305c9} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!flags@{flags}}
+\index{flags@{flags}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{flags()}{flags()}}
+{\footnotesize\ttfamily Qt\+::\+Item\+Flags Om\+Size\+Correction\+Table\+Model\+::flags (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00148}{148}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+\Hypertarget{classOmSizeCorrectionTableModel_ad990797fc95873529785d3f14beb567a}\label{classOmSizeCorrectionTableModel_ad990797fc95873529785d3f14beb567a} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!headerData@{headerData}}
+\index{headerData@{headerData}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily QVariant Om\+Size\+Correction\+Table\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00082}{82}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00100}{Multiple\+Linear\+Regression\+Set\+::\+Key()}}, and \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{MLRset}}.
+
+\Hypertarget{classOmSizeCorrectionTableModel_a3aa52b3730ad00a7dbdffaf9bc00c9e4}\label{classOmSizeCorrectionTableModel_a3aa52b3730ad00a7dbdffaf9bc00c9e4} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Om\+Size\+Correction\+Table\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{parent = {\ttfamily QModelIndex()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{MLRset}}.
+
+\Hypertarget{classOmSizeCorrectionTableModel_a26820ba797081c631d7d33cb4f3533f7}\label{classOmSizeCorrectionTableModel_a26820ba797081c631d7d33cb4f3533f7} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!setData@{setData}}
+\index{setData@{setData}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{setData()}{setData()}}
+{\footnotesize\ttfamily bool Om\+Size\+Correction\+Table\+Model\+::set\+Data (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index,  }\item[{const QVariant \&}]{value,  }\item[{int}]{role = {\ttfamily Qt\+:\+:EditRole} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00123}{123}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source}{omsizecorrectiontablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{classOmSizeCorrectionTableModel_a6c2525612dfa3f2a072ad9a2cd8d0062}{edit\+Completed()}}, \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00100}{Multiple\+Linear\+Regression\+Set\+::\+Key()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}, and \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{MLRset}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae}\label{classOmSizeCorrectionTableModel_ad983c9bf440fd70607999b254d1782ae} 
+\index{OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}!MLRset@{MLRset}}
+\index{MLRset@{MLRset}!OmSizeCorrectionTableModel@{OmSizeCorrectionTableModel}}
+\doxysubsubsection{\texorpdfstring{MLRset}{MLRset}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}}\texorpdfstring{$\ast$}{*} Om\+Size\+Correction\+Table\+Model\+::\+MLRset}
+
+
+
+Definition at line \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source_l00022}{22}} of file \mbox{\hyperlink{omsizecorrectiontablemodel_8h_source}{omsizecorrectiontablemodel.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00003}{Om\+Size\+Correction\+Table\+Model()}}, \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00011}{column\+Count()}}, \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00018}{data()}}, \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00082}{header\+Data()}}, \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00007}{row\+Count()}}, and \mbox{\hyperlink{omsizecorrectiontablemodel_8cpp_source_l00123}{set\+Data()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{omsizecorrectiontablemodel_8h}{omsizecorrectiontablemodel.\+h}}\item 
+\mbox{\hyperlink{omsizecorrectiontablemodel_8cpp}{omsizecorrectiontablemodel.\+cpp}}\end{DoxyCompactItemize}

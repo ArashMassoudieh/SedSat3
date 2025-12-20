@@ -1,0 +1,37 @@
+\doxysection{observation.\+h}
+\hypertarget{observation_8h_source}{}\label{observation_8h_source}\mbox{\hyperlink{observation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ OBSERVATION\_H}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ OBSERVATION\_H}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}TimeSeries.h"{}}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00006}\mbox{\hyperlink{classObservation}{00006}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classObservation}{Observation}}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00008}00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{classObservation_a5c0c06219dc84651ad46d01a0a555270}{Observation}}();}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classObservation_a5c0c06219dc84651ad46d01a0a555270}{Observation}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classObservation}{Observation}}\ \&obs);}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classObservation}{Observation}}\&\ \mbox{\hyperlink{classObservation_acead88738fc53915baa1a48efb0dbcc7}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classObservation}{Observation}}\ \&obs);}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00012}\mbox{\hyperlink{classObservation_a1baa92aaf3e1aa2d1c4bf3be6ee57e92}{00012}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classObservation_a1baa92aaf3e1aa2d1c4bf3be6ee57e92}{SetName}}(\textcolor{keyword}{const}\ std::string\ \&nam)\ \{\mbox{\hyperlink{classObservation_af13e7976e2af370508b5fac020f61f2f}{name}}\ =\ nam;\}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00013}\mbox{\hyperlink{classObservation_a37f1e01a1a07f620b66d91fa6deadd54}{00013}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classObservation_a37f1e01a1a07f620b66d91fa6deadd54}{Name}}()\ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classObservation_af13e7976e2af370508b5fac020f61f2f}{name}};\}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00014}\mbox{\hyperlink{classObservation_a39b93b85f7c1225cee79e12d300c65cb}{00014}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classObservation_a39b93b85f7c1225cee79e12d300c65cb}{GetName}}()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classObservation_af13e7976e2af370508b5fac020f61f2f}{name}};\ \}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00015}00015\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classObservation_a3fb0d74da1b52090601e971d3d19ebe5}{SetValues}}(\textcolor{keyword}{const}\ TimeSeries<double>\ \&\mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}});}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00016}\mbox{\hyperlink{classObservation_aba545b4e308a30cf8dbd0336f7cdfc34}{00016}}\ \ \ \ \ TimeSeries<double>\ \mbox{\hyperlink{classObservation_aba545b4e308a30cf8dbd0336f7cdfc34}{Values}}()\ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}};\}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00017}\mbox{\hyperlink{classObservation_af6968e7dfcd05a871ae3809c91242e00}{00017}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classObservation_af6968e7dfcd05a871ae3809c91242e00}{Value}}()\ \{}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}}.size()>0)}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}}.getValue(0);}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00022}00022\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00023}00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classObservation_aab6b1b334f9b0df062106d491866cfed}{AppendValues}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&t,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&val);}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00024}\mbox{\hyperlink{classObservation_af8801915d49428d9028afa2a32fc30b9}{00024}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classObservation_af8801915d49428d9028afa2a32fc30b9}{PredictedValue}}()\ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classObservation_a3e555e2a43aec3657202975df027edd7}{predicted\_value}};\}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00025}\mbox{\hyperlink{classObservation_a6d254bc73f4e9e61d618f03fb3b495d1}{00025}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classObservation_a6d254bc73f4e9e61d618f03fb3b495d1}{SetPredictedValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&value)\ \{\mbox{\hyperlink{classObservation_a3e555e2a43aec3657202975df027edd7}{predicted\_value}}\ =\ value;\}}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00026}00026\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00027}\mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{00027}}\ \ \ \ \ TimeSeries<double>\ \mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}};}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00028}\mbox{\hyperlink{classObservation_a3e555e2a43aec3657202975df027edd7}{00028}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classObservation_a3e555e2a43aec3657202975df027edd7}{predicted\_value}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00029}\mbox{\hyperlink{classObservation_af13e7976e2af370508b5fac020f61f2f}{00029}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classObservation_af13e7976e2af370508b5fac020f61f2f}{name}};}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00030}00030\ \};}
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{observation_8h_source_l00032}00032\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ OBSERVATION\_H}}
+
+\end{DoxyCode}

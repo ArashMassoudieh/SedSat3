@@ -1,0 +1,129 @@
+\doxysection{sourcesinkdata.\+h File Reference}
+\hypertarget{sourcesinkdata_8h}{}\label{sourcesinkdata_8h}\index{sourcesinkdata.h@{sourcesinkdata.h}}
+{\ttfamily \#include $<$elemental\+\_\+profile\+\_\+set.\+h$>$}\newline
+{\ttfamily \#include "{}vector"{}}\newline
+{\ttfamily \#include "{}parameter.\+h"{}}\newline
+{\ttfamily \#include "{}observation.\+h"{}}\newline
+{\ttfamily \#include "{}contribution.\+h"{}}\newline
+{\ttfamily \#include "{}results.\+h"{}}\newline
+{\ttfamily \#include "{}Progress\+Window.\+h"{}}\newline
+{\ttfamily \#include "{}fstream"{}}\newline
+{\ttfamily \#include "{}qjsonobject.\+h"{}}\newline
+{\ttfamily \#include "{}cmbvector.\+h"{}}\newline
+{\ttfamily \#include "{}cmbvectorset.\+h"{}}\newline
+{\ttfamily \#include "{}cmbvectorsetset.\+h"{}}\newline
+{\ttfamily \#include "{}MCMC.\+h"{}}\newline
+Include dependency graph for sourcesinkdata.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sourcesinkdata_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sourcesinkdata_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structprofiles__data}{profiles\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{structelement__data}{element\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{structelement__data__groups}{element\+\_\+data\+\_\+groups}}
+\item 
+struct \mbox{\hyperlink{structDFA__result}{DFA\+\_\+result}}
+\item 
+struct \mbox{\hyperlink{structANOVA__info}{ANOVA\+\_\+info}}
+\item 
+class \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}{transformation}} \{ \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa}{linear}}
+, \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}{softmax}}
+ \}
+\item 
+enum class \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\+\_\+mode}} \{ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa576eb2974a1ae0b087c914c7f3bf6958}{only\+\_\+contributions}}
+, \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{elemental\+\_\+profile\+\_\+and\+\_\+contribution}}
+, \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa326a5aa575058f786c83d801d8212225}{source\+\_\+elemental\+\_\+profiles\+\_\+based\+\_\+on\+\_\+source\+\_\+data}}
+ \}
+\item 
+enum class \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27}{negative\+\_\+reporting}} \{ \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27a10ae9fc7d453b0dd525d0edf2ede7961}{list}}
+, \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27ad9a22d7a8178d5b42a8750123cbfe5b1}{complete}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}\label{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a} 
+\index{sourcesinkdata.h@{sourcesinkdata.h}!estimation\_mode@{estimation\_mode}}
+\index{estimation\_mode@{estimation\_mode}!sourcesinkdata.h@{sourcesinkdata.h}}
+\doxysubsubsection{\texorpdfstring{estimation\_mode}{estimation\_mode}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\+\_\+mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{only\_contributions@{only\_contributions}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!only\_contributions@{only\_contributions}}}\Hypertarget{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa576eb2974a1ae0b087c914c7f3bf6958}\label{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa576eb2974a1ae0b087c914c7f3bf6958} 
+only\+\_\+contributions&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{elemental\_profile\_and\_contribution@{elemental\_profile\_and\_contribution}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!elemental\_profile\_and\_contribution@{elemental\_profile\_and\_contribution}}}\Hypertarget{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}\label{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3} 
+elemental\+\_\+profile\+\_\+and\+\_\+contribution&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{source\_elemental\_profiles\_based\_on\_source\_data@{source\_elemental\_profiles\_based\_on\_source\_data}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!source\_elemental\_profiles\_based\_on\_source\_data@{source\_elemental\_profiles\_based\_on\_source\_data}}}\Hypertarget{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa326a5aa575058f786c83d801d8212225}\label{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa326a5aa575058f786c83d801d8212225} 
+source\+\_\+elemental\+\_\+profiles\+\_\+based\+\_\+on\+\_\+source\+\_\+data&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sourcesinkdata_8h_source_l00062}{62}} of file \mbox{\hyperlink{sourcesinkdata_8h_source}{sourcesinkdata.\+h}}.
+
+\Hypertarget{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27}\label{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27} 
+\index{sourcesinkdata.h@{sourcesinkdata.h}!negative\_reporting@{negative\_reporting}}
+\index{negative\_reporting@{negative\_reporting}!sourcesinkdata.h@{sourcesinkdata.h}}
+\doxysubsubsection{\texorpdfstring{negative\_reporting}{negative\_reporting}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27}{negative\+\_\+reporting}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{list@{list}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!list@{list}}}\Hypertarget{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27a10ae9fc7d453b0dd525d0edf2ede7961}\label{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27a10ae9fc7d453b0dd525d0edf2ede7961} 
+list&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{complete@{complete}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!complete@{complete}}}\Hypertarget{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27ad9a22d7a8178d5b42a8750123cbfe5b1}\label{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27ad9a22d7a8178d5b42a8750123cbfe5b1} 
+complete&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sourcesinkdata_8h_source_l00064}{64}} of file \mbox{\hyperlink{sourcesinkdata_8h_source}{sourcesinkdata.\+h}}.
+
+\Hypertarget{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}\label{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1} 
+\index{sourcesinkdata.h@{sourcesinkdata.h}!transformation@{transformation}}
+\index{transformation@{transformation}!sourcesinkdata.h@{sourcesinkdata.h}}
+\doxysubsubsection{\texorpdfstring{transformation}{transformation}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}{transformation}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{linear@{linear}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!linear@{linear}}}\Hypertarget{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa}\label{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa} 
+linear&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{softmax@{softmax}!sourcesinkdata.h@{sourcesinkdata.h}}\index{sourcesinkdata.h@{sourcesinkdata.h}!softmax@{softmax}}}\Hypertarget{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}\label{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c} 
+softmax&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sourcesinkdata_8h_source_l00018}{18}} of file \mbox{\hyperlink{sourcesinkdata_8h_source}{sourcesinkdata.\+h}}.
+

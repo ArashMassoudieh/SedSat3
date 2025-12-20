@@ -1,0 +1,94 @@
+\doxysection{contribution.\+cpp}
+\hypertarget{contribution_8cpp_source}{}\label{contribution_8cpp_source}\mbox{\hyperlink{contribution_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{contribution_8h}{contribution.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}Utilities.h"{}}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}qfile.h"{}}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00005}\mbox{\hyperlink{classContribution_a59775497d673b49ac00b19f525bc1b05}{00005}}\ \mbox{\hyperlink{classContribution_a59775497d673b49ac00b19f525bc1b05}{Contribution::Contribution}}():map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ double>(),\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00006}00006\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00010}\mbox{\hyperlink{classContribution_a86cbe34c23f957d3e9bc4ec81a0ab8bc}{00010}}\ \mbox{\hyperlink{classContribution_a59775497d673b49ac00b19f525bc1b05}{Contribution::Contribution}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classContribution}{Contribution}}\ \&rhs):map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ double>(rhs),\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00014}\mbox{\hyperlink{classContribution_ada54c167fb5fc61ed3b12196ba154e75}{00014}}\ \mbox{\hyperlink{classContribution}{Contribution}}\&\ \mbox{\hyperlink{classContribution_ada54c167fb5fc61ed3b12196ba154e75}{Contribution::operator\ =\ }}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classContribution}{Contribution}}\ \&rhs)}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00016}00016\ \ \ \ \ map<string,double>::operator=(rhs);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{Interface::operator=}}(rhs);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00019}00019\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00021}\mbox{\hyperlink{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}{00021}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}{Contribution::ToString}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00022}00022\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordtype}{string}\ out;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,double>::const\_iterator\ it=cbegin();\ it!=cend();\ it++\ )}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00025}00025\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ out\ +=\ it-\/>first\ +\ \textcolor{stringliteral}{"{}:"{}}\ +\ aquiutils::numbertostring(it-\/>second)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00027}00027\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00031}\mbox{\hyperlink{classContribution_a9f0b8cd1d881e3fe13665d80e738002d}{00031}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classContribution_a9f0b8cd1d881e3fe13665d80e738002d}{Contribution::writetofile}}(QFile*\ file)}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00033}00033\ \ \ \ \ file-\/>write(QString::fromStdString(\mbox{\hyperlink{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}{ToString}}()).toUtf8());}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00037}\mbox{\hyperlink{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f}{00037}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f}{Contribution::Read}}(\textcolor{keyword}{const}\ QStringList\ \&strlist)}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00038}00038\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00039}00039\ \ \ \ \ clear();}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<strlist.size();i++)}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00041}00041\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strlist[i].split(\textcolor{stringliteral}{"{}:"{}}).size()>1)}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](strlist[i].split(\textcolor{stringliteral}{"{}:"{}})[0].toStdString())\ =\ strlist[i].split(\textcolor{stringliteral}{"{}:"{}})[1].toDouble();}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00050}\mbox{\hyperlink{classContribution_a529de1fba55974ab913a5e34c09ceec1}{00050}}\ QJsonObject\ \mbox{\hyperlink{classContribution_a529de1fba55974ab913a5e34c09ceec1}{Contribution::toJsonObject}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00051}00051\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00052}00052\ \ \ \ \ QJsonObject\ out;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,double>::const\_iterator\ it=cbegin();\ it!=cend();\ it++\ )}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00054}00054\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ out[QString::fromStdString(it-\/>first)]\ =\ it-\/>second;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00056}00056\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00058}00058\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00060}\mbox{\hyperlink{classContribution_a2d8dddc79dd2a69dae3e83324652b845}{00060}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classContribution_a2d8dddc79dd2a69dae3e83324652b845}{Contribution::ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00061}00061\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00062}00062\ \ \ \ \ clear();}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{for}\ (QString\ key:\ jsonobject.keys())}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00064}00064\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ jsonobject[key].toDouble();}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00066}00066\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00068}00068\ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00070}\mbox{\hyperlink{classContribution_a0d955eb0c9d0727e54eab577af30c088}{00070}}\ QTableWidget\ *\mbox{\hyperlink{classContribution_a0d955eb0c9d0727e54eab577af30c088}{Contribution::ToTable}}()}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00071}00071\ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00072}00072\ \ \ \ \ QTableWidget\ *tablewidget\ =\ \textcolor{keyword}{new}\ QTableWidget();}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00073}00073\ \ \ \ \ tablewidget-\/>setEditTriggers(QAbstractItemView::NoEditTriggers);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00074}00074\ \ \ \ \ tablewidget-\/>setColumnCount(1);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00075}00075\ \ \ \ \ tablewidget-\/>setRowCount(size());}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00076}00076\ \ \ \ \ QStringList\ headers;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00077}00077\ \ \ \ \ QStringList\ sources;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,double>::const\_iterator\ it=cbegin();\ it!=cend();\ it++\ )}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00080}00080\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ sources<<QString::fromStdString(it-\/>first);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(i,0,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(it-\/>second)));}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00085}00085\ \ \ \ \ headers\ <<\ \textcolor{stringliteral}{"{}Contribution"{}};}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00086}00086\ \ \ \ \ tablewidget-\/>setHorizontalHeaderLabels(headers);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00087}00087\ \ \ \ \ tablewidget-\/>setVerticalHeaderLabels(sources);}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{return}\ tablewidget;}
+\DoxyCodeLine{\Hypertarget{contribution_8cpp_source_l00089}00089\ \}}
+
+\end{DoxyCode}

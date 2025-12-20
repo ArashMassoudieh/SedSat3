@@ -1,0 +1,33 @@
+\doxysection{elementstablemodel.\+h}
+\hypertarget{elementstablemodel_8h_source}{}\label{elementstablemodel_8h_source}\mbox{\hyperlink{elementstablemodel_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ ELEMENTSTABLEMODEL\_H}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ ELEMENTSTABLEMODEL\_H}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QAbstractTableModel>}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{sourcesinkdata_8h}{sourcesinkdata.h}}>}}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00008}\mbox{\hyperlink{classElementTableModel}{00008}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classElementTableModel}{ElementTableModel}}:\ \textcolor{keyword}{public}\ QAbstractTableModel}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00010}00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00011}00011\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00013}00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classElementTableModel}{ElementTableModel}}(\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}},\ QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00015}00015\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classElementTableModel_a85e9dd7ee6267cbf8e586b72d3c2d40a}{rowCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classElementTableModel_a2c52d320eefffb52a40d3c1a94edb5d4}{columnCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&parent\ =\ QModelIndex())\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00017}00017\ \ \ \ \ QVariant\ \mbox{\hyperlink{classElementTableModel_a9d8ccceb27fb7a314b893bf22285b650}{data}}(\textcolor{keyword}{const}\ QModelIndex\ \&index,\ \textcolor{keywordtype}{int}\ role\ =\ Qt::DisplayRole)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00018}00018\ \ \ \ \ QVariant\ \mbox{\hyperlink{classElementTableModel_a250a9add019e80b168846b3365be9050}{headerData}}(\textcolor{keywordtype}{int}\ section,\ Qt::Orientation\ orientation,\ \textcolor{keywordtype}{int}\ role)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElementTableModel_a02785ad1d450ce27971d085f770a9af7}{setData}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index,\ \textcolor{keyword}{const}\ QVariant\ \&\ value,\ \textcolor{keywordtype}{int}\ role\ =\ Qt::EditRole)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00020}00020\ \ \ \ \ Qt::ItemFlags\ \mbox{\hyperlink{classElementTableModel_a8318b3b34b22bf8f13de9884601297f0}{flags}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00021}\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{00021}}\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00022}00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00024}00024\ signals:}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00025}\mbox{\hyperlink{classElementTableModel_a897a69a1b350d947c449b936e9f57175}{00025}}\ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classElementTableModel_a897a69a1b350d947c449b936e9f57175}{editCompleted}}(\textcolor{keyword}{const}\ QString\ \&);}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00026}00026\ \};}
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{elementstablemodel_8h_source_l00028}00028\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ELEMENTSTABLEMODEL\_H}}
+
+\end{DoxyCode}

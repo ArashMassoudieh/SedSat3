@@ -1,0 +1,290 @@
+\doxysection{Results Class Reference}
+\hypertarget{classResults}{}\label{classResults}\index{Results@{Results}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/results.\+h$>$}
+
+
+
+Inheritance diagram for Results\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classResults__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Results\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classResults__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classResults_ae15a9e843b67c54e98a6f59a56104e1f}{Results}} ()
+\item 
+\mbox{\hyperlink{classResults_ad763563bd2a15401cc5f42d69fb943b7}{Results}} (const \mbox{\hyperlink{classResults}{Results}} \&rhs)
+\item 
+\mbox{\hyperlink{classResults}{Results}} \& \mbox{\hyperlink{classResults_a6964b981eace04ac35f4a3165968fa7f}{operator=}} (const \mbox{\hyperlink{classResults}{Results}} \&rhs)
+\item 
+void \mbox{\hyperlink{classResults_a2204340fba7e5b01d474d2ad3aa3d215}{Append}} (const \mbox{\hyperlink{classResultItem}{Result\+Item}} \&)
+\item 
+void \mbox{\hyperlink{classResults_aaad42520cea33eadbf3b800cc56e48d9}{Set\+Name}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\+\_\+name)
+\item 
+bool \mbox{\hyperlink{classResults_ae37c72323b02946acb1a8b482036f539}{Read\+From\+Json}} (const QJson\+Object \&jsonobject)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classResults_abf983d8a6e179b09221a33670d555a67}{Get\+Name}} ()
+\item 
+QJson\+Object \mbox{\hyperlink{classResults_a339dc75445f96422237388fe269253bd}{to\+Json\+Object}} ()
+\item 
+void \mbox{\hyperlink{classResults_a42de1333dd506560e462ed9a852a015a}{Set\+Error}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\+\_\+error)
+\item 
+void \mbox{\hyperlink{classResults_a9fe6e6adc9c4b4efcce943aea4336b66}{Append\+Error}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&\+\_\+error)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classResults_a73fa9f7804bd224620cf7bb4ba22429d}{Error}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classResults_ad68c10e52be16019c48c35ee2a252ad8}{name}}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classResults_afbb15328f9fade6364f56e016a221fb4}{error}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00014}{14}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classResults_ae15a9e843b67c54e98a6f59a56104e1f}\label{classResults_ae15a9e843b67c54e98a6f59a56104e1f} 
+\index{Results@{Results}!Results@{Results}}
+\index{Results@{Results}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{Results()}{Results()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Results\+::\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{results_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{results_8cpp_source}{results.\+cpp}}.
+
+\Hypertarget{classResults_ad763563bd2a15401cc5f42d69fb943b7}\label{classResults_ad763563bd2a15401cc5f42d69fb943b7} 
+\index{Results@{Results}!Results@{Results}}
+\index{Results@{Results}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{Results()}{Results()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Results\+::\+Results (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classResults}{Results}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{results_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{results_8cpp_source}{results.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00029}{name}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classResults_a2204340fba7e5b01d474d2ad3aa3d215}\label{classResults_a2204340fba7e5b01d474d2ad3aa3d215} 
+\index{Results@{Results}!Append@{Append}}
+\index{Append@{Append}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{Append()}{Append()}}
+{\footnotesize\ttfamily void Results\+::\+Append (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classResultItem}{Result\+Item}} \&}]{ritem }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{results_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{results_8cpp_source}{results.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_source_l00022}{Result\+Item\+::\+Name()}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03744}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Conductor\+::\+Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Conductor\+::\+Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01704}{Conductor\+::\+Execute\+Box\+Cox()}}, \mbox{\hyperlink{conductor_8cpp_source_l01627}{Conductor\+::\+Execute\+Bracketing\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Conductor\+::\+Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Conductor\+::\+Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Conductor\+::\+Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00631}{Conductor\+::\+Execute\+Covariance\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Conductor\+::\+Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Conductor\+::\+Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Conductor\+::\+Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Conductor\+::\+Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Conductor\+::\+Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Conductor\+::\+Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Conductor\+::\+Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Conductor\+::\+Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Conductor\+::\+Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l01308}{Conductor\+::\+Execute\+Kolmogorov\+Smirnov()}}, \mbox{\hyperlink{conductor_8cpp_source_l01338}{Conductor\+::\+Execute\+Kolmogorov\+Smirnov\+Individual()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Conductor\+::\+Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Conductor\+::\+Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00561}{Conductor\+::\+Execute\+MLR()}}, \mbox{\hyperlink{conductor_8cpp_source_l00535}{Conductor\+::\+Execute\+OMSize\+Correct()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Conductor\+::\+Execute\+Outlier\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Conductor\+::\+Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Conductor\+::\+Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Conductor\+::\+Execute\+SDFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Conductor\+::\+Execute\+Source\+Verify()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classResults_a9fe6e6adc9c4b4efcce943aea4336b66}\label{classResults_a9fe6e6adc9c4b4efcce943aea4336b66} 
+\index{Results@{Results}!AppendError@{AppendError}}
+\index{AppendError@{AppendError}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{AppendError()}{AppendError()}}
+{\footnotesize\ttfamily void Results\+::\+Append\+Error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{\+\_\+error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00026}{26}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00030}{error}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classResults_a73fa9f7804bd224620cf7bb4ba22429d}\label{classResults_a73fa9f7804bd224620cf7bb4ba22429d} 
+\index{Results@{Results}!Error@{Error}}
+\index{Error@{Error}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{Error()}{Error()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Results\+::\+Error (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00027}{27}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00030}{error}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l02225}{Conductor\+::\+Execute\+CMBBayesian()}}.
+
+\Hypertarget{classResults_abf983d8a6e179b09221a33670d555a67}\label{classResults_abf983d8a6e179b09221a33670d555a67} 
+\index{Results@{Results}!GetName@{GetName}}
+\index{GetName@{GetName}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{GetName()}{GetName()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Results\+::\+Get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00023}{23}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00029}{name}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Main\+Window\+::\+Execute()}}.
+
+\Hypertarget{classResults_a6964b981eace04ac35f4a3165968fa7f}\label{classResults_a6964b981eace04ac35f4a3165968fa7f} 
+\index{Results@{Results}!operator=@{operator=}}
+\index{operator=@{operator=}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResults}{Results}} \& Results\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classResults}{Results}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{results_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{results_8cpp_source}{results.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00029}{name}}.
+
+\Hypertarget{classResults_ae37c72323b02946acb1a8b482036f539}\label{classResults_ae37c72323b02946acb1a8b482036f539} 
+\index{Results@{Results}!ReadFromJson@{ReadFromJson}}
+\index{ReadFromJson@{ReadFromJson}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{ReadFromJson()}{ReadFromJson()}}
+{\footnotesize\ttfamily bool Results\+::\+Read\+From\+Json (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{results_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{results_8cpp_source}{results.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d}{dfa\+\_\+vectorsetset}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9}{distribution\+\_\+with\+\_\+observed}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{elemental\+\_\+profile\+\_\+set}}, \mbox{\hyperlink{interface_8h_source_l00071}{Interface\+::\+Get\+Options()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a51292102a4c6b0d6bf7029cfaf800ed5}{matrix1vs1}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84}{mcmc\+\_\+samples}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{predicted\+\_\+concentration}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920}{rangeset\+\_\+with\+\_\+observed}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00707}{Elemental\+\_\+\+Profile\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00067}{CMBMatrix\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00071}{CMBTime\+Series\+Set\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00081}{CMBVector\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbvectorset_8cpp_source_l00028}{CMBVector\+Set\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbvectorsetset_8cpp_source_l00028}{CMBVector\+Set\+Set\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00311}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}, \mbox{\hyperlink{resultitem_8h_source_l00057}{Result\+Item\+::\+Set\+Absolute\+Value()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00183}{CMBMatrix\+::\+Set\+Boolean\+Value()}}, \mbox{\hyperlink{interface_8h_source_l00051}{Interface\+::\+Set\+Limit()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{interface_8h_source_l00059}{Interface\+::\+Set\+Option()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00026}{Result\+Item\+::\+Set\+XAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\+\_\+column\+\_\+x}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{stacked\+\_\+bar\+\_\+chart}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843}{timeseries\+\_\+set}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}{vectorset\+\_\+groups}}, \mbox{\hyperlink{interface_8h_source_l00020}{options\+::\+X\+\_\+suffix}}, and \mbox{\hyperlink{interface_8h_source_l00021}{options\+::\+Y\+\_\+suffix}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Main\+Window\+::\+Load\+Model()}}.
+
+\Hypertarget{classResults_a42de1333dd506560e462ed9a852a015a}\label{classResults_a42de1333dd506560e462ed9a852a015a} 
+\index{Results@{Results}!SetError@{SetError}}
+\index{SetError@{SetError}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{SetError()}{SetError()}}
+{\footnotesize\ttfamily void Results\+::\+Set\+Error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{\+\_\+error }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00025}{25}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00030}{error}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classResults_aaad42520cea33eadbf3b800cc56e48d9}\label{classResults_aaad42520cea33eadbf3b800cc56e48d9} 
+\index{Results@{Results}!SetName@{SetName}}
+\index{SetName@{SetName}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{SetName()}{SetName()}}
+{\footnotesize\ttfamily void Results\+::\+Set\+Name (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{\+\_\+name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00021}{21}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+References \mbox{\hyperlink{results_8h_source_l00029}{name}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03744}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Conductor\+::\+Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Conductor\+::\+Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01704}{Conductor\+::\+Execute\+Box\+Cox()}}, \mbox{\hyperlink{conductor_8cpp_source_l01627}{Conductor\+::\+Execute\+Bracketing\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Conductor\+::\+Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Conductor\+::\+Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Conductor\+::\+Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00631}{Conductor\+::\+Execute\+Covariance\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Conductor\+::\+Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Conductor\+::\+Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Conductor\+::\+Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Conductor\+::\+Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Conductor\+::\+Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Conductor\+::\+Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l02037}{Conductor\+::\+Execute\+Error\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Conductor\+::\+Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Conductor\+::\+Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Conductor\+::\+Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l01308}{Conductor\+::\+Execute\+Kolmogorov\+Smirnov()}}, \mbox{\hyperlink{conductor_8cpp_source_l01338}{Conductor\+::\+Execute\+Kolmogorov\+Smirnov\+Individual()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Conductor\+::\+Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Conductor\+::\+Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00561}{Conductor\+::\+Execute\+MLR()}}, \mbox{\hyperlink{conductor_8cpp_source_l00535}{Conductor\+::\+Execute\+OMSize\+Correct()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Conductor\+::\+Execute\+Outlier\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Conductor\+::\+Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Conductor\+::\+Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Conductor\+::\+Execute\+SDFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Conductor\+::\+Execute\+Source\+Verify()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classResults_a339dc75445f96422237388fe269253bd}\label{classResults_a339dc75445f96422237388fe269253bd} 
+\index{Results@{Results}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Results\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{results_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{results_8cpp_source}{results.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, and \mbox{\hyperlink{interface_8cpp_source_l00027}{Interface\+::to\+Json\+Object()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00234}{Main\+Window\+::build\+Results\+Json()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classResults_afbb15328f9fade6364f56e016a221fb4}\label{classResults_afbb15328f9fade6364f56e016a221fb4} 
+\index{Results@{Results}!error@{error}}
+\index{error@{error}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{error}{error}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Results\+::error\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00030}{30}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8h_source_l00026}{Append\+Error()}}, \mbox{\hyperlink{results_8h_source_l00027}{Error()}}, and \mbox{\hyperlink{results_8h_source_l00025}{Set\+Error()}}.
+
+\Hypertarget{classResults_ad68c10e52be16019c48c35ee2a252ad8}\label{classResults_ad68c10e52be16019c48c35ee2a252ad8} 
+\index{Results@{Results}!name@{name}}
+\index{name@{name}!Results@{Results}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Results\+::name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{results_8h_source_l00029}{29}} of file \mbox{\hyperlink{results_8h_source}{results.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8cpp_source_l00014}{Results()}}, \mbox{\hyperlink{results_8h_source_l00023}{Get\+Name()}}, \mbox{\hyperlink{results_8cpp_source_l00018}{operator=()}}, and \mbox{\hyperlink{results_8h_source_l00021}{Set\+Name()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{results_8h}{results.\+h}}\item 
+\mbox{\hyperlink{results_8cpp}{results.\+cpp}}\end{DoxyCompactItemize}

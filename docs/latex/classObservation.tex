@@ -1,0 +1,300 @@
+\doxysection{Observation Class Reference}
+\hypertarget{classObservation}{}\label{classObservation}\index{Observation@{Observation}}
+
+
+{\ttfamily \#include $<$observation.\+h$>$}
+
+
+
+Collaboration diagram for Observation\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{classObservation__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classObservation_a5c0c06219dc84651ad46d01a0a555270}{Observation}} ()
+\item 
+\mbox{\hyperlink{classObservation_a26fac55f9f8438a2c5d90e5088e054a7}{Observation}} (const \mbox{\hyperlink{classObservation}{Observation}} \&obs)
+\item 
+\mbox{\hyperlink{classObservation}{Observation}} \& \mbox{\hyperlink{classObservation_acead88738fc53915baa1a48efb0dbcc7}{operator=}} (const \mbox{\hyperlink{classObservation}{Observation}} \&obs)
+\item 
+void \mbox{\hyperlink{classObservation_a1baa92aaf3e1aa2d1c4bf3be6ee57e92}{Set\+Name}} (const std\+::string \&nam)
+\item 
+std\+::string \mbox{\hyperlink{classObservation_a37f1e01a1a07f620b66d91fa6deadd54}{Name}} ()
+\item 
+std\+::string \mbox{\hyperlink{classObservation_a39b93b85f7c1225cee79e12d300c65cb}{Get\+Name}} ()
+\item 
+void \mbox{\hyperlink{classObservation_a3fb0d74da1b52090601e971d3d19ebe5}{Set\+Values}} (const Time\+Series$<$ double $>$ \&\mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}})
+\item 
+Time\+Series$<$ double $>$ \mbox{\hyperlink{classObservation_aba545b4e308a30cf8dbd0336f7cdfc34}{Values}} ()
+\item 
+double \mbox{\hyperlink{classObservation_af6968e7dfcd05a871ae3809c91242e00}{Value}} ()
+\item 
+void \mbox{\hyperlink{classObservation_aab6b1b334f9b0df062106d491866cfed}{Append\+Values}} (const double \&t, const double \&val)
+\item 
+double \mbox{\hyperlink{classObservation_af8801915d49428d9028afa2a32fc30b9}{Predicted\+Value}} ()
+\item 
+void \mbox{\hyperlink{classObservation_a6d254bc73f4e9e61d618f03fb3b495d1}{Set\+Predicted\+Value}} (const double \&value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Time\+Series$<$ double $>$ \mbox{\hyperlink{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}{values}}
+\item 
+double \mbox{\hyperlink{classObservation_a3e555e2a43aec3657202975df027edd7}{predicted\+\_\+value}} = 0
+\item 
+std\+::string \mbox{\hyperlink{classObservation_af13e7976e2af370508b5fac020f61f2f}{name}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00006}{6}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classObservation_a5c0c06219dc84651ad46d01a0a555270}\label{classObservation_a5c0c06219dc84651ad46d01a0a555270} 
+\index{Observation@{Observation}!Observation@{Observation}}
+\index{Observation@{Observation}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{Observation()}{Observation()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Observation\+::\+Observation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{observation_8cpp_source}{observation.\+cpp}}.
+
+\Hypertarget{classObservation_a26fac55f9f8438a2c5d90e5088e054a7}\label{classObservation_a26fac55f9f8438a2c5d90e5088e054a7} 
+\index{Observation@{Observation}!Observation@{Observation}}
+\index{Observation@{Observation}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{Observation()}{Observation()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Observation\+::\+Observation (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classObservation}{Observation}} \&}]{obs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{observation_8cpp_source}{observation.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00029}{name}}, and \mbox{\hyperlink{observation_8h_source_l00027}{values}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classObservation_aab6b1b334f9b0df062106d491866cfed}\label{classObservation_aab6b1b334f9b0df062106d491866cfed} 
+\index{Observation@{Observation}!AppendValues@{AppendValues}}
+\index{AppendValues@{AppendValues}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{AppendValues()}{AppendValues()}}
+{\footnotesize\ttfamily void Observation\+::\+Append\+Values (\begin{DoxyParamCaption}\item[{const double \&}]{t,  }\item[{const double \&}]{val }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{observation_8cpp_source}{observation.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00027}{values}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}.
+
+\Hypertarget{classObservation_a39b93b85f7c1225cee79e12d300c65cb}\label{classObservation_a39b93b85f7c1225cee79e12d300c65cb} 
+\index{Observation@{Observation}!GetName@{GetName}}
+\index{GetName@{GetName}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{GetName()}{GetName()}}
+{\footnotesize\ttfamily std\+::string Observation\+::\+Get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00014}{14}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00029}{name}}.
+
+\Hypertarget{classObservation_a37f1e01a1a07f620b66d91fa6deadd54}\label{classObservation_a37f1e01a1a07f620b66d91fa6deadd54} 
+\index{Observation@{Observation}!Name@{Name}}
+\index{Name@{Name}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{Name()}{Name()}}
+{\footnotesize\ttfamily std\+::string Observation\+::\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00013}{13}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00029}{name}}.
+
+\Hypertarget{classObservation_acead88738fc53915baa1a48efb0dbcc7}\label{classObservation_acead88738fc53915baa1a48efb0dbcc7} 
+\index{Observation@{Observation}!operator=@{operator=}}
+\index{operator=@{operator=}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classObservation}{Observation}} \& Observation\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classObservation}{Observation}} \&}]{obs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{observation_8cpp_source}{observation.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00029}{name}}, and \mbox{\hyperlink{observation_8h_source_l00027}{values}}.
+
+\Hypertarget{classObservation_af8801915d49428d9028afa2a32fc30b9}\label{classObservation_af8801915d49428d9028afa2a32fc30b9} 
+\index{Observation@{Observation}!PredictedValue@{PredictedValue}}
+\index{PredictedValue@{PredictedValue}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{PredictedValue()}{PredictedValue()}}
+{\footnotesize\ttfamily double Observation\+::\+Predicted\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00024}{24}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00028}{predicted\+\_\+value}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02243}{Source\+Sink\+Data\+::\+Get\+Predicted\+Values()}}.
+
+\Hypertarget{classObservation_a1baa92aaf3e1aa2d1c4bf3be6ee57e92}\label{classObservation_a1baa92aaf3e1aa2d1c4bf3be6ee57e92} 
+\index{Observation@{Observation}!SetName@{SetName}}
+\index{SetName@{SetName}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{SetName()}{SetName()}}
+{\footnotesize\ttfamily void Observation\+::\+Set\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{nam }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00012}{12}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00029}{name}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}.
+
+\Hypertarget{classObservation_a6d254bc73f4e9e61d618f03fb3b495d1}\label{classObservation_a6d254bc73f4e9e61d618f03fb3b495d1} 
+\index{Observation@{Observation}!SetPredictedValue@{SetPredictedValue}}
+\index{SetPredictedValue@{SetPredictedValue}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{SetPredictedValue()}{SetPredictedValue()}}
+{\footnotesize\ttfamily void Observation\+::\+Set\+Predicted\+Value (\begin{DoxyParamCaption}\item[{const double \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00025}{25}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00028}{predicted\+\_\+value}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01403}{Source\+Sink\+Data\+::\+Predict\+Target()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01429}{Source\+Sink\+Data\+::\+Predict\+Target\+\_\+\+Isotope\+\_\+delta()}}.
+
+\Hypertarget{classObservation_a3fb0d74da1b52090601e971d3d19ebe5}\label{classObservation_a3fb0d74da1b52090601e971d3d19ebe5} 
+\index{Observation@{Observation}!SetValues@{SetValues}}
+\index{SetValues@{SetValues}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{SetValues()}{SetValues()}}
+{\footnotesize\ttfamily void Observation\+::\+Set\+Values (\begin{DoxyParamCaption}\item[{const Time\+Series$<$ double $>$ \&}]{values }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{observation_8cpp_source}{observation.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00027}{values}}.
+
+\Hypertarget{classObservation_af6968e7dfcd05a871ae3809c91242e00}\label{classObservation_af6968e7dfcd05a871ae3809c91242e00} 
+\index{Observation@{Observation}!Value@{Value}}
+\index{Value@{Value}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{Value()}{Value()}}
+{\footnotesize\ttfamily double Observation\+::\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00017}{17}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00027}{values}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classObservation_aba545b4e308a30cf8dbd0336f7cdfc34}\label{classObservation_aba545b4e308a30cf8dbd0336f7cdfc34} 
+\index{Observation@{Observation}!Values@{Values}}
+\index{Values@{Values}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{Values()}{Values()}}
+{\footnotesize\ttfamily Time\+Series$<$ double $>$ Observation\+::\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00016}{16}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+References \mbox{\hyperlink{observation_8h_source_l00027}{values}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classObservation_af13e7976e2af370508b5fac020f61f2f}\label{classObservation_af13e7976e2af370508b5fac020f61f2f} 
+\index{Observation@{Observation}!name@{name}}
+\index{name@{name}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily std\+::string Observation\+::name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00029}{29}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{observation_8cpp_source_l00008}{Observation()}}, \mbox{\hyperlink{observation_8h_source_l00014}{Get\+Name()}}, \mbox{\hyperlink{observation_8h_source_l00013}{Name()}}, \mbox{\hyperlink{observation_8cpp_source_l00014}{operator=()}}, and \mbox{\hyperlink{observation_8h_source_l00012}{Set\+Name()}}.
+
+\Hypertarget{classObservation_a3e555e2a43aec3657202975df027edd7}\label{classObservation_a3e555e2a43aec3657202975df027edd7} 
+\index{Observation@{Observation}!predicted\_value@{predicted\_value}}
+\index{predicted\_value@{predicted\_value}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{predicted\_value}{predicted\_value}}
+{\footnotesize\ttfamily double Observation\+::predicted\+\_\+value = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00028}{28}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{observation_8h_source_l00024}{Predicted\+Value()}}, and \mbox{\hyperlink{observation_8h_source_l00025}{Set\+Predicted\+Value()}}.
+
+\Hypertarget{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f}\label{classObservation_afd967685da16cb4f7fc3a4b0a8336e2f} 
+\index{Observation@{Observation}!values@{values}}
+\index{values@{values}!Observation@{Observation}}
+\doxysubsubsection{\texorpdfstring{values}{values}}
+{\footnotesize\ttfamily Time\+Series$<$double$>$ Observation\+::values\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{observation_8h_source_l00027}{27}} of file \mbox{\hyperlink{observation_8h_source}{observation.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{observation_8cpp_source_l00008}{Observation()}}, \mbox{\hyperlink{observation_8cpp_source_l00026}{Append\+Values()}}, \mbox{\hyperlink{observation_8cpp_source_l00014}{operator=()}}, \mbox{\hyperlink{observation_8cpp_source_l00021}{Set\+Values()}}, \mbox{\hyperlink{observation_8h_source_l00017}{Value()}}, and \mbox{\hyperlink{observation_8h_source_l00016}{Values()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{observation_8h}{observation.\+h}}\item 
+\mbox{\hyperlink{observation_8cpp}{observation.\+cpp}}\end{DoxyCompactItemize}

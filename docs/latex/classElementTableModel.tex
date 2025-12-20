@@ -1,0 +1,182 @@
+\doxysection{Element\+Table\+Model Class Reference}
+\hypertarget{classElementTableModel}{}\label{classElementTableModel}\index{ElementTableModel@{ElementTableModel}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/elementstablemodel.\+h$>$}
+
+
+
+Inheritance diagram for Element\+Table\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classElementTableModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Element\+Table\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classElementTableModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classElementTableModel_a14c902b8a4f9ce9bf155ed79f9831d64}{Element\+Table\+Model}} (\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}, QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+int \mbox{\hyperlink{classElementTableModel_a85e9dd7ee6267cbf8e586b72d3c2d40a}{row\+Count}} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+int \mbox{\hyperlink{classElementTableModel_a2c52d320eefffb52a40d3c1a94edb5d4}{column\+Count}} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+QVariant \mbox{\hyperlink{classElementTableModel_a9d8ccceb27fb7a314b893bf22285b650}{data}} (const QModel\+Index \&index, int role=Qt\+::\+Display\+Role) const override
+\item 
+QVariant \mbox{\hyperlink{classElementTableModel_a250a9add019e80b168846b3365be9050}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\item 
+bool \mbox{\hyperlink{classElementTableModel_a02785ad1d450ce27971d085f770a9af7}{set\+Data}} (const QModel\+Index \&index, const QVariant \&value, int role=Qt\+::\+Edit\+Role) override
+\item 
+Qt\+::\+Item\+Flags \mbox{\hyperlink{classElementTableModel_a8318b3b34b22bf8f13de9884601297f0}{flags}} (const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classElementTableModel_a897a69a1b350d947c449b936e9f57175}{edit\+Completed}} (const QString \&)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElementTableModel_ab0d480021566d1556e44cff7cd034317}{Data}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8h_source_l00008}{8}} of file \mbox{\hyperlink{elementstablemodel_8h_source}{elementstablemodel.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classElementTableModel_a14c902b8a4f9ce9bf155ed79f9831d64}\label{classElementTableModel_a14c902b8a4f9ce9bf155ed79f9831d64} 
+\index{ElementTableModel@{ElementTableModel}!ElementTableModel@{ElementTableModel}}
+\index{ElementTableModel@{ElementTableModel}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{ElementTableModel()}{ElementTableModel()}}
+{\footnotesize\ttfamily Element\+Table\+Model\+::\+Element\+Table\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{Data,  }\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementstablemodel_8h_source_l00021}{Data}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classElementTableModel_a2c52d320eefffb52a40d3c1a94edb5d4}\label{classElementTableModel_a2c52d320eefffb52a40d3c1a94edb5d4} 
+\index{ElementTableModel@{ElementTableModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Element\+Table\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{parent = {\ttfamily QModelIndex()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+\Hypertarget{classElementTableModel_a9d8ccceb27fb7a314b893bf22285b650}\label{classElementTableModel_a9d8ccceb27fb7a314b893bf22285b650} 
+\index{ElementTableModel@{ElementTableModel}!data@{data}}
+\index{data@{data}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily QVariant Element\+Table\+Model\+::data (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index,  }\item[{int}]{role = {\ttfamily Qt\+:\+:DisplayRole} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementstablemodel_8h_source_l00021}{Data}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\+\_\+information\+::do\+\_\+not\+\_\+include}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\+\_\+information\+::element}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05042}{Source\+Sink\+Data\+::\+Get\+Element\+Information()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\+\_\+information\+::isotope}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, and \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}.
+
+\Hypertarget{classElementTableModel_a897a69a1b350d947c449b936e9f57175}\label{classElementTableModel_a897a69a1b350d947c449b936e9f57175} 
+\index{ElementTableModel@{ElementTableModel}!editCompleted@{editCompleted}}
+\index{editCompleted@{editCompleted}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{editCompleted()}{editCompleted()}}
+{\footnotesize\ttfamily void Element\+Table\+Model\+::edit\+Completed (\begin{DoxyParamCaption}\item[{const QString \&}]{ }\end{DoxyParamCaption})}
+
+
+
+Referenced by \mbox{\hyperlink{elementstablemodel_8cpp_source_l00099}{set\+Data()}}.
+
+\Hypertarget{classElementTableModel_a8318b3b34b22bf8f13de9884601297f0}\label{classElementTableModel_a8318b3b34b22bf8f13de9884601297f0} 
+\index{ElementTableModel@{ElementTableModel}!flags@{flags}}
+\index{flags@{flags}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{flags()}{flags()}}
+{\footnotesize\ttfamily Qt\+::\+Item\+Flags Element\+Table\+Model\+::flags (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00140}{140}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+\Hypertarget{classElementTableModel_a250a9add019e80b168846b3365be9050}\label{classElementTableModel_a250a9add019e80b168846b3365be9050} 
+\index{ElementTableModel@{ElementTableModel}!headerData@{headerData}}
+\index{headerData@{headerData}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily QVariant Element\+Table\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+\Hypertarget{classElementTableModel_a85e9dd7ee6267cbf8e586b72d3c2d40a}\label{classElementTableModel_a85e9dd7ee6267cbf8e586b72d3c2d40a} 
+\index{ElementTableModel@{ElementTableModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Element\+Table\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{parent = {\ttfamily QModelIndex()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementstablemodel_8h_source_l00021}{Data}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}.
+
+\Hypertarget{classElementTableModel_a02785ad1d450ce27971d085f770a9af7}\label{classElementTableModel_a02785ad1d450ce27971d085f770a9af7} 
+\index{ElementTableModel@{ElementTableModel}!setData@{setData}}
+\index{setData@{setData}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{setData()}{setData()}}
+{\footnotesize\ttfamily bool Element\+Table\+Model\+::set\+Data (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index,  }\item[{const QVariant \&}]{value,  }\item[{int}]{role = {\ttfamily Qt\+:\+:EditRole} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8cpp_source_l00099}{99}} of file \mbox{\hyperlink{elementstablemodel_8cpp_source}{elementstablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementstablemodel_8h_source_l00021}{Data}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\+\_\+information\+::do\+\_\+not\+\_\+include}}, \mbox{\hyperlink{classElementTableModel_a897a69a1b350d947c449b936e9f57175}{edit\+Completed()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\+\_\+information\+::element}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05042}{Source\+Sink\+Data\+::\+Get\+Element\+Information()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\+\_\+information\+::isotope}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, and \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classElementTableModel_ab0d480021566d1556e44cff7cd034317}\label{classElementTableModel_ab0d480021566d1556e44cff7cd034317} 
+\index{ElementTableModel@{ElementTableModel}!Data@{Data}}
+\index{Data@{Data}!ElementTableModel@{ElementTableModel}}
+\doxysubsubsection{\texorpdfstring{Data}{Data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}\texorpdfstring{$\ast$}{*} Element\+Table\+Model\+::\+Data}
+
+
+
+Definition at line \mbox{\hyperlink{elementstablemodel_8h_source_l00021}{21}} of file \mbox{\hyperlink{elementstablemodel_8h_source}{elementstablemodel.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elementstablemodel_8cpp_source_l00003}{Element\+Table\+Model()}}, \mbox{\hyperlink{elementstablemodel_8cpp_source_l00015}{data()}}, \mbox{\hyperlink{elementstablemodel_8cpp_source_l00007}{row\+Count()}}, and \mbox{\hyperlink{elementstablemodel_8cpp_source_l00099}{set\+Data()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{elementstablemodel_8h}{elementstablemodel.\+h}}\item 
+\mbox{\hyperlink{elementstablemodel_8cpp}{elementstablemodel.\+cpp}}\end{DoxyCompactItemize}

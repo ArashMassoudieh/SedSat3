@@ -1,0 +1,585 @@
+\doxysection{CMBVector\+Set Class Reference}
+\hypertarget{classCMBVectorSet}{}\label{classCMBVectorSet}\index{CMBVectorSet@{CMBVectorSet}}
+
+
+Collection of named \doxylink{classCMBVector}{CMBVector} objects for multi-\/variable analysis.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/cmbvectorset.\+h$>$}
+
+
+
+Inheritance diagram for CMBVector\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBVectorSet__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CMBVector\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBVectorSet__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCMBVectorSet_a2bfe2b1fa324aa68656b3d3a984f6af7}{CMBVector\+Set}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor -\/ creates an empty vector set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVectorSet_a97727ac9be3933d3bd6b2b14b51ddfb6}{CMBVector\+Set}} (const \mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \&mp)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \& \mbox{\hyperlink{classCMBVectorSet_ab7ca71adc09c3728c807d13ac9b5770d}{operator=}} (const \mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \&mp)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classCMBVectorSet_a3da45b41c9c45707dc79dfbcf5080e38}{to\+Json\+Object}} () const override
+\begin{DoxyCompactList}\small\item\em Serializes vector set to JSON format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBVectorSet_af3547375177fbb595243945fcbfcfaf0}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\begin{DoxyCompactList}\small\item\em Deserializes vector set from JSON format. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBVectorSet_acf441cbf3da7e407b45fb6d472bed139}{To\+String}} () const override
+\begin{DoxyCompactList}\small\item\em Converts vector set to string representation. \end{DoxyCompactList}\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMBVectorSet_a013bd1b6dbab4d9f0116e17fcaa0eda7}{To\+Table}} () override
+\begin{DoxyCompactList}\small\item\em Creates a QTable\+Widget for displaying vector set data. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBVectorSet_a67b48894dc34add069ce10bb709ccf05}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file) override
+\begin{DoxyCompactList}\small\item\em Writes vector set to file. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBVectorSet_a194111fa20b419354ffbc9f30e3a2ea2}{Label}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} column, int j) const
+\begin{DoxyCompactList}\small\item\em Gets label at specified position in a column. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBVectorSet_ac9756ff6617ec1abd9da0efe1d986559}{value\+At}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&columnlabel, int j) const
+\begin{DoxyCompactList}\small\item\em Gets value at specified position in a column. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \& \mbox{\hyperlink{classCMBVectorSet_a42b1d102a3bc4e5430f492d37bedaf81}{Get\+Column}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} columnlabel)
+\begin{DoxyCompactList}\small\item\em Gets reference to a named column vector. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBVectorSet_a13832f536ec22d8e819bb2f5a82eaaef}{Append}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&columnlabel, const \mbox{\hyperlink{classCMBVector}{CMBVector}} \&\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}})
+\begin{DoxyCompactList}\small\item\em Adds or replaces a vector in the set. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classCMBVectorSet_a5390530dc783b89eb19b9c242582738d}{Max\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Finds the maximum size among all vectors. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBVectorSet_a91b70f83a75069efbcabbce846caa4e0}{max}} () const
+\begin{DoxyCompactList}\small\item\em Finds the maximum value across all vectors. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBVectorSet_a14ca4379346b1cbbb7fcc848052e8932}{min}} () const
+\begin{DoxyCompactList}\small\item\em Finds the minimum value across all vectors. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBVectorSet_a756b5a444a2f4bd5af58439007dc54a9}{FTest\+\_\+p\+\_\+value}} () const
+\begin{DoxyCompactList}\small\item\em Computes F-\/test p-\/value for ANOVA. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBVectorSet_a256dd66d569fa1e67805dbd7dda0fea2}{Overall\+Mean}} () const
+\begin{DoxyCompactList}\small\item\em Computes overall mean across all vectors. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classCMBVectorSet_a4a2c4878e12ca89337810a5f337c48c9}{Total\+Numberof\+Observations}} () const
+\begin{DoxyCompactList}\small\item\em Counts total number of observations across all vectors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Collection of named \doxylink{classCMBVector}{CMBVector} objects for multi-\/variable analysis. 
+
+Manages a set of labeled vectors stored as a map, providing JSON serialization, table generation, and statistical operations like ANOVA F-\/test. Commonly used for organizing multiple samples or variables in source apportionment analysis. 
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8h_source_l00016}{16}} of file \mbox{\hyperlink{cmbvectorset_8h_source}{cmbvectorset.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCMBVectorSet_a2bfe2b1fa324aa68656b3d3a984f6af7}\label{classCMBVectorSet_a2bfe2b1fa324aa68656b3d3a984f6af7} 
+\index{CMBVectorSet@{CMBVectorSet}!CMBVectorSet@{CMBVectorSet}}
+\index{CMBVectorSet@{CMBVectorSet}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{CMBVectorSet()}{CMBVectorSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily CMBVector\+Set\+::\+CMBVector\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor -\/ creates an empty vector set. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+\Hypertarget{classCMBVectorSet_a97727ac9be3933d3bd6b2b14b51ddfb6}\label{classCMBVectorSet_a97727ac9be3933d3bd6b2b14b51ddfb6} 
+\index{CMBVectorSet@{CMBVectorSet}!CMBVectorSet@{CMBVectorSet}}
+\index{CMBVectorSet@{CMBVectorSet}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{CMBVectorSet()}{CMBVectorSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily CMBVector\+Set\+::\+CMBVector\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Vector set to copy from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCMBVectorSet_a13832f536ec22d8e819bb2f5a82eaaef}\label{classCMBVectorSet_a13832f536ec22d8e819bb2f5a82eaaef} 
+\index{CMBVectorSet@{CMBVectorSet}!Append@{Append}}
+\index{Append@{Append}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{Append()}{Append()}}
+{\footnotesize\ttfamily void CMBVector\+Set\+::\+Append (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{columnlabel,  }\item[{const \mbox{\hyperlink{classCMBVector}{CMBVector}} \&}]{vectorset }\end{DoxyParamCaption})}
+
+
+
+Adds or replaces a vector in the set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em columnlabel} & Name for the vector \\
+\hline
+{\em vectorset} & Vector to add \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00128}{128}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04599}{Source\+Sink\+Data\+::\+DFA\+\_\+\+Projected()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04619}{Source\+Sink\+Data\+::\+DFA\+\_\+\+Projected()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04640}{Source\+Sink\+Data\+::\+DFA\+\_\+\+Projected()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02814}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02894}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02854}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}.
+
+\Hypertarget{classCMBVectorSet_a756b5a444a2f4bd5af58439007dc54a9}\label{classCMBVectorSet_a756b5a444a2f4bd5af58439007dc54a9} 
+\index{CMBVectorSet@{CMBVectorSet}!FTest\_p\_value@{FTest\_p\_value}}
+\index{FTest\_p\_value@{FTest\_p\_value}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{FTest\_p\_value()}{FTest\_p\_value()}}
+{\footnotesize\ttfamily double CMBVector\+Set\+::\+FTest\+\_\+p\+\_\+value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Computes F-\/test p-\/value for ANOVA. 
+
+Performs one-\/way ANOVA to test if means differ significantly across the vectors in the set.
+
+\begin{DoxyReturn}{Returns}
+F-\/test p-\/value 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvectorset_8cpp_source_l00153}{Overall\+Mean()}}, and \mbox{\hyperlink{cmbvectorset_8cpp_source_l00165}{Total\+Numberof\+Observations()}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02894}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02854}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04843}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}.
+
+\Hypertarget{classCMBVectorSet_a42b1d102a3bc4e5430f492d37bedaf81}\label{classCMBVectorSet_a42b1d102a3bc4e5430f492d37bedaf81} 
+\index{CMBVectorSet@{CMBVectorSet}!GetColumn@{GetColumn}}
+\index{GetColumn@{GetColumn}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{GetColumn()}{GetColumn()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} \& CMBVector\+Set\+::\+Get\+Column (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{columnlabel }\end{DoxyParamCaption})}
+
+
+
+Gets reference to a named column vector. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em columnlabel} & Name of the vector column \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the \doxylink{classCMBVector}{CMBVector} 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00124}{124}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+\Hypertarget{classCMBVectorSet_a194111fa20b419354ffbc9f30e3a2ea2}\label{classCMBVectorSet_a194111fa20b419354ffbc9f30e3a2ea2} 
+\index{CMBVectorSet@{CMBVectorSet}!Label@{Label}}
+\index{Label@{Label}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{Label()}{Label()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBVector\+Set\+::\+Label (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{column,  }\item[{int}]{j }\end{DoxyParamCaption}) const}
+
+
+
+Gets label at specified position in a column. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em column} & Name of the vector column \\
+\hline
+{\em j} & Index within the column \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Label string, or empty string if column not found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvectorset_8cpp_source_l00110}{Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorset_8cpp_source_l00110}{Label()}}.
+
+\Hypertarget{classCMBVectorSet_a91b70f83a75069efbcabbce846caa4e0}\label{classCMBVectorSet_a91b70f83a75069efbcabbce846caa4e0} 
+\index{CMBVectorSet@{CMBVectorSet}!max@{max}}
+\index{max@{max}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{max()}{max()}}
+{\footnotesize\ttfamily double CMBVector\+Set\+::max (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Finds the maximum value across all vectors. 
+
+\begin{DoxyReturn}{Returns}
+Maximum value found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00878}{General\+Chart\+::\+Plot\+Scatter()}}.
+
+\Hypertarget{classCMBVectorSet_a5390530dc783b89eb19b9c242582738d}\label{classCMBVectorSet_a5390530dc783b89eb19b9c242582738d} 
+\index{CMBVectorSet@{CMBVectorSet}!MaxSize@{MaxSize}}
+\index{MaxSize@{MaxSize}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{MaxSize()}{MaxSize()}}
+{\footnotesize\ttfamily unsigned int CMBVector\+Set\+::\+Max\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Finds the maximum size among all vectors. 
+
+\begin{DoxyReturn}{Returns}
+Maximum number of elements in any vector 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00049}{49}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorset_8cpp_source_l00080}{To\+Table()}}.
+
+\Hypertarget{classCMBVectorSet_a14ca4379346b1cbbb7fcc848052e8932}\label{classCMBVectorSet_a14ca4379346b1cbbb7fcc848052e8932} 
+\index{CMBVectorSet@{CMBVectorSet}!min@{min}}
+\index{min@{min}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{min()}{min()}}
+{\footnotesize\ttfamily double CMBVector\+Set\+::min (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Finds the minimum value across all vectors. 
+
+\begin{DoxyReturn}{Returns}
+Minimum value found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00069}{69}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00878}{General\+Chart\+::\+Plot\+Scatter()}}.
+
+\Hypertarget{classCMBVectorSet_ab7ca71adc09c3728c807d13ac9b5770d}\label{classCMBVectorSet_ab7ca71adc09c3728c807d13ac9b5770d} 
+\index{CMBVectorSet@{CMBVectorSet}!operator=@{operator=}}
+\index{operator=@{operator=}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \& CMBVector\+Set\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Vector set to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this vector set 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}.
+
+\Hypertarget{classCMBVectorSet_a256dd66d569fa1e67805dbd7dda0fea2}\label{classCMBVectorSet_a256dd66d569fa1e67805dbd7dda0fea2} 
+\index{CMBVectorSet@{CMBVectorSet}!OverallMean@{OverallMean}}
+\index{OverallMean@{OverallMean}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{OverallMean()}{OverallMean()}}
+{\footnotesize\ttfamily double CMBVector\+Set\+::\+Overall\+Mean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Computes overall mean across all vectors. 
+
+Calculates weighted mean across all vectors, accounting for different vector sizes.
+
+\begin{DoxyReturn}{Returns}
+Overall mean value 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00153}{153}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorset_8cpp_source_l00133}{FTest\+\_\+p\+\_\+value()}}.
+
+\Hypertarget{classCMBVectorSet_af3547375177fbb595243945fcbfcfaf0}\label{classCMBVectorSet_af3547375177fbb595243945fcbfcfaf0} 
+\index{CMBVectorSet@{CMBVectorSet}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool CMBVector\+Set\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Deserializes vector set from JSON format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em jsonobject} & JSON object to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvector_8cpp_source_l00081}{CMBVector\+::\+Read\+From\+Json\+Object()}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}, and \mbox{\hyperlink{cmbvectorsetset_8cpp_source_l00028}{CMBVector\+Set\+Set\+::\+Read\+From\+Json\+Object()}}.
+
+\Hypertarget{classCMBVectorSet_a3da45b41c9c45707dc79dfbcf5080e38}\label{classCMBVectorSet_a3da45b41c9c45707dc79dfbcf5080e38} 
+\index{CMBVectorSet@{CMBVectorSet}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object CMBVector\+Set\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Serializes vector set to JSON format. 
+
+\begin{DoxyReturn}{Returns}
+JSON object containing all vectors with their names as keys 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+\Hypertarget{classCMBVectorSet_acf441cbf3da7e407b45fb6d472bed139}\label{classCMBVectorSet_acf441cbf3da7e407b45fb6d472bed139} 
+\index{CMBVectorSet@{CMBVectorSet}!ToString@{ToString}}
+\index{ToString@{ToString}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBVector\+Set\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Converts vector set to string representation. 
+
+\begin{DoxyReturn}{Returns}
+String containing all vectors with their names 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvector_8cpp_source_l00107}{CMBVector\+::\+To\+String()}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorsetset_8cpp_source_l00037}{CMBVector\+Set\+Set\+::\+To\+String()}}, and \mbox{\hyperlink{cmbvectorset_8cpp_source_l00104}{writetofile()}}.
+
+\Hypertarget{classCMBVectorSet_a013bd1b6dbab4d9f0116e17fcaa0eda7}\label{classCMBVectorSet_a013bd1b6dbab4d9f0116e17fcaa0eda7} 
+\index{CMBVectorSet@{CMBVectorSet}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} CMBVector\+Set\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Creates a QTable\+Widget for displaying vector set data. 
+
+Generates a table with one column pair (label, value) for each vector.
+
+\begin{DoxyReturn}{Returns}
+Pointer to newly created QTable\+Widget (caller takes ownership) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00080}{80}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvectorset_8cpp_source_l00049}{Max\+Size()}}.
+
+\Hypertarget{classCMBVectorSet_a4a2c4878e12ca89337810a5f337c48c9}\label{classCMBVectorSet_a4a2c4878e12ca89337810a5f337c48c9} 
+\index{CMBVectorSet@{CMBVectorSet}!TotalNumberofObservations@{TotalNumberofObservations}}
+\index{TotalNumberofObservations@{TotalNumberofObservations}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{TotalNumberofObservations()}{TotalNumberofObservations()}}
+{\footnotesize\ttfamily int CMBVector\+Set\+::\+Total\+Numberof\+Observations (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Counts total number of observations across all vectors. 
+
+\begin{DoxyReturn}{Returns}
+Total number of elements in all vectors combined 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00165}{165}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorset_8cpp_source_l00133}{FTest\+\_\+p\+\_\+value()}}.
+
+\Hypertarget{classCMBVectorSet_ac9756ff6617ec1abd9da0efe1d986559}\label{classCMBVectorSet_ac9756ff6617ec1abd9da0efe1d986559} 
+\index{CMBVectorSet@{CMBVectorSet}!valueAt@{valueAt}}
+\index{valueAt@{valueAt}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{valueAt()}{valueAt()}}
+{\footnotesize\ttfamily double CMBVector\+Set\+::value\+At (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{columnlabel,  }\item[{int}]{j }\end{DoxyParamCaption}) const}
+
+
+
+Gets value at specified position in a column. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em columnlabel} & Name of the vector column \\
+\hline
+{\em j} & Index within the column \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value at position j, or 0 if column not found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00117}{117}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvectorset_8cpp_source_l00117}{value\+At()}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorset_8cpp_source_l00117}{value\+At()}}.
+
+\Hypertarget{classCMBVectorSet_a67b48894dc34add069ce10bb709ccf05}\label{classCMBVectorSet_a67b48894dc34add069ce10bb709ccf05} 
+\index{CMBVectorSet@{CMBVectorSet}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!CMBVectorSet@{CMBVectorSet}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool CMBVector\+Set\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Writes vector set to file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File pointer to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbvectorset_8cpp_source_l00104}{104}} of file \mbox{\hyperlink{cmbvectorset_8cpp_source}{cmbvectorset.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvectorset_8cpp_source_l00037}{To\+String()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cmbvectorset_8h}{cmbvectorset.\+h}}\item 
+\mbox{\hyperlink{cmbvectorset_8cpp}{cmbvectorset.\+cpp}}\end{DoxyCompactItemize}

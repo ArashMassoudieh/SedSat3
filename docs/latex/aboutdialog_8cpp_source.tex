@@ -1,0 +1,244 @@
+\doxysection{aboutdialog.\+cpp}
+\hypertarget{aboutdialog_8cpp_source}{}\label{aboutdialog_8cpp_source}\mbox{\hyperlink{aboutdialog_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{aboutdialog_8h}{aboutdialog.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <QApplication>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <QScreen>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QFont>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QFrame>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00007}\mbox{\hyperlink{classAboutDialog_a66647a6ddd09e3a000e96bd25a835799}{00007}}\ \mbox{\hyperlink{classAboutDialog_a66647a6ddd09e3a000e96bd25a835799}{AboutDialog::AboutDialog}}(QWidget*\ parent)}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00008}00008\ \ \ \ \ :\ QDialog(parent),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00009}00009\ \ \ \ \ versionLabel(nullptr),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00010}00010\ \ \ \ \ buildDateLabel(nullptr),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00011}00011\ \ \ \ \ descriptionBrowser(nullptr)}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0}{setupUI}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00016}\mbox{\hyperlink{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0}{00016}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0}{AboutDialog::setupUI}}()}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00018}00018\ \ \ \ \ setWindowTitle(tr(\textcolor{stringliteral}{"{}About\ SedSat3"{}}));}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00019}00019\ \ \ \ \ setModal(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00020}00020\ \ \ \ \ setMinimumSize(500,\ 400);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00021}00021\ \ \ \ \ resize(600,\ 500);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ Main\ layout}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00024}00024\ \ \ \ \ QVBoxLayout*\ mainLayout\ =\ \textcolor{keyword}{new}\ QVBoxLayout(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00025}00025\ \ \ \ \ mainLayout-\/>setSpacing(0);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00026}00026\ \ \ \ \ mainLayout-\/>setContentsMargins(0,\ 0,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{comment}{//\ Add\ sections}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00029}00029\ \ \ \ \ mainLayout-\/>addWidget(\mbox{\hyperlink{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2}{createHeader}}());}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00030}00030\ \ \ \ \ mainLayout-\/>addWidget(\mbox{\hyperlink{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13}{createInfoSection}}());}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00031}00031\ \ \ \ \ mainLayout-\/>addWidget(\mbox{\hyperlink{classAboutDialog_ac7931d6dde55061b63316e46c982e74e}{createDescriptionSection}}(),\ 1);\ \textcolor{comment}{//\ Stretch\ factor\ 1}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00032}00032\ \ \ \ \ mainLayout-\/>addWidget(\mbox{\hyperlink{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4}{createFooter}}());}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00034}00034\ \ \ \ \ setLayout(mainLayout);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00037}\mbox{\hyperlink{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2}{00037}}\ QWidget*\ \mbox{\hyperlink{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2}{AboutDialog::createHeader}}()}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00038}00038\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00039}00039\ \ \ \ \ QWidget*\ headerWidget\ =\ \textcolor{keyword}{new}\ QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00040}00040\ \ \ \ \ headerWidget-\/>setStyleSheet(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}QWidget\ \{\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}background-\/color:\ qlineargradient(x1:0,\ y1:0,\ x2:0,\ y2:1,\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}stop:0\ \#2c3e50,\ stop:1\ \#34495e);\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00045}00045\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00046}00046\ \ \ \ \ headerWidget-\/>setMinimumHeight(100);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00048}00048\ \ \ \ \ QVBoxLayout*\ headerLayout\ =\ \textcolor{keyword}{new}\ QVBoxLayout(headerWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00049}00049\ \ \ \ \ headerLayout-\/>setContentsMargins(20,\ 20,\ 20,\ 20);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ Application\ title}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00052}00052\ \ \ \ \ QLabel*\ titleLabel\ =\ \textcolor{keyword}{new}\ QLabel(tr(\textcolor{stringliteral}{"{}SedSat3"{}}),\ headerWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00053}00053\ \ \ \ \ QFont\ titleFont\ =\ titleLabel-\/>font();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00054}00054\ \ \ \ \ titleFont.setPointSize(24);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00055}00055\ \ \ \ \ titleFont.setBold(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00056}00056\ \ \ \ \ titleLabel-\/>setFont(titleFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00057}00057\ \ \ \ \ titleLabel-\/>setStyleSheet(\textcolor{stringliteral}{"{}QLabel\ \{\ color:\ white;\ \}"{}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00058}00058\ \ \ \ \ titleLabel-\/>setAlignment(Qt::AlignCenter);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ Subtitle}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00061}00061\ \ \ \ \ QLabel*\ subtitleLabel\ =\ \textcolor{keyword}{new}\ QLabel(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}Sediment\ Source\ Apportionment\ Tool"{}}),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ headerWidget}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00064}00064\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00065}00065\ \ \ \ \ QFont\ subtitleFont\ =\ subtitleLabel-\/>font();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00066}00066\ \ \ \ \ subtitleFont.setPointSize(11);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00067}00067\ \ \ \ \ subtitleLabel-\/>setFont(subtitleFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00068}00068\ \ \ \ \ subtitleLabel-\/>setStyleSheet(\textcolor{stringliteral}{"{}QLabel\ \{\ color:\ \#ecf0f1;\ \}"{}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00069}00069\ \ \ \ \ subtitleLabel-\/>setAlignment(Qt::AlignCenter);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00071}00071\ \ \ \ \ headerLayout-\/>addWidget(titleLabel);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00072}00072\ \ \ \ \ headerLayout-\/>addWidget(subtitleLabel);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{return}\ headerWidget;}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00075}00075\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00077}\mbox{\hyperlink{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13}{00077}}\ QWidget*\ \mbox{\hyperlink{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13}{AboutDialog::createInfoSection}}()}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00078}00078\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00079}00079\ \ \ \ \ QWidget*\ infoWidget\ =\ \textcolor{keyword}{new}\ QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00080}00080\ \ \ \ \ infoWidget-\/>setStyleSheet(\textcolor{stringliteral}{"{}QWidget\ \{\ background-\/color:\ white;\ \}"{}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00082}00082\ \ \ \ \ QVBoxLayout*\ infoLayout\ =\ \textcolor{keyword}{new}\ QVBoxLayout(infoWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00083}00083\ \ \ \ \ infoLayout-\/>setContentsMargins(20,\ 20,\ 20,\ 10);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00084}00084\ \ \ \ \ infoLayout-\/>setSpacing(10);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ Version}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}}\ =\ \textcolor{keyword}{new}\ QLabel(tr(\textcolor{stringliteral}{"{}Version:\ "{}}),\ infoWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00088}00088\ \ \ \ \ QFont\ boldFont\ =\ \mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}}-\/>font();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00089}00089\ \ \ \ \ boldFont.setPointSize(10);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00090}00090\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}}-\/>setFont(boldFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ Build\ date}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{buildDateLabel}}\ =\ \textcolor{keyword}{new}\ QLabel(tr(\textcolor{stringliteral}{"{}Build\ Date:\ "{}}),\ infoWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00094}00094\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{buildDateLabel}}-\/>setFont(boldFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{comment}{//\ Authors\ section}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00097}00097\ \ \ \ \ QLabel*\ authorsLabel\ =\ \textcolor{keyword}{new}\ QLabel(tr(\textcolor{stringliteral}{"{}<b>Authors:</b>"{}}),\ infoWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00098}00098\ \ \ \ \ authorsLabel-\/>setFont(boldFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00100}00100\ \ \ \ \ QLabel*\ authorsText\ =\ \textcolor{keyword}{new}\ QLabel(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}Arash\ Massoudieh<br>"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Allen\ Gellis<br>"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Cara\ Peterman"{}}),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ infoWidget}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00105}00105\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00106}00106\ \ \ \ \ authorsText-\/>setIndent(20);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00107}00107\ \ \ \ \ authorsText-\/>setTextFormat(Qt::RichText);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{comment}{//\ Description}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00110}00110\ \ \ \ \ QLabel*\ descriptionLabel\ =\ \textcolor{keyword}{new}\ QLabel(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}<b>Description:</b>"{}}),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ infoWidget}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00113}00113\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00114}00114\ \ \ \ \ descriptionLabel-\/>setFont(boldFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00116}00116\ \ \ \ \ infoLayout-\/>addWidget(\mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00117}00117\ \ \ \ \ infoLayout-\/>addWidget(\mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{buildDateLabel}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00118}00118\ \ \ \ \ infoLayout-\/>addSpacing(10);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00119}00119\ \ \ \ \ infoLayout-\/>addWidget(authorsLabel);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00120}00120\ \ \ \ \ infoLayout-\/>addWidget(authorsText);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00121}00121\ \ \ \ \ infoLayout-\/>addSpacing(10);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00122}00122\ \ \ \ \ infoLayout-\/>addWidget(descriptionLabel);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00124}00124\ \ \ \ \ \textcolor{keywordflow}{return}\ infoWidget;}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00125}00125\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00127}\mbox{\hyperlink{classAboutDialog_ac7931d6dde55061b63316e46c982e74e}{00127}}\ QTextBrowser*\ \mbox{\hyperlink{classAboutDialog_ac7931d6dde55061b63316e46c982e74e}{AboutDialog::createDescriptionSection}}()}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00128}00128\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00129}00129\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}\ =\ \textcolor{keyword}{new}\ QTextBrowser(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00130}00130\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}-\/>setFrameStyle(QFrame::NoFrame);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00131}00131\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}-\/>setStyleSheet(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}QTextBrowser\ \{\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}background-\/color:\ white;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}border:\ none;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}padding-\/left:\ 20px;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}padding-\/right:\ 20px;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00138}00138\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00139}00139\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}-\/>setOpenExternalLinks(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00141}00141\ \ \ \ \ \textcolor{comment}{//\ Default\ description}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00142}00142\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}-\/>setHtml(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}<p>SedSat3\ is\ a\ comprehensive\ tool\ for\ sediment\ source\ apportionment\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}analysis\ using\ advanced\ statistical\ methods\ including\ Chemical\ Mass\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Balance\ (CMB)\ modeling,\ Bayesian\ inference,\ MCMC\ sampling,\ and\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}multivariate\ statistical\ techniques.</p>"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}<p>This\ software\ enables\ researchers\ to\ identify\ and\ quantify\ the\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}contributions\ of\ different\ sediment\ sources\ to\ receptor\ sites,\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}supporting\ environmental\ pollution\ research\ and\ watershed\ management.</p>"{}})}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00150}00150\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00152}00152\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}};}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00153}00153\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00155}\mbox{\hyperlink{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4}{00155}}\ QWidget*\ \mbox{\hyperlink{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4}{AboutDialog::createFooter}}()}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00156}00156\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00157}00157\ \ \ \ \ QWidget*\ footerWidget\ =\ \textcolor{keyword}{new}\ QWidget(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00158}00158\ \ \ \ \ footerWidget-\/>setStyleSheet(\textcolor{stringliteral}{"{}QWidget\ \{\ background-\/color:\ \#f8f9fa;\ \}"{}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00160}00160\ \ \ \ \ QVBoxLayout*\ footerLayout\ =\ \textcolor{keyword}{new}\ QVBoxLayout(footerWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00161}00161\ \ \ \ \ footerLayout-\/>setContentsMargins(20,\ 15,\ 20,\ 15);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00162}00162\ \ \ \ \ footerLayout-\/>setSpacing(10);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00164}00164\ \ \ \ \ \textcolor{comment}{//\ Copyright}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00165}00165\ \ \ \ \ QLabel*\ copyrightLabel\ =\ \textcolor{keyword}{new}\ QLabel(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ tr(\textcolor{stringliteral}{"{}©\ 2025\ SedSat3\ Development\ Team"{}}),}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ footerWidget}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00168}00168\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00169}00169\ \ \ \ \ copyrightLabel-\/>setAlignment(Qt::AlignCenter);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00170}00170\ \ \ \ \ QFont\ copyrightFont\ =\ copyrightLabel-\/>font();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00171}00171\ \ \ \ \ copyrightFont.setPointSize(9);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00172}00172\ \ \ \ \ copyrightLabel-\/>setFont(copyrightFont);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00173}00173\ \ \ \ \ copyrightLabel-\/>setStyleSheet(\textcolor{stringliteral}{"{}QLabel\ \{\ color:\ \#6c757d;\ \}"{}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00175}00175\ \ \ \ \ \textcolor{comment}{//\ Close\ button}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00176}00176\ \ \ \ \ QPushButton*\ closeButton\ =\ \textcolor{keyword}{new}\ QPushButton(tr(\textcolor{stringliteral}{"{}Close"{}}),\ footerWidget);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00177}00177\ \ \ \ \ closeButton-\/>setMinimumWidth(100);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00178}00178\ \ \ \ \ closeButton-\/>setStyleSheet(}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}QPushButton\ \{\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}background-\/color:\ \#3498db;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}color:\ white;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}border:\ none;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}padding:\ 8px\ 16px;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}border-\/radius:\ 4px;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}font-\/weight:\ bold;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}QPushButton:hover\ \{\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}background-\/color:\ \#2980b9;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}QPushButton:pressed\ \{\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}background-\/color:\ \#21618c;\ "{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}"{}}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00193}00193\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00195}00195\ \ \ \ \ connect(closeButton,\ \&QPushButton::clicked,\ \textcolor{keyword}{this},\ \&AboutDialog::accept);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00197}00197\ \ \ \ \ \textcolor{comment}{//\ Button\ layout}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00198}00198\ \ \ \ \ QHBoxLayout*\ buttonLayout\ =\ \textcolor{keyword}{new}\ QHBoxLayout();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00199}00199\ \ \ \ \ buttonLayout-\/>addStretch();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00200}00200\ \ \ \ \ buttonLayout-\/>addWidget(closeButton);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00201}00201\ \ \ \ \ buttonLayout-\/>addStretch();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00203}00203\ \ \ \ \ footerLayout-\/>addWidget(copyrightLabel);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00204}00204\ \ \ \ \ footerLayout-\/>addLayout(buttonLayout);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{return}\ footerWidget;}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00207}00207\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00209}\mbox{\hyperlink{classAboutDialog_a2f4720983102050bb6e30d392a836df7}{00209}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_a2f4720983102050bb6e30d392a836df7}{AboutDialog::setVersion}}(\textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}{version}})}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00210}00210\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00211}00211\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}})}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00212}00212\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}}-\/>setText(tr(\textcolor{stringliteral}{"{}Version:\ \%1"{}}).arg(\mbox{\hyperlink{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}{version}}));}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00214}00214\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00215}00215\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00217}\mbox{\hyperlink{classAboutDialog_afd45defb6d940f64730b19e39d5cf309}{00217}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_afd45defb6d940f64730b19e39d5cf309}{AboutDialog::setBuildDate}}(\textcolor{keyword}{const}\ QString\&\ date)}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00218}00218\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00219}00219\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{buildDateLabel}})}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00220}00220\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{buildDateLabel}}-\/>setText(tr(\textcolor{stringliteral}{"{}Build\ Date:\ \%1"{}}).arg(date));}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00222}00222\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00223}00223\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00225}\mbox{\hyperlink{classAboutDialog_ad47fe9e184d788cc9a0a2bb120ff4699}{00225}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_ad47fe9e184d788cc9a0a2bb120ff4699}{AboutDialog::appendText}}(\textcolor{keyword}{const}\ QString\&\ text)}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00226}00226\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00227}00227\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}})}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00228}00228\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}-\/>append(text);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00230}00230\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00231}00231\ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00233}\mbox{\hyperlink{classAboutDialog_aee3b296ee6e293706f42f269b2e63af5}{00233}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_aee3b296ee6e293706f42f269b2e63af5}{AboutDialog::clearText}}()}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00234}00234\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}})}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00236}00236\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}}-\/>clear();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00238}00238\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8cpp_source_l00239}00239\ \}}
+
+\end{DoxyCode}

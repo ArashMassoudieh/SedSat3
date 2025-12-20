@@ -1,0 +1,43 @@
+\doxysection{elementtabledelegate.\+h}
+\hypertarget{elementtabledelegate_8h_source}{}\label{elementtabledelegate_8h_source}\mbox{\hyperlink{elementtabledelegate_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ ELEMENTTABLEDELEGATE\_H}}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ ELEMENTTABLEDELEGATE\_H}}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QAbstractTableModel>}}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <QStyleOptionViewItem>}}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <QStyledItemDelegate>}}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sourcesinkdata_8h}{sourcesinkdata.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00010}\mbox{\hyperlink{classElementTableDelegate}{00010}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classElementTableDelegate}{ElementTableDelegate}}\ :\ \textcolor{keyword}{public}\ QStyledItemDelegate}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00012}00012\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00014}00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classElementTableDelegate}{ElementTableDelegate}}(\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\_Data,\ QObject\ *parent);}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00018}00018\ \ \ \ \ QWidget\ *\mbox{\hyperlink{classElementTableDelegate_a9b7ed2476a71abe247c92bd9c45a831b}{createEditor}}(QWidget\ *parent,\ \textcolor{keyword}{const}\ QStyleOptionViewItem\ \&option,}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\ \&index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classElementTableDelegate_aa0cab558565d2a571505933ac7074bc4}{setEditorData}}(QWidget\ *editor,\ \textcolor{keyword}{const}\ QModelIndex\ \&index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00022}00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classElementTableDelegate_a373ca8ca8fe926fe42e6b4813a2b9577}{setModelData}}(QWidget\ *editor,\ QAbstractItemModel\ *model,}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\ \&index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classElementTableDelegate_aa51ec623dc89d11d4be1e51f7ef4fe89}{updateEditorGeometry}}(QWidget\ *editor,}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QStyleOptionViewItem\ \&option,\ \textcolor{keyword}{const}\ QModelIndex\ \&index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classElementTableDelegate_a37c8b859bf9865509b64c472b68baa7a}{paint}}(QPainter\ *painter,\ \textcolor{keyword}{const}\ QStyleOptionViewItem\ \&option,}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\ \&index)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00032}00032\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00034}00034\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00035}\mbox{\hyperlink{classElementTableDelegate_aebf2d198ab49b8bf918368c8bf56e75f}{00035}}\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\mbox{\hyperlink{classElementTableDelegate_aebf2d198ab49b8bf918368c8bf56e75f}{Data}};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00036}00036\ \};}
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{elementtabledelegate_8h_source_l00038}00038\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ELEMENTTABLEDELEGATE\_H}}
+
+\end{DoxyCode}

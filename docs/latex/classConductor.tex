@@ -1,0 +1,1694 @@
+\doxysection{Conductor Class Reference}
+\hypertarget{classConductor}{}\label{classConductor}\index{Conductor@{Conductor}}
+
+
+Orchestrates execution of source apportionment analysis operations.  
+
+
+
+
+{\ttfamily \#include $<$conductor.\+h$>$}
+
+
+
+Collaboration diagram for Conductor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classConductor__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classConductor_ad9db8e1e14f6cc4d127984d47b810cf8}{Conductor}} (\mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classConductor_a9dc7fd8a196149fe46d01785977c095d}{mainwindow}})
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{classConductor}{Conductor} associated with a \doxylink{classMainWindow}{Main\+Window}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_ab9f379edeab01ad48dca3f16c8a26a26}{Execute}} (const std\+::string \&command, std\+::map$<$ std\+::string, std\+::string $>$ arguments)
+\begin{DoxyCompactList}\small\item\em Executes a specified analysis command with given parameters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classConductor_aa7cb67835ba4d08b30e5ed84f3b574fa}{Data}} ()
+\begin{DoxyCompactList}\small\item\em Returns pointer to the current \doxylink{classSourceSinkData}{Source\+Sink\+Data}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classConductor_a96ce7f8f0838b69e32fbfefef22e4ec5}{Set\+Data}} (\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}\+\_\+data)
+\begin{DoxyCompactList}\small\item\em Sets the \doxylink{classSourceSinkData}{Source\+Sink\+Data} for analysis. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classResults}{Results}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classConductor_a3ab06752c45ab5da05152e21a37d0b64}{Get\+Results}} ()
+\begin{DoxyCompactList}\small\item\em Creates and returns a heap-\/allocated copy of current results. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classConductor_a406cb40a96cf797c9a1c4745b7af860c}{Set\+Working\+Folder}} (const QString \&wf)
+\begin{DoxyCompactList}\small\item\em Sets the working directory for output files. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classConductor_adda5ed9a7318228b394a133422e75ce6}{Working\+Folder}} () const
+\begin{DoxyCompactList}\small\item\em Returns the current working directory path. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a2dbb56a4a74b93fcd753210a9800ad41}{Check\+Negative\+Elements}} (\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classConductor_ab0d0f611fcafbeaa7c7bfb016edda56e}{data}}=nullptr)
+\begin{DoxyCompactList}\small\item\em Validates that all element concentrations are non-\/negative. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_aa7523c970d3fc0f16d3223ad68237e66}{Check\+Negative\+Elements}} (std\+::map$<$ std\+::string, std\+::vector$<$ std\+::string $>$ $>$ negative\+\_\+elements)
+\begin{DoxyCompactList}\small\item\em Validates element concentrations across multiple samples. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classConductor_a83a4a89a58b6b328deb1e776ca5d3572}{Execute\+GA}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Genetic Algorithm optimization. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a87bbf08842232ce0611fd8c4c63c750c}{Execute\+GA\+\_\+\+Fixed\+Profile}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Genetic Algorithm with fixed elemental profiles. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a83822c5344b87ec5a534ec862e9a7793}{Execute\+GA\+\_\+\+No\+Targets}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Genetic Algorithm disregarding target constraints. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_ae95f5d5fddf0f6f7de2e24d5a624b7d6}{Execute\+Levenberg\+Marquardt}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Levenberg-\/\+Marquardt nonlinear optimization. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_aa3538efb383852a8323fcd7303631410}{Execute\+Levenberg\+Marquardt\+Batch}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Levenberg-\/\+Marquardt optimization across all target samples. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_ae848363d6273d67548fb0659f38d4b71}{Execute\+OMSize\+Correct}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes organic matter and particle size correction. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a99da4f24fe10b6351e5c5735600a30f7}{Execute\+MLR}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes multiple linear regression versus organic matter and particle size. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_ad570bf457452ae2a2e5268974e75b4e5}{Execute\+Covariance\+Matrix}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Calculates covariance matrix for a source or target group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_af07a1758e339b741498349e460c52f6e}{Execute\+Correlation\+Matrix}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Calculates correlation matrix for a source or target group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a1f07c26321e01cf67ed0a0d021a05e76}{Execute\+DFA}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Discriminant Function Analysis between two groups. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_acb632d391ce43dc77516eb707ec8aa37}{Execute\+DFAOnevs\+Rest}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Discriminant Function Analysis for one group versus all others. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a19b588743656b426816bb9de337187ce}{Execute\+DFAM}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes multi-\/way Discriminant Function Analysis across all groups. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a3764f85a480187345b0ed582ae3dc712}{Execute\+SDFA}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Stepwise Discriminant Function Analysis between two groups. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a2021491b90efc608cf2ee435ec3b5af1}{Execute\+SDFAM}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes multi-\/way Stepwise Discriminant Function Analysis across all groups. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_ab479514276c900858cd006934817f240}{Execute\+SDFAOnevs\+Rest}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Stepwise Discriminant Function Analysis for one group versus all others. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_aa55e38f74910a3874c93557288b7b7c5}{Execute\+Kolmogorov\+Smirnov}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Kolmogorov-\/\+Smirnov goodness-\/of-\/fit test for a source/target group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a2a883830a95f04cae13aaaf5afa5781a}{Execute\+Kolmogorov\+Smirnov\+Individual}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Kolmogorov-\/\+Smirnov test for a single constituent in a group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a170e1bd2ee8c4c1e98740e1956feb755}{Execute\+CMBBayesian}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Bayesian Chemical Mass Balance using MCMC sampling. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a2f3a136f3892aa14838a45e3af30fea7}{Execute\+CMBBayesian\+Batch}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Bayesian Chemical Mass Balance across all target samples. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a06beb81753720dd2a92f7f6fe131f3c5}{Execute\+Test\+CMBBayesian}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes MCMC test with a simple analytical model. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_aa08d8be1bbd256acb781370b3d07c414}{Execute\+Distribution\+Fitting}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes distribution fitting analysis for a constituent. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_ac299f703c6612059d7ea7d43c0833ea2}{Execute\+Bracketing\+Analysis}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes bracketing analysis for a single target sample. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a3f830677b29d2390a82b0ad52070bf7d}{Execute\+Bracketing\+Analysis\+Batch}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes bracketing analysis across all target samples. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a26ae4540601eddb02e61430f9ed479dd}{Execute\+Box\+Cox}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Calculates optimal Box-\/\+Cox transformation parameters. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a021283dd0f972025d30a96f6b683fee4}{Execute\+Outlier\+Analysis}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes outlier detection analysis for a source/target group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_aec17bd1e3da29721920f059bd83f07d8}{Execute\+EDP}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Calculates two-\/way element discriminant power between two groups. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_af000f000c826a583d6702334fb35e7c8}{Execute\+EDPM}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Calculates multi-\/way element discriminant power across all groups. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a52e714a18f7de08548eec5e2beac48a7}{Execute\+ANOVA}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes Analysis of Variance (ANOVA) for element discrimination. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_aa66fc628a43a783bf6148adaa3eae45d}{Execute\+Error\+Analysis}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes bootstrap error analysis for uncertainty quantification. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a87aaea11e26ae4c5b959e8c2a5d46a26}{Execute\+Source\+Verify}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes source verification analysis. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classConductor_a369d16565ca9c05011961bf2a641d2a6}{Execute\+Auto\+Select}} (const std\+::map$<$ std\+::string, std\+::string $>$ \&arguments)
+\begin{DoxyCompactList}\small\item\em Executes automatic element selection based on discriminant power. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classConductor_ab0d0f611fcafbeaa7c7bfb016edda56e}{data}}
+\begin{DoxyCompactList}\small\item\em Non-\/owning pointer to analysis data. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classCGA}{CGA}}$<$ \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} $>$ $>$ \mbox{\hyperlink{classConductor_a7c6bc25fe2b52389299527f814eb84b8}{GA}}
+\begin{DoxyCompactList}\small\item\em Genetic Algorithm optimizer (owned) \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classCMCMC}{CMCMC}}$<$ \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} $>$ $>$ \mbox{\hyperlink{classConductor_aff6ce4f3d572745d4094d54085097cbb}{MCMC}}
+\begin{DoxyCompactList}\small\item\em MCMC sampler (owned) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classResults}{Results}} \mbox{\hyperlink{classConductor_adafa0659295420dc960073884ed0852c}{results}}
+\begin{DoxyCompactList}\small\item\em Current analysis results (cleared each Execute) \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classConductor_a79bc7163a73d7e624949079a8d9128eb}{workingfolder}}
+\begin{DoxyCompactList}\small\item\em Output directory path. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classConductor_a9dc7fd8a196149fe46d01785977c095d}{mainwindow}}
+\begin{DoxyCompactList}\small\item\em Non-\/owning pointer to parent window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Orchestrates execution of source apportionment analysis operations. 
+
+The \doxylink{classConductor}{Conductor} class serves as a command dispatcher and coordinator for various source apportionment algorithms including Genetic Algorithms (GA), Markov Chain Monte Carlo (MCMC), Levenberg-\/\+Marquardt optimization, and statistical analyses. It manages the lifecycle of optimization algorithms, maintains analysis results, and provides an interface between the GUI (\doxylink{classMainWindow}{Main\+Window}) and the computational backend (\doxylink{classSourceSinkData}{Source\+Sink\+Data}).
+
+Key responsibilities\+:
+\begin{DoxyItemize}
+\item Execute analysis commands with configurable parameters
+\item Manage algorithm instances (GA, MCMC)
+\item Validate input data for negative concentrations
+\item Collect and package analysis results
+\item Coordinate with progress reporting UI
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+The \doxylink{classConductor}{Conductor} does not own the \doxylink{classSourceSinkData}{Source\+Sink\+Data} -\/ it operates on externally managed data passed via \doxylink{classConductor_a96ce7f8f0838b69e32fbfefef22e4ec5}{Set\+Data()} 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00038}{38}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classConductor_ad9db8e1e14f6cc4d127984d47b810cf8}\label{classConductor_ad9db8e1e14f6cc4d127984d47b810cf8} 
+\index{Conductor@{Conductor}!Conductor@{Conductor}}
+\index{Conductor@{Conductor}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{Conductor()}{Conductor()}}
+{\footnotesize\ttfamily Conductor\+::\+Conductor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*}}]{mainwindow }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs a \doxylink{classConductor}{Conductor} associated with a \doxylink{classMainWindow}{Main\+Window}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mainwindow} & Pointer to the parent \doxylink{classMainWindow}{Main\+Window} (non-\/owning, must outlive \doxylink{classConductor}{Conductor}) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classConductor_a2dbb56a4a74b93fcd753210a9800ad41}\label{classConductor_a2dbb56a4a74b93fcd753210a9800ad41} 
+\index{Conductor@{Conductor}!CheckNegativeElements@{CheckNegativeElements}}
+\index{CheckNegativeElements@{CheckNegativeElements}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{CheckNegativeElements()}{CheckNegativeElements()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Conductor\+::\+Check\+Negative\+Elements (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{data = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Validates that all element concentrations are non-\/negative. 
+
+Checks the specified \doxylink{classSourceSinkData}{Source\+Sink\+Data} for negative element concentrations, which are physically invalid for most source apportionment analyses (except isotope delta values). Displays a warning dialog if negative values are found.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to \doxylink{classSourceSinkData}{Source\+Sink\+Data} to check (uses this-\/\texorpdfstring{$>$}{>}data if nullptr) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if all concentrations are valid (non-\/negative), false otherwise
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Presents warning dialog to user via \doxylink{classMainWindow}{Main\+Window} if validation fails 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00175}{175}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03402}{Source\+Sink\+Data\+::\+Negative\+Value\+Check()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01627}{Execute\+Bracketing\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l02037}{Execute\+Error\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Execute\+Outlier\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Execute\+SDFAOnevs\+Rest()}}, and \mbox{\hyperlink{conductor_8cpp_source_l02086}{Execute\+Source\+Verify()}}.
+
+\Hypertarget{classConductor_aa7523c970d3fc0f16d3223ad68237e66}\label{classConductor_aa7523c970d3fc0f16d3223ad68237e66} 
+\index{Conductor@{Conductor}!CheckNegativeElements@{CheckNegativeElements}}
+\index{CheckNegativeElements@{CheckNegativeElements}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{CheckNegativeElements()}{CheckNegativeElements()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Conductor\+::\+Check\+Negative\+Elements (\begin{DoxyParamCaption}\item[{std\+::map$<$ std\+::string, std\+::vector$<$ std\+::string $>$ $>$}]{negative\+\_\+elements }\end{DoxyParamCaption})}
+
+
+
+Validates element concentrations across multiple samples. 
+
+Checks for negative concentrations in a collection of samples, where each map entry represents a sample and its list of problematic elements.
+
+
+\begin{DoxyParams}{Parameters}
+{\em negative\+\_\+elements} & Map from sample names to lists of elements with negative values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if no negative values found, false if any exist
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Presents consolidated warning dialog showing all problematic samples 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00195}{195}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}.
+
+\Hypertarget{classConductor_aa7cb67835ba4d08b30e5ed84f3b574fa}\label{classConductor_aa7cb67835ba4d08b30e5ed84f3b574fa} 
+\index{Conductor@{Conductor}!Data@{Data}}
+\index{Data@{Data}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{Data()}{Data()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} Conductor\+::\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns pointer to the current \doxylink{classSourceSinkData}{Source\+Sink\+Data}. 
+
+\begin{DoxyReturn}{Returns}
+Non-\/owning pointer to the data object, or nullptr if not set 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00075}{75}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00139}{data}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01704}{Execute\+Box\+Cox()}}, \mbox{\hyperlink{conductor_8cpp_source_l01627}{Execute\+Bracketing\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l02225}{Execute\+CMBBayesian()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00631}{Execute\+Covariance\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l02037}{Execute\+Error\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l01308}{Execute\+Kolmogorov\+Smirnov()}}, \mbox{\hyperlink{conductor_8cpp_source_l01338}{Execute\+Kolmogorov\+Smirnov\+Individual()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00561}{Execute\+MLR()}}, \mbox{\hyperlink{conductor_8cpp_source_l00535}{Execute\+OMSize\+Correct()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Execute\+Outlier\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Execute\+SDFAOnevs\+Rest()}}, and \mbox{\hyperlink{conductor_8cpp_source_l02086}{Execute\+Source\+Verify()}}.
+
+\Hypertarget{classConductor_ab9f379edeab01ad48dca3f16c8a26a26}\label{classConductor_ab9f379edeab01ad48dca3f16c8a26a26} 
+\index{Conductor@{Conductor}!Execute@{Execute}}
+\index{Execute@{Execute}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{command,  }\item[{std\+::map$<$ std\+::string, std\+::string $>$}]{arguments }\end{DoxyParamCaption})}
+
+
+
+Executes a specified analysis command with given parameters. 
+
+Supported commands include\+:
+\begin{DoxyItemize}
+\item "{}\+GA"{}\+: Genetic Algorithm optimization
+\item "{}\+GA (fixed elemental contribution)"{}\+: GA with fixed source profiles
+\item "{}\+GA (disregarding targets)"{}\+: GA without target constraints
+\item "{}\+Levenberg-\/\+Marquardt"{}\+: Nonlinear least squares optimization
+\item "{}\+MCMC"{}\+: Markov Chain Monte Carlo sampling
+\item "{}\+Bootstrap"{}\+: Bootstrap uncertainty analysis
+\item "{}\+ANOVA"{}\+: Analysis of variance for source discrimination
+\item "{}\+Error\+\_\+\+Analysis"{}\+: Error propagation analysis
+\item "{}\+Source\+\_\+\+Verify"{}\+: Source verification analysis
+\item "{}\+Auto\+Select"{}\+: Automated element selection
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Command name identifying the analysis type \\
+\hline
+{\em arguments} & Map of parameter names to values configuring the analysis \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if validation failed or errors occurred
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Clears previous results at the start of each execution 
+
+Validates data for negative element concentrations before proceeding 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02606}{Source\+Sink\+Data\+::\+Addto\+Tools\+Used()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01704}{Execute\+Box\+Cox()}}, \mbox{\hyperlink{conductor_8cpp_source_l01627}{Execute\+Bracketing\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l02225}{Execute\+CMBBayesian()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00631}{Execute\+Covariance\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l02037}{Execute\+Error\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l01308}{Execute\+Kolmogorov\+Smirnov()}}, \mbox{\hyperlink{conductor_8cpp_source_l01338}{Execute\+Kolmogorov\+Smirnov\+Individual()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00561}{Execute\+MLR()}}, \mbox{\hyperlink{conductor_8cpp_source_l00535}{Execute\+OMSize\+Correct()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Execute\+Outlier\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Execute\+SDFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Execute\+Source\+Verify()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{conductor_8h_source_l00142}{results}}.
+
+\Hypertarget{classConductor_a52e714a18f7de08548eec5e2beac48a7}\label{classConductor_a52e714a18f7de08548eec5e2beac48a7} 
+\index{Conductor@{Conductor}!ExecuteANOVA@{ExecuteANOVA}}
+\index{ExecuteANOVA@{ExecuteANOVA}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteANOVA()}{ExecuteANOVA()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+ANOVA (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Analysis of Variance (ANOVA) for element discrimination. 
+
+Performs one-\/way ANOVA to test whether elemental concentrations differ significantly across source groups. Returns p-\/values for each element indicating the statistical significance of between-\/group differences. Elements with low p-\/values (below threshold) show significant variation across sources and are good candidates for source apportionment. Optionally modifies included elements based on results. Supports log transformation and Box-\/\+Cox transformation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Log Transformation"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+P-\/value threshold"{}\+: Significance threshold
+\item "{}\+Modify the included elements based on the results"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01969}{1969}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03490}{Source\+Sink\+Data\+::\+ANOVA()}}, \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00280}{CMBVector\+::\+Extract\+Within\+Range()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03603}{Source\+Sink\+Data\+::\+Include\+Exclude\+Elements\+Based\+On()}}, \mbox{\hyperlink{cmbvector_8h_source_l00138}{CMBVector\+::\+Labels()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{interface_8h_source_l00051}{Interface\+::\+Set\+Limit()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a369d16565ca9c05011961bf2a641d2a6}\label{classConductor_a369d16565ca9c05011961bf2a641d2a6} 
+\index{Conductor@{Conductor}!ExecuteAutoSelect@{ExecuteAutoSelect}}
+\index{ExecuteAutoSelect@{ExecuteAutoSelect}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteAutoSelect()}{ExecuteAutoSelect()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Auto\+Select (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes automatic element selection based on discriminant power. 
+
+Automatically selects the optimal subset of elements for source apportionment by analyzing multi-\/way discriminant p-\/values for all source group pairs. Elements are ranked by their ability to discriminate between sources, and the top N elements from each pairwise comparison are aggregated to form the final selection. Optionally modifies the included elements in the dataset. Supports isotope inclusion, Box-\/\+Cox transformation, and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Include Isotopes"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Number of elements from each pair"{}\+: Top N elements per pair
+\item "{}\+Modify the included elements based on the results"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l02151}{2151}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03379}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+P\+\_\+value()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{elemental\+\_\+profile\+\_\+set}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00287}{Source\+Sink\+Data\+::\+Extract\+Chemical\+Elements()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00839}{Elemental\+\_\+\+Profile\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03603}{Source\+Sink\+Data\+::\+Include\+Exclude\+Elements\+Based\+On()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{predicted\+\_\+concentration}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00954}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Select\+Top\+Elements\+Aggregate()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a26ae4540601eddb02e61430f9ed479dd}\label{classConductor_a26ae4540601eddb02e61430f9ed479dd} 
+\index{Conductor@{Conductor}!ExecuteBoxCox@{ExecuteBoxCox}}
+\index{ExecuteBoxCox@{ExecuteBoxCox}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteBoxCox()}{ExecuteBoxCox()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Box\+Cox (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates optimal Box-\/\+Cox transformation parameters. 
+
+Computes the optimal Box-\/\+Cox lambda parameters for variance-\/stabilizing power transformations of elemental concentrations within a source or target group. Box-\/\+Cox transformation can normalize skewed distributions and stabilize variance, improving the performance of subsequent statistical analyses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01704}{1704}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_ac299f703c6612059d7ea7d43c0833ea2}\label{classConductor_ac299f703c6612059d7ea7d43c0833ea2} 
+\index{Conductor@{Conductor}!ExecuteBracketingAnalysis@{ExecuteBracketingAnalysis}}
+\index{ExecuteBracketingAnalysis@{ExecuteBracketingAnalysis}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteBracketingAnalysis()}{ExecuteBracketingAnalysis()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Bracketing\+Analysis (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes bracketing analysis for a single target sample. 
+
+Performs bracketing test to determine if target sample concentrations fall within the range defined by source group concentrations. For each element, the test checks whether the target value is bracketed (bounded) by the minimum and maximum source values. \doxylink{classResults}{Results} are boolean indicators showing which elements pass the bracketing criterion. Supports optional OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name to test
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Correct based on size and organic matter"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01627}{1627}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02994}{Source\+Sink\+Data\+::\+Bracket\+Test()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{cmbvector_8h_source_l00161}{CMBVector\+::\+Set\+Boolean\+Value()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a3f830677b29d2390a82b0ad52070bf7d}\label{classConductor_a3f830677b29d2390a82b0ad52070bf7d} 
+\index{Conductor@{Conductor}!ExecuteBracketingAnalysisBatch@{ExecuteBracketingAnalysisBatch}}
+\index{ExecuteBracketingAnalysisBatch@{ExecuteBracketingAnalysisBatch}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteBracketingAnalysisBatch()}{ExecuteBracketingAnalysisBatch()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Bracketing\+Analysis\+Batch (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes bracketing analysis across all target samples. 
+
+Performs batch bracketing test to determine if target sample concentrations fall within the range defined by source group concentrations for all samples. Returns a matrix showing boolean bracketing results for each element in each target sample. This batch analysis enables quick assessment of which samples and elements satisfy the bracketing criterion. Supports optional OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Correct based on size and organic matter"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01662}{1662}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8h_source_l00139}{data}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00183}{CMBMatrix\+::\+Set\+Boolean\+Value()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, and \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a170e1bd2ee8c4c1e98740e1956feb755}\label{classConductor_a170e1bd2ee8c4c1e98740e1956feb755} 
+\index{Conductor@{Conductor}!ExecuteCMBBayesian@{ExecuteCMBBayesian}}
+\index{ExecuteCMBBayesian@{ExecuteCMBBayesian}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteCMBBayesian()}{ExecuteCMBBayesian()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+CMBBayesian (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Bayesian Chemical Mass Balance using MCMC sampling. 
+
+Performs Bayesian inference for source apportionment using Markov Chain Monte Carlo (MCMC) sampling. This probabilistic approach estimates posterior distributions of source contributions accounting for uncertainties in both source profiles and receptor measurements. Generates comprehensive results including contribution distributions, parameter traces, and convergence diagnostics. Supports optional organic matter/size corrections and softmax transformations.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item Plus MCMC-\/specific parameters (chain count, samples, burnin, etc.) 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or errors occur 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l02225}{2225}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{results_8h_source_l00027}{Results\+::\+Error()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00141}{MCMC}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, and \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a2f3a136f3892aa14838a45e3af30fea7}\label{classConductor_a2f3a136f3892aa14838a45e3af30fea7} 
+\index{Conductor@{Conductor}!ExecuteCMBBayesianBatch@{ExecuteCMBBayesianBatch}}
+\index{ExecuteCMBBayesianBatch@{ExecuteCMBBayesianBatch}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteCMBBayesianBatch()}{ExecuteCMBBayesianBatch()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+CMBBayesian\+Batch (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Bayesian Chemical Mass Balance across all target samples. 
+
+Performs batch MCMC-\/based Bayesian source apportionment for all target samples, producing a comprehensive contribution matrix showing probabilistic source contributions with uncertainty ranges across multiple samples. This is the batch version of CMB Bayesian, enabling efficient spatial or temporal analysis of source contributions. Supports optional organic matter/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item Plus MCMC-\/specific parameters (chain count, samples, burnin, etc.) 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01373}{1373}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{conductor_8h_source_l00141}{MCMC}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, and \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_af07a1758e339b741498349e460c52f6e}\label{classConductor_af07a1758e339b741498349e460c52f6e} 
+\index{Conductor@{Conductor}!ExecuteCorrelationMatrix@{ExecuteCorrelationMatrix}}
+\index{ExecuteCorrelationMatrix@{ExecuteCorrelationMatrix}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteCorrelationMatrix()}{ExecuteCorrelationMatrix()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Correlation\+Matrix (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates correlation matrix for a source or target group. 
+
+Computes the correlation matrix showing normalized relationships between elemental concentrations within a specified source or target group. Supports optional organic matter/size corrections and Box-\/\+Cox transformations. Values outside the specified threshold are highlighted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze
+\item "{}\+Threshold"{}\+: Correlation threshold for highlighting
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00652}{652}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{interface_8h_source_l00051}{Interface\+::\+Set\+Limit()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00047}{Result\+Item\+::set\+Table\+Title()}}, and \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_ad570bf457452ae2a2e5268974e75b4e5}\label{classConductor_ad570bf457452ae2a2e5268974e75b4e5} 
+\index{Conductor@{Conductor}!ExecuteCovarianceMatrix@{ExecuteCovarianceMatrix}}
+\index{ExecuteCovarianceMatrix@{ExecuteCovarianceMatrix}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteCovarianceMatrix()}{ExecuteCovarianceMatrix()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Covariance\+Matrix (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates covariance matrix for a source or target group. 
+
+Computes the covariance matrix showing relationships between elemental concentrations within a specified source or target group. Useful for understanding correlations and dependencies between elements in the data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00631}{631}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, and \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a1f07c26321e01cf67ed0a0d021a05e76}\label{classConductor_a1f07c26321e01cf67ed0a0d021a05e76} 
+\index{Conductor@{Conductor}!ExecuteDFA@{ExecuteDFA}}
+\index{ExecuteDFA@{ExecuteDFA}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteDFA()}{ExecuteDFA()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+DFA (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Discriminant Function Analysis between two groups. 
+
+Performs two-\/group discriminant function analysis to find the linear combination of elements that best separates two source or target groups. Computes eigenvalues, eigenvectors, projected profiles, and statistical significance (chi-\/squared and F-\/test p-\/values). Supports optional Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group I"{}\+: First group name
+\item "{}\+Source/\+Target group II"{}\+: Second group name
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if groups are identical or matrix is singular 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00701}{701}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02814}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00043}{DFA\+\_\+result\+::eigen\+\_\+vectors}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00047}{DFA\+\_\+result\+::\+F\+\_\+test\+\_\+\+P\+\_\+value}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00045}{DFA\+\_\+result\+::p\+\_\+values}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00044}{DFA\+\_\+result\+::projected}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{Progress\+Window\+::\+Set\+Progress()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}{vectorset\+\_\+groups}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a19b588743656b426816bb9de337187ce}\label{classConductor_a19b588743656b426816bb9de337187ce} 
+\index{Conductor@{Conductor}!ExecuteDFAM@{ExecuteDFAM}}
+\index{ExecuteDFAM@{ExecuteDFAM}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteDFAM()}{ExecuteDFAM()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+DFAM (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes multi-\/way Discriminant Function Analysis across all groups. 
+
+Performs multi-\/way discriminant function analysis to find linear combinations of elements that optimally separate all source groups simultaneously. Computes multiple discriminant functions (eigenvalues/eigenvectors) and projects all groups onto these discriminant axes. Supports optional Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if matrix is singular or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00901}{901}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d}{dfa\+\_\+vectorsetset}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02814}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00043}{DFA\+\_\+result\+::eigen\+\_\+vectors}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00047}{DFA\+\_\+result\+::\+F\+\_\+test\+\_\+\+P\+\_\+value}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00048}{DFA\+\_\+result\+::multi\+\_\+projected}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00045}{DFA\+\_\+result\+::p\+\_\+values}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{Progress\+Window\+::\+Set\+Progress()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_acb632d391ce43dc77516eb707ec8aa37}\label{classConductor_acb632d391ce43dc77516eb707ec8aa37} 
+\index{Conductor@{Conductor}!ExecuteDFAOnevsRest@{ExecuteDFAOnevsRest}}
+\index{ExecuteDFAOnevsRest@{ExecuteDFAOnevsRest}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteDFAOnevsRest()}{ExecuteDFAOnevsRest()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+DFAOnevs\+Rest (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Discriminant Function Analysis for one group versus all others. 
+
+Performs discriminant function analysis to separate one specified source group from all other groups combined. Useful for identifying which elements best distinguish a particular source from the background of all other sources. Supports optional Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source group"{}\+: Group name to discriminate from others
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if matrix is singular 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00805}{805}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02814}{Source\+Sink\+Data\+::\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00043}{DFA\+\_\+result\+::eigen\+\_\+vectors}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00047}{DFA\+\_\+result\+::\+F\+\_\+test\+\_\+\+P\+\_\+value}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00045}{DFA\+\_\+result\+::p\+\_\+values}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00044}{DFA\+\_\+result\+::projected}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{Progress\+Window\+::\+Set\+Progress()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}{vectorset\+\_\+groups}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_aa08d8be1bbd256acb781370b3d07c414}\label{classConductor_aa08d8be1bbd256acb781370b3d07c414} 
+\index{Conductor@{Conductor}!ExecuteDistributionFitting@{ExecuteDistributionFitting}}
+\index{ExecuteDistributionFitting@{ExecuteDistributionFitting}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteDistributionFitting()}{ExecuteDistributionFitting()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Distribution\+Fitting (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes distribution fitting analysis for a constituent. 
+
+Fits normal and lognormal distributions to observed elemental concentrations for a specific constituent within a source or target group. Generates both probability density functions (PDF) and cumulative distribution functions (CDF) comparing observed data with fitted theoretical distributions. Useful for assessing distributional assumptions before source apportionment. Supports optional Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze
+\item "{}\+Constituent"{}\+: Specific element name to fit
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01506}{1506}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00287}{Concentration\+Set\+::\+Create\+CDFComparison()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00321}{Concentration\+Set\+::\+Create\+Fitted\+Distribution()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05055}{Source\+Sink\+Data\+::\+Get\+Element\+Distribution()}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa3ca99b9a7fdb189d57aa337bcdb86c4}{timeseries\+\_\+set\+\_\+first\+\_\+symbol}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_aec17bd1e3da29721920f059bd83f07d8}\label{classConductor_aec17bd1e3da29721920f059bd83f07d8} 
+\index{Conductor@{Conductor}!ExecuteEDP@{ExecuteEDP}}
+\index{ExecuteEDP@{ExecuteEDP}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteEDP()}{ExecuteEDP()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+EDP (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates two-\/way element discriminant power between two groups. 
+
+Evaluates the ability of each element to discriminate between two specific source or target groups using multiple metrics\+: difference-\/to-\/standard-\/deviation ratio, discrimination fraction (percentage of samples correctly separated), and statistical significance (t-\/test p-\/values). Elements with low p-\/values and high discrimination power are good candidates for source apportionment. Supports Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group I"{}\+: First group name
+\item "{}\+Source/\+Target group II"{}\+: Second group name
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+P-\/value threshold"{}\+: Significance threshold for highlighting 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01763}{1763}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03296}{Source\+Sink\+Data\+::\+Differentiation\+Power()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03356}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+Percentage()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{predicted\+\_\+concentration}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{interface_8h_source_l00051}{Interface\+::\+Set\+Limit()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03204}{Source\+Sink\+Data\+::t\+\_\+\+Test\+PValue()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_af000f000c826a583d6702334fb35e7c8}\label{classConductor_af000f000c826a583d6702334fb35e7c8} 
+\index{Conductor@{Conductor}!ExecuteEDPM@{ExecuteEDPM}}
+\index{ExecuteEDPM@{ExecuteEDPM}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteEDPM()}{ExecuteEDPM()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+EDPM (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Calculates multi-\/way element discriminant power across all groups. 
+
+Evaluates the ability of each element to discriminate among all source groups simultaneously using pairwise comparisons. Computes three metrics for each element-\/pair combination\+: difference-\/to-\/standard-\/deviation ratio, discrimination fraction, and t-\/test p-\/values. \doxylink{classResults}{Results} show which elements provide optimal discrimination across the entire source dataset. Optionally includes target samples. Supports Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Include target samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+P-\/value threshold"{}\+: Significance threshold for highlighting 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01874}{1874}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03296}{Source\+Sink\+Data\+::\+Differentiation\+Power()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03379}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+P\+\_\+value()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03356}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+Percentage()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{elemental\+\_\+profile\+\_\+set}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{interface_8h_source_l00051}{Interface\+::\+Set\+Limit()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_aa66fc628a43a783bf6148adaa3eae45d}\label{classConductor_aa66fc628a43a783bf6148adaa3eae45d} 
+\index{Conductor@{Conductor}!ExecuteErrorAnalysis@{ExecuteErrorAnalysis}}
+\index{ExecuteErrorAnalysis@{ExecuteErrorAnalysis}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteErrorAnalysis()}{ExecuteErrorAnalysis()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Error\+Analysis (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes bootstrap error analysis for uncertainty quantification. 
+
+Performs bootstrap resampling to quantify uncertainty in source contribution estimates. Randomly removes a specified percentage of elements in each bootstrap iteration and re-\/solves the source apportionment problem, generating distributions of contribution estimates. Produces confidence intervals and uncertainty metrics for source contributions. Supports both linear and softmax transformations and optional OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Softmax transformation"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Pecentage eliminated"{}\+: Percentage of elements to remove per iteration
+\item "{}\+Number of realizations"{}\+: Number of bootstrap iterations 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l02037}{2037}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03699}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, and \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}{softmax}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a83a4a89a58b6b328deb1e776ca5d3572}\label{classConductor_a83a4a89a58b6b328deb1e776ca5d3572} 
+\index{Conductor@{Conductor}!ExecuteGA@{ExecuteGA}}
+\index{ExecuteGA@{ExecuteGA}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteGA()}{ExecuteGA()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+GA (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Genetic Algorithm optimization. 
+
+Performs standard GA optimization with configurable source profiles, organic matter and size corrections, and comprehensive result collection including contributions, observed vs modeled profiles, and statistical parameters (means, mu, sigma) for both calculated and estimated values.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item Plus other GA-\/specific parameters passed to Set\+Properties 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if validation failed 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00217}{217}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8h_source_l00140}{GA}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, and \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a87bbf08842232ce0611fd8c4c63c750c}\label{classConductor_a87bbf08842232ce0611fd8c4c63c750c} 
+\index{Conductor@{Conductor}!ExecuteGA\_FixedProfile@{ExecuteGA\_FixedProfile}}
+\index{ExecuteGA\_FixedProfile@{ExecuteGA\_FixedProfile}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteGA\_FixedProfile()}{ExecuteGA\_FixedProfile()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+GA\+\_\+\+Fixed\+Profile (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Genetic Algorithm with fixed elemental profiles. 
+
+Performs GA optimization where source elemental profiles are held constant and only source contributions are estimated. This mode is useful when source compositions are well-\/characterized and only mixing proportions need determination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item Plus other GA-\/specific parameters 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if validation failed 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00307}{307}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}{direct}}, \mbox{\hyperlink{conductor_8h_source_l00140}{GA}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa576eb2974a1ae0b087c914c7f3bf6958}{only\+\_\+contributions}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05027}{Source\+Sink\+Data\+::\+Set\+Parameter\+Estimation\+Mode()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00060}{Progress\+Window\+::\+Set\+Title()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00133}{Progress\+Window\+::\+Set\+YAxis\+Title()}}, and \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a83822c5344b87ec5a534ec862e9a7793}\label{classConductor_a83822c5344b87ec5a534ec862e9a7793} 
+\index{Conductor@{Conductor}!ExecuteGA\_NoTargets@{ExecuteGA\_NoTargets}}
+\index{ExecuteGA\_NoTargets@{ExecuteGA\_NoTargets}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteGA\_NoTargets()}{ExecuteGA\_NoTargets()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+GA\+\_\+\+No\+Targets (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Genetic Algorithm disregarding target constraints. 
+
+Performs GA optimization to estimate source elemental profiles based solely on source data, without constraining the solution to match target sample compositions. This mode is useful for characterizing source profiles when target data is unavailable or unreliable.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name (used for naming only)
+\item Plus other GA-\/specific parameters 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if validation failed 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00365}{365}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8h_source_l00140}{GA}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05027}{Source\+Sink\+Data\+::\+Set\+Parameter\+Estimation\+Mode()}}, \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa326a5aa575058f786c83d801d8212225}{source\+\_\+elemental\+\_\+profiles\+\_\+based\+\_\+on\+\_\+source\+\_\+data}}, and \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_aa55e38f74910a3874c93557288b7b7c5}\label{classConductor_aa55e38f74910a3874c93557288b7b7c5} 
+\index{Conductor@{Conductor}!ExecuteKolmogorovSmirnov@{ExecuteKolmogorovSmirnov}}
+\index{ExecuteKolmogorovSmirnov@{ExecuteKolmogorovSmirnov}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteKolmogorovSmirnov()}{ExecuteKolmogorovSmirnov()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Kolmogorov\+Smirnov (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Kolmogorov-\/\+Smirnov goodness-\/of-\/fit test for a source/target group. 
+
+Performs Kolmogorov-\/\+Smirnov test to assess how well elemental concentration distributions within a source or target group conform to a specified theoretical distribution (normal or lognormal). Returns K-\/S statistics for each element, where larger values indicate poorer fit to the assumed distribution.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze
+\item "{}\+Distribution"{}\+: "{}\+Normal"{} or "{}\+Lognormal"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01308}{1308}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a2a883830a95f04cae13aaaf5afa5781a}\label{classConductor_a2a883830a95f04cae13aaaf5afa5781a} 
+\index{Conductor@{Conductor}!ExecuteKolmogorovSmirnovIndividual@{ExecuteKolmogorovSmirnovIndividual}}
+\index{ExecuteKolmogorovSmirnovIndividual@{ExecuteKolmogorovSmirnovIndividual}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteKolmogorovSmirnovIndividual()}{ExecuteKolmogorovSmirnovIndividual()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Kolmogorov\+Smirnov\+Individual (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Kolmogorov-\/\+Smirnov test for a single constituent in a group. 
+
+Performs detailed Kolmogorov-\/\+Smirnov goodness-\/of-\/fit test for one specific element within a source or target group. Returns the cumulative distribution function (CDF) comparison between observed data and the theoretical distribution (normal or lognormal), allowing visual assessment of distribution fit.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze
+\item "{}\+Constituent"{}\+: Specific element name to test
+\item "{}\+Distribution"{}\+: "{}\+Normal"{} or "{}\+Lognormal"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01338}{1338}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00287}{Concentration\+Set\+::\+Create\+CDFComparison()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05055}{Source\+Sink\+Data\+::\+Get\+Element\+Distribution()}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843}{timeseries\+\_\+set}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_ae95f5d5fddf0f6f7de2e24d5a624b7d6}\label{classConductor_ae95f5d5fddf0f6f7de2e24d5a624b7d6} 
+\index{Conductor@{Conductor}!ExecuteLevenbergMarquardt@{ExecuteLevenbergMarquardt}}
+\index{ExecuteLevenbergMarquardt@{ExecuteLevenbergMarquardt}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteLevenbergMarquardt()}{ExecuteLevenbergMarquardt()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Levenberg\+Marquardt (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Levenberg-\/\+Marquardt nonlinear optimization. 
+
+Performs Levenberg-\/\+Marquardt least squares optimization to estimate source contributions. This deterministic algorithm is faster than GA/\+MCMC and works well when the problem is well-\/conditioned. Supports both linear and softmax transformations for contribution constraints.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Softmax transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if validation failed 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00400}{400}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}{direct}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02198}{Source\+Sink\+Data\+::\+Get\+Contribution()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02280}{Source\+Sink\+Data\+::\+Get\+Observedvs\+Modeled\+Elemental\+Profile()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02325}{Source\+Sink\+Data\+::\+Get\+Observedvs\+Modeled\+Elemental\+Profile\+\_\+\+Isotope()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02220}{Source\+Sink\+Data\+::\+Get\+Predicted\+Elemental\+Profile()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}{softmax}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01298}{Source\+Sink\+Data\+::\+Solve\+Levenberg\+\_\+\+Marquardt()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_aa3538efb383852a8323fcd7303631410}\label{classConductor_aa3538efb383852a8323fcd7303631410} 
+\index{Conductor@{Conductor}!ExecuteLevenbergMarquardtBatch@{ExecuteLevenbergMarquardtBatch}}
+\index{ExecuteLevenbergMarquardtBatch@{ExecuteLevenbergMarquardtBatch}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteLevenbergMarquardtBatch()}{ExecuteLevenbergMarquardtBatch()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Levenberg\+Marquardt\+Batch (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Levenberg-\/\+Marquardt optimization across all target samples. 
+
+Performs batch Levenberg-\/\+Marquardt optimization for all target samples, producing a comprehensive contribution matrix showing source apportionment results across multiple samples. Useful for analyzing spatial or temporal patterns in source contributions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Softmax transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if validation failed 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00463}{463}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{interface_8h_source_l00071}{Interface\+::\+Get\+Options()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{interface_8h_source_l00059}{Interface\+::\+Set\+Option()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00026}{Result\+Item\+::\+Set\+XAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\+\_\+column\+\_\+x}}, \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}{softmax}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{stacked\+\_\+bar\+\_\+chart}}, \mbox{\hyperlink{interface_8h_source_l00020}{options\+::\+X\+\_\+suffix}}, and \mbox{\hyperlink{interface_8h_source_l00021}{options\+::\+Y\+\_\+suffix}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a99da4f24fe10b6351e5c5735600a30f7}\label{classConductor_a99da4f24fe10b6351e5c5735600a30f7} 
+\index{Conductor@{Conductor}!ExecuteMLR@{ExecuteMLR}}
+\index{ExecuteMLR@{ExecuteMLR}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteMLR()}{ExecuteMLR()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+MLR (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes multiple linear regression versus organic matter and particle size. 
+
+Performs multiple linear regression analysis to establish relationships between elemental concentrations and organic matter content/particle size. The resulting regression models are stored and can be used to correct concentrations in subsequent analyses. Supports both linear and power-\/law regression forms.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Organic Matter constituent"{}\+: OM variable name (can be empty)
+\item "{}\+Particle Size constituent"{}\+: Size variable name (can be empty)
+\item "{}\+Equation"{}\+: "{}\+Linear"{} or "{}\+Power"{}
+\item "{}\+P-\/value threshold"{}\+: Statistical significance threshold
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if no constituents selected 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00561}{561}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02305}{Source\+Sink\+Data\+::\+Get\+MLRResults()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05022}{Source\+Sink\+Data\+::\+Get\+Target\+Group()}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02781}{Source\+Sink\+Data\+::\+Perform\+Regression\+Vs\+OMAnd\+Size()}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa62cd275989e78ee56a81f0265a87562e}{power}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05112}{Source\+Sink\+Data\+::\+Set\+OMand\+Size\+Constituents()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_ae848363d6273d67548fb0659f38d4b71}\label{classConductor_ae848363d6273d67548fb0659f38d4b71} 
+\index{Conductor@{Conductor}!ExecuteOMSizeCorrect@{ExecuteOMSizeCorrect}}
+\index{ExecuteOMSizeCorrect@{ExecuteOMSizeCorrect}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteOMSizeCorrect()}{ExecuteOMSizeCorrect()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+OMSize\+Correct (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes organic matter and particle size correction. 
+
+Applies multiple linear regression corrections to adjust elemental concentrations for variations in organic matter content and particle size. Returns corrected source profiles for the specified target sample, which can then be used in subsequent source apportionment analyses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Sample"{}\+: Target sample name for correction basis
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00535}{535}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02448}{Source\+Sink\+Data\+::\+Get\+Source\+Profiles()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05161}{Source\+Sink\+Data\+::\+Set\+Selected\+Target\+Sample()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a021283dd0f972025d30a96f6b683fee4}\label{classConductor_a021283dd0f972025d30a96f6b683fee4} 
+\index{Conductor@{Conductor}!ExecuteOutlierAnalysis@{ExecuteOutlierAnalysis}}
+\index{ExecuteOutlierAnalysis@{ExecuteOutlierAnalysis}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteOutlierAnalysis()}{ExecuteOutlierAnalysis()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Outlier\+Analysis (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes outlier detection analysis for a source/target group. 
+
+Performs Box-\/\+Cox based outlier detection to identify samples with unusual elemental concentrations within a source or target group. After Box-\/\+Cox transformation to normality, calculates standardized residuals and flags values exceeding the specified threshold (typically ±2 or ±3 standard deviations). Supports sample and element filtering.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group"{}\+: Name of the group to analyze
+\item "{}\+Threshold"{}\+: Standard deviation threshold for outlier detection
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01725}{1725}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{interface_8h_source_l00051}{Interface\+::\+Set\+Limit()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, and \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a3764f85a480187345b0ed582ae3dc712}\label{classConductor_a3764f85a480187345b0ed582ae3dc712} 
+\index{Conductor@{Conductor}!ExecuteSDFA@{ExecuteSDFA}}
+\index{ExecuteSDFA@{ExecuteSDFA}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteSDFA()}{ExecuteSDFA()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+SDFA (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Stepwise Discriminant Function Analysis between two groups. 
+
+Performs stepwise discriminant function analysis to identify the subset of elements that provides optimal discrimination between two source groups. Elements are added sequentially based on their contribution to group separation, evaluated using Wilks\textquotesingle{} Lambda, chi-\/squared, and F-\/test statistics. Supports optional Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source/\+Target group I"{}\+: First group name
+\item "{}\+Source/\+Target group II"{}\+: Second group name
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if groups identical, matrix singular, or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l00998}{998}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00057}{Result\+Item\+::\+Set\+Absolute\+Value()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04773}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a2021491b90efc608cf2ee435ec3b5af1}\label{classConductor_a2021491b90efc608cf2ee435ec3b5af1} 
+\index{Conductor@{Conductor}!ExecuteSDFAM@{ExecuteSDFAM}}
+\index{ExecuteSDFAM@{ExecuteSDFAM}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteSDFAM()}{ExecuteSDFAM()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+SDFAM (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes multi-\/way Stepwise Discriminant Function Analysis across all groups. 
+
+Performs stepwise discriminant function analysis to identify the optimal subset of elements for discriminating among all source groups simultaneously. Elements are sequentially selected based on their contribution to overall group separation using Wilks\textquotesingle{} Lambda, chi-\/squared, and F-\/test statistics. Optionally modifies the included elements based on results. Supports Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Modify the included elements based on the results"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if matrix singular or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01099}{1099}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00272}{CMBVector\+::append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00291}{CMBVector\+::\+Extract\+Up\+To\+Minimum()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03603}{Source\+Sink\+Data\+::\+Include\+Exclude\+Elements\+Based\+On()}}, \mbox{\hyperlink{cmbvector_8h_source_l00138}{CMBVector\+::\+Labels()}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00057}{Result\+Item\+::\+Set\+Absolute\+Value()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04773}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00136}{CMBVector\+::value\+At()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_ab479514276c900858cd006934817f240}\label{classConductor_ab479514276c900858cd006934817f240} 
+\index{Conductor@{Conductor}!ExecuteSDFAOnevsRest@{ExecuteSDFAOnevsRest}}
+\index{ExecuteSDFAOnevsRest@{ExecuteSDFAOnevsRest}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteSDFAOnevsRest()}{ExecuteSDFAOnevsRest()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+SDFAOnevs\+Rest (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes Stepwise Discriminant Function Analysis for one group versus all others. 
+
+Performs stepwise discriminant function analysis to identify the optimal subset of elements for discriminating one specified source group from all other groups combined. Elements are sequentially selected based on Wilks\textquotesingle{} Lambda, chi-\/squared, and F-\/test statistics. Supports optional Box-\/\+Cox transformation and OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source group"{}\+: Group name to discriminate from others
+\item "{}\+Use only selected samples"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Use only selected elements"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+OM and Size Correct based on target sample"{}\+: Sample name or empty
+\item "{}\+Box-\/cox transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if matrix singular or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01215}{1215}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03117}{Source\+Sink\+Data\+::\+Box\+Cox\+Transformed()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00213}{Source\+Sink\+Data\+::\+Create\+Corrected\+And\+Filtered\+Dataset()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00111}{Source\+Sink\+Data\+::\+Create\+Corrected\+Dataset()}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00057}{Result\+Item\+::\+Set\+Absolute\+Value()}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00025}{Result\+Item\+::\+Set\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04773}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a87aaea11e26ae4c5b959e8c2a5d46a26}\label{classConductor_a87aaea11e26ae4c5b959e8c2a5d46a26} 
+\index{Conductor@{Conductor}!ExecuteSourceVerify@{ExecuteSourceVerify}}
+\index{ExecuteSourceVerify@{ExecuteSourceVerify}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteSourceVerify()}{ExecuteSourceVerify()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Source\+Verify (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes source verification analysis. 
+
+Performs leave-\/one-\/out cross-\/validation where each sample from a specified source group is treated as an unknown target and contributions are estimated using the remaining sources. If source apportionment is working correctly, the "{}unknown"{} sample should show high contribution from its true source group. \doxylink{classResults}{Results} show contribution matrices for all verification samples, enabling assessment of source profile representativeness and model reliability. Supports softmax transformation and optional OM/size corrections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Source Group"{}\+: Source group name to verify
+\item "{}\+Apply size and organic matter correction"{}\+: "{}true"{}/"{}false"{}
+\item "{}\+Softmax transformation"{}\+: "{}true"{}/"{}false"{} 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully, false if OM/\+Size correction unavailable or negative elements found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l02086}{2086}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{interface_8h_source_l00071}{Interface\+::\+Get\+Options()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{interface_8h_source_l00059}{Interface\+::\+Set\+Option()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{Progress\+Window\+::\+Set\+Progress()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05037}{Source\+Sink\+Data\+::\+Set\+Progress\+Window()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00080}{Result\+Item\+::\+Set\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00078}{Result\+Item\+::\+Set\+Show\+Table()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00026}{Result\+Item\+::\+Set\+XAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00066}{Result\+Item\+::\+Set\+YLimit()}}, \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\+\_\+column\+\_\+x}}, \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}{softmax}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{stacked\+\_\+bar\+\_\+chart}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03861}{Source\+Sink\+Data\+::\+Verify\+Source()}}, \mbox{\hyperlink{interface_8h_source_l00020}{options\+::\+X\+\_\+suffix}}, and \mbox{\hyperlink{interface_8h_source_l00021}{options\+::\+Y\+\_\+suffix}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a06beb81753720dd2a92f7f6fe131f3c5}\label{classConductor_a06beb81753720dd2a92f7f6fe131f3c5} 
+\index{Conductor@{Conductor}!ExecuteTestCMBBayesian@{ExecuteTestCMBBayesian}}
+\index{ExecuteTestCMBBayesian@{ExecuteTestCMBBayesian}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{ExecuteTestCMBBayesian()}{ExecuteTestCMBBayesian()}}
+{\footnotesize\ttfamily bool Conductor\+::\+Execute\+Test\+CMBBayesian (\begin{DoxyParamCaption}\item[{const std\+::map$<$ std\+::string, std\+::string $>$ \&}]{arguments }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Executes MCMC test with a simple analytical model. 
+
+Performs MCMC sampling on a simple test model (\doxylink{classTestMCMC}{Test\+MCMC}) with known analytical properties to validate the MCMC implementation. Useful for debugging convergence issues, tuning sampler parameters, and verifying posterior distributions against expected theoretical results. Generates both parameter trace samples and posterior distributions.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arguments} & Map of configuration parameters including\+:
+\begin{DoxyItemize}
+\item "{}\+Number of samples"{}\+: Total MCMC samples per chain
+\item "{}\+Number of chains"{}\+: Number of independent chains
+\item "{}\+Samples to be discarded (burnout)"{}\+: Burnin period
+\item "{}samples\+\_\+file\+\_\+name"{}\+: Output file name for samples 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution completed successfully 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8cpp_source_l01423}{1423}} of file \mbox{\hyperlink{conductor_8cpp_source}{conductor.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{results_8cpp_source_l00025}{Results\+::\+Append()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}, \mbox{\hyperlink{MCMC_8hpp_source_l00200}{CMCMC$<$ T $>$\+::initialize()}}, \mbox{\hyperlink{testmcmc_8cpp_source_l00008}{Test\+MCMC\+::\+Initialize\+Parameters\+Observations()}}, \mbox{\hyperlink{conductor_8h_source_l00144}{mainwindow}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84}{mcmc\+\_\+samples}}, \mbox{\hyperlink{MCMC_8h_source_l00073}{CMCMC$<$ T $>$\+::\+Model}}, \mbox{\hyperlink{conductor_8h_source_l00142}{results}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}, \mbox{\hyperlink{resultitem_8h_source_l00021}{Result\+Item\+::\+Set\+Name()}}, \mbox{\hyperlink{results_8h_source_l00021}{Results\+::\+Set\+Name()}}, \mbox{\hyperlink{MCMC_8hpp_source_l00068}{CMCMC$<$ T $>$\+::\+Set\+Property()}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, \mbox{\hyperlink{resultitem_8h_source_l00029}{Result\+Item\+::\+Set\+Show\+As\+String()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00060}{Progress\+Window\+::\+Set\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00133}{Progress\+Window\+::\+Set\+YAxis\+Title()}}, \mbox{\hyperlink{MCMC_8hpp_source_l00337}{CMCMC$<$ T $>$\+::step()}}, and \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}.
+
+\Hypertarget{classConductor_a3ab06752c45ab5da05152e21a37d0b64}\label{classConductor_a3ab06752c45ab5da05152e21a37d0b64} 
+\index{Conductor@{Conductor}!GetResults@{GetResults}}
+\index{GetResults@{GetResults}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{GetResults()}{GetResults()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResults}{Results}} \texorpdfstring{$\ast$}{*} Conductor\+::\+Get\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates and returns a heap-\/allocated copy of current results. 
+
+Returns a new \doxylink{classResults}{Results} object allocated on the heap containing a copy of the most recent analysis results. The caller assumes ownership and is responsible for deletion.
+
+\begin{DoxyReturn}{Returns}
+Heap-\/allocated \doxylink{classResults}{Results} pointer (caller must delete)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This allocates memory -\/ caller must ensure proper cleanup 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+\doxylink{classResults}{Results} are cleared at the start of each \doxylink{classConductor_ab9f379edeab01ad48dca3f16c8a26a26}{Execute()} call, so this should be called before the next analysis 
+\end{DoxyWarning}
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00096}{96}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00142}{results}}.
+
+\Hypertarget{classConductor_a96ce7f8f0838b69e32fbfefef22e4ec5}\label{classConductor_a96ce7f8f0838b69e32fbfefef22e4ec5} 
+\index{Conductor@{Conductor}!SetData@{SetData}}
+\index{SetData@{SetData}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{SetData()}{SetData()}}
+{\footnotesize\ttfamily void Conductor\+::\+Set\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the \doxylink{classSourceSinkData}{Source\+Sink\+Data} for analysis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+data} & Pointer to \doxylink{classSourceSinkData}{Source\+Sink\+Data} (non-\/owning, must remain valid during operations) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00081}{81}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00139}{data}}.
+
+\Hypertarget{classConductor_a406cb40a96cf797c9a1c4745b7af860c}\label{classConductor_a406cb40a96cf797c9a1c4745b7af860c} 
+\index{Conductor@{Conductor}!SetWorkingFolder@{SetWorkingFolder}}
+\index{SetWorkingFolder@{SetWorkingFolder}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{SetWorkingFolder()}{SetWorkingFolder()}}
+{\footnotesize\ttfamily void Conductor\+::\+Set\+Working\+Folder (\begin{DoxyParamCaption}\item[{const QString \&}]{wf }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the working directory for output files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wf} & Working folder path as QString \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00102}{102}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+\Hypertarget{classConductor_adda5ed9a7318228b394a133422e75ce6}\label{classConductor_adda5ed9a7318228b394a133422e75ce6} 
+\index{Conductor@{Conductor}!WorkingFolder@{WorkingFolder}}
+\index{WorkingFolder@{WorkingFolder}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{WorkingFolder()}{WorkingFolder()}}
+{\footnotesize\ttfamily QString Conductor\+::\+Working\+Folder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the current working directory path. 
+
+\begin{DoxyReturn}{Returns}
+Working folder path as QString 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00108}{108}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+References \mbox{\hyperlink{conductor_8h_source_l00143}{workingfolder}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classConductor_ab0d0f611fcafbeaa7c7bfb016edda56e}\label{classConductor_ab0d0f611fcafbeaa7c7bfb016edda56e} 
+\index{Conductor@{Conductor}!data@{data}}
+\index{data@{data}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}\texorpdfstring{$\ast$}{*} Conductor\+::data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Non-\/owning pointer to analysis data. 
+
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00139}{139}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8h_source_l00075}{Data()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Execute\+Bracketing\+Analysis\+Batch()}}, and \mbox{\hyperlink{conductor_8h_source_l00081}{Set\+Data()}}.
+
+\Hypertarget{classConductor_a7c6bc25fe2b52389299527f814eb84b8}\label{classConductor_a7c6bc25fe2b52389299527f814eb84b8} 
+\index{Conductor@{Conductor}!GA@{GA}}
+\index{GA@{GA}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{GA}{GA}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classCGA}{CGA}}$<$\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}$>$ $>$ Conductor\+::\+GA\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Genetic Algorithm optimizer (owned) 
+
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00140}{140}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, and \mbox{\hyperlink{conductor_8cpp_source_l00365}{Execute\+GA\+\_\+\+No\+Targets()}}.
+
+\Hypertarget{classConductor_a9dc7fd8a196149fe46d01785977c095d}\label{classConductor_a9dc7fd8a196149fe46d01785977c095d} 
+\index{Conductor@{Conductor}!mainwindow@{mainwindow}}
+\index{mainwindow@{mainwindow}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{mainwindow}{mainwindow}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMainWindow}{Main\+Window}}\texorpdfstring{$\ast$}{*} Conductor\+::mainwindow\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Non-\/owning pointer to parent window. 
+
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00144}{144}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00175}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{conductor_8cpp_source_l00195}{Check\+Negative\+Elements()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l02225}{Execute\+CMBBayesian()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l02037}{Execute\+Error\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00561}{Execute\+MLR()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Execute\+SDFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Execute\+Source\+Verify()}}, and \mbox{\hyperlink{conductor_8cpp_source_l01423}{Execute\+Test\+CMBBayesian()}}.
+
+\Hypertarget{classConductor_aff6ce4f3d572745d4094d54085097cbb}\label{classConductor_aff6ce4f3d572745d4094d54085097cbb} 
+\index{Conductor@{Conductor}!MCMC@{MCMC}}
+\index{MCMC@{MCMC}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{MCMC}{MCMC}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classCMCMC}{CMCMC}}$<$\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}$>$ $>$ Conductor\+::\+MCMC\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+MCMC sampler (owned) 
+
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00141}{141}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l02225}{Execute\+CMBBayesian()}}, and \mbox{\hyperlink{conductor_8cpp_source_l01373}{Execute\+CMBBayesian\+Batch()}}.
+
+\Hypertarget{classConductor_adafa0659295420dc960073884ed0852c}\label{classConductor_adafa0659295420dc960073884ed0852c} 
+\index{Conductor@{Conductor}!results@{results}}
+\index{results@{results}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{results}{results}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResults}{Results}} Conductor\+::results\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current analysis results (cleared each Execute) 
+
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00142}{142}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00018}{Execute()}}, \mbox{\hyperlink{conductor_8cpp_source_l01969}{Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l02151}{Execute\+Auto\+Select()}}, \mbox{\hyperlink{conductor_8cpp_source_l01704}{Execute\+Box\+Cox()}}, \mbox{\hyperlink{conductor_8cpp_source_l01627}{Execute\+Bracketing\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l01662}{Execute\+Bracketing\+Analysis\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l02225}{Execute\+CMBBayesian()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00631}{Execute\+Covariance\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l01506}{Execute\+Distribution\+Fitting()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l02037}{Execute\+Error\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l01308}{Execute\+Kolmogorov\+Smirnov()}}, \mbox{\hyperlink{conductor_8cpp_source_l01338}{Execute\+Kolmogorov\+Smirnov\+Individual()}}, \mbox{\hyperlink{conductor_8cpp_source_l00400}{Execute\+Levenberg\+Marquardt()}}, \mbox{\hyperlink{conductor_8cpp_source_l00463}{Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00561}{Execute\+MLR()}}, \mbox{\hyperlink{conductor_8cpp_source_l00535}{Execute\+OMSize\+Correct()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Execute\+Outlier\+Analysis()}}, \mbox{\hyperlink{conductor_8cpp_source_l00998}{Execute\+SDFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l01099}{Execute\+SDFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01215}{Execute\+SDFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Execute\+Source\+Verify()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{conductor_8h_source_l00096}{Get\+Results()}}.
+
+\Hypertarget{classConductor_a79bc7163a73d7e624949079a8d9128eb}\label{classConductor_a79bc7163a73d7e624949079a8d9128eb} 
+\index{Conductor@{Conductor}!workingfolder@{workingfolder}}
+\index{workingfolder@{workingfolder}!Conductor@{Conductor}}
+\doxysubsubsection{\texorpdfstring{workingfolder}{workingfolder}}
+{\footnotesize\ttfamily QString Conductor\+::workingfolder\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Output directory path. 
+
+
+
+Definition at line \mbox{\hyperlink{conductor_8h_source_l00143}{143}} of file \mbox{\hyperlink{conductor_8h_source}{conductor.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l02225}{Execute\+CMBBayesian()}}, \mbox{\hyperlink{conductor_8cpp_source_l01373}{Execute\+CMBBayesian\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l00217}{Execute\+GA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00307}{Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l00365}{Execute\+GA\+\_\+\+No\+Targets()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Execute\+Test\+CMBBayesian()}}, \mbox{\hyperlink{conductor_8h_source_l00102}{Set\+Working\+Folder()}}, and \mbox{\hyperlink{conductor_8h_source_l00108}{Working\+Folder()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{conductor_8h}{conductor.\+h}}\item 
+\mbox{\hyperlink{conductor_8cpp}{conductor.\+cpp}}\end{DoxyCompactItemize}

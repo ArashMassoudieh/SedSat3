@@ -1,0 +1,242 @@
+\doxysection{Results\+Window Class Reference}
+\hypertarget{classResultsWindow}{}\label{classResultsWindow}\index{ResultsWindow@{ResultsWindow}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/resultswindow.\+h$>$}
+
+
+
+Inheritance diagram for Results\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{classResultsWindow__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Results\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classResultsWindow__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classResultsWindow_ab5eed3b399c8a305f588d4a98fb3a9ed}{Results\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+void \mbox{\hyperlink{classResultsWindow_a1b80a7ddc30695b9be11e9067982f817}{Append\+Text}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&text)
+\item 
+void \mbox{\hyperlink{classResultsWindow_a3dff3106b9533532b4b215ebca85e3d7}{Append\+Result}} (const \mbox{\hyperlink{classResultItem}{Result\+Item}} \&resultitem)
+\item 
+\mbox{\hyperlink{classResultsWindow_a2b320802242dbf6ac6b779480a30b86c}{\texorpdfstring{$\sim$}{\string~}\+Results\+Window}} ()
+\item 
+void \mbox{\hyperlink{classResultsWindow_a39f24f1e0e0db8c04e3e4067c04be7ac}{Set\+Results}} (\mbox{\hyperlink{classResults}{Results}} \texorpdfstring{$\ast$}{*}res)
+\item 
+void \mbox{\hyperlink{classResultsWindow_a539ce1215cb3aa1e3ec6c808f8e8edd2}{on\+\_\+result\+\_\+graph\+\_\+clicked}} ()
+\item 
+void \mbox{\hyperlink{classResultsWindow_ac4273b2478e0a48a82913f51f4f1a6c5}{on\+\_\+result\+\_\+export\+\_\+clicked}} ()
+\item 
+void \mbox{\hyperlink{classResultsWindow_add122bea33d77a678f56e3e74a89929a}{on\+\_\+result\+\_\+table\+\_\+clicked}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\+::\+Results\+Window \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}{ui}}
+\item 
+\mbox{\hyperlink{classResults}{Results}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}{results}} = nullptr
+\item 
+int \mbox{\hyperlink{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}{result\+\_\+item\+\_\+counter}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8h_source_l00014}{14}} of file \mbox{\hyperlink{resultswindow_8h_source}{resultswindow.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classResultsWindow_ab5eed3b399c8a305f588d4a98fb3a9ed}\label{classResultsWindow_ab5eed3b399c8a305f588d4a98fb3a9ed} 
+\index{ResultsWindow@{ResultsWindow}!ResultsWindow@{ResultsWindow}}
+\index{ResultsWindow@{ResultsWindow}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{ResultsWindow()}{ResultsWindow()}}
+{\footnotesize\ttfamily Results\+Window\+::\+Results\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{resultswindow_8cpp_source}{resultswindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8h_source_l00026}{ui}}.
+
+\Hypertarget{classResultsWindow_a2b320802242dbf6ac6b779480a30b86c}\label{classResultsWindow_a2b320802242dbf6ac6b779480a30b86c} 
+\index{ResultsWindow@{ResultsWindow}!````~ResultsWindow@{\texorpdfstring{$\sim$}{\string~}ResultsWindow}}
+\index{````~ResultsWindow@{\texorpdfstring{$\sim$}{\string~}ResultsWindow}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ResultsWindow()}{\string~ResultsWindow()}}
+{\footnotesize\ttfamily Results\+Window\+::\texorpdfstring{$\sim$}{\string~}\+Results\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{resultswindow_8cpp_source}{resultswindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8h_source_l00026}{ui}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classResultsWindow_a3dff3106b9533532b4b215ebca85e3d7}\label{classResultsWindow_a3dff3106b9533532b4b215ebca85e3d7} 
+\index{ResultsWindow@{ResultsWindow}!AppendResult@{AppendResult}}
+\index{AppendResult@{AppendResult}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{AppendResult()}{AppendResult()}}
+{\footnotesize\ttfamily void Results\+Window\+::\+Append\+Result (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classResultItem}{Result\+Item}} \&}]{resultitem }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{resultswindow_8cpp_source}{resultswindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_source_l00022}{Result\+Item\+::\+Name()}}, \mbox{\hyperlink{resultswindow_8cpp_source_l00134}{on\+\_\+result\+\_\+export\+\_\+clicked()}}, \mbox{\hyperlink{resultswindow_8cpp_source_l00109}{on\+\_\+result\+\_\+graph\+\_\+clicked()}}, \mbox{\hyperlink{resultswindow_8cpp_source_l00120}{on\+\_\+result\+\_\+table\+\_\+clicked()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, \mbox{\hyperlink{resultswindow_8h_source_l00028}{result\+\_\+item\+\_\+counter}}, \mbox{\hyperlink{resultitem_8h_source_l00030}{Result\+Item\+::\+Show\+As\+String()}}, \mbox{\hyperlink{resultitem_8h_source_l00081}{Result\+Item\+::\+Show\+Graph()}}, \mbox{\hyperlink{resultitem_8h_source_l00079}{Result\+Item\+::\+Show\+Table()}}, \mbox{\hyperlink{interface_8cpp_source_l00022}{Interface\+::\+To\+String()}}, and \mbox{\hyperlink{resultswindow_8h_source_l00026}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Main\+Window\+::\+Execute()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01189}{Main\+Window\+::on\+\_\+old\+\_\+result\+\_\+requested()}}.
+
+\Hypertarget{classResultsWindow_a1b80a7ddc30695b9be11e9067982f817}\label{classResultsWindow_a1b80a7ddc30695b9be11e9067982f817} 
+\index{ResultsWindow@{ResultsWindow}!AppendText@{AppendText}}
+\index{AppendText@{AppendText}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{AppendText()}{AppendText()}}
+{\footnotesize\ttfamily void Results\+Window\+::\+Append\+Text (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{text }\end{DoxyParamCaption})}
+
+\Hypertarget{classResultsWindow_ac4273b2478e0a48a82913f51f4f1a6c5}\label{classResultsWindow_ac4273b2478e0a48a82913f51f4f1a6c5} 
+\index{ResultsWindow@{ResultsWindow}!on\_result\_export\_clicked@{on\_result\_export\_clicked}}
+\index{on\_result\_export\_clicked@{on\_result\_export\_clicked}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{on\_result\_export\_clicked()}{on\_result\_export\_clicked()}}
+{\footnotesize\ttfamily void Results\+Window\+::on\+\_\+result\+\_\+export\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8cpp_source_l00134}{134}} of file \mbox{\hyperlink{resultswindow_8cpp_source}{resultswindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8h_source_l00027}{results}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Append\+Result()}}.
+
+\Hypertarget{classResultsWindow_a539ce1215cb3aa1e3ec6c808f8e8edd2}\label{classResultsWindow_a539ce1215cb3aa1e3ec6c808f8e8edd2} 
+\index{ResultsWindow@{ResultsWindow}!on\_result\_graph\_clicked@{on\_result\_graph\_clicked}}
+\index{on\_result\_graph\_clicked@{on\_result\_graph\_clicked}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{on\_result\_graph\_clicked()}{on\_result\_graph\_clicked()}}
+{\footnotesize\ttfamily void Results\+Window\+::on\+\_\+result\+\_\+graph\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8cpp_source_l00109}{109}} of file \mbox{\hyperlink{resultswindow_8cpp_source}{resultswindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8cpp_source_l00024}{General\+Chart\+::\+Plot()}}, and \mbox{\hyperlink{resultswindow_8h_source_l00027}{results}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Append\+Result()}}.
+
+\Hypertarget{classResultsWindow_add122bea33d77a678f56e3e74a89929a}\label{classResultsWindow_add122bea33d77a678f56e3e74a89929a} 
+\index{ResultsWindow@{ResultsWindow}!on\_result\_table\_clicked@{on\_result\_table\_clicked}}
+\index{on\_result\_table\_clicked@{on\_result\_table\_clicked}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{on\_result\_table\_clicked()}{on\_result\_table\_clicked()}}
+{\footnotesize\ttfamily void Results\+Window\+::on\+\_\+result\+\_\+table\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8cpp_source_l00120}{120}} of file \mbox{\hyperlink{resultswindow_8cpp_source}{resultswindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8h_source_l00027}{results}}, and \mbox{\hyperlink{resulttableviewer_8cpp_source_l00024}{Result\+Table\+Viewer\+::\+Set\+Table()}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Append\+Result()}}.
+
+\Hypertarget{classResultsWindow_a39f24f1e0e0db8c04e3e4067c04be7ac}\label{classResultsWindow_a39f24f1e0e0db8c04e3e4067c04be7ac} 
+\index{ResultsWindow@{ResultsWindow}!SetResults@{SetResults}}
+\index{SetResults@{SetResults}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{SetResults()}{SetResults()}}
+{\footnotesize\ttfamily void Results\+Window\+::\+Set\+Results (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classResults}{Results}} \texorpdfstring{$\ast$}{*}}]{res }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8h_source_l00023}{23}} of file \mbox{\hyperlink{resultswindow_8h_source}{resultswindow.\+h}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8h_source_l00027}{results}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Main\+Window\+::\+Execute()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01189}{Main\+Window\+::on\+\_\+old\+\_\+result\+\_\+requested()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4}\label{classResultsWindow_abb43a92dc422c1b6e147023756dfdbc4} 
+\index{ResultsWindow@{ResultsWindow}!result\_item\_counter@{result\_item\_counter}}
+\index{result\_item\_counter@{result\_item\_counter}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{result\_item\_counter}{result\_item\_counter}}
+{\footnotesize\ttfamily int Results\+Window\+::result\+\_\+item\+\_\+counter = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8h_source_l00028}{28}} of file \mbox{\hyperlink{resultswindow_8h_source}{resultswindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Append\+Result()}}.
+
+\Hypertarget{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd}\label{classResultsWindow_a01da2127d4dee1ad4a8a629770c708bd} 
+\index{ResultsWindow@{ResultsWindow}!results@{results}}
+\index{results@{results}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{results}{results}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResults}{Results}}\texorpdfstring{$\ast$}{*} Results\+Window\+::results = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8h_source_l00027}{27}} of file \mbox{\hyperlink{resultswindow_8h_source}{resultswindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00134}{on\+\_\+result\+\_\+export\+\_\+clicked()}}, \mbox{\hyperlink{resultswindow_8cpp_source_l00109}{on\+\_\+result\+\_\+graph\+\_\+clicked()}}, \mbox{\hyperlink{resultswindow_8cpp_source_l00120}{on\+\_\+result\+\_\+table\+\_\+clicked()}}, and \mbox{\hyperlink{resultswindow_8h_source_l00023}{Set\+Results()}}.
+
+\Hypertarget{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e}\label{classResultsWindow_a653b598b6278715ebf93a64dfb062e0e} 
+\index{ResultsWindow@{ResultsWindow}!ui@{ui}}
+\index{ui@{ui}!ResultsWindow@{ResultsWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily Ui\+::\+Results\+Window\texorpdfstring{$\ast$}{*} Results\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{resultswindow_8h_source_l00026}{26}} of file \mbox{\hyperlink{resultswindow_8h_source}{resultswindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00013}{Results\+Window()}}, \mbox{\hyperlink{resultswindow_8cpp_source_l00021}{\texorpdfstring{$\sim$}{\string~}\+Results\+Window()}}, and \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Append\+Result()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultswindow_8h}{resultswindow.\+h}}\item 
+\mbox{\hyperlink{resultswindow_8cpp}{resultswindow.\+cpp}}\end{DoxyCompactItemize}
