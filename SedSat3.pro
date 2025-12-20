@@ -33,7 +33,6 @@ SOURCES += \
     cmbvectorset.cpp \
     cmbvectorsetset.cpp \
     contribution.cpp \
-    customplotbar.cpp \
     dialogchooseexcelsheets.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
@@ -101,7 +100,6 @@ HEADERS += \
     cmbvectorset.h \
     cmbvectorsetset.h \
     contribution.h \
-    customplotbar.h \
     dialogchooseexcelsheets.h \
     elementstablemodel.h \
     elementtabledelegate.h \
@@ -189,7 +187,6 @@ macx {
 
 FORMS += \
     ProgressWindow.ui \
-    aboutdialog.ui \
     dialogchooseexcelsheets.ui \
     formelementinformation.ui \
     generalchart.ui \

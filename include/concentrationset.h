@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "distribution.h"
+#include "Distribution.h"
 #include "cmbtimeseries.h"
 #include "cmbtimeseriesset.h"
 

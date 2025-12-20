@@ -1,0 +1,9 @@
+<map id="RangeSet" name="RangeSet">
+<area shape="rect" id="Node000001" title=" " alt="" coords="93,588,255,853"/>
+<area shape="rect" id="Node000002" href="$classInterface.html" title=" " alt="" coords="5,173,167,539"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,551,145,587,139,588,131,553"/>
+<area shape="rect" id="Node000003" href="$structoptions.html" title=" " alt="" coords="25,5,147,111"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,111,89,157,83,157,83,111"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="191,323,333,389"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="254,403,209,589,203,587,248,402"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="OmSizeCorrectionTableModel" name="OmSizeCorrectionTableModel">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,925,212,1131"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,693,157,758"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,771,104,925,99,925,88,772"/>
+<area shape="rect" id="Node000003" href="$classMultipleLinearRegressionSet.html" title=" " alt="" coords="181,588,361,863"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="200,864,174,912,169,910,195,862"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="130,316,301,396"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="226,409,253,587,248,588,221,410"/>
+<area shape="rect" id="Node000005" href="$classInterface.html" title=" " alt="" coords="325,173,487,539"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="337,553,324,589,319,587,332,551"/>
+<area shape="rect" id="Node000006" href="$structoptions.html" title=" " alt="" coords="345,5,467,111"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="409,111,409,157,403,157,403,111"/>
+</map>
