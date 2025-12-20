@@ -18,9 +18,9 @@ public:
     CMBVector& operator=(const CVector &mp);
     CMBVector& operator=(const CVector_arma &mp);
 
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     QTableWidget *ToTable() override;
     bool writetofile(QFile* file) override;
     double valueAt(int i) const;

@@ -15,11 +15,11 @@ public:
     CMBMatrix(const CMBMatrix& mp);
     CMatrix toMatrix() const;
     CMBMatrix& operator=(const CMBMatrix &mp);
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     bool writetofile(QFile* file) override;
-    double valueAt(int i, int j);
+    double valueAt(int i, int j) const;
     string ColumnLabel(int i) {return columnlabels[i];}
     string RowLabel(int i) {return rowlabels[i];}
     void SetColumnLabel(int i, const string &label) {columnlabels[i]=label;}

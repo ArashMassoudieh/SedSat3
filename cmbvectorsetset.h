@@ -11,9 +11,9 @@ public:
     CMBVectorSetSet();
     CMBVectorSetSet(const CMBVectorSetSet& mp);
     CMBVectorSetSet& operator=(const CMBVectorSetSet &mp);
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     QTableWidget *ToTable() override;
     bool writetofile(QFile* file) override;
     string Label(const string &vectorset,const string &column, int j) const;

@@ -38,7 +38,7 @@ CMBTimeSeriesSet::CMBTimeSeriesSet(const TimeSeriesSet<double>& mp):TimeSeriesSe
     observed_value.resize(size());
 }
 
-QJsonObject CMBTimeSeriesSet::toJsonObject()
+QJsonObject CMBTimeSeriesSet::toJsonObject() const
 {
     QJsonObject out;
     QJsonArray labels;
@@ -102,7 +102,7 @@ bool CMBTimeSeriesSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 }
 
 
-string CMBTimeSeriesSet::ToString()
+string CMBTimeSeriesSet::ToString() const
 {
 
     string out;

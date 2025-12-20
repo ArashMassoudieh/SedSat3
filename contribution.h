@@ -15,9 +15,9 @@ public:
     Contribution();
     Contribution(const Contribution &rhs);
     Contribution& operator = (const Contribution &rhs);
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     bool writetofile(QFile*) override;
     bool Read(const QStringList &strlist) override;
     QTableWidget *ToTable() override;

@@ -19,12 +19,12 @@ Interface& Interface::operator=(const Interface &intf)
     return *this;
 }
 
-string Interface::ToString()
+string Interface::ToString() const
 {
     return "";
 }
 
-QJsonObject Interface::toJsonObject()
+QJsonObject Interface::toJsonObject() const
 {
     return QJsonObject();
 }

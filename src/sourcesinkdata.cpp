@@ -2577,12 +2577,12 @@ ResultItem SourceSinkData::GetEstimatedElementSigma()
 
 
 
-QJsonArray SourceSinkData::ToolsUsedToJsonObject()
+QJsonArray SourceSinkData::ToolsUsedToJsonObject() const
 {
     QJsonArray tools_used_json_array;
     
     // Serialize each tool name
-    for (list<string>::iterator it = tools_used_.begin(); it != tools_used_.end(); it++)
+    for (list<string>::const_iterator it = tools_used_.cbegin(); it != tools_used_.cend(); it++)
     {
         tools_used_json_array.append(QString::fromStdString(*it));
     }
@@ -2590,12 +2590,12 @@ QJsonArray SourceSinkData::ToolsUsedToJsonObject()
     return tools_used_json_array;
 }
 
-QJsonObject SourceSinkData::OptionsToJsonObject()
+QJsonObject SourceSinkData::OptionsToJsonObject() const
 {
     QJsonObject json_object;
     
     // Serialize each option name-value pair
-    for (QMap<QString, double>::iterator it = options_.begin(); it != options_.end(); it++)
+    for (QMap<QString, double>::const_iterator it = options_.cbegin(); it != options_.cend(); it++)
     {
         json_object[it.key()] = it.value();
     }
@@ -2670,12 +2670,12 @@ bool SourceSinkData::ReadOptionsfromJsonObject(const QJsonObject& jsonobject)
     return true;
 }
 
-QJsonObject SourceSinkData::ElementDataToJsonObject()
+QJsonObject SourceSinkData::ElementDataToJsonObject() const
 {
     QJsonObject json_object;
     
     // Serialize each sample group
-    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
+    for (map<string, Elemental_Profile_Set>::const_iterator it = cbegin(); it != cend(); it++)
     {
         json_object[QString::fromStdString(it->first)] = it->second.toJsonObject();
     }
@@ -2723,12 +2723,12 @@ bool SourceSinkData::ReadFromFile(QFile* fil)
     return true;
 }
 
-QJsonObject SourceSinkData::ElementInformationToJsonObject()
+QJsonObject SourceSinkData::ElementInformationToJsonObject() const
 {
     QJsonObject json_object;
 
     // Serialize metadata for each element
-    for (map<string, element_information>::iterator it = element_information_.begin(); it != element_information_.end(); it++)
+    for (map<string, element_information>::const_iterator it = element_information_.cbegin(); it != element_information_.cend(); it++)
     {
         QJsonObject elem_info_json_obj;
         elem_info_json_obj["Role"] = Role(it->second.Role);
@@ -2742,7 +2742,7 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject()
     return json_object;
 }
 
-QString SourceSinkData::Role(const element_information::role& role)
+QString SourceSinkData::Role(const element_information::role& role) const
 {
     // Convert enum to string representation
     if (role == element_information::role::do_not_include)
@@ -2760,7 +2760,7 @@ QString SourceSinkData::Role(const element_information::role& role)
     return "DoNotInclude";
 }
 
-element_information::role SourceSinkData::Role(const QString& role_string)
+element_information::role SourceSinkData::Role(const QString& role_string) const
 {
     // Convert string to enum representation
     if (role_string == "DoNotInclude")
@@ -5019,7 +5019,7 @@ bool SourceSinkData::SetTargetGroup(const string& targroup)
     return true;
 }
 
-string SourceSinkData::GetTargetGroup()
+string SourceSinkData::GetTargetGroup() const
 {
     return target_group_;
 }

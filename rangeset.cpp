@@ -16,10 +16,10 @@ RangeSet& RangeSet::operator = (const RangeSet &rhs)
     map<string,Range>::operator=(rhs);
     return *this;
 }
-QJsonObject RangeSet::toJsonObject()
+QJsonObject RangeSet::toJsonObject() const
 {
     QJsonObject out;
-    for (map<string,Range>::iterator it=begin(); it!=end(); it++)
+    for (map<string,Range>::const_iterator it=cbegin(); it!=cend(); it++)
     {
         out[QString::fromStdString(it->first)] = it->second.toJsonObject();
     }
@@ -35,10 +35,10 @@ bool RangeSet::ReadFromJsonObject(const QJsonObject &jsonobject)
     }
     return true;
 }
-string RangeSet::ToString()
+string RangeSet::ToString() const
 {
     string out;
-    for (map<string,Range>::iterator it=begin(); it!=end(); it++)
+    for (map<string,Range>::const_iterator it=cbegin(); it!=cend(); it++)
     {
         out.append(it->first + ":" + it->second.ToString());
     }

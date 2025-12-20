@@ -14,8 +14,8 @@ public:
     MultipleLinearRegression& operator=(const MultipleLinearRegression &mp);
     double Regress(const vector<vector<double>> &independent, const vector<double> dependent, const vector<string> &indep_vars_names);
     double SSE_reduced_model(const vector<vector<double>> &independent, const vector<double> dependent, int eliminated_var);
-    QJsonObject toJsonObject() override;
-    string ToString() override;
+    QJsonObject toJsonObject() const override;
+    string ToString() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     vector<double> CoefficientsIntercept() const;
     vector<string> &GetIndependentVariableNames() {

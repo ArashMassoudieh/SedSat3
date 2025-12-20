@@ -182,7 +182,7 @@ public:
      *
      * @return Name of the target group, or empty string if not set
      */
-    string GetTargetGroup();
+    string GetTargetGroup() const;
 
     // ========== Dataset Creation and Filtering ==========
 
@@ -1659,7 +1659,7 @@ public:
     *
     * @return QJsonObject containing all element information
     */
-    QJsonObject ElementInformationToJsonObject();
+    QJsonObject ElementInformationToJsonObject() const;
 
     /**
      * @brief Exports the list of analysis tools used to a JSON array
@@ -1669,7 +1669,7 @@ public:
      *
      * @return QJsonArray containing tool names as strings
      */
-    QJsonArray ToolsUsedToJsonObject();
+    QJsonArray ToolsUsedToJsonObject() const;
 
     /**
      * @brief Exports analysis options/settings to a JSON object
@@ -1679,7 +1679,7 @@ public:
      *
      * @return QJsonObject containing option names and values
      */
-    QJsonObject OptionsToJsonObject();
+    QJsonObject OptionsToJsonObject() const;
 
     /**
      * @brief Deserializes the list of analysis tools from a JSON array
@@ -1732,7 +1732,7 @@ public:
      *
      * @return QJsonObject containing all elemental profile sets
      */
-    QJsonObject ElementDataToJsonObject();
+    QJsonObject ElementDataToJsonObject() const;
 
     /**
      * @brief Writes elemental profile data to a text file
@@ -1853,7 +1853,7 @@ private:
      *
      * @note Returns "DoNotInclude" for unrecognized values
      */
-    QString Role(const element_information::role& role);
+    QString Role(const element_information::role& role) const;
 
     /**
      * @brief Converts string representation to element role enum
@@ -1873,7 +1873,7 @@ private:
      *
      * @note Returns do_not_include for unrecognized strings
      */
-    element_information::role Role(const QString& role_string);
+    element_information::role Role(const QString& role_string) const;
 
     // --- Parameter Management ---
 

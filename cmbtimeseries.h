@@ -10,9 +10,9 @@ public:
     CMBTimeSeries(int n);
     CMBTimeSeries(const CMBTimeSeries& mp);
     CMBTimeSeries& operator=(const CMBTimeSeries &mp);
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     bool writetofile(QFile*) override;
     QTableWidget *ToTable() override;
 

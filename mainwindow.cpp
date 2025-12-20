@@ -22,7 +22,6 @@
 #include "elementtabledelegate.h"
 #include "GA.h"
 #include "genericform.h"
-#include "QMessageBox"
 #include "ProgressWindow.h"
 #include "resultswindow.h"
 #include "aboutdialog.h"
@@ -49,394 +48,680 @@
 #endif
 
 
-#define version "1.1.2"
-#define date_compiled "8/14/2025"
+#define version "1.1.3"
+#define date_compiled "12/20/2025"
 
 using namespace QXlsx;
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    sinkSheet(-1),
+    plotter(nullptr),
+    columnViewModel(nullptr),
+    resultsViewModel(nullptr),
+    ResultscontextMenu(nullptr),
+    DeleteAction(nullptr),
+    selectedTreeItemType("None"),
+    treeItemChangedProgramatically(false),
+    conductor(nullptr)
 {
     ui->setupUi(this);
-    QIcon mainicon(qApp->applicationDirPath()+"/../../resources/Icons/CMBSource_Icon.png");
-    conductor = new Conductor(this);
-    setWindowIcon(mainicon);
-    connect(ui->actionImport_Elemental_Profile_from_Excel,SIGNAL(triggered()),this,SLOT(on_import_excel()));
-    connect(ui->actionRaw_Elemental_Profiles,SIGNAL(triggered()),this,SLOT(on_plot_raw_elemental_profiles()));
-    connect(ui->actionTestGraphs, SIGNAL(triggered()),this,SLOT(on_test_plot()));
-    ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
-    ui->frame->setVisible(false);
-    qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
-    //tools
-    qDebug()<<qApp->applicationDirPath()+"/../../resources/tools.json";
-    QJsonDocument tools = loadJson(qApp->applicationDirPath()+"/../../resources/tools.json");
-    formsstructure = loadJson(qApp->applicationDirPath()+"/../../resources/forms_structures.json");
-    QStandardItemModel *toolsmodel = ToQStandardItemModel(tools);
-    toolsmodel->setHorizontalHeaderLabels(QStringList()<<"Tools");
-    ui->treeViewtools->setModel(toolsmodel);
+
+    // Set window icon
+    QIcon mainIcon(qApp->applicationDirPath() + "/../../resources/Icons/CMBSource_Icon.png");
+    setWindowIcon(mainIcon);
+
+    // Initialize conductor
+    conductor = std::make_unique<Conductor>(this);
+    conductor->SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+
+    // Setup UI components
+    setupToolsView();
+    setupResultsView();
+    setupToolBar();
+    setupConnections();
+
+    // Initialize other components
+    centralform.reset(ui->textBrowser);
+
+    // Load recent files
+    readRecentFilesList();
+}
+
+void MainWindow::setupConnections()
+{
+    // Menu actions - File operations
+    connect(ui->actionImport_Elemental_Profile_from_Excel, &QAction::triggered,
+        this, &MainWindow::on_import_excel);
+    connect(ui->actionSave_Project, &QAction::triggered,
+        this, &MainWindow::onSaveProject);
+    connect(ui->actionSave_As, &QAction::triggered,
+        this, &MainWindow::onSaveProjectAs);
+    connect(ui->actionOpen_Project, &QAction::triggered,
+        this, &MainWindow::onOpenProject);
+
+    // Menu actions - Plotting
+    connect(ui->actionRaw_Elemental_Profiles, &QAction::triggered,
+        this, &MainWindow::on_plot_raw_elemental_profiles);
+
+    // Menu actions - Data operations
+    connect(ui->actionConstituent_Properties, &QAction::triggered,
+        this, &MainWindow::on_constituent_properties_triggered);
+    connect(ui->actionInclude_Exclude_Samples, &QAction::triggered,
+        this, &MainWindow::onIncludeExcludeSample);
+    connect(ui->actionOrganic_Matter_Size_correction, &QAction::triggered,
+        this, &MainWindow::onOMSizeCorrection);
+
+    // Menu actions - Help and settings
+    connect(ui->actionAbout, &QAction::triggered,
+        this, &MainWindow::onAboutTriggered);
+    connect(ui->actionOptions, &QAction::triggered,
+        this, &MainWindow::on_Options_triggered);
+
+    // Toolbar buttons
+    connect(ui->ShowTabular, &QPushButton::clicked,
+        this, &MainWindow::on_show_data_as_table);
+    connect(ui->btnZoom, &QPushButton::clicked,
+        this, &MainWindow::on_ZoomExtends);
+
+    // Tree views
+    connect(ui->treeViewtools, &QTreeView::doubleClicked,
+        this, &MainWindow::on_tool_executed);
+    connect(ui->TreeView_Results, &QTreeView::doubleClicked,
+        this, &MainWindow::on_old_result_requested);
+
+    // Results context menu
+    connect(ui->TreeView_Results, &QWidget::customContextMenuRequested,
+        this, &MainWindow::onCustomContextMenu);
+    connect(DeleteAction, &QAction::triggered,
+        this, &MainWindow::DeleteResults);
+}
+
+void MainWindow::setupToolsView()
+{
+    // Load tools configuration from JSON
+    QString toolsPath = qApp->applicationDirPath() + "/../../resources/tools.json";
+    qDebug() << "Loading tools from:" << toolsPath;
+
+    QJsonDocument tools = loadJson(toolsPath);
+    QStandardItemModel* toolsModel = ToQStandardItemModel(tools);
+    toolsModel->setHorizontalHeaderLabels(QStringList() << "Tools");
+
+    ui->treeViewtools->setModel(toolsModel);
     ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QIcon iconTable = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/table.png");
+    // Load forms structure
+    QString formsPath = qApp->applicationDirPath() + "/../../resources/forms_structures.json";
+    formsstructure = loadJson(formsPath);
+
+    // Configure tree view settings
+    ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
+    ui->frame->setVisible(false);
+}
+
+void MainWindow::setupResultsView()
+{
+    // Initialize results model
+    resultsViewModel.reset(new QStandardItemModel());
+    resultsViewModel->setHorizontalHeaderLabels(QStringList() << "Results");
+
+    ui->TreeView_Results->setModel(resultsViewModel.get());
+    ui->TreeView_Results->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // Setup context menu
+    ResultscontextMenu = new QMenu(ui->TreeView_Results);
+    DeleteAction = new QAction("Delete", ResultscontextMenu);
+    ResultscontextMenu->addAction(DeleteAction);
+}
+
+void MainWindow::setupToolBar()
+{
+    // Setup table view button
+    QIcon iconTable(qApp->applicationDirPath() + "/../../resources/Icons/table.png");
     ui->ShowTabular->setIcon(iconTable);
     ui->ShowTabular->setEnabled(false);
-    connect(ui->ShowTabular, SIGNAL(clicked()),this, SLOT(on_show_data_as_table()));
 
-
-    QIcon iconZoomEx = QIcon(qApp->applicationDirPath()+"/../../resources/Icons/Zoom_Extends.png");
-    ui->btnZoom->setIcon(iconZoomEx);
+    // Setup zoom button
+    QIcon iconZoom(qApp->applicationDirPath() + "/../../resources/Icons/Zoom_Extends.png");
+    ui->btnZoom->setIcon(iconZoom);
     ui->btnZoom->setEnabled(false);
-    connect(ui->btnZoom, SIGNAL(clicked()),this, SLOT(on_ZoomExtends()));
 
-    //results
-    resultsviewmodel = new QStandardItemModel();
-    ui->TreeView_Results->setModel(resultsviewmodel);
-    resultsviewmodel->setHorizontalHeaderLabels(QStringList()<<"Results");
-
-    DeleteAction = new QAction("Delete",ResultscontextMenu);
-    ResultscontextMenu = new QMenu(ui->TreeView_Results);
-    ResultscontextMenu->addAction(DeleteAction);
-    connect(DeleteAction, SIGNAL(triggered()), this, SLOT(DeleteResults()));
+    // Call existing toolbar population method
     Populate_General_ToolBar();
-
-    ui->TreeView_Results->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->TreeView_Results, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
-    connect(ui->actionTestLevenberg_Marquardt, SIGNAL(triggered()), this, SLOT(on_TestLevenberg_Marquardt()));
-    connect(ui->actionConstituent_Properties,SIGNAL(triggered()),this,SLOT(on_constituent_properties_triggered()));
-    connect(ui->actionInclude_Exclude_Samples,SIGNAL(triggered()),this,SLOT(onIncludeExcludeSample()));
-    connect(ui->actionOrganic_Matter_Size_correction,SIGNAL(triggered()),this,SLOT(onOMSizeCorrection()));
-    connect(ui->actionTestDialog,SIGNAL(triggered()),this,SLOT(on_test_dialog_triggered()));
-    connect(ui->treeViewtools,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_tool_executed(const QModelIndex&)));
-    connect(ui->TreeView_Results,SIGNAL(doubleClicked(const QModelIndex&)),this, SLOT(on_old_result_requested(const QModelIndex&)));
-    connect(ui->actionTestLikelihoods, SIGNAL(triggered()),this,SLOT(on_test_likelihood()));
-    connect(ui->actionTestProgressGraph, SIGNAL(triggered()), this, SLOT(on_test_progress_window()));
-    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAboutTriggered()));
-    connect(ui->actionSave_Project,SIGNAL(triggered()),this,SLOT(onSaveProject()));
-    connect(ui->actionSave_As,SIGNAL(triggered()),this,SLOT(onSaveProjectAs()));
-    connect(ui->actionOpen_Project,SIGNAL(triggered()),this,SLOT(onOpenProject()));
-    connect(ui->actionOptions,SIGNAL(triggered()),this,SLOT(on_Options_triggered()));
-
-    CGA<SourceSinkData> GA;
-    centralform.reset(ui->textBrowser);
-    conductor->SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
-    readRecentFilesList();
-
 }
 
 MainWindow::~MainWindow()
 {
+    // plotter is added to layout, so Qt handles it
+    // ui is deleted explicitly as always
     delete ui;
+}
+
+QString MainWindow::getSaveFilePath(bool promptUser)
+{
+    // Use existing project file name if available and not prompting
+    if (!promptUser && !ProjectFileName.isEmpty())
+    {
+        return ProjectFileName;
+    }
+
+    // Show save file dialog
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        tr("Save Project"),
+        ProjectFileName,  // Simplified - empty QString is fine
+        tr("CMB Source file (*.cmb);;All files (*.*)"),
+        nullptr,
+        QFileDialog::DontUseNativeDialog
+    );
+
+    // User cancelled
+    if (fileName.isEmpty())
+    {
+        return QString();
+    }
+
+    // Ensure .cmb extension
+    if (!fileName.toLower().endsWith(".cmb"))
+    {
+        fileName += ".cmb";
+    }
+
+    return fileName;
+}
+
+QJsonObject MainWindow::buildResultsJson() const
+{
+    QJsonObject resultsJson;
+
+    if (!resultsViewModel)
+    {
+        return resultsJson;
+    }
+
+    for (int i = 0; i < resultsViewModel->rowCount(); ++i)
+    {
+        QStandardItem* item = resultsViewModel->item(i, 0);
+        if (!item)
+        {
+            continue;
+        }
+
+        ResultSetItem* resultSetItem = dynamic_cast<ResultSetItem*>(item);
+        if (!resultSetItem || !resultSetItem->result)
+        {
+            qWarning() << "Invalid result item at row" << i;
+            continue;
+        }
+
+        resultsJson[resultSetItem->text()] = resultSetItem->result->toJsonObject();
+    }
+
+    return resultsJson;
+}
+
+QJsonObject MainWindow::buildProjectJson() const
+{
+    QJsonObject projectJson;
+
+    projectJson["Element Information"] = Data()->ElementInformationToJsonObject();
+    projectJson["Element Data"] = Data()->ElementDataToJsonObject();
+    projectJson["Target Group"] = QString::fromStdString(Data()->GetTargetGroup());
+    projectJson["Tools used"] = Data()->ToolsUsedToJsonObject();
+    projectJson["Options"] = Data()->OptionsToJsonObject();
+    projectJson["Results"] = buildResultsJson();
+
+    return projectJson;
+}
+
+bool MainWindow::saveProjectToFile(const QString& filePath)
+{
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(
+            this,
+            tr("Save Error"),
+            tr("Could not open file for writing:\n%1\n\nError: %2")
+            .arg(filePath)
+            .arg(file.errorString())
+        );
+        return false;
+    }
+
+    // Set working folder based on file location
+    QFileInfo fileInfo(file);
+    conductor->SetWorkingFolder(fileInfo.absolutePath());
+
+    // Build and write JSON
+    QJsonObject projectJson = buildProjectJson();
+    QJsonDocument jsonDocument(projectJson);
+
+    qint64 bytesWritten = file.write(jsonDocument.toJson());
+    file.close();
+
+    if (bytesWritten == -1)
+    {
+        QMessageBox::critical(
+            this,
+            tr("Save Error"),
+            tr("Error writing to file:\n%1\n\nError: %2")
+            .arg(filePath)
+            .arg(file.errorString())
+        );
+        return false;
+    }
+
+    // Update project state
+    ProjectFileName = filePath;
+    addToRecentFiles(filePath, true);
+
+    return true;
 }
 
 void MainWindow::onSaveProject()
 {
-    QString fileName;
-    if (!ProjectFileName.isEmpty())
-        fileName = ProjectFileName;
-    else
-    {   fileName = QFileDialog::getSaveFileName(this,
-            tr("Save"), "",
-            tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
-        if (fileName.isEmpty())
-            return;
+    QString filePath = getSaveFilePath(false);
 
-        if (!fileName.toLower().contains(".cmb"))
-            fileName += ".cmb";
-        addToRecentFiles(fileName,true);
-    }
-
-   
-    QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
-    QFileInfo fi(file);
-    conductor->SetWorkingFolder(fi.absolutePath());
-
-    QJsonObject outputjsonobject;
-    outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
-    outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
-    outputjsonobject["Target Group"] = QString::fromStdString(Data()->GetTargetGroup());
-    outputjsonobject["Tools used"] = Data()->ToolsUsedToJsonObject();
-    outputjsonobject["Options"] = Data()->OptionsToJsonObject();
-    QJsonObject resultsetjsonobject;
-    for (int i=0; i<resultsviewmodel->rowCount(); i++)
+    if (filePath.isEmpty())
     {
-        QModelIndex index = resultsviewmodel->index(i,0);
-        Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
-        resultsetjsonobject[static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text()] = resultset->toJsonObject();
+        return; // User cancelled
     }
-    outputjsonobject["Results"] = resultsetjsonobject;
-    QJsonDocument outputjsondocument(outputjsonobject);
 
-    file.write(outputjsondocument.toJson());
-    file.close();
-    
+    if (saveProjectToFile(filePath))
+    {
+        statusBar()->showMessage(tr("Project saved successfully"), 3000);
+    }
 }
 
 void MainWindow::onSaveProjectAs()
 {
-    QString fileName = QFileDialog::getSaveFileName(this,
-            tr("Save"), "",
-            tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+    QString filePath = getSaveFilePath(true);
 
-    if (fileName.isEmpty())
-        return;
-
-
-    if (!fileName.toLower().contains(".cmb"))
-        fileName+=".cmb";
-    addToRecentFiles(fileName,true);
-    ProjectFileName = fileName;
-    this->setWindowTitle("SetSat3:" + ProjectFileName);
-    QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
-    QFileInfo fi(file);
-    conductor->SetWorkingFolder(fi.absolutePath());
-
-    QJsonObject outputjsonobject;
-    outputjsonobject["Element Information"] = Data()->ElementInformationToJsonObject();
-    outputjsonobject["Element Data"] = Data()->ElementDataToJsonObject();
-    outputjsonobject["Target Group"] = QString::fromStdString(Data()->GetTargetGroup());
-    outputjsonobject["Tools used"] = Data()->ToolsUsedToJsonObject();
-    QJsonObject resultsetjsonobject;
-    for (int i=0; i<resultsviewmodel->rowCount(); i++)
+    if (filePath.isEmpty())
     {
-        QModelIndex index = resultsviewmodel->index(i,0);
-        Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
-        resultsetjsonobject[static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text()] = resultset->toJsonObject();
+        return; // User cancelled
     }
-    outputjsonobject["Results"] = resultsetjsonobject;
-    QJsonDocument outputjsondocument(outputjsonobject);
 
-    file.write(outputjsondocument.toJson());
-    file.close();
-
+    if (saveProjectToFile(filePath))
+    {
+        statusBar()->showMessage(tr("Project saved successfully"), 3000);
+    }
 }
-
 
 void MainWindow::onOpenProject()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Open"), "",
-            tr("CMB Source file (*.cmb);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+    QString fileName = QFileDialog::getOpenFileName(
+        this,
+        tr("Open Project"),
+        ProjectFileName,  // Start in same directory as current project
+        tr("CMB Source file (*.cmb);;All files (*.*)"),
+        nullptr,
+        QFileDialog::DontUseNativeDialog
+    );
 
     if (fileName.isEmpty())
+    {
         return;
-
+    }
 
     if (LoadModel(fileName))
-        addToRecentFiles(fileName,true);
+    {
+        addToRecentFiles(fileName, true);
+        statusBar()->showMessage(tr("Project opened successfully"), 3000);
+    }
 }
 
-bool MainWindow::LoadModel(const QString &fileName)
+bool MainWindow::LoadModel(const QString& fileName)
 {
-    ProjectFileName = fileName;
-
-    this->setWindowTitle("SetSat3:" + ProjectFileName);
     QFile file(fileName);
-    QFileInfo fi(file);
 
-    conductor->SetWorkingFolder(fi.absolutePath());
-    if (file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly))
     {
-        Data()->ReadFromFile(&file);
-        file.close();
-        QFile fileres(fileName);
-        fileres.open(QIODevice::ReadOnly);
-        QJsonObject jsondoc = QJsonDocument().fromJson(fileres.readAll()).object();
-        QJsonObject resultsjson = jsondoc["Results"].toObject();
-        resultsviewmodel->clear();
-        resultsviewmodel->setHorizontalHeaderLabels(QStringList()<<"Results");
-        for(QString key: resultsjson.keys() ) {
+        QMessageBox::critical(
+            this,
+            tr("Load Error"),
+            tr("Could not open file for reading:\n%1\n\nError: %2")
+            .arg(fileName)
+            .arg(file.errorString())
+        );
+        return false;
+    }
 
-            ResultSetItem *resultset = new ResultSetItem(key);
-            resultset->setToolTip(key);
-            resultset->result = new Results();
-            resultset->result->ReadFromJson(resultsjson.value(key).toObject());
-            for (map<string, ResultItem>::iterator it = resultset->result->begin(); it!=resultset->result->end(); it++)
+    // Read and parse JSON
+    QByteArray fileData = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(fileData);
+    if (jsonDoc.isNull())
+    {
+        QMessageBox::critical(
+            this,
+            tr("Load Error"),
+            tr("Invalid JSON format in file:\n%1")
+            .arg(fileName)
+        );
+        return false;
+    }
+
+    QJsonObject jsonObject = jsonDoc.object();
+
+    // Set working directory
+    QFileInfo fileInfo(fileName);
+    conductor->SetWorkingFolder(fileInfo.absolutePath());
+
+    // Load data
+    file.open(QIODevice::ReadOnly);
+    Data()->ReadFromFile(&file);
+    file.close();
+
+    // Load results
+    QJsonObject resultsJson = jsonObject["Results"].toObject();
+    resultsViewModel->clear();
+    resultsViewModel->setHorizontalHeaderLabels(QStringList() << "Results");
+
+    for (const QString& key : resultsJson.keys())
+    {
+        ResultSetItem* resultSet = new ResultSetItem(key);
+        resultSet->setToolTip(key);
+        resultSet->result = new Results();
+        resultSet->result->ReadFromJson(resultsJson.value(key).toObject());
+
+        // Process MLR results
+        for (auto it = resultSet->result->begin(); it != resultSet->result->end(); ++it)
+        {
+            if (it->second.Type() == result_type::mlrset)
             {
-                if (it->second.Type()==result_type::mlrset)
+                QStringList parts = QString::fromStdString(it->first).split("OM & Size MLR for ");
+                if (parts.size() > 1)
                 {
-                    string source = QString::fromStdString(it->first).split("OM & Size MLR for ")[1].toStdString();
-                    if (Data()->count(source)>0)
-                    {   Data()->at(source).SetRegressionModels(static_cast<MultipleLinearRegressionSet*>(it->second.Result()));
-                        Data()->SetOMandSizeConstituents(Data()->at(source).GetRegressionModels()->begin()->second.GetIndependentVariableNames());
+                    std::string source = parts[1].toStdString();
+                    if (Data()->count(source) > 0)
+                    {
+                        Data()->at(source).SetRegressionModels(
+                            static_cast<MultipleLinearRegressionSet*>(it->second.Result())
+                        );
+                        Data()->SetOMandSizeConstituents(
+                            Data()->at(source).GetRegressionModels()->begin()->second.GetIndependentVariableNames()
+                        );
                     }
                 }
             }
-            resultsviewmodel->appendRow(resultset);
-         }
+        }
 
-
-        file.close();
-        DataCollection.PopulateElementDistributions();
-        DataCollection.AssignAllDistributions();
-        InitiateTables();
-        return true;
+        resultsViewModel->appendRow(resultSet);
     }
-    return false;
+
+    // Finalize data
+    dataCollection.PopulateElementDistributions();
+    dataCollection.AssignAllDistributions();
+    InitiateTables();
+
+    // Update UI state
+    ProjectFileName = fileName;
+    setWindowTitle("SedSat3: " + ProjectFileName);
+
+    return true;
 }
 
 void MainWindow::on_import_excel()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Open"), "",
-            tr("Excel files (*.xlsx);; All files (*.*)"),nullptr,QFileDialog::DontUseNativeDialog);
+    QString fileName = QFileDialog::getOpenFileName(
+        this,
+        tr("Open Excel File"),
+        ProjectFileName.isEmpty() ? "" : QFileInfo(ProjectFileName).absolutePath(),
+        tr("Excel files (*.xlsx);;All files (*.*)"),
+        nullptr,
+        QFileDialog::DontUseNativeDialog
+    );
 
-    QFileInfo fi(fileName);
-    
-    conductor->SetWorkingFolder(fi.absolutePath());
-    if (fileName!="")
+    if (fileName.isEmpty())
     {
-        if (ReadExcel(fileName))
-        {
-            InitiateTables();
-            QMessageBox::information(this, "Exclude Elements", "To not include in analysis, double click, and uncheck box for the constituent", QMessageBox::Ok);
-            on_constituent_properties_triggered();
-        }
+        return; // User cancelled
     }
 
-}
+    QFileInfo fileInfo(fileName);
+    conductor->SetWorkingFolder(fileInfo.absolutePath());
 
+    if (ReadExcel(fileName))
+    {
+        InitiateTables();
+
+        QMessageBox::information(
+            this,
+            tr("Element Selection"),
+            tr("To exclude elements from analysis, double-click on an element and uncheck the box."),
+            QMessageBox::Ok
+        );
+
+        on_constituent_properties_triggered();
+    }
+}
 void MainWindow::InitiateTables()
 {
-    QList<QStandardItem*> modelitems;
-    QList<QStandardItem*> elementitems;
-    if (columnviewmodel)
-        delete columnviewmodel;
-    columnviewmodel = new QStandardItemModel();
-    columnviewmodel->setColumnCount(1);
-    modelitems.append(ToQStandardItem("Samples",&DataCollection));
-    columnviewmodel->appendRow(modelitems);
-    elementitems.append(ElementsToQStandardItem("Elements",&DataCollection));
-    columnviewmodel->appendRow(elementitems);
-    columnviewmodel->setHorizontalHeaderLabels(QStringList()<<"Data");
-    ui->treeView->setModel(columnviewmodel);
-    connect(ui->treeView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection &)), this, SLOT(on_tree_selectionChanged(QItemSelection)));
-    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(preparetreeviewMenu(const QPoint &)));
-}
+    // Create new model
+    columnViewModel = std::make_unique<QStandardItemModel>();
+    columnViewModel->setColumnCount(1);
+    columnViewModel->setHorizontalHeaderLabels(QStringList() << "Data");
 
+    // Add samples item
+    QList<QStandardItem*> modelItems;
+    modelItems.append(ToQStandardItem("Samples", &dataCollection));
+    columnViewModel->appendRow(modelItems);
+
+    // Add elements item
+    QList<QStandardItem*> elementItems;
+    elementItems.append(ElementsToQStandardItem("Elements", &dataCollection));
+    columnViewModel->appendRow(elementItems);
+
+    // Set model on tree view
+    ui->treeView->setModel(columnViewModel.get());
+    ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // Connect signals - modern Qt5 syntax
+    connect(ui->treeView->selectionModel(), &QItemSelectionModel::selectionChanged,
+        this, &MainWindow::on_tree_selectionChanged);
+    connect(ui->treeView, &QWidget::customContextMenuRequested,
+        this, &MainWindow::preparetreeviewMenu);
+}
 void MainWindow::on_plot_raw_elemental_profiles()
 {
     PlotWindow *plotwindow = new PlotWindow(this);
     plotwindow->show();
 }
 
-bool MainWindow::ReadExcel(const QString &filename)
+bool MainWindow::ReadExcel(const QString& filename)
 {
+    // Load Excel file
     Document xlsxR(filename);
-    QStringList sheetnamesall;
-    if ( xlsxR.load() ) // load excel file
+    if (!xlsxR.load())
     {
-        qDebug() << "[debug] success to load xlsx file.";
-        sheetnamesall = xlsxR.sheetNames();
-    }
-    DataCollection.Clear();
-    QStringList *sheetstobeincluded = nullptr;
-    std::unique_ptr<DialogChooseExcelSheets> chooseExcelSheetsDlg(new DialogChooseExcelSheets(this,&sheetstobeincluded));
-
-    for (int i=0; i<sheetnamesall.count(); i++)
-    {
-        chooseExcelSheetsDlg->AddItem(sheetnamesall[i]);
-        qDebug() << sheetnamesall[i];
+        QMessageBox::critical(
+            this,
+            tr("Excel Load Error"),
+            tr("Failed to load Excel file:\n%1").arg(filename)
+        );
+        return false;
     }
 
-    chooseExcelSheetsDlg->exec();
-    QStringList sheetnames;
-    if (!sheetstobeincluded) return false;
-    for (int i=0; i<sheetnamesall.count(); i++)
+    qDebug() << "[debug] Successfully loaded xlsx file.";
+    QStringList allSheetNames = xlsxR.sheetNames();
+
+    // Clear existing data
+    dataCollection.Clear();
+
+    // Let user select sheets to import
+    QStringList* sheetsToInclude = nullptr;
+    auto chooseSheetsDlg = std::make_unique<DialogChooseExcelSheets>(this, &sheetsToInclude);
+
+    for (const QString& sheetName : allSheetNames)
     {
-        if (sheetstobeincluded->contains(sheetnamesall[i]))
+        chooseSheetsDlg->AddItem(sheetName);
+        qDebug() << sheetName;
+    }
+
+    chooseSheetsDlg->exec();
+
+    if (!sheetsToInclude)
+    {
+        return false; // User cancelled
+    }
+
+    // Filter selected sheets
+    QStringList selectedSheets;
+    for (const QString& sheetName : allSheetNames)
+    {
+        if (sheetsToInclude->contains(sheetName))
         {
-            sheetnames<<sheetnamesall[i];
+            selectedSheets << sheetName;
         }
     }
-    if (sheetstobeincluded)
-        delete sheetstobeincluded;
-    std::unique_ptr<IndicateSheetsDialog> indicatesheetdialog(new IndicateSheetsDialog(this));
-    indicatesheetdialog->Populate_Table(sheetnames);
-    indicatesheetdialog->exec();
-    indicatesheetdialog->close();
-    qDebug()<<"Sink Sheet is: " << Sink_Sheet;
+    delete sheetsToInclude;
 
-    QList<QStringList> element_names;
-    for (int sheetnumber=0; sheetnumber<sheetnames.count(); sheetnumber++)
+    if (selectedSheets.isEmpty())
     {
-        xlsxR.selectSheet(sheetnames[sheetnumber]);
-        QStringList elem_names;
-        QString elem="none";
+        return false; // No sheets selected
+    }
+
+    // Let user indicate which sheet is the sink
+    auto indicateSheetDlg = std::make_unique<IndicateSheetsDialog>(this);
+    indicateSheetDlg->Populate_Table(selectedSheets);
+    indicateSheetDlg->exec();
+
+    qDebug() << "Sink Sheet is:" << sinkSheet;
+
+    // Validate element names are consistent across all sheets
+    QList<QStringList> elementNamesBySheet;
+
+    for (int sheetIdx = 0; sheetIdx < selectedSheets.count(); ++sheetIdx)
+    {
+        xlsxR.selectSheet(selectedSheets[sheetIdx]);
+        QStringList elementNames;
+
+        // Read element names from row 1, starting at column 2
         int col = 2;
-        while (elem!="" && xlsxR.cellAt(1,col))
+        while (true)
         {
-            elem = xlsxR.cellAt(1,col)->readValue().toString().trimmed();
-            if (elem!="")
-                elem_names.append(elem);
-            qDebug()<<elem;
+            auto cell = xlsxR.cellAt(1, col);  // Returns shared_ptr
+            if (!cell)
+                break;
+
+            QString elemName = cell->readValue().toString().trimmed();
+            if (elemName.isEmpty())
+                break;
+
+            elementNames.append(elemName);
+            qDebug() << elemName;
             col++;
         }
-        if (sheetnumber>0)
-        {   if (elem_names!=element_names.last())
-            {
-                QMessageBox::warning(this, "CMBSource", tr("Element names and their order in all sheets must be identical\n"), QMessageBox::Ok);
-                WriteMessageOnScreen("Name of elements in sheet '" + sheetnames[sheetnumber-1] + "' and '" + sheetnames[sheetnumber] + "' are different",Qt::red);
-                return false;
-            }
-        }
-        element_names.append(elem_names);
 
+        // Verify element names match across sheets
+        if (sheetIdx > 0 && elementNames != elementNamesBySheet.last())
+        {
+            QMessageBox::warning(
+                this,
+                tr("Element Mismatch"),
+                tr("Element names and their order must be identical in all sheets.\n\n"
+                    "Mismatch found between:\n  '%1'\n  '%2'")
+                .arg(selectedSheets[sheetIdx - 1])
+                .arg(selectedSheets[sheetIdx])
+            );
+
+            WriteMessageOnScreen(
+                QString("Element mismatch between sheets '%1' and '%2'")
+                .arg(selectedSheets[sheetIdx - 1])
+                .arg(selectedSheets[sheetIdx]),
+                Qt::red
+            );
+            return false;
+        }
+
+        elementNamesBySheet.append(elementNames);
     }
 
-    for (int sheetnumber=0; sheetnumber<sheetnames.count(); sheetnumber++)
+    // Read sample data from each sheet
+    for (int sheetIdx = 0; sheetIdx < selectedSheets.count(); ++sheetIdx)
     {
-        xlsxR.selectSheet(sheetnames[sheetnumber]);
-        int row=2;
-        Elemental_Profile_Set *elemental_profile_set = nullptr;
-        if (sheetnumber==Sink_Sheet)
-        {
-            elemental_profile_set = DataCollection.AppendSampleSet(sheetnames[sheetnumber].toStdString());
-        }
-        else
-        {
-            elemental_profile_set = DataCollection.AppendSampleSet(sheetnames[sheetnumber].toStdString());
-        }
+        xlsxR.selectSheet(selectedSheets[sheetIdx]);
 
-        while (xlsxR.cellAt(row,1) && xlsxR.cellAt(row,1)->readValue().toString()!="")
+        Elemental_Profile_Set* profileSet = dataCollection.AppendSampleSet(
+            selectedSheets[sheetIdx].toStdString()
+        );
+
+        // Read samples starting from row 2
+        int row = 2;
+        while (true)
         {
-            QString sample_name=xlsxR.cellAt(row,1)->readValue().toString();
-            Elemental_Profile elemental_profile;
-            for (int col=0; col<element_names[0].count(); col++)
+            auto sampleCell = xlsxR.cellAt(row, 1);
+            if (!sampleCell || sampleCell->readValue().toString().isEmpty())
+                break;
+
+            QString sampleName = sampleCell->readValue().toString();
+            Elemental_Profile elementalProfile;
+
+            // Read element values for this sample
+            for (int col = 0; col < elementNamesBySheet[0].count(); ++col)
             {
-                bool isnumber = false; 
-                
-                if (!xlsxR.cellAt(row, col + 2))
+                auto dataCell = xlsxR.cellAt(row, col + 2);
+
+                if (!dataCell)
                 {
-                    QMessageBox::warning(this, "Cell is empty!", "In sheet " + sheetnames[sheetnumber] + ", row " + QString::number(row) + " and column " + QString::number(col+2) + " the cell is empty!", QMessageBox::Ok);
-                    DataCollection.Clear();
+                    QMessageBox::warning(
+                        this,
+                        tr("Empty Cell"),
+                        tr("Empty cell found in:\n"
+                            "Sheet: %1\n"
+                            "Row: %2\n"
+                            "Column: %3")
+                        .arg(selectedSheets[sheetIdx])
+                        .arg(row)
+                        .arg(col + 2)
+                    );
+                    dataCollection.Clear();
                     return false;
                 }
-                else
-                    qDebug()<<xlsxR.cellAt(row, col + 2)->readValue().toString().toDouble(&isnumber);
-                if (isnumber)
-                {
-                    double value = xlsxR.cellAt(row, col + 2)->readValue().toDouble();
-                    elemental_profile.AppendElement(element_names[0][col].toStdString(), value);
-                }
-                else
-                {
-                    QMessageBox::warning(this, "Non numerical values identified!", "In sheet " + sheetnames[sheetnumber] + ", row " + QString::number(row) + " and column " + QString::number(col+2) + " the cell content is '" + xlsxR.cellAt(row, col + 2)->readValue().toString() + "'", QMessageBox::Ok);
-                    DataCollection.Clear();
-                    return false; 
-                }
-            }
-            row++;
-            elemental_profile_set->AppendProfile(sample_name.toStdString(),elemental_profile);
-        }
 
+                bool isNumber = false;
+                double value = dataCell->readValue().toDouble(&isNumber);
+
+                if (!isNumber)
+                {
+                    QMessageBox::warning(
+                        this,
+                        tr("Invalid Data"),
+                        tr("Non-numerical value found:\n"
+                            "Sheet: %1\n"
+                            "Row: %2\n"
+                            "Column: %3\n"
+                            "Value: '%4'")
+                        .arg(selectedSheets[sheetIdx])
+                        .arg(row)
+                        .arg(col + 2)
+                        .arg(dataCell->readValue().toString())
+                    );
+                    dataCollection.Clear();
+                    return false;
+                }
+
+                elementalProfile.AppendElement(
+                    elementNamesBySheet[0][col].toStdString(),
+                    value
+                );
+            }
+
+            profileSet->AppendProfile(sampleName.toStdString(), elementalProfile);
+            row++;
+        }
     }
-    DataCollection.PopulateElementInformation();
-    DataCollection.PopulateElementDistributions();
-    DataCollection.AssignAllDistributions();
-    qDebug()<<"Reading element information done!";
+
+    // Finalize data collection
+    dataCollection.PopulateElementInformation();
+    dataCollection.PopulateElementDistributions();
+    dataCollection.AssignAllDistributions();
+
+    qDebug() << "Reading element information done!";
 
     return true;
 }
@@ -447,115 +732,106 @@ void MainWindow::WriteMessageOnScreen(const QString &text, QColor color)
     ui->textBrowser->append(text);
 }
 
-void MainWindow::on_test_plot()
+QStandardItem* MainWindow::ToQStandardItem(const QString& key, const SourceSinkData* srcsinkdata)
 {
-    plotter = new GeneralPlotter(this);
-    map<string,vector<double>> _data;
+    QStandardItem* rootItem = new QStandardItem(key);
+    rootItem->setData("RootItem", Qt::UserRole);
 
-    for (int i=0; i<10; i++)
+    vector<string> groupNames = dataCollection.GetGroupNames();
+
+    for (size_t i = 0; i < groupNames.size(); ++i)
     {
-        vector<double> y_val(i+1);
-        for (unsigned int j=0; j<y_val.size(); j++)
-        {
-            y_val[j]=i+0.2*j;
-        }
-        _data["case " + aquiutils::numbertostring(i)] = y_val;
-    }
-    plotter->AddNoneUniformScatter(_data,1);
-    ui->verticalLayout_3->addWidget(plotter);
-    ui->frame->setVisible(true);
-    ui->frame->setEnabled(true);
+        QStandardItem* groupItem = new QStandardItem(QString::fromStdString(groupNames[i]));
+        groupItem->setData("Group", Qt::UserRole);
+        groupItem->setData(QString::fromStdString(groupNames[i]), groupRole);
 
+        Elemental_Profile_Set* sampleSet = dataCollection.GetSampleSet(groupNames[i]);
+        if (sampleSet)
+        {
+            for (auto it = sampleSet->begin(); it != sampleSet->end(); ++it)
+            {
+                QStandardItem* sampleItem = new QStandardItem(QString::fromStdString(it->first));
+                sampleItem->setData("Sample", Qt::UserRole);
+                sampleItem->setData(QString::fromStdString(groupNames[i]), groupRole);
+                sampleItem->setData(QString::fromStdString(it->first), sampleRole);
+
+                groupItem->appendRow(sampleItem);
+            }
+        }
+
+        rootItem->appendRow(groupItem);
+    }
+
+    return rootItem;
+}
+
+QStandardItem* MainWindow::ElementsToQStandardItem(const QString& key, const SourceSinkData* srcsinkdata)
+{
+    QStandardItem* rootItem = new QStandardItem(key);
+    rootItem->setData("RootItem", Qt::UserRole);
+
+    vector<string> groupNames = dataCollection.GetGroupNames();
+    vector<string> elementNames = dataCollection.GetElementNames();
+
+    for (size_t elemIdx = 0; elemIdx < elementNames.size(); ++elemIdx)
+    {
+        QStandardItem* elementItem = new QStandardItem(QString::fromStdString(elementNames[elemIdx]));
+        elementItem->setData("Element", Qt::UserRole);
+        elementItem->setData(QString::fromStdString(elementNames[elemIdx]), elementRole);
+
+        for (size_t groupIdx = 0; groupIdx < groupNames.size(); ++groupIdx)
+        {
+            QStandardItem* groupItem = new QStandardItem(QString::fromStdString(groupNames[groupIdx]));
+            groupItem->setData("GroupInElements", Qt::UserRole);
+            groupItem->setData(QString::fromStdString(elementNames[elemIdx]), elementRole);
+            groupItem->setData(QString::fromStdString(groupNames[groupIdx]), groupRole);
+
+            elementItem->appendRow(groupItem);
+        }
+
+        rootItem->appendRow(elementItem);
+    }
+
+    return rootItem;
 }
 
 QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsinkdata)
 {
-    if (columnviewmodel)
-        delete columnviewmodel;
-    columnviewmodel = new QStandardItemModel();
+    columnViewModel = std::make_unique<QStandardItemModel>();
+    columnViewModel->setColumnCount(1);
+    columnViewModel->setHorizontalHeaderLabels(QStringList() << "Groups");
 
-    vector<string> group_names = DataCollection.GetGroupNames();
-    for (int i=0; i<group_names.size(); i++)
+    vector<string> groupNames = dataCollection.GetGroupNames();
+
+    for (size_t i = 0; i < groupNames.size(); ++i)
     {
-        /* Create the phone groups as QStandardItems */
-        QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
-        group->setData("Parent",Qt::UserRole);
-        /* Append to each group 5 person as children */
-        for (map<string,Elemental_Profile>::iterator it= DataCollection.GetSampleSet(group_names[i])->begin();it!=DataCollection.GetSampleSet(group_names[i])->end(); it++)
+        QStandardItem* groupItem = new QStandardItem(QString::fromStdString(groupNames[i]));
+        groupItem->setData("Parent", Qt::UserRole);
+
+        Elemental_Profile_Set* sampleSet = dataCollection.GetSampleSet(groupNames[i]);
+        if (sampleSet)
         {
-            QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
-            child->setData(QString::fromStdString(it->first), elementRole );
-            child->setData(QString::fromStdString(group_names[i]), groupRole );
-            child->setData("Child",Qt::UserRole);
-            group->appendRow(child);
+            for (auto it = sampleSet->begin(); it != sampleSet->end(); ++it)
+            {
+                QStandardItem* sampleItem = new QStandardItem(QString::fromStdString(it->first));
+                sampleItem->setData(QString::fromStdString(it->first), elementRole);
+                sampleItem->setData(QString::fromStdString(groupNames[i]), groupRole);
+                sampleItem->setData("Child", Qt::UserRole);
+
+                groupItem->appendRow(sampleItem);
+            }
         }
-        /* append group as new row to the model. model takes the ownership of the item */
-        columnviewmodel->appendRow(group);
+
+        columnViewModel->appendRow(groupItem);
     }
-    columnviewmodel->setColumnCount(1);
-    QStringList columnTitles = QStringList() << "Groups";
-    for (int i = 0; i < columnTitles.count(); ++i)
-        columnviewmodel->setHeaderData(i, Qt::Horizontal, columnTitles.at(i), Qt::DisplayRole);
-    return columnviewmodel;
+
+    return columnViewModel.get();
 }
-
-QStandardItem* MainWindow::ToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata)
-{
-
-    QStandardItem *columnviewitem = new QStandardItem(key);
-    columnviewitem->setData("RootItem",Qt::UserRole);
-    vector<string> group_names = DataCollection.GetGroupNames();
-    for (int i=0; i<group_names.size(); i++)
-    {
-
-        QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[i]));
-        group->setData("Group",Qt::UserRole);
-        group->setData(QString::fromStdString(group_names[i]),groupRole);
-        for (map<string,Elemental_Profile>::iterator it= DataCollection.GetSampleSet(group_names[i])->begin();it!=DataCollection.GetSampleSet(group_names[i])->end(); it++)
-        {
-            QStandardItem *child = new QStandardItem(QString::fromStdString(it->first));
-            child->setData("Sample",Qt::UserRole);
-            child->setData(QString::fromStdString(group_names[i]),groupRole);
-            child->setData(QString::fromStdString(it->first),sampleRole);
-
-            group->appendRow(child);
-        }
-        /* append group as new row to the model. model takes the ownership of the item */
-        columnviewitem->appendRow(group);
-    }
-    return columnviewitem;
-}
-
-QStandardItem* MainWindow::ElementsToQStandardItem(const QString &key, const SourceSinkData* srcsinkdata)
-{
-    QStandardItem *columnviewitem = new QStandardItem(key);
-    columnviewitem->setData("RootItem",Qt::UserRole);
-    vector<string> group_names = DataCollection.GetGroupNames();
-    vector<string> element_names = DataCollection.GetElementNames();
-    for (unsigned int elem_counter=0; elem_counter<element_names.size(); elem_counter++)
-    {   QStandardItem *element_item=new QStandardItem(QString::fromStdString(element_names[elem_counter]));
-        element_item->setData("Element",Qt::UserRole);
-        element_item->setData(QString::fromStdString(element_names[elem_counter]),elementRole);
-        for (unsigned int group_counter=0; group_counter<group_names.size(); group_counter++)
-        {
-            QStandardItem *group = new QStandardItem(QString::fromStdString(group_names[group_counter]));
-            group->setData("GroupInElements",Qt::UserRole);
-            group->setData(QString::fromStdString(element_names[elem_counter]),elementRole);
-            group->setData(QString::fromStdString(group_names[group_counter]),groupRole);
-
-            element_item->appendRow(group);
-        }
-        columnviewitem->appendRow(element_item);
-    }
-    return columnviewitem;
-}
-
-
 void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 {
     qDebug()<<"Selection changed "<<changed;
     ui->ShowTabular->setEnabled(false);
-    if (treeitemchangedprogramatically) return;
+    if (treeItemChangedProgramatically) return;
     if (plotter==nullptr)
     {
         plotter = new GeneralPlotter(this);
@@ -570,13 +846,13 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
     {   QModelIndex changed_index = changed.at(0).indexes()[0];
         if (indexes.size()>0)
         {   if (indexes.contains(changed.at(0).indexes()[0]))
-                if (changed.at(0).indexes()[0].data(Qt::UserRole)!=SelectedTreeItemType && SelectedTreeItemType!="None")
+                if (changed.at(0).indexes()[0].data(Qt::UserRole)!=selectedTreeItemType && selectedTreeItemType!="None")
                 {
-                    SelectedTreeItemType = changed.at(0).indexes()[0].data(Qt::UserRole).toString();
-                    treeitemchangedprogramatically=true;
+                    selectedTreeItemType = changed.at(0).indexes()[0].data(Qt::UserRole).toString();
+                    treeItemChangedProgramatically=true;
                     ui->treeView->selectionModel()->clearSelection();
                     ui->treeView->selectionModel()->select(changed_index,QItemSelectionModel::Select | QItemSelectionModel::Rows);
-                    treeitemchangedprogramatically=false;
+                    treeItemChangedProgramatically=false;
                     indexes = ui->treeView->selectionModel()->selectedIndexes();
                 }
         }
@@ -587,7 +863,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
         if (indexes[i].data(Qt::UserRole).toString()=="Group")
         {
             QString Group_Name_Selected = indexes[i].data().toString();
-            vector<string> Sample_Names = DataCollection.GetSampleSet(Group_Name_Selected.toStdString())->GetSampleNames();
+            vector<string> Sample_Names = dataCollection.GetSampleSet(Group_Name_Selected.toStdString())->GetSampleNames();
             for (int sample_counter=0; sample_counter<Sample_Names.size(); sample_counter++)
             {
                 vector<string> item;
@@ -608,7 +884,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
             qDebug()<<"Element selected!";
             PlotType = plottype::element_scatters;
             QString Element_Name_Selected = indexes[i].data().toString();
-            map<string,vector<double>> extracted_data = DataCollection.ExtractElementDataByGroup(Element_Name_Selected.toStdString());
+            map<string,vector<double>> extracted_data = dataCollection.ExtractElementDataByGroup(Element_Name_Selected.toStdString());
             qDebug()<<"Data extracted!";
             if (plotter==nullptr)
             {
@@ -624,9 +900,10 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 
 
     if (samples_selected.size()>0 && PlotType==plottype::elemental_profiles)
-    {   profiles_data extracted_data = DataCollection.ExtractConcentrationData(samples_selected);
-        Elemental_Profile_Set *selected_elements_profiles = new Elemental_Profile_Set(DataCollection.ExtractSamplesAsProfileSet(samples_selected));
-        plotted_data = selected_elements_profiles;
+    {   profiles_data extracted_data = dataCollection.ExtractConcentrationData(samples_selected);
+    plottedData = std::make_unique<Elemental_Profile_Set>(
+        dataCollection.ExtractSamplesAsProfileSet(samples_selected)  
+    );
         ui->ShowTabular->setEnabled(true);
         plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
         plotter->SetYAxisScaleType(AxisScale::log);
@@ -634,7 +911,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
     ui->frame->setVisible(true);
     ui->frame->setEnabled(true);
     ui->btnZoom->setEnabled(true);
-    SelectedTreeItemType = TreeQStringSelectedType();
+    selectedTreeItemType = TreeQStringSelectedType();
 }
 
 QJsonDocument MainWindow::loadJson(const QString &fileName) {
@@ -649,392 +926,532 @@ void MainWindow::saveJson(const QJsonDocument &document, const QString &fileName
     jsonFile.write(document.toJson());
 }
 
-QStandardItem* MainWindow::ToQStandardItem(const QString &key, const QJsonObject &json)
+QStandardItem* MainWindow::ToQStandardItem(const QString& key, const QJsonObject& json)
 {
-    QStandardItem *standarditem = new QStandardItem(key);
-    for (int i=0; i<json.keys().size(); i++)
+    QStandardItem* standardItem = new QStandardItem(key);
+
+    QStringList keys = json.keys();
+    for (const QString& jsonKey : keys)
     {
-        if (json[json.keys()[i]].isObject())
+        if (json[jsonKey].isObject())
         {
-            standarditem->appendRow(ToQStandardItem(json.keys()[i],json[json.keys()[i]].toObject()));
-            standarditem->setToolTip(json.keys()[i]);
-            //standarditem->setData(QColor("blue"),Qt::ItemDataRole::ForegroundRole);
+            // Recursively create items for nested objects
+            standardItem->appendRow(ToQStandardItem(jsonKey, json[jsonKey].toObject()));
+            standardItem->setToolTip(jsonKey);
         }
         else
         {
-            QStandardItem *subitem = new ToolBoxItem(Data(),json.keys()[i]);
-            subitem->setData(json.value(json.keys()[i]).toString(),Qt::UserRole);
-            subitem->setData(json.value(json.keys()[i]).toString(),Qt::UserRole+1);
-            subitem->setToolTip(json.keys()[i]);
-            standarditem->appendRow(subitem);
-            //subitem->setData(QColor("green"),Qt::ItemDataRole::ForegroundRole);
+            // Create leaf items for values
+            QStandardItem* subItem = new ToolBoxItem(Data(), jsonKey);
+            subItem->setData(json.value(jsonKey).toString(), Qt::UserRole);
+            subItem->setData(json.value(jsonKey).toString(), Qt::UserRole + 1);
+            subItem->setToolTip(jsonKey);
+            standardItem->appendRow(subItem);
         }
     }
-    return standarditem;
+
+    return standardItem;
 }
 
-QStandardItemModel* MainWindow::ToQStandardItemModel(const QJsonDocument &jsondocument)
+QStandardItemModel* MainWindow::ToQStandardItemModel(const QJsonDocument& jsonDocument)
 {
-    QStandardItemModel *standarditemmodel = new QStandardItemModel();
-    QJsonObject jsonobject = jsondocument.object();
-    QStandardItem *standarditem = ToQStandardItem("Tools",jsonobject);
+    QStandardItemModel* standardItemModel = new QStandardItemModel();
+    QJsonObject jsonObject = jsonDocument.object();
+    QStandardItem* rootItem = ToQStandardItem("Tools", jsonObject);
 
-    standarditemmodel->appendRow(standarditem);
-    return standarditemmodel;
+    standardItemModel->appendRow(rootItem);
+
+    return standardItemModel;
 }
 
 QString MainWindow::TreeQStringSelectedType()
 {
-    if (ui->treeView->selectionModel()->selectedIndexes().size()>0)
-        return ui->treeView->selectionModel()->selectedIndexes()[0].data(Qt::UserRole).toString();
-    else
-        return "none";
-}
+    QModelIndexList selectedIndexes = ui->treeView->selectionModel()->selectedIndexes();
 
-void MainWindow::preparetreeviewMenu(const QPoint &pos)
-{
-    menu.reset(new QMenu(this));
-    QTreeView *tree = ui->treeView;
-
-    QModelIndex index = tree->currentIndex();
-    qDebug()<<index.data(elementRole);
-    qDebug()<<index.data(groupRole);
-    qDebug()<<index.data(sampleRole);
-    if (!index.data(elementRole).toString().isEmpty())
-    {   QAction* showdistributions = menu->addAction("Show fitted distributions");
-        QStringList RoleData;
-
-        RoleData<< "Element=" + index.data(elementRole).toString();
-        RoleData<< "Group=" + index.data(groupRole).toString();
-        RoleData<<"Sample=" +  index.data(sampleRole).toString();
-        RoleData<<"Action=SFD";
-        showdistributions->setData(RoleData);
-        connect(showdistributions, SIGNAL(triggered()), this, SLOT(showdistributionsforelements()));
+    if (!selectedIndexes.isEmpty())
+    {
+        return selectedIndexes[0].data(Qt::UserRole).toString();
     }
 
+    return "none";
+}
 
+void MainWindow::preparetreeviewMenu(const QPoint& pos)
+{
+    QTreeView* tree = ui->treeView;
+    QModelIndex index = tree->currentIndex();
+
+    if (!index.isValid())
+    {
+        return;
+    }
+
+    qDebug() << index.data(elementRole);
+    qDebug() << index.data(groupRole);
+    qDebug() << index.data(sampleRole);
+
+    menu = std::make_unique<QMenu>(this);
+
+    if (!index.data(elementRole).toString().isEmpty())
+    {
+        QAction* showDistributions = menu->addAction("Show fitted distributions");
+
+        QStringList roleData;
+        roleData << "Element=" + index.data(elementRole).toString();
+        roleData << "Group=" + index.data(groupRole).toString();
+        roleData << "Sample=" + index.data(sampleRole).toString();
+        roleData << "Action=SFD";
+
+        showDistributions->setData(roleData);
+
+        connect(showDistributions, &QAction::triggered,
+            this, &MainWindow::showdistributionsforelements);
+    }
 
     if (menu)
-        menu->exec( tree->mapToGlobal(pos) );
-    return;
-
+    {
+        menu->exec(tree->mapToGlobal(pos));
+    }
 }
 
 void MainWindow::showdistributionsforelements()
 {
-    QAction* act = qobject_cast<QAction*>(sender());
-    QStringList keysStringList = act->data().toStringList();
-    QMap<QString,QString> keys;
-    for (unsigned int i=0; i<keysStringList.count(); i++)
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (!action)
     {
-        keys[keysStringList[i].split("=")[0]] = keysStringList[i].split("=")[1];
+        return;
     }
 
-    QString Element = keys["Element"];
-    QString Group = keys["Group"];
-    QString Sample = keys["Sample"];
-    QString Action = keys["Action"];
+    QStringList keysStringList = action->data().toStringList();
+    QMap<QString, QString> keys;
 
-
-    if (Action == "SFD")
-    {   PlotWindow *plotwindow = new PlotWindow(this);
-        if (Group=="")
+    for (const QString& keyValue : keysStringList)
+    {
+        QStringList parts = keyValue.split("=");
+        if (parts.size() == 2)
         {
-            TimeSeries<double> elem_dist = DataCollection.GetFittedDistribution(Element.toStdString())->EvaluateAsTimeSeries();
-            plotwindow->Plotter()->AddTimeSeries("All samples", elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-            for (map<string,Elemental_Profile_Set>::iterator it=DataCollection.begin(); it!=DataCollection.end(); it++)
-            {
-                elem_dist = DataCollection.GetSampleSet(it->first)->GetElementDistribution(Element.toStdString())->GetFittedDistribution()->EvaluateAsTimeSeries();
-                plotwindow->Plotter()->AddTimeSeries(it->first, elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-            }
-
+            keys[parts[0]] = parts[1];
         }
-        else
-        {
-            TimeSeries<double> elem_dist = DataCollection.GetSampleSet(Group.toStdString())->GetElementDistribution(Element.toStdString())->GetFittedDistribution()->EvaluateAsTimeSeries();
-            plotwindow->Plotter()->AddTimeSeries((Group+":"+Element).toStdString(), elem_dist.tToStdVector(),elem_dist.ValuesToStdVector());
-        }
-        plotwindow->setWindowTitle(Element);
-        plotwindow->Plotter()->SetLegend(true);
-        plotwindow->show();
     }
 
+    QString element = keys["Element"];
+    QString group = keys["Group"];
+    QString sample = keys["Sample"];
+    QString actionType = keys["Action"];
 
+    if (actionType != "SFD")
+    {
+        return;
+    }
+
+    PlotWindow* plotWindow = new PlotWindow(this);
+
+    if (group.isEmpty())
+    {
+        // Plot distribution for all samples
+        TimeSeries<double> elementDist =
+            dataCollection.GetFittedDistribution(element.toStdString())->EvaluateAsTimeSeries();
+
+        plotWindow->Plotter()->AddTimeSeries(
+            "All samples",
+            elementDist.tToStdVector(),
+            elementDist.ValuesToStdVector()
+        );
+
+        // Add distribution for each group
+        for (auto it = dataCollection.begin(); it != dataCollection.end(); ++it)
+        {
+            elementDist = dataCollection.GetSampleSet(it->first)
+                ->GetElementDistribution(element.toStdString())
+                ->GetFittedDistribution()
+                ->EvaluateAsTimeSeries();
+
+            plotWindow->Plotter()->AddTimeSeries(
+                it->first,
+                elementDist.tToStdVector(),
+                elementDist.ValuesToStdVector()
+            );
+        }
+    }
+    else
+    {
+        // Plot distribution for specific group
+        TimeSeries<double> elementDist =
+            dataCollection.GetSampleSet(group.toStdString())
+            ->GetElementDistribution(element.toStdString())
+            ->GetFittedDistribution()
+            ->EvaluateAsTimeSeries();
+
+        plotWindow->Plotter()->AddTimeSeries(
+            (group + ":" + element).toStdString(),
+            elementDist.tToStdVector(),
+            elementDist.ValuesToStdVector()
+        );
+    }
+
+    plotWindow->setWindowTitle(element);
+    plotWindow->Plotter()->SetLegend(true);
+    plotWindow->show();
 }
 
 void MainWindow::on_constituent_properties_triggered()
 {
+    FormElementInformation* formElems = new FormElementInformation(this);
+    ElementTableModel* elementTableModel = new ElementTableModel(&dataCollection, this);
+    formElems->table()->setModel(elementTableModel);
 
-    FormElementInformation *formelems = new FormElementInformation(this);
-    ElementTableModel *elementtablemodel = new ElementTableModel(&DataCollection,this);
-    formelems->table()->setModel(elementtablemodel);
-    ElementTableDelegate *elemDelegate = new ElementTableDelegate(&DataCollection, this);
-    formelems->table()->setItemDelegate(elemDelegate);
-    ui->verticalLayout_middle->addWidget(formelems);
-    centralform.reset(formelems);
+    ElementTableDelegate* elemDelegate = new ElementTableDelegate(&dataCollection, this);
+    formElems->table()->setItemDelegate(elemDelegate);
+
+    ui->verticalLayout_middle->addWidget(formElems);
+    centralform.reset(formElems);
 }
 
 void MainWindow::onIncludeExcludeSample()
 {
-    if (Data()->GetOptions()->operator[]("Outlier deviation threshold") == 3)
-        on_Options_triggered();
-    Data()->OutlierAnalysisForAll(-Data()->GetOptions()->operator[]("Outlier deviation threshold") ,Data()->GetOptions()->operator[]("Outlier deviation threshold"));
-    Data()->BracketTest(false, false, false);
-    SelectSamples *include_exclude_samples = new SelectSamples(this);
-    include_exclude_samples->SetMode(mode::samples);
-    include_exclude_samples->SetData(&DataCollection);
-    ui->verticalLayout_middle->addWidget(include_exclude_samples);
-    centralform.reset(include_exclude_samples);
+    double outlierThreshold = Data()->GetOptions()->operator[]("Outlier deviation threshold");
 
+    // Prompt for options if using default threshold
+    if (outlierThreshold == 3)
+    {
+        on_Options_triggered();
+    }
+
+    // Perform outlier analysis
+    Data()->OutlierAnalysisForAll(-outlierThreshold, outlierThreshold);
+    Data()->BracketTest(false, false, false);
+
+    // Create and configure sample selection dialog
+    SelectSamples* sampleSelector = new SelectSamples(this);
+    sampleSelector->SetMode(mode::samples);
+    sampleSelector->SetData(&dataCollection);
+
+    ui->verticalLayout_middle->addWidget(sampleSelector);
+    centralform.reset(sampleSelector);
 }
 
 void MainWindow::onOMSizeCorrection()
 {
-    if (DataCollection.OMandSizeConstituents()[0]=="" && DataCollection.OMandSizeConstituents()[1]=="")
+    // Check if OM and size correction has been performed
+    if (dataCollection.OMandSizeConstituents()[0].empty() &&
+        dataCollection.OMandSizeConstituents()[1].empty())
     {
-        QMessageBox::warning(this, "OpenHydroQual",tr("Perform Organic Matter and Size Correction first!\n"), QMessageBox::Ok);
-            return;
-    }
-    SelectSamples *include_exclude_samples = new SelectSamples(this);
-    include_exclude_samples->SetMode(mode::regressions);
-    include_exclude_samples->SetData(&DataCollection);
-    ui->verticalLayout_middle->addWidget(include_exclude_samples);
-    centralform.reset(include_exclude_samples);
-
-}
-
-
-void MainWindow::on_test_dialog_triggered()
-{
-
-    QJsonObject mainjsonobject = formsstructure.object();
-    QJsonObject GA_object = mainjsonobject.value("GA").toObject();
-    GenericForm *form = new GenericForm(&GA_object,this,this);
-    ui->verticalLayout_middle->addWidget(form);
-    centralform.reset(form);
-}
-
-void MainWindow::on_tool_executed(const QModelIndex &index)
-{
-    qDebug()<<"Tool executed"<<index.data()<<": "<<index.data(Qt::UserRole);
-    if (DataCollection.GetElementNames().size()==0)
-    {   QMessageBox::warning(this, "OpenHydroQual",tr("No data has been loaded!\n"), QMessageBox::Ok);
+        QMessageBox::warning(
+            this,
+            tr("SedSat3"),
+            tr("Organic Matter and Size Correction must be performed first."),
+            QMessageBox::Ok
+        );
         return;
     }
-    QJsonObject mainjsonobject = formsstructure.object();
-    if (mainjsonobject.contains(index.data(Qt::UserRole).toString()))
-    {   QJsonObject GA_object = mainjsonobject.value(index.data(Qt::UserRole).toString()).toObject();
-        qDebug()<<index.data(Qt::UserRole).toString();
-        centralform.reset(new GenericForm(&GA_object,this, this));
-        static_cast<GenericForm*>(centralform.get())->SetCommand(index.data(Qt::UserRole).toString());
-        ui->verticalLayout_middle->addWidget(centralform.get());
+
+    // Create and configure sample selection dialog
+    SelectSamples* sampleSelector = new SelectSamples(this);
+    sampleSelector->SetMode(mode::regressions);
+    sampleSelector->SetData(&dataCollection);
+
+    ui->verticalLayout_middle->addWidget(sampleSelector);
+    centralform.reset(sampleSelector);
+}
+
+
+void MainWindow::on_tool_executed(const QModelIndex& index)
+{
+    qDebug() << "Tool executed" << index.data() << ":" << index.data(Qt::UserRole);
+
+    // Check if data has been loaded
+    if (dataCollection.GetElementNames().empty())
+    {
+        QMessageBox::warning(
+            this,
+            tr("SedSat3"),
+            tr("No data has been loaded."),
+            QMessageBox::Ok
+        );
+        return;
     }
 
+    QJsonObject mainJsonObject = formsstructure.object();
+    QString toolName = index.data(Qt::UserRole).toString();
 
+    if (mainJsonObject.contains(toolName))
+    {
+        qDebug() << toolName;
 
+        QJsonObject formObject = mainJsonObject.value(toolName).toObject();
+
+        centralform = std::make_unique<GenericForm>(&formObject, this, this);
+        dynamic_cast<GenericForm*>(centralform.get())->SetCommand(toolName);
+        ui->verticalLayout_middle->addWidget(centralform.get());
+    }
 }
 
 void MainWindow::on_old_result_requested(const QModelIndex& index)
 {
-    ResultsWindow *reswind = new ResultsWindow(this);
-    Results *resultset = static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result;
-    reswind->SetResults(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->result);
-    reswind->setWindowTitle(static_cast<ResultSetItem*>(resultsviewmodel->item(index.row()))->text());
-    for (map<string,ResultItem>::iterator it=resultset->begin(); it!=resultset->end(); it++)
+    if (!index.isValid() || !resultsViewModel)
     {
-        reswind->AppendResult(it->second);
+        return;
     }
-    reswind->show();
 
+    QStandardItem* item = resultsViewModel->item(index.row());
+    if (!item)
+    {
+        return;
+    }
+
+    ResultSetItem* resultSetItem = dynamic_cast<ResultSetItem*>(item);
+    if (!resultSetItem || !resultSetItem->result)
+    {
+        qWarning() << "Invalid result item at row" << index.row();
+        return;
+    }
+
+    Results* resultSet = resultSetItem->result;
+
+    ResultsWindow* resultsWindow = new ResultsWindow(this);
+    resultsWindow->SetResults(resultSet);
+    resultsWindow->setWindowTitle(resultSetItem->text());
+
+    for (auto it = resultSet->begin(); it != resultSet->end(); ++it)
+    {
+        resultsWindow->AppendResult(it->second);
+    }
+
+    resultsWindow->show();
 }
 
-bool MainWindow::Execute(const string& command, map<string, string> arguments)
+bool MainWindow::Execute(const std::string& command, std::map<std::string, std::string> arguments)
 {
-    conductor->SetData(&DataCollection);
+    conductor->SetData(&dataCollection);
+
     bool outcome = conductor->Execute(command, arguments);
-    if (outcome)
+    if (!outcome)
     {
-        // Create separate copies for window and permanent storage
-        Results* results_for_window = conductor->GetResults();  // For ResultsWindow
-        Results* results_for_storage = conductor->GetResults(); // For ResultSetItem
-
-        ResultsWindow* reswind = new ResultsWindow(this);
-        reswind->SetResults(results_for_window);
-
-        ResultSetItem* resultset = new ResultSetItem(
-            QString::fromStdString(results_for_storage->GetName()) + "_" +
-            QDateTime::currentDateTime().toString(Qt::TextDate));
-        resultset->setToolTip(
-            QString::fromStdString(results_for_storage->GetName()) + "_" +
-            QDateTime::currentDateTime().toString(Qt::TextDate));
-        resultset->result = results_for_storage;  // This one persists!
-
-        resultsviewmodel->appendRow(resultset);
-
-        for (map<string, ResultItem>::iterator it = results_for_storage->begin();
-            it != results_for_storage->end(); it++)
-        {
-            reswind->AppendResult(it->second);
-        }
-        reswind->setWindowTitle(
-            QString::fromStdString(results_for_storage->GetName()) + "_" +
-            QDateTime::currentDateTime().toString(Qt::TextDate));
-        reswind->show();
+        return false;
     }
-    return outcome;
-}
 
-void MainWindow::on_test_likelihood()
-{
-    vector<string> elements = DataCollection.ElementsToBeUsedInCMB();
-    vector<string> sources = DataCollection.SourceGroupNames();
-    DataCollection.InitializeParametersAndObservations(DataCollection.SelectedTargetSample());
-    DataCollection.SetParameterValue(0, 0.25);
-    DataCollection.SetParameterValue(1, 0.25);
-    DataCollection.SetParameterValue(2, 0.25);
+    // Create separate copies for window and permanent storage
+    Results* resultsForWindow = conductor->GetResults();   // For ResultsWindow
+    Results* resultsForStorage = conductor->GetResults();  // For ResultSetItem (persists)
 
-    for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
+    // Generate timestamp suffix
+    QString timestamp = QDateTime::currentDateTime().toString(Qt::TextDate);
+    QString resultName = QString::fromStdString(resultsForStorage->GetName()) + "_" + timestamp;
+
+    // Create result set item for permanent storage
+    ResultSetItem* resultSetItem = new ResultSetItem(resultName);
+    resultSetItem->setToolTip(resultName);
+    resultSetItem->result = resultsForStorage;
+    resultsViewModel->appendRow(resultSetItem);
+
+    // Create results window
+    ResultsWindow* resultsWindow = new ResultsWindow(this);
+    resultsWindow->SetResults(resultsForWindow);
+    resultsWindow->setWindowTitle(resultName);
+
+    // Populate results window
+    for (auto it = resultsForStorage->begin(); it != resultsForStorage->end(); ++it)
     {
-        for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
-        {
-            DataCollection.SetParameterValue(3+element_counter*sources.size()+source_group_counter,DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->GetFittedDistribution()->parameters[0]);
-        }
+        resultsWindow->AppendResult(it->second);
     }
-    for (unsigned int element_counter=0; element_counter<elements.size(); element_counter++)
-    {
-        for (unsigned int source_group_counter=0; source_group_counter<sources.size(); source_group_counter++)
-        {
-            DataCollection.SetParameterValue(3+source_group_counter+element_counter*sources.size()+sources.size()*elements.size(),DataCollection.GetElementDistribution(elements[element_counter],sources[source_group_counter])->GetFittedDistribution()->parameters[1]);
-        }
-    }
-    DataCollection.SetParameterValue(3+2*sources.size()*elements.size(),1);
-    DataCollection.SetSelectedTargetSample("CTAIL3");
-    cout<<DataCollection.LogLikelihood()<<std::endl;
-}
 
-void MainWindow::on_test_progress_window()
-{
-    ProgressWindow* prgwindow = new ProgressWindow(this);
-    prgwindow->show(); 
-    prgwindow->SetProgress(0.5);
-    prgwindow->AppendPoint(0.1, 0.1);
-    prgwindow->AppendPoint(0.2, 0.05);
-    prgwindow->AppendPoint(0.3, 0.25);
-    prgwindow->SetXRange(0, 2);
-    prgwindow->SetYRange(0, 2);
+    resultsWindow->show();
 
-}
-
-void MainWindow::on_TestLevenberg_Marquardt()
-{
-
+    return true;
 }
 
 void MainWindow::onAboutTriggered()
 {
-    AboutDialog* abtdlg = new AboutDialog(this);
-    abtdlg->AppendText(QString("SedSat3 version ") + QString(version));
-    abtdlg->AppendText(QString("Date generated: ") + QString(date_compiled));
-    abtdlg->exec(); 
+    AboutDialog* aboutDlg = new AboutDialog(this);
+    aboutDlg->setVersion(version);
+    aboutDlg->setBuildDate(date_compiled);
+    aboutDlg->exec();
+    delete aboutDlg;
 }
 
-void MainWindow::onCustomContextMenu(const QPoint &point)
+void MainWindow::onCustomContextMenu(const QPoint& point)
 {
     indexresultselected = ui->TreeView_Results->indexAt(point);
-        if (indexresultselected.isValid()) {
-            ResultscontextMenu->exec(ui->TreeView_Results->viewport()->mapToGlobal(point));
-        }
+    if (indexresultselected.isValid()) {
+        ResultscontextMenu->exec(ui->TreeView_Results->viewport()->mapToGlobal(point));
+    }
 }
+
 void MainWindow::DeleteResults()
 {
-    resultsviewmodel->removeRow(indexresultselected.row());
+    if (!indexresultselected.isValid())
+    {
+        qWarning() << "Attempted to delete with invalid index";
+        return;
+    }
+
+    QStandardItem* item = resultsViewModel->item(indexresultselected.row());
+    if (item)
+    {
+        int ret = QMessageBox::question(
+            this,
+            tr("Delete Result"),
+            tr("Are you sure you want to delete '%1'?").arg(item->text()),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::No
+        );
+
+        if (ret == QMessageBox::Yes)
+        {
+            resultsViewModel->removeRow(indexresultselected.row());
+        }
+    }
 }
 
 void MainWindow::readRecentFilesList()
 {
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-//	QString add = localAppFolderAddress();
-    ifstream file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString()+RECENT);
-    int count = 0;
-    if (file.good())
+    QString recentFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+        + "/" + RECENT;
+
+    QFile file(recentFilePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        string line;
-        while (!file.eof())
-        {
-            getline(file, line);
-            count++;
-        }
-        file.close();
+        qDebug() << "No recent files list found";
+        return;
     }
 
-    file.open(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() +"/"+ RECENT);
-    int n = 0;
-    if (file.good())
+    QTextStream in(&file);
+    QStringList allLines;
+
+    while (!in.atEnd())
     {
-        string line;
-        while (!file.eof())
+        QString line = in.readLine().trimmed();
+        if (!line.isEmpty())
         {
-            getline(file, line);
-            n++;
-            QString fileName = QString::fromStdString(line);
-            //qDebug() << fileName; QString::fromStdString(line);
-            if (n>count-max_num_recent_files)
-                addToRecentFiles(fileName, false);
-
+            allLines.append(line);
         }
-        file.close();
+    }
+    file.close();
 
+    // Add only the most recent files (up to max_num_recent_files)
+    int startIndex = qMax(0, allLines.size() - max_num_recent_files);
+    for (int i = startIndex; i < allLines.size(); ++i)
+    {
+        addToRecentFiles(allLines[i], false);
     }
 }
-void MainWindow::addToRecentFiles(QString fileName, bool addToFile)
+
+void MainWindow::addToRecentFiles(const QString& fileName, bool addToFile)
 {
+    if (fileName.trimmed().isEmpty())
+    {
+        return;
+    }
+
+    QString trimmedFileName = fileName.trimmed();
     bool rewriteFile = false;
-    if (recentFiles.contains(fileName) && fileName.trimmed() != "")
-        if (recentFiles.indexOf(fileName) != recentFiles.count()-1)
+
+    // If file already exists in list, move it to the end (most recent)
+    if (recentFiles.contains(trimmedFileName))
+    {
+        int existingIndex = recentFiles.indexOf(trimmedFileName);
+
+        // Only move if not already at the end
+        if (existingIndex != recentFiles.count() - 1)
         {
-            ui->menuRecent->removeAction(ui->menuRecent->actions()[recentFiles.size() - 1 - recentFiles.indexOf(fileName)]);
-            recentFiles.removeOne(fileName);
+            // Remove from menu
+            QList<QAction*> actions = ui->menuRecent->actions();
+            int actionIndex = recentFiles.size() - 1 - existingIndex;
+            if (actionIndex >= 0 && actionIndex < actions.size())
+            {
+                ui->menuRecent->removeAction(actions[actionIndex]);
+            }
+
+            // Remove from list
+            recentFiles.removeOne(trimmedFileName);
             addToFile = false;
             rewriteFile = true;
         }
-
-    if (!recentFiles.contains(fileName) && fileName.trimmed() != "")
-    {
-        recentFiles.append(fileName);
-        //		QAction * a = ui->menuRecent->addAction(fileName);// , this, SLOT(recentItem()));
-        QAction * fileNameAction = new QAction(fileName, nullptr);
-        if (ui->menuRecent->actions().size())
-            ui->menuRecent->insertAction(ui->menuRecent->actions()[0], fileNameAction);
         else
-            ui->menuRecent->addAction(fileNameAction);
-        QObject::connect(fileNameAction, SIGNAL(triggered()), this, SLOT(on_actionRecent_triggered()));
-
-        if (addToFile)
         {
-            CreateFileIfDoesNotExist(localAppFolderAddress() + "/"+ RECENT);
-            ofstream file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() +"/"+  RECENT, fstream::app);
-            if (file.good())
-                file << fileName.toStdString() << std::endl;
+            return; // Already most recent, nothing to do
+        }
+    }
+
+    // Enforce maximum number of recent files
+    if (recentFiles.size() >= max_num_recent_files)
+    {
+        // Remove oldest file (first in list)
+        recentFiles.removeFirst();
+
+        // Remove oldest action (last in menu)
+        QList<QAction*> actions = ui->menuRecent->actions();
+        if (!actions.isEmpty())
+        {
+            ui->menuRecent->removeAction(actions.last());
+        }
+
+        rewriteFile = true;
+    }
+
+    // Add to list
+    recentFiles.append(trimmedFileName);
+
+    // Add to menu (at the top)
+    QAction* fileAction = new QAction(trimmedFileName, this);
+
+    QList<QAction*> actions = ui->menuRecent->actions();
+    if (!actions.isEmpty())
+    {
+        ui->menuRecent->insertAction(actions.first(), fileAction);
+    }
+    else
+    {
+        ui->menuRecent->addAction(fileAction);
+    }
+
+    connect(fileAction, &QAction::triggered, this, &MainWindow::on_actionRecent_triggered);
+
+    // Write to file if needed
+    if (addToFile)
+    {
+        QString recentFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+            + "/" + RECENT;
+        CreateFileIfDoesNotExist(recentFilePath);
+
+        QFile file(recentFilePath);
+        if (file.open(QIODevice::Append | QIODevice::Text))
+        {
+            QTextStream out(&file);
+            out << trimmedFileName << "\n";
             file.close();
         }
-        if (rewriteFile)
-            writeRecentFilesList();
+    }
+
+    if (rewriteFile)
+    {
+        writeRecentFilesList();
     }
 }
 
 void MainWindow::writeRecentFilesList()
 {
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    ofstream file(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation).toStdString() +"/"+ RECENT);
-    if (file.good())
+    QString recentFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+        + "/" + RECENT;
+
+    QFile file(recentFilePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        foreach (QString fileName , recentFiles)
-            file << fileName.toStdString() << std::endl;
+        qWarning() << "Failed to write recent files list:" << file.errorString();
+        return;
     }
+
+    QTextStream out(&file);
+    for (const QString& fileName : recentFiles)
+    {
+        out << fileName << "\n";
+    }
+
     file.close();
 }
 
-QString localAppFolderAddress() {
+QString localAppFolderAddress()
+{
     QString localAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
     qDebug() << "Local AppData Folder:" << localAppDataPath;
     return localAppDataPath;
@@ -1042,125 +1459,149 @@ QString localAppFolderAddress() {
 
 void MainWindow::on_actionRecent_triggered()
 {
-    QAction* a = static_cast<QAction*> (QObject::sender());
-    QString fileName = a->text();
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (!action)
+    {
+        qWarning() << "Invalid sender in on_actionRecent_triggered";
+        return;
+    }
+
+    QString fileName = action->text();
     if (LoadModel(fileName))
     {
         addToRecentFiles(fileName, false);
     }
-
 }
 
 void MainWindow::removeFromRecentList(QAction* selectedFileAction)
 {
+    if (!selectedFileAction)
+    {
+        return;
+    }
+
     recentFiles.removeAll(selectedFileAction->text());
     ui->menuRecent->removeAction(selectedFileAction);
     writeRecentFilesList();
 }
 
-bool MainWindow::CreateFileIfDoesNotExist(QString fileName)
+bool MainWindow::CreateFileIfDoesNotExist(const QString& fileName)
 {
-    QFileInfo check_file(fileName);
-    bool success = false;
-    if (!check_file.exists())
+    QFileInfo fileInfo(fileName);
+
+    if (fileInfo.exists())
     {
-        QFile filetobecreated(fileName);
-        success = filetobecreated.open(QIODevice::WriteOnly);
-        filetobecreated.close();
+        return true; // File already exists
     }
-    return success;
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        qWarning() << "Failed to create file:" << fileName << "-" << file.errorString();
+        return false;
+    }
+
+    file.close();
+    return true;
+}
+
+void MainWindow::addToolBarAction(const QString& text,
+    const QString& iconPath,
+    const QString& toolTip,
+    void (MainWindow::* slot)())
+{
+    QAction* action = new QAction(this);
+    action->setObjectName(text);
+    action->setText(text);
+    action->setToolTip(toolTip);
+
+    QIcon icon(iconPath);
+    if (!icon.isNull())
+    {
+        action->setIcon(icon);
+    }
+    else
+    {
+        qWarning() << "Failed to load icon:" << iconPath;
+    }
+
+    ui->toolBar->addAction(action);
+    connect(action, &QAction::triggered, this, slot);
 }
 
 
 void MainWindow::Populate_General_ToolBar()
 {
-    // ImportExcel //
-    QAction* actionimportexcel = new QAction(this);
-    actionimportexcel->setObjectName("Constituents Properties");
-    QIcon iconimportexcel;
+    QString iconPath = qApp->applicationDirPath() + "/../../resources/Icons/";
 
-    iconimportexcel.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/Import_Excel.png", QSize(), QIcon::Normal, QIcon::Off);
-    actionimportexcel->setIcon(iconimportexcel);
-    ui->toolBar->addAction(actionimportexcel);
-    actionimportexcel->setText("Import Excel");
-    actionimportexcel->setToolTip("Import from Excel File");
-    connect(actionimportexcel, SIGNAL(triggered()), this, SLOT(on_import_excel()));
+    // Import Excel
+    addToolBarAction(
+        "Import Excel",
+        iconPath + "Import_Excel.png",
+        "Import from Excel File",
+        &MainWindow::on_import_excel
+    );
 
+    // Save
+    addToolBarAction(
+        "Save",
+        iconPath + "Save.png",
+        "Save Project",
+        &MainWindow::onSaveProject
+    );
 
-    // Save //
-    QAction* actionsave = new QAction(this);
-    actionsave->setObjectName("Save");
-    QIcon iconsave;
-    iconsave.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/Save.png", QSize(), QIcon::Normal, QIcon::Off);
-    actionsave->setIcon(iconsave);
-    ui->toolBar->addAction(actionsave);
-    actionsave->setText("Save");
-    actionsave->setToolTip("Save");
-    connect(actionsave, SIGNAL(triggered()), this, SLOT(onSaveProject()));
+    // Open
+    addToolBarAction(
+        "Open",
+        iconPath + "open.png",
+        "Open Project",
+        &MainWindow::onOpenProject
+    );
 
-    // Open //
-    QAction* actionopen = new QAction(this);
-    actionopen->setObjectName("Open");
-    QIcon iconopen;
+    // Separator
+    ui->toolBar->addSeparator();
 
-    iconopen.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/open.png", QSize(), QIcon::Normal, QIcon::Off);
-    actionopen->setIcon(iconopen);
-    ui->toolBar->addAction(actionopen);
-    actionopen->setText("Open");
-    actionopen->setToolTip("Open");
-    connect(actionopen, SIGNAL(triggered()), this, SLOT(onOpenProject()));
+    // Element Properties
+    addToolBarAction(
+        "Constituents Selection/Properties",
+        iconPath + "Element_Props.png",
+        "Constituents Selection/Properties",
+        &MainWindow::on_constituent_properties_triggered
+    );
 
+    // Organic Matter and Size Correction
+    addToolBarAction(
+        "Organic Matter and Size Correction",
+        iconPath + "OMSizeCorrection.png",
+        "Organic Matter and Size Correction",
+        &MainWindow::onOMSizeCorrection
+    );
 
-    QAction* seperator = new QAction(this);
-    seperator->setSeparator(true);
-    ui->toolBar->addAction(seperator);
-
-    // Element Properties //
-    QAction* actionelementprops = new QAction(this);
-    actionelementprops->setObjectName("Constituents Properties");
-    QIcon iconelementprops;
-
-    iconelementprops.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/Element_Props.png", QSize(), QIcon::Normal, QIcon::Off);
-    actionelementprops->setIcon(iconelementprops);
-    ui->toolBar->addAction(actionelementprops);
-    actionelementprops->setText("Constituents Selection/Properties");
-    actionelementprops->setToolTip("Constituents Selection/Properties");
-    connect(actionelementprops, SIGNAL(triggered()), this, SLOT(on_constituent_properties_triggered()));
-
-    // Organic Matter and Size Correction //
-    QAction* actionomsizecorrection = new QAction(this);
-    actionomsizecorrection->setObjectName("Organic Matter and Size Correction");
-    QIcon iconomsizecorrection;
-
-    iconomsizecorrection.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/OMSizeCorrection.png", QSize(), QIcon::Normal, QIcon::Off);
-    actionomsizecorrection->setIcon(iconomsizecorrection);
-    ui->toolBar->addAction(actionomsizecorrection);
-    actionomsizecorrection->setText("Organic Matter and Size Correction");
-    actionomsizecorrection->setToolTip("Organic Matter and Size Correction");
-    connect(actionomsizecorrection, SIGNAL(triggered()), this, SLOT(onOMSizeCorrection()));
-
-    // Organic Select Samples //
-    QAction* actionselectsamples = new QAction(this);
-    actionselectsamples->setObjectName("Select Samples");
-    QIcon iconselectsamples;
-
-    iconselectsamples.addFile(qApp->applicationDirPath()+"/../../resources"+"/Icons/SelectSamples.png", QSize(), QIcon::Normal, QIcon::Off);
-    actionselectsamples->setIcon(iconselectsamples);
-    ui->toolBar->addAction(actionselectsamples);
-    actionselectsamples->setText("Select Samples");
-    actionselectsamples->setToolTip("Select Samples");
-    connect(actionselectsamples, SIGNAL(triggered()), this, SLOT(onIncludeExcludeSample()));
-
+    // Select Samples
+    addToolBarAction(
+        "Select Samples",
+        iconPath + "SelectSamples.png",
+        "Select Samples",
+        &MainWindow::onIncludeExcludeSample
+    );
 }
 
 void MainWindow::on_show_data_as_table()
 {
-    ResultTableViewer *tableviewer = new ResultTableViewer(this);
-    tableviewer->setWindowFlag(Qt::WindowMinMaxButtonsHint);
-    QTableWidget *tablewidget = plotted_data->ToTable();
-    tableviewer->setWindowTitle("Elemental Profiles");
-    tableviewer->SetTable(tablewidget);
-    tableviewer->show();
+    if (!plottedData)
+    {
+        qWarning() << "No data to display in table";
+        return;
+    }
+
+    ResultTableViewer* tableViewer = new ResultTableViewer(this);
+    tableViewer->setWindowFlag(Qt::WindowMinMaxButtonsHint);
+    tableViewer->setWindowTitle(tr("Elemental Profiles"));
+
+    QTableWidget* tableWidget = plottedData->ToTable();
+    tableViewer->SetTable(tableWidget);
+
+    tableViewer->show();
 }
 
 void MainWindow::on_ZoomExtends()

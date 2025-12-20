@@ -379,10 +379,10 @@ public:
 
     // ========== Serialization ==========
 
-    string ToString() override;
+    string ToString() const override;
     QTableWidget* ToTable() override;
     bool writetofile(QFile* file) override;
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject& jsonobject) override;
     bool Read(const QStringList& strlist) override;
 

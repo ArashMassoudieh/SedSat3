@@ -247,7 +247,7 @@ vector<string> Elemental_Profile_Set::GetSampleNames() const
 
 // ========== Serialization ==========
 
-string Elemental_Profile_Set::ToString()
+string Elemental_Profile_Set::ToString() const
 {
     if (empty()) {
         return string();
@@ -288,7 +288,7 @@ bool Elemental_Profile_Set::writetofile(QFile* file)
     return true;  // Fixed: was returning 0 (false)
 }
 
-QJsonObject Elemental_Profile_Set::toJsonObject()
+QJsonObject Elemental_Profile_Set::toJsonObject() const
 {
     QJsonObject json_object;
 

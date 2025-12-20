@@ -414,7 +414,7 @@ public:
      * @return String with "Element:Value" pairs separated by newlines
      * @note Format: "Al:8.5\nFe:4.2\n..."
      */
-    string ToString() override;
+    string ToString() const override;
 
     /**
      * @brief Create Qt table widget representation
@@ -452,7 +452,7 @@ public:
      * @brief Serialize to JSON object
      * @return QJsonObject containing profile data
      */
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
 
     /**
      * @brief Deserialize from JSON object

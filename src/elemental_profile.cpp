@@ -596,7 +596,7 @@ double Elemental_Profile::GetValue(const string& element_name) const
   * Output format:
   * "Al:8.5\nFe:4.2\nPb:25.3\n"
   */
- string Elemental_Profile::ToString() 
+ string Elemental_Profile::ToString() const
  {
      string output;
 
@@ -671,7 +671,7 @@ double Elemental_Profile::GetValue(const string& element_name) const
   * @note Format: {"Include": bool, "Element Contents": {name: value, ...},
   *                "XAxisLabel": string, "YAxisLabel": string}
   */
- QJsonObject Elemental_Profile::toJsonObject()
+ QJsonObject Elemental_Profile::toJsonObject() const
  {
      QJsonObject json_object;
      QJsonObject element_contents;

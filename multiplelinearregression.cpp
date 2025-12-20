@@ -198,7 +198,7 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
     return chisq;
 
 }
-QJsonObject MultipleLinearRegression::toJsonObject()
+QJsonObject MultipleLinearRegression::toJsonObject() const
 {
     QJsonObject out;
     if (regressionEquation==regression_form::linear)
@@ -310,7 +310,7 @@ double MultipleLinearRegression::GeoMeanIndependentVar(int i)
 {
     return exp(CVector(independent_data[i]).Log().mean());
 }
-string MultipleLinearRegression::ToString()
+string MultipleLinearRegression::ToString() const
 {
     string out;
     if (regressionEquation == regression_form::linear)

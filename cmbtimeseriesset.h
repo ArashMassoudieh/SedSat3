@@ -14,9 +14,9 @@ public:
     CMBTimeSeriesSet& operator=(const CMBTimeSeriesSet &mp);
     CMBTimeSeriesSet& operator=(const TimeSeriesSet<double> &mp);
     CMBTimeSeriesSet(const TimeSeriesSet<double>& mp);
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     bool writetofile(QFile*) override;
     QTableWidget *ToTable() override;
     void AppendLastContribution(int colnumber,const string &name);
@@ -41,7 +41,7 @@ public:
         }
         return 0;
     }
-    string Label(unsigned int i)
+    string Label(unsigned int i) const
     {
         if (i<labels.size())
             return labels[i];
@@ -50,7 +50,7 @@ public:
         else
             return "";
     }
-    string Label(unsigned int i, unsigned int j)
+    string Label(unsigned int i, unsigned int j) const
     {
         if (i<labels.size())
             return labels[i];

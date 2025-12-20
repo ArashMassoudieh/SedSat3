@@ -38,7 +38,7 @@ CMBMatrix& CMBMatrix::operator=(const CMBMatrix &mp)
     CMatrix::operator=(mp);
     return *this;
 }
-QJsonObject CMBMatrix::toJsonObject()
+QJsonObject CMBMatrix::toJsonObject() const
 {
     QJsonObject out;
     QJsonArray matrix;
@@ -98,7 +98,7 @@ bool CMBMatrix::writetofile(QFile* file)
     file->write(QString::fromStdString(ToString()).toUtf8());
     return true;
 }
-string CMBMatrix::ToString()
+string CMBMatrix::ToString() const
 {
     string out;
     for (int j=0; j<getnumcols(); j++)
@@ -177,7 +177,7 @@ QTableWidget *CMBMatrix::ToTable()
     return tablewidget;
 }
 
-double CMBMatrix::valueAt(int i, int j)
+double CMBMatrix::valueAt(int i, int j) const
 {
     return CMatrix::operator[](i).at(j);
 }
