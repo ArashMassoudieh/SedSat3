@@ -1,0 +1,40 @@
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:223: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:307: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:400: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:475: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:595: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:624: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:750: warning: Example /home/arash/Projects/SedSat3/src/elemental_profile.cpp was already documented. Ignoring documentation found here.
+/home/arash/Projects/SedSat3/src/GA/GA.cpp:25: warning: no matching class member found for 
+  template < T >
+  CGA< T >::CGA(int n)
+Possible candidates:
+  'CGA< T >::CGA()' at line 75 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+  'CGA< T >::CGA(const CGA &C)' at line 77 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+  'CGA< T >::CGA(string filename, const T &)' at line 79 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+  'CGA< T >::CGA(T *)' at line 80 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+/home/arash/Projects/SedSat3/src/GA/GA.cpp:38: warning: no matching class member found for 
+  template < T >
+  CGA< T >::CGA(int n, int nParam)
+Possible candidates:
+  'CGA< T >::CGA()' at line 75 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+  'CGA< T >::CGA(const CGA &C)' at line 77 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+  'CGA< T >::CGA(string filename, const T &)' at line 79 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+  'CGA< T >::CGA(T *)' at line 80 of file /home/arash/Projects/SedSat3/include/GA/GA.h
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:42: warning: argument 'other' from the argument list of Elemental_Profile::Elemental_Profile has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:539: warning: argument 'name' of command @param is not found in the argument list of Elemental_Profile::AppendElement(const string &element_name, double value=0.0)
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:539: warning: argument 'val' of command @param is not found in the argument list of Elemental_Profile::AppendElement(const string &element_name, double value=0.0)
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:866: warning: argument 'elementinfo' of command @param is not found in the argument list of Elemental_Profile::ApplyOrganicMatterAndSizeCorrections(const vector< double > &reference_om_size, const MultipleLinearRegressionSet *regression_models, const map< string, element_information > *element_info=nullptr) const
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:866: warning: argument 'reference_om_size' from the argument list of Elemental_Profile::ApplyOrganicMatterAndSizeCorrections has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:866: warning: argument 'regression_models' from the argument list of Elemental_Profile::ApplyOrganicMatterAndSizeCorrections has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:948: warning: argument 'weights' from the argument list of Elemental_Profile::CalculateDotProduct has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:854: warning: argument 'name' of command @param is not found in the argument list of Elemental_Profile::Contains(const string &element_name) const
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:446: warning: argument 'name' of command @param is not found in the argument list of Elemental_Profile::GetValue(const string &element_name) const
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:520: warning: argument 'name' of command @param is not found in the argument list of Elemental_Profile::IsMarked(const string &element_name) const
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:693: warning: argument 'json' of command @param is not found in the argument list of Elemental_Profile::ReadFromJsonObject(const QJsonObject &json_object)
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:1023: warning: argument 'n' from the argument list of Elemental_Profile::SelectTopElements has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:1023: warning: argument 'ascending' from the argument list of Elemental_Profile::SelectTopElements has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:498: warning: argument 'name' of command @param is not found in the argument list of Elemental_Profile::SetMarked(const string &element_name, bool marked)
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:498: warning: argument 'marked' from the argument list of Elemental_Profile::SetMarked has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:979: warning: argument 'ascending' from the argument list of Elemental_Profile::SortByConcentration has multiple @param documentation sections
+/home/arash/Projects/SedSat3/src/elemental_profile.cpp:770: warning: argument 'file' from the argument list of Elemental_Profile::writetofile has multiple @param documentation sections

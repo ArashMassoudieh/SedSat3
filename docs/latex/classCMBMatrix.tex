@@ -1,0 +1,827 @@
+\doxysection{CMBMatrix Class Reference}
+\hypertarget{classCMBMatrix}{}\label{classCMBMatrix}\index{CMBMatrix@{CMBMatrix}}
+
+
+Matrix class with labeled rows and columns for Chemical Mass Balance analysis.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/cmbmatrix.\+h$>$}
+
+
+
+Inheritance diagram for CMBMatrix\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBMatrix__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CMBMatrix\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCMBMatrix__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}{CMBMatrix}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor -\/ creates an empty matrix. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix_a1085554babb3f9b1c606aa53ac382134}{CMBMatrix}} (int n)
+\begin{DoxyCompactList}\small\item\em Constructs a square matrix with given dimension. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix_a2809f932df1eb2a48eb601dbd3d018d3}{CMBMatrix}} (int n, int m)
+\begin{DoxyCompactList}\small\item\em Constructs a rectangular matrix with given dimensions. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix_ad86431977e241145d0ac8695aab5ca90}{CMBMatrix}} (const \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \&mp)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+CMatrix \mbox{\hyperlink{classCMBMatrix_a30ecc3a8a6abb44fe4970bf197ea7c8b}{to\+Matrix}} () const
+\begin{DoxyCompactList}\small\item\em Converts to base CMatrix type (without labels) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \& \mbox{\hyperlink{classCMBMatrix_acc40ca3e43d77aeb7e48f531085e9d7b}{operator=}} (const \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \&mp)
+\begin{DoxyCompactList}\small\item\em Assignment operator. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classCMBMatrix_a9b593e4be0122137740a8469eea5653a}{to\+Json\+Object}} () const override
+\begin{DoxyCompactList}\small\item\em Serializes matrix to JSON format. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\begin{DoxyCompactList}\small\item\em Deserializes matrix from JSON format. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242}{To\+String}} () const override
+\begin{DoxyCompactList}\small\item\em Converts matrix to CSV-\/formatted string. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBMatrix_afcbd91f9c11008e1707805ea7924fe89}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file) override
+\begin{DoxyCompactList}\small\item\em Writes matrix to file in CSV format. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5}{value\+At}} (int i, int j) const
+\begin{DoxyCompactList}\small\item\em Gets value at specified matrix position. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBMatrix_a0d24354b2c5260e98c8e1a0693102f10}{Column\+Label}} (int i)
+\begin{DoxyCompactList}\small\item\em Gets column label at specified index. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCMBMatrix_abdb9a47593e640b39b10954d85b539bd}{Row\+Label}} (int i)
+\begin{DoxyCompactList}\small\item\em Gets row label at specified index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBMatrix_aabe9955930235ae1c9a674a261851aac}{Set\+Column\+Label}} (int i, const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&label)
+\begin{DoxyCompactList}\small\item\em Sets column label at specified index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBMatrix_a11a7902348dbd911535156ad6cc532c3}{Set\+Row\+Label}} (int i, const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&label)
+\begin{DoxyCompactList}\small\item\em Sets row label at specified index. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBMatrix_ac7b07bcd7ee38f17a4fd90e77fb8f4af}{Set\+Column\+Labels}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&label)
+\begin{DoxyCompactList}\small\item\em Sets all column labels at once. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBMatrix_aef6af818e4d73113fd395888be529cb3}{Set\+Row\+Labels}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&label)
+\begin{DoxyCompactList}\small\item\em Sets all row labels at once. \end{DoxyCompactList}\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCMBMatrix_aaf48d4fae0de8950420bacaab8f0152b}{To\+Table}} () override
+\begin{DoxyCompactList}\small\item\em Creates a QTable\+Widget for displaying matrix data. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classCMBMatrix_af4be45ec3c91fdfaf6ebb3e47245124d}{Row\+Labels}} () const
+\begin{DoxyCompactList}\small\item\em Gets all row labels. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classCMBMatrix_a1bd1d4a7a9f29e02e483a8869327ca95}{Column\+Labels}} () const
+\begin{DoxyCompactList}\small\item\em Gets all column labels. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{classCMBMatrix_af2d9a2ae9bb0b91ab6f88036ab370f38}{Get\+Row}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&rowlabel)
+\begin{DoxyCompactList}\small\item\em Extracts a row by its label. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{classCMBMatrix_ae3274b6fd02e1eee4520e5c40743b503}{Get\+Column}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&columnlabel)
+\begin{DoxyCompactList}\small\item\em Extracts a column by its label. \end{DoxyCompactList}\item 
+QString\+List \mbox{\hyperlink{classCMBMatrix_ac1a8c32e4b78c21810949f04ef51a7b8}{Row\+Label\+Categories}} ()
+\begin{DoxyCompactList}\small\item\em Gets unique row label categories. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCMBMatrix_ac19c12cdcb082591ff3e8d0502467971}{Set\+Boolean\+Value}} (bool val)
+\begin{DoxyCompactList}\small\item\em Sets boolean display mode for table widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}
+\begin{DoxyCompactList}\small\item\em Labels for each column. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}
+\begin{DoxyCompactList}\small\item\em Labels for each row. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCMBMatrix_a454f537af4d9658623cc5f8e462e8537}{boolean\+\_\+values}} = false
+\begin{DoxyCompactList}\small\item\em Display values as Pass/\+Fail instead of numbers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Matrix class with labeled rows and columns for Chemical Mass Balance analysis. 
+
+Extends CMatrix with string labels for rows and columns, JSON serialization, table widget generation, and specialized operations for CMB calculations. Inherits from both CMatrix (for mathematical operations) and \doxylink{classInterface}{Interface} (for I/O and visualization). 
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00018}{18}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}\label{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa} 
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{CMBMatrix()}{CMBMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily CMBMatrix\+::\+CMBMatrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor -\/ creates an empty matrix. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+\Hypertarget{classCMBMatrix_a1085554babb3f9b1c606aa53ac382134}\label{classCMBMatrix_a1085554babb3f9b1c606aa53ac382134} 
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{CMBMatrix()}{CMBMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily CMBMatrix\+::\+CMBMatrix (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Constructs a square matrix with given dimension. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of rows and columns \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_a2809f932df1eb2a48eb601dbd3d018d3}\label{classCMBMatrix_a2809f932df1eb2a48eb601dbd3d018d3} 
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{CMBMatrix()}{CMBMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily CMBMatrix\+::\+CMBMatrix (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int}]{m }\end{DoxyParamCaption})}
+
+
+
+Constructs a rectangular matrix with given dimensions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of columns \\
+\hline
+{\em m} & Number of rows \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_ad86431977e241145d0ac8695aab5ca90}\label{classCMBMatrix_ad86431977e241145d0ac8695aab5ca90} 
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\index{CMBMatrix@{CMBMatrix}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{CMBMatrix()}{CMBMatrix()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily CMBMatrix\+::\+CMBMatrix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Matrix to copy from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, \mbox{\hyperlink{interface_8h_source_l00050}{Interface\+::highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::highlimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::lowlimit}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCMBMatrix_a0d24354b2c5260e98c8e1a0693102f10}\label{classCMBMatrix_a0d24354b2c5260e98c8e1a0693102f10} 
+\index{CMBMatrix@{CMBMatrix}!ColumnLabel@{ColumnLabel}}
+\index{ColumnLabel@{ColumnLabel}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{ColumnLabel()}{ColumnLabel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBMatrix\+::\+Column\+Label (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets column label at specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Column index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Column label string 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00097}{97}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}.
+
+\Hypertarget{classCMBMatrix_a1bd1d4a7a9f29e02e483a8869327ca95}\label{classCMBMatrix_a1bd1d4a7a9f29e02e483a8869327ca95} 
+\index{CMBMatrix@{CMBMatrix}!ColumnLabels@{ColumnLabels}}
+\index{ColumnLabels@{ColumnLabels}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{ColumnLabels()}{ColumnLabels()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ CMBMatrix\+::\+Column\+Labels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets all column labels. 
+
+\begin{DoxyReturn}{Returns}
+Vector of column label strings 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00153}{153}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00200}{Get\+Row()}}.
+
+\Hypertarget{classCMBMatrix_ae3274b6fd02e1eee4520e5c40743b503}\label{classCMBMatrix_ae3274b6fd02e1eee4520e5c40743b503} 
+\index{CMBMatrix@{CMBMatrix}!GetColumn@{GetColumn}}
+\index{GetColumn@{GetColumn}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{GetColumn()}{GetColumn()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} CMBMatrix\+::\+Get\+Column (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{columnlabel }\end{DoxyParamCaption})}
+
+
+
+Extracts a column by its label. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em columnlabel} & Label of the column to extract \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classCMBVector}{CMBVector} containing the column values with row labels 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00214}{214}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00147}{Row\+Labels()}}, and \mbox{\hyperlink{cmbvector_8h_source_l00151}{CMBVector\+::\+Set\+Labels()}}.
+
+\Hypertarget{classCMBMatrix_af2d9a2ae9bb0b91ab6f88036ab370f38}\label{classCMBMatrix_af2d9a2ae9bb0b91ab6f88036ab370f38} 
+\index{CMBMatrix@{CMBMatrix}!GetRow@{GetRow}}
+\index{GetRow@{GetRow}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{GetRow()}{GetRow()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} CMBMatrix\+::\+Get\+Row (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{rowlabel }\end{DoxyParamCaption})}
+
+
+
+Extracts a row by its label. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rowlabel} & Label of the row to extract \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classCMBVector}{CMBVector} containing the row values with column labels 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00200}{200}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00153}{Column\+Labels()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}, and \mbox{\hyperlink{cmbvector_8h_source_l00151}{CMBVector\+::\+Set\+Labels()}}.
+
+\Hypertarget{classCMBMatrix_acc40ca3e43d77aeb7e48f531085e9d7b}\label{classCMBMatrix_acc40ca3e43d77aeb7e48f531085e9d7b} 
+\index{CMBMatrix@{CMBMatrix}!operator=@{operator=}}
+\index{operator=@{operator=}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \& CMBMatrix\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \&}]{mp }\end{DoxyParamCaption})}
+
+
+
+Assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mp} & Matrix to assign from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to this matrix 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, \mbox{\hyperlink{interface_8h_source_l00050}{Interface\+::highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::highlimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::lowlimit}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}\label{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6} 
+\index{CMBMatrix@{CMBMatrix}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool CMBMatrix\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Deserializes matrix from JSON format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em jsonobject} & JSON object to read from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00067}{67}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}.
+
+\Hypertarget{classCMBMatrix_abdb9a47593e640b39b10954d85b539bd}\label{classCMBMatrix_abdb9a47593e640b39b10954d85b539bd} 
+\index{CMBMatrix@{CMBMatrix}!RowLabel@{RowLabel}}
+\index{RowLabel@{RowLabel}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{RowLabel()}{RowLabel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBMatrix\+::\+Row\+Label (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets row label at specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Row index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Row label string 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00104}{104}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_ac1a8c32e4b78c21810949f04ef51a7b8}\label{classCMBMatrix_ac1a8c32e4b78c21810949f04ef51a7b8} 
+\index{CMBMatrix@{CMBMatrix}!RowLabelCategories@{RowLabelCategories}}
+\index{RowLabelCategories@{RowLabelCategories}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{RowLabelCategories()}{RowLabelCategories()}}
+{\footnotesize\ttfamily QString\+List CMBMatrix\+::\+Row\+Label\+Categories (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets unique row label categories. 
+
+\begin{DoxyReturn}{Returns}
+QString\+List of unique row labels (no duplicates) 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00229}{229}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_af4be45ec3c91fdfaf6ebb3e47245124d}\label{classCMBMatrix_af4be45ec3c91fdfaf6ebb3e47245124d} 
+\index{CMBMatrix@{CMBMatrix}!RowLabels@{RowLabels}}
+\index{RowLabels@{RowLabels}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{RowLabels()}{RowLabels()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ CMBMatrix\+::\+Row\+Labels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets all row labels. 
+
+\begin{DoxyReturn}{Returns}
+Vector of row label strings 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00147}{147}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00214}{Get\+Column()}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00185}{operator\texorpdfstring{$\ast$}{*}()}}.
+
+\Hypertarget{classCMBMatrix_ac19c12cdcb082591ff3e8d0502467971}\label{classCMBMatrix_ac19c12cdcb082591ff3e8d0502467971} 
+\index{CMBMatrix@{CMBMatrix}!SetBooleanValue@{SetBooleanValue}}
+\index{SetBooleanValue@{SetBooleanValue}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{SetBooleanValue()}{SetBooleanValue()}}
+{\footnotesize\ttfamily void CMBMatrix\+::\+Set\+Boolean\+Value (\begin{DoxyParamCaption}\item[{bool}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets boolean display mode for table widget. 
+
+When true, matrix values are displayed as "{}\+Pass"{} (0) or "{}\+Fail"{} (1) in the table widget instead of numeric values.
+
+
+\begin{DoxyParams}{Parameters}
+{\em val} & True to enable boolean display mode \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00183}{183}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00188}{boolean\+\_\+values}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01662}{Conductor\+::\+Execute\+Bracketing\+Analysis\+Batch()}}, and \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}.
+
+\Hypertarget{classCMBMatrix_aabe9955930235ae1c9a674a261851aac}\label{classCMBMatrix_aabe9955930235ae1c9a674a261851aac} 
+\index{CMBMatrix@{CMBMatrix}!SetColumnLabel@{SetColumnLabel}}
+\index{SetColumnLabel@{SetColumnLabel}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{SetColumnLabel()}{SetColumnLabel()}}
+{\footnotesize\ttfamily void CMBMatrix\+::\+Set\+Column\+Label (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets column label at specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Column index \\
+\hline
+{\em label} & Label string to set \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00111}{111}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03067}{Source\+Sink\+Data\+::\+Bracket\+Test()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00621}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Correlation\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00578}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Covariance\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Detect\+Outliers()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classCMBMatrix_ac7b07bcd7ee38f17a4fd90e77fb8f4af}\label{classCMBMatrix_ac7b07bcd7ee38f17a4fd90e77fb8f4af} 
+\index{CMBMatrix@{CMBMatrix}!SetColumnLabels@{SetColumnLabels}}
+\index{SetColumnLabels@{SetColumnLabels}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{SetColumnLabels()}{SetColumnLabels()}}
+{\footnotesize\ttfamily void CMBMatrix\+::\+Set\+Column\+Labels (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets all column labels at once. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & Vector of label strings \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00124}{124}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}.
+
+\Hypertarget{classCMBMatrix_a11a7902348dbd911535156ad6cc532c3}\label{classCMBMatrix_a11a7902348dbd911535156ad6cc532c3} 
+\index{CMBMatrix@{CMBMatrix}!SetRowLabel@{SetRowLabel}}
+\index{SetRowLabel@{SetRowLabel}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{SetRowLabel()}{SetRowLabel()}}
+{\footnotesize\ttfamily void CMBMatrix\+::\+Set\+Row\+Label (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets row label at specified index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Row index \\
+\hline
+{\em label} & Label string to set \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00118}{118}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03067}{Source\+Sink\+Data\+::\+Bracket\+Test()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00621}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Correlation\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00578}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Covariance\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Detect\+Outliers()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classCMBMatrix_aef6af818e4d73113fd395888be529cb3}\label{classCMBMatrix_aef6af818e4d73113fd395888be529cb3} 
+\index{CMBMatrix@{CMBMatrix}!SetRowLabels@{SetRowLabels}}
+\index{SetRowLabels@{SetRowLabels}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{SetRowLabels()}{SetRowLabels()}}
+{\footnotesize\ttfamily void CMBMatrix\+::\+Set\+Row\+Labels (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets all row labels at once. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & Vector of label strings \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00130}{130}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_a9b593e4be0122137740a8469eea5653a}\label{classCMBMatrix_a9b593e4be0122137740a8469eea5653a} 
+\index{CMBMatrix@{CMBMatrix}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object CMBMatrix\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Serializes matrix to JSON format. 
+
+\begin{DoxyReturn}{Returns}
+JSON object containing matrix data, row labels, and column labels 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00180}{value\+At()}}.
+
+\Hypertarget{classCMBMatrix_a30ecc3a8a6abb44fe4970bf197ea7c8b}\label{classCMBMatrix_a30ecc3a8a6abb44fe4970bf197ea7c8b} 
+\index{CMBMatrix@{CMBMatrix}!toMatrix@{toMatrix}}
+\index{toMatrix@{toMatrix}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{toMatrix()}{toMatrix()}}
+{\footnotesize\ttfamily CMatrix CMBMatrix\+::to\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Converts to base CMatrix type (without labels) 
+
+\begin{DoxyReturn}{Returns}
+CMatrix representation 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00193}{193}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00185}{operator\texorpdfstring{$\ast$}{*}()}}.
+
+\Hypertarget{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242}\label{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242} 
+\index{CMBMatrix@{CMBMatrix}!ToString@{ToString}}
+\index{ToString@{ToString}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} CMBMatrix\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Converts matrix to CSV-\/formatted string. 
+
+\begin{DoxyReturn}{Returns}
+String representation with labels and comma-\/separated values 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00101}{101}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00180}{value\+At()}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00096}{writetofile()}}.
+
+\Hypertarget{classCMBMatrix_aaf48d4fae0de8950420bacaab8f0152b}\label{classCMBMatrix_aaf48d4fae0de8950420bacaab8f0152b} 
+\index{CMBMatrix@{CMBMatrix}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} CMBMatrix\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Creates a QTable\+Widget for displaying matrix data. 
+
+Generates a read-\/only table widget with labeled rows and columns. Highlights cells outside limit range if highlighting is enabled. Displays boolean values as "{}\+Pass"{}/"{}\+Fail"{} if boolean mode is set.
+
+\begin{DoxyReturn}{Returns}
+Pointer to newly created QTable\+Widget (caller takes ownership) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00188}{boolean\+\_\+values}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{columnlabels}}, \mbox{\hyperlink{interface_8h_source_l00050}{Interface\+::highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::highlimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::lowlimit}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{rowlabels}}.
+
+\Hypertarget{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5}\label{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5} 
+\index{CMBMatrix@{CMBMatrix}!valueAt@{valueAt}}
+\index{valueAt@{valueAt}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{valueAt()}{valueAt()}}
+{\footnotesize\ttfamily double CMBMatrix\+::value\+At (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{j }\end{DoxyParamCaption}) const}
+
+
+
+Gets value at specified matrix position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Row index \\
+\hline
+{\em j} & Column index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix value at position (i,j) 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00180}{180}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00041}{to\+Json\+Object()}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00101}{To\+String()}}.
+
+\Hypertarget{classCMBMatrix_afcbd91f9c11008e1707805ea7924fe89}\label{classCMBMatrix_afcbd91f9c11008e1707805ea7924fe89} 
+\index{CMBMatrix@{CMBMatrix}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool CMBMatrix\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Writes matrix to file in CSV format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file} & File pointer to write to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00096}{96}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8cpp_source_l00101}{To\+String()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCMBMatrix_a454f537af4d9658623cc5f8e462e8537}\label{classCMBMatrix_a454f537af4d9658623cc5f8e462e8537} 
+\index{CMBMatrix@{CMBMatrix}!boolean\_values@{boolean\_values}}
+\index{boolean\_values@{boolean\_values}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{boolean\_values}{boolean\_values}}
+{\footnotesize\ttfamily bool CMBMatrix\+::boolean\+\_\+values = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Display values as Pass/\+Fail instead of numbers. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00188}{188}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8h_source_l00183}{Set\+Boolean\+Value()}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{To\+Table()}}.
+
+\Hypertarget{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}\label{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6} 
+\index{CMBMatrix@{CMBMatrix}!columnlabels@{columnlabels}}
+\index{columnlabels@{columnlabels}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{columnlabels}{columnlabels}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}$>$ CMBMatrix\+::columnlabels\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Labels for each column. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00186}{186}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00011}{CMBMatrix()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00020}{CMBMatrix()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00025}{CMBMatrix()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00097}{Column\+Label()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00153}{Column\+Labels()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00214}{Get\+Column()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00067}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00111}{Set\+Column\+Label()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00124}{Set\+Column\+Labels()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00041}{to\+Json\+Object()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00101}{To\+String()}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{To\+Table()}}.
+
+\Hypertarget{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}\label{classCMBMatrix_afda7d7a640c806e296bb0399687460ee} 
+\index{CMBMatrix@{CMBMatrix}!rowlabels@{rowlabels}}
+\index{rowlabels@{rowlabels}!CMBMatrix@{CMBMatrix}}
+\doxysubsubsection{\texorpdfstring{rowlabels}{rowlabels}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}$>$ CMBMatrix\+::rowlabels\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Labels for each row. 
+
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8h_source_l00187}{187}} of file \mbox{\hyperlink{cmbmatrix_8h_source}{cmbmatrix.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00011}{CMBMatrix()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00020}{CMBMatrix()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00025}{CMBMatrix()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00200}{Get\+Row()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00031}{operator=()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00067}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00104}{Row\+Label()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00229}{Row\+Label\+Categories()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00147}{Row\+Labels()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00118}{Set\+Row\+Label()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00130}{Set\+Row\+Labels()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00041}{to\+Json\+Object()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00101}{To\+String()}}, and \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{To\+Table()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cmbmatrix_8h}{cmbmatrix.\+h}}\item 
+\mbox{\hyperlink{cmbmatrix_8cpp}{cmbmatrix.\+cpp}}\end{DoxyCompactItemize}

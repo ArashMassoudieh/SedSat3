@@ -1,0 +1,154 @@
+\doxysection{Element\+Table\+Delegate Class Reference}
+\hypertarget{classElementTableDelegate}{}\label{classElementTableDelegate}\index{ElementTableDelegate@{ElementTableDelegate}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/elementtabledelegate.\+h$>$}
+
+
+
+Inheritance diagram for Element\+Table\+Delegate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classElementTableDelegate__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Element\+Table\+Delegate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classElementTableDelegate__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classElementTableDelegate_a68c5c21dcc3552247268aa432034cd84}{Element\+Table\+Delegate}} (\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}\+\_\+\+Data, QObject \texorpdfstring{$\ast$}{*}parent)
+\item 
+QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElementTableDelegate_a9b7ed2476a71abe247c92bd9c45a831b}{create\+Editor}} (QWidget \texorpdfstring{$\ast$}{*}parent, const QStyle\+Option\+View\+Item \&option, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classElementTableDelegate_aa0cab558565d2a571505933ac7074bc4}{set\+Editor\+Data}} (QWidget \texorpdfstring{$\ast$}{*}editor, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classElementTableDelegate_a373ca8ca8fe926fe42e6b4813a2b9577}{set\+Model\+Data}} (QWidget \texorpdfstring{$\ast$}{*}editor, QAbstract\+Item\+Model \texorpdfstring{$\ast$}{*}model, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classElementTableDelegate_aa51ec623dc89d11d4be1e51f7ef4fe89}{update\+Editor\+Geometry}} (QWidget \texorpdfstring{$\ast$}{*}editor, const QStyle\+Option\+View\+Item \&option, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classElementTableDelegate_a37c8b859bf9865509b64c472b68baa7a}{paint}} (QPainter \texorpdfstring{$\ast$}{*}painter, const QStyle\+Option\+View\+Item \&option, const QModel\+Index \&index) const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElementTableDelegate_aebf2d198ab49b8bf918368c8bf56e75f}{Data}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8h_source_l00010}{10}} of file \mbox{\hyperlink{elementtabledelegate_8h_source}{elementtabledelegate.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classElementTableDelegate_a68c5c21dcc3552247268aa432034cd84}\label{classElementTableDelegate_a68c5c21dcc3552247268aa432034cd84} 
+\index{ElementTableDelegate@{ElementTableDelegate}!ElementTableDelegate@{ElementTableDelegate}}
+\index{ElementTableDelegate@{ElementTableDelegate}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{ElementTableDelegate()}{ElementTableDelegate()}}
+{\footnotesize\ttfamily Element\+Table\+Delegate\+::\+Element\+Table\+Delegate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{\+\_\+\+Data,  }\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{elementtabledelegate_8cpp_source}{elementtabledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementtabledelegate_8h_source_l00035}{Data}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classElementTableDelegate_a9b7ed2476a71abe247c92bd9c45a831b}\label{classElementTableDelegate_a9b7ed2476a71abe247c92bd9c45a831b} 
+\index{ElementTableDelegate@{ElementTableDelegate}!createEditor@{createEditor}}
+\index{createEditor@{createEditor}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{createEditor()}{createEditor()}}
+{\footnotesize\ttfamily QWidget \texorpdfstring{$\ast$}{*} Element\+Table\+Delegate\+::create\+Editor (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent,  }\item[{const QStyle\+Option\+View\+Item \&}]{option,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{elementtabledelegate_8cpp_source}{elementtabledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementtabledelegate_8h_source_l00035}{Data}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\+\_\+information\+::do\+\_\+not\+\_\+include}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\+\_\+information\+::element}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05042}{Source\+Sink\+Data\+::\+Get\+Element\+Information()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\+\_\+information\+::isotope}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, and \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}.
+
+\Hypertarget{classElementTableDelegate_a37c8b859bf9865509b64c472b68baa7a}\label{classElementTableDelegate_a37c8b859bf9865509b64c472b68baa7a} 
+\index{ElementTableDelegate@{ElementTableDelegate}!paint@{paint}}
+\index{paint@{paint}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Element\+Table\+Delegate\+::paint (\begin{DoxyParamCaption}\item[{QPainter \texorpdfstring{$\ast$}{*}}]{painter,  }\item[{const QStyle\+Option\+View\+Item \&}]{option,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00167}{167}} of file \mbox{\hyperlink{elementtabledelegate_8cpp_source}{elementtabledelegate.\+cpp}}.
+
+\Hypertarget{classElementTableDelegate_aa0cab558565d2a571505933ac7074bc4}\label{classElementTableDelegate_aa0cab558565d2a571505933ac7074bc4} 
+\index{ElementTableDelegate@{ElementTableDelegate}!setEditorData@{setEditorData}}
+\index{setEditorData@{setEditorData}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{setEditorData()}{setEditorData()}}
+{\footnotesize\ttfamily void Element\+Table\+Delegate\+::set\+Editor\+Data (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{editor,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00081}{81}} of file \mbox{\hyperlink{elementtabledelegate_8cpp_source}{elementtabledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elementtabledelegate_8h_source_l00035}{Data}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\+\_\+information\+::do\+\_\+not\+\_\+include}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\+\_\+information\+::element}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05042}{Source\+Sink\+Data\+::\+Get\+Element\+Information()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\+\_\+information\+::isotope}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, and \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}.
+
+\Hypertarget{classElementTableDelegate_a373ca8ca8fe926fe42e6b4813a2b9577}\label{classElementTableDelegate_a373ca8ca8fe926fe42e6b4813a2b9577} 
+\index{ElementTableDelegate@{ElementTableDelegate}!setModelData@{setModelData}}
+\index{setModelData@{setModelData}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{setModelData()}{setModelData()}}
+{\footnotesize\ttfamily void Element\+Table\+Delegate\+::set\+Model\+Data (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{editor,  }\item[{QAbstract\+Item\+Model \texorpdfstring{$\ast$}{*}}]{model,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00125}{125}} of file \mbox{\hyperlink{elementtabledelegate_8cpp_source}{elementtabledelegate.\+cpp}}.
+
+\Hypertarget{classElementTableDelegate_aa51ec623dc89d11d4be1e51f7ef4fe89}\label{classElementTableDelegate_aa51ec623dc89d11d4be1e51f7ef4fe89} 
+\index{ElementTableDelegate@{ElementTableDelegate}!updateEditorGeometry@{updateEditorGeometry}}
+\index{updateEditorGeometry@{updateEditorGeometry}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{updateEditorGeometry()}{updateEditorGeometry()}}
+{\footnotesize\ttfamily void Element\+Table\+Delegate\+::update\+Editor\+Geometry (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{editor,  }\item[{const QStyle\+Option\+View\+Item \&}]{option,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00161}{161}} of file \mbox{\hyperlink{elementtabledelegate_8cpp_source}{elementtabledelegate.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classElementTableDelegate_aebf2d198ab49b8bf918368c8bf56e75f}\label{classElementTableDelegate_aebf2d198ab49b8bf918368c8bf56e75f} 
+\index{ElementTableDelegate@{ElementTableDelegate}!Data@{Data}}
+\index{Data@{Data}!ElementTableDelegate@{ElementTableDelegate}}
+\doxysubsubsection{\texorpdfstring{Data}{Data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}\texorpdfstring{$\ast$}{*} Element\+Table\+Delegate\+::\+Data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{elementtabledelegate_8h_source_l00035}{35}} of file \mbox{\hyperlink{elementtabledelegate_8h_source}{elementtabledelegate.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00007}{Element\+Table\+Delegate()}}, \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00012}{create\+Editor()}}, and \mbox{\hyperlink{elementtabledelegate_8cpp_source_l00081}{set\+Editor\+Data()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{elementtabledelegate_8h}{elementtabledelegate.\+h}}\item 
+\mbox{\hyperlink{elementtabledelegate_8cpp}{elementtabledelegate.\+cpp}}\end{DoxyCompactItemize}

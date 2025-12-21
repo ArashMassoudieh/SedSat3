@@ -1,0 +1,9 @@
+<map id="MultipleLinearRegressionSet" name="MultipleLinearRegressionSet">
+<area shape="rect" id="Node000001" title=" " alt="" coords="17,588,197,863"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,316,176,396"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,410,103,588,98,588,90,410"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title=" " alt="" coords="201,173,362,539"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,540,174,589,169,587,192,538"/>
+<area shape="rect" id="Node000004" href="$structoptions.html" title=" " alt="" coords="220,5,343,111"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="284,111,284,157,279,157,279,111"/>
+</map>

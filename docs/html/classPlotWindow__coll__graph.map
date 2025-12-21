@@ -1,0 +1,15 @@
+<map id="PlotWindow" name="PlotWindow">
+<area shape="rect" id="Node000001" title=" " alt="" coords="27,972,139,1097"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,624,67,689"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="44,702,78,971,72,972,39,703"/>
+<area shape="rect" id="Node000003" href="$classGeneralPlotter.html" title=" " alt="" coords="91,404,267,909"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="117,910,105,957,100,955,112,909"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="85,261,179,327"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="141,340,149,404,143,404,135,341"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="203,261,341,327"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="266,328,250,389,245,388,261,327"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="218,133,326,199"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="275,213,275,261,269,261,269,213"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="261,5,283,71"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="275,71,275,117,269,117,269,71"/>
+</map>

@@ -1,0 +1,38 @@
+\doxysection{range.\+h}
+\hypertarget{range_8h_source}{}\label{range_8h_source}\mbox{\hyperlink{range_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ RANGE\_H}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ RANGE\_H}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{interface_8h}{interface.h}}>}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{parameter_8h}{parameter.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00007}\mbox{\hyperlink{classRange}{00007}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRange}{Range}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classInterface}{Interface}}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00009}00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classRange_aa4407a93074fbb726deb613f7a067983}{Range}}();}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classRange_aa4407a93074fbb726deb613f7a067983}{Range}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classRange}{Range}}\ \&rhs);}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{classRange}{Range}}\&\ \mbox{\hyperlink{classRange_a0ac3373d3074cbcdf7a95a4b7f9b6fdd}{operator\ =\ }}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classRange}{Range}}\ \&rhs);}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00013}00013\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classRange_a3664300bcdc1dbcbcef2e1aeb6b276fa}{toJsonObject}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00014}00014\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRange_a571f1a21e961a54b90afa03d9449df65}{ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00015}00015\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classRange_a0d95d827d04a96451baea3d88c2ef92e}{ToString}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00016}00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRange_a904851d2ba8c0c2f47f4c4925a9f925a}{writetofile}}(QFile*)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRange_a1c9121fc9f3e87a69bf867d107a544f4}{Read}}(\textcolor{keyword}{const}\ QStringList\ \&strlist)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00018}00018\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRange_a17d9f6e25fb4bdadca3b9fec2197a769}{Set}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\_range}}\ lowhigh,\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&value);}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_affecd8e858494001db58ddd246f030a7}{Get}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\_range}}\ lowhigh)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00020}\mbox{\hyperlink{classRange_a096ad0c9f707c34da96fe7534da1ad12}{00020}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_a096ad0c9f707c34da96fe7534da1ad12}{Mean}}()\textcolor{keyword}{\ const\ }\{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRange_a6cd6c9d98a0e57b33aac77fa29c58605}{mean}};\}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00021}\mbox{\hyperlink{classRange_afbe88c2e384f99abaaa8e67428336207}{00021}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRange_afbe88c2e384f99abaaa8e67428336207}{SetMean}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&m)\ \{\mbox{\hyperlink{classRange_a6cd6c9d98a0e57b33aac77fa29c58605}{mean}}\ =\ m;\}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00022}\mbox{\hyperlink{classRange_a1b6fabc5ad519e52778a75c2cfd3f2ed}{00022}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_a1b6fabc5ad519e52778a75c2cfd3f2ed}{Median}}()\textcolor{keyword}{\ const\ }\{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRange_aef44d1f8639914f2628c3d3ec2f884b9}{median}};\}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00023}\mbox{\hyperlink{classRange_a9cf1c0eebe0bdedfb59218b8fd58e1c0}{00023}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRange_a9cf1c0eebe0bdedfb59218b8fd58e1c0}{SetMedian}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&m)\ \{\mbox{\hyperlink{classRange_aef44d1f8639914f2628c3d3ec2f884b9}{median}}\ =\ m;\}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00024}\mbox{\hyperlink{classRange_a3d45e8fc0fd5ed2255be85344a2004a8}{00024}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRange_a3d45e8fc0fd5ed2255be85344a2004a8}{SetValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ value)\ \{\mbox{\hyperlink{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c}{observed\_value}}\ =\ value;\}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00025}\mbox{\hyperlink{classRange_a5c3cb811927ca55bb557e578778c4b58}{00025}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_a5c3cb811927ca55bb557e578778c4b58}{GetValue}}()\ \{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c}{observed\_value}};\ \}}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00026}00026\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00027}\mbox{\hyperlink{classRange_ab60e8b6d7e32ed3630250ac0eecc0338}{00027}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classRange_ab60e8b6d7e32ed3630250ac0eecc0338}{range}};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00028}\mbox{\hyperlink{classRange_aef44d1f8639914f2628c3d3ec2f884b9}{00028}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_aef44d1f8639914f2628c3d3ec2f884b9}{median}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00029}\mbox{\hyperlink{classRange_a6cd6c9d98a0e57b33aac77fa29c58605}{00029}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_a6cd6c9d98a0e57b33aac77fa29c58605}{mean}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00030}\mbox{\hyperlink{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c}{00030}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c}{observed\_value}}=0;}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00031}00031\ \};}
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{range_8h_source_l00033}00033\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ RANGE\_H}}
+
+\end{DoxyCode}

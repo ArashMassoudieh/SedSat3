@@ -1,0 +1,408 @@
+\doxysection{CIndividual Class Reference}
+\hypertarget{classCIndividual}{}\label{classCIndividual}\index{CIndividual@{CIndividual}}
+
+
+{\ttfamily \#include $<$GA/\+Individual.\+h$>$}
+
+
+
+Collaboration diagram for CIndividual\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCIndividual__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCIndividual_a99f8770a2ced6c434e3ea73a4ee76c81}{CIndividual}} ()
+\item 
+\mbox{\hyperlink{classCIndividual_a5499e3acbe12670f73d95f36c00bf8c6}{CIndividual}} (int n)
+\item 
+\mbox{\hyperlink{classCIndividual_aaffb1c345f2e88638875be918e12d491}{CIndividual}} (const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&C)
+\item 
+\mbox{\hyperlink{classCIndividual}{CIndividual}} \mbox{\hyperlink{classCIndividual_a7aafaf915575aa9d2a118e34152c2f04}{operator=}} (const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&C)
+\item 
+virtual \mbox{\hyperlink{classCIndividual_aaed3bf3848b909905f744b83de05363f}{\texorpdfstring{$\sim$}{\string~}\+CIndividual}} ()
+\item 
+void \mbox{\hyperlink{classCIndividual_a75526b341a075d56577e52db02b7a85f}{initialize}} ()
+\item 
+void \mbox{\hyperlink{classCIndividual_a57872dc367fb8cc07ca2d90b7efc6c27}{mutate}} (double mu)
+\item 
+void \mbox{\hyperlink{classCIndividual_a0fbe8581e789a590519311adb674237c}{shake}} (double shakescale)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classCIndividual_a897eabc77d82add8ae4ba0453069763b}{x}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classCIndividual_a642aa0b8a04bfbadf5745c4d63d2b732}{pert}}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classCIndividual_a55b41388577ffa9e635dbe4fc753d66e}{dir}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classCIndividual_a76406c7fe6bace5bdab6e6d62f4a669c}{perteff}}
+\item 
+double \mbox{\hyperlink{classCIndividual_ae82ac7b36d85ed31f18c85b994d0b014}{fitness}}
+\item 
+double \mbox{\hyperlink{classCIndividual_a30f511767109626c0463b39689828e27}{actual\+\_\+fitness}}
+\item 
+double \mbox{\hyperlink{classCIndividual_ac5dec8c1dd0e84e47ed8757786061220}{actual\+\_\+fitness2}}
+\item 
+int \mbox{\hyperlink{classCIndividual_a444ae9b1ce4808984c6c95dce0d25a77}{parent1}}
+\item 
+int \mbox{\hyperlink{classCIndividual_a733ea523cb211159494bad4dea4a2db7}{parent2}}
+\item 
+int \mbox{\hyperlink{classCIndividual_a1255113ec2014e5c1d45cf3fc344dfbc}{xsite}}
+\item 
+int \mbox{\hyperlink{classCIndividual_a7037fbe2f43cea02b5b98d69aa8714d2}{n\+Params}}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classCIndividual_a99916bd730c41e4debeb97eafdcc46d9}{precision}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classCIndividual_ab1ae74906e074fb3c91ae2cb7f9de91b}{minrange}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classCIndividual_ad8faa3d3f5d86e00fc6f75de83ab8146}{maxrange}}
+\item 
+int \mbox{\hyperlink{classCIndividual_a3654c90e71215259c44679b1af4c8efe}{rank}}
+\item 
+std\+::vector$<$ double $>$ \mbox{\hyperlink{classCIndividual_ad4f4b1185144c410fdd644fdae190ffb}{fit\+\_\+measures}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00006}{6}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCIndividual_a99f8770a2ced6c434e3ea73a4ee76c81}\label{classCIndividual_a99f8770a2ced6c434e3ea73a4ee76c81} 
+\index{CIndividual@{CIndividual}!CIndividual@{CIndividual}}
+\index{CIndividual@{CIndividual}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{CIndividual()}{CIndividual()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily CIndividual\+::\+CIndividual (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8h_source_l00016}{dir}}, \mbox{\hyperlink{Individual_8h_source_l00028}{fit\+\_\+measures}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, \mbox{\hyperlink{Individual_8h_source_l00015}{pert}}, \mbox{\hyperlink{Individual_8h_source_l00017}{perteff}}, \mbox{\hyperlink{Individual_8h_source_l00022}{precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+\Hypertarget{classCIndividual_a5499e3acbe12670f73d95f36c00bf8c6}\label{classCIndividual_a5499e3acbe12670f73d95f36c00bf8c6} 
+\index{CIndividual@{CIndividual}!CIndividual@{CIndividual}}
+\index{CIndividual@{CIndividual}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{CIndividual()}{CIndividual()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily CIndividual\+::\+CIndividual (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8h_source_l00016}{dir}}, \mbox{\hyperlink{Individual_8h_source_l00028}{fit\+\_\+measures}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, \mbox{\hyperlink{Individual_8h_source_l00015}{pert}}, \mbox{\hyperlink{Individual_8h_source_l00017}{perteff}}, \mbox{\hyperlink{Individual_8h_source_l00022}{precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+\Hypertarget{classCIndividual_aaffb1c345f2e88638875be918e12d491}\label{classCIndividual_aaffb1c345f2e88638875be918e12d491} 
+\index{CIndividual@{CIndividual}!CIndividual@{CIndividual}}
+\index{CIndividual@{CIndividual}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{CIndividual()}{CIndividual()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily CIndividual\+::\+CIndividual (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{C }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8h_source_l00019}{actual\+\_\+fitness}}, \mbox{\hyperlink{Individual_8h_source_l00019}{actual\+\_\+fitness2}}, \mbox{\hyperlink{Individual_8h_source_l00016}{dir}}, \mbox{\hyperlink{Individual_8h_source_l00028}{fit\+\_\+measures}}, \mbox{\hyperlink{Individual_8h_source_l00018}{fitness}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, \mbox{\hyperlink{Individual_8h_source_l00015}{pert}}, \mbox{\hyperlink{Individual_8h_source_l00017}{perteff}}, \mbox{\hyperlink{Individual_8h_source_l00022}{precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+\Hypertarget{classCIndividual_aaed3bf3848b909905f744b83de05363f}\label{classCIndividual_aaed3bf3848b909905f744b83de05363f} 
+\index{CIndividual@{CIndividual}!````~CIndividual@{\texorpdfstring{$\sim$}{\string~}CIndividual}}
+\index{````~CIndividual@{\texorpdfstring{$\sim$}{\string~}CIndividual}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}CIndividual()}{\string~CIndividual()}}
+{\footnotesize\ttfamily CIndividual\+::\texorpdfstring{$\sim$}{\string~}\+CIndividual (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCIndividual_a75526b341a075d56577e52db02b7a85f}\label{classCIndividual_a75526b341a075d56577e52db02b7a85f} 
+\index{CIndividual@{CIndividual}!initialize@{initialize}}
+\index{initialize@{initialize}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void CIndividual\+::initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00115}{115}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8cpp_source_l00126}{Get\+Rnd\+Unif()}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+\Hypertarget{classCIndividual_a57872dc367fb8cc07ca2d90b7efc6c27}\label{classCIndividual_a57872dc367fb8cc07ca2d90b7efc6c27} 
+\index{CIndividual@{CIndividual}!mutate@{mutate}}
+\index{mutate@{mutate}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{mutate()}{mutate()}}
+{\footnotesize\ttfamily void CIndividual\+::mutate (\begin{DoxyParamCaption}\item[{double}]{mu }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00203}{203}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8cpp_source_l00086}{code()}}, \mbox{\hyperlink{Binary_8cpp_source_l00072}{CBinary\+::decode()}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Binary_8cpp_source_l00225}{CBinary\+::mutate()}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, \mbox{\hyperlink{Individual_8h_source_l00022}{precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+\Hypertarget{classCIndividual_a7aafaf915575aa9d2a118e34152c2f04}\label{classCIndividual_a7aafaf915575aa9d2a118e34152c2f04} 
+\index{CIndividual@{CIndividual}!operator=@{operator=}}
+\index{operator=@{operator=}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCIndividual}{CIndividual}} CIndividual\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{C }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8h_source_l00019}{actual\+\_\+fitness}}, \mbox{\hyperlink{Individual_8h_source_l00019}{actual\+\_\+fitness2}}, \mbox{\hyperlink{Individual_8h_source_l00016}{dir}}, \mbox{\hyperlink{Individual_8h_source_l00028}{fit\+\_\+measures}}, \mbox{\hyperlink{Individual_8h_source_l00018}{fitness}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, \mbox{\hyperlink{Individual_8h_source_l00015}{pert}}, \mbox{\hyperlink{Individual_8h_source_l00017}{perteff}}, \mbox{\hyperlink{Individual_8h_source_l00022}{precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+\Hypertarget{classCIndividual_a0fbe8581e789a590519311adb674237c}\label{classCIndividual_a0fbe8581e789a590519311adb674237c} 
+\index{CIndividual@{CIndividual}!shake@{shake}}
+\index{shake@{shake}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{shake()}{shake()}}
+{\footnotesize\ttfamily void CIndividual\+::shake (\begin{DoxyParamCaption}\item[{double}]{shakescale }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00277}{277}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8cpp_source_l00126}{Get\+Rnd\+Unif()}}, \mbox{\hyperlink{Individual_8h_source_l00023}{maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{n\+Params}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{x}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCIndividual_a30f511767109626c0463b39689828e27}\label{classCIndividual_a30f511767109626c0463b39689828e27} 
+\index{CIndividual@{CIndividual}!actual\_fitness@{actual\_fitness}}
+\index{actual\_fitness@{actual\_fitness}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{actual\_fitness}{actual\_fitness}}
+{\footnotesize\ttfamily double CIndividual\+::actual\+\_\+fitness}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00019}{19}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_ac5dec8c1dd0e84e47ed8757786061220}\label{classCIndividual_ac5dec8c1dd0e84e47ed8757786061220} 
+\index{CIndividual@{CIndividual}!actual\_fitness2@{actual\_fitness2}}
+\index{actual\_fitness2@{actual\_fitness2}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{actual\_fitness2}{actual\_fitness2}}
+{\footnotesize\ttfamily double CIndividual\+::actual\+\_\+fitness2}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00019}{19}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_a55b41388577ffa9e635dbe4fc753d66e}\label{classCIndividual_a55b41388577ffa9e635dbe4fc753d66e} 
+\index{CIndividual@{CIndividual}!dir@{dir}}
+\index{dir@{dir}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{dir}{dir}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ CIndividual\+::dir}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00016}{16}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_ad4f4b1185144c410fdd644fdae190ffb}\label{classCIndividual_ad4f4b1185144c410fdd644fdae190ffb} 
+\index{CIndividual@{CIndividual}!fit\_measures@{fit\_measures}}
+\index{fit\_measures@{fit\_measures}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{fit\_measures}{fit\_measures}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ CIndividual\+::fit\+\_\+measures}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00028}{28}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_ae82ac7b36d85ed31f18c85b994d0b014}\label{classCIndividual_ae82ac7b36d85ed31f18c85b994d0b014} 
+\index{CIndividual@{CIndividual}!fitness@{fitness}}
+\index{fitness@{fitness}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{fitness}{fitness}}
+{\footnotesize\ttfamily double CIndividual\+::fitness}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00018}{18}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_ad8faa3d3f5d86e00fc6f75de83ab8146}\label{classCIndividual_ad8faa3d3f5d86e00fc6f75de83ab8146} 
+\index{CIndividual@{CIndividual}!maxrange@{maxrange}}
+\index{maxrange@{maxrange}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{maxrange}{maxrange}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ CIndividual\+::maxrange}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00023}{23}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00115}{initialize()}}, \mbox{\hyperlink{Individual_8cpp_source_l00203}{mutate()}}, \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}, \mbox{\hyperlink{GA_8cpp_source_l00142}{CGA$<$ T $>$\+::setnumpop()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00277}{shake()}}.
+
+\Hypertarget{classCIndividual_ab1ae74906e074fb3c91ae2cb7f9de91b}\label{classCIndividual_ab1ae74906e074fb3c91ae2cb7f9de91b} 
+\index{CIndividual@{CIndividual}!minrange@{minrange}}
+\index{minrange@{minrange}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{minrange}{minrange}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ CIndividual\+::minrange}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00023}{23}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00115}{initialize()}}, \mbox{\hyperlink{Individual_8cpp_source_l00203}{mutate()}}, \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}, \mbox{\hyperlink{GA_8cpp_source_l00142}{CGA$<$ T $>$\+::setnumpop()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00277}{shake()}}.
+
+\Hypertarget{classCIndividual_a7037fbe2f43cea02b5b98d69aa8714d2}\label{classCIndividual_a7037fbe2f43cea02b5b98d69aa8714d2} 
+\index{CIndividual@{CIndividual}!nParams@{nParams}}
+\index{nParams@{nParams}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{nParams}{nParams}}
+{\footnotesize\ttfamily int CIndividual\+::n\+Params}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00021}{21}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00188}{cross\+\_\+\+RC\+\_\+\+L()}}, \mbox{\hyperlink{Individual_8cpp_source_l00115}{initialize()}}, \mbox{\hyperlink{Individual_8cpp_source_l00203}{mutate()}}, \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}, \mbox{\hyperlink{GA_8cpp_source_l00142}{CGA$<$ T $>$\+::setnumpop()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00277}{shake()}}.
+
+\Hypertarget{classCIndividual_a444ae9b1ce4808984c6c95dce0d25a77}\label{classCIndividual_a444ae9b1ce4808984c6c95dce0d25a77} 
+\index{CIndividual@{CIndividual}!parent1@{parent1}}
+\index{parent1@{parent1}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{parent1}{parent1}}
+{\footnotesize\ttfamily int CIndividual\+::parent1}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00020}{20}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+\Hypertarget{classCIndividual_a733ea523cb211159494bad4dea4a2db7}\label{classCIndividual_a733ea523cb211159494bad4dea4a2db7} 
+\index{CIndividual@{CIndividual}!parent2@{parent2}}
+\index{parent2@{parent2}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{parent2}{parent2}}
+{\footnotesize\ttfamily int CIndividual\+::parent2}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00020}{20}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+\Hypertarget{classCIndividual_a642aa0b8a04bfbadf5745c4d63d2b732}\label{classCIndividual_a642aa0b8a04bfbadf5745c4d63d2b732} 
+\index{CIndividual@{CIndividual}!pert@{pert}}
+\index{pert@{pert}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{pert}{pert}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ CIndividual\+::pert}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00015}{15}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_a76406c7fe6bace5bdab6e6d62f4a669c}\label{classCIndividual_a76406c7fe6bace5bdab6e6d62f4a669c} 
+\index{CIndividual@{CIndividual}!perteff@{perteff}}
+\index{perteff@{perteff}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{perteff}{perteff}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ CIndividual\+::perteff}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00017}{17}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}.
+
+\Hypertarget{classCIndividual_a99916bd730c41e4debeb97eafdcc46d9}\label{classCIndividual_a99916bd730c41e4debeb97eafdcc46d9} 
+\index{CIndividual@{CIndividual}!precision@{precision}}
+\index{precision@{precision}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{precision}{precision}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ CIndividual\+::precision}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00022}{22}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00203}{mutate()}}, \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}, and \mbox{\hyperlink{GA_8cpp_source_l00142}{CGA$<$ T $>$\+::setnumpop()}}.
+
+\Hypertarget{classCIndividual_a3654c90e71215259c44679b1af4c8efe}\label{classCIndividual_a3654c90e71215259c44679b1af4c8efe} 
+\index{CIndividual@{CIndividual}!rank@{rank}}
+\index{rank@{rank}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{rank}{rank}}
+{\footnotesize\ttfamily int CIndividual\+::rank}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00026}{26}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+\Hypertarget{classCIndividual_a897eabc77d82add8ae4ba0453069763b}\label{classCIndividual_a897eabc77d82add8ae4ba0453069763b} 
+\index{CIndividual@{CIndividual}!x@{x}}
+\index{x@{x}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily std\+::vector$<$double$>$ CIndividual\+::x}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00014}{14}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00017}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00059}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00036}{CIndividual()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00188}{cross\+\_\+\+RC\+\_\+\+L()}}, \mbox{\hyperlink{Individual_8cpp_source_l00115}{initialize()}}, \mbox{\hyperlink{Individual_8cpp_source_l00203}{mutate()}}, \mbox{\hyperlink{Individual_8cpp_source_l00087}{operator=()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00277}{shake()}}.
+
+\Hypertarget{classCIndividual_a1255113ec2014e5c1d45cf3fc344dfbc}\label{classCIndividual_a1255113ec2014e5c1d45cf3fc344dfbc} 
+\index{CIndividual@{CIndividual}!xsite@{xsite}}
+\index{xsite@{xsite}!CIndividual@{CIndividual}}
+\doxysubsubsection{\texorpdfstring{xsite}{xsite}}
+{\footnotesize\ttfamily int CIndividual\+::xsite}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8h_source_l00020}{20}} of file \mbox{\hyperlink{Individual_8h_source}{Individual.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+GA/\mbox{\hyperlink{Individual_8h}{Individual.\+h}}\item 
+GA/\mbox{\hyperlink{Individual_8cpp}{Individual.\+cpp}}\end{DoxyCompactItemize}

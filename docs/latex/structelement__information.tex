@@ -1,0 +1,173 @@
+\doxysection{element\+\_\+information Struct Reference}
+\hypertarget{structelement__information}{}\label{structelement__information}\index{element\_information@{element\_information}}
+
+
+Metadata describing an element\textquotesingle{}s role and properties in analysis.  
+
+
+
+
+{\ttfamily \#include $<$elemental\+\_\+profile.\+h$>$}
+
+
+
+Collaboration diagram for element\+\_\+information\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{structelement__information__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{role}} \{ \newline
+\mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{do\+\_\+not\+\_\+include}}
+, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{isotope}}
+, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{particle\+\_\+size}}
+, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element}}
+, \newline
+\mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{organic\+\_\+carbon}}
+ \}
+\begin{DoxyCompactList}\small\item\em Classification of element types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{element\+\_\+information\+::role}} \mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}} = \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{role\+::element}}
+\item 
+double \mbox{\hyperlink{structelement__information_a056c8f0e1ae1fd21a11dddb990c83dcd}{standard\+\_\+ratio}}
+\begin{DoxyCompactList}\small\item\em Standard isotopic ratio for normalization. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{structelement__information_afe23057d4978b38c0acef67198a45117}{base\+\_\+element}}
+\begin{DoxyCompactList}\small\item\em Parent element for isotopes. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structelement__information_ac50ec2cd0b5510b23e917db405b2a62d}{include\+\_\+in\+\_\+analysis}} = true
+\begin{DoxyCompactList}\small\item\em Whether to include in statistical analyses. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Metadata describing an element\textquotesingle{}s role and properties in analysis. 
+
+Contains configuration information for how each element should be treated during sediment source fingerprinting analysis. \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00050}{50}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{structelement__information_a927baa115e71066b2964052d16cc474c}\label{structelement__information_a927baa115e71066b2964052d16cc474c} 
+\index{element\_information@{element\_information}!role@{role}}
+\index{role@{role}!element\_information@{element\_information}}
+\doxysubsubsection{\texorpdfstring{role}{role}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{element\+\_\+information\+::role}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Classification of element types. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{do\_not\_include@{do\_not\_include}!element\_information@{element\_information}}\index{element\_information@{element\_information}!do\_not\_include@{do\_not\_include}}}\Hypertarget{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}\label{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2} 
+do\+\_\+not\+\_\+include&Exclude from all analyses. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{isotope@{isotope}!element\_information@{element\_information}}\index{element\_information@{element\_information}!isotope@{isotope}}}\Hypertarget{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}\label{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172} 
+isotope&Isotopic ratio (e.\+g., 206Pb/207\+Pb) \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{particle\_size@{particle\_size}!element\_information@{element\_information}}\index{element\_information@{element\_information}!particle\_size@{particle\_size}}}\Hypertarget{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}\label{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b} 
+particle\+\_\+size&Particle size distribution parameter. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{element@{element}!element\_information@{element\_information}}\index{element\_information@{element\_information}!element@{element}}}\Hypertarget{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}\label{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b} 
+element&Standard chemical element concentration. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{organic\_carbon@{organic\_carbon}!element\_information@{element\_information}}\index{element\_information@{element\_information}!organic\_carbon@{organic\_carbon}}}\Hypertarget{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}\label{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94} 
+organic\+\_\+carbon&Organic carbon content. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00056}{56}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structelement__information_afe23057d4978b38c0acef67198a45117}\label{structelement__information_afe23057d4978b38c0acef67198a45117} 
+\index{element\_information@{element\_information}!base\_element@{base\_element}}
+\index{base\_element@{base\_element}!element\_information@{element\_information}}
+\doxysubsubsection{\texorpdfstring{base\_element}{base\_element}}
+{\footnotesize\ttfamily string element\+\_\+information\+::base\+\_\+element}
+
+
+
+Parent element for isotopes. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00065}{65}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01530}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix\+\_\+\+Isotopes()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02626}{Source\+Sink\+Data\+::\+Read\+Element\+Informationfrom\+Json\+Object()}}.
+
+\Hypertarget{structelement__information_ac50ec2cd0b5510b23e917db405b2a62d}\label{structelement__information_ac50ec2cd0b5510b23e917db405b2a62d} 
+\index{element\_information@{element\_information}!include\_in\_analysis@{include\_in\_analysis}}
+\index{include\_in\_analysis@{include\_in\_analysis}!element\_information@{element\_information}}
+\doxysubsubsection{\texorpdfstring{include\_in\_analysis}{include\_in\_analysis}}
+{\footnotesize\ttfamily bool element\+\_\+information\+::include\+\_\+in\+\_\+analysis = true}
+
+
+
+Whether to include in statistical analyses. 
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00066}{66}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{Elemental\+\_\+\+Profile\+::\+Create\+Analysis\+Profile()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02626}{Source\+Sink\+Data\+::\+Read\+Element\+Informationfrom\+Json\+Object()}}.
+
+\Hypertarget{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}\label{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e} 
+\index{element\_information@{element\_information}!Role@{Role}}
+\index{Role@{Role}!element\_information@{element\_information}}
+\doxysubsubsection{\texorpdfstring{Role}{Role}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{element\+\_\+information\+::role}} element\+\_\+information\+::\+Role = \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{role\+::element}}}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00878}{Elemental\+\_\+\+Profile\+::\+Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{Elemental\+\_\+\+Profile\+::\+Create\+Analysis\+Profile()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00330}{Elemental\+\_\+\+Profile\+::\+Extract\+Chemical\+Elements()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02626}{Source\+Sink\+Data\+::\+Read\+Element\+Informationfrom\+Json\+Object()}}.
+
+\Hypertarget{structelement__information_a056c8f0e1ae1fd21a11dddb990c83dcd}\label{structelement__information_a056c8f0e1ae1fd21a11dddb990c83dcd} 
+\index{element\_information@{element\_information}!standard\_ratio@{standard\_ratio}}
+\index{standard\_ratio@{standard\_ratio}!element\_information@{element\_information}}
+\doxysubsubsection{\texorpdfstring{standard\_ratio}{standard\_ratio}}
+{\footnotesize\ttfamily double element\+\_\+information\+::standard\+\_\+ratio}
+
+
+
+Standard isotopic ratio for normalization. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile_8h_source_l00064}{64}} of file \mbox{\hyperlink{elemental__profile_8h_source}{elemental\+\_\+profile.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01530}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix\+\_\+\+Isotopes()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02626}{Source\+Sink\+Data\+::\+Read\+Element\+Informationfrom\+Json\+Object()}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{elemental__profile_8h}{elemental\+\_\+profile.\+h}}\end{DoxyCompactItemize}

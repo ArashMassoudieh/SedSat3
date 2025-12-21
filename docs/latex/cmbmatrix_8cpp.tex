@@ -1,0 +1,52 @@
+\doxysection{cmbmatrix.\+cpp File Reference}
+\hypertarget{cmbmatrix_8cpp}{}\label{cmbmatrix_8cpp}\index{cmbmatrix.cpp@{cmbmatrix.cpp}}
+{\ttfamily \#include "{}cmbmatrix.\+h"{}}\newline
+{\ttfamily \#include "{}QJson\+Array"{}}\newline
+{\ttfamily \#include "{}Vector.\+h"{}}\newline
+{\ttfamily \#include $<$QFile$>$}\newline
+Include dependency graph for cmbmatrix.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cmbmatrix_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{cmbmatrix_8cpp_afb9b78d5aa1ef3c59c28126dfb412e56}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \&M, const \mbox{\hyperlink{classCMBVector}{CMBVector}} \&V)
+\begin{DoxyCompactList}\small\item\em Matrix-\/vector multiplication operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{cmbmatrix_8cpp_afb9b78d5aa1ef3c59c28126dfb412e56}\label{cmbmatrix_8cpp_afb9b78d5aa1ef3c59c28126dfb412e56} 
+\index{cmbmatrix.cpp@{cmbmatrix.cpp}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!cmbmatrix.cpp@{cmbmatrix.cpp}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \&}]{M,  }\item[{const \mbox{\hyperlink{classCMBVector}{CMBVector}} \&}]{V }\end{DoxyParamCaption})}
+
+
+
+Matrix-\/vector multiplication operator. 
+
+Multiplies a \doxylink{classCMBMatrix}{CMBMatrix} by a \doxylink{classCMBVector}{CMBVector}, preserving row labels in the result.
+
+
+\begin{DoxyParams}{Parameters}
+{\em M} & Matrix (left operand) \\
+\hline
+{\em V} & Vector (right operand) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Resulting vector with row labels from matrix M 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{cmbmatrix_8cpp_source_l00185}{185}} of file \mbox{\hyperlink{cmbmatrix_8cpp_source}{cmbmatrix.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbmatrix_8h_source_l00147}{CMBMatrix\+::\+Row\+Labels()}}, \mbox{\hyperlink{cmbvector_8h_source_l00151}{CMBVector\+::\+Set\+Labels()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00193}{CMBMatrix\+::to\+Matrix()}}, and \mbox{\hyperlink{cmbvector_8cpp_source_l00196}{CMBVector\+::to\+Vector()}}.
+

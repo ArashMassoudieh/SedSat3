@@ -1,0 +1,32 @@
+\doxysection{plotwindow.\+cpp}
+\hypertarget{plotwindow_8cpp_source}{}\label{plotwindow_8cpp_source}\mbox{\hyperlink{plotwindow_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{plotwindow_8h}{plotwindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}ui\_plotwindow.h"{}}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}QComboBox"{}}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mainwindow_8h}{mainwindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00006}\mbox{\hyperlink{classPlotWindow_aa4cc66ba344978ee91def66ee9703e5c}{00006}}\ \mbox{\hyperlink{classPlotWindow_aa4cc66ba344978ee91def66ee9703e5c}{PlotWindow::PlotWindow}}(QWidget\ *parent)\ :}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00007}00007\ \ \ \ \ QDialog(parent),}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00008}00008\ \ \ \ \ ui(new\ \mbox{\hyperlink{namespaceUi}{Ui}}::\mbox{\hyperlink{classPlotWindow}{PlotWindow}})}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classPlotWindow_ab8c045d2794c93656d86147e8f213423}{ui}}-\/>setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{classPlotWindow_a993572502ef56ec534378056a12b8650}{plot}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classGeneralPlotter}{GeneralPlotter}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classPlotWindow_ab8c045d2794c93656d86147e8f213423}{ui}}-\/>horizontalLayout\_2-\/>addWidget(\mbox{\hyperlink{classPlotWindow_a993572502ef56ec534378056a12b8650}{plot}});}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00017}\mbox{\hyperlink{classPlotWindow_a684ea087a646cbe658940098a25ce150}{00017}}\ \mbox{\hyperlink{classPlotWindow_a684ea087a646cbe658940098a25ce150}{PlotWindow::\string~PlotWindow}}()}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classPlotWindow_ab8c045d2794c93656d86147e8f213423}{ui}};}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00020}00020\ \}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00022}\mbox{\hyperlink{classPlotWindow_a0172bea937dd292b68c896b71400ff25}{00022}}\ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\mbox{\hyperlink{classPlotWindow_a0172bea937dd292b68c896b71400ff25}{PlotWindow::Data}}()}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00023}00023\ \{}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classMainWindow}{MainWindow}}*\textcolor{keyword}{>}(parent())-\/>\mbox{\hyperlink{classPlotWindow_a0172bea937dd292b68c896b71400ff25}{Data}}();}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00025}00025\ \}}
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{plotwindow_8cpp_source_l00027}00027\ }
+
+\end{DoxyCode}

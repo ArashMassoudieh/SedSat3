@@ -1,0 +1,647 @@
+\doxysection{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}
+\hypertarget{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{}\label{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}Create profile containing only elements included in analysis.
+
+Create profile containing only elements included in analysis\+Filters the profile based on \doxylink{structelement__information}{element\+\_\+information} metadata, keeping only elements that should be included in statistical analysis. Excludes\+:
+\begin{DoxyItemize}
+\item Elements with include\+\_\+in\+\_\+analysis = false
+\item Elements with role = do\+\_\+not\+\_\+include
+\item Particle size indicators (role = particle\+\_\+size)
+\item Organic carbon measurements (role = organic\+\_\+carbon)
+\end{DoxyItemize}
+
+The marked status of elements is preserved in the filtered profile.
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+info} & Pointer to element metadata map (nullptr to include all) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+New profile containing only analysis-\/appropriate elements
+\end{DoxyReturn}
+\begin{DoxyPostcond}{Postcondition}
+If element\+\_\+info == nullptr\+: returns copy of entire profile 
+
+If element\+\_\+info != nullptr\+: returns filtered subset 
+
+Marked status preserved for included elements 
+
+Is\+Included\+In\+Analysis() state copied to output
+\end{DoxyPostcond}
+\begin{DoxyNote}{Note}
+Original profile is unchanged (const method)
+\end{DoxyNote}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ full\_profile;}
+\DoxyCodeLine{full\_profile.\mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{stringliteral}{"{}Al"{}},\ 8.5);}
+\DoxyCodeLine{full\_profile.\mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{stringliteral}{"{}OC"{}},\ 2.5);\ \ \textcolor{comment}{//\ Organic\ carbon}}
+\DoxyCodeLine{full\_profile.\mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(\textcolor{stringliteral}{"{}D50"{}},\ 125);\ \textcolor{comment}{//\ Particle\ size}}
+\DoxyCodeLine{}
+\DoxyCodeLine{map<string,\ element\_information>\ info;}
+\DoxyCodeLine{info[\textcolor{stringliteral}{"{}Al"{}}].Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\_information::role::element}};}
+\DoxyCodeLine{info[\textcolor{stringliteral}{"{}Al"{}}].include\_in\_analysis\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{info[\textcolor{stringliteral}{"{}OC"{}}].Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\_information::role::organic\_carbon}};}
+\DoxyCodeLine{info[\textcolor{stringliteral}{"{}D50"{}}].Role\ =\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\_information::role::particle\_size}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Get\ only\ analysis\ elements}}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ analysis\ =\ full\_profile.\mbox{\hyperlink{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780}{CreateAnalysisProfile}}(\&info);}
+\DoxyCodeLine{\textcolor{comment}{//\ analysis\ contains\ only\ "{}Al"{},\ not\ "{}OC"{}\ or\ "{}D50"{}}}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{elemental__profile_8h}{elemental\_profile.h}}"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}Utilities.h"{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <QStringList>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <QFile>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{\textcolor{comment}{//\ CONSTRUCTION\ AND\ ASSIGNMENT}}
+\DoxyCodeLine{\textcolor{comment}{//\ =============================================================================}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}{Elemental\_Profile::Elemental\_Profile}}()}
+\DoxyCodeLine{\ \ \ \ :\ map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ double>(),}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classInterface}{Interface}}(),}
+\DoxyCodeLine{\ \ \ \ included\_in\_analysis\_(true),}
+\DoxyCodeLine{\ \ \ \ marked\_elements\_()}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ All\ initialization\ done\ in\ initializer\ list}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Empty\ body\ is\ fine\ -\/\ demonstrates\ proper\ C++\ style}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}{Elemental\_Profile::Elemental\_Profile}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\&\ other)}
+\DoxyCodeLine{\ \ \ \ :\ map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ double>(other),\ \ \textcolor{comment}{//\ Copy\ base\ class\ (element\ concentrations)}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classInterface}{Interface}}(other),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ Interface\ base\ class}}
+\DoxyCodeLine{\ \ \ \ included\_in\_analysis\_(other.included\_in\_analysis\_),}
+\DoxyCodeLine{\ \ \ \ marked\_elements\_(other.marked\_elements\_)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ All\ copying\ done\ in\ initializer\ list\ -\/\ efficient\ and\ exception-\/safe}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*/}}
+\DoxyCodeLine{\textcolor{comment}{*@brief\ Copy\ assignment\ operator}}
+\DoxyCodeLine{\textcolor{comment}{*}}
+\DoxyCodeLine{\textcolor{comment}{*\ Assigns\ the\ contents\ of\ another\ profile\ to\ this\ one,\ replacing\ all}}
+\DoxyCodeLine{\textcolor{comment}{*\ existing\ data.Handles\ self\ -\/\ assignment\ safely.}}
+\DoxyCodeLine{\textcolor{comment}{*}}
+\DoxyCodeLine{\textcolor{comment}{*@param\ other\ Profile\ to\ assign\ from}}
+\DoxyCodeLine{\textcolor{comment}{*\ @return\ Reference\ to\ *\ this\ for\ chaining(e.g.,\ a\ =\ b\ =\ c)}}
+\DoxyCodeLine{\textcolor{comment}{*}}
+\DoxyCodeLine{\textcolor{comment}{*\ @post*\ this\ contains\ copy\ of\ other's\ data}}
+\DoxyCodeLine{\textcolor{comment}{*\ @post\ Previous\ contents\ of\ *\ this\ are\ replaced}}
+\DoxyCodeLine{\textcolor{comment}{*\ @post\ Self\ -\/\ assignment(a\ =\ a)\ is\ safe}}
+\DoxyCodeLine{\textcolor{comment}{*}}
+\DoxyCodeLine{\textcolor{comment}{*@note\ Assignment\ order\ is\ important\ :\ Interface\ first,\ then\ members,}}
+\DoxyCodeLine{\textcolor{comment}{*\ then\ base\ class\ to\ ensure\ proper\ cleanup\ if\ exceptions\ occur}}
+\DoxyCodeLine{\textcolor{comment}{*/}}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \&\ \mbox{\hyperlink{classElemental__Profile_a0081cfc8b373ed0f6111d866361181e8}{Elemental\_Profile::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \&\ other)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Check\ for\ self-\/assignment\ (important\ for\ performance\ and\ correctness)}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&other)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Assign\ in\ proper\ order:}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ 1.\ Interface\ base\ class}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{Interface::operator=}}(other);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ 2.\ Member\ variables}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}}\ =\ other.\mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}};}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}\ =\ other.\mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ 3.\ map\ base\ class\ (element\ concentrations)}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ \ \ \ Done\ last\ because\ it\ might\ throw,\ and\ we\ want\ other\ data\ copied\ first}}
+\DoxyCodeLine{\ \ \ \ map<string,\ double>::operator=(other);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780}{Elemental\_Profile::CreateAnalysisProfile}}(}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ element\_info)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{}\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ If\ no\ metadata\ provided,\ return\ complete\ copy}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (element\_info\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Create\ filtered\ profile}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ filtered\_profile;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Copy\ analysis\ inclusion\ flag}}
+\DoxyCodeLine{\ \ \ \ filtered\_profile.\mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}}\ =\ this-\/>\mbox{\hyperlink{classElemental__Profile_a4bdadf68530b434fb7be463ac65d1f3a}{included\_in\_analysis\_}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Iterate\ through\ all\ elements\ in\ current\ profile}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ element\_entry\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name\ =\ element\_entry.first;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ concentration\ =\ element\_entry.second;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ element\ exists\ in\ metadata}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ info\_iter\ =\ element\_info-\/>find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info\_iter\ ==\ element\_info-\/>end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Element\ not\ in\ metadata\ -\/\ skip\ it}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structelement__information}{element\_information}}\&\ info\ =\ info\_iter-\/>second;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ inclusion\ criteria}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ should\_include\ =\ info.\mbox{\hyperlink{structelement__information_ac50ec2cd0b5510b23e917db405b2a62d}{include\_in\_analysis}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ !=\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\_information::role::do\_not\_include}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ !=\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\_information::role::particle\_size}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ !=\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\_information::role::organic\_carbon}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (should\_include)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ element\ to\ filtered\ profile}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ filtered\_profile[element\_name]\ =\ concentration;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Preserve\ marked\ status\ if\ element\ was\ marked}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ marked\_iter\ =\ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}.find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (marked\_iter\ !=\ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}.end()\ \&\&\ marked\_iter-\/>second)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ filtered\_profile.\mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}[element\_name]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ filtered\_profile;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_ab22dbed07fdb56b97cf9bccab22545cc}{Elemental\_Profile::CreateCorrectedProfile}}(}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ exclude\_elements,}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ apply\_corrections,}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ vector<double>\&\ reference\_om\_size,}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}*\ regression\_models,}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ element\_info)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{}\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Start\ with\ current\ profile}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Step\ 1:\ Apply\ OM/size\ corrections\ if\ requested}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (apply\_corrections)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (regression\_models\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Log\ warning\ or\ throw\ exception\ in\ production\ code}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Warning:\ apply\_corrections=true\ but\ regression\_models\ is\ null.\ "{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Skipping\ corrections."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result.\mbox{\hyperlink{classElemental__Profile_a1ae3b2f72eb66fb5ac7f195324f1dd41}{ApplyOrganicMatterAndSizeCorrections}}(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reference\_om\_size,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ regression\_models,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ element\_info}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Step\ 2:\ Filter\ elements\ if\ requested}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (exclude\_elements)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (element\_info\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Log\ warning\ or\ throw\ exception\ in\ production\ code}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Warning:\ exclude\_elements=true\ but\ element\_info\ is\ null.\ "{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Skipping\ filtering."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ result\ =\ result.\mbox{\hyperlink{classElemental__Profile_a02d917a6cfb217a12d2015ff4460d780}{CreateAnalysisProfile}}(element\_info);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a0541b570dda666bf2a3ddea2d6366c54}{Elemental\_Profile::ExtractChemicalElements}}(}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ element\_info,}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ include\_isotopes)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{}\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Validate\ input\ -\/\ element\_info\ is\ required}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (element\_info\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ now,\ log\ error\ and\ return\ empty\ profile}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Future:\ throw\ std::invalid\_argument("{}element\_info\ cannot\ be\ null"{})}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Error:\ ExtractChemicalElements\ called\ with\ null\ element\_info.\ "{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}Returning\ empty\ profile."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classElemental__Profile_ac74d62dcf559e0bc86414ee7b24bdc2a}{Elemental\_Profile}}();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ extracted\_profile;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Iterate\ through\ all\ elements\ in\ current\ profile}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ element\ exists\ in\ metadata}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ info\_iter\ =\ element\_info-\/>find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info\_iter\ ==\ element\_info-\/>end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Element\ not\ in\ metadata\ -\/\ skip\ it}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Could\ log\ warning:\ std::cerr\ <<\ "{}Warning:\ Element\ '"{}\ <<\ element\_name\ }}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ "{}'\ not\ found\ in\ metadata.\ Skipping.\(\backslash\)n"{};}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structelement__information}{element\_information}}\&\ info\ =\ info\_iter-\/>second;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ element\ should\ be\ included\ based\ on\ role}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ should\_include\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474ca8e2dcfd7e7e24b1ca76c1193f645902b}{element\_information::role::element}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Always\ include\ chemical\ elements}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ should\_include\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Include\ isotopes\ only\ if\ requested}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ should\_include\ =\ include\_isotopes;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ All\ other\ roles\ (organic\_carbon,\ particle\_size,\ do\_not\_include)\ are\ excluded}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (should\_include)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ extracted\_profile[element\_name]\ =\ concentration;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ extracted\_profile;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a149f46abf0285a5c7b9f2c823479b1d8}{Elemental\_Profile::ExtractElements}}(}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ vector<string>\&\ element\_names)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{}\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ extracted\_profile;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Reserve\ space\ if\ we\ expect\ most\ elements\ to\ exist\ (optimization)}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Note:\ Can't\ reserve\ in\ map,\ but\ this\ shows\ intent}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Iterate\ through\ requested\ elements}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name\ :\ element\_names)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ element\ exists\ in\ current\ profile}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Element\ exists\ -\/\ add\ to\ extracted\ profile}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ extracted\_profile[element\_name]\ =\ it-\/>second;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Element\ doesn't\ exist\ -\/\ silently\ skip}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ extracted\_profile;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_ac022b9ee818190fde138a0a5cbbed9b0}{Elemental\_Profile::GetValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{}\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ it\ =\ find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Element\ '"{}}\ +\ element\_name\ +\ \textcolor{stringliteral}{"{}'\ does\ not\ exist\ in\ profile"{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ it-\/>second;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af33d23d19061776c4f20120395c4ca35}{Elemental\_Profile::SetValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name,\ \textcolor{keywordtype}{double}\ value)}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ it\ =\ find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ it-\/>second\ =\ value;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_a82cc77b68f773d9c3214e6b20f3ded55}{Elemental\_Profile::SetMarked}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name,\ \textcolor{keywordtype}{bool}\ marked)}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (find(element\_name)\ ==\ end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}[element\_name]\ =\ marked;}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_a1e87fa1b1f3782d18cc7456943e99be7}{Elemental\_Profile::IsMarked}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (find(element\_name)\ ==\ end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}.find(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ !=\ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}.end()\ \&\&\ it-\/>second);}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{Elemental\_Profile::AppendElement}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name,\ \textcolor{keywordtype}{double}\ value)}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (find(element\_name)\ !=\ end())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ (*this)[element\_name]\ =\ value;}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile_a20ba46ac0b29779bb16b8ce761b6c764}{marked\_elements\_}}[element\_name]\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ vector<double>\ \mbox{\hyperlink{classElemental__Profile_a7a155e3385f47495fc9cf8b317c2b6e4}{Elemental\_Profile::GetAllValues}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ vector<double>\ values;}
+\DoxyCodeLine{\ \ \ \ \ values.reserve(size());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ values.push\_back(concentration);}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ values;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e}{Elemental\_Profile::ToString}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordtype}{string}\ output;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ output\ +=\ element\_name\ +\ \textcolor{stringliteral}{"{}:"{}}\ +\ aquiutils::numbertostring(concentration)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ output;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ QTableWidget*\ \mbox{\hyperlink{classElemental__Profile_a9339549be3522fda11453bf97d405ce0}{Elemental\_Profile::ToTable}}()}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ QTableWidget*\ table\ =\ \textcolor{keyword}{new}\ QTableWidget();}
+\DoxyCodeLine{\ \ \ \ \ table-\/>setEditTriggers(QAbstractItemView::NoEditTriggers);}
+\DoxyCodeLine{\ \ \ \ \ table-\/>setColumnCount(1);}
+\DoxyCodeLine{\ \ \ \ \ table-\/>setRowCount(size());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ QStringList\ headers;}
+\DoxyCodeLine{\ \ \ \ \ QStringList\ element\_names;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordtype}{int}\ row\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ element\_names\ <<\ QString::fromStdString(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ table-\/>setItem(row,\ 0,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(concentration)));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Highlight\ values\ outside\ limits\ if\ enabled}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ (concentration\ >\ \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}\ ||\ concentration\ <\ \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}))\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ table-\/>item(row,\ 0)-\/>setForeground(QColor(Qt::red));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ row++;}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ headers\ <<\ \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxisLabel}}();}
+\DoxyCodeLine{\ \ \ \ \ table-\/>setHorizontalHeaderLabels(headers);}
+\DoxyCodeLine{\ \ \ \ \ table-\/>setVerticalHeaderLabels(element\_names);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ table;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ QJsonObject\ \mbox{\hyperlink{classElemental__Profile_ae6d76197a4334b6db6160b19610d3c9d}{Elemental\_Profile::toJsonObject}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ QJsonObject\ json\_object;}
+\DoxyCodeLine{\ \ \ \ \ QJsonObject\ element\_contents;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ json\_object[\textcolor{stringliteral}{"{}Include"{}}]\ =\ \mbox{\hyperlink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{IsIncludedInAnalysis}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ element\_contents[QString::fromStdString(element\_name)]\ =\ concentration;}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ json\_object[\textcolor{stringliteral}{"{}Element\ Contents"{}}]\ =\ element\_contents;}
+\DoxyCodeLine{\ \ \ \ \ json\_object[\textcolor{stringliteral}{"{}XAxisLabel"{}}]\ =\ \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxisLabel}}();}
+\DoxyCodeLine{\ \ \ \ \ json\_object[\textcolor{stringliteral}{"{}YAxisLabel"{}}]\ =\ \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxisLabel}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ json\_object;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{Elemental\_Profile::ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ json\_object)}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ clear();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (json\_object.contains(\textcolor{stringliteral}{"{}Include"{}}))\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Full\ format\ with\ metadata}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}{SetIncludedInAnalysis}}(json\_object[\textcolor{stringliteral}{"{}Include"{}}].toBool());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ QJsonObject\ contents\ =\ json\_object[\textcolor{stringliteral}{"{}Element\ Contents"{}}].toObject();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ QString\&\ key\ :\ contents.keys())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ (*this)[key.toStdString()]\ =\ contents[key].toDouble();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Legacy\ format\ -\/\ elements\ directly\ in\ root}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ QString\&\ key\ :\ json\_object.keys())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ (*this)[key.toStdString()]\ =\ json\_object[key].toDouble();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (json\_object.contains(\textcolor{stringliteral}{"{}XAxisLabel"{}}))\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{SetXAxisLabel}}(json\_object[\textcolor{stringliteral}{"{}XAxisLabel"{}}].toString());}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (json\_object.contains(\textcolor{stringliteral}{"{}YAxisLabel"{}}))\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{SetYAxisLabel}}(json\_object[\textcolor{stringliteral}{"{}YAxisLabel"{}}].toString());\ \ \textcolor{comment}{//\ Fixed:\ was\ SetXAxisLabel}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af63837f23db8c25fbd1414451c367403}{Elemental\_Profile::Read}}(\textcolor{keyword}{const}\ QStringList\&\ string\_list)}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ clear();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ QString\&\ line\ :\ string\_list)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ QStringList\ parts\ =\ line.split(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parts.size()\ >\ 1)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile_abd371be1a17109dbdb8517a29de516a3}{AppendElement}}(parts[0].toStdString(),\ parts[1].toDouble());}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_adff28a214b4cd5d4abef75d7067fc942}{Elemental\_Profile::writetofile}}(QFile*\ file)}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \ \ file-\/>write(QString::fromStdString(\mbox{\hyperlink{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e}{ToString}}()).toUtf8());}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_a28feb4c1d0486aa25c6602f33b7d3d9a}{Elemental\_Profile::GetMaximum}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (empty())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1e12;}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordtype}{double}\ max\_value\ =\ -\/1e12;}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (concentration\ >\ max\_value)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ max\_value\ =\ concentration;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ max\_value;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_a5007d301571db4ce04f2430635694710}{Elemental\_Profile::GetMinimum}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (empty())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1e12;}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordtype}{double}\ min\_value\ =\ 1e12;}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (concentration\ <\ min\_value)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ min\_value\ =\ concentration;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ min\_value;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ vector<string>\ \mbox{\hyperlink{classElemental__Profile_a295397bcb07225d953471aa26b367cdd}{Elemental\_Profile::GetElementNames}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ vector<string>\ names;}
+\DoxyCodeLine{\ \ \ \ \ names.reserve(size());}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ names.push\_back(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ names;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classElemental__Profile_af7ee759943443d6251d30927f51847f9}{Elemental\_Profile::Contains}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ (find(element\_name)\ !=\ end());}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classElemental__Profile_a1ae3b2f72eb66fb5ac7f195324f1dd41}{Elemental\_Profile::ApplyOrganicMatterAndSizeCorrections}}(}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keyword}{const}\ vector<double>\&\ reference\_om\_size,}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}*\ regression\_models,}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keyword}{const}\ map<string,\ element\_information>*\ element\_info)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ corrected\_profile;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structelement__information}{element\_information}}\&\ info\ =\ element\_info-\/>at(element\_name);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ organic\ carbon\ and\ particle\ size\ indicators}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\_information::role::organic\_carbon}}\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ ==\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\_information::role::particle\_size}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Start\ with\ original\ concentration}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ corrected\_profile[element\_name]\ =\ concentration;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ corrections\ if\ regression\ model\ exists\ for\ this\ element}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (regression\_models-\/>count(element\_name)\ ==\ 0)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegression}{MultipleLinearRegression}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}\ =\ \&regression\_models-\/>at(element\_name);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ var\_names\ =\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}-\/>GetIndependentVariableNames();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ coefficients\ =\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}-\/>CoefficientsIntercept();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_linear\ =\ (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}-\/>Equation()\ ==\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ first\ correction\ (typically\ organic\ matter)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}-\/>Effective(0)\ \&\&\ var\_names[0]\ !=\ element\_name)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ reference\ =\ reference\_om\_size[0];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ measured\ =\ this-\/>at(var\_names[0]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_linear)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected\_profile[element\_name]\ +=\ (reference\ -\/\ measured)\ *\ coefficients[1];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected\_profile[element\_name]\ *=\ pow(reference\ /\ measured,\ coefficients[1]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ second\ correction\ (typically\ particle\ size)\ if\ available}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (var\_names.size()\ >\ 1\ \&\&\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}-\/>Effective(1)\ \&\&\ var\_names[1]\ !=\ element\_name)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ reference\ =\ reference\_om\_size[1];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ measured\ =\ this-\/>at(var\_names[1]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_linear)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected\_profile[element\_name]\ +=\ (reference\ -\/\ measured)\ *\ coefficients[2];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ corrected\_profile[element\_name]\ *=\ pow(reference\ /\ measured,\ coefficients[2]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Warn\ about\ negative\ corrected\ values\ (except\ for\ isotopes)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (corrected\_profile[element\_name]\ <\ 0\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ info.\mbox{\hyperlink{structelement__information_a5f9e4723fe2c080ca91b31a8f697dd4e}{Role}}\ !=\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caa8b1c31fc8c4c565d63b478eddb9b172}{element\_information::role::isotope}})\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Warning:\ Corrected\ value\ for\ "{}}\ <<\ element\_name}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ \textcolor{stringliteral}{"{}\ is\ negative:\ "{}}\ <<\ corrected\_profile[element\_name]\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ corrected\_profile;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classElemental__Profile_a2b81a2859a02a4ac85df7eb243f594c3}{Elemental\_Profile::CalculateDotProduct}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ weights)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{if}\ (size()\ !=\ weights.getsize())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/999;}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0.0;}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordtype}{int}\ index\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ sum\ +=\ concentration\ *\ weights[index];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ index++;}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ sum;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classElemental__Profile_a3353e492c0cd55969e72d6e990cda355}{Elemental\_Profile::SortByConcentration}}(\textcolor{keywordtype}{bool}\ ascending)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ sorted\_result;}
+\DoxyCodeLine{\ \ \ \ \ vector<string>\ processed\_elements;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ size();\ i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ target\_value\ =\ ascending\ ?\ 1e6\ :\ -\/1e6;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ target\_element;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ [element\_name,\ concentration]\ :\ *this)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Skip\ already\ processed\ elements}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lookup(processed\_elements,\ element\_name)\ !=\ -\/1)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ min\ (ascending)\ or\ max\ (descending)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_better\ =\ ascending\ ?\ (concentration\ <\ target\_value)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ (concentration\ >\ target\_value);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_better)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target\_element\ =\ element\_name;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ target\_value\ =\ concentration;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ processed\_elements.push\_back(target\_element);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ sorted\_result.\mbox{\hyperlink{classCMBVector_ab9fd007cf960fe8d1538cc48aa4dbf0f}{append}}(target\_element,\ target\_value);}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ sorted\_result;}
+\DoxyCodeLine{\ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ vector<string>\ \mbox{\hyperlink{classElemental__Profile_ac612e5ce6ee3566ace1a718dda5e4c7d}{Elemental\_Profile::SelectTopElements}}(\textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{bool}\ ascending)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\textcolor{keyword}{\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ sorted\ =\ \mbox{\hyperlink{classElemental__Profile_a3353e492c0cd55969e72d6e990cda355}{SortByConcentration}}(ascending);}
+\DoxyCodeLine{\ \ \ \ \ vector<string>\ top\_elements;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\ \&\&\ i\ <\ sorted.num;\ i++)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ top\_elements.push\_back(sorted.\mbox{\hyperlink{classCMBVector_adac7688c971cd9680324eb0bc002134e}{Label}}(i));}
+\DoxyCodeLine{\ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{keywordflow}{return}\ top\_elements;}
+\DoxyCodeLine{\ \}}
+
+\end{DoxyCodeInclude}
+ 

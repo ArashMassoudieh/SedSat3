@@ -1,0 +1,806 @@
+\doxysection{MCMC.\+hpp}
+\hypertarget{MCMC_8hpp_source}{}\label{MCMC_8hpp_source}\index{MCMC/MCMC.hpp@{MCMC/MCMC.hpp}}
+\mbox{\hyperlink{MCMC_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00001}00001\ \textcolor{comment}{//\ MCMC.cpp\ :\ Defines\ the\ entry\ point\ for\ the\ console\ application.}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00002}00002\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}NormalDist.h"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#ifndef\ mac\_version}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <omp.h>}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{MCMC_8h}{MCMC.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ProgressWindow_8h}{ProgressWindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}Utilities.h"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00016}00016\ \textcolor{comment}{//using\ namespace\ std;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00018}00018\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00019}\mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{00019}}\ \mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{CMCMC<T>::CMCMC}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00021}00021\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00023}00023\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00024}\mbox{\hyperlink{classCMCMC_afc71e62174c3a20bed892e5056579d9f}{00024}}\ \mbox{\hyperlink{classCMCMC_afc71e62174c3a20bed892e5056579d9f}{CMCMC<T>::\string~CMCMC}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00025}00025\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00026}00026\ \ \ \ \ Params.clear();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00027}00027\ \ \ \ \ logp1.clear();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00028}00028\ \ \ \ \ logp.clear();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00032}00032\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00033}\mbox{\hyperlink{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6}{00033}}\ \mbox{\hyperlink{classParameter}{Parameter}}*\ \mbox{\hyperlink{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6}{CMCMC<T>::parameter}}(\textcolor{keywordtype}{int}\ i)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00034}00034\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{return}\ \&parameters-\/>at(i);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00039}00039\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00040}\mbox{\hyperlink{classCMCMC_a46c0379bf73cef8d753fe6b15023869b}{00040}}\ \mbox{\hyperlink{classObservation}{Observation}}*\ \mbox{\hyperlink{classCMCMC_a46c0379bf73cef8d753fe6b15023869b}{CMCMC<T>::observation}}(\textcolor{keywordtype}{int}\ i)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00041}00041\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{return}\ (\&observations-\/>at(i));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00043}00043\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00045}00045\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00046}\mbox{\hyperlink{classCMCMC_a730f1945ab771ee1e6faf64d3eb47416}{00046}}\ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{CMCMC<T>::model}}(vector<double>\ par)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00047}00047\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00049}00049\ \ \ \ \ vector<TimeSeriesSet<double>>\ res;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00052}00052\ \ \ \ \ T\ G1\ =\ *Model;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00053}00053\ \ \ \ \ G1.SetSilent(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00054}00054\ \ \ \ \ G1.SetRecordResults(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00055}00055\ \ \ \ \ G1.SetNumThreads(1);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00057}00057\ \ \ \ \ \ \ \ \ G1.SetParameterValue(i,\ par[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00059}00059\ \ \ \ \ G1.ApplyParameters();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00060}00060\ \ \ \ \ G1.Solve();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00061}00061\ \ \ \ \ sum\ +=G1.GetObjectiveFunctionValue();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{return}\ G1.Outputs.ObservedOutputs;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00065}00065\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00067}00067\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00068}\mbox{\hyperlink{classCMCMC_a33e1d8651f8c8561843fceedafab06fd}{00068}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMCMC_a33e1d8651f8c8561843fceedafab06fd}{CMCMC<T>::SetProperty}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&varname,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00069}00069\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00071}00071\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}number\_of\_samples"{}})\ \{MCMC\_Settings.total\_number\_of\_samples\ =\ aquiutils::atoi(value);\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}number\_of\_chains"{}})\ \{MCMC\_Settings.number\_of\_chains\ =\ aquiutils::atoi(value);\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}number\_of\_burnout\_samples"{}})\ \{MCMC\_Settings.burnout\_samples\ =\ aquiutils::atoi(value);\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}initial\_purturbation\_factor"{}})\ \{MCMC\_Settings.purturbation\_factor\ =\ aquiutils::atof(value);\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00075}\mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{00075}}\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}record\_interval"{}})\ \{MCMC\_Settings.save\_interval\ =\ aquiutils::atoi(value);\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00076}00076\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}initial\_purturbation"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00077}\mbox{\hyperlink{classCMCMC_aa094bb7e570b0b9e578697ebe92b03c7}{00077}}\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00078}\mbox{\hyperlink{classCMCMC_a33e1d8651f8c8561843fceedafab06fd}{00078}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(value)==\textcolor{stringliteral}{"{}yes"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00079}\mbox{\hyperlink{classCMCMC_afc71e62174c3a20bed892e5056579d9f}{00079}}\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.noinipurt\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.noinipurt\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00084}00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}perform\_global\_sensitivity"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00085}00085\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(value)==\textcolor{stringliteral}{"{}yes"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.global\_sensitivity\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00088}\mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{00088}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00089}\mbox{\hyperlink{classCMCMC_aa27032a71de7207fcaefd43210e58745}{00089}}\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.global\_sensitivity\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00090}\mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{00090}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00091}\mbox{\hyperlink{classCMCMC_ae6fc398641269125cc9666d2d91b9c15}{00091}}\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00092}\mbox{\hyperlink{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a}{00092}}\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}continue\_based\_on\_file\_name"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00093}00093\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value!=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \{\ \ \ MCMC\_Settings.continue\_filename\ =\ value;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.continue\_mcmc\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.continue\_mcmc\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00100}\mbox{\hyperlink{classCMCMC_a92f06a89486b649700c812bfe0517ece}{00100}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00101}\mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{00101}}\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00102}00102\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}samples\_filename"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00103}00103\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value!=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.find\_first\_of(\textcolor{charliteral}{'/'})!=string::npos\ ||\ value.find\_first\_of(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})!=string::npos)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FileInformation.outputfilename\ =\ value;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00108}\mbox{\hyperlink{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6}{00108}}\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00109}\mbox{\hyperlink{classCMCMC_a46c0379bf73cef8d753fe6b15023869b}{00109}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FileInformation.outputfilename\ =\ FileInformation.outputpath\ +\ value;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00110}\mbox{\hyperlink{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4}{00110}}\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00111}\mbox{\hyperlink{classCMCMC_ac52f936022260b65893e35a3a7b9b46b}{00111}}\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00114}00114\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00115}00115\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}number\_of\_post\_estimate\_realizations"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00116}\mbox{\hyperlink{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6}{00116}}\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ MCMC\_Settings.number\_of\_post\_estimate\_realizations\ =\ aquiutils::atoi(value);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00118}\mbox{\hyperlink{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a}{00118}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00119}\mbox{\hyperlink{classCMCMC_a730f1945ab771ee1e6faf64d3eb47416}{00119}}\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}increment\_for\_sensitivity\_analysis"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00121}00121\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ MCMC\_Settings.dp\_sens\ =\ aquiutils::atof(value);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00124}00124\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}add\_noise\_to\_realizations"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00126}00126\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00127}\mbox{\hyperlink{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a}{00127}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(value)==\textcolor{stringliteral}{"{}yes"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00128}\mbox{\hyperlink{classCMCMC_ab2e01f222e9b37384e49cf29194a4514}{00128}}\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.noise\_realization\_writeout\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.noise\_realization\_writeout\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00131}\mbox{\hyperlink{classCMCMC_af730c4f77d698e62f055b8e376685a93}{00131}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00133}00133\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00134}\mbox{\hyperlink{classCMCMC_a9319f2b475594347f51491601ac1babf}{00134}}\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}number\_of\_threads"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00135}00135\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00136}\mbox{\hyperlink{classCMCMC_aad302d32046828f04d7072d9818678de}{00136}}\ \ \ \ \ \ \ \ \ MCMC\_Settings.numberOfThreads\ =\ aquiutils::atoi(value);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00137}\mbox{\hyperlink{classCMCMC_a8aab3f0befdfa07636083519e391f4bf}{00137}}\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00138}00138\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00139}00139\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}acceptance\_rate"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00140}00140\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00141}00141\ \ \ \ \ \ \ \ \ MCMC\_Settings.acceptance\_rate\ =\ aquiutils::atof(value);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00143}00143\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}purturbation\_change\_scale"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00145}00145\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ MCMC\_Settings.purt\_change\_scale\ =\ aquiutils::atof(value);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00148}00148\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(varname)\ ==\ \textcolor{stringliteral}{"{}dissolve\_chains"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00150}00150\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (aquiutils::tolower(value)==\textcolor{stringliteral}{"{}true"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.dissolve\_chains\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ MCMC\_Settings.dissolve\_chains\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00156}00156\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00158}00158\ \ \ \ \ last\_error\ =\ \textcolor{stringliteral}{"{}Property\ '"{}}\ +\ varname\ +\ \textcolor{stringliteral}{"{}'\ was\ not\ found!"{}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00160}00160\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00163}00163\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00164}\mbox{\hyperlink{classCMCMC_a92f06a89486b649700c812bfe0517ece}{00164}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMCMC_a92f06a89486b649700c812bfe0517ece}{CMCMC<T>::posterior}}(vector<double>\ par,\ \textcolor{keywordtype}{int}\ chain\_counter)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00165}00165\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00166}00166\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00168}00168\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ CopiedModels[chain\_counter].SetParameterValue(i,\ par[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00171}00171\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ sum+=parameter(i)-\/>CalcLogPriorProbability(par[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00175}00175\ \ \ \ \ sum+=\ -\/CopiedModels[chain\_counter].GetObjectiveFunctionValue();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00176}00176\ \ \ \ \ temp\_predicted[chain\_counter]\ =\ CopiedModels[chain\_counter].GetPredictedValues();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{return}\ sum;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00179}00179\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00181}00181\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00182}\mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{00182}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{CMCMC<T>::model}}(T\ *Model1,\ vector<double>\ par)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00183}00183\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00185}00185\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00186}00186\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ Model1-\/>SetSilent(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ Model1-\/>SetRecordResults(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ Model1-\/>SetNumThreads(1);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ Model1-\/>SetParameterValue(i,\ par[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ Model1-\/>ApplyParameters();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00193}00193\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00195}00195\ \ \ \ \ Model1-\/>Solve();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00197}00197\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00199}00199\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00200}\mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{00200}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{CMCMC<T>::initialize}}(\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ *results,\ \textcolor{keywordtype}{bool}\ random)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00201}00201\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00202}00202\ \ \ \ \ parameters\ =\ \&Model-\/>Parameters();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00203}00203\ \ \ \ \ Params.resize(MCMC\_Settings.total\_number\_of\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00204}00204\ \ \ \ \ logp.resize(MCMC\_Settings.total\_number\_of\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00205}00205\ \ \ \ \ logp1.resize(MCMC\_Settings.total\_number\_of\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00206}00206\ \ \ \ \ pertcoeff.resize(parameters-\/>size());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00207}00207\ \ \ \ \ MCMC\_Settings.number\_of\_parameters\ =\ Model-\/>Parameters().size();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00209}00209\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.total\_number\_of\_samples;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ Params[i].resize(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00212}00212\ \ \ \ \ results-\/>resize(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00213}00213\ \ \ \ \ results-\/>SetAllSeriesSize(MCMC\_Settings.total\_number\_of\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00214}00214\ \ \ \ \ predicted.resize(Model-\/>ObservationsCount());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00215}00215\ \ \ \ \ predicted.SetAllSeriesSize(MCMC\_Settings.total\_number\_of\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00216}00216\ \ \ \ \ temp\_predicted.resize(MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00217}00217\ \ \ \ \ CopiedModels.resize(MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00218}00218\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_chains;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00219}00219\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00220}00220\ \ \ \ \ \ \ \ \ CopiedModels[i]\ =\ *Model;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00222}00222\ \ \ \ \ \textcolor{keywordtype}{double}\ pp=0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00223}00223\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j<MCMC\_Settings.number\_of\_parameters;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00224}00224\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(j)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}normal"{}}\ ||\ parameter(j)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[j]\ =\ MCMC\_Settings.purturbation\_factor*(-\/parameter(j)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}})\ +\ parameter(j)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}}));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(j)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[j]\ =\ MCMC\_Settings.purturbation\_factor*(-\/\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(j)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}}))\ +\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(j)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}})));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00233}00233\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00235}00235\ \ \ \ \ \textcolor{keywordflow}{if}\ (random)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00236}00236\ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<MCMC\_Settings.number\_of\_chains;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ posterior\_value\ =\ -\/2e6;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (posterior\_value<-\/1e6)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (parameter(i)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Params[j][i]\ =\ exp(\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(i)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}}))+(\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(i)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}}))-\/\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(i)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}})))*unitrandom());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Params[j][i]\ =\ parameter(i)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}})+(parameter(i)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}})-\/parameter(i)-\/>GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}}))*unitrandom();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ +=\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(Params[j][i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ logp[j]\ =\ posterior(Params[j],j);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ posterior\_value\ =\ logp[j];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ logp1[j]\ =\ logp[j]+pp;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ results-\/>SetRow(j,j,Params[j]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ cout<<\textcolor{stringliteral}{"{}success!"{}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ predicted.SetRow(j,j,CopiedModels[j].GetPredictedValues().vec);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ temp\_predicted[j]\ =\ CopiedModels[j].GetPredictedValues();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00258}00258\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00260}00260\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00261}00261\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<MCMC\_Settings.number\_of\_chains;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ Params[j][i]\ =\ parameter(i)-\/>GetValue();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ +=\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(Params[j][i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ logp[j]\ =\ posterior(Params[j],j);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ logp1[j]\ =\ logp[j]+pp;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00271}00271\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00273}00273\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00277}00277\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00278}\mbox{\hyperlink{classCMCMC_aa27032a71de7207fcaefd43210e58745}{00278}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{CMCMC<T>::initialize}}(vector<double>\ par)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00279}00279\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00281}00281\ \ \ \ \ \textcolor{keywordflow}{if}\ (MCMC\_Settings.sensbasedpurt\ ==\ \textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00282}00282\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00283}00283\ \ \ \ \ \ \ \ \ CVector\ X\ =\ sensitivity(1e-\/4,\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00284}00284\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j<MCMC\_Settings.number\_of\_parameters;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(j).Get\_Distribution()==\textcolor{stringliteral}{"{}normal"{}}\ ||\ parameter(j).Get\_Distribution()==\textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[j]\ =\ MCMC\_Settings.purturbation\_factor\ /\ fabs(X[getparamno(j,\ 0)]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(j).Get\_Distribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[j]\ =\ MCMC\_Settings.purturbation\_factor\ /\ fabs(sqrt(par[j])*X[getparamno(j,\ 0)]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00297}00297\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00298}00298\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j<MCMC\_Settings.number\_of\_parameters;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(j).Get\_Distribution()==\textcolor{stringliteral}{"{}normal"{}}\ ||\ parameter(j).Get\_Distribution()==\textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[j]\ =\ MCMC\_Settings.purturbation\_factor*(-\/parameter(j)-\/>GetRange().low\ +\ -\/parameter(j)-\/>GetRange().high);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(j).Get\_Distribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[j]\ =\ MCMC\_Settings.purturbation\_factor*(-\/\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(j)-\/>GetRange().\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}})\ +\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(j)-\/>GetRange().\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00310}00310\ \ \ \ \ \textcolor{keywordtype}{double}\ alpha;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00311}00311\ \ \ \ \ \textcolor{keywordflow}{if}\ (MCMC\_Settings.noinipurt\ ==\ \textcolor{keyword}{true})\ alpha\ =\ 0;\ \textcolor{keywordflow}{else}\ alpha\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00313}00313\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00314}00314\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j<MCMC\_Settings.number\_of\_chains;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00315}00315\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ Params[j].resize(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ pp\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i).Get\_Distribution()==\textcolor{stringliteral}{"{}normal"{}}\ ||\ parameter(i).Get\_Distribution()==\textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Params[j][i]\ =\ par[i]\ +\ alpha*getnormalrand(0,\ pertcoeff[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ Params[j][i]\ =\ par[i]\ *\ exp(alpha*getnormalrand(0,\ pertcoeff[i]));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp+=\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(par[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i).Get\_Distribution()==\textcolor{stringliteral}{"{}uniform"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ ((Params[j][i]<parameter(i).GetRange().\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}})\ ||\ (Params[j][i]>parameter(i).GetRange(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}})))}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Params[j][i]\ =\ par[i]\ +\ alpha*getnormalrand(0,\ pertcoeff[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00329}00329\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ logp[j]\ =\ posterior(Params[j]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00332}00332\ \ \ \ \ \ \ \ \ logp1[j]\ =\ logp[j]\ +\ pp;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00333}00333\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00334}00334\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00336}00336\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00337}\mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{00337}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{CMCMC<T>::step}}(\textcolor{keywordtype}{int}\ k,\ \textcolor{keywordtype}{int}\ chain\_counter)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00338}00338\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00339}00339\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00340}00340\ \ \ \ \ vector<double>\ X\ =\ purturb(k-\/MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00341}00341\ \ \ \ \ \textcolor{keywordtype}{double}\ pp\ =0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00342}00342\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00343}00343\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i)-\/>GetPriorDistribution()==\textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ pp\ +=\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(X[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00346}00346\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00347}00347\ \ \ \ \ \textcolor{keywordtype}{double}\ logp\_0\ =\ posterior(X,chain\_counter)\ +\ pp;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00348}00348\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00350}00350\ \ \ \ \ \textcolor{keywordtype}{double}\ logp\_1\ =\ logp\_0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00351}00351\ \ \ \ \ \textcolor{keywordtype}{bool}\ res;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00352}00352\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00353}00353\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00354}00354\ \ \ \ \ \textcolor{keywordflow}{if}\ (unitrandom()\ <exp(logp\_0-\/logp[k-\/MCMC\_Settings.number\_of\_chains])\ \&\&\ !isnan(logp\_0))}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00355}00355\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00356}00356\ \ \ \ \ \ \ \ \ res=\textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00357}00357\ \ \ \ \ \ \ \ \ Params[k]\ =\ X;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00358}00358\ \ \ \ \ \ \ \ \ logp[k]\ =\ logp\_0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ logp1[k]\ =\ logp\_1;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ predicted.SetRow(k,k,temp\_predicted[chain\_counter].vec);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \textcolor{comment}{//accepted\_count\ +=\ 1;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00363}00363\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00364}00364\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00365}00365\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ res\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ Params[k]\ =\ Params[k-\/MCMC\_Settings.number\_of\_chains];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ logp[k]\ =\ logp[k-\/MCMC\_Settings.number\_of\_chains];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ logp1[k]\ =\ logp\_1;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ predicted.SetRow(k,k,predicted.getrow(k-\/MCMC\_Settings.number\_of\_chains));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00371}00371\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00372}00372\ \ \ \ \ \textcolor{comment}{//total\_count\ +=\ 1;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00373}00373\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00374}00374\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00375}00375\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00376}00376\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00377}\mbox{\hyperlink{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a}{00377}}\ vector<double>\ \mbox{\hyperlink{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a}{CMCMC<T>::purturb}}(\textcolor{keywordtype}{int}\ k)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00378}00378\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00379}00379\ \ \ \ \ vector<double>\ X;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00380}00380\ \ \ \ \ X.resize(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00381}00381\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00382}00382\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i)-\/>GetPriorDistribution()\ ==\ \textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ X[i]\ =\ Params[k][i]*exp(pertcoeff[i]*getstdnormalrand());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ X[i]\ =\ Params[k][i]+pertcoeff[i]*getstdnormalrand();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00388}00388\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00389}00389\ \ \ \ \ \textcolor{keywordflow}{return}\ X;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00390}00390\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00391}00391\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00392}00392\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00393}\mbox{\hyperlink{classCMCMC_ae6fc398641269125cc9666d2d91b9c15}{00393}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{CMCMC<T>::step}}(\textcolor{keywordtype}{int}\ k,\ \textcolor{keywordtype}{int}\ nsamps,\ \textcolor{keywordtype}{string}\ filename,\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ *results,\ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}\ *rtw)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00394}00394\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00395}00395\ \ \ \ \ FILE\ *file;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00396}00396\ \ \ \ \ \textcolor{keywordflow}{if}\ (!MCMC\_Settings.continue\_mcmc)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00397}00397\ \ \ \ \ \{\ \ \ file\ =\ fopen(filename.c\_str(),\textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00398}00398\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00399}00399\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00400}00400\ \ \ \ \ qDebug()<<5;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00401}00401\ \ \ \ \ \textcolor{keywordflow}{if}\ (!MCMC\_Settings.continue\_mcmc)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00402}00402\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00403}00403\ \ \ \ \ \ \ \ \ file\ =\ fopen(filename.c\_str(),\textcolor{stringliteral}{"{}a"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00404}00404\ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\%s,\ "{}},\ \textcolor{stringliteral}{"{}no."{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \{\ \ \ fprintf(file,\ \textcolor{stringliteral}{"{}\%s,\ "{}},\ parameter(i)-\/>Name().c\_str());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \ \ \ \ results-\/>setname(i,parameter(i)-\/>Name());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00409}00409\ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\%s,\ \%s,\ \%s,"{}},\ \textcolor{stringliteral}{"{}logp"{}},\ \textcolor{stringliteral}{"{}logp\_1"{}},\ \textcolor{stringliteral}{"{}stuck\_counter"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00410}00410\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j=0;\ j<pertcoeff.size();\ j++)\ fprintf(file,\textcolor{stringliteral}{"{}\%s,"{}},\ \textcolor{keywordtype}{string}(\textcolor{stringliteral}{"{}purt\_coeff\_"{}}\ +\ QString(\textcolor{stringliteral}{"{}\%1"{}}).arg(j).toStdString()).c\_str());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00411}00411\ \ \ \ \ \ \ \ \ fprintf(file,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00412}00412\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00413}00413\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00414}00414\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00415}00415\ \ \ \ \ CVector\ stuckcounter(MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00416}00416\ \ \ \ \ CVector\ accepted(MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00417}00417\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00418}00418\ \ \ \ \ MCMC\_Settings.ini\_purt\_fact\ =\ pertcoeff[0];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00419}00419\ \ \ \ \ \textcolor{keywordtype}{int}\ k\_0\ =\ k;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00420}00420\ \ \ \ \ qDebug()<<6;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00421}00421\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ kk=k;\ kk<k+nsamps+MCMC\_Settings.number\_of\_chains;\ kk+=MCMC\_Settings.number\_of\_chains)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00422}00422\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00423}00423\ \ \ \ \ \ \ \ \ QCoreApplication::processEvents(QEventLoop::AllEvents,10*1000);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00425}00425\ \textcolor{preprocessor}{\#ifndef\ NO\_OPENMP}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00426}00426\ \ \ \ \ \ \ \ \ omp\_set\_num\_threads(MCMC\_Settings.numberOfThreads);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00427}00427\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00428}00428\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00429}00429\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00430}00430\ \textcolor{preprocessor}{\#ifdef\ WIN64}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00431}00431\ \textcolor{preprocessor}{\#pragma\ omp\ parallel}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ srand(\textcolor{keywordtype}{int}(time(NULL))\ \string^\ omp\_get\_thread\_num()\ +\ kk);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00435}00435\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00436}00436\ qDebug()<<7;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00437}00437\ \textcolor{preprocessor}{\#pragma\ omp\ parallel\ for}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ jj\ =\ kk;\ jj\ <\ min(kk\ +\ MCMC\_Settings.number\_of\_chains,\ MCMC\_Settings.total\_number\_of\_samples);\ jj++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Starting\ step:\ "{}}\ +\ QString::number(jj);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ stepstuck\ =\ !step(jj,jj-\/kk);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Step:\ "{}}\ +\ QString::number(jj)\ +\ \textcolor{stringliteral}{"{}Done!"{}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stepstuck)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ stuckcounter[jj\ -\/\ kk]++;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accepted[jj-\/kk]=0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ stuckcounter[jj\ -\/\ kk]\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ accepted[jj-\/kk]=1;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00451}00451\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00453}00453\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00454}00454\ \ \ \ \ \ \ \ \ accepted\_count\ +=\ accepted.sum();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00455}00455\ \ \ \ \ \ \ \ \ total\_count\ +=\ accepted.num;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00456}00456\ \ \ \ \ \ \ \ \ QCoreApplication::processEvents(QEventLoop::AllEvents,100*1000);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00457}00457\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((kk-\/k\_0)\ \%\ (50\ *\ MCMC\_Settings.number\_of\_chains)\ ==\ 0\ ||\ kk\ ==\ k\ +\ nsamps\ +\ MCMC\_Settings.number\_of\_chains\ -\/\ 1)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00460}00460\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (MCMC\_Settings.dissolve\_chains)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ minchain\ =\ Min(logp,min(kk\ +\ MCMC\_Settings.number\_of\_chains,\ MCMC\_Settings.total\_number\_of\_samples),MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ maxchain\ =\ Max(logp,min(kk\ +\ MCMC\_Settings.number\_of\_chains,\ MCMC\_Settings.total\_number\_of\_samples),MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ratio\ =\ maxchain.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}}-\/minchain.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ qDebug()<<\textcolor{stringliteral}{"{}Ratio:"{}}<<ratio;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ratio>5)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Params[minchain.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}]\ =\ Params[maxchain.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ logp[minchain.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}]\ =\ logp[maxchain.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ logp1[minchain.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}]\ =\ logp1[maxchain.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ file\ =\ fopen(filename.c\_str(),\ \textcolor{stringliteral}{"{}a"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ jj\ =\ max(\textcolor{keywordtype}{int}(min(kk\ +\ MCMC\_Settings.number\_of\_chains,\ MCMC\_Settings.total\_number\_of\_samples)\ -\/\ 50\ *\ MCMC\_Settings.number\_of\_chains),\ k\_0);\ jj\ <\ min(kk\ +\ MCMC\_Settings.number\_of\_chains,\ MCMC\_Settings.total\_number\_of\_samples);\ jj++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (jj\%MCMC\_Settings.save\_interval\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//QCoreApplication::processEvents(QEventLoop::AllEvents,100*1000);}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00479}00479\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\ \textcolor{stringliteral}{"{}\%i,\ "{}},\ jj);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\ \textcolor{stringliteral}{"{}\%le,\ "{}},\ Params[jj][i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!results-\/>SetRow(jj,\ jj,Params[jj]))}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout<<\textcolor{stringliteral}{"{}not\ enough\ room!"{}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00487}00487\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\ \textcolor{stringliteral}{"{}\%le,\ \%le,\ \%f,"{}},\ logp[jj],\ logp1[jj],\ stuckcounter[jj\%MCMC\_Settings.number\_of\_chains]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ pertcoeff.size();\ j++)\ fprintf(file,\ \textcolor{stringliteral}{"{}\%le,"{}},\ pertcoeff[j]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00491}00491\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00493}00493\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//cout\ <<\ jj\ <<\ "{},"{}\ <<\ pertcoeff[0]\ <<\ "{},"{}\ <<\ stuckcounter.max()\ <<\ "{},"{}\ <<\ stuckcounter.min()\ <<\ endl;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (jj<n\_burnout)}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00500}00500\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((kk-\/k\_0)\ \%\ (50*MCMC\_Settings.number\_of\_chains)\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00503}00503\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{double}(accepted\_count)\ /\ \textcolor{keywordtype}{double}(total\_count)>MCMC\_Settings.acceptance\_rate)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ MCMC\_Settings.number\_of\_parameters;\ i++)\ pertcoeff[i]\ /=\ MCMC\_Settings.purt\_change\_scale;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ MCMC\_Settings.number\_of\_parameters;\ i++)\ pertcoeff[i]\ *=\ MCMC\_Settings.purt\_change\_scale;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ accepted\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ total\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00512}00512\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00513}00513\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00514}00514\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rtw)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ average\_log\_p\ =\ CVector::Extract(logp,kk-\/100,kk).mean();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ progress\ =\ double(kk)\ /\ double(nsamps)*0.98;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ rtw-\/>\mbox{\hyperlink{classProgressWindow_a8d4ea0027007ff871962e33689a63d13}{SetProgress}}(progress);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ rtw-\/>\mbox{\hyperlink{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}{AppendPoint}}(kk,\textcolor{keywordtype}{double}(accepted\_count)\ /\ \textcolor{keywordtype}{double}(total\_count),0);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ rtw-\/>\mbox{\hyperlink{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}{AppendPoint}}(kk,\textcolor{keywordtype}{double}(pertcoeff[0]\ /\ MCMC\_Settings.ini\_purt\_fact),1);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ rtw-\/>\mbox{\hyperlink{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}{AppendPoint}}(kk,\textcolor{keywordtype}{double}(average\_log\_p),2);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ QCoreApplication::processEvents();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00523}00523\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00524}00524\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00525}00525\ \ \ \ \ qDebug()<<\textcolor{stringliteral}{"{}MCMC\ done!"{}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00526}00526\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00527}00527\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00528}00528\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00529}00529\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00530}\mbox{\hyperlink{classCMCMC_af730c4f77d698e62f055b8e376685a93}{00530}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_af730c4f77d698e62f055b8e376685a93}{CMCMC<T>::SetRunTimeWindow}}(\mbox{\hyperlink{classProgressWindow}{ProgressWindow}}\ *\_rtw)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00531}00531\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00532}00532\ \ \ \ \ rtw\ =\ \_rtw;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00533}00533\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00534}00534\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00535}00535\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00536}\mbox{\hyperlink{classCMCMC_aa094bb7e570b0b9e578697ebe92b03c7}{00536}}\ \mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{CMCMC<T>::CMCMC}}(T\ *\_system)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00537}00537\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00538}00538\ \ \ \ \ Model\ =\ \_system;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00539}00539\ \ \ \ \ MCMC\_Settings.number\_of\_parameters\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00540}00540\ \ \ \ \ MCMC\_Settings.numberOfThreads\ =\ 20;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00541}00541\ \ \ \ \ FileInformation.outputpath\ =\ Model-\/>OutputPath();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00542}00542\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00543}00543\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<Model-\/>Parameters().size();\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00544}00544\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00545}00545\ \ \ \ \ \ \ \ \ MCMC\_Settings.number\_of\_parameters++;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00546}00546\ \ \ \ \ \ \ \ \ params.push\_back(i);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00547}00547\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00548}00548\ \ \ \ \ parameters\ =\ \&Model-\/>Parameters();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00549}00549\ \ \ \ \ observations\ =\ Model-\/>Observations();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00550}00550\ \ \ \ \ pertcoeff.resize(parameters-\/>size());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00551}00551\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00552}00552\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00553}00553\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00554}\mbox{\hyperlink{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4}{00554}}\ CVector\ \mbox{\hyperlink{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4}{CMCMC<T>::sensitivity}}(\textcolor{keywordtype}{double}\ d,\ vector<double>\ par)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00555}00555\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00556}00556\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00557}00557\ \ \ \ \ \textcolor{keywordtype}{double}\ base\ =\ posterior(par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00558}00558\ \ \ \ \ CVector\ X(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00559}00559\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00560}00560\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00561}00561\ \ \ \ \ \ \ \ \ vector<double>\ par1\ =\ par;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00562}00562\ \ \ \ \ \ \ \ \ par1[i]=par[i]*(1+d);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00563}00563\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ base\_1\ =\ posterior(par1);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00564}00564\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00565}00565\ \ \ \ \ \ \ \ \ X[i]\ =\ (sqrt(fabs(base))-\/sqrt(fabs(base\_1)))/(d*par[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00566}00566\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00567}00567\ \ \ \ \ \textcolor{keywordflow}{return}\ X;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00568}00568\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00569}00569\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00570}00570\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00571}00571\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00572}\mbox{\hyperlink{classCMCMC_ac52f936022260b65893e35a3a7b9b46b}{00572}}\ CVector\ \mbox{\hyperlink{classCMCMC_ac52f936022260b65893e35a3a7b9b46b}{CMCMC<T>::sensitivity\_ln}}(\textcolor{keywordtype}{double}\ d,\ vector<double>\ par)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00573}00573\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00574}00574\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00575}00575\ \ \ \ \ CVector\ X\ =\ sensitivity(d,\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00576}00576\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00577}00577\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00578}00578\ \ \ \ \ \ \ \ \ X[i]\ =\ par[i]*X[i];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00579}00579\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00580}00580\ \ \ \ \ \textcolor{keywordflow}{return}\ X;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00581}00581\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00582}00582\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00583}00583\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00584}\mbox{\hyperlink{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a}{00584}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a}{CMCMC<T>::readfromfile}}(\textcolor{keywordtype}{string}\ filename)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00585}00585\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00586}00586\ \ \ \ \ ifstream\ file(filename);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00587}00587\ \ \ \ \ vector<string>\ s;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00588}00588\ \ \ \ \ s\ =\ aquiutils::getline(file);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00589}00589\ \ \ \ \ \textcolor{keywordtype}{int}\ jj=0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00590}00590\ \ \ \ \ \textcolor{keywordflow}{while}\ (file.eof()\ ==\ \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00591}00591\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00592}00592\ \ \ \ \ \ \ \ \ s\ =\ aquiutils::getline(file);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00593}00593\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s.size()\ ==\ 2*MCMC\_Settings.number\_of\_parameters+4)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00594}00594\ \ \ \ \ \ \ \ \ \{\ \ \ Params[jj].resize(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00595}00595\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00596}00596\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00597}00597\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Params[jj][i]\ =\ atof(s[i+1].c\_str());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00598}00598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pertcoeff[i]\ =\ \ atof(s[MCMC\_Settings.number\_of\_parameters+i+4].c\_str());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00599}00599\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00600}00600\ \ \ \ \ \ \ \ \ \ \ \ \ logp[jj]\ =\ atof(s[MCMC\_Settings.number\_of\_parameters+1].c\_str());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00601}00601\ \ \ \ \ \ \ \ \ \ \ \ \ logp1[jj]\ =\ atof(s[MCMC\_Settings.number\_of\_parameters+2].c\_str());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00602}00602\ \ \ \ \ \ \ \ \ \ \ \ \ jj++;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00603}00603\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00604}00604\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00605}00605\ \ \ \ \ file.close();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00606}00606\ \ \ \ \ \textcolor{keywordflow}{return}\ jj;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00607}00607\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00608}00608\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00609}00609\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00610}\mbox{\hyperlink{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6}{00610}}\ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6}{CMCMC<T>::prior\_distribution}}(\textcolor{keywordtype}{int}\ n\_bins)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00611}00611\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00612}00612\ \ \ \ \ TimeSeriesSet<double>\ prior\_dist(MCMC\_Settings.number\_of\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00613}00613\ \ \ \ \ TimeSeries<double>\ B(n\_bins);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00614}00614\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00615}00615\ \ \ \ \ \textcolor{keywordtype}{double}\ min\_range\ ,\ max\_range;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00616}00616\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00617}00617\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_parameters;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00618}00618\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00619}00619\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i).GetDistribution()\ !=\ \textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00620}00620\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00621}00621\ \ \ \ \ \ \ \ \ \ \ \ \ min\_range\ =\ parameter(i)-\/>mean()\ -\/\ 4*parameter(i)-\/>std();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00622}00622\ \ \ \ \ \ \ \ \ \ \ \ \ max\_range\ =\ parameter(i)-\/>mean()\ +\ 4*parameter(i)-\/>std();;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00623}00623\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00624}00624\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i).GetDistribution()\ ==\ \textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00625}00625\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00626}00626\ \ \ \ \ \ \ \ \ \ \ \ \ min\_range\ =\ parameter(i)-\/>mean()\ *\ exp(-\/4*parameter(i)-\/>std());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00627}00627\ \ \ \ \ \ \ \ \ \ \ \ \ max\_range\ =\ parameter(i)-\/>mean()\ *\ exp(4*parameter(i)-\/>std());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00628}00628\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00629}00629\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00630}00630\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00631}00631\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dp\ =\ abs(max\_range\ -\/\ min\_range)\ /\ n\_bins;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00632}00632\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00633}00633\ \ \ \ \ \ \ \ \ B.setTime(0,\ min\_range\ +\ dp/2);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00634}00634\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<n\_bins-\/1;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00635}00635\ \ \ \ \ \ \ \ \ \ \ \ \ B.setTime(j+1,\ B.getTime(j)\ +\ dp);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00636}00636\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00637}00637\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i).GetDistribution()\ !=\ \textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00638}00638\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<n\_bins;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00639}00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B.setValue(j\ ,\ exp(-\/pow(B.getTime(j)-\/parameter(i)-\/>mean(),2)/(2.0*pow(parameter(i)-\/>std(),2)))/(parameter(i)-\/>std()*pow(6.28,0.5)));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00640}00640\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00641}00641\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parameter(i).GetDistribution()\ ==\ \textcolor{stringliteral}{"{}log-\/normal"{}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00642}00642\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<n\_bins;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00643}00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B.setValue(j,\ exp(-\/pow(\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(B.getTime(j))-\/\mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(parameter(i)-\/>mean()),2)/(2.0*pow(parameter(i)-\/>std(),2)))/(B.getTime(j)*parameter(i)-\/>std()*pow(6.28,0.5)));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00644}00644\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00645}00645\ \ \ \ \ \ \ \ \ prior\_dist.at(i)\ =\ B;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00646}00646\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00647}00647\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00648}00648\ \ \ \ \ \textcolor{keywordflow}{return}\ prior\_dist;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00649}00649\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00650}00650\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00651}00651\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00652}\mbox{\hyperlink{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a}{00652}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a}{CMCMC<T>::ProduceRealizations}}(TimeSeriesSet<double>\ \&MCMCout)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00653}00653\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00654}00654\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00655}00655\ \ \ \ \ vector<TimeSeriesSet<double>>\ realized\_timeseries(observations-\/>size());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00656}00656\ \ \ \ \ vector<TimeSeriesSet<double>>\ predicted\_percentiles(observations-\/>size());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00657}00657\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00658}00658\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ jj\ =\ 0;\ jj\ <=MCMC\_Settings.number\_of\_post\_estimate\_realizations/MCMC\_Settings.numberOfThreads;\ jj++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00659}00659\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00660}00660\ \ \ \ \ \ \ \ \ vector<T>\ Sys1(MCMC\_Settings.numberOfThreads);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00661}00661\ \textcolor{preprocessor}{\#ifndef\ NO\_OPENMP}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00662}00662\ \ \ \ \ \ \ \ \ omp\_set\_num\_threads(MCMC\_Settings.numberOfThreads);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00663}00663\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00664}00664\ \textcolor{preprocessor}{\#pragma\ omp\ parallel\ for}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00665}00665\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ min(MCMC\_Settings.numberOfThreads,\ MCMC\_Settings.number\_of\_post\_estimate\_realizations\ -\/\ jj*MCMC\_Settings.numberOfThreads);\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00666}00666\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00667}00667\ \ \ \ \ \ \ \ \ \ \ \ \ Sys1[j]\ =\ *Model;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00668}00668\ \ \ \ \ \ \ \ \ \ \ \ \ vector<double>\ sampled\_parameters\ =\ MCMCout.getrandom(MCMC\_Settings.burnout\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00669}00669\ \ \ \ \ \ \ \ \ \ \ \ \ model(\&Sys1[j],sampled\_parameters);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00670}00670\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00671}00671\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00672}00672\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ min(MCMC\_Settings.numberOfThreads,\ MCMC\_Settings.number\_of\_post\_estimate\_realizations\ -\/\ jj*MCMC\_Settings.numberOfThreads);\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<observations-\/>size();\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ realized\_timeseries[i].append(*(Sys1[j].observation(i)-\/>GetModeledTimeSeries()));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00675}00675\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00676}00676\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rtw)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00677}00677\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ progress\ =\ double(jj*MCMC\_Settings.numberOfThreads)\ /\ double(MCMC\_Settings.number\_of\_post\_estimate\_realizations);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ rtw-\/>SetProgress(progress);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00680}00680\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00681}00681\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00682}00682\ \ \ \ \ vector<double>\ percents;\ percents.push\_back(0.025);\ percents.push\_back(0.5);\ percents.push\_back(0.975);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00683}00683\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<observations-\/>size();\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00684}00684\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00685}00685\ \ \ \ \ \ \ \ \ realized\_timeseries[i].write(FileInformation.outputpath\ +\ \textcolor{stringliteral}{"{}Realizations\_"{}}\ +\ observation(i)-\/>GetName()\ +\ \textcolor{stringliteral}{"{}.txt"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00686}00686\ \ \ \ \ \ \ \ \ predicted\_percentiles[i]\ =\ realized\_timeseries[i].getpercentiles(percents);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00687}00687\ \ \ \ \ \ \ \ \ observation(i)-\/>SetPercentile95(predicted\_percentiles[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00688}00688\ \ \ \ \ \ \ \ \ predicted\_percentiles[i].write(FileInformation.outputpath\ +\ \textcolor{stringliteral}{"{}Predicted\_95p\_Bracket"{}}\ +\ observation(i)-\/>GetName()\ +\ \textcolor{stringliteral}{"{}.txt"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00689}00689\ \ \ \ \ \ \ \ \ observation(i)-\/>SetRealizations(realized\_timeseries[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00690}00690\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00691}00691\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00692}00692\ \ \ \ \ rtw-\/>SetProgress(1);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00693}00693\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00694}00694\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00695}00695\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00696}\mbox{\hyperlink{classCMCMC_ab2e01f222e9b37384e49cf29194a4514}{00696}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_ab2e01f222e9b37384e49cf29194a4514}{CMCMC<T>::get\_outputpercentiles}}(TimeSeriesSet<double>\ \&MCMCout)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00697}00697\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00698}00698\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00699}00699\ \ \ \ \ ProduceRealizations(MCMCout);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00700}00700\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_BTCout\_obs\ =\ Model-\/>ObservationsCount();}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00701}00701\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00702}00702\ \ \ \ \ BTCout\_obs\_prcntle.resize(1);\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ 1;\ j++)\ BTCout\_obs\_prcntle[j].resize(n\_BTCout\_obs);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00703}00703\ \ \ \ \ BTCout\_obs\_prcntle\_noise.resize(1);\ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ 1;\ j++)\ BTCout\_obs\_prcntle\_noise[j].resize(n\_BTCout\_obs);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00704}00704\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00705}00705\ \ \ \ \ \textcolor{keywordflow}{if}\ (calc\_output\_percentiles.size()>0)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00706}00706\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_BTCout\_obs;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00707}00707\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00708}00708\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ 1;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00709}00709\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00710}00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BTCout\_obs\_prcntle[j][i]\ =\ BTCout\_obs[j][i].getpercentiles(calc\_output\_percentiles);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00711}00711\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00712}00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BTCout\_obs\_prcntle[j][i].write(FileInformation.outputpath\ +\ \textcolor{stringliteral}{"{}BTC\_obs\_prcntl\_"{}}\ +\ Model-\/>Observation(i)-\/>GetName()\ +\ \textcolor{stringliteral}{"{}.txt"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00713}00713\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00714}00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (MCMC\_Settings.noise\_realization\_writeout)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00715}00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BTCout\_obs\_prcntle\_noise[j][i]\ =\ BTCout\_obs\_noise[j][i].getpercentiles(calc\_output\_percentiles);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00716}00716\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00717}00717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ BTCout\_obs\_prcntle\_noise[j][i].write(FileInformation.outputpath\ +\ \textcolor{stringliteral}{"{}BTC\_obs\_prcntl\_noise\_"{}}\ +\ Model-\/>Observation(i)-\/>GetName()\ +\ \textcolor{stringliteral}{"{}.txt"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00718}00718\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00719}00719\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00720}00720\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00721}00721\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00722}00722\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00723}00723\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00724}00724\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00725}\mbox{\hyperlink{classCMCMC_a9319f2b475594347f51491601ac1babf}{00725}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_a9319f2b475594347f51491601ac1babf}{CMCMC<T>::Perform}}()}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00726}00726\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00727}00727\ \ \ \ \ initialize(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00728}00728\ \ \ \ \ \textcolor{keywordtype}{int}\ mcmcstart\ =\ MCMC\_Settings.number\_of\_chains;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00729}00729\ \ \ \ \ \textcolor{keywordflow}{if}\ (MCMC\_Settings.continue\_mcmc)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00730}00730\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00731}00731\ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (rtw)\ rtw-\/>AppendText("{}Reading\ samples\ from\ ...\ "{}\ +\ MCMC\_Settings.continue\_filename);}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00732}00732\ \ \ \ \ \ \ \ \ mcmcstart\ =\ readfromfile(MCMC\_Settings.continue\_filename);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00733}00733\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00734}00734\ \ \ \ \ \textcolor{comment}{//if\ (rtw)\ rtw-\/>AppendText(string("{}Generating\ samples\ ...\ "{}));}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00735}00735\ \ \ \ \ step(mcmcstart,\ \textcolor{keywordtype}{int}((MCMC\_Settings.total\_number\_of\_samples\ -\/\ mcmcstart)\ /\ MCMC\_Settings.number\_of\_chains)*MCMC\_Settings.number\_of\_chains,\ FileInformation.outputfilename\ ,\ rtw);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00736}00736\ \ \ \ \ \textcolor{comment}{//if\ (rtw)\ rtw-\/>AppendText(string("{}Creating\ posterior\ distribution\ ..."{}));}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00737}00737\ \ \ \ \ TimeSeriesSet<double>\ all\_posterior\_distributions;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00738}00738\ \ \ \ \ TimeSeriesSet<double>\ parameter\_samples;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00739}00739\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<parameters-\/>size();\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00740}00740\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00741}00741\ \ \ \ \ \ \ \ \ TimeSeriesSet<double>\ chain\_values(MCMC\_Settings.number\_of\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00742}00742\ \ \ \ \ \ \ \ \ TimeSeries<double>\ all\_samples;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00743}00743\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_chains;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00744}00744\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00745}00745\ \ \ \ \ \ \ \ \ \ \ \ \ chain\_values.setname(i,\textcolor{stringliteral}{"{}Chain\_"{}}\ +\ aquiutils::numbertostring(i));}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00746}00746\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00747}00747\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j=MCMC\_Settings.burnout\_samples;\ j<MCMC\_Settings.total\_number\_of\_samples;\ j++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00748}00748\ \ \ \ \ \ \ \ \ \ \ \ \ chain\_values[j\%MCMC\_Settings.number\_of\_chains].append(j,Params[j][i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00749}00749\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00750}00750\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<MCMC\_Settings.number\_of\_chains;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00751}00751\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00752}00752\ \ \ \ \ \ \ \ \ \ \ \ \ all\_samples.append(chain\_values[i]);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00753}00753\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00754}00754\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00755}00755\ \ \ \ \ \ \ \ \ \textcolor{comment}{//chain\_values.name\ =\ parameter(i)-\/>GetName();}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00756}00756\ \ \ \ \ \ \ \ \ parameter(i)-\/>SetMCMCSamples(chain\_values);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00757}00757\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00758}00758\ \ \ \ \ \ \ \ \ TimeSeries<double>\ posterior\_distribution\ =\ all\_samples.distribution(all\_samples.size()/100,0);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00759}00759\ \ \ \ \ \ \ \ \ all\_posterior\_distributions.append(posterior\_distribution,parameter(i)-\/>GetName());}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00760}00760\ \ \ \ \ \ \ \ \ posterior\_distribution.setName(\textcolor{stringliteral}{"{}Posterior\ density"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00761}00761\ \ \ \ \ \ \ \ \ parameter(i)-\/>SetPosteriorDistribution(posterior\_distribution);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00762}00762\ \ \ \ \ \ \ \ \ parameter\_samples.append(all\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00763}00763\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00764}00764\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00765}00765\ \ \ \ \ all\_posterior\_distributions.write(FileInformation.outputpath\ +\ \textcolor{stringliteral}{"{}Posterior\_distributions.txt"{}});}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00766}00766\ \ \ \ \ \textcolor{comment}{//if\ (rtw)\ rtw-\/>AppendText(string("{}Generating\ Realizations\ ..."{}));}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00767}00767\ \ \ \ \ ProduceRealizations(parameter\_samples);}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00768}00768\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00769}00769\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00770}00770\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00771}\mbox{\hyperlink{classCMCMC_aad302d32046828f04d7072d9818678de}{00771}}\ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ \mbox{\hyperlink{classCMCMC_aad302d32046828f04d7072d9818678de}{CMCMC<T>::Min}}(\textcolor{keyword}{const}\ vector<double>\ \&vec,\ \textcolor{keywordtype}{int}\ current\_counter,\ \textcolor{keywordtype}{int}\ n\_chains)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00772}00772\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00773}00773\ \ \ \ \ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ out;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00774}00774\ \ \ \ \ out.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}}\ =\ 1e12;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00775}00775\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=max(current\_counter-\/n\_chains,0);\ i<current\_counter;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00776}00776\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00777}00777\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vec[i]<out.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00778}00778\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00779}00779\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}}\ =\ vec[i];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00780}00780\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}\ =\ i;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00781}00781\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00782}00782\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00783}00783\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00784}00784\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00785}00785\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00786}00786\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00787}\mbox{\hyperlink{classCMCMC_a8aab3f0befdfa07636083519e391f4bf}{00787}}\ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ \mbox{\hyperlink{classCMCMC_a8aab3f0befdfa07636083519e391f4bf}{CMCMC<T>::Max}}(\textcolor{keyword}{const}\ vector<double>\ \&vec,\ \textcolor{keywordtype}{int}\ current\_counter,\ \textcolor{keywordtype}{int}\ n\_chains)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00788}00788\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00789}00789\ \ \ \ \ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ out;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00790}00790\ \ \ \ \ out.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}}\ =\ -\/1e12;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00791}00791\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=max(current\_counter-\/n\_chains,0);\ i<current\_counter;\ i++)}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00792}00792\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00793}00793\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (vec[i]>out.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}})}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00794}00794\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00795}00795\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}}\ =\ vec[i];}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00796}00796\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}}\ =\ i;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00797}00797\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00798}00798\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00799}00799\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00800}00800\ \}}
+\DoxyCodeLine{\Hypertarget{MCMC_8hpp_source_l00801}00801\ }
+
+\end{DoxyCode}

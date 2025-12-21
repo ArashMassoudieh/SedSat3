@@ -1,0 +1,147 @@
+\doxysection{MCMC.\+h}
+\hypertarget{MCMC_8h_source}{}\label{MCMC_8h_source}\index{MCMC/MCMC.h@{MCMC/MCMC.h}}
+\mbox{\hyperlink{MCMC_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}math.h"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}NormalDist.h"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{GA_8h}{GA.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}Vector.h"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}TimeSeriesSet.h"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{observation_8h}{observation.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{parameter_8h}{parameter.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbtimeseriesset_8h}{cmbtimeseriesset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00013}00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classProgressWindow}{ProgressWindow}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00015}00015\ \textcolor{comment}{//using\ namespace\ std;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00017}00017\ \textcolor{comment}{/*struct\ Param}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00018}00018\ \textcolor{comment}{\{}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00019}00019\ \textcolor{comment}{\ \ \ \ int\ param\_ID;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00020}00020\ \textcolor{comment}{\ \ \ \ int\ type;\ //\ 0:\ normal,\ 1:\ lognormal,\ 2:\ uniform}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00021}00021\ \textcolor{comment}{\ \ \ \ double\ low,\ high;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00022}00022\ \textcolor{comment}{\ \ \ \ bool\ loged;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00023}00023\ \textcolor{comment}{\ \ \ \ double\ mean,\ std;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00024}00024\ \textcolor{comment}{\};*/}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00026}\mbox{\hyperlink{struct__MCMC__file__names}{00026}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct__MCMC__file__names}{\_MCMC\_file\_names}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00027}00027\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00028}\mbox{\hyperlink{struct__MCMC__file__names_a1f3158602fcc48ea8a97917b2a1eb405}{00028}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct__MCMC__file__names_a1f3158602fcc48ea8a97917b2a1eb405}{outputpath}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00029}\mbox{\hyperlink{struct__MCMC__file__names_adb5c3c9a84a4ce91b7238c57efc71836}{00029}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct__MCMC__file__names_adb5c3c9a84a4ce91b7238c57efc71836}{outputfilename}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00030}00030\ \};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00033}\mbox{\hyperlink{struct__MCMC__settings}{00033}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct__MCMC__settings}{\_MCMC\_settings}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00034}00034\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00035}\mbox{\hyperlink{struct__MCMC__settings_ac58b7427510121e081011f9d3e817831}{00035}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_ac58b7427510121e081011f9d3e817831}{total\_number\_of\_samples}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00036}\mbox{\hyperlink{struct__MCMC__settings_a05b8327df4905c3c4f8085410221e461}{00036}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_a05b8327df4905c3c4f8085410221e461}{number\_of\_chains}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00037}\mbox{\hyperlink{struct__MCMC__settings_aba350782c29a33c4cdf2b9f20475a74f}{00037}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_aba350782c29a33c4cdf2b9f20475a74f}{burnout\_samples}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00038}\mbox{\hyperlink{struct__MCMC__settings_aaf42aea98e37e5ecc94c57a2a72ce42b}{00038}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct__MCMC__settings_aaf42aea98e37e5ecc94c57a2a72ce42b}{ini\_purt\_fact}}\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00039}\mbox{\hyperlink{struct__MCMC__settings_a4eb451d0af3895d1ddc64500cd0a22e9}{00039}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct__MCMC__settings_a4eb451d0af3895d1ddc64500cd0a22e9}{purturbation\_factor}}\ =\ 0.05;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00040}\mbox{\hyperlink{struct__MCMC__settings_aa51b74881f1f29a0ef35a44ba2d56a7b}{00040}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_aa51b74881f1f29a0ef35a44ba2d56a7b}{number\_of\_parameters}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//int\ nActParams;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00042}00042\ \ \ \ \ \textcolor{comment}{//int\ numBTCs;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00043}00043\ \ \ \ \ \textcolor{comment}{//int\ nsamples;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00044}00044\ \ \ \ \ \textcolor{comment}{//int\ n\_ts;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00045}\mbox{\hyperlink{struct__MCMC__settings_af30e40d443d007fd0ae24b90635729c0}{00045}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_af30e40d443d007fd0ae24b90635729c0}{save\_interval}}=1;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00046}\mbox{\hyperlink{struct__MCMC__settings_a07ca2cba763581c05747501ca3763fd5}{00046}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{struct__MCMC__settings_a07ca2cba763581c05747501ca3763fd5}{continue\_filename}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00047}00047\ \ \ \ \ \textcolor{comment}{//bool\ mixederror;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00048}\mbox{\hyperlink{struct__MCMC__settings_a63a84c74b76c6977a682a8ccc1b7d57b}{00048}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct__MCMC__settings_a63a84c74b76c6977a682a8ccc1b7d57b}{noinipurt}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00049}\mbox{\hyperlink{struct__MCMC__settings_ab6920a7a40b77e1c3429fc0f3130dd8e}{00049}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct__MCMC__settings_ab6920a7a40b77e1c3429fc0f3130dd8e}{sensbasedpurt}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00050}\mbox{\hyperlink{struct__MCMC__settings_a9f971e39328be2f314a4733984d01f97}{00050}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct__MCMC__settings_a9f971e39328be2f314a4733984d01f97}{global\_sensitivity}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00051}\mbox{\hyperlink{struct__MCMC__settings_a2dab528e6c81bc07929fb98f9898a006}{00051}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct__MCMC__settings_a2dab528e6c81bc07929fb98f9898a006}{continue\_mcmc}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00052}\mbox{\hyperlink{struct__MCMC__settings_a3125c9b55e1f3b4643165dce6d7d4b42}{00052}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_a3125c9b55e1f3b4643165dce6d7d4b42}{number\_of\_post\_estimate\_realizations}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00053}\mbox{\hyperlink{struct__MCMC__settings_a367e1a44e98797fadf32e4db550407d0}{00053}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct__MCMC__settings_a367e1a44e98797fadf32e4db550407d0}{dp\_sens}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00054}\mbox{\hyperlink{struct__MCMC__settings_ad8034317c35639b42875b6f278665632}{00054}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct__MCMC__settings_ad8034317c35639b42875b6f278665632}{noise\_realization\_writeout}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00055}\mbox{\hyperlink{struct__MCMC__settings_a5f43519e1c57be528177f908945fbfe4}{00055}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{struct__MCMC__settings_a5f43519e1c57be528177f908945fbfe4}{numberOfThreads}}\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00056}\mbox{\hyperlink{struct__MCMC__settings_a00e5d3d19fd8bdd733b62b5b77f388f1}{00056}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct__MCMC__settings_a00e5d3d19fd8bdd733b62b5b77f388f1}{acceptance\_rate}}\ =\ 0.15;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00057}\mbox{\hyperlink{struct__MCMC__settings_a7c35d769af0d44b6f8f148cf7089aef2}{00057}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{struct__MCMC__settings_a7c35d769af0d44b6f8f148cf7089aef2}{purt\_change\_scale}}\ =\ 0.75;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00058}\mbox{\hyperlink{struct__MCMC__settings_a6d9a014a691107a88c6fae7b77b16b75}{00058}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct__MCMC__settings_a6d9a014a691107a88c6fae7b77b16b75}{dissolve\_chains}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00059}00059\ \};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00061}\mbox{\hyperlink{structint__value__pair}{00061}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00062}00062\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00063}\mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{00063}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{structint__value__pair_a73e90921250ad1cf1646efc9d08fcd03}{counter}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00064}\mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{00064}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structint__value__pair_a1d194cd36670e291868429343c1b7353}{value}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00065}00065\ \};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00068}00068\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00069}\mbox{\hyperlink{classCMCMC}{00069}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCMCMC}{CMCMC}}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00070}00070\ \{}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00071}00071\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00073}\mbox{\hyperlink{classCMCMC_a7d2ef49fdf418a9a2a3856f5402d0195}{00073}}\ \ \ \ \ T*\ \mbox{\hyperlink{classCMCMC_a7d2ef49fdf418a9a2a3856f5402d0195}{Model}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00074}\mbox{\hyperlink{classCMCMC_aefd76524110c3d3fe2c09bfd7e72a98a}{00074}}\ \ \ \ \ T\ \mbox{\hyperlink{classCMCMC_aefd76524110c3d3fe2c09bfd7e72a98a}{Model\_out}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{CMCMC}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00076}\mbox{\hyperlink{classCMCMC_a4d2f70d007b71e970a6f0422252eac6a}{00076}}\ \ \ \ \ \mbox{\hyperlink{classCMCMC_a4d2f70d007b71e970a6f0422252eac6a}{CMCMC}}(\textcolor{keywordtype}{int}\ nn,\ \textcolor{keywordtype}{int}\ nn\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00077}00077\ \ \ \ \ \mbox{\hyperlink{classCMCMC_a56df6bb8e03c3830ead8fe80bcd80d42}{CMCMC}}(T\ *system);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00078}00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMCMC_a33e1d8651f8c8561843fceedafab06fd}{SetProperty}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&varname,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&value);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00079}00079\ \ \ \ \ \mbox{\hyperlink{classCMCMC_afc71e62174c3a20bed892e5056579d9f}{\string~CMCMC}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00080}\mbox{\hyperlink{classCMCMC_aa1371f78972e014d744d808051e9b309}{00080}}\ \ \ \ \ \mbox{\hyperlink{struct__MCMC__settings}{\_MCMC\_settings}}\ \mbox{\hyperlink{classCMCMC_aa1371f78972e014d744d808051e9b309}{MCMC\_Settings}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//vector<Param>\ MCMCParam;}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00082}\mbox{\hyperlink{classCMCMC_ac7fd6e03329fba5ea3262c8b5e104e35}{00082}}\ \ \ \ \ vector<vector<double>>\ \mbox{\hyperlink{classCMCMC_ac7fd6e03329fba5ea3262c8b5e104e35}{Params}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00083}\mbox{\hyperlink{classCMCMC_a2d83e05e35fbf9207e0959a8f688e91a}{00083}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCMCMC_a2d83e05e35fbf9207e0959a8f688e91a}{pertcoeff}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00084}\mbox{\hyperlink{classCMCMC_a5002c74f59b81234d79b9ca2536d3c88}{00084}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCMCMC_a5002c74f59b81234d79b9ca2536d3c88}{logp}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00085}\mbox{\hyperlink{classCMCMC_a00c947ff08cc48740679c96baff164b5}{00085}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCMCMC_a00c947ff08cc48740679c96baff164b5}{logp1}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00086}\mbox{\hyperlink{classCMCMC_ac7137054f78cb874bc353f4063a42932}{00086}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCMCMC_ac7137054f78cb874bc353f4063a42932}{u}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//double\ posterior(vector<double>\ par,\ int\ ID\ =\ -\/1);}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00088}00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{initialize}}(\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ *results,\textcolor{keywordtype}{bool}\ random=\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00089}00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_aa1479a997069b4a313c163783a780be1}{initialize}}(vector<double>\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00090}00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{step}}(\textcolor{keywordtype}{int}\ k,\ \textcolor{keywordtype}{int}\ chain\_counter);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00091}00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMCMC_a60ce33e9468b284fc32d3de4bd17a4d5}{step}}(\textcolor{keywordtype}{int}\ k,\ \textcolor{keywordtype}{int}\ nsamps,\ \textcolor{keywordtype}{string}\ filename,\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ *results\ =\ \textcolor{keyword}{nullptr},\ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}*\ \_rtw\ =\ 0);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00092}00092\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCMCMC_a4ce5e910a76a2a6675c48f81e615495a}{purturb}}(\textcolor{keywordtype}{int}\ k);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00093}\mbox{\hyperlink{classCMCMC_a323780c636a0c1e7cff7c70144a67131}{00093}}\ \ \ \ \ vector<CVector>\ \mbox{\hyperlink{classCMCMC_a323780c636a0c1e7cff7c70144a67131}{temp\_predicted}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00094}\mbox{\hyperlink{classCMCMC_a2b7ed32c012aec9d4bdd098db796a325}{00094}}\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \mbox{\hyperlink{classCMCMC_a2b7ed32c012aec9d4bdd098db796a325}{predicted}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00095}\mbox{\hyperlink{classCMCMC_a30a24c11afc07e833328ed138490b455}{00095}}\ \ \ \ \ vector<T>\ \mbox{\hyperlink{classCMCMC_a30a24c11afc07e833328ed138490b455}{CopiedModels}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00096}\mbox{\hyperlink{classCMCMC_ab5fd1abc53e638253563dbb177ae1f14}{00096}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_ab5fd1abc53e638253563dbb177ae1f14}{writeoutput}}(\textcolor{keywordtype}{string}\ filename);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00097}\mbox{\hyperlink{classCMCMC_ae8a1b3c80cf8f1ac70cfd1eb40d76931}{00097}}\ \ \ \ \ vector<int>\ \mbox{\hyperlink{classCMCMC_ae8a1b3c80cf8f1ac70cfd1eb40d76931}{params}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00098}\mbox{\hyperlink{classCMCMC_a78b0e280493777a163847b31c6f3a646}{00098}}\ \ \ \ \ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_a78b0e280493777a163847b31c6f3a646}{MData}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00099}\mbox{\hyperlink{classCMCMC_a0717cdfe3c2b9ff392f5a2f13ff9b3e1}{00099}}\ \ \ \ \ \mbox{\hyperlink{struct__MCMC__file__names}{\_MCMC\_file\_names}}\ \mbox{\hyperlink{classCMCMC_a0717cdfe3c2b9ff392f5a2f13ff9b3e1}{FileInformation}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00100}00100\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMCMC_a92f06a89486b649700c812bfe0517ece}{posterior}}(vector<double>\ par,\ \textcolor{keywordtype}{int}\ chain\_counter);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00101}00101\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{model}}(T\ *Model1\ ,\ vector<double>\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00102}\mbox{\hyperlink{classCMCMC_ac1d37673d46f371de2556ac1e9417a3b}{00102}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMCMC_ac1d37673d46f371de2556ac1e9417a3b}{getparamno}}(\textcolor{keywordtype}{int}\ i,\textcolor{keywordtype}{int}\ ts)\textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00103}\mbox{\hyperlink{classCMCMC_a77d3ca28c0463f1503d2db78a71d5d64}{00103}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMCMC_a77d3ca28c0463f1503d2db78a71d5d64}{get\_act\_paramno}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00104}\mbox{\hyperlink{classCMCMC_a2a1eec3e95888b8ca9ff066156057995}{00104}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMCMC_a2a1eec3e95888b8ca9ff066156057995}{get\_time\_series}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00105}\mbox{\hyperlink{classCMCMC_a5b1d0c353a03465f86a633a0479717ac}{00105}}\ \ \ \ \ vector<bool>\ \mbox{\hyperlink{classCMCMC_a5b1d0c353a03465f86a633a0479717ac}{apply\_to\_all}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00106}\mbox{\hyperlink{classCMCMC_a4a4188a932db5bc00d7bd0714cf6b958}{00106}}\ \ \ \ \ vector<Parameter>\ *\mbox{\hyperlink{classCMCMC_a4a4188a932db5bc00d7bd0714cf6b958}{parameters}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00107}\mbox{\hyperlink{classCMCMC_abe18b7246e413ae49e46ee59da40ff0d}{00107}}\ \ \ \ \ vector<Observation>\ *\mbox{\hyperlink{classCMCMC_abe18b7246e413ae49e46ee59da40ff0d}{observations}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00108}00108\ \ \ \ \ \mbox{\hyperlink{classParameter}{Parameter}}*\ \mbox{\hyperlink{classCMCMC_a64ef834ef59c419c0179c7d9b4c6cce6}{parameter}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00109}00109\ \ \ \ \ \mbox{\hyperlink{classObservation}{Observation}}\ *\mbox{\hyperlink{classCMCMC_a46c0379bf73cef8d753fe6b15023869b}{observation}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00110}00110\ \ \ \ \ CVector\ \mbox{\hyperlink{classCMCMC_ab0dbddf682a12bf891c446de672e5ba4}{sensitivity}}(\textcolor{keywordtype}{double}\ d,\ vector<double>\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00111}00111\ \ \ \ \ CVector\ \mbox{\hyperlink{classCMCMC_ac52f936022260b65893e35a3a7b9b46b}{sensitivity\_ln}}(\textcolor{keywordtype}{double}\ d,\ vector<double>\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00112}00112\ \textcolor{preprocessor}{\#ifdef\ Q\_GUI\_SUPPORT}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00113}\mbox{\hyperlink{classCMCMC_ab1540f4ed1b79842cdafeefe067f6781}{00113}}\ \ \ \ \ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}\ *\mbox{\hyperlink{classCMCMC_ab1540f4ed1b79842cdafeefe067f6781}{rtw}}=\textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00114}00114\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QT\_version}}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00115}\mbox{\hyperlink{classCMCMC_ab4880c86996dfdf9da895bf6050b8720}{00115}}\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classCMCMC_ab4880c86996dfdf9da895bf6050b8720}{sensitivity\_mat\_lumped}}(\textcolor{keywordtype}{double}\ d,\ vector<double>\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00116}00116\ \ \ \ \ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_a448a673016ed58bf06b92a1e35b25ad6}{prior\_distribution}}(\textcolor{keywordtype}{int}\ n\_bins);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00118}00118\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMCMC_add41f5aa74d76992f84bd1c3f1d66b8a}{readfromfile}}(\textcolor{keywordtype}{string}\ filename);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00119}00119\ \ \ \ \ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_a0a4b64f52b0d3ce75a937ada9d01bd06}{model}}(vector<double>\ par);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00120}\mbox{\hyperlink{classCMCMC_a2d978b0ecfd5ce976632e1586773432d}{00120}}\ \ \ \ \ vector<vector<TimeSeriesSet<double>>>\ \mbox{\hyperlink{classCMCMC_a2d978b0ecfd5ce976632e1586773432d}{BTCout\_obs}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00121}\mbox{\hyperlink{classCMCMC_a34a9e232656a26b8f4b99f66b5f2589e}{00121}}\ \ \ \ \ vector<vector<TimeSeriesSet<double>>>\ \mbox{\hyperlink{classCMCMC_a34a9e232656a26b8f4b99f66b5f2589e}{BTCout\_obs\_noise}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00122}\mbox{\hyperlink{classCMCMC_a3569f2b938ac0df0db11ac52c6552f1c}{00122}}\ \ \ \ \ vector<vector<TimeSeriesSet<double>>>\ \mbox{\hyperlink{classCMCMC_a3569f2b938ac0df0db11ac52c6552f1c}{BTCout\_obs\_prcntle}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00123}\mbox{\hyperlink{classCMCMC_a7a9fa4526df8db196a8dea8bceabcd61}{00123}}\ \ \ \ \ vector<vector<TimeSeriesSet<double>>>\ \mbox{\hyperlink{classCMCMC_a7a9fa4526df8db196a8dea8bceabcd61}{BTCout\_obs\_prcntle\_noise}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00124}\mbox{\hyperlink{classCMCMC_aceb09d47a2d3ec6b8de9b24f321517c2}{00124}}\ \ \ \ \ vector<CMatrix>\ \mbox{\hyperlink{classCMCMC_aceb09d47a2d3ec6b8de9b24f321517c2}{global\_sens\_lumped}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00125}\mbox{\hyperlink{classCMCMC_afb6e599c89dadd6e2e585641a12c8a55}{00125}}\ \ \ \ \ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_afb6e599c89dadd6e2e585641a12c8a55}{paramsList}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00126}\mbox{\hyperlink{classCMCMC_acc8f8fd81c1ea8b960a65743da848830}{00126}}\ \ \ \ \ TimeSeriesSet<double>\ \mbox{\hyperlink{classCMCMC_acc8f8fd81c1ea8b960a65743da848830}{realized\_paramsList}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00127}00127\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_a467a156e457893f81c5aaf60aa5fcc7a}{ProduceRealizations}}(TimeSeriesSet<double>\ \&MCMCout);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00128}00128\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_ab2e01f222e9b37384e49cf29194a4514}{get\_outputpercentiles}}(TimeSeriesSet<double>\ \&MCMCout);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00130}\mbox{\hyperlink{classCMCMC_afc637ec62d02b88e9ce96617343e8d6f}{00130}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{classCMCMC_afc637ec62d02b88e9ce96617343e8d6f}{calc\_output\_percentiles}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00131}00131\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_af730c4f77d698e62f055b8e376685a93}{SetRunTimeWindow}}(\mbox{\hyperlink{classProgressWindow}{ProgressWindow}}\ *\_rtw);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00132}\mbox{\hyperlink{classCMCMC_a02ea3757621c608133bf8efa568cdac7}{00132}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMCMC_a02ea3757621c608133bf8efa568cdac7}{accepted\_count}}=0,\ \mbox{\hyperlink{classCMCMC_a3cb3f9aae3876bc47081544c8943069a}{total\_count}}=0;}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00133}\mbox{\hyperlink{classCMCMC_afdc0bbeef6af44e9da5f4fb1b05bbc12}{00133}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMCMC_afdc0bbeef6af44e9da5f4fb1b05bbc12}{last\_error}};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00134}00134\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMCMC_a9319f2b475594347f51491601ac1babf}{Perform}}();}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00135}00135\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00136}00136\ \ \ \ \ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ \mbox{\hyperlink{classCMCMC_aad302d32046828f04d7072d9818678de}{Min}}(\textcolor{keyword}{const}\ vector<double>\ \&vec,\ \textcolor{keywordtype}{int}\ current\_counter,\ \textcolor{keywordtype}{int}\ n\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00137}00137\ \ \ \ \ \mbox{\hyperlink{structint__value__pair}{int\_value\_pair}}\ \mbox{\hyperlink{classCMCMC_a8aab3f0befdfa07636083519e391f4bf}{Max}}(\textcolor{keyword}{const}\ vector<double>\ \&vec,\ \textcolor{keywordtype}{int}\ current\_counter,\ \textcolor{keywordtype}{int}\ n\_chains);}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00139}00139\ \};}
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{MCMC_8h_source_l00141}00141\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{MCMC_8hpp}{MCMC.hpp}}"{}}}
+
+\end{DoxyCode}

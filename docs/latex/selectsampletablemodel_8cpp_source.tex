@@ -1,0 +1,106 @@
+\doxysection{selectsampletablemodel.\+cpp}
+\hypertarget{selectsampletablemodel_8cpp_source}{}\label{selectsampletablemodel_8cpp_source}\mbox{\hyperlink{selectsampletablemodel_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{selectsampletablemodel_8h}{selectsampletablemodel.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00003}\mbox{\hyperlink{classSelectSampleTableModel_ad2ee70215c6f4c9d4f2fea1f2296534d}{00003}}\ \mbox{\hyperlink{classSelectSampleTableModel_ad2ee70215c6f4c9d4f2fea1f2296534d}{SelectSampleTableModel::SelectSampleTableModel}}(\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\_data,\ QObject\ *parent)\ :\ QAbstractTableModel(parent)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00004}00004\ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00005}00005\ \ \ \ \ \mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}\ =\ \_data;}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00007}\mbox{\hyperlink{classSelectSampleTableModel_ad11e67fc0f2c5c2c18ef5ef2691fe09f}{00007}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSelectSampleTableModel_ad11e67fc0f2c5c2c18ef5ef2691fe09f}{SelectSampleTableModel::rowCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00008}00008\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}-\/>operator[](\mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selectedSource}}).size();}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00010}00010\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00011}\mbox{\hyperlink{classSelectSampleTableModel_a6b9dd1384a515628827079a9c8aa2aa3}{00011}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSelectSampleTableModel_a6b9dd1384a515628827079a9c8aa2aa3}{SelectSampleTableModel::columnCount}}(\textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00012}00012\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{return}\ 3;}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00015}\mbox{\hyperlink{classSelectSampleTableModel_a4a7f7b3c1db53e2053465a86e85772d4}{00015}}\ QVariant\ \mbox{\hyperlink{classSelectSampleTableModel_a4a7f7b3c1db53e2053465a86e85772d4}{SelectSampleTableModel::data}}(\textcolor{keyword}{const}\ QModelIndex\ \&index,\ \textcolor{keywordtype}{int}\ role)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00016}00016\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::DisplayRole)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00018}00018\ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (index.column()==0)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QString::fromStdString(\mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}-\/>operator[](\mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selectedSource}}).\mbox{\hyperlink{classSourceSinkData_aaa31775b3d948b8a29dbc0c45ed1c081}{GetSampleNames}}()[index.row()]);}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==1)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{GetProfileSet}}(index.row())-\/>\mbox{\hyperlink{classElemental__Profile_af21fb541c1e8e760f5f7adae8b00dde7}{IsIncludedInAnalysis}}())}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Yes"{}};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}No"{}};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==2)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QString::fromStdString(\mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{GetProfileSet}}(index.row())-\/>\mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{GetNotes}}());}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::ForegroundRole)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00036}00036\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{GetProfileSet}}(index.row())-\/>\mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{GetNotes}}()!=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QVariant::fromValue(QColor(Qt::red));}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QVariant::fromValue(QColor(Qt::black));}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{return}\ QVariant();}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00045}00045\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00047}\mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{00047}}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}*\ \mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{SelectSampleTableModel::GetProfileSet}}(\textcolor{keywordtype}{int}\ row)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00048}00048\ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}-\/>operator[](\mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selectedSource}})[\mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}-\/>operator[](\mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selectedSource}}).\mbox{\hyperlink{classSourceSinkData_aaa31775b3d948b8a29dbc0c45ed1c081}{GetSampleNames}}()[row]];}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00052}\mbox{\hyperlink{classSelectSampleTableModel_afdaf310a1642da21c6cff3dd7aefe6f4}{00052}}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}*\ \mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{SelectSampleTableModel::GetProfileSet}}(\textcolor{keywordtype}{int}\ row)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00053}00053\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}-\/>operator[](\mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selectedSource}})[\mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}-\/>operator[](\mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selectedSource}}).\mbox{\hyperlink{classSourceSinkData_aaa31775b3d948b8a29dbc0c45ed1c081}{GetSampleNames}}()[row]];}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00056}\mbox{\hyperlink{classSelectSampleTableModel_ac982608ddd36be53b85a9642bea97204}{00056}}\ QVariant\ \mbox{\hyperlink{classSelectSampleTableModel_ac982608ddd36be53b85a9642bea97204}{SelectSampleTableModel::headerData}}(\textcolor{keywordtype}{int}\ section,\ Qt::Orientation\ orientation,\ \textcolor{keywordtype}{int}\ role)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00057}00057\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::DisplayRole)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00059}00059\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (orientation\ ==\ Qt::Horizontal)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (section==0)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Sample"{}};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (section==1)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Include"{}};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (section==2)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Notes"{}};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{return}\ QVariant();}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00076}00076\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00077}\mbox{\hyperlink{classSelectSampleTableModel_a2a20771b771780e2399d65803a74ae78}{00077}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSelectSampleTableModel_a2a20771b771780e2399d65803a74ae78}{SelectSampleTableModel::setData}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index,\ \textcolor{keyword}{const}\ QVariant\ \&\ value,\ \textcolor{keywordtype}{int}\ role)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00078}00078\ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (role==Qt::EditRole)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00080}00080\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()==1)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value.toString()==\textcolor{stringliteral}{"{}Yes"{}}\ ||\ value.toBool())}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{GetProfileSet}}(index.row())-\/>\mbox{\hyperlink{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}{SetIncludedInAnalysis}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{GetProfileSet}}(index.row())-\/>\mbox{\hyperlink{classElemental__Profile_aa8163f73d23a6a59a053f4535a23c652}{SetIncludedInAnalysis}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00090}00090\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00091}00091\ \ \ \ \ QString\ result\ =\ \textcolor{stringliteral}{"{}Done"{}};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00092}00092\ \ \ \ \ emit\ \mbox{\hyperlink{classSelectSampleTableModel_af0954caea064dca4028023efd211dd40}{editCompleted}}(result);}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00094}00094\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00095}\mbox{\hyperlink{classSelectSampleTableModel_a80f3d945c8295c824661c643cef091d1}{00095}}\ Qt::ItemFlags\ \mbox{\hyperlink{classSelectSampleTableModel_a80f3d945c8295c824661c643cef091d1}{SelectSampleTableModel::flags}}(\textcolor{keyword}{const}\ QModelIndex\ \&\ index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00096}00096\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00097}00097\ \ \ \ \ \textcolor{keywordflow}{if}\ (index.column()!=0)}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Qt::ItemIsSelectable\ |\ \ Qt::ItemIsEditable\ |\ Qt::ItemIsEnabled\ ;}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Qt::ItemIsSelectable\ |\ \ Qt::ItemIsEnabled\ ;}
+\DoxyCodeLine{\Hypertarget{selectsampletablemodel_8cpp_source_l00101}00101\ \}}
+
+\end{DoxyCode}

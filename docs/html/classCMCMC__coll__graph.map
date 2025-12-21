@@ -1,0 +1,29 @@
+<map id="CMCMC&lt; T &gt;" name="CMCMC&lt; T &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="479,1188,593,1693"/>
+<area shape="rect" id="Node000002" href="$struct__MCMC__settings.html" title=" " alt="" coords="29,820,203,1085"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,1084,237,1162,293,1226,353,1286,467,1384,464,1388,350,1290,289,1230,233,1166,180,1087"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="379,451,517,517"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="446,517,435,619,425,770,424,946,430,1036,440,1125,455,1199,476,1273,471,1274,450,1201,435,1126,424,1037,419,946,420,769,430,619,441,517"/>
+<area shape="rect" id="Node000006" href="$classCMBTimeSeriesSet.html" title="Collection of time series with labels and observed values." alt="" coords="227,820,389,1085"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="443,518,417,591,395,632,367,669,354,677,341,680,330,683,321,692,308,718,299,745,291,804,285,803,293,744,303,716,317,689,328,679,340,675,352,672,364,665,391,629,412,589,438,516"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="511,153,619,219"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="515,230,489,264,469,312,458,364,452,412,450,451,445,451,447,411,452,363,464,311,484,261,511,227"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="537,691,652,756"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="570,233,596,690,590,691,565,233"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="554,5,577,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="568,71,568,137,563,137,563,71"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="331,1085,356,1163,381,1215,410,1265,471,1354,466,1357,405,1268,376,1217,351,1165,326,1087"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,451,168,517"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="110,528,248,819,243,821,105,530"/>
+<area shape="rect" id="Node000008" href="$classInterface.html" title=" " alt="" coords="193,301,354,667"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="289,680,295,756,300,819,294,820,289,756,284,681"/>
+<area shape="rect" id="Node000009" href="$structoptions.html" title=" " alt="" coords="212,133,335,239"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="276,239,276,285,271,285,271,239"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="599,756,603,915,601,1020,595,1126,590,1172,584,1171,589,1125,596,1019,597,915,594,757"/>
+<area shape="rect" id="Node000011" href="$struct__MCMC__file__names.html" title=" " alt="" coords="715,910,848,995"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="763,997,698,1127,603,1314,598,1312,694,1124,758,994"/>
+<area shape="rect" id="Node000012" href="$classProgressWindow.html" title=" " alt="" coords="872,780,1013,1125"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="874,1109,862,1127,801,1202,734,1273,667,1335,608,1386,605,1382,664,1331,730,1269,797,1199,858,1124,870,1106"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="912,451,973,517"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="945,531,945,780,940,780,940,531"/>
+</map>

@@ -1,0 +1,104 @@
+\doxysection{cmbvector.\+h}
+\hypertarget{cmbvector_8h_source}{}\label{cmbvector_8h_source}\mbox{\hyperlink{cmbvector_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ CMBVector\_H}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ CMBVector\_H}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}Vector.h"{}}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interface_8h}{interface.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{range_8h}{range.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00016}\mbox{\hyperlink{classCMBVector}{00016}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCMBVector}{CMBVector}}\ :\ \textcolor{keyword}{public}\ CVector,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classInterface}{Interface}}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00018}00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}(\textcolor{keywordtype}{int}\ n);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}(\textcolor{keyword}{const}\ CVector\_arma\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00047}00047\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ \mbox{\hyperlink{classCMBVector_a00e1e5df2084d250c6b45e544407dff9}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00053}00053\ \ \ \ \ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}(\textcolor{keyword}{const}\ CVector\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ \mbox{\hyperlink{classCMBVector_a00e1e5df2084d250c6b45e544407dff9}{operator=}}(\textcolor{keyword}{const}\ CVector\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00067}00067\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ \mbox{\hyperlink{classCMBVector_a00e1e5df2084d250c6b45e544407dff9}{operator=}}(\textcolor{keyword}{const}\ CVector\_arma\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00073}00073\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classCMBVector_a4841a1e52bd7c09e54cd8567ecfdebe5}{toJsonObject}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00080}00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ jsonobject)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00086}00086\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBVector_a64a8b90af0d90b394b61ab7f322f1b77}{ToString}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00097}00097\ \ \ \ \ QTableWidget*\ \mbox{\hyperlink{classCMBVector_a1f437b9720b5d134f80078826dbc1ca5}{ToTable}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBVector_a208ac7624eb69b64542d0c487df60348}{writetofile}}(QFile*\ file)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00111}00111\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMBVector_ad817fbf2537265f48581d3dd702b15e0}{valueAt}}(\textcolor{keywordtype}{int}\ i)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00118}\mbox{\hyperlink{classCMBVector_adac7688c971cd9680324eb0bc002134e}{00118}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBVector_adac7688c971cd9680324eb0bc002134e}{Label}}(\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classCMBVector_a312f7e323c69ec44a90b438bd94909ad}{labels}}[i];\ \}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00125}00125\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMBVector_ad817fbf2537265f48581d3dd702b15e0}{valueAt}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ label)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00132}00132\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMBVector_afb401a45477b4bf3d1ce678139e12f5f}{LookupLabel}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ label)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00138}\mbox{\hyperlink{classCMBVector_af73073dbd5a6bf4ae7919e3ff843ad65}{00138}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classCMBVector_af73073dbd5a6bf4ae7919e3ff843ad65}{Labels}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classCMBVector_a312f7e323c69ec44a90b438bd94909ad}{labels}};\ \}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00145}\mbox{\hyperlink{classCMBVector_a46b92d4fd06021959c9a6184e85bfbfc}{00145}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMBVector_a46b92d4fd06021959c9a6184e85bfbfc}{SetLabel}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ label)\ \{\ \mbox{\hyperlink{classCMBVector_a312f7e323c69ec44a90b438bd94909ad}{labels}}[i]\ =\ label;\ \}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00151}\mbox{\hyperlink{classCMBVector_a2316d881437bfec2831e86dccc2c3590}{00151}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMBVector_a2316d881437bfec2831e86dccc2c3590}{SetLabels}}(\textcolor{keyword}{const}\ vector<string>\&\ label)\ \{\ \mbox{\hyperlink{classCMBVector_a312f7e323c69ec44a90b438bd94909ad}{labels}}\ =\ label;\ \}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00161}\mbox{\hyperlink{classCMBVector_a6c7bc3385944edb5b28826e50de1bff3}{00161}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMBVector_a6c7bc3385944edb5b28826e50de1bff3}{SetBooleanValue}}(\textcolor{keywordtype}{bool}\ val)\ \{\ \mbox{\hyperlink{classCMBVector_ad1a035236b8108b7bdb6efb470953613}{boolean\_values}}\ =\ val;\ \}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00167}00167\ \ \ \ \ CVector\ \mbox{\hyperlink{classCMBVector_a166ef62eecd6251e420a1467d531a468}{toVector}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00174}00174\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBVector_a8485baf121f0ca92efa2a5d44cf72e4d}{Sort}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ sortvector\ =\ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}())\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00181}00181\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBVector_ad6012748dc1b8916ed55450a78692975}{AbsSort}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ sortvector\ =\ \mbox{\hyperlink{classCMBVector_ad1774e2b05aacb65965d4a3dff2bb546}{CMBVector}}())\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00187}00187\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBVector_a87e013a1c628742fb0f4a61a22f44bd1}{MaxElement}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00193}00193\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBVector_a574acc2d0dfbdb9c85d9368a10f7f335}{MaxAbsElement}}()\textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00200}00200\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBVector_a1fd84b5335ba988f339061c4fb6c289f}{Eliminate}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00207}00207\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMBVector_ab9fd007cf960fe8d1538cc48aa4dbf0f}{append}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ label,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ val);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00215}00215\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBVector_a52519bda3fb3cb5de82adc85c6a3cfe8}{Extract}}(\textcolor{keywordtype}{int}\ start,\ \textcolor{keywordtype}{int}\ end)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00221}\mbox{\hyperlink{classCMBVector_ab1ec3cee82431c72c3c5ce6d162d72b6}{00221}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMBVector_ab1ec3cee82431c72c3c5ce6d162d72b6}{size}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ num;\ \}}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00229}00229\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBVector_a5476710e79e16f15380e67a8dabfca2f}{ExtractWithinRange}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ lowval,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ highval)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00230}00230\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00239}00239\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBVector_aa3029eba063bceb6146f3dbc168d3a8f}{ExtractUpToMinimum}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00241}00241\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00242}\mbox{\hyperlink{classCMBVector_a312f7e323c69ec44a90b438bd94909ad}{00242}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classCMBVector_a312f7e323c69ec44a90b438bd94909ad}{labels}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00243}\mbox{\hyperlink{classCMBVector_ad1a035236b8108b7bdb6efb470953613}{00243}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBVector_ad1a035236b8108b7bdb6efb470953613}{boolean\_values}}\ =\ \textcolor{keyword}{false};\ \ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00244}00244\ \};}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00252}00252\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a0670aabd844cb5b3bec89bbf43db7162}{operator+}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00260}00260\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a0670aabd844cb5b3bec89bbf43db7162}{operator+}}(\textcolor{keywordtype}{double},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00268}00268\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a0670aabd844cb5b3bec89bbf43db7162}{operator+}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&,\ \textcolor{keywordtype}{double});}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00276}00276\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a424319ad579817caff2aaedc5866f3ba}{operator-\/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00284}00284\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a424319ad579817caff2aaedc5866f3ba}{operator-\/}}(\textcolor{keywordtype}{double},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00292}00292\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a424319ad579817caff2aaedc5866f3ba}{operator-\/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&,\ \textcolor{keywordtype}{double});}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00300}00300\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a41a2fa1fe800c869b64601a38a88f0a1}{operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00308}00308\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a41a2fa1fe800c869b64601a38a88f0a1}{operator*}}(\textcolor{keywordtype}{double},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&);}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00316}00316\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbvector_8h_a43d485835b57d25cd803c1ff50632375}{operator/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&,\ \textcolor{keywordtype}{double});}
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{cmbvector_8h_source_l00319}00319\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CMBVector\_H}}
+
+\end{DoxyCode}

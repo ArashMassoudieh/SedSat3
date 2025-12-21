@@ -1,0 +1,1029 @@
+\doxysection{CGA\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classCGA}{}\label{classCGA}\index{CGA$<$ T $>$@{CGA$<$ T $>$}}
+
+
+{\ttfamily \#include $<$GA/\+GA.\+h$>$}
+
+
+
+Inheritance diagram for CGA\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCGA__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for CGA\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCGA__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCGA_a7048e1195bed1e4bf6c0fc7493301795}{CGA}} ()
+\item 
+virtual \mbox{\hyperlink{classCGA_a484e829285d19300cc576eafbd848475}{\texorpdfstring{$\sim$}{\string~}\+CGA}} ()
+\item 
+\mbox{\hyperlink{classCGA_a1ece3abc51a335bb59647dd8be68f9b9}{CGA}} (const \mbox{\hyperlink{classCGA}{CGA}} \&C)
+\item 
+\mbox{\hyperlink{classCGA}{CGA}} \mbox{\hyperlink{classCGA_a5f879d23bf89218da703c8f8b5d3d16d}{operator=}} (\mbox{\hyperlink{classCGA}{CGA}} \&C)
+\item 
+\mbox{\hyperlink{classCGA_a7907156d20323014e560f6bd65f808e9}{CGA}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename, const T \&)
+\item 
+\mbox{\hyperlink{classCGA_a88148d38386d930db17dd617104069aa}{CGA}} (T \texorpdfstring{$\ast$}{*})
+\item 
+void \mbox{\hyperlink{classCGA_ab443f6c69f6f4a57b1a4d267dadc3656}{initialize}} ()
+\item 
+double \mbox{\hyperlink{classCGA_a5063df3a1ccb9dbb5cfd3447c7480f3c}{getfromoutput}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename)
+\item 
+void \mbox{\hyperlink{classCGA_ae8e1155afbb3a650cfcb779328a6a922}{getinifromoutput}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename)
+\item 
+void \mbox{\hyperlink{classCGA_a906b9f9691fe66909203164ca1fbc3ab}{getinitialpop}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} filename)
+\item 
+int \mbox{\hyperlink{classCGA_a86986bd512fe45c6d1534db8517c38a8}{optimize}} ()
+\item 
+bool \mbox{\hyperlink{classCGA_af65cc470a4395e78b5f3831ceba5cc90}{Set\+Property}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&varname, const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&value)
+\item 
+bool \mbox{\hyperlink{classCGA_ab49fb0070fb9fed7fc660173d57a654e}{Set\+Properties}} (const map$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&arguments)
+\item 
+void \mbox{\hyperlink{classCGA_adf976df2e1592206d5089205d93f1fab}{Initiate\+Population}} ()
+\item 
+void \mbox{\hyperlink{classCGA_a257b7f7a8d39c36851b9ade4aa12b461}{Set\+Run\+Time\+Window}} (\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*}\+\_\+rtw)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classCGA_a5a93c1487806ec2b200fe6b4eb3640cf}{sumfitness}}
+\item 
+double \mbox{\hyperlink{classCGA_a03cd49fcce9e818b6643e625d1ac17c8}{Max\+Fitness}}
+\item 
+\mbox{\hyperlink{structGA__Twiking__parameters}{GA\+\_\+\+Twiking\+\_\+parameters}} \mbox{\hyperlink{classCGA_a8683bf1edf7fa4e01096691a9d9285e0}{GA\+\_\+params}}
+\item 
+\mbox{\hyperlink{struct__filenames}{\+\_\+filenames}} \mbox{\hyperlink{classCGA_afe18aad1d9ca86eb4d0f03b2966dbb7d}{filenames}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCGA_a12b2a15a33592b03863a1226fb096547}{calc\+\_\+output\+\_\+percentiles}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ $>$ \mbox{\hyperlink{classCGA_a7adcaa510efe6d2ccc42ee2462e5dae8}{initial\+\_\+pop}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCGA_ac1717eb7de3fc3c1b17c34c5ae363a9a}{final\+\_\+params}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ int $>$ \mbox{\hyperlink{classCGA_a58ab54945f47697d13ceecee8d314b80}{params}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ int $>$ \mbox{\hyperlink{classCGA_adaccfb638a0fa94ee51fe00152699382}{loged}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ int $>$ \mbox{\hyperlink{classCGA_adbc2ed91c9187c21484c692bfbcf868e}{to\+\_\+ts}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCGA_a8c7850c2caf9dce2a233a66bcb56795f}{fixedinputvale}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCGA_a7378e78172071776ac9e61682217d2ec}{minval}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classCGA_adfefccaa1fdb5682a2515530c8ef8798}{maxval}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ bool $>$ \mbox{\hyperlink{classCGA_a2de45fbfceefc8909a7886ad1a06e101}{apply\+\_\+to\+\_\+all}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ int $>$ $>$ \mbox{\hyperlink{classCGA_abcd4e2c32b97210d245ac742d3e5b5ea}{outcompare}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classCIndividual}{CIndividual}} $>$ \mbox{\hyperlink{classCGA_a998ca31a227a23bf70ecacb256f10535}{Ind}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classCIndividual}{CIndividual}} $>$ \mbox{\hyperlink{classCGA_a086382c6293291a744bfe3eda41338de}{Ind\+\_\+old}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \mbox{\hyperlink{classCGA_a47ccc8e1a654b701720366af905d19f2}{paramname}}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ T $>$ \mbox{\hyperlink{classCGA_a423c307f000c4cb4ae00dd1cae9c255b}{Models}}
+\item 
+T \mbox{\hyperlink{classCGA_a87c7af73db61205481da9a2ba7e3e520}{Model\+\_\+out}}
+\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCGA_a13c3a854eb49b2797cd98dd3873be44a}{Model}}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCGA_a923cea7a8f170a8c7ce4c716d3f992dc}{last\+\_\+error}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classCGA_a6c523af9d43762633e2f33504a2e084e}{Setminmax}} (int a, double minrange, double maxrange, int prec)
+\item 
+void \mbox{\hyperlink{classCGA_aa50bce2a5d717a37d6e7f7448f33ae3b}{fitnessdistini}} ()
+\item 
+void \mbox{\hyperlink{classCGA_abca61d1426b7da21232c1ae5a01f0eff}{crossover}} ()
+\item 
+double \mbox{\hyperlink{classCGA_ae43684eb49a3d62194ce3c586d5902c7}{avgfitness}} ()
+\item 
+void \mbox{\hyperlink{classCGA_aa6c9f602ff66f1267c5b9750d5fe673a}{mutate}} (double mu)
+\item 
+void \mbox{\hyperlink{classCGA_a80354318026f5570239903a20065883b}{assignfitnesses}} ()
+\item 
+int \mbox{\hyperlink{classCGA_a1396ca02e98954f007215747200884bc}{maxfitness}} ()
+\item 
+double \mbox{\hyperlink{classCGA_ad613d910b0b69ebdb3cdb623207963ce}{variancefitness}} ()
+\item 
+double \mbox{\hyperlink{classCGA_a963420b83f23b27cfcd334e2b507f831}{stdfitness}} ()
+\item 
+double \mbox{\hyperlink{classCGA_a23e8a0f6e44ae981eef152407c4892fa}{avg\+\_\+actual\+\_\+fitness}} ()
+\item 
+void \mbox{\hyperlink{classCGA_ae1427388d4b63d5bdd424eaf99ce64fe}{write\+\_\+to\+\_\+detailed\+\_\+\+GA}} (\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} s)
+\item 
+void \mbox{\hyperlink{classCGA_a6641710765b4b2a52ca663cb206af611}{setnumpop}} (int n)
+\item 
+double \mbox{\hyperlink{classCGA_a6ddda08d40d267e93b1591209f9e0d2d}{avg\+\_\+inv\+\_\+actual\+\_\+fitness}} ()
+\item 
+int \mbox{\hyperlink{classCGA_a26861c27bbb345e1a2a77fe6b3352639}{optimize}} (int n\+Gens, char Def\+Out\+Put\+File\+Name\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{classCGA_a80b40099fdd339c653f46bf8378d0254}{setnparams}} (int n)
+\item 
+void \mbox{\hyperlink{classCGA_afbfb3354346fffa29c98c1d9c48502d0}{assignfixedvalues}} ()
+\item 
+void \mbox{\hyperlink{classCGA_a1c7bebbed88c608337decf0913c19189}{assignrank}} ()
+\item 
+void \mbox{\hyperlink{classCGA_ae30b9e738da2a445f00151168ac9cb36}{assignfitness\+\_\+rank}} (double N)
+\item 
+void \mbox{\hyperlink{classCGA_a420d4ea55847628fb81263b66440b145}{shake}} ()
+\item 
+void \mbox{\hyperlink{classCGA_a704087f884d6e08baa74708b6bd3c862}{crossover\+RC}} ()
+\item 
+void \mbox{\hyperlink{classCGA_ac017b8d18512b829f2d74489dd3bd14b}{getfromfile}} (char filename\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{classCGA_a03ea84782e1569f53be13a5ffbdda820}{fillfitdist}} ()
+\item 
+double \mbox{\hyperlink{classCGA_aed2bac7cae0a1a555c9c93f1512a070c}{assignfitnesses}} (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ inp)
+\item 
+double \mbox{\hyperlink{classCGA_a060ea9a00aa7d57d55ea282b7f5fbb26}{Gradient\+\_\+\+Descent}} (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ inp)
+\item 
+int \mbox{\hyperlink{classCGA_aa39ee39e595a0117b43f82bfafd7562d}{getparamno}} (int i, int ts)
+\item 
+int \mbox{\hyperlink{classCGA_addf72af0a9d378fde4f6658481077603}{get\+\_\+act\+\_\+paramno}} (int i)
+\item 
+int \mbox{\hyperlink{classCGA_a21bddbab65da31a5d42a7d0f4d49cb7f}{get\+\_\+time\+\_\+series}} (int i)
+\item 
+double \mbox{\hyperlink{classCGA_a6671fb178a0790c7a9a397dd929e423d}{evaluateforward}} ()
+\item 
+double \mbox{\hyperlink{classCGA_ad12526c03ec6dba6d3d88e933e6e51df}{evaluateforward\+\_\+mixed}} (\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ v)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classCGA_a8464fc9835d8033dd9b60e5ca324d6f7}{current\+\_\+generation}} = 0
+\item 
+\mbox{\hyperlink{classGADistribution}{GADistribution}} \mbox{\hyperlink{classCGA_a5d1c4c793a9d5dbc62c50a45cd743baf}{fitdist}}
+\item 
+int \mbox{\hyperlink{classCGA_ac3609bac5bfe4364d88aeecc5f821e92}{number\+Of\+Threads}}
+\item 
+\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCGA_adc111546d2a3a199d63a00cc915a7295}{rtw}} =nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class CGA$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00050}{50}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCGA_a7048e1195bed1e4bf6c0fc7493301795}\label{classCGA_a7048e1195bed1e4bf6c0fc7493301795} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!CGA@{CGA}}
+\index{CGA@{CGA}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CGA()}{CGA()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\mbox{\hyperlink{classCGA}{\+::\+CGA}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a484e829285d19300cc576eafbd848475}\label{classCGA_a484e829285d19300cc576eafbd848475} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!````~CGA@{\texorpdfstring{$\sim$}{\string~}CGA}}
+\index{````~CGA@{\texorpdfstring{$\sim$}{\string~}CGA}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}CGA()}{\string~CGA()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{classCGA}{CGA}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00203}{203}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a1ece3abc51a335bb59647dd8be68f9b9}\label{classCGA_a1ece3abc51a335bb59647dd8be68f9b9} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!CGA@{CGA}}
+\index{CGA@{CGA}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CGA()}{CGA()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\mbox{\hyperlink{classCGA}{\+::\+CGA}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$ \&}]{C }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00169}{169}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{GA_8h_source_l00057}{CGA$<$ T $>$\+::filenames}}, \mbox{\hyperlink{GA_8h_source_l00124}{CGA$<$ T $>$\+::fitdist}}, \mbox{\hyperlink{GA_8h_source_l00056}{CGA$<$ T $>$\+::\+GA\+\_\+params}}, \mbox{\hyperlink{GA_8h_source_l00068}{CGA$<$ T $>$\+::\+Ind}}, \mbox{\hyperlink{GA_8h_source_l00062}{CGA$<$ T $>$\+::loged}}, \mbox{\hyperlink{GA_8h_source_l00055}{CGA$<$ T $>$\+::\+Max\+Fitness}}, \mbox{\hyperlink{GA_8h_source_l00070}{CGA$<$ T $>$\+::paramname}}, and \mbox{\hyperlink{GA_8h_source_l00061}{CGA$<$ T $>$\+::params}}.
+
+\Hypertarget{classCGA_a7907156d20323014e560f6bd65f808e9}\label{classCGA_a7907156d20323014e560f6bd65f808e9} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!CGA@{CGA}}
+\index{CGA@{CGA}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CGA()}{CGA()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\mbox{\hyperlink{classCGA}{\+::\+CGA}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename,  }\item[{const T \&}]{model }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00057}{57}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a88148d38386d930db17dd617104069aa}\label{classCGA_a88148d38386d930db17dd617104069aa} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!CGA@{CGA}}
+\index{CGA@{CGA}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{CGA()}{CGA()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\mbox{\hyperlink{classCGA}{\+::\+CGA}} (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{model }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8hpp_source_l00108}{108}} of file \mbox{\hyperlink{GA_8hpp_source}{GA.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCGA_ae30b9e738da2a445f00151168ac9cb36}\label{classCGA_ae30b9e738da2a445f00151168ac9cb36} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!assignfitness\_rank@{assignfitness\_rank}}
+\index{assignfitness\_rank@{assignfitness\_rank}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{assignfitness\_rank()}{assignfitness\_rank()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::assignfitness\+\_\+rank (\begin{DoxyParamCaption}\item[{double}]{N }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00743}{743}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a80354318026f5570239903a20065883b}\label{classCGA_a80354318026f5570239903a20065883b} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!assignfitnesses@{assignfitnesses}}
+\index{assignfitnesses@{assignfitnesses}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{assignfitnesses()}{assignfitnesses()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::assignfitnesses (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00241}{241}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classCGA_aed2bac7cae0a1a555c9c93f1512a070c}\label{classCGA_aed2bac7cae0a1a555c9c93f1512a070c} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!assignfitnesses@{assignfitnesses}}
+\index{assignfitnesses@{assignfitnesses}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{assignfitnesses()}{assignfitnesses()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::assignfitnesses (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{inp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00543}{543}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_afbfb3354346fffa29c98c1d9c48502d0}\label{classCGA_afbfb3354346fffa29c98c1d9c48502d0} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!assignfixedvalues@{assignfixedvalues}}
+\index{assignfixedvalues@{assignfixedvalues}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{assignfixedvalues()}{assignfixedvalues()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::assignfixedvalues (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_a1c7bebbed88c608337decf0913c19189}\label{classCGA_a1c7bebbed88c608337decf0913c19189} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!assignrank@{assignrank}}
+\index{assignrank@{assignrank}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{assignrank()}{assignrank()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::assignrank (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00728}{728}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a23e8a0f6e44ae981eef152407c4892fa}\label{classCGA_a23e8a0f6e44ae981eef152407c4892fa} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!avg\_actual\_fitness@{avg\_actual\_fitness}}
+\index{avg\_actual\_fitness@{avg\_actual\_fitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{avg\_actual\_fitness()}{avg\_actual\_fitness()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::avg\+\_\+actual\+\_\+fitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00707}{707}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a6ddda08d40d267e93b1591209f9e0d2d}\label{classCGA_a6ddda08d40d267e93b1591209f9e0d2d} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!avg\_inv\_actual\_fitness@{avg\_inv\_actual\_fitness}}
+\index{avg\_inv\_actual\_fitness@{avg\_inv\_actual\_fitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{avg\_inv\_actual\_fitness()}{avg\_inv\_actual\_fitness()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::avg\+\_\+inv\+\_\+actual\+\_\+fitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00717}{717}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_ae43684eb49a3d62194ce3c586d5902c7}\label{classCGA_ae43684eb49a3d62194ce3c586d5902c7} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!avgfitness@{avgfitness}}
+\index{avgfitness@{avgfitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{avgfitness()}{avgfitness()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::avgfitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00374}{374}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_abca61d1426b7da21232c1ae5a01f0eff}\label{classCGA_abca61d1426b7da21232c1ae5a01f0eff} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!crossover@{crossover}}
+\index{crossover@{crossover}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{crossover()}{crossover()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::crossover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00322}{322}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8cpp_source_l00142}{cross()}}, \mbox{\hyperlink{Binary_8cpp_source_l00190}{cross2p()}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classCGA_a704087f884d6e08baa74708b6bd3c862}\label{classCGA_a704087f884d6e08baa74708b6bd3c862} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!crossoverRC@{crossoverRC}}
+\index{crossoverRC@{crossoverRC}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{crossoverRC()}{crossoverRC()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::crossover\+RC (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00351}{351}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8cpp_source_l00188}{cross\+\_\+\+RC\+\_\+\+L()}}, \mbox{\hyperlink{Individual_8cpp_source_l00126}{Get\+Rnd\+Unif()}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classCGA_a6671fb178a0790c7a9a397dd929e423d}\label{classCGA_a6671fb178a0790c7a9a397dd929e423d} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!evaluateforward@{evaluateforward}}
+\index{evaluateforward@{evaluateforward}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{evaluateforward()}{evaluateforward()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::evaluateforward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00775}{775}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_ad12526c03ec6dba6d3d88e933e6e51df}\label{classCGA_ad12526c03ec6dba6d3d88e933e6e51df} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!evaluateforward\_mixed@{evaluateforward\_mixed}}
+\index{evaluateforward\_mixed@{evaluateforward\_mixed}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{evaluateforward\_mixed()}{evaluateforward\_mixed()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::evaluateforward\+\_\+mixed (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_a03ea84782e1569f53be13a5ffbdda820}\label{classCGA_a03ea84782e1569f53be13a5ffbdda820} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!fillfitdist@{fillfitdist}}
+\index{fillfitdist@{fillfitdist}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fillfitdist()}{fillfitdist()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::fillfitdist (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00754}{754}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_aa50bce2a5d717a37d6e7f7448f33ae3b}\label{classCGA_aa50bce2a5d717a37d6e7f7448f33ae3b} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!fitnessdistini@{fitnessdistini}}
+\index{fitnessdistini@{fitnessdistini}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fitnessdistini()}{fitnessdistini()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::fitnessdistini (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_addf72af0a9d378fde4f6658481077603}\label{classCGA_addf72af0a9d378fde4f6658481077603} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!get\_act\_paramno@{get\_act\_paramno}}
+\index{get\_act\_paramno@{get\_act\_paramno}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_act\_paramno()}{get\_act\_paramno()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::get\+\_\+act\+\_\+paramno (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_a21bddbab65da31a5d42a7d0f4d49cb7f}\label{classCGA_a21bddbab65da31a5d42a7d0f4d49cb7f} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!get\_time\_series@{get\_time\_series}}
+\index{get\_time\_series@{get\_time\_series}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{get\_time\_series()}{get\_time\_series()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::get\+\_\+time\+\_\+series (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00638}{638}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_ac017b8d18512b829f2d74489dd3bd14b}\label{classCGA_ac017b8d18512b829f2d74489dd3bd14b} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!getfromfile@{getfromfile}}
+\index{getfromfile@{getfromfile}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getfromfile()}{getfromfile()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::getfromfile (\begin{DoxyParamCaption}\item[{char}]{filename\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_a5063df3a1ccb9dbb5cfd3447c7480f3c}\label{classCGA_a5063df3a1ccb9dbb5cfd3447c7480f3c} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!getfromoutput@{getfromoutput}}
+\index{getfromoutput@{getfromoutput}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getfromoutput()}{getfromoutput()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::getfromoutput (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00598}{598}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_ae8e1155afbb3a650cfcb779328a6a922}\label{classCGA_ae8e1155afbb3a650cfcb779328a6a922} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!getinifromoutput@{getinifromoutput}}
+\index{getinifromoutput@{getinifromoutput}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getinifromoutput()}{getinifromoutput()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::getinifromoutput (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00794}{794}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a906b9f9691fe66909203164ca1fbc3ab}\label{classCGA_a906b9f9691fe66909203164ca1fbc3ab} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!getinitialpop@{getinitialpop}}
+\index{getinitialpop@{getinitialpop}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getinitialpop()}{getinitialpop()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::getinitialpop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00820}{820}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classCGA_aa39ee39e595a0117b43f82bfafd7562d}\label{classCGA_aa39ee39e595a0117b43f82bfafd7562d} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!getparamno@{getparamno}}
+\index{getparamno@{getparamno}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{getparamno()}{getparamno()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::getparamno (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{ts }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00625}{625}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a060ea9a00aa7d57d55ea282b7f5fbb26}\label{classCGA_a060ea9a00aa7d57d55ea282b7f5fbb26} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Gradient\_Descent@{Gradient\_Descent}}
+\index{Gradient\_Descent@{Gradient\_Descent}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Gradient\_Descent()}{Gradient\_Descent()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Gradient\+\_\+\+Descent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{inp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_ab443f6c69f6f4a57b1a4d267dadc3656}\label{classCGA_ab443f6c69f6f4a57b1a4d267dadc3656} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!initialize@{initialize}}
+\index{initialize@{initialize}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00209}{209}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_adf976df2e1592206d5089205d93f1fab}\label{classCGA_adf976df2e1592206d5089205d93f1fab} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!InitiatePopulation@{InitiatePopulation}}
+\index{InitiatePopulation@{InitiatePopulation}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{InitiatePopulation()}{InitiatePopulation()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Initiate\+Population (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8hpp_source_l00165}{165}} of file \mbox{\hyperlink{GA_8hpp_source}{GA.\+hpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}.
+
+\Hypertarget{classCGA_a1396ca02e98954f007215747200884bc}\label{classCGA_a1396ca02e98954f007215747200884bc} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!maxfitness@{maxfitness}}
+\index{maxfitness@{maxfitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{maxfitness()}{maxfitness()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::maxfitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00670}{670}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_aa6c9f602ff66f1267c5b9750d5fe673a}\label{classCGA_aa6c9f602ff66f1267c5b9750d5fe673a} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!mutate@{mutate}}
+\index{mutate@{mutate}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{mutate()}{mutate()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::mutate (\begin{DoxyParamCaption}\item[{double}]{mu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00662}{662}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a5f879d23bf89218da703c8f8b5d3d16d}\label{classCGA_a5f879d23bf89218da703c8f8b5d3d16d} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$ \&}]{C }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00186}{186}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{GA_8h_source_l00057}{CGA$<$ T $>$\+::filenames}}, \mbox{\hyperlink{GA_8h_source_l00124}{CGA$<$ T $>$\+::fitdist}}, \mbox{\hyperlink{GA_8h_source_l00056}{CGA$<$ T $>$\+::\+GA\+\_\+params}}, \mbox{\hyperlink{GA_8h_source_l00068}{CGA$<$ T $>$\+::\+Ind}}, \mbox{\hyperlink{GA_8h_source_l00069}{CGA$<$ T $>$\+::\+Ind\+\_\+old}}, \mbox{\hyperlink{GA_8h_source_l00062}{CGA$<$ T $>$\+::loged}}, \mbox{\hyperlink{GA_8h_source_l00055}{CGA$<$ T $>$\+::\+Max\+Fitness}}, \mbox{\hyperlink{GA_8h_source_l00070}{CGA$<$ T $>$\+::paramname}}, and \mbox{\hyperlink{GA_8h_source_l00061}{CGA$<$ T $>$\+::params}}.
+
+\Hypertarget{classCGA_a86986bd512fe45c6d1534db8517c38a8}\label{classCGA_a86986bd512fe45c6d1534db8517c38a8} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!optimize@{optimize}}
+\index{optimize@{optimize}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{optimize()}{optimize()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::optimize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00394}{394}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classCGA_a26861c27bbb345e1a2a77fe6b3352639}\label{classCGA_a26861c27bbb345e1a2a77fe6b3352639} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!optimize@{optimize}}
+\index{optimize@{optimize}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{optimize()}{optimize()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::optimize (\begin{DoxyParamCaption}\item[{int}]{n\+Gens,  }\item[{char}]{Def\+Out\+Put\+File\+Name\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{classCGA_a6c523af9d43762633e2f33504a2e084e}\label{classCGA_a6c523af9d43762633e2f33504a2e084e} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Setminmax@{Setminmax}}
+\index{Setminmax@{Setminmax}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Setminmax()}{Setminmax()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Setminmax (\begin{DoxyParamCaption}\item[{int}]{a,  }\item[{double}]{minrange,  }\item[{double}]{maxrange,  }\item[{int}]{prec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00229}{229}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a80b40099fdd339c653f46bf8378d0254}\label{classCGA_a80b40099fdd339c653f46bf8378d0254} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!setnparams@{setnparams}}
+\index{setnparams@{setnparams}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setnparams()}{setnparams()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::setnparams (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00129}{129}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a6641710765b4b2a52ca663cb206af611}\label{classCGA_a6641710765b4b2a52ca663cb206af611} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!setnumpop@{setnumpop}}
+\index{setnumpop@{setnumpop}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{setnumpop()}{setnumpop()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::setnumpop (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00142}{142}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8h_source_l00023}{CIndividual\+::maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{CIndividual\+::minrange}}, \mbox{\hyperlink{Individual_8h_source_l00021}{CIndividual\+::n\+Params}}, and \mbox{\hyperlink{Individual_8h_source_l00022}{CIndividual\+::precision}}.
+
+\Hypertarget{classCGA_ab49fb0070fb9fed7fc660173d57a654e}\label{classCGA_ab49fb0070fb9fed7fc660173d57a654e} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!SetProperties@{SetProperties}}
+\index{SetProperties@{SetProperties}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetProperties()}{SetProperties()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Set\+Properties (\begin{DoxyParamCaption}\item[{const map$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} $>$ \&}]{arguments }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8hpp_source_l00549}{549}} of file \mbox{\hyperlink{GA_8hpp_source}{GA.\+hpp}}.
+
+\Hypertarget{classCGA_af65cc470a4395e78b5f3831ceba5cc90}\label{classCGA_af65cc470a4395e78b5f3831ceba5cc90} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!SetProperty@{SetProperty}}
+\index{SetProperty@{SetProperty}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetProperty()}{SetProperty()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+bool \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Set\+Property (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{varname,  }\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8hpp_source_l00524}{524}} of file \mbox{\hyperlink{GA_8hpp_source}{GA.\+hpp}}.
+
+\Hypertarget{classCGA_a257b7f7a8d39c36851b9ade4aa12b461}\label{classCGA_a257b7f7a8d39c36851b9ade4aa12b461} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!SetRunTimeWindow@{SetRunTimeWindow}}
+\index{SetRunTimeWindow@{SetRunTimeWindow}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{SetRunTimeWindow()}{SetRunTimeWindow()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Set\+Run\+Time\+Window (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classProgressWindow}{Progress\+Window}} \texorpdfstring{$\ast$}{*}}]{\+\_\+rtw }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00091}{91}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+References \mbox{\hyperlink{GA_8h_source_l00129}{CGA$<$ T $>$\+::rtw}}.
+
+\Hypertarget{classCGA_a420d4ea55847628fb81263b66440b145}\label{classCGA_a420d4ea55847628fb81263b66440b145} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!shake@{shake}}
+\index{shake@{shake}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{shake()}{shake()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::shake (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00654}{654}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_a963420b83f23b27cfcd334e2b507f831}\label{classCGA_a963420b83f23b27cfcd334e2b507f831} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!stdfitness@{stdfitness}}
+\index{stdfitness@{stdfitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{stdfitness()}{stdfitness()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::stdfitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00696}{696}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_ad613d910b0b69ebdb3cdb623207963ce}\label{classCGA_ad613d910b0b69ebdb3cdb623207963ce} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!variancefitness@{variancefitness}}
+\index{variancefitness@{variancefitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{variancefitness()}{variancefitness()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::variancefitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00685}{685}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+\Hypertarget{classCGA_ae1427388d4b63d5bdd424eaf99ce64fe}\label{classCGA_ae1427388d4b63d5bdd424eaf99ce64fe} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!write\_to\_detailed\_GA@{write\_to\_detailed\_GA}}
+\index{write\_to\_detailed\_GA@{write\_to\_detailed\_GA}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{write\_to\_detailed\_GA()}{write\_to\_detailed\_GA()}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+void \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::write\+\_\+to\+\_\+detailed\+\_\+\+GA (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8cpp_source_l00383}{383}} of file \mbox{\hyperlink{GA_8cpp_source}{GA.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCGA_a2de45fbfceefc8909a7886ad1a06e101}\label{classCGA_a2de45fbfceefc8909a7886ad1a06e101} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!apply\_to\_all@{apply\_to\_all}}
+\index{apply\_to\_all@{apply\_to\_all}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{apply\_to\_all}{apply\_to\_all}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$bool$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::apply\+\_\+to\+\_\+all}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00066}{66}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a12b2a15a33592b03863a1226fb096547}\label{classCGA_a12b2a15a33592b03863a1226fb096547} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!calc\_output\_percentiles@{calc\_output\_percentiles}}
+\index{calc\_output\_percentiles@{calc\_output\_percentiles}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{calc\_output\_percentiles}{calc\_output\_percentiles}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::calc\+\_\+output\+\_\+percentiles}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00058}{58}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a8464fc9835d8033dd9b60e5ca324d6f7}\label{classCGA_a8464fc9835d8033dd9b60e5ca324d6f7} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!current\_generation@{current\_generation}}
+\index{current\_generation@{current\_generation}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{current\_generation}{current\_generation}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::current\+\_\+generation = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00123}{123}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_afe18aad1d9ca86eb4d0f03b2966dbb7d}\label{classCGA_afe18aad1d9ca86eb4d0f03b2966dbb7d} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!filenames@{filenames}}
+\index{filenames@{filenames}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{filenames}{filenames}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{struct__filenames}{\+\_\+filenames}} \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::filenames}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00057}{57}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_ac1717eb7de3fc3c1b17c34c5ae363a9a}\label{classCGA_ac1717eb7de3fc3c1b17c34c5ae363a9a} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!final\_params@{final\_params}}
+\index{final\_params@{final\_params}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{final\_params}{final\_params}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::final\+\_\+params}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00060}{60}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a5d1c4c793a9d5dbc62c50a45cd743baf}\label{classCGA_a5d1c4c793a9d5dbc62c50a45cd743baf} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!fitdist@{fitdist}}
+\index{fitdist@{fitdist}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fitdist}{fitdist}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classGADistribution}{GADistribution}} \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::fitdist\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00124}{124}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_a8c7850c2caf9dce2a233a66bcb56795f}\label{classCGA_a8c7850c2caf9dce2a233a66bcb56795f} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!fixedinputvale@{fixedinputvale}}
+\index{fixedinputvale@{fixedinputvale}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{fixedinputvale}{fixedinputvale}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::fixedinputvale}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00064}{64}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a8683bf1edf7fa4e01096691a9d9285e0}\label{classCGA_a8683bf1edf7fa4e01096691a9d9285e0} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!GA\_params@{GA\_params}}
+\index{GA\_params@{GA\_params}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{GA\_params}{GA\_params}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{structGA__Twiking__parameters}{GA\+\_\+\+Twiking\+\_\+parameters}} \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+GA\+\_\+params}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00056}{56}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_a998ca31a227a23bf70ecacb256f10535}\label{classCGA_a998ca31a227a23bf70ecacb256f10535} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Ind@{Ind}}
+\index{Ind@{Ind}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Ind}{Ind}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{classCIndividual}{CIndividual}}$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Ind}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00068}{68}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_a086382c6293291a744bfe3eda41338de}\label{classCGA_a086382c6293291a744bfe3eda41338de} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Ind\_old@{Ind\_old}}
+\index{Ind\_old@{Ind\_old}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Ind\_old}{Ind\_old}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{classCIndividual}{CIndividual}}$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Ind\+\_\+old}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00069}{69}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_a7adcaa510efe6d2ccc42ee2462e5dae8}\label{classCGA_a7adcaa510efe6d2ccc42ee2462e5dae8} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!initial\_pop@{initial\_pop}}
+\index{initial\_pop@{initial\_pop}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{initial\_pop}{initial\_pop}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ $>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::initial\+\_\+pop}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00059}{59}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a923cea7a8f170a8c7ce4c716d3f992dc}\label{classCGA_a923cea7a8f170a8c7ce4c716d3f992dc} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!last\_error@{last\_error}}
+\index{last\_error@{last\_error}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{last\_error}{last\_error}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::last\+\_\+error}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00089}{89}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_adaccfb638a0fa94ee51fe00152699382}\label{classCGA_adaccfb638a0fa94ee51fe00152699382} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!loged@{loged}}
+\index{loged@{loged}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{loged}{loged}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$int$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::loged}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00062}{62}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_a03cd49fcce9e818b6643e625d1ac17c8}\label{classCGA_a03cd49fcce9e818b6643e625d1ac17c8} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!MaxFitness@{MaxFitness}}
+\index{MaxFitness@{MaxFitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{MaxFitness}{MaxFitness}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Max\+Fitness}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00055}{55}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_adfefccaa1fdb5682a2515530c8ef8798}\label{classCGA_adfefccaa1fdb5682a2515530c8ef8798} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!maxval@{maxval}}
+\index{maxval@{maxval}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{maxval}{maxval}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::maxval}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00065}{65}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a7378e78172071776ac9e61682217d2ec}\label{classCGA_a7378e78172071776ac9e61682217d2ec} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!minval@{minval}}
+\index{minval@{minval}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{minval}{minval}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::minval}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00065}{65}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a13c3a854eb49b2797cd98dd3873be44a}\label{classCGA_a13c3a854eb49b2797cd98dd3873be44a} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Model@{Model}}
+\index{Model@{Model}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Model}{Model}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Model}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00073}{73}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a87c7af73db61205481da9a2ba7e3e520}\label{classCGA_a87c7af73db61205481da9a2ba7e3e520} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Model\_out@{Model\_out}}
+\index{Model\_out@{Model\_out}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Model\_out}{Model\_out}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+T \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Model\+\_\+out}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00072}{72}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a423c307f000c4cb4ae00dd1cae9c255b}\label{classCGA_a423c307f000c4cb4ae00dd1cae9c255b} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!Models@{Models}}
+\index{Models@{Models}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{Models}{Models}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$T$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::\+Models}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00071}{71}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_ac3609bac5bfe4364d88aeecc5f821e92}\label{classCGA_ac3609bac5bfe4364d88aeecc5f821e92} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!numberOfThreads@{numberOfThreads}}
+\index{numberOfThreads@{numberOfThreads}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{numberOfThreads}{numberOfThreads}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+int \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::number\+Of\+Threads\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00125}{125}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_abcd4e2c32b97210d245ac742d3e5b5ea}\label{classCGA_abcd4e2c32b97210d245ac742d3e5b5ea} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!outcompare@{outcompare}}
+\index{outcompare@{outcompare}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{outcompare}{outcompare}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$int$>$ $>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::outcompare}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00067}{67}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_a47ccc8e1a654b701720366af905d19f2}\label{classCGA_a47ccc8e1a654b701720366af905d19f2} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!paramname@{paramname}}
+\index{paramname@{paramname}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{paramname}{paramname}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::paramname}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00070}{70}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_a58ab54945f47697d13ceecee8d314b80}\label{classCGA_a58ab54945f47697d13ceecee8d314b80} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!params@{params}}
+\index{params@{params}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{params}{params}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$int$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::params}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00061}{61}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00169}{CGA$<$ T $>$\+::\+CGA()}}, and \mbox{\hyperlink{GA_8cpp_source_l00186}{CGA$<$ T $>$\+::operator=()}}.
+
+\Hypertarget{classCGA_adc111546d2a3a199d63a00cc915a7295}\label{classCGA_adc111546d2a3a199d63a00cc915a7295} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!rtw@{rtw}}
+\index{rtw@{rtw}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{rtw}{rtw}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{classProgressWindow}{Progress\+Window}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::rtw =nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00129}{129}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8h_source_l00091}{CGA$<$ T $>$\+::\+Set\+Run\+Time\+Window()}}.
+
+\Hypertarget{classCGA_a5a93c1487806ec2b200fe6b4eb3640cf}\label{classCGA_a5a93c1487806ec2b200fe6b4eb3640cf} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!sumfitness@{sumfitness}}
+\index{sumfitness@{sumfitness}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{sumfitness}{sumfitness}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+double \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::sumfitness}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00054}{54}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+\Hypertarget{classCGA_adbc2ed91c9187c21484c692bfbcf868e}\label{classCGA_adbc2ed91c9187c21484c692bfbcf868e} 
+\index{CGA$<$ T $>$@{CGA$<$ T $>$}!to\_ts@{to\_ts}}
+\index{to\_ts@{to\_ts}!CGA$<$ T $>$@{CGA$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{to\_ts}{to\_ts}}
+{\footnotesize\ttfamily template$<$class T $>$ \\
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$int$>$ \mbox{\hyperlink{classCGA}{CGA}}$<$ T $>$\+::to\+\_\+ts}
+
+
+
+Definition at line \mbox{\hyperlink{GA_8h_source_l00063}{63}} of file \mbox{\hyperlink{GA_8h_source}{GA.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+GA/\mbox{\hyperlink{GA_8h}{GA.\+h}}\item 
+GA/\mbox{\hyperlink{GA_8cpp}{GA.\+cpp}}\item 
+GA/\mbox{\hyperlink{GA_8hpp}{GA.\+hpp}}\end{DoxyCompactItemize}

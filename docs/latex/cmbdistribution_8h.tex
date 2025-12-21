@@ -1,0 +1,96 @@
+\doxysection{cmbdistribution.\+h File Reference}
+\hypertarget{cmbdistribution_8h}{}\label{cmbdistribution_8h}\index{cmbdistribution.h@{cmbdistribution.h}}
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include "{}Time\+Series.\+h"{}}\newline
+Include dependency graph for cmbdistribution.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{cmbdistribution_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cmbdistribution_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classDistribution}{Distribution}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \{ \newline
+\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}
+, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}
+, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec}{dirichlet}}
+, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8}{none}}
+, \newline
+\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee}{uniform}}
+ \}
+\item 
+enum class \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\+\_\+mode}} \{ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}{direct}}
+, \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{based\+\_\+on\+\_\+fitted\+\_\+distribution}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}\label{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88} 
+\index{cmbdistribution.h@{cmbdistribution.h}!distribution\_type@{distribution\_type}}
+\index{distribution\_type@{distribution\_type}!cmbdistribution.h@{cmbdistribution.h}}
+\doxysubsubsection{\texorpdfstring{distribution\_type}{distribution\_type}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{normal@{normal}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!normal@{normal}}}\Hypertarget{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}\label{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555} 
+normal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{lognormal@{lognormal}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!lognormal@{lognormal}}}\Hypertarget{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}\label{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88} 
+lognormal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{dirichlet@{dirichlet}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!dirichlet@{dirichlet}}}\Hypertarget{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec}\label{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec} 
+dirichlet&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{none@{none}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!none@{none}}}\Hypertarget{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8}\label{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8} 
+none&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{uniform@{uniform}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!uniform@{uniform}}}\Hypertarget{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee}\label{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee} 
+uniform&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00008}{8}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+\Hypertarget{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}\label{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050} 
+\index{cmbdistribution.h@{cmbdistribution.h}!parameter\_mode@{parameter\_mode}}
+\index{parameter\_mode@{parameter\_mode}!cmbdistribution.h@{cmbdistribution.h}}
+\doxysubsubsection{\texorpdfstring{parameter\_mode}{parameter\_mode}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\+\_\+mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{direct@{direct}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!direct@{direct}}}\Hypertarget{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}\label{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d} 
+direct&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{based\_on\_fitted\_distribution@{based\_on\_fitted\_distribution}!cmbdistribution.h@{cmbdistribution.h}}\index{cmbdistribution.h@{cmbdistribution.h}!based\_on\_fitted\_distribution@{based\_on\_fitted\_distribution}}}\Hypertarget{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}\label{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c} 
+based\+\_\+on\+\_\+fitted\+\_\+distribution&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00009}{9}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+

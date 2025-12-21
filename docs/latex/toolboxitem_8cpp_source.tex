@@ -1,0 +1,31 @@
+\doxysection{toolboxitem.\+cpp}
+\hypertarget{toolboxitem_8cpp_source}{}\label{toolboxitem_8cpp_source}\mbox{\hyperlink{toolboxitem_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{toolboxitem_8h}{toolboxitem.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00003}\mbox{\hyperlink{classToolBoxItem_a6265cdacfe87c344f698fbb94063e6a8}{00003}}\ \mbox{\hyperlink{classToolBoxItem_a6265cdacfe87c344f698fbb94063e6a8}{ToolBoxItem::ToolBoxItem}}():QStandardItem()}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00004}00004\ \{}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00009}\mbox{\hyperlink{classToolBoxItem_a27ffe9f58ff7354a7962abcc157acf03}{00009}}\ \mbox{\hyperlink{classToolBoxItem_a6265cdacfe87c344f698fbb94063e6a8}{ToolBoxItem::ToolBoxItem}}(\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\_data,\ \textcolor{keyword}{const}\ QString\ \&itemtext):QStandardItem(itemtext)}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classToolBoxItem_a401851351071476b6aa3847f109b977d}{Data}}\ =\ \_data;}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00015}\mbox{\hyperlink{classToolBoxItem_a56734fe1cbf049b0b5c535a15299a37a}{00015}}\ QVariant\ \mbox{\hyperlink{classToolBoxItem_a56734fe1cbf049b0b5c535a15299a37a}{ToolBoxItem::data}}(\textcolor{keywordtype}{int}\ role)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00016}00016\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{if}\ (role\ ==\ Qt::ForegroundRole)}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00018}00018\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classToolBoxItem_a401851351071476b6aa3847f109b977d}{Data}}-\/>\mbox{\hyperlink{classSourceSinkData_a590c5b2344ab9f3acebe8273396554fd}{ToolsUsed}}(\mbox{\hyperlink{classToolBoxItem_a56734fe1cbf049b0b5c535a15299a37a}{data}}(Qt::UserRole+1).toString().toStdString()))}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QColor(Qt::blue);}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QStandardItem::data(role);}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QStandardItem::data(role);}
+\DoxyCodeLine{\Hypertarget{toolboxitem_8cpp_source_l00026}00026\ \}}
+
+\end{DoxyCode}

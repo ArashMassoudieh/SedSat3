@@ -1,0 +1,17 @@
+<map id="TestMCMC" name="TestMCMC">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,1333,232,1519"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="39,1205,199,1271"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,1271,121,1317,116,1317,116,1271"/>
+<area shape="rect" id="Node000003" href="$classParameter.html" title=" " alt="" coords="161,857,309,1143"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="167,1144,144,1192,139,1190,162,1142"/>
+<area shape="rect" id="Node000004" href="$classDistribution.html" title=" " alt="" coords="301,389,467,795"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="312,796,295,843,290,841,307,794"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="165,261,304,327"/>
+<area shape="poly" id="edge7_Node000003_Node000005" title=" " alt="" coords="237,327,237,841,232,841,232,327"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="253,326,296,410,291,412,248,328"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="65,133,173,199"/>
+<area shape="poly" id="edge8_Node000002_Node000006" title=" " alt="" coords="110,213,103,252,100,293,100,1001,106,1114,117,1205,111,1205,101,1114,95,1001,95,293,98,251,105,212"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="159,207,207,259,203,263,155,211"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="107,5,130,71"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="121,71,121,117,116,117,116,71"/>
+</map>

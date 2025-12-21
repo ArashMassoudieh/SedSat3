@@ -1,0 +1,1496 @@
+\doxysection{Elemental\+\_\+\+Profile\+\_\+\+Set Class Reference}
+\hypertarget{classElemental__Profile__Set}{}\label{classElemental__Profile__Set}\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+
+
+Manages a collection of elemental profiles (samples) for source fingerprinting analysis.  
+
+
+
+
+{\ttfamily \#include $<$elemental\+\_\+profile\+\_\+set.\+h$>$}
+
+
+
+Inheritance diagram for Elemental\+\_\+\+Profile\+\_\+\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classElemental__Profile__Set__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Elemental\+\_\+\+Profile\+\_\+\+Set\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classElemental__Profile__Set__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classElemental__Profile__Set_af88dae9824d99c63aa593dabd6614ac3}{Elemental\+\_\+\+Profile\+\_\+\+Set}} ()
+\item 
+\mbox{\hyperlink{classElemental__Profile__Set_a8b62c91c2113186a8477ddf9137bd91e}{Elemental\+\_\+\+Profile\+\_\+\+Set}} (const \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \&other)
+\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \& \mbox{\hyperlink{classElemental__Profile__Set_a44cfbf3f962ee3c0011c54f06a09c988}{operator=}} (const \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \&other)
+\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a19b85245caeac522bba4e925d5650993}{Append\+Profile}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, const \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \&profile=\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}}(), map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr)
+\begin{DoxyCompactList}\small\item\em Add a new sample profile to the set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classElemental__Profile__Set_afb062cae65fb5b20337011f6b3b20695}{Append\+Profiles}} (const \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \&profiles, map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo)
+\begin{DoxyCompactList}\small\item\em Add multiple profiles from another set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classElemental__Profile__Set_a3ff71fc172fea20f4e808f550a4ad4b4}{Update\+Element\+Distributions}} ()
+\begin{DoxyCompactList}\small\item\em Rebuild element distributions from all profiles. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a5d31b163bf324865abdd042b1c1950be}{Get\+Profile}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}})
+\begin{DoxyCompactList}\small\item\em Get profile by sample name (mutable) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile__Set_a8436aa819588eefdd73e8ca3a0fa17a7}{Get\+Profile}} (const string \&\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}) const
+\begin{DoxyCompactList}\small\item\em Get profile by sample name (const) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a68e1cdb4b52e47a195533fd4a1e232af}{Get\+Profile}} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Get profile by index (mutable) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile__Set_a81a70f9a3755f7800c2b397b22d24546}{Get\+Profile}} (unsigned int index) const
+\begin{DoxyCompactList}\small\item\em Get profile by index (const) \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{classElemental__Profile__Set_a19a5b79807d4ff0fdaf4df5e67314e64}{Get\+Sample\+Names}} () const
+\begin{DoxyCompactList}\small\item\em Get all sample names in the set. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{classElemental__Profile__Set_a4acb4ff0c16cf35d91f59ce634582b35}{Get\+Element\+Names}} () const
+\begin{DoxyCompactList}\small\item\em Get all element names (from first profile) \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{classElemental__Profile__Set_a2db297f1b6e7de9f62027ab753ba8f9c}{Get\+All\+Concentrations\+For}} (const string \&element\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Get all concentration values for a specific element across samples. \end{DoxyCompactList}\item 
+vector$<$ double $>$ \mbox{\hyperlink{classElemental__Profile__Set_a5ad4a9f965c46776647f38cc3479331c}{Get\+Concentrations\+For\+Sample}} (const string \&sample\+\_\+name) const
+\begin{DoxyCompactList}\small\item\em Get all element concentrations for a specific sample. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a7b3f5ead684ec800d032749ebc460b78}{Contains\+Element}} (const string \&element\+\_\+name) const
+\begin{DoxyCompactList}\small\item\em Check if an element exists in ALL profiles. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_a77595cc07da25d3cdbdcf02bd76e4736}{Extract\+Elements}} (const vector$<$ string $>$ \&element\+\_\+list) const
+\begin{DoxyCompactList}\small\item\em Create subset with only specified elements. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_afc4cb877a778f19c5123667eb9de63ae}{Extract\+Chemical\+Elements}} (const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo, bool isotopes) const
+\begin{DoxyCompactList}\small\item\em Create subset with only chemical elements (and optionally isotopes) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_a1882c9efeba50fe7a449390629bb1691}{Create\+Corrected\+Set}} (bool exclude\+\_\+samples, bool exclude\+\_\+elements, bool omnsizecorrect, const vector$<$ double $>$ \&om\+\_\+size, const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr) const
+\begin{DoxyCompactList}\small\item\em Create corrected and filtered subset. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_a789781237a5fcc91ede4d0659f2ffe54}{Copy\+Included\+In\+Analysis}} (bool applyomsizecorrection, const vector$<$ double $>$ \&om\+\_\+size, map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr)
+\begin{DoxyCompactList}\small\item\em Copy only samples marked for inclusion in analysis. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_ac5822ea07a12c0913caadbaf9320e559}{Eliminate\+Samples}} (vector$<$ string $>$ samples\+\_\+to\+\_\+eliminate, map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo) const
+\begin{DoxyCompactList}\small\item\em Create subset excluding specified samples. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classConcentrationSet}{Concentration\+Set}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a16891adbce1903443742d1e698454f2d}{Get\+Element\+Distribution}} (const string \&element\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Get distribution for a specific element (mutable) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classConcentrationSet}{Concentration\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_a3e0eed506236d7d734e4325fdcd1b153}{Get\+Element\+Distribution}} (const string \&element\+\_\+name) const
+\begin{DoxyCompactList}\small\item\em Get distribution for a specific element (const) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \mbox{\hyperlink{classElemental__Profile__Set_a1473252974ee1c6ad50c4cde2642f1d5}{Get\+Assigned\+Distribution}} (const string \&element\+\_\+name) const
+\begin{DoxyCompactList}\small\item\em Get assigned distribution type for an element. \end{DoxyCompactList}\item 
+CVector \mbox{\hyperlink{classElemental__Profile__Set_aa1c317feb1a4708f67a8d7a6681c0d34}{Calculate\+Element\+Means}} (const vector$<$ string $>$ \&element\+\_\+order=vector$<$ string $>$()) const
+\begin{DoxyCompactList}\small\item\em Calculate mean concentration for each element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \mbox{\hyperlink{classElemental__Profile__Set_a62f285213fb3c59d6aab78e02276e059}{Calculate\+Covariance\+Matrix}} ()
+\begin{DoxyCompactList}\small\item\em Calculate covariance matrix across elements. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \mbox{\hyperlink{classElemental__Profile__Set_ab8934cfcb01b1bec6f34954c69aa5928}{Calculate\+Correlation\+Matrix}} ()
+\begin{DoxyCompactList}\small\item\em Calculate correlation matrix across elements. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{classElemental__Profile__Set_a2722f16374e9b05ce8aee256746534f6}{Calculate\+Kolmogorov\+Smirnov\+Statistics}} (\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} dist\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Calculate Kolmogorov-\/\+Smirnov statistics for all elements. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_a71ce013744c6a14de6575815c0fc02d5}{Get\+Maximum}} () const
+\begin{DoxyCompactList}\small\item\em Get maximum concentration across all elements and samples. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_a5983191729785d21cba6fe4eff49e9a7}{Get\+Minimum}} () const
+\begin{DoxyCompactList}\small\item\em Get minimum concentration across all elements and samples. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_a1076edc4397f73148c78790d9841d742}{Get\+Estimated\+Mu}} (const string \&element) const
+\begin{DoxyCompactList}\small\item\em Get estimated mu parameter for an element. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_a5c857bac595f6b246ae388d120bed2e8}{Get\+Estimated\+Sigma}} (const string \&element) const
+\begin{DoxyCompactList}\small\item\em Get estimated sigma parameter for an element. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a60ef2d5ba37a646e9fbe3036ddc1c078}{Set\+Estimated\+Mu}} (const string \&element, const double \&value)
+\begin{DoxyCompactList}\small\item\em Set estimated mu parameter for an element. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_aef4949665e9f27cf6fddd9be80fd06e5}{Set\+Estimated\+Sigma}} (const string \&element, const double \&value)
+\begin{DoxyCompactList}\small\item\em Set estimated sigma parameter for an element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classDistribution}{Distribution}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a1b3293e3399df898f5aa8c9fd0f93f00}{Get\+Estimated\+Distribution}} (const string \&element\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Get estimated distribution for an element (for MCMC optimization) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classDistribution}{Distribution}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_aab21169e4a7637d9c0bf37408fbdcfe8}{Get\+Fitted\+Distribution}} (const string \&element\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Get fitted distribution for an element (from data, for likelihood) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_ad9ab8050e9f3f3d0e1466785f5b7b776}{Build\+Regression\+Models}} (const string \&om, const string \&d, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} form=\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}, const double \&p\+\_\+value\+\_\+threshold=0.\+05)
+\begin{DoxyCompactList}\small\item\em Build MLR models for all elements vs OM and particle size. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \mbox{\hyperlink{classElemental__Profile__Set_a5e70bcc1319dc9e98b372d9fd5cfa696}{Build\+Regression\+Model}} (const string \&element, const string \&om, const string \&d, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} form=\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}, const double \&p\+\_\+value\+\_\+threshold=0.\+05)
+\begin{DoxyCompactList}\small\item\em Build MLR model for single element vs OM and particle size. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classElemental__Profile__Set_adac8ab3ea21581a2d27be19d4951d177}{Set\+Regression\+Models}} (const string \&om, const string \&d, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}} form=\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}, const double \&p\+\_\+value\+\_\+threshold=0.\+05)
+\begin{DoxyCompactList}\small\item\em Set regression models (build new) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classElemental__Profile__Set_a13a751f313875bf9bf272b7cb16d83d4}{Set\+Regression\+Models}} (const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}})
+\begin{DoxyCompactList}\small\item\em Set regression models (copy existing) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a590077fa091285343d18f0ecfe8c48ac}{Get\+Regression\+Models}} ()
+\begin{DoxyCompactList}\small\item\em Get internal regression model set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classResultItem}{Result\+Item}} \mbox{\hyperlink{classElemental__Profile__Set_a36c1695b6899b9602545756a4f013990}{Get\+Regressions\+As\+Result}} ()
+\begin{DoxyCompactList}\small\item\em Get regressions wrapped in \doxylink{classResultItem}{Result\+Item} for display. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_ab1266c766b0b12f581d362542a17ab56}{Apply\+Organic\+Matter\+And\+Size\+Corrections}} (const vector$<$ double $>$ \&om\+\_\+size, map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}elementinfo=nullptr)
+\begin{DoxyCompactList}\small\item\em Apply OM and particle size corrections to all profiles. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{classElemental__Profile__Set_a94dacf97bc45e2dcae52972657cca271}{Calculate\+Box\+Cox\+Parameters}} ()
+\begin{DoxyCompactList}\small\item\em Calculate optimal Box-\/\+Cox lambda for each element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_aebf989264ddb4b3c8aede3c76157ae9e}{Apply\+Box\+Cox\+Transform}} (\mbox{\hyperlink{classCMBVector}{CMBVector}} \texorpdfstring{$\ast$}{*}lambda\+\_\+vals=nullptr)
+\begin{DoxyCompactList}\small\item\em Apply Box-\/\+Cox transformation to all profiles. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \mbox{\hyperlink{classElemental__Profile__Set_ac38b2db14f971d9d79bb0c013e642b6d}{Detect\+Outliers}} (const double \&lowerlimit=0, const double \&upperlimit=0)
+\begin{DoxyCompactList}\small\item\em Detect outliers using Box-\/\+Cox transformation and standardization. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a2f291c71c61912f036566973b456650b}{Outlier\+Analysis\+Done}} () const
+\begin{DoxyCompactList}\small\item\em Check if outlier analysis has been performed. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \mbox{\hyperlink{classElemental__Profile__Set_aec68a3a0263cdab51d80d630d6dbc196}{Check\+For\+Negative\+Values}} (const vector$<$ string $>$ \&element\+\_\+names) const
+\begin{DoxyCompactList}\small\item\em Check for elements with negative values. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a6c588eb82023171e7e51ba6e7c621645}{Set\+Contribution}} (const double \&value)
+\begin{DoxyCompactList}\small\item\em Set contribution value for this source. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_a7f4828ae13476112d5c459d79907e174}{Get\+Contribution}} () const
+\begin{DoxyCompactList}\small\item\em Get contribution value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a523bd9c7e492dea6369efa3ffb21c5df}{Set\+Contribution\+Softmax}} (const double \&value)
+\begin{DoxyCompactList}\small\item\em Set softmax-\/transformed contribution. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_ac87dc4484143ecde539e9ceace770ed5}{Get\+Contribution\+Softmax}} () const
+\begin{DoxyCompactList}\small\item\em Get softmax-\/transformed contribution. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \mbox{\hyperlink{classElemental__Profile__Set_a3e5efddd79898470660b96437efced7a}{Select\+Top\+Elements\+Aggregate}} (int n) const
+\begin{DoxyCompactList}\small\item\em Select top N elements across all samples (aggregate minimum) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBVector}{CMBVector}} \mbox{\hyperlink{classElemental__Profile__Set_a5b15e79c1ee81c4907b7c7c035d6b913}{Calculate\+Dot\+Product}} (const CVector \&v) const
+\begin{DoxyCompactList}\small\item\em Calculate dot product of each profile with weight vector. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \mbox{\hyperlink{classElemental__Profile__Set_a137c107b6d0444c4b4c4ba068a116b7d}{To\+Matrix}} () const
+\begin{DoxyCompactList}\small\item\em Convert to matrix format (samples × elements) \end{DoxyCompactList}\item 
+gsl\+\_\+matrix \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a0bee83981b6cdff8983de25e26a5618f}{Copy\+To\+GSLMatrix}} () const
+\begin{DoxyCompactList}\small\item\em Convert to GSL matrix for statistical functions. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{classElemental__Profile__Set_a91f6ad83445213f5e932917e882ecd01}{To\+String}} () const override
+\item 
+QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classElemental__Profile__Set_a9c72da3d9219bc698eb4e3f173007b26}{To\+Table}} () override
+\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a184f90e41d8fec64ad7d4f8dd991fdb0}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file) override
+\item 
+QJson\+Object \mbox{\hyperlink{classElemental__Profile__Set_a8a96dfcaf637ae59c04e88282cb5418d}{to\+Json\+Object}} () const override
+\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_a5e6d31d25e0dfbbf5ec37ed09db75b54}{Read}} (const QString\+List \&strlist) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+map$<$ string, \mbox{\hyperlink{classConcentrationSet}{Concentration\+Set}} $>$ \mbox{\hyperlink{classElemental__Profile__Set_ac137c823ba5c2d977d96b2ebf12619a3}{element\+\_\+distributions\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Concentration distributions for each element. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \mbox{\hyperlink{classElemental__Profile__Set_a80600c18c1a1acd5b59acd43c2532bb1}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}
+\begin{DoxyCompactList}\small\item\em MLR models for OM/size corrections. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_aeb648e95e0a9c908b145224cb850bbd3}{contribution\+\_\+}} = 0.\+0
+\begin{DoxyCompactList}\small\item\em Source contribution (for CMB) \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classElemental__Profile__Set_a9ad505047eee70a65ee1fc25cdf41fed}{contribution\+\_\+softmax\+\_\+}} = 0.\+0
+\begin{DoxyCompactList}\small\item\em Softmax-\/transformed contribution. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classElemental__Profile__Set_ae71ccd3b0bcb41b7b73d0d2fd8d61699}{outlierdone\+\_\+}} = false
+\begin{DoxyCompactList}\small\item\em Flag indicating outlier analysis performed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages a collection of elemental profiles (samples) for source fingerprinting analysis. 
+
+This class stores multiple \doxylink{classElemental__Profile}{Elemental\+\_\+\+Profile} objects (one per sample) and provides\+:
+\begin{DoxyItemize}
+\item Statistical analysis across samples (distributions, covariance, correlation)
+\item Data extraction and filtering operations
+\item Organic matter and particle size corrections via multiple linear regression
+\item Box-\/\+Cox transformations and outlier detection
+\item Source contribution tracking for CMB (Chemical Mass Balance) analysis 
+\end{DoxyItemize}
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00027}{27}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classElemental__Profile__Set_af88dae9824d99c63aa593dabd6614ac3}\label{classElemental__Profile__Set_af88dae9824d99c63aa593dabd6614ac3} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{Elemental\_Profile\_Set()}{Elemental\_Profile\_Set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Elemental\+\_\+\+Profile\+\_\+\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}.
+
+\Hypertarget{classElemental__Profile__Set_a8b62c91c2113186a8477ddf9137bd91e}\label{classElemental__Profile__Set_a8b62c91c2113186a8477ddf9137bd91e} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{Elemental\_Profile\_Set()}{Elemental\_Profile\_Set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Elemental\+\_\+\+Profile\+\_\+\+Set (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classElemental__Profile__Set_a19b85245caeac522bba4e925d5650993}\label{classElemental__Profile__Set_a19b85245caeac522bba4e925d5650993} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!AppendProfile@{AppendProfile}}
+\index{AppendProfile@{AppendProfile}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{AppendProfile()}{AppendProfile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Append\+Profile (\begin{DoxyParamCaption}\item[{const string \&}]{name,  }\item[{const \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \&}]{profile = {\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}}()},  }\item[{map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Add a new sample profile to the set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Sample identifier \\
+\hline
+{\em profile} & Elemental profile data \\
+\hline
+{\em elementinfo} & Optional element metadata for filtering \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the added profile, or nullptr if name already exists 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{179}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00145}{Elemental\+\_\+\+Profile\+::\+Create\+Analysis\+Profile()}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474caea679c8b8d3e2f3ce01d0409a42f68f2}{element\+\_\+information\+::do\+\_\+not\+\_\+include}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cad504cad7691c7cb1144d2d226edf6f94}{element\+\_\+information\+::organic\+\_\+carbon}}, and \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474cae44ba3cbb5cd522611b75a74e6a4ba8b}{element\+\_\+information\+::particle\+\_\+size}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00221}{Append\+Profiles()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00772}{Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00114}{Copy\+Included\+In\+Analysis()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00052}{Create\+Corrected\+Set()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03296}{Source\+Sink\+Data\+::\+Differentiation\+Power()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03379}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+P\+\_\+value()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03356}{Source\+Sink\+Data\+::\+Differentiation\+Power\+\_\+\+Percentage()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00141}{Eliminate\+Samples()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00087}{Extract\+Chemical\+Elements()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00101}{Extract\+Elements()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00472}{Source\+Sink\+Data\+::\+Extract\+Samples\+As\+Profile\+Set()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02396}{Source\+Sink\+Data\+::\+Get\+Calculated\+Element\+Means()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02479}{Source\+Sink\+Data\+::\+Get\+Calculated\+Element\+Mu()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02420}{Source\+Sink\+Data\+::\+Get\+Calculated\+Element\+Sigma()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02527}{Source\+Sink\+Data\+::\+Get\+Estimated\+Element\+Mean()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02503}{Source\+Sink\+Data\+::\+Get\+Estimated\+Element\+Mu()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02553}{Source\+Sink\+Data\+::\+Get\+Estimated\+Element\+Sigma()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02280}{Source\+Sink\+Data\+::\+Get\+Observedvs\+Modeled\+Elemental\+Profile()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02325}{Source\+Sink\+Data\+::\+Get\+Observedvs\+Modeled\+Elemental\+Profile\+\_\+\+Isotope()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{Main\+Window\+::\+Read\+Excel()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00311}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03673}{Source\+Sink\+Data\+::\+Replace\+Source\+As\+Target()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02968}{Source\+Sink\+Data\+::\+The\+Rest()}}.
+
+\Hypertarget{classElemental__Profile__Set_afb062cae65fb5b20337011f6b3b20695}\label{classElemental__Profile__Set_afb062cae65fb5b20337011f6b3b20695} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!AppendProfiles@{AppendProfiles}}
+\index{AppendProfiles@{AppendProfiles}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{AppendProfiles()}{AppendProfiles()}}
+{\footnotesize\ttfamily void Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Append\+Profiles (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \&}]{profiles,  }\item[{map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo }\end{DoxyParamCaption})}
+
+
+
+Add multiple profiles from another set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & Source profile set \\
+\hline
+{\em elementinfo} & Optional element metadata for filtering \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00221}{221}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00162}{Update\+Element\+Distributions()}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03470}{Source\+Sink\+Data\+::\+Lump\+All\+Profile\+Sets()}}.
+
+\Hypertarget{classElemental__Profile__Set_aebf989264ddb4b3c8aede3c76157ae9e}\label{classElemental__Profile__Set_aebf989264ddb4b3c8aede3c76157ae9e} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ApplyBoxCoxTransform@{ApplyBoxCoxTransform}}
+\index{ApplyBoxCoxTransform@{ApplyBoxCoxTransform}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ApplyBoxCoxTransform()}{ApplyBoxCoxTransform()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Apply\+Box\+Cox\+Transform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBVector}{CMBVector}} \texorpdfstring{$\ast$}{*}}]{lambda\+\_\+vals = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Apply Box-\/\+Cox transformation to all profiles. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00876}{876}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{concentrationset_8cpp_source_l00389}{Concentration\+Set\+::\+Apply\+Box\+Cox\+Transform()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00794}{Calculate\+Box\+Cox\+Parameters()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}, and \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}.
+
+\Hypertarget{classElemental__Profile__Set_ab1266c766b0b12f581d362542a17ab56}\label{classElemental__Profile__Set_ab1266c766b0b12f581d362542a17ab56} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ApplyOrganicMatterAndSizeCorrections@{ApplyOrganicMatterAndSizeCorrections}}
+\index{ApplyOrganicMatterAndSizeCorrections@{ApplyOrganicMatterAndSizeCorrections}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ApplyOrganicMatterAndSizeCorrections()}{ApplyOrganicMatterAndSizeCorrections()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Apply\+Organic\+Matter\+And\+Size\+Corrections (\begin{DoxyParamCaption}\item[{const vector$<$ double $>$ \&}]{om\+\_\+size,  }\item[{map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Apply OM and particle size corrections to all profiles. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00772}{772}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00878}{Elemental\+\_\+\+Profile\+::\+Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, and \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00114}{Copy\+Included\+In\+Analysis()}}.
+
+\Hypertarget{classElemental__Profile__Set_a5e70bcc1319dc9e98b372d9fd5cfa696}\label{classElemental__Profile__Set_a5e70bcc1319dc9e98b372d9fd5cfa696} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!BuildRegressionModel@{BuildRegressionModel}}
+\index{BuildRegressionModel@{BuildRegressionModel}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{BuildRegressionModel()}{BuildRegressionModel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Build\+Regression\+Model (\begin{DoxyParamCaption}\item[{const string \&}]{element,  }\item[{const string \&}]{om,  }\item[{const string \&}]{d,  }\item[{\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}}}]{form = {\ttfamily \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}},  }\item[{const double \&}]{p\+\_\+value\+\_\+threshold = {\ttfamily 0.05} }\end{DoxyParamCaption})}
+
+
+
+Build MLR model for single element vs OM and particle size. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{512}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00425}{Get\+All\+Concentrations\+For()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00114}{Multiple\+Linear\+Regression\+::\+Regress()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00036}{Multiple\+Linear\+Regression\+::\+Set\+Dependent\+Variable\+Name()}}, \mbox{\hyperlink{multiplelinearregression_8h_source_l00041}{Multiple\+Linear\+Regression\+::\+Set\+Equation()}}, and \mbox{\hyperlink{multiplelinearregression_8h_source_l00044}{Multiple\+Linear\+Regression\+::\+Set\+PValue\+Threshold()}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00494}{Build\+Regression\+Models()}}.
+
+\Hypertarget{classElemental__Profile__Set_ad9ab8050e9f3f3d0e1466785f5b7b776}\label{classElemental__Profile__Set_ad9ab8050e9f3f3d0e1466785f5b7b776} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!BuildRegressionModels@{BuildRegressionModels}}
+\index{BuildRegressionModels@{BuildRegressionModels}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{BuildRegressionModels()}{BuildRegressionModels()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Build\+Regression\+Models (\begin{DoxyParamCaption}\item[{const string \&}]{om,  }\item[{const string \&}]{d,  }\item[{\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}}}]{form = {\ttfamily \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}},  }\item[{const double \&}]{p\+\_\+value\+\_\+threshold = {\ttfamily 0.05} }\end{DoxyParamCaption})}
+
+
+
+Build MLR models for all elements vs OM and particle size. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00494}{494}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{Build\+Regression\+Model()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00547}{Set\+Regression\+Models()}}.
+
+\Hypertarget{classElemental__Profile__Set_a94dacf97bc45e2dcae52972657cca271}\label{classElemental__Profile__Set_a94dacf97bc45e2dcae52972657cca271} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CalculateBoxCoxParameters@{CalculateBoxCoxParameters}}
+\index{CalculateBoxCoxParameters@{CalculateBoxCoxParameters}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CalculateBoxCoxParameters()}{CalculateBoxCoxParameters()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Box\+Cox\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Calculate optimal Box-\/\+Cox lambda for each element. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00794}{794}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}, and \mbox{\hyperlink{cmbvector_8h_source_l00145}{CMBVector\+::\+Set\+Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00876}{Apply\+Box\+Cox\+Transform()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{Detect\+Outliers()}}.
+
+\Hypertarget{classElemental__Profile__Set_ab8934cfcb01b1bec6f34954c69aa5928}\label{classElemental__Profile__Set_ab8934cfcb01b1bec6f34954c69aa5928} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CalculateCorrelationMatrix@{CalculateCorrelationMatrix}}
+\index{CalculateCorrelationMatrix@{CalculateCorrelationMatrix}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CalculateCorrelationMatrix()}{CalculateCorrelationMatrix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Correlation\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Calculate correlation matrix across elements. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00621}{621}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00660}{Copy\+To\+GSLMatrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00111}{CMBMatrix\+::\+Set\+Column\+Label()}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00118}{CMBMatrix\+::\+Set\+Row\+Label()}}.
+
+\Hypertarget{classElemental__Profile__Set_a62f285213fb3c59d6aab78e02276e059}\label{classElemental__Profile__Set_a62f285213fb3c59d6aab78e02276e059} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CalculateCovarianceMatrix@{CalculateCovarianceMatrix}}
+\index{CalculateCovarianceMatrix@{CalculateCovarianceMatrix}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CalculateCovarianceMatrix()}{CalculateCovarianceMatrix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Covariance\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Calculate covariance matrix across elements. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00578}{578}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00660}{Copy\+To\+GSLMatrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00111}{CMBMatrix\+::\+Set\+Column\+Label()}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00118}{CMBMatrix\+::\+Set\+Row\+Label()}}.
+
+\Hypertarget{classElemental__Profile__Set_a5b15e79c1ee81c4907b7c7c035d6b913}\label{classElemental__Profile__Set_a5b15e79c1ee81c4907b7c7c035d6b913} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CalculateDotProduct@{CalculateDotProduct}}
+\index{CalculateDotProduct@{CalculateDotProduct}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CalculateDotProduct()}{CalculateDotProduct()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Dot\+Product (\begin{DoxyParamCaption}\item[{const CVector \&}]{v }\end{DoxyParamCaption}) const}
+
+
+
+Calculate dot product of each profile with weight vector. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00984}{984}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbvector_8h_source_l00145}{CMBVector\+::\+Set\+Label()}}.
+
+\Hypertarget{classElemental__Profile__Set_aa1c317feb1a4708f67a8d7a6681c0d34}\label{classElemental__Profile__Set_aa1c317feb1a4708f67a8d7a6681c0d34} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CalculateElementMeans@{CalculateElementMeans}}
+\index{CalculateElementMeans@{CalculateElementMeans}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CalculateElementMeans()}{CalculateElementMeans()}}
+{\footnotesize\ttfamily CVector Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Element\+Means (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{element\+\_\+order = {\ttfamily vector$<$string$>$()} }\end{DoxyParamCaption}) const}
+
+
+
+Calculate mean concentration for each element. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00700}{700}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}.
+
+\Hypertarget{classElemental__Profile__Set_a2722f16374e9b05ce8aee256746534f6}\label{classElemental__Profile__Set_a2722f16374e9b05ce8aee256746534f6} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CalculateKolmogorovSmirnovStatistics@{CalculateKolmogorovSmirnovStatistics}}
+\index{CalculateKolmogorovSmirnovStatistics@{CalculateKolmogorovSmirnovStatistics}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CalculateKolmogorovSmirnovStatistics()}{CalculateKolmogorovSmirnovStatistics()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBVector}{CMBVector}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Calculate\+Kolmogorov\+Smirnov\+Statistics (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}}}]{dist\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Calculate Kolmogorov-\/\+Smirnov statistics for all elements. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00684}{684}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01001}{Get\+Element\+Distribution()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, and \mbox{\hyperlink{cmbvector_8h_source_l00151}{CMBVector\+::\+Set\+Labels()}}.
+
+\Hypertarget{classElemental__Profile__Set_aec68a3a0263cdab51d80d630d6dbc196}\label{classElemental__Profile__Set_aec68a3a0263cdab51d80d630d6dbc196} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CheckForNegativeValues@{CheckForNegativeValues}}
+\index{CheckForNegativeValues@{CheckForNegativeValues}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CheckForNegativeValues()}{CheckForNegativeValues()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Check\+For\+Negative\+Values (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{element\+\_\+names }\end{DoxyParamCaption}) const}
+
+
+
+Check for elements with negative values. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00936}{936}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01001}{Get\+Element\+Distribution()}}, and \mbox{\hyperlink{concentrationset_8cpp_source_l00187}{Concentration\+Set\+::\+Get\+Minimum()}}.
+
+\Hypertarget{classElemental__Profile__Set_a7b3f5ead684ec800d032749ebc460b78}\label{classElemental__Profile__Set_a7b3f5ead684ec800d032749ebc460b78} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ContainsElement@{ContainsElement}}
+\index{ContainsElement@{ContainsElement}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ContainsElement()}{ContainsElement()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Contains\+Element (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Check if an element exists in ALL profiles. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00339}{339}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+\Hypertarget{classElemental__Profile__Set_a789781237a5fcc91ede4d0659f2ffe54}\label{classElemental__Profile__Set_a789781237a5fcc91ede4d0659f2ffe54} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CopyIncludedInAnalysis@{CopyIncludedInAnalysis}}
+\index{CopyIncludedInAnalysis@{CopyIncludedInAnalysis}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CopyIncludedInAnalysis()}{CopyIncludedInAnalysis()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Copy\+Included\+In\+Analysis (\begin{DoxyParamCaption}\item[{bool}]{applyomsizecorrection,  }\item[{const vector$<$ double $>$ \&}]{om\+\_\+size,  }\item[{map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Copy only samples marked for inclusion in analysis. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00114}{114}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00772}{Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00547}{Set\+Regression\+Models()}}.
+
+\Hypertarget{classElemental__Profile__Set_a0bee83981b6cdff8983de25e26a5618f}\label{classElemental__Profile__Set_a0bee83981b6cdff8983de25e26a5618f} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CopyToGSLMatrix@{CopyToGSLMatrix}}
+\index{CopyToGSLMatrix@{CopyToGSLMatrix}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CopyToGSLMatrix()}{CopyToGSLMatrix()}}
+{\footnotesize\ttfamily gsl\+\_\+matrix \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Copy\+To\+GSLMatrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Convert to GSL matrix for statistical functions. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00660}{660}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00621}{Calculate\+Correlation\+Matrix()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00578}{Calculate\+Covariance\+Matrix()}}.
+
+\Hypertarget{classElemental__Profile__Set_a1882c9efeba50fe7a449390629bb1691}\label{classElemental__Profile__Set_a1882c9efeba50fe7a449390629bb1691} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!CreateCorrectedSet@{CreateCorrectedSet}}
+\index{CreateCorrectedSet@{CreateCorrectedSet}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{CreateCorrectedSet()}{CreateCorrectedSet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Create\+Corrected\+Set (\begin{DoxyParamCaption}\item[{bool}]{exclude\+\_\+samples,  }\item[{bool}]{exclude\+\_\+elements,  }\item[{bool}]{omnsizecorrect,  }\item[{const vector$<$ double $>$ \&}]{om\+\_\+size,  }\item[{const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo = {\ttfamily nullptr} }\end{DoxyParamCaption}) const}
+
+
+
+Create corrected and filtered subset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em exclude\+\_\+samples} & If true, exclude samples marked as excluded \\
+\hline
+{\em exclude\+\_\+elements} & If true, exclude elements marked as excluded \\
+\hline
+{\em omnsizecorrect} & If true, apply organic matter and size corrections \\
+\hline
+{\em om\+\_\+size} & Target OM and size values for correction \\
+\hline
+{\em elementinfo} & Element metadata for filtering \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00547}{Set\+Regression\+Models()}}.
+
+\Hypertarget{classElemental__Profile__Set_ac38b2db14f971d9d79bb0c013e642b6d}\label{classElemental__Profile__Set_ac38b2db14f971d9d79bb0c013e642b6d} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!DetectOutliers@{DetectOutliers}}
+\index{DetectOutliers@{DetectOutliers}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{DetectOutliers()}{DetectOutliers()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Detect\+Outliers (\begin{DoxyParamCaption}\item[{const double \&}]{lowerlimit = {\ttfamily 0},  }\item[{const double \&}]{upperlimit = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Detect outliers using Box-\/\+Cox transformation and standardization. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lowerlimit} & Lower threshold for standardized values \\
+\hline
+{\em upperlimit} & Upper threshold for standardized values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Matrix of outlier magnitudes 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{810}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00041}{Interface\+::\+Appendto\+Notes()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00389}{Concentration\+Set\+::\+Apply\+Box\+Cox\+Transform()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00794}{Calculate\+Box\+Cox\+Parameters()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00064}{Concentration\+Set\+::\+Calculate\+Mean()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00078}{Concentration\+Set\+::\+Calculate\+Std\+Dev()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00394}{outlierdone\+\_\+}}, \mbox{\hyperlink{cmbmatrix_8h_source_l00111}{CMBMatrix\+::\+Set\+Column\+Label()}}, and \mbox{\hyperlink{cmbmatrix_8h_source_l00118}{CMBMatrix\+::\+Set\+Row\+Label()}}.
+
+\Hypertarget{classElemental__Profile__Set_ac5822ea07a12c0913caadbaf9320e559}\label{classElemental__Profile__Set_ac5822ea07a12c0913caadbaf9320e559} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!EliminateSamples@{EliminateSamples}}
+\index{EliminateSamples@{EliminateSamples}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{EliminateSamples()}{EliminateSamples()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Eliminate\+Samples (\begin{DoxyParamCaption}\item[{vector$<$ string $>$}]{samples\+\_\+to\+\_\+eliminate,  }\item[{map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo }\end{DoxyParamCaption}) const}
+
+
+
+Create subset excluding specified samples. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00141}{141}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00547}{Set\+Regression\+Models()}}.
+
+\Hypertarget{classElemental__Profile__Set_afc4cb877a778f19c5123667eb9de63ae}\label{classElemental__Profile__Set_afc4cb877a778f19c5123667eb9de63ae} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ExtractChemicalElements@{ExtractChemicalElements}}
+\index{ExtractChemicalElements@{ExtractChemicalElements}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ExtractChemicalElements()}{ExtractChemicalElements()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Extract\+Chemical\+Elements (\begin{DoxyParamCaption}\item[{const map$<$ string, \mbox{\hyperlink{structelement__information}{element\+\_\+information}} $>$ \texorpdfstring{$\ast$}{*}}]{elementinfo,  }\item[{bool}]{isotopes }\end{DoxyParamCaption}) const}
+
+
+
+Create subset with only chemical elements (and optionally isotopes) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em elementinfo} & Element metadata for classification \\
+\hline
+{\em isotopes} & Whether to include isotopes \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}.
+
+\Hypertarget{classElemental__Profile__Set_a77595cc07da25d3cdbdcf02bd76e4736}\label{classElemental__Profile__Set_a77595cc07da25d3cdbdcf02bd76e4736} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ExtractElements@{ExtractElements}}
+\index{ExtractElements@{ExtractElements}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ExtractElements()}{ExtractElements()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Extract\+Elements (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{element\+\_\+list }\end{DoxyParamCaption}) const}
+
+
+
+Create subset with only specified elements. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00101}{101}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}.
+
+\Hypertarget{classElemental__Profile__Set_a2db297f1b6e7de9f62027ab753ba8f9c}\label{classElemental__Profile__Set_a2db297f1b6e7de9f62027ab753ba8f9c} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetAllConcentrationsFor@{GetAllConcentrationsFor}}
+\index{GetAllConcentrationsFor@{GetAllConcentrationsFor}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetAllConcentrationsFor()}{GetAllConcentrationsFor()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+All\+Concentrations\+For (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Get all concentration values for a specific element across samples. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00425}{425}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00512}{Build\+Regression\+Model()}}.
+
+\Hypertarget{classElemental__Profile__Set_a1473252974ee1c6ad50c4cde2642f1d5}\label{classElemental__Profile__Set_a1473252974ee1c6ad50c4cde2642f1d5} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetAssignedDistribution@{GetAssignedDistribution}}
+\index{GetAssignedDistribution@{GetAssignedDistribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetAssignedDistribution()}{GetAssignedDistribution()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Assigned\+Distribution (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Get assigned distribution type for an element. 
+
+\Hypertarget{classElemental__Profile__Set_a5ad4a9f965c46776647f38cc3479331c}\label{classElemental__Profile__Set_a5ad4a9f965c46776647f38cc3479331c} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetConcentrationsForSample@{GetConcentrationsForSample}}
+\index{GetConcentrationsForSample@{GetConcentrationsForSample}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetConcentrationsForSample()}{GetConcentrationsForSample()}}
+{\footnotesize\ttfamily vector$<$ double $>$ Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Concentrations\+For\+Sample (\begin{DoxyParamCaption}\item[{const string \&}]{sample\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Get all element concentrations for a specific sample. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00444}{444}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00445}{Source\+Sink\+Data\+::\+Extract\+Concentration\+Data()}}.
+
+\Hypertarget{classElemental__Profile__Set_a7f4828ae13476112d5c459d79907e174}\label{classElemental__Profile__Set_a7f4828ae13476112d5c459d79907e174} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetContribution@{GetContribution}}
+\index{GetContribution@{GetContribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetContribution()}{GetContribution()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Contribution (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get contribution value. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00346}{346}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00392}{contribution\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01583}{Source\+Sink\+Data\+::\+Get\+Contribution\+Vector()}}.
+
+\Hypertarget{classElemental__Profile__Set_ac87dc4484143ecde539e9ceace770ed5}\label{classElemental__Profile__Set_ac87dc4484143ecde539e9ceace770ed5} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetContributionSoftmax@{GetContributionSoftmax}}
+\index{GetContributionSoftmax@{GetContributionSoftmax}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetContributionSoftmax()}{GetContributionSoftmax()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Contribution\+Softmax (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get softmax-\/transformed contribution. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00356}{356}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00393}{contribution\+\_\+softmax\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01603}{Source\+Sink\+Data\+::\+Get\+Contribution\+Vector\+Softmax()}}.
+
+\Hypertarget{classElemental__Profile__Set_a16891adbce1903443742d1e698454f2d}\label{classElemental__Profile__Set_a16891adbce1903443742d1e698454f2d} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetElementDistribution@{GetElementDistribution}}
+\index{GetElementDistribution@{GetElementDistribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetElementDistribution()}{GetElementDistribution()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classConcentrationSet}{Concentration\+Set}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Element\+Distribution (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Get distribution for a specific element (mutable) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01001}{1001}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03506}{Source\+Sink\+Data\+::\+ANOVA()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00684}{Calculate\+Kolmogorov\+Smirnov\+Statistics()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00936}{Check\+For\+Negative\+Values()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05063}{Source\+Sink\+Data\+::\+Get\+Element\+Distribution()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00961}{Source\+Sink\+Data\+::\+Log\+Likelihood\+Source\+Elemental\+Distributions()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{Main\+Window\+::showdistributionsforelements()}}.
+
+\Hypertarget{classElemental__Profile__Set_a3e0eed506236d7d734e4325fdcd1b153}\label{classElemental__Profile__Set_a3e0eed506236d7d734e4325fdcd1b153} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetElementDistribution@{GetElementDistribution}}
+\index{GetElementDistribution@{GetElementDistribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetElementDistribution()}{GetElementDistribution()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classConcentrationSet}{Concentration\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Element\+Distribution (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption}) const}
+
+
+
+Get distribution for a specific element (const) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01009}{1009}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}.
+
+\Hypertarget{classElemental__Profile__Set_a4acb4ff0c16cf35d91f59ce634582b35}\label{classElemental__Profile__Set_a4acb4ff0c16cf35d91f59ce634582b35} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetElementNames@{GetElementNames}}
+\index{GetElementNames@{GetElementNames}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetElementNames()}{GetElementNames()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Element\+Names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get all element names (from first profile) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{356}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00494}{Build\+Regression\+Models()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00621}{Calculate\+Correlation\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00578}{Calculate\+Covariance\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00700}{Calculate\+Element\+Means()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00684}{Calculate\+Kolmogorov\+Smirnov\+Statistics()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00660}{Copy\+To\+GSLMatrix()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00344}{General\+Chart\+::\+Plot\+Profile\+Set()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00907}{To\+Matrix()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00250}{To\+String()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00719}{To\+Table()}}.
+
+\Hypertarget{classElemental__Profile__Set_a1b3293e3399df898f5aa8c9fd0f93f00}\label{classElemental__Profile__Set_a1b3293e3399df898f5aa8c9fd0f93f00} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetEstimatedDistribution@{GetEstimatedDistribution}}
+\index{GetEstimatedDistribution@{GetEstimatedDistribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetEstimatedDistribution()}{GetEstimatedDistribution()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDistribution}{Distribution}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Estimated\+Distribution (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Get estimated distribution for an element (for MCMC optimization) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01020}{1020}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01492}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01530}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix\+\_\+\+Isotopes()}}.
+
+\Hypertarget{classElemental__Profile__Set_a1076edc4397f73148c78790d9841d742}\label{classElemental__Profile__Set_a1076edc4397f73148c78790d9841d742} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetEstimatedMu@{GetEstimatedMu}}
+\index{GetEstimatedMu@{GetEstimatedMu}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetEstimatedMu()}{GetEstimatedMu()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Estimated\+Mu (\begin{DoxyParamCaption}\item[{const string \&}]{element }\end{DoxyParamCaption}) const}
+
+
+
+Get estimated mu parameter for an element. 
+
+\Hypertarget{classElemental__Profile__Set_a5c857bac595f6b246ae388d120bed2e8}\label{classElemental__Profile__Set_a5c857bac595f6b246ae388d120bed2e8} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetEstimatedSigma@{GetEstimatedSigma}}
+\index{GetEstimatedSigma@{GetEstimatedSigma}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetEstimatedSigma()}{GetEstimatedSigma()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Estimated\+Sigma (\begin{DoxyParamCaption}\item[{const string \&}]{element }\end{DoxyParamCaption}) const}
+
+
+
+Get estimated sigma parameter for an element. 
+
+\Hypertarget{classElemental__Profile__Set_aab21169e4a7637d9c0bf37408fbdcfe8}\label{classElemental__Profile__Set_aab21169e4a7637d9c0bf37408fbdcfe8} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetFittedDistribution@{GetFittedDistribution}}
+\index{GetFittedDistribution@{GetFittedDistribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetFittedDistribution()}{GetFittedDistribution()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDistribution}{Distribution}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Fitted\+Distribution (\begin{DoxyParamCaption}\item[{const string \&}]{element\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Get fitted distribution for an element (from data, for likelihood) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01028}{1028}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}.
+
+\Hypertarget{classElemental__Profile__Set_a71ce013744c6a14de6575815c0fc02d5}\label{classElemental__Profile__Set_a71ce013744c6a14de6575815c0fc02d5} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetMaximum@{GetMaximum}}
+\index{GetMaximum@{GetMaximum}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetMaximum()}{GetMaximum()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Maximum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get maximum concentration across all elements and samples. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00455}{455}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00344}{General\+Chart\+::\+Plot\+Profile\+Set()}}.
+
+\Hypertarget{classElemental__Profile__Set_a5983191729785d21cba6fe4eff49e9a7}\label{classElemental__Profile__Set_a5983191729785d21cba6fe4eff49e9a7} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetMinimum@{GetMinimum}}
+\index{GetMinimum@{GetMinimum}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetMinimum()}{GetMinimum()}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Minimum (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get minimum concentration across all elements and samples. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00474}{474}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00344}{General\+Chart\+::\+Plot\+Profile\+Set()}}.
+
+\Hypertarget{classElemental__Profile__Set_a5d31b163bf324865abdd042b1c1950be}\label{classElemental__Profile__Set_a5d31b163bf324865abdd042b1c1950be} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetProfile@{GetProfile}}
+\index{GetProfile@{GetProfile}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetProfile()}{GetProfile()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Profile (\begin{DoxyParamCaption}\item[{const string \&}]{name }\end{DoxyParamCaption})}
+
+
+
+Get profile by sample name (mutable) 
+
+\begin{DoxyReturn}{Returns}
+Pointer to profile, or nullptr if not found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00375}{375}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00981}{Source\+Sink\+Data\+::\+Observed\+Datafor\+Selected\+Sample()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00993}{Source\+Sink\+Data\+::\+Observed\+Datafor\+Selected\+Sample\+\_\+\+Isotope()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01006}{Source\+Sink\+Data\+::\+Observed\+Datafor\+Selected\+Sample\+\_\+\+Isotope\+\_\+delta()}}.
+
+\Hypertarget{classElemental__Profile__Set_a8436aa819588eefdd73e8ca3a0fa17a7}\label{classElemental__Profile__Set_a8436aa819588eefdd73e8ca3a0fa17a7} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetProfile@{GetProfile}}
+\index{GetProfile@{GetProfile}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetProfile()}{GetProfile()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Profile (\begin{DoxyParamCaption}\item[{const string \&}]{name }\end{DoxyParamCaption}) const}
+
+
+
+Get profile by sample name (const) 
+
+\begin{DoxyReturn}{Returns}
+Copy of profile, or empty profile if not found 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00399}{399}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}.
+
+\Hypertarget{classElemental__Profile__Set_a68e1cdb4b52e47a195533fd4a1e232af}\label{classElemental__Profile__Set_a68e1cdb4b52e47a195533fd4a1e232af} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetProfile@{GetProfile}}
+\index{GetProfile@{GetProfile}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetProfile()}{GetProfile()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Profile (\begin{DoxyParamCaption}\item[{unsigned int}]{index }\end{DoxyParamCaption})}
+
+
+
+Get profile by index (mutable) 
+
+\begin{DoxyReturn}{Returns}
+Pointer to profile, or nullptr if index out of range 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00386}{386}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+\Hypertarget{classElemental__Profile__Set_a81a70f9a3755f7800c2b397b22d24546}\label{classElemental__Profile__Set_a81a70f9a3755f7800c2b397b22d24546} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetProfile@{GetProfile}}
+\index{GetProfile@{GetProfile}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetProfile()}{GetProfile()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Profile (\begin{DoxyParamCaption}\item[{unsigned int}]{index }\end{DoxyParamCaption}) const}
+
+
+
+Get profile by index (const) 
+
+\begin{DoxyReturn}{Returns}
+Copy of profile, or empty profile if index out of range 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00410}{410}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+\Hypertarget{classElemental__Profile__Set_a590077fa091285343d18f0ecfe8c48ac}\label{classElemental__Profile__Set_a590077fa091285343d18f0ecfe8c48ac} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetRegressionModels@{GetRegressionModels}}
+\index{GetRegressionModels@{GetRegressionModels}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetRegressionModels()}{GetRegressionModels()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Regression\+Models (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get internal regression model set. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00571}{571}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}.
+
+\Hypertarget{classElemental__Profile__Set_a36c1695b6899b9602545756a4f013990}\label{classElemental__Profile__Set_a36c1695b6899b9602545756a4f013990} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetRegressionsAsResult@{GetRegressionsAsResult}}
+\index{GetRegressionsAsResult@{GetRegressionsAsResult}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetRegressionsAsResult()}{GetRegressionsAsResult()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResultItem}{Result\+Item}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Regressions\+As\+Result (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get regressions wrapped in \doxylink{classResultItem}{Result\+Item} for display. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00563}{563}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}, \mbox{\hyperlink{resultitem_8h_source_l00018}{Result\+Item\+::\+Set\+Result()}}, and \mbox{\hyperlink{resultitem_8h_source_l00023}{Result\+Item\+::\+Set\+Type()}}.
+
+\Hypertarget{classElemental__Profile__Set_a19a5b79807d4ff0fdaf4df5e67314e64}\label{classElemental__Profile__Set_a19a5b79807d4ff0fdaf4df5e67314e64} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!GetSampleNames@{GetSampleNames}}
+\index{GetSampleNames@{GetSampleNames}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{GetSampleNames()}{GetSampleNames()}}
+{\footnotesize\ttfamily vector$<$ string $>$ Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Sample\+Names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get all sample names in the set. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00235}{235}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00395}{Source\+Sink\+Data\+::\+Get\+Sample\+Names()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{Main\+Window\+::on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classElemental__Profile__Set_a44cfbf3f962ee3c0011c54f06a09c988}\label{classElemental__Profile__Set_a44cfbf3f962ee3c0011c54f06a09c988} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!operator=@{operator=}}
+\index{operator=@{operator=}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \& Elemental\+\_\+\+Profile\+\_\+\+Set\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00392}{contribution\+\_\+}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00393}{contribution\+\_\+softmax\+\_\+}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}, \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}, \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}, and \mbox{\hyperlink{elemental__profile__set_8h_source_l00394}{outlierdone\+\_\+}}.
+
+\Hypertarget{classElemental__Profile__Set_a2f291c71c61912f036566973b456650b}\label{classElemental__Profile__Set_a2f291c71c61912f036566973b456650b} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!OutlierAnalysisDone@{OutlierAnalysisDone}}
+\index{OutlierAnalysisDone@{OutlierAnalysisDone}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{OutlierAnalysisDone()}{OutlierAnalysisDone()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Outlier\+Analysis\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if outlier analysis has been performed. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00329}{329}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00394}{outlierdone\+\_\+}}.
+
+\Hypertarget{classElemental__Profile__Set_a5e6d31d25e0dfbbf5ec37ed09db75b54}\label{classElemental__Profile__Set_a5e6d31d25e0dfbbf5ec37ed09db75b54} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!Read@{Read}}
+\index{Read@{Read}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Read (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{strlist }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00330}{330}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+\Hypertarget{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}\label{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00311}{311}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, and \mbox{\hyperlink{elemental__profile_8cpp_source_l00707}{Elemental\+\_\+\+Profile\+::\+Read\+From\+Json\+Object()}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02646}{Source\+Sink\+Data\+::\+Read\+Element\+Datafrom\+Json\+Object()}}, and \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}.
+
+\Hypertarget{classElemental__Profile__Set_a3e5efddd79898470660b96437efced7a}\label{classElemental__Profile__Set_a3e5efddd79898470660b96437efced7a} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SelectTopElementsAggregate@{SelectTopElementsAggregate}}
+\index{SelectTopElementsAggregate@{SelectTopElementsAggregate}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SelectTopElementsAggregate()}{SelectTopElementsAggregate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Select\+Top\+Elements\+Aggregate (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption}) const}
+
+
+
+Select top N elements across all samples (aggregate minimum) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00954}{954}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00552}{Elemental\+\_\+\+Profile\+::\+Append\+Element()}}, and \mbox{\hyperlink{cmbvector_8h_source_l00118}{CMBVector\+::\+Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l02151}{Conductor\+::\+Execute\+Auto\+Select()}}.
+
+\Hypertarget{classElemental__Profile__Set_a6c588eb82023171e7e51ba6e7c621645}\label{classElemental__Profile__Set_a6c588eb82023171e7e51ba6e7c621645} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SetContribution@{SetContribution}}
+\index{SetContribution@{SetContribution}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SetContribution()}{SetContribution()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Set\+Contribution (\begin{DoxyParamCaption}\item[{const double \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Set contribution value for this source. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01036}{1036}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00392}{contribution\+\_\+}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00644}{Source\+Sink\+Data\+::\+Initialize\+Contributions\+Randomly()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00661}{Source\+Sink\+Data\+::\+Initialize\+Contributions\+Randomly\+Softmax()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01622}{Source\+Sink\+Data\+::\+Set\+Contribution()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01773}{Source\+Sink\+Data\+::\+Set\+Parameter\+Value()}}.
+
+\Hypertarget{classElemental__Profile__Set_a523bd9c7e492dea6369efa3ffb21c5df}\label{classElemental__Profile__Set_a523bd9c7e492dea6369efa3ffb21c5df} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SetContributionSoftmax@{SetContributionSoftmax}}
+\index{SetContributionSoftmax@{SetContributionSoftmax}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SetContributionSoftmax()}{SetContributionSoftmax()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Set\+Contribution\+Softmax (\begin{DoxyParamCaption}\item[{const double \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Set softmax-\/transformed contribution. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01014}{1014}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00393}{contribution\+\_\+softmax\+\_\+}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01639}{Source\+Sink\+Data\+::\+Set\+Contribution\+Softmax()}}.
+
+\Hypertarget{classElemental__Profile__Set_a60ef2d5ba37a646e9fbe3036ddc1c078}\label{classElemental__Profile__Set_a60ef2d5ba37a646e9fbe3036ddc1c078} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SetEstimatedMu@{SetEstimatedMu}}
+\index{SetEstimatedMu@{SetEstimatedMu}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SetEstimatedMu()}{SetEstimatedMu()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Set\+Estimated\+Mu (\begin{DoxyParamCaption}\item[{const string \&}]{element,  }\item[{const double \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Set estimated mu parameter for an element. 
+
+\Hypertarget{classElemental__Profile__Set_aef4949665e9f27cf6fddd9be80fd06e5}\label{classElemental__Profile__Set_aef4949665e9f27cf6fddd9be80fd06e5} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SetEstimatedSigma@{SetEstimatedSigma}}
+\index{SetEstimatedSigma@{SetEstimatedSigma}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SetEstimatedSigma()}{SetEstimatedSigma()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Set\+Estimated\+Sigma (\begin{DoxyParamCaption}\item[{const string \&}]{element,  }\item[{const double \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Set estimated sigma parameter for an element. 
+
+\Hypertarget{classElemental__Profile__Set_a13a751f313875bf9bf272b7cb16d83d4}\label{classElemental__Profile__Set_a13a751f313875bf9bf272b7cb16d83d4} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SetRegressionModels@{SetRegressionModels}}
+\index{SetRegressionModels@{SetRegressionModels}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SetRegressionModels()}{SetRegressionModels()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Set\+Regression\+Models (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}}]{mlrset }\end{DoxyParamCaption})}
+
+
+
+Set regression models (copy existing) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00556}{556}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}.
+
+\Hypertarget{classElemental__Profile__Set_adac8ab3ea21581a2d27be19d4951d177}\label{classElemental__Profile__Set_adac8ab3ea21581a2d27be19d4951d177} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!SetRegressionModels@{SetRegressionModels}}
+\index{SetRegressionModels@{SetRegressionModels}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{SetRegressionModels()}{SetRegressionModels()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Set\+Regression\+Models (\begin{DoxyParamCaption}\item[{const string \&}]{om,  }\item[{const string \&}]{d,  }\item[{\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\+\_\+form}}}]{form = {\ttfamily \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\+\_\+form\+::linear}}},  }\item[{const double \&}]{p\+\_\+value\+\_\+threshold = {\ttfamily 0.05} }\end{DoxyParamCaption})}
+
+
+
+Set regression models (build new) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00547}{547}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00494}{Build\+Regression\+Models()}}, and \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00114}{Copy\+Included\+In\+Analysis()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00052}{Create\+Corrected\+Set()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00141}{Eliminate\+Samples()}}.
+
+\Hypertarget{classElemental__Profile__Set_a8a96dfcaf637ae59c04e88282cb5418d}\label{classElemental__Profile__Set_a8a96dfcaf637ae59c04e88282cb5418d} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Elemental\+\_\+\+Profile\+\_\+\+Set\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00291}{291}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+\Hypertarget{classElemental__Profile__Set_a137c107b6d0444c4b4c4ba068a116b7d}\label{classElemental__Profile__Set_a137c107b6d0444c4b4c4ba068a116b7d} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ToMatrix@{ToMatrix}}
+\index{ToMatrix@{ToMatrix}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ToMatrix()}{ToMatrix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+To\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Convert to matrix format (samples × elements) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00907}{907}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}.
+
+\Hypertarget{classElemental__Profile__Set_a91f6ad83445213f5e932917e882ecd01}\label{classElemental__Profile__Set_a91f6ad83445213f5e932917e882ecd01} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ToString@{ToString}}
+\index{ToString@{ToString}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily string Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00250}{250}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00281}{writetofile()}}.
+
+\Hypertarget{classElemental__Profile__Set_a9c72da3d9219bc698eb4e3f173007b26}\label{classElemental__Profile__Set_a9c72da3d9219bc698eb4e3f173007b26} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00719}{719}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Get\+Element\+Names()}}, \mbox{\hyperlink{interface_8h_source_l00050}{Interface\+::highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::highlimit}}, and \mbox{\hyperlink{interface_8h_source_l00049}{Interface\+::lowlimit}}.
+
+\Hypertarget{classElemental__Profile__Set_a3ff71fc172fea20f4e808f550a4ad4b4}\label{classElemental__Profile__Set_a3ff71fc172fea20f4e808f550a4ad4b4} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!UpdateElementDistributions@{UpdateElementDistributions}}
+\index{UpdateElementDistributions@{UpdateElementDistributions}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{UpdateElementDistributions()}{UpdateElementDistributions()}}
+{\footnotesize\ttfamily void Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Update\+Element\+Distributions (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Rebuild element distributions from all profiles. 
+
+Call this after adding/modifying profiles to update statistical distributions 
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{element\+\_\+distributions\+\_\+}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00221}{Append\+Profiles()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03470}{Source\+Sink\+Data\+::\+Lump\+All\+Profile\+Sets()}}.
+
+\Hypertarget{classElemental__Profile__Set_a184f90e41d8fec64ad7d4f8dd991fdb0}\label{classElemental__Profile__Set_a184f90e41d8fec64ad7d4f8dd991fdb0} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00281}{281}} of file \mbox{\hyperlink{elemental__profile__set_8cpp_source}{elemental\+\_\+profile\+\_\+set.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00250}{To\+String()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classElemental__Profile__Set_aeb648e95e0a9c908b145224cb850bbd3}\label{classElemental__Profile__Set_aeb648e95e0a9c908b145224cb850bbd3} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!contribution\_@{contribution\_}}
+\index{contribution\_@{contribution\_}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{contribution\_}{contribution\_}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::contribution\+\_\+ = 0.\+0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Source contribution (for CMB) 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00392}{392}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8h_source_l00346}{Get\+Contribution()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{operator=()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01036}{Set\+Contribution()}}.
+
+\Hypertarget{classElemental__Profile__Set_a9ad505047eee70a65ee1fc25cdf41fed}\label{classElemental__Profile__Set_a9ad505047eee70a65ee1fc25cdf41fed} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!contribution\_softmax\_@{contribution\_softmax\_}}
+\index{contribution\_softmax\_@{contribution\_softmax\_}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{contribution\_softmax\_}{contribution\_softmax\_}}
+{\footnotesize\ttfamily double Elemental\+\_\+\+Profile\+\_\+\+Set\+::contribution\+\_\+softmax\+\_\+ = 0.\+0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Softmax-\/transformed contribution. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00393}{393}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8h_source_l00356}{Get\+Contribution\+Softmax()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{operator=()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01014}{Set\+Contribution\+Softmax()}}.
+
+\Hypertarget{classElemental__Profile__Set_ac137c823ba5c2d977d96b2ebf12619a3}\label{classElemental__Profile__Set_ac137c823ba5c2d977d96b2ebf12619a3} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!element\_distributions\_@{element\_distributions\_}}
+\index{element\_distributions\_@{element\_distributions\_}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{element\_distributions\_}{element\_distributions\_}}
+{\footnotesize\ttfamily map$<$string, \mbox{\hyperlink{classConcentrationSet}{Concentration\+Set}}$>$ Elemental\+\_\+\+Profile\+\_\+\+Set\+::element\+\_\+distributions\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Concentration distributions for each element. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00390}{390}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Append\+Profile()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00876}{Apply\+Box\+Cox\+Transform()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00794}{Calculate\+Box\+Cox\+Parameters()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00700}{Calculate\+Element\+Means()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{Detect\+Outliers()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01001}{Get\+Element\+Distribution()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01009}{Get\+Element\+Distribution()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01020}{Get\+Estimated\+Distribution()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01028}{Get\+Fitted\+Distribution()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{operator=()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00162}{Update\+Element\+Distributions()}}.
+
+\Hypertarget{classElemental__Profile__Set_a80600c18c1a1acd5b59acd43c2532bb1}\label{classElemental__Profile__Set_a80600c18c1a1acd5b59acd43c2532bb1} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!mlr\_vs\_om\_size\_@{mlr\_vs\_om\_size\_}}
+\index{mlr\_vs\_om\_size\_@{mlr\_vs\_om\_size\_}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{mlr\_vs\_om\_size\_}{mlr\_vs\_om\_size\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} Elemental\+\_\+\+Profile\+\_\+\+Set\+::mlr\+\_\+vs\+\_\+om\+\_\+size\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+MLR models for OM/size corrections. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00391}{391}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00772}{Apply\+Organic\+Matter\+And\+Size\+Corrections()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00114}{Copy\+Included\+In\+Analysis()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00052}{Create\+Corrected\+Set()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00141}{Eliminate\+Samples()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00571}{Get\+Regression\+Models()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00563}{Get\+Regressions\+As\+Result()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{operator=()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00556}{Set\+Regression\+Models()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00547}{Set\+Regression\+Models()}}.
+
+\Hypertarget{classElemental__Profile__Set_ae71ccd3b0bcb41b7b73d0d2fd8d61699}\label{classElemental__Profile__Set_ae71ccd3b0bcb41b7b73d0d2fd8d61699} 
+\index{Elemental\_Profile\_Set@{Elemental\_Profile\_Set}!outlierdone\_@{outlierdone\_}}
+\index{outlierdone\_@{outlierdone\_}!Elemental\_Profile\_Set@{Elemental\_Profile\_Set}}
+\doxysubsubsection{\texorpdfstring{outlierdone\_}{outlierdone\_}}
+{\footnotesize\ttfamily bool Elemental\+\_\+\+Profile\+\_\+\+Set\+::outlierdone\+\_\+ = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flag indicating outlier analysis performed. 
+
+
+
+Definition at line \mbox{\hyperlink{elemental__profile__set_8h_source_l00394}{394}} of file \mbox{\hyperlink{elemental__profile__set_8h_source}{elemental\+\_\+profile\+\_\+set.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{Detect\+Outliers()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{operator=()}}, and \mbox{\hyperlink{elemental__profile__set_8h_source_l00329}{Outlier\+Analysis\+Done()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{elemental__profile__set_8h}{elemental\+\_\+profile\+\_\+set.\+h}}\item 
+\mbox{\hyperlink{elemental__profile__set_8cpp}{elemental\+\_\+profile\+\_\+set.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,103 @@
+\doxysection{selectsampledelegate.\+cpp}
+\hypertarget{selectsampledelegate_8cpp_source}{}\label{selectsampledelegate_8cpp_source}\mbox{\hyperlink{selectsampledelegate_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{selectsampledelegate_8h}{selectsampledelegate.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}QCheckBox"{}}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}QComboBox"{}}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}QLineEdit"{}}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}QLabel"{}}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00008}\mbox{\hyperlink{classSelectSampleDelegate_a569c4bc66960e69c2e134627b34f626e}{00008}}\ \mbox{\hyperlink{classSelectSampleDelegate_a569c4bc66960e69c2e134627b34f626e}{SelectSampleDelegate::SelectSampleDelegate}}(\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ *\_Data,\ QObject\ *parent)}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_ab16d4697e5110aa4987017035adff0b8}{Data}}=\_Data;}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00011}00011\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00013}\mbox{\hyperlink{classSelectSampleDelegate_ab55e9f0e46ae08f40d05a9111c8a0643}{00013}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSelectSampleDelegate_ab55e9f0e46ae08f40d05a9111c8a0643}{SelectSampleDelegate::SetMode}}(\mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167}{mode}}\ \_mode)}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a14cc50890a6477c4287a4ea42b928cb0}{Mode}}\ =\ \_mode;}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a14cc50890a6477c4287a4ea42b928cb0}{Mode}}\ ==\ \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167a6ef9161b900632671022358216c7dfe7}{mode::samples}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00017}00017\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0}{numberofcolumns}}\ =\ 3;}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}.resize(\mbox{\hyperlink{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0}{numberofcolumns}});}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[0]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{column\_type::name}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[1]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{column\_type::yesno}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[2]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{column\_type::string}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a14cc50890a6477c4287a4ea42b928cb0}{Mode}}\ ==\ \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167a6265b3d48ef4f0f8b9ffa14675098709}{mode::regressions}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00025}00025\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0}{numberofcolumns}}\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}.resize(\mbox{\hyperlink{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0}{numberofcolumns}});}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[0]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{column\_type::name}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[1]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df}{column\_type::number}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[2]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df}{column\_type::number}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[3]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df}{column\_type::number}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[4]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{column\_type::yesno}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[5]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df}{column\_type::number}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[6]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df}{column\_type::number}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[7]\ =\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{column\_type::yesno}};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00037}00037\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00039}\mbox{\hyperlink{classSelectSampleDelegate_a4d722b703bb7e94bd009f327a4c17fea}{00039}}\ QWidget\ *\mbox{\hyperlink{classSelectSampleDelegate_a4d722b703bb7e94bd009f327a4c17fea}{SelectSampleDelegate::createEditor}}(QWidget\ *parent,\ \textcolor{keyword}{const}\ QStyleOptionViewItem\ \&option,}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00041}00041\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[index.column()]\ ==\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{column\_type::name}})\ \textcolor{keywordflow}{return}\ QStyledItemDelegate::createEditor(parent,\ option,\ index);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[index.column()]\ ==\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{column\_type::yesno}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00044}00044\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ QCheckBox\ *editor\ =\ \textcolor{keyword}{new}\ QCheckBox(parent);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ editor-\/>setChecked(index.data(Qt::DisplayRole).toBool());}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ editor;}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00052}00052\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00054}\mbox{\hyperlink{classSelectSampleDelegate_a5dee8e9189ae7e9d0069e69c343ede0c}{00054}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSelectSampleDelegate_a5dee8e9189ae7e9d0069e69c343ede0c}{SelectSampleDelegate::setEditorData}}(QWidget\ *editor,\ \textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00055}00055\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00056}00056\ \ \ \ \ QVariant\ var\ =\ index.data(Qt::DisplayRole);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[index.column()]==\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{column\_type::name}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00058}00058\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ QLabel\ *label\ =\ \textcolor{keyword}{static\_cast<}QLabel*\textcolor{keyword}{>}(editor);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ label-\/>setText(var.toString());}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[index.column()]==\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{column\_type::yesno}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00063}00063\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ QCheckBox\ *chkbox\ =\ \textcolor{keyword}{static\_cast<}QCheckBox*\textcolor{keyword}{>}(editor);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (var.toString()==\textcolor{stringliteral}{"{}No"{}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ chkbox-\/>setChecked(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ chkbox-\/>setChecked(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00069}00069\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00071}\mbox{\hyperlink{classSelectSampleDelegate_a6c185788eaf139e670067cb6ec8759d8}{00071}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSelectSampleDelegate_a6c185788eaf139e670067cb6ec8759d8}{SelectSampleDelegate::setModelData}}(QWidget\ *editor,\ QAbstractItemModel\ *model,}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00073}00073\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[index.column()]\ ==\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{column\_type::name}})\ QStyledItemDelegate::setModelData(editor,\ model,\ index);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{columnTypes}}[index.column()]\ ==\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{column\_type::yesno}})}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00076}00076\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ QCheckBox\ *chkbox\ =\ \textcolor{keyword}{static\_cast<}QCheckBox*\textcolor{keyword}{>}(editor);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chkbox-\/>checkState()==Qt::CheckState::Checked)}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ model-\/>setData(index,\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ model-\/>setData(index,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00084}00084\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00085}00085\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00087}\mbox{\hyperlink{classSelectSampleDelegate_adac495e7a64a02191e74010be3778f4a}{00087}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSelectSampleDelegate_adac495e7a64a02191e74010be3778f4a}{SelectSampleDelegate::updateEditorGeometry}}(QWidget\ *editor,}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keyword}{const}\ QStyleOptionViewItem\ \&option,\ \textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00089}00089\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00090}00090\ \ \ \ \ editor-\/>setGeometry(option.rect);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00091}00091\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00093}\mbox{\hyperlink{classSelectSampleDelegate_ad578715097648deb044d35565d531272}{00093}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSelectSampleDelegate_ad578715097648deb044d35565d531272}{SelectSampleDelegate::paint}}(QPainter\ *painter,\ \textcolor{keyword}{const}\ QStyleOptionViewItem\ \&option,}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00094}00094\ \ \ \ \ \textcolor{keyword}{const}\ QModelIndex\ \&index)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00095}00095\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00096}00096\ \ \ \ \ \ QStyledItemDelegate::paint(painter,\ option,\ index);}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{selectsampledelegate_8cpp_source_l00098}00098\ }
+
+\end{DoxyCode}
