@@ -32,6 +32,7 @@
 #include "toolboxitem.h"
 #include "resulttableviewer.h"
 #include "optionsdialog.h"
+#include <QStandardPaths>
 //#include "MCMC.h"
 
 #ifdef _WIN32
@@ -157,6 +158,16 @@ void MainWindow::setupToolsView()
 
     // Configure tree view settings
     ui->treeView->setSelectionMode(QAbstractItemView::MultiSelection);
+    ui->verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+    ui->verticalLayout_3->setSpacing(0);
+
+    // If the frame has its own layout, reduce its margins too
+    if (ui->frame->layout())
+    {
+        ui->frame->layout()->setContentsMargins(2, 2, 2, 2);
+        ui->frame->layout()->setSpacing(2);
+    }
+
     ui->frame->setVisible(false);
 }
 
@@ -463,6 +474,8 @@ bool MainWindow::LoadModel(const QString& fileName)
     ProjectFileName = fileName;
     setWindowTitle("SedSat3: " + ProjectFileName);
 
+    ui->ShowTabular->setEnabled(true);
+    ui->btnZoom->setEnabled(true);
     return true;
 }
 
@@ -834,7 +847,12 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
     if (treeItemChangedProgramatically) return;
     if (plotter==nullptr)
     {
+#ifdef USE_QCHARTS
+        plotter = new GeneralChartPlotter(this);
+#else
         plotter = new GeneralPlotter(this);
+#endif // USE_QCHARTS
+                
         ui->verticalLayout_3->addWidget(plotter);
 
     }
@@ -888,13 +906,22 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
             qDebug()<<"Data extracted!";
             if (plotter==nullptr)
             {
+#ifdef USE_QCHARTS
+                plotter = new GeneralChartPlotter(this);
+#else
                 plotter = new GeneralPlotter(this);
+#endif // USE_QCHARTS
                 ui->verticalLayout_3->addWidget(plotter);
 
             }
 
-            plotter->AddNoneUniformScatter(extracted_data,i);
+            plotter->AddNonUniformScatter(extracted_data,i,8,Element_Name_Selected.toStdString());
+#ifdef USE_QCHARTS
+			plotter->SetYAxisScaleType(ChartAxisScale::Logarithmic);
+#else
             plotter->SetYAxisScaleType(AxisScale::log);
+#endif // USE_QCHARTS
+
         }
     }
 
@@ -906,7 +933,11 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
     );
         ui->ShowTabular->setEnabled(true);
         plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
+#ifdef USE_QCHARTS
+        plotter->SetYAxisScaleType(ChartAxisScale::Logarithmic);
+#else
         plotter->SetYAxisScaleType(AxisScale::log);
+#endif // USE_QCHARTS
     }
     ui->frame->setVisible(true);
     ui->frame->setEnabled(true);
@@ -1606,7 +1637,13 @@ void MainWindow::on_show_data_as_table()
 
 void MainWindow::on_ZoomExtends()
 {
+#ifdef USE_QCHARTS
+    plotter->ZoomExtents();
+#else
     plotter->ZoomExtends();
+#endif // USE_QCHARTS
+
+    
 }
 
 

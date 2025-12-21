@@ -61,7 +61,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;..\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;USE_QCHARTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -78,7 +78,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;..\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;USE_QCHARTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -125,7 +125,9 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include=".\Utilities\Vector.cpp" />
     <ClCompile Include=".\Utilities\Vector_arma.cpp" />
     <ClCompile Include="aboutdialog.cpp" />
+    <ClCompile Include="GeneralChartPlotter.cpp" />
     <ClCompile Include="cmbvectorsetset.cpp" />
+    <ClCompile Include="generalplotter.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="multiplelinearregression.cpp" />
     <ClCompile Include="multiplelinearregressionset.cpp" />
@@ -174,7 +176,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="FilePushButton.cpp" />
     <ClCompile Include="formelementinformation.cpp" />
     <ClCompile Include="generalchart.cpp" />
-    <ClCompile Include="generalplotter.cpp" />
     <ClCompile Include="genericform.cpp" />
     <ClCompile Include="indicatesheetsdialog.cpp" />
     <ClCompile Include="main.cpp" />
@@ -184,12 +185,14 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="optionsdialog.h" />
+    <QtMoc Include="GeneralChartPlotter.h" />
+    <QtMoc Include="..\qcustomplot6\qcustomplot.h" />
+    <ClInclude Include="generalplotter.h" />
     <ClInclude Include="testmcmc.h" />
     <ClInclude Include="Utilities\TimeSeries.h" />
     <ClInclude Include="Utilities\TimeSeries.hpp" />
     <ClInclude Include="Utilities\TimeSeriesSet.h" />
     <ClInclude Include="Utilities\TimeSeriesSet.hpp" />
-    <QtMoc Include="..\qcustomplot6\qcustomplot.h" />
     <ClInclude Include=".\Utilities\Matrix.h" />
     <ClInclude Include=".\Utilities\Matrix_arma.h" />
     <ClInclude Include=".\Utilities\NormalDist.h" />
@@ -206,7 +209,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="cmbvectorset.h" />
     <ClInclude Include="cmbvectorsetset.h" />
     <ClInclude Include="contribution.h" />
-    <ClInclude Include="generalplotter.h" />
     <ClInclude Include="include\cmbdistribution.h" />
     <ClInclude Include="include\concentrationset.h" />
     <ClInclude Include="include\conductor.h" />

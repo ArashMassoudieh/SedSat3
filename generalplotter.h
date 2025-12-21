@@ -30,7 +30,7 @@ public:
     bool AddScatter(const string &name, const vector<string> &x, const vector<double> &y, const QCPScatterStyle &symbol = QCPScatterStyle::ssDisc);
     bool AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y);
     bool AddScatters(const vector<string> names, const vector<string> &x,const vector<vector<double>> &y);
-    bool AddNoneUniformScatter(const map<string,vector<double>> &data, int shape_counter=0);
+    bool AddNonUniformScatter(const map<string,vector<double>> &data, int shape_counter=0);
     bool AddTimeSeries(const string &name, const vector<double> &x, const vector<double> &y);
     bool AddTimeSeriesSet(const string &name, const vector<vector<double>> &x, const vector<vector<double>> &y);
     bool SetYAxisScaleType(AxisScale axisscale);

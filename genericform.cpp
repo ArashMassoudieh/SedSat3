@@ -2,6 +2,8 @@
 #include "ui_genericform.h"
 #include "QLabel"
 #include "mainwindow.h"
+#include <QTextBrowser>
+#include <QStandardPaths>
 
 GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_mainwindow) :
     QWidget(parent),

@@ -9,7 +9,13 @@ PlotWindow::PlotWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    plot = new GeneralPlotter(this);
+#ifdef USE_QCHARTS
+    plot = new GeneralChartPlotter(this);
+#else
+	plot = new GeneralPlotter(this);    
+#endif // USE_QCHARTS
+
+    
     ui->horizontalLayout_2->addWidget(plot);
 
 }

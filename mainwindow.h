@@ -5,9 +5,16 @@
 #include <memory>
 #include <string>
 #include <map>
-
+#include <QStandardItemModel>
+#include <QStandardItem>
 #include "sourcesinkdata.h"
+#include <QJsonDocument>
+#ifdef USE_QCHARTS
+#include "GeneralChartPlotter.h"
+#else
 #include "generalplotter.h"
+#endif // USE_QCHARTS
+
 #include "formelementinformation.h"
 #include "conductor.h"
 
@@ -234,7 +241,13 @@ private:
     int sinkSheet = -1;                                 ///< Index of sink sheet in Excel import
 
     // Visualization
+#ifdef USE_QCHARTS
+    GeneralChartPlotter* plotter = nullptr;                  ///< Main plotting widget
+#else
     GeneralPlotter* plotter = nullptr;                  ///< Main plotting widget
+#endif // USE_QCHARTS
+
+    
     std::unique_ptr<Interface> plottedData;             ///< Currently plotted data interface
 
     // Models
