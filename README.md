@@ -1,6 +1,6 @@
-# SedSAT3 (Sediment Source Assessment Tool, version 1.0.25)
+# SedSAT3 (Sediment Source Assessment Tool, version 1.1.6)
 
-SedSAT3 is an open-source software package developed by the U.S. Geological Survey for sediment source fingerprinting using chemical and isotopic tracers. It provides a graphical user interface and a suite of tools for preprocessing, tracer selection, source apportionment, and diagnostic analysis. The software supports multiple apportionment approaches, including deterministic maximum likelihood estimation, metaheuristic search with genetic algorithms, and Bayesian inference through Markov Chain Monte Ca...
+SedSAT3 is an open-source software package developed by the Arash Massoudieh, Allen Gellis, and Cara Peterman-Phippss for sediment source fingerprinting using chemical and isotopic tracers. It provides a graphical user interface and a suite of tools for preprocessing, tracer selection, source apportionment, and diagnostic analysis. The software supports multiple apportionment approaches, including deterministic maximum likelihood estimation, metaheuristic search with genetic algorithms, and Bayesian inference through Markov Chain Monte Ca...
 
 ---
 
