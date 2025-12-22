@@ -1,7 +1,7 @@
 QT += core gui widgets printsupport charts
 
 CONFIG += c++17
-DEFINES += _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT
+DEFINES += _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT USE_QCHARTS
 
 greaterThan(QT_MAJOR_VERSION, 5): DEFINES += Qt6
 
@@ -11,6 +11,7 @@ INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtGui/$${QT_VERSION}/QtGui/private
 
 
 SOURCES += \
+    GeneralChartPlotter.cpp \
     Utilities/Distribution.cpp \
     Utilities/Matrix.cpp \
     Utilities/Matrix_arma.cpp \
@@ -74,6 +75,7 @@ SOURCES += \
     toolboxitem.cpp
 
 HEADERS += \
+    GeneralChartPlotter.h \
     Utilities/TimeSeries.h \
     Utilities/TimeSeries.hpp \
     Utilities/TimeSeriesSet.h \

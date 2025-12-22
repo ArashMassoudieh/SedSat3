@@ -1102,12 +1102,12 @@ CVector SourceSinkData::ResidualVector()
     combined_residuals.append(isotopic_residuals);
 
     // Check for non-finite residuals (indicates numerical issues)
-    if (!combined_residuals.is_finite())
-    {
-        qDebug() << "Warning: Non-finite residuals detected in ResidualVector()";
-        qDebug() << "Contribution vector:" << GetContributionVector().toString();
-        qDebug() << "Contribution vector (softmax):" << GetContributionVectorSoftmax().toString();
-    }
+    //if (!combined_residuals.is_finite())
+    //{
+    //    qDebug() << "Warning: Non-finite residuals detected in ResidualVector()";
+    //    qDebug() << "Contribution vector:" << GetContributionVector().toString();
+    //    qDebug() << "Contribution vector (softmax):" << GetContributionVectorSoftmax().toString();
+    //}
 
     return combined_residuals;
 }

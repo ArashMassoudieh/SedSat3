@@ -30,6 +30,7 @@ add_subdirectory(thirdparty/QXlsx/QXlsx)
 # Sources, headers, forms
 # ----------------------------
 set(PROJECT_SOURCES
+    GeneralChartPlotter.cpp
     Utilities/Distribution.cpp
     Utilities/Matrix.cpp
     Utilities/Matrix_arma.cpp
@@ -51,7 +52,6 @@ set(PROJECT_SOURCES
     cmbvectorset.cpp
     cmbvectorsetset.cpp
     contribution.cpp
-    customplotbar.cpp
     dialogchooseexcelsheets.cpp
     elementstablemodel.cpp
     elementtabledelegate.cpp
@@ -66,6 +66,7 @@ set(PROJECT_SOURCES
     multiplelinearregression.cpp
     multiplelinearregressionset.cpp
     omsizecorrectiontablemodel.cpp
+    optionsdialog.cpp
     plotwindow.cpp
     range.cpp
     rangeset.cpp
@@ -94,6 +95,7 @@ set(PROJECT_SOURCES
 )
 
 set(PROJECT_HEADERS
+    GeneralChartPlotter.h
     Utilities/TimeSeries.h
     Utilities/TimeSeries.hpp
     Utilities/TimeSeriesSet.h
@@ -119,7 +121,6 @@ set(PROJECT_HEADERS
     cmbvectorset.h
     cmbvectorsetset.h
     contribution.h
-    customplotbar.h
     dialogchooseexcelsheets.h
     elementstablemodel.h
     elementtabledelegate.h
@@ -149,6 +150,7 @@ set(PROJECT_HEADERS
     multiplelinearregression.h
     multiplelinearregressionset.h
     omsizecorrectiontablemodel.h
+    optionsdialog.h
     plotwindow.h
     range.h
     rangeset.h
@@ -166,7 +168,6 @@ set(PROJECT_HEADERS
 
 set(UI_FILES
     ProgressWindow.ui
-    aboutdialog.ui
     dialogchooseexcelsheets.ui
     formelementinformation.ui
     generalchart.ui
@@ -228,6 +229,7 @@ target_compile_definitions(SedSat3 PRIVATE
     GSL
     Q_GUI_SUPPORT
     Qt6
+    USE_QCHARTS
 )
 
 # ----------------------------
@@ -279,11 +281,10 @@ install(FILES ${CMAKE_SOURCE_DIR}/resources/icons/sedsat3.png
 # Packaging metadata
 # ----------------------------
 set(CPACK_PACKAGE_NAME "sedsat3")
-set(CPACK_PACKAGE_VERSION "1.0.25")
+set(CPACK_PACKAGE_VERSION "1.1.6")
 set(CPACK_PACKAGE_CONTACT "Arash Massoudieh <massoudieh@cua.edu>")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Arash Massoudieh") # required
 set(CPACK_DEBIAN_PACKAGE_SECTION "science")
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 include(CPack)
-
