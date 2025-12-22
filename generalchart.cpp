@@ -345,8 +345,8 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
 {
     QCategoryAxis* axisX = new QCategoryAxis();
 
-    axisX->setRange(0, profile_sets->ElementNames().size());
-    vector<string> element_names = profile_sets->ElementNames();
+    axisX->setRange(0, profile_sets->GetElementNames().size());
+    vector<string> element_names = profile_sets->GetElementNames();
     for (int i=0; i<element_names.size(); i++)
         axisX->append(QString::fromStdString(element_names[i]),double(i+1));
 
@@ -354,10 +354,10 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
     QLogValueAxis* axisYLog;
     QValueAxis* axisYNormal;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
-    if (profile_sets->min()>0 && _log)
+    if (profile_sets->GetMinimum()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
-        axisYLog->setRange(pow(10, roundDown(log(profile_sets->min())/log(10.0))), pow(10, int(log(profile_sets->max()) / log(10.0))+1));
+        axisYLog->setRange(pow(10, roundDown(log(profile_sets->GetMinimum())/log(10.0))), pow(10, int(log(profile_sets->GetMaximum()) / log(10.0))+1));
         axisYLog->setLabelFormat("%g");
         axisYLog->setMinorTickCount(5);
         chart->addAxis(axisYLog, Qt::AlignLeft);
@@ -367,9 +367,9 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
     {
         axisYNormal = new QValueAxis();
         if (result_item->YLimit(_range::high)==0)
-            axisYNormal->setRange(roundDown(profile_sets->min()), roundDown(profile_sets->max()+1));
+            axisYNormal->setRange(roundDown(profile_sets->GetMinimum()), roundDown(profile_sets->GetMaximum()+1));
         else
-            axisYNormal->setRange(roundDown(profile_sets->min()), result_item->YLimit(_range::high));
+            axisYNormal->setRange(roundDown(profile_sets->GetMinimum()), result_item->YLimit(_range::high));
         axisYNormal->setLabelFormat("%g");
         axisYNormal->setMinorTickCount(5);
         chart->addAxis(axisYNormal, Qt::AlignLeft);
@@ -434,9 +434,9 @@ bool GeneralChart::PlotContribution(Contribution* contributions, const QString &
 bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, const QString &title)
 {
     QCategoryAxis* axisX = new QCategoryAxis();
-    qDebug() << profile_set->ElementNames().size();
+    qDebug() << profile_set->GetElementNames().size();
     axisX->setRange(0, profile_set->size()*10);
-    vector<string> element_names = profile_set->ElementNames();
+    vector<string> element_names = profile_set->GetElementNames();
     for (int i = 0; i < element_names.size(); i++)
         axisX->append(QString::fromStdString(element_names[i]), double(i + 1)*10);
 
@@ -445,10 +445,10 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
     QValueAxis* axisYNormal;
     axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
-    if (profile_set->min()>0 && _log)
+    if (profile_set->GetMinimum()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
-        axisYLog->setRange(pow(10, roundDown(log(profile_set->min())/log(10.0))), pow(10, int(log(profile_set->max()) / log(10.0))+1));
+        axisYLog->setRange(pow(10, roundDown(log(profile_set->GetMinimum())/log(10.0))), pow(10, int(log(profile_set->GetMaximum()) / log(10.0))+1));
         axisYLog->setLabelFormat("%g");
         axisYLog->setMinorTickCount(5);
         axisYLog->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
@@ -459,9 +459,9 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
     {
         axisYNormal = new QValueAxis();
         if (result_item->YLimit(_range::high)==0)
-            axisYNormal->setRange(roundDown(profile_set->min()), roundDown(profile_set->max()+1));
+			axisYNormal->setRange(roundDown(profile_set->GetMinimum()), roundDown(profile_set->GetMaximum()+1));
         else
-            axisYNormal->setRange(roundDown(profile_set->min()), result_item->YLimit(_range::low));
+            axisYNormal->setRange(roundDown(profile_set->GetMinimum()), result_item->YLimit(_range::low));
         axisYNormal->setLabelFormat("%f");
         axisYNormal->setMinorTickCount(5);
         axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));

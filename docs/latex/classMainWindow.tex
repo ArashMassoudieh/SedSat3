@@ -1,0 +1,1569 @@
+\doxysection{Main\+Window Class Reference}
+\hypertarget{classMainWindow}{}\label{classMainWindow}\index{MainWindow@{MainWindow}}
+
+
+Main application window for Sed\+SAT3 source apportionment analysis.  
+
+
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/mainwindow.\+h$>$}
+
+
+
+Inheritance diagram for Main\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classMainWindow__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Main\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMainWindow__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{Main\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Constructs the main window. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window}} ()
+\begin{DoxyCompactList}\small\item\em Destructor -\/ cleans up UI resources. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_a6d4e2a9dfd79d332c1c65fbba4c9e1a0}{Set\+Sink\+Sheet}} (int i)
+\begin{DoxyCompactList}\small\item\em Sets the sink sheet index for Excel import. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_a28cfdaf50abf0c162ddb843660b2dbbb}{Write\+Message\+On\+Screen}} (const QString \&text, QColor color=Qt\+::black)
+\begin{DoxyCompactList}\small\item\em Writes a message to the application\textquotesingle{}s message display area. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a0e4849de10342238c2a91304de641386}{Data}} ()
+\begin{DoxyCompactList}\small\item\em Returns pointer to the main data collection. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a4a7ee7221d3692a003a842dc081b6249}{Data}} () const
+\item 
+bool \mbox{\hyperlink{classMainWindow_af23e2c1e63ec9afc7a3e2df624681281}{Execute}} (const std\+::string \&command, std\+::map$<$ std\+::string, std\+::string $>$ arguments)
+\begin{DoxyCompactList}\small\item\em Executes a specified analysis command. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classMainWindow_a95dc085bf70bd0c1ad05bd80f897fd1d}{setup\+Connections}} ()
+\begin{DoxyCompactList}\small\item\em Sets up all signal-\/slot connections for UI elements. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_a370d22cbed4325e1b5da97d8abacf5e2}{setup\+Tools\+View}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the tools tree view. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_a27a1aa5a11b0b3f57eebd79c41345095}{setup\+Results\+View}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the results tree view and context menu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_adff8efaa9748c0ea2eabba6bbce5a719}{setup\+Tool\+Bar}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the general toolbar. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMainWindow_a0b62c088df2ae7c3c9e876d21500d638}{Read\+Excel}} (const QString \&filename)
+\begin{DoxyCompactList}\small\item\em Reads elemental profile data from Excel file. \end{DoxyCompactList}\item 
+QStandard\+Item\+Model \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a804484a74b314713fe930612f507a34a}{To\+QStandard\+Item\+Model}} (const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}srcsinkdata)
+\item 
+QStandard\+Item \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a1da6b68e99725e224c98284d9c4a26be}{To\+QStandard\+Item}} (const QString \&key, const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}srcsinkdata)
+\item 
+QStandard\+Item \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_ac3e9f985ba65a55e75c21cd9173e265b}{Elements\+To\+QStandard\+Item}} (const QString \&key, const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}srcsinkdata)
+\item 
+QStandard\+Item \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a9bfbc2d26b57fd2f5f03038847a7e5c8}{To\+QStandard\+Item}} (const QString \&key, const QJson\+Object \&json)
+\item 
+QStandard\+Item\+Model \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_aa4e362f1fe53e66e788afe341a1701d4}{To\+QStandard\+Item\+Model}} (const QJson\+Document \&jsondocument)
+\item 
+QString \mbox{\hyperlink{classMainWindow_a8113108835f669acea200cf157d8d937}{Tree\+QString\+Selected\+Type}} ()
+\item 
+QJson\+Document \mbox{\hyperlink{classMainWindow_aa9f8e4526eb075e7a837ab0f1b526cd9}{load\+Json}} (const QString \&file\+Name)
+\item 
+void \mbox{\hyperlink{classMainWindow_af581894b9819612d331aa6764ddca7e9}{save\+Json}} (const QJson\+Document \&document, const QString \&file\+Name)
+\item 
+void \mbox{\hyperlink{classMainWindow_a9067e00d85b73aaec7ce8c58fd91829b}{Initiate\+Tables}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_ac9653f05335ec17513e4267d4903b3da}{read\+Recent\+Files\+List}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a6632e675a8ec8919664eba06ffa8b53b}{add\+To\+Recent\+Files}} (const QString \&file\+Name, bool add\+To\+File)
+\item 
+void \mbox{\hyperlink{classMainWindow_a8e4919bba09d0b9ee1b9c63e613a65f6}{write\+Recent\+Files\+List}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a89bb53a1510da4b649fa9d2e2a771324}{remove\+From\+Recent\+List}} (QAction \texorpdfstring{$\ast$}{*}selected\+File\+Action)
+\item 
+bool \mbox{\hyperlink{classMainWindow_a3ea2144db0fde9e5bfda6cfb549c751e}{Create\+File\+If\+Does\+Not\+Exist}} (const QString \&file\+Name)
+\item 
+bool \mbox{\hyperlink{classMainWindow_a269406cc03261654b5c2b345486a88ac}{Load\+Model}} (const QString \&file\+Name)
+\item 
+void \mbox{\hyperlink{classMainWindow_a42638ba53b0f759b291192e44043ce8e}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a81222bfbaf986fd8ed67f3087c0e4c93}{on\+\_\+import\+\_\+excel}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_adf54121cb6cc3bfe064d610d4ac685e4}{on\+\_\+plot\+\_\+raw\+\_\+elemental\+\_\+profiles}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_ae61b7bce066836b550a1b8c9f7c811a3}{on\+\_\+tree\+\_\+selection\+Changed}} (const QItem\+Selection \&changed)
+\item 
+void \mbox{\hyperlink{classMainWindow_ab2e93a9319dbbb3eda231b325963acf1}{preparetreeview\+Menu}} (const QPoint \&pos)
+\item 
+void \mbox{\hyperlink{classMainWindow_a18ba831fdd0c1f5319213fd57b0650f4}{showdistributionsforelements}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a756f7390649c2919156ddc84117c2697}{on\+\_\+constituent\+\_\+properties\+\_\+triggered}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_afbd5ef0e71796a1db8c815262e3b616e}{on\+Include\+Exclude\+Sample}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_ab8febda360d6d59df3089f7528eb1260}{on\+OMSize\+Correction}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_afc5097c5959c5769ea6aaf88825ffd1a}{on\+\_\+tool\+\_\+executed}} (const QModel\+Index \&index)
+\item 
+void \mbox{\hyperlink{classMainWindow_a02c7c137bd76ff1bacbc5b5d8d11f560}{on\+\_\+old\+\_\+result\+\_\+requested}} (const QModel\+Index \&index)
+\item 
+void \mbox{\hyperlink{classMainWindow_abb28b4bc4e433b2bf7887d90d463a0db}{on\+About\+Triggered}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a63acb38d778de7af26b45f557b183df3}{on\+\_\+\+Options\+\_\+triggered}} ()
+\item 
+QString \mbox{\hyperlink{classMainWindow_a54baaae8a11c806435fb2e46e6bfc529}{get\+Save\+File\+Path}} (bool prompt\+User)
+\begin{DoxyCompactList}\small\item\em Gets the file path for saving, prompting user if needed. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMainWindow_a4dc5d63cca8d452f8ed7e0f19de2ec9b}{save\+Project\+To\+File}} (const QString \&file\+Path)
+\begin{DoxyCompactList}\small\item\em Saves project data to the specified file. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classMainWindow_a6778f7310c095c511119bf7f69600b3d}{build\+Project\+Json}} () const
+\begin{DoxyCompactList}\small\item\em Builds the complete project JSON object. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classMainWindow_a9b88c4c4ae50c34484cc9af5058d8c3e}{build\+Results\+Json}} () const
+\begin{DoxyCompactList}\small\item\em Builds the results section of the project JSON. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMainWindow_af48bb604907b2efeab53e5e2579346bd}{on\+Save\+Project}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_afd87b4f42f4b8bf3fe1e133812853076}{on\+Save\+Project\+As}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a1cc79151566767c278c25a813e9075b2}{on\+Open\+Project}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a00024c6db5a22117c5d0a01ed0405b29}{on\+\_\+action\+Recent\+\_\+triggered}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a11826c39856be257dc3187b51d951951}{Delete\+Results}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_ae2a4fa2102ed2a0da354c4c7fcd24fdd}{on\+Custom\+Context\+Menu}} (const QPoint \&pos)
+\item 
+void \mbox{\hyperlink{classMainWindow_a193612c7172dc9c2dae2e13454687825}{on\+\_\+show\+\_\+data\+\_\+as\+\_\+table}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_ab6f25e826848aa6c9dc5589a993b8e53}{on\+\_\+\+Zoom\+Extends}} ()
+\item 
+void \mbox{\hyperlink{classMainWindow_a0061e38bb2648c40115c9f8ab78c3c0d}{add\+Tool\+Bar\+Action}} (const QString \&text, const QString \&icon\+Path, const QString \&tool\+Tip, void(Main\+Window\+::\texorpdfstring{$\ast$}{*}slot)())
+\begin{DoxyCompactList}\small\item\em Helper to add an action to the toolbar with icon and connection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\+::\+Main\+Window \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a35466a70ed47252a0191168126a352a5}{ui}}
+\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \mbox{\hyperlink{classMainWindow_a168f8151efdd0b6c39c61f1fd6074179}{data\+Collection}}
+\begin{DoxyCompactList}\small\item\em Main data collection for analysis. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classMainWindow_ad982e95584e2d2c64f13ebd2c807def2}{sink\+Sheet}} = -\/1
+\begin{DoxyCompactList}\small\item\em Index of sink sheet in Excel import. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGeneralPlotter}{General\+Plotter}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a1434b835206c5c42b26fd2bec6094fbb}{plotter}} = nullptr
+\begin{DoxyCompactList}\small\item\em Main plotting widget. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classInterface}{Interface}} $>$ \mbox{\hyperlink{classMainWindow_ab15516d8da30281dc8ac72d5ccd2fed0}{plotted\+Data}}
+\begin{DoxyCompactList}\small\item\em Currently plotted data interface. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ QStandard\+Item\+Model $>$ \mbox{\hyperlink{classMainWindow_a246f319007aa7f7685706cceaa17cb70}{column\+View\+Model}}
+\begin{DoxyCompactList}\small\item\em Model for column/data tree view. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ QStandard\+Item\+Model $>$ \mbox{\hyperlink{classMainWindow_a496cc353e266db32e9fa9eebf649debd}{results\+View\+Model}}
+\begin{DoxyCompactList}\small\item\em Model for results tree view. \end{DoxyCompactList}\item 
+QMenu \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_a0edf3626621f7671410ae4d7bd79f495}{Resultscontext\+Menu}} = nullptr
+\begin{DoxyCompactList}\small\item\em Context menu for results view. \end{DoxyCompactList}\item 
+QAction \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMainWindow_aaf66fc273c885b891cac8cfd925023a4}{Delete\+Action}} = nullptr
+\begin{DoxyCompactList}\small\item\em Delete action for results. \end{DoxyCompactList}\item 
+QJson\+Document \mbox{\hyperlink{classMainWindow_a6a7f52b990ff4e04edcb6c386d6aef23}{formsstructure}}
+\begin{DoxyCompactList}\small\item\em Forms structure definitions. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classMainWindow_a74ac58eda0f1bf2de2b170d7c3d0243e}{selected\+Tree\+Item\+Type}} = "{}None"{}
+\begin{DoxyCompactList}\small\item\em Currently selected tree item type. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classMainWindow_a36fdffdfe3665170b1aed18a5ba20b2a}{tree\+Item\+Changed\+Programatically}} = false
+\begin{DoxyCompactList}\small\item\em Flag for programmatic tree changes. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classMainWindow_a1a8e06bc665fc6d2ddedfe200f9c1602}{Project\+File\+Name}}
+\begin{DoxyCompactList}\small\item\em Current project file path. \end{DoxyCompactList}\item 
+QString\+List \mbox{\hyperlink{classMainWindow_a0bb6ce195389689bf99a93361e00b817}{recent\+Files}}
+\begin{DoxyCompactList}\small\item\em List of recently opened files. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ QMenu $>$ \mbox{\hyperlink{classMainWindow_a9a75a21c27ff83422c4ede8ac07301c8}{menu}}
+\begin{DoxyCompactList}\small\item\em Main menu. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ QWidget $>$ \mbox{\hyperlink{classMainWindow_aacb0568db61eaaadd6238d0567a7f679}{centralform}}
+\begin{DoxyCompactList}\small\item\em Central form widget. \end{DoxyCompactList}\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classConductor}{Conductor}} $>$ \mbox{\hyperlink{classMainWindow_a5b98fe1096daa74759c893bba8769039}{conductor}}
+\begin{DoxyCompactList}\small\item\em Analysis command coordinator. \end{DoxyCompactList}\item 
+QModel\+Index \mbox{\hyperlink{classMainWindow_ae4b620a705f2d9e2ecc8ff8f256e09a1}{indexresultselected}}
+\begin{DoxyCompactList}\small\item\em Currently selected result index. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main application window for Sed\+SAT3 source apportionment analysis. 
+
+Provides the primary user interface for importing data, configuring analyses, executing source apportionment algorithms, and visualizing results. Manages data models, plotting, project file I/O, and coordinates with the \doxylink{classConductor}{Conductor} class for computational operations. 
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00033}{33}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classMainWindow_a996c5a2b6f77944776856f08ec30858d}\label{classMainWindow_a996c5a2b6f77944776856f08ec30858d} 
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily Main\+Window\+::\+Main\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs the main window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Parent widget (typically nullptr for main window) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00259}{centralform}}, \mbox{\hyperlink{mainwindow_8h_source_l00260}{conductor}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01306}{read\+Recent\+Files\+List()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00163}{setup\+Results\+View()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00178}{setup\+Tool\+Bar()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00141}{setup\+Tools\+View()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+\Hypertarget{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}\label{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7} 
+\index{MainWindow@{MainWindow}!````~MainWindow@{\texorpdfstring{$\sim$}{\string~}MainWindow}}
+\index{````~MainWindow@{\texorpdfstring{$\sim$}{\string~}MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MainWindow()}{\string~MainWindow()}}
+{\footnotesize\ttfamily Main\+Window\+::\texorpdfstring{$\sim$}{\string~}\+Main\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor -\/ cleans up UI resources. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00194}{194}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classMainWindow_a0061e38bb2648c40115c9f8ab78c3c0d}\label{classMainWindow_a0061e38bb2648c40115c9f8ab78c3c0d} 
+\index{MainWindow@{MainWindow}!addToolBarAction@{addToolBarAction}}
+\index{addToolBarAction@{addToolBarAction}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{addToolBarAction()}{addToolBarAction()}}
+{\footnotesize\ttfamily void Main\+Window\+::add\+Tool\+Bar\+Action (\begin{DoxyParamCaption}\item[{const QString \&}]{text,  }\item[{const QString \&}]{icon\+Path,  }\item[{const QString \&}]{tool\+Tip,  }\item[{void(Main\+Window\+::\texorpdfstring{$\ast$}{*})()}]{slot }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Helper to add an action to the toolbar with icon and connection. 
+
+Creates a toolbar action with the specified text, icon, and tooltip, then connects it to the given member function slot.
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & Action text and object name \\
+\hline
+{\em icon\+Path} & Path to icon file relative to resources folder \\
+\hline
+{\em tool\+Tip} & Tooltip text displayed on hover \\
+\hline
+{\em slot} & Member function pointer to connect to triggered signal \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01508}{1508}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}.
+
+\Hypertarget{classMainWindow_a6632e675a8ec8919664eba06ffa8b53b}\label{classMainWindow_a6632e675a8ec8919664eba06ffa8b53b} 
+\index{MainWindow@{MainWindow}!addToRecentFiles@{addToRecentFiles}}
+\index{addToRecentFiles@{addToRecentFiles}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{addToRecentFiles()}{addToRecentFiles()}}
+{\footnotesize\ttfamily void Main\+Window\+::add\+To\+Recent\+Files (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Name,  }\item[{bool}]{add\+To\+File }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{1339}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01488}{Create\+File\+If\+Does\+Not\+Exist()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00047}{max\+\_\+num\+\_\+recent\+\_\+files}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01460}{on\+\_\+action\+Recent\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00044}{RECENT}}, \mbox{\hyperlink{mainwindow_8h_source_l00255}{recent\+Files}}, \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01432}{write\+Recent\+Files\+List()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01460}{on\+\_\+action\+Recent\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00354}{on\+Open\+Project()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01306}{read\+Recent\+Files\+List()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{save\+Project\+To\+File()}}.
+
+\Hypertarget{classMainWindow_a6778f7310c095c511119bf7f69600b3d}\label{classMainWindow_a6778f7310c095c511119bf7f69600b3d} 
+\index{MainWindow@{MainWindow}!buildProjectJson@{buildProjectJson}}
+\index{buildProjectJson@{buildProjectJson}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{buildProjectJson()}{buildProjectJson()}}
+{\footnotesize\ttfamily QJson\+Object Main\+Window\+::build\+Project\+Json (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Builds the complete project JSON object. 
+
+\begin{DoxyReturn}{Returns}
+JSON object containing all project data 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00264}{264}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00234}{build\+Results\+Json()}}, \mbox{\hyperlink{mainwindow_8h_source_l00066}{Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02673}{Source\+Sink\+Data\+::\+Element\+Data\+To\+Json\+Object()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02726}{Source\+Sink\+Data\+::\+Element\+Information\+To\+Json\+Object()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02593}{Source\+Sink\+Data\+::\+Options\+To\+Json\+Object()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02580}{Source\+Sink\+Data\+::\+Tools\+Used\+To\+Json\+Object()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{save\+Project\+To\+File()}}.
+
+\Hypertarget{classMainWindow_a9b88c4c4ae50c34484cc9af5058d8c3e}\label{classMainWindow_a9b88c4c4ae50c34484cc9af5058d8c3e} 
+\index{MainWindow@{MainWindow}!buildResultsJson@{buildResultsJson}}
+\index{buildResultsJson@{buildResultsJson}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{buildResultsJson()}{buildResultsJson()}}
+{\footnotesize\ttfamily QJson\+Object Main\+Window\+::build\+Results\+Json (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Builds the results section of the project JSON. 
+
+\begin{DoxyReturn}{Returns}
+JSON object containing all results 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00234}{234}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultsetitem_8h_source_l00012}{Result\+Set\+Item\+::result}}, \mbox{\hyperlink{mainwindow_8h_source_l00242}{results\+View\+Model}}, and \mbox{\hyperlink{results_8cpp_source_l00030}{Results\+::to\+Json\+Object()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00264}{build\+Project\+Json()}}.
+
+\Hypertarget{classMainWindow_a3ea2144db0fde9e5bfda6cfb549c751e}\label{classMainWindow_a3ea2144db0fde9e5bfda6cfb549c751e} 
+\index{MainWindow@{MainWindow}!CreateFileIfDoesNotExist@{CreateFileIfDoesNotExist}}
+\index{CreateFileIfDoesNotExist@{CreateFileIfDoesNotExist}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{CreateFileIfDoesNotExist()}{CreateFileIfDoesNotExist()}}
+{\footnotesize\ttfamily bool Main\+Window\+::\+Create\+File\+If\+Does\+Not\+Exist (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01488}{1488}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}.
+
+\Hypertarget{classMainWindow_a0e4849de10342238c2a91304de641386}\label{classMainWindow_a0e4849de10342238c2a91304de641386} 
+\index{MainWindow@{MainWindow}!Data@{Data}}
+\index{Data@{Data}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{Data()}{Data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} Main\+Window\+::\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns pointer to the main data collection. 
+
+\begin{DoxyReturn}{Returns}
+Non-\/owning pointer to \doxylink{classSourceSinkData}{Source\+Sink\+Data} 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00066}{66}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form\+::\+Generic\+Form()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00264}{build\+Project\+Json()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01613}{on\+\_\+\+Options\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00929}{To\+QStandard\+Item()}}.
+
+\Hypertarget{classMainWindow_a4a7ee7221d3692a003a842dc081b6249}\label{classMainWindow_a4a7ee7221d3692a003a842dc081b6249} 
+\index{MainWindow@{MainWindow}!Data@{Data}}
+\index{Data@{Data}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{Data()}{Data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} Main\+Window\+::\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00067}{67}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}.
+
+\Hypertarget{classMainWindow_a11826c39856be257dc3187b51d951951}\label{classMainWindow_a11826c39856be257dc3187b51d951951} 
+\index{MainWindow@{MainWindow}!DeleteResults@{DeleteResults}}
+\index{DeleteResults@{DeleteResults}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{DeleteResults()}{DeleteResults()}}
+{\footnotesize\ttfamily void Main\+Window\+::\+Delete\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01280}{1280}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00261}{indexresultselected}}, and \mbox{\hyperlink{mainwindow_8h_source_l00242}{results\+View\+Model}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_ac3e9f985ba65a55e75c21cd9173e265b}\label{classMainWindow_ac3e9f985ba65a55e75c21cd9173e265b} 
+\index{MainWindow@{MainWindow}!ElementsToQStandardItem@{ElementsToQStandardItem}}
+\index{ElementsToQStandardItem@{ElementsToQStandardItem}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ElementsToQStandardItem()}{ElementsToQStandardItem()}}
+{\footnotesize\ttfamily QStandard\+Item \texorpdfstring{$\ast$}{*} Main\+Window\+::\+Elements\+To\+QStandard\+Item (\begin{DoxyParamCaption}\item[{const QString \&}]{key,  }\item[{const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{srcsinkdata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00768}{768}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{mainwindow_8h_source_l00015}{element\+Role}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00407}{Source\+Sink\+Data\+::\+Get\+Group\+Names()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00016}{group\+Role}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}.
+
+\Hypertarget{classMainWindow_af23e2c1e63ec9afc7a3e2df624681281}\label{classMainWindow_af23e2c1e63ec9afc7a3e2df624681281} 
+\index{MainWindow@{MainWindow}!Execute@{Execute}}
+\index{Execute@{Execute}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{Execute()}{Execute()}}
+{\footnotesize\ttfamily bool Main\+Window\+::\+Execute (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{command,  }\item[{std\+::map$<$ std\+::string, std\+::string $>$}]{arguments }\end{DoxyParamCaption})}
+
+
+
+Executes a specified analysis command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Command name identifying the analysis type \\
+\hline
+{\em arguments} & Map of parameter names to values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if execution successful, false otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{1223}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Results\+Window\+::\+Append\+Result()}}, \mbox{\hyperlink{mainwindow_8h_source_l00260}{conductor}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{results_8h_source_l00023}{Results\+::\+Get\+Name()}}, \mbox{\hyperlink{resultsetitem_8h_source_l00012}{Result\+Set\+Item\+::result}}, \mbox{\hyperlink{mainwindow_8h_source_l00242}{results\+View\+Model}}, and \mbox{\hyperlink{resultswindow_8h_source_l00023}{Results\+Window\+::\+Set\+Results()}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00188}{Generic\+Form\+::on\+Proceed()}}.
+
+\Hypertarget{classMainWindow_a54baaae8a11c806435fb2e46e6bfc529}\label{classMainWindow_a54baaae8a11c806435fb2e46e6bfc529} 
+\index{MainWindow@{MainWindow}!getSaveFilePath@{getSaveFilePath}}
+\index{getSaveFilePath@{getSaveFilePath}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{getSaveFilePath()}{getSaveFilePath()}}
+{\footnotesize\ttfamily QString Main\+Window\+::get\+Save\+File\+Path (\begin{DoxyParamCaption}\item[{bool}]{prompt\+User }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gets the file path for saving, prompting user if needed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prompt\+User} & If true, always show save dialog; if false, use existing Project\+File\+Name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+File path for saving, or empty string if cancelled 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00201}{201}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00254}{Project\+File\+Name}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00324}{on\+Save\+Project()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00339}{on\+Save\+Project\+As()}}.
+
+\Hypertarget{classMainWindow_a9067e00d85b73aaec7ce8c58fd91829b}\label{classMainWindow_a9067e00d85b73aaec7ce8c58fd91829b} 
+\index{MainWindow@{MainWindow}!InitiateTables@{InitiateTables}}
+\index{InitiateTables@{InitiateTables}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{InitiateTables()}{InitiateTables()}}
+{\footnotesize\ttfamily void Main\+Window\+::\+Initiate\+Tables (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{502}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00241}{column\+View\+Model}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00768}{Elements\+To\+QStandard\+Item()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00979}{preparetreeview\+Menu()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00735}{To\+QStandard\+Item()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}.
+
+\Hypertarget{classMainWindow_aa9f8e4526eb075e7a837ab0f1b526cd9}\label{classMainWindow_aa9f8e4526eb075e7a837ab0f1b526cd9} 
+\index{MainWindow@{MainWindow}!loadJson@{loadJson}}
+\index{loadJson@{loadJson}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{loadJson()}{loadJson()}}
+{\footnotesize\ttfamily QJson\+Document Main\+Window\+::load\+Json (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00917}{917}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00141}{setup\+Tools\+View()}}.
+
+\Hypertarget{classMainWindow_a269406cc03261654b5c2b345486a88ac}\label{classMainWindow_a269406cc03261654b5c2b345486a88ac} 
+\index{MainWindow@{MainWindow}!LoadModel@{LoadModel}}
+\index{LoadModel@{LoadModel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{LoadModel()}{LoadModel()}}
+{\footnotesize\ttfamily bool Main\+Window\+::\+Load\+Model (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{377}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00557}{Source\+Sink\+Data\+::\+Assign\+All\+Distributions()}}, \mbox{\hyperlink{mainwindow_8h_source_l00260}{conductor}}, \mbox{\hyperlink{mainwindow_8h_source_l00066}{Data()}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00521}{Source\+Sink\+Data\+::\+Populate\+Element\+Distributions()}}, \mbox{\hyperlink{mainwindow_8h_source_l00254}{Project\+File\+Name}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02708}{Source\+Sink\+Data\+::\+Read\+From\+File()}}, \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}, \mbox{\hyperlink{resultsetitem_8h_source_l00012}{Result\+Set\+Item\+::result}}, \mbox{\hyperlink{mainwindow_8h_source_l00242}{results\+View\+Model}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05112}{Source\+Sink\+Data\+::\+Set\+OMand\+Size\+Constituents()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01460}{on\+\_\+action\+Recent\+\_\+triggered()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00354}{on\+Open\+Project()}}.
+
+\Hypertarget{classMainWindow_a00024c6db5a22117c5d0a01ed0405b29}\label{classMainWindow_a00024c6db5a22117c5d0a01ed0405b29} 
+\index{MainWindow@{MainWindow}!on\_actionRecent\_triggered@{on\_actionRecent\_triggered}}
+\index{on\_actionRecent\_triggered@{on\_actionRecent\_triggered}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_actionRecent\_triggered()}{on\_actionRecent\_triggered()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+action\+Recent\+\_\+triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01460}{1460}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}.
+
+\Hypertarget{classMainWindow_a756f7390649c2919156ddc84117c2697}\label{classMainWindow_a756f7390649c2919156ddc84117c2697} 
+\index{MainWindow@{MainWindow}!on\_constituent\_properties\_triggered@{on\_constituent\_properties\_triggered}}
+\index{on\_constituent\_properties\_triggered@{on\_constituent\_properties\_triggered}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_constituent\_properties\_triggered()}{on\_constituent\_properties\_triggered()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+constituent\+\_\+properties\+\_\+triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{1097}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00259}{centralform}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{formelementinformation_8cpp_source_l00020}{Form\+Element\+Information\+::table()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_a81222bfbaf986fd8ed67f3087c0e4c93}\label{classMainWindow_a81222bfbaf986fd8ed67f3087c0e4c93} 
+\index{MainWindow@{MainWindow}!on\_import\_excel@{on\_import\_excel}}
+\index{on\_import\_excel@{on\_import\_excel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_import\_excel()}{on\_import\_excel()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+import\+\_\+excel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{469}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00260}{conductor}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{on\+\_\+constituent\+\_\+properties\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8h_source_l00254}{Project\+File\+Name}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{Read\+Excel()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_a02c7c137bd76ff1bacbc5b5d8d11f560}\label{classMainWindow_a02c7c137bd76ff1bacbc5b5d8d11f560} 
+\index{MainWindow@{MainWindow}!on\_old\_result\_requested@{on\_old\_result\_requested}}
+\index{on\_old\_result\_requested@{on\_old\_result\_requested}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_old\_result\_requested()}{on\_old\_result\_requested()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+old\+\_\+result\+\_\+requested (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01189}{1189}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Results\+Window\+::\+Append\+Result()}}, \mbox{\hyperlink{resultsetitem_8h_source_l00012}{Result\+Set\+Item\+::result}}, \mbox{\hyperlink{mainwindow_8h_source_l00242}{results\+View\+Model}}, and \mbox{\hyperlink{resultswindow_8h_source_l00023}{Results\+Window\+::\+Set\+Results()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_a63acb38d778de7af26b45f557b183df3}\label{classMainWindow_a63acb38d778de7af26b45f557b183df3} 
+\index{MainWindow@{MainWindow}!on\_Options\_triggered@{on\_Options\_triggered}}
+\index{on\_Options\_triggered@{on\_Options\_triggered}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_Options\_triggered()}{on\_Options\_triggered()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+\+Options\+\_\+triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01613}{1613}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00066}{Data()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_adf54121cb6cc3bfe064d610d4ac685e4}\label{classMainWindow_adf54121cb6cc3bfe064d610d4ac685e4} 
+\index{MainWindow@{MainWindow}!on\_plot\_raw\_elemental\_profiles@{on\_plot\_raw\_elemental\_profiles}}
+\index{on\_plot\_raw\_elemental\_profiles@{on\_plot\_raw\_elemental\_profiles}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_plot\_raw\_elemental\_profiles()}{on\_plot\_raw\_elemental\_profiles()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+plot\+\_\+raw\+\_\+elemental\+\_\+profiles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00529}{529}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_a193612c7172dc9c2dae2e13454687825}\label{classMainWindow_a193612c7172dc9c2dae2e13454687825} 
+\index{MainWindow@{MainWindow}!on\_show\_data\_as\_table@{on\_show\_data\_as\_table}}
+\index{on\_show\_data\_as\_table@{on\_show\_data\_as\_table}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_show\_data\_as\_table()}{on\_show\_data\_as\_table()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+show\+\_\+data\+\_\+as\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01589}{1589}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00238}{plotted\+Data}}, and \mbox{\hyperlink{resulttableviewer_8cpp_source_l00024}{Result\+Table\+Viewer\+::\+Set\+Table()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_afc5097c5959c5769ea6aaf88825ffd1a}\label{classMainWindow_afc5097c5959c5769ea6aaf88825ffd1a} 
+\index{MainWindow@{MainWindow}!on\_tool\_executed@{on\_tool\_executed}}
+\index{on\_tool\_executed@{on\_tool\_executed}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_tool\_executed()}{on\_tool\_executed()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+tool\+\_\+executed (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01158}{1158}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00259}{centralform}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{mainwindow_8h_source_l00249}{formsstructure}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_ae61b7bce066836b550a1b8c9f7c811a3}\label{classMainWindow_ae61b7bce066836b550a1b8c9f7c811a3} 
+\index{MainWindow@{MainWindow}!on\_tree\_selectionChanged@{on\_tree\_selectionChanged}}
+\index{on\_tree\_selectionChanged@{on\_tree\_selectionChanged}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_tree\_selectionChanged()}{on\_tree\_selectionChanged()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+tree\+\_\+selection\+Changed (\begin{DoxyParamCaption}\item[{const QItem\+Selection \&}]{changed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{830}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8cpp_source_l00308}{General\+Plotter\+::\+Add\+None\+Uniform\+Scatter()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00194}{General\+Plotter\+::\+Add\+Scatters()}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00302}{General\+Plotter\+::\+Clear()}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00022}{profiles\+\_\+data\+::element\+\_\+names}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00445}{Source\+Sink\+Data\+::\+Extract\+Concentration\+Data()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00542}{Source\+Sink\+Data\+::\+Extract\+Element\+Data\+By\+Group()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00472}{Source\+Sink\+Data\+::\+Extract\+Samples\+As\+Profile\+Set()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00235}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Sample\+Names()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00386}{Source\+Sink\+Data\+::\+Get\+Sample\+Set()}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{mainwindow_8h_source_l00238}{plotted\+Data}}, \mbox{\hyperlink{mainwindow_8h_source_l00237}{plotter}}, \mbox{\hyperlink{sourcesinkdata_8h_source_l00023}{profiles\+\_\+data\+::sample\+\_\+names}}, \mbox{\hyperlink{mainwindow_8h_source_l00252}{selected\+Tree\+Item\+Type}}, \mbox{\hyperlink{generalplotter_8cpp_source_l00255}{General\+Plotter\+::\+Set\+YAxis\+Scale\+Type()}}, \mbox{\hyperlink{mainwindow_8h_source_l00253}{tree\+Item\+Changed\+Programatically}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00967}{Tree\+QString\+Selected\+Type()}}, \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}, and \mbox{\hyperlink{sourcesinkdata_8h_source_l00024}{profiles\+\_\+data\+::values}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}.
+
+\Hypertarget{classMainWindow_ab6f25e826848aa6c9dc5589a993b8e53}\label{classMainWindow_ab6f25e826848aa6c9dc5589a993b8e53} 
+\index{MainWindow@{MainWindow}!on\_ZoomExtends@{on\_ZoomExtends}}
+\index{on\_ZoomExtends@{on\_ZoomExtends}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_ZoomExtends()}{on\_ZoomExtends()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+\+Zoom\+Extends (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01607}{1607}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00237}{plotter}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00187}{General\+Plotter\+::\+Zoom\+Extends()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_abb28b4bc4e433b2bf7887d90d463a0db}\label{classMainWindow_abb28b4bc4e433b2bf7887d90d463a0db} 
+\index{MainWindow@{MainWindow}!onAboutTriggered@{onAboutTriggered}}
+\index{onAboutTriggered@{onAboutTriggered}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onAboutTriggered()}{onAboutTriggered()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+About\+Triggered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01263}{1263}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00052}{date\+\_\+compiled}}, \mbox{\hyperlink{aboutdialog_8cpp_source_l00217}{About\+Dialog\+::set\+Build\+Date()}}, \mbox{\hyperlink{aboutdialog_8cpp_source_l00209}{About\+Dialog\+::set\+Version()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00051}{version}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_ae2a4fa2102ed2a0da354c4c7fcd24fdd}\label{classMainWindow_ae2a4fa2102ed2a0da354c4c7fcd24fdd} 
+\index{MainWindow@{MainWindow}!onCustomContextMenu@{onCustomContextMenu}}
+\index{onCustomContextMenu@{onCustomContextMenu}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onCustomContextMenu()}{onCustomContextMenu()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+Custom\+Context\+Menu (\begin{DoxyParamCaption}\item[{const QPoint \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01272}{1272}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00261}{indexresultselected}}, \mbox{\hyperlink{mainwindow_8h_source_l00245}{Resultscontext\+Menu}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_afbd5ef0e71796a1db8c815262e3b616e}\label{classMainWindow_afbd5ef0e71796a1db8c815262e3b616e} 
+\index{MainWindow@{MainWindow}!onIncludeExcludeSample@{onIncludeExcludeSample}}
+\index{onIncludeExcludeSample@{onIncludeExcludeSample}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onIncludeExcludeSample()}{onIncludeExcludeSample()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+Include\+Exclude\+Sample (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{1110}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02994}{Source\+Sink\+Data\+::\+Bracket\+Test()}}, \mbox{\hyperlink{mainwindow_8h_source_l00259}{centralform}}, \mbox{\hyperlink{mainwindow_8h_source_l00066}{Data()}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05141}{Source\+Sink\+Data\+::\+Get\+Options()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01613}{on\+\_\+\+Options\+\_\+triggered()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02801}{Source\+Sink\+Data\+::\+Outlier\+Analysis\+For\+All()}}, \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167a6ef9161b900632671022358216c7dfe7}{samples}}, \mbox{\hyperlink{selectsamples_8cpp_source_l00019}{Select\+Samples\+::\+Set\+Data()}}, \mbox{\hyperlink{selectsamples_8h_source_l00021}{Select\+Samples\+::\+Set\+Mode()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_ab8febda360d6d59df3089f7528eb1260}\label{classMainWindow_ab8febda360d6d59df3089f7528eb1260} 
+\index{MainWindow@{MainWindow}!onOMSizeCorrection@{onOMSizeCorrection}}
+\index{onOMSizeCorrection@{onOMSizeCorrection}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onOMSizeCorrection()}{onOMSizeCorrection()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+OMSize\+Correction (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01133}{1133}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00259}{centralform}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l05131}{Source\+Sink\+Data\+::\+OMand\+Size\+Constituents()}}, \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167a6265b3d48ef4f0f8b9ffa14675098709}{regressions}}, \mbox{\hyperlink{selectsamples_8cpp_source_l00019}{Select\+Samples\+::\+Set\+Data()}}, \mbox{\hyperlink{selectsamples_8h_source_l00021}{Select\+Samples\+::\+Set\+Mode()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_a1cc79151566767c278c25a813e9075b2}\label{classMainWindow_a1cc79151566767c278c25a813e9075b2} 
+\index{MainWindow@{MainWindow}!onOpenProject@{onOpenProject}}
+\index{onOpenProject@{onOpenProject}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onOpenProject()}{onOpenProject()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+Open\+Project (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00354}{354}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00254}{Project\+File\+Name}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_af48bb604907b2efeab53e5e2579346bd}\label{classMainWindow_af48bb604907b2efeab53e5e2579346bd} 
+\index{MainWindow@{MainWindow}!onSaveProject@{onSaveProject}}
+\index{onSaveProject@{onSaveProject}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onSaveProject()}{onSaveProject()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+Save\+Project (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00324}{324}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00201}{get\+Save\+File\+Path()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{save\+Project\+To\+File()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_afd87b4f42f4b8bf3fe1e133812853076}\label{classMainWindow_afd87b4f42f4b8bf3fe1e133812853076} 
+\index{MainWindow@{MainWindow}!onSaveProjectAs@{onSaveProjectAs}}
+\index{onSaveProjectAs@{onSaveProjectAs}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{onSaveProjectAs()}{onSaveProjectAs()}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+Save\+Project\+As (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00339}{339}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00201}{get\+Save\+File\+Path()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{save\+Project\+To\+File()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}.
+
+\Hypertarget{classMainWindow_a42638ba53b0f759b291192e44043ce8e}\label{classMainWindow_a42638ba53b0f759b291192e44043ce8e} 
+\index{MainWindow@{MainWindow}!Populate\_General\_ToolBar@{Populate\_General\_ToolBar}}
+\index{Populate\_General\_ToolBar@{Populate\_General\_ToolBar}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{Populate\_General\_ToolBar()}{Populate\_General\_ToolBar()}}
+{\footnotesize\ttfamily void Main\+Window\+::\+Populate\+\_\+\+General\+\_\+\+Tool\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{1533}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01508}{add\+Tool\+Bar\+Action()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{on\+\_\+constituent\+\_\+properties\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01133}{on\+OMSize\+Correction()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00354}{on\+Open\+Project()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00324}{on\+Save\+Project()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00178}{setup\+Tool\+Bar()}}.
+
+\Hypertarget{classMainWindow_ab2e93a9319dbbb3eda231b325963acf1}\label{classMainWindow_ab2e93a9319dbbb3eda231b325963acf1} 
+\index{MainWindow@{MainWindow}!preparetreeviewMenu@{preparetreeviewMenu}}
+\index{preparetreeviewMenu@{preparetreeviewMenu}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{preparetreeviewMenu()}{preparetreeviewMenu()}}
+{\footnotesize\ttfamily void Main\+Window\+::preparetreeview\+Menu (\begin{DoxyParamCaption}\item[{const QPoint \&}]{pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00979}{979}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00015}{element\+Role}}, \mbox{\hyperlink{mainwindow_8h_source_l00016}{group\+Role}}, \mbox{\hyperlink{mainwindow_8h_source_l00258}{menu}}, \mbox{\hyperlink{mainwindow_8h_source_l00017}{sample\+Role}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{showdistributionsforelements()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}.
+
+\Hypertarget{classMainWindow_a0b62c088df2ae7c3c9e876d21500d638}\label{classMainWindow_a0b62c088df2ae7c3c9e876d21500d638} 
+\index{MainWindow@{MainWindow}!ReadExcel@{ReadExcel}}
+\index{ReadExcel@{ReadExcel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ReadExcel()}{ReadExcel()}}
+{\footnotesize\ttfamily bool Main\+Window\+::\+Read\+Excel (\begin{DoxyParamCaption}\item[{const QString \&}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reads elemental profile data from Excel file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to Excel file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if import successful, false otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{535}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{elemental__profile_8cpp_source_l00552}{Elemental\+\_\+\+Profile\+::\+Append\+Element()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00179}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Append\+Profile()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00368}{Source\+Sink\+Data\+::\+Append\+Sample\+Set()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00557}{Source\+Sink\+Data\+::\+Assign\+All\+Distributions()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00332}{Source\+Sink\+Data\+::\+Clear()}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00521}{Source\+Sink\+Data\+::\+Populate\+Element\+Distributions()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00605}{Source\+Sink\+Data\+::\+Populate\+Element\+Information()}}, \mbox{\hyperlink{mainwindow_8h_source_l00234}{sink\+Sheet}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00729}{Write\+Message\+On\+Screen()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}.
+
+\Hypertarget{classMainWindow_ac9653f05335ec17513e4267d4903b3da}\label{classMainWindow_ac9653f05335ec17513e4267d4903b3da} 
+\index{MainWindow@{MainWindow}!readRecentFilesList@{readRecentFilesList}}
+\index{readRecentFilesList@{readRecentFilesList}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{readRecentFilesList()}{readRecentFilesList()}}
+{\footnotesize\ttfamily void Main\+Window\+::read\+Recent\+Files\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01306}{1306}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00047}{max\+\_\+num\+\_\+recent\+\_\+files}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00044}{RECENT}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a89bb53a1510da4b649fa9d2e2a771324}\label{classMainWindow_a89bb53a1510da4b649fa9d2e2a771324} 
+\index{MainWindow@{MainWindow}!removeFromRecentList@{removeFromRecentList}}
+\index{removeFromRecentList@{removeFromRecentList}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{removeFromRecentList()}{removeFromRecentList()}}
+{\footnotesize\ttfamily void Main\+Window\+::remove\+From\+Recent\+List (\begin{DoxyParamCaption}\item[{QAction \texorpdfstring{$\ast$}{*}}]{selected\+File\+Action }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01476}{1476}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00255}{recent\+Files}}, \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01432}{write\+Recent\+Files\+List()}}.
+
+\Hypertarget{classMainWindow_af581894b9819612d331aa6764ddca7e9}\label{classMainWindow_af581894b9819612d331aa6764ddca7e9} 
+\index{MainWindow@{MainWindow}!saveJson@{saveJson}}
+\index{saveJson@{saveJson}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{saveJson()}{saveJson()}}
+{\footnotesize\ttfamily void Main\+Window\+::save\+Json (\begin{DoxyParamCaption}\item[{const QJson\+Document \&}]{document,  }\item[{const QString \&}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00923}{923}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+\Hypertarget{classMainWindow_a4dc5d63cca8d452f8ed7e0f19de2ec9b}\label{classMainWindow_a4dc5d63cca8d452f8ed7e0f19de2ec9b} 
+\index{MainWindow@{MainWindow}!saveProjectToFile@{saveProjectToFile}}
+\index{saveProjectToFile@{saveProjectToFile}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{saveProjectToFile()}{saveProjectToFile()}}
+{\footnotesize\ttfamily bool Main\+Window\+::save\+Project\+To\+File (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Saves project data to the specified file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & Path to save the project file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if save successful, false otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{278}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00264}{build\+Project\+Json()}}, \mbox{\hyperlink{mainwindow_8h_source_l00260}{conductor}}, and \mbox{\hyperlink{mainwindow_8h_source_l00254}{Project\+File\+Name}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00324}{on\+Save\+Project()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00339}{on\+Save\+Project\+As()}}.
+
+\Hypertarget{classMainWindow_a6d4e2a9dfd79d332c1c65fbba4c9e1a0}\label{classMainWindow_a6d4e2a9dfd79d332c1c65fbba4c9e1a0} 
+\index{MainWindow@{MainWindow}!SetSinkSheet@{SetSinkSheet}}
+\index{SetSinkSheet@{SetSinkSheet}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{SetSinkSheet()}{SetSinkSheet()}}
+{\footnotesize\ttfamily void Main\+Window\+::\+Set\+Sink\+Sheet (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the sink sheet index for Excel import. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Sheet index \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00053}{53}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00234}{sink\+Sheet}}.
+
+\Hypertarget{classMainWindow_a95dc085bf70bd0c1ad05bd80f897fd1d}\label{classMainWindow_a95dc085bf70bd0c1ad05bd80f897fd1d} 
+\index{MainWindow@{MainWindow}!setupConnections@{setupConnections}}
+\index{setupConnections@{setupConnections}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setupConnections()}{setupConnections()}}
+{\footnotesize\ttfamily void Main\+Window\+::setup\+Connections (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sets up all signal-\/slot connections for UI elements. 
+
+Connects menu actions, toolbar buttons, and tree views to their respective slot handlers. Uses modern Qt5 function pointer syntax for type safety. 
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{92}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00246}{Delete\+Action}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01280}{Delete\+Results()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{on\+\_\+constituent\+\_\+properties\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01189}{on\+\_\+old\+\_\+result\+\_\+requested()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01613}{on\+\_\+\+Options\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00529}{on\+\_\+plot\+\_\+raw\+\_\+elemental\+\_\+profiles()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01589}{on\+\_\+show\+\_\+data\+\_\+as\+\_\+table()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01158}{on\+\_\+tool\+\_\+executed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01607}{on\+\_\+\+Zoom\+Extends()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01263}{on\+About\+Triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01272}{on\+Custom\+Context\+Menu()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01133}{on\+OMSize\+Correction()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00354}{on\+Open\+Project()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00324}{on\+Save\+Project()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00339}{on\+Save\+Project\+As()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a27a1aa5a11b0b3f57eebd79c41345095}\label{classMainWindow_a27a1aa5a11b0b3f57eebd79c41345095} 
+\index{MainWindow@{MainWindow}!setupResultsView@{setupResultsView}}
+\index{setupResultsView@{setupResultsView}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setupResultsView()}{setupResultsView()}}
+{\footnotesize\ttfamily void Main\+Window\+::setup\+Results\+View (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes the results tree view and context menu. 
+
+Sets up the results tree view model and configures the context menu for result management (delete, etc.). 
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00163}{163}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00246}{Delete\+Action}}, \mbox{\hyperlink{mainwindow_8h_source_l00245}{Resultscontext\+Menu}}, \mbox{\hyperlink{mainwindow_8h_source_l00242}{results\+View\+Model}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_adff8efaa9748c0ea2eabba6bbce5a719}\label{classMainWindow_adff8efaa9748c0ea2eabba6bbce5a719} 
+\index{MainWindow@{MainWindow}!setupToolBar@{setupToolBar}}
+\index{setupToolBar@{setupToolBar}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setupToolBar()}{setupToolBar()}}
+{\footnotesize\ttfamily void Main\+Window\+::setup\+Tool\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes the general toolbar. 
+
+Configures toolbar buttons with icons and initial enabled states. 
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00178}{178}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a370d22cbed4325e1b5da97d8abacf5e2}\label{classMainWindow_a370d22cbed4325e1b5da97d8abacf5e2} 
+\index{MainWindow@{MainWindow}!setupToolsView@{setupToolsView}}
+\index{setupToolsView@{setupToolsView}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{setupToolsView()}{setupToolsView()}}
+{\footnotesize\ttfamily void Main\+Window\+::setup\+Tools\+View (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initializes the tools tree view. 
+
+Loads tool definitions from JSON configuration file and populates the tools tree view with available analysis operations. 
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00141}{141}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00249}{formsstructure}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00917}{load\+Json()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00798}{To\+QStandard\+Item\+Model()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}.
+
+\Hypertarget{classMainWindow_a18ba831fdd0c1f5319213fd57b0650f4}\label{classMainWindow_a18ba831fdd0c1f5319213fd57b0650f4} 
+\index{MainWindow@{MainWindow}!showdistributionsforelements@{showdistributionsforelements}}
+\index{showdistributionsforelements@{showdistributionsforelements}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{showdistributionsforelements()}{showdistributionsforelements()}}
+{\footnotesize\ttfamily void Main\+Window\+::showdistributionsforelements (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{1017}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8cpp_source_l00220}{General\+Plotter\+::\+Add\+Time\+Series()}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00051}{Distribution\+::\+Evaluate\+As\+Time\+Series()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l01001}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Element\+Distribution()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00596}{Source\+Sink\+Data\+::\+Get\+Fitted\+Distribution()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00386}{Source\+Sink\+Data\+::\+Get\+Sample\+Set()}}, \mbox{\hyperlink{plotwindow_8h_source_l00021}{Plot\+Window\+::\+Plotter()}}, and \mbox{\hyperlink{generalplotter_8cpp_source_l00288}{General\+Plotter\+::\+Set\+Legend()}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00979}{preparetreeview\+Menu()}}.
+
+\Hypertarget{classMainWindow_a9bfbc2d26b57fd2f5f03038847a7e5c8}\label{classMainWindow_a9bfbc2d26b57fd2f5f03038847a7e5c8} 
+\index{MainWindow@{MainWindow}!ToQStandardItem@{ToQStandardItem}}
+\index{ToQStandardItem@{ToQStandardItem}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ToQStandardItem()}{ToQStandardItem()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily QStandard\+Item \texorpdfstring{$\ast$}{*} Main\+Window\+::\+To\+QStandard\+Item (\begin{DoxyParamCaption}\item[{const QString \&}]{key,  }\item[{const QJson\+Object \&}]{json }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00929}{929}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00066}{Data()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00735}{To\+QStandard\+Item()}}.
+
+\Hypertarget{classMainWindow_a1da6b68e99725e224c98284d9c4a26be}\label{classMainWindow_a1da6b68e99725e224c98284d9c4a26be} 
+\index{MainWindow@{MainWindow}!ToQStandardItem@{ToQStandardItem}}
+\index{ToQStandardItem@{ToQStandardItem}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ToQStandardItem()}{ToQStandardItem()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily QStandard\+Item \texorpdfstring{$\ast$}{*} Main\+Window\+::\+To\+QStandard\+Item (\begin{DoxyParamCaption}\item[{const QString \&}]{key,  }\item[{const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{srcsinkdata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00735}{735}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00407}{Source\+Sink\+Data\+::\+Get\+Group\+Names()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00386}{Source\+Sink\+Data\+::\+Get\+Sample\+Set()}}, \mbox{\hyperlink{mainwindow_8h_source_l00016}{group\+Role}}, and \mbox{\hyperlink{mainwindow_8h_source_l00017}{sample\+Role}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00929}{To\+QStandard\+Item()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00956}{To\+QStandard\+Item\+Model()}}.
+
+\Hypertarget{classMainWindow_aa4e362f1fe53e66e788afe341a1701d4}\label{classMainWindow_aa4e362f1fe53e66e788afe341a1701d4} 
+\index{MainWindow@{MainWindow}!ToQStandardItemModel@{ToQStandardItemModel}}
+\index{ToQStandardItemModel@{ToQStandardItemModel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ToQStandardItemModel()}{ToQStandardItemModel()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily QStandard\+Item\+Model \texorpdfstring{$\ast$}{*} Main\+Window\+::\+To\+QStandard\+Item\+Model (\begin{DoxyParamCaption}\item[{const QJson\+Document \&}]{jsondocument }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00956}{956}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00735}{To\+QStandard\+Item()}}.
+
+\Hypertarget{classMainWindow_a804484a74b314713fe930612f507a34a}\label{classMainWindow_a804484a74b314713fe930612f507a34a} 
+\index{MainWindow@{MainWindow}!ToQStandardItemModel@{ToQStandardItemModel}}
+\index{ToQStandardItemModel@{ToQStandardItemModel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ToQStandardItemModel()}{ToQStandardItemModel()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily QStandard\+Item\+Model \texorpdfstring{$\ast$}{*} Main\+Window\+::\+To\+QStandard\+Item\+Model (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{srcsinkdata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00798}{798}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00241}{column\+View\+Model}}, \mbox{\hyperlink{mainwindow_8h_source_l00233}{data\+Collection}}, \mbox{\hyperlink{mainwindow_8h_source_l00015}{element\+Role}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00407}{Source\+Sink\+Data\+::\+Get\+Group\+Names()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00386}{Source\+Sink\+Data\+::\+Get\+Sample\+Set()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00016}{group\+Role}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00141}{setup\+Tools\+View()}}.
+
+\Hypertarget{classMainWindow_a8113108835f669acea200cf157d8d937}\label{classMainWindow_a8113108835f669acea200cf157d8d937} 
+\index{MainWindow@{MainWindow}!TreeQStringSelectedType@{TreeQStringSelectedType}}
+\index{TreeQStringSelectedType@{TreeQStringSelectedType}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{TreeQStringSelectedType()}{TreeQStringSelectedType()}}
+{\footnotesize\ttfamily QString Main\+Window\+::\+Tree\+QString\+Selected\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00967}{967}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classMainWindow_a28cfdaf50abf0c162ddb843660b2dbbb}\label{classMainWindow_a28cfdaf50abf0c162ddb843660b2dbbb} 
+\index{MainWindow@{MainWindow}!WriteMessageOnScreen@{WriteMessageOnScreen}}
+\index{WriteMessageOnScreen@{WriteMessageOnScreen}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{WriteMessageOnScreen()}{WriteMessageOnScreen()}}
+{\footnotesize\ttfamily void Main\+Window\+::\+Write\+Message\+On\+Screen (\begin{DoxyParamCaption}\item[{const QString \&}]{text,  }\item[{QColor}]{color = {\ttfamily Qt\+:\+:black} }\end{DoxyParamCaption})}
+
+
+
+Writes a message to the application\textquotesingle{}s message display area. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & Message text to display \\
+\hline
+{\em color} & Text color (default\+: black) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l00729}{729}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8h_source_l00230}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{Read\+Excel()}}.
+
+\Hypertarget{classMainWindow_a8e4919bba09d0b9ee1b9c63e613a65f6}\label{classMainWindow_a8e4919bba09d0b9ee1b9c63e613a65f6} 
+\index{MainWindow@{MainWindow}!writeRecentFilesList@{writeRecentFilesList}}
+\index{writeRecentFilesList@{writeRecentFilesList}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{writeRecentFilesList()}{writeRecentFilesList()}}
+{\footnotesize\ttfamily void Main\+Window\+::write\+Recent\+Files\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8cpp_source_l01432}{1432}} of file \mbox{\hyperlink{mainwindow_8cpp_source}{mainwindow.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{mainwindow_8cpp_source_l00044}{RECENT}}, and \mbox{\hyperlink{mainwindow_8h_source_l00255}{recent\+Files}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01476}{remove\+From\+Recent\+List()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classMainWindow_aacb0568db61eaaadd6238d0567a7f679}\label{classMainWindow_aacb0568db61eaaadd6238d0567a7f679} 
+\index{MainWindow@{MainWindow}!centralform@{centralform}}
+\index{centralform@{centralform}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{centralform}{centralform}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$QWidget$>$ Main\+Window\+::centralform\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Central form widget. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00259}{259}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{on\+\_\+constituent\+\_\+properties\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01158}{on\+\_\+tool\+\_\+executed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01133}{on\+OMSize\+Correction()}}.
+
+\Hypertarget{classMainWindow_a246f319007aa7f7685706cceaa17cb70}\label{classMainWindow_a246f319007aa7f7685706cceaa17cb70} 
+\index{MainWindow@{MainWindow}!columnViewModel@{columnViewModel}}
+\index{columnViewModel@{columnViewModel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{columnViewModel}{columnViewModel}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$QStandard\+Item\+Model$>$ Main\+Window\+::column\+View\+Model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Model for column/data tree view. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00241}{241}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00798}{To\+QStandard\+Item\+Model()}}.
+
+\Hypertarget{classMainWindow_a5b98fe1096daa74759c893bba8769039}\label{classMainWindow_a5b98fe1096daa74759c893bba8769039} 
+\index{MainWindow@{MainWindow}!conductor@{conductor}}
+\index{conductor@{conductor}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{conductor}{conductor}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classConductor}{Conductor}}$>$ Main\+Window\+::conductor\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Analysis command coordinator. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00260}{260}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Execute()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{save\+Project\+To\+File()}}.
+
+\Hypertarget{classMainWindow_a168f8151efdd0b6c39c61f1fd6074179}\label{classMainWindow_a168f8151efdd0b6c39c61f1fd6074179} 
+\index{MainWindow@{MainWindow}!dataCollection@{dataCollection}}
+\index{dataCollection@{dataCollection}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{dataCollection}{dataCollection}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} Main\+Window\+::data\+Collection\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Main data collection for analysis. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00233}{233}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8h_source_l00066}{Data()}}, \mbox{\hyperlink{mainwindow_8h_source_l00067}{Data()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00768}{Elements\+To\+QStandard\+Item()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Execute()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{on\+\_\+constituent\+\_\+properties\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01158}{on\+\_\+tool\+\_\+executed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01133}{on\+OMSize\+Correction()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{Read\+Excel()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{showdistributionsforelements()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00735}{To\+QStandard\+Item()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00798}{To\+QStandard\+Item\+Model()}}.
+
+\Hypertarget{classMainWindow_aaf66fc273c885b891cac8cfd925023a4}\label{classMainWindow_aaf66fc273c885b891cac8cfd925023a4} 
+\index{MainWindow@{MainWindow}!DeleteAction@{DeleteAction}}
+\index{DeleteAction@{DeleteAction}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{DeleteAction}{DeleteAction}}
+{\footnotesize\ttfamily QAction\texorpdfstring{$\ast$}{*} Main\+Window\+::\+Delete\+Action = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Delete action for results. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00246}{246}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00163}{setup\+Results\+View()}}.
+
+\Hypertarget{classMainWindow_a6a7f52b990ff4e04edcb6c386d6aef23}\label{classMainWindow_a6a7f52b990ff4e04edcb6c386d6aef23} 
+\index{MainWindow@{MainWindow}!formsstructure@{formsstructure}}
+\index{formsstructure@{formsstructure}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{formsstructure}{formsstructure}}
+{\footnotesize\ttfamily QJson\+Document Main\+Window\+::formsstructure\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Forms structure definitions. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00249}{249}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01158}{on\+\_\+tool\+\_\+executed()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00141}{setup\+Tools\+View()}}.
+
+\Hypertarget{classMainWindow_ae4b620a705f2d9e2ecc8ff8f256e09a1}\label{classMainWindow_ae4b620a705f2d9e2ecc8ff8f256e09a1} 
+\index{MainWindow@{MainWindow}!indexresultselected@{indexresultselected}}
+\index{indexresultselected@{indexresultselected}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{indexresultselected}{indexresultselected}}
+{\footnotesize\ttfamily QModel\+Index Main\+Window\+::indexresultselected\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Currently selected result index. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00261}{261}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01280}{Delete\+Results()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01272}{on\+Custom\+Context\+Menu()}}.
+
+\Hypertarget{classMainWindow_a9a75a21c27ff83422c4ede8ac07301c8}\label{classMainWindow_a9a75a21c27ff83422c4ede8ac07301c8} 
+\index{MainWindow@{MainWindow}!menu@{menu}}
+\index{menu@{menu}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{menu}{menu}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$QMenu$>$ Main\+Window\+::menu\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Main menu. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00258}{258}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00979}{preparetreeview\+Menu()}}.
+
+\Hypertarget{classMainWindow_ab15516d8da30281dc8ac72d5ccd2fed0}\label{classMainWindow_ab15516d8da30281dc8ac72d5ccd2fed0} 
+\index{MainWindow@{MainWindow}!plottedData@{plottedData}}
+\index{plottedData@{plottedData}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{plottedData}{plottedData}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classInterface}{Interface}}$>$ Main\+Window\+::plotted\+Data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Currently plotted data interface. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00238}{238}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01589}{on\+\_\+show\+\_\+data\+\_\+as\+\_\+table()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classMainWindow_a1434b835206c5c42b26fd2bec6094fbb}\label{classMainWindow_a1434b835206c5c42b26fd2bec6094fbb} 
+\index{MainWindow@{MainWindow}!plotter@{plotter}}
+\index{plotter@{plotter}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{plotter}{plotter}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGeneralPlotter}{General\+Plotter}}\texorpdfstring{$\ast$}{*} Main\+Window\+::plotter = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Main plotting widget. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00237}{237}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01607}{on\+\_\+\+Zoom\+Extends()}}.
+
+\Hypertarget{classMainWindow_a1a8e06bc665fc6d2ddedfe200f9c1602}\label{classMainWindow_a1a8e06bc665fc6d2ddedfe200f9c1602} 
+\index{MainWindow@{MainWindow}!ProjectFileName@{ProjectFileName}}
+\index{ProjectFileName@{ProjectFileName}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ProjectFileName}{ProjectFileName}}
+{\footnotesize\ttfamily QString Main\+Window\+::\+Project\+File\+Name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current project file path. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00254}{254}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00201}{get\+Save\+File\+Path()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00469}{on\+\_\+import\+\_\+excel()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00354}{on\+Open\+Project()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00278}{save\+Project\+To\+File()}}.
+
+\Hypertarget{classMainWindow_a0bb6ce195389689bf99a93361e00b817}\label{classMainWindow_a0bb6ce195389689bf99a93361e00b817} 
+\index{MainWindow@{MainWindow}!recentFiles@{recentFiles}}
+\index{recentFiles@{recentFiles}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{recentFiles}{recentFiles}}
+{\footnotesize\ttfamily QString\+List Main\+Window\+::recent\+Files\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+List of recently opened files. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00255}{255}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01476}{remove\+From\+Recent\+List()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l01432}{write\+Recent\+Files\+List()}}.
+
+\Hypertarget{classMainWindow_a0edf3626621f7671410ae4d7bd79f495}\label{classMainWindow_a0edf3626621f7671410ae4d7bd79f495} 
+\index{MainWindow@{MainWindow}!ResultscontextMenu@{ResultscontextMenu}}
+\index{ResultscontextMenu@{ResultscontextMenu}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ResultscontextMenu}{ResultscontextMenu}}
+{\footnotesize\ttfamily QMenu\texorpdfstring{$\ast$}{*} Main\+Window\+::\+Resultscontext\+Menu = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Context menu for results view. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00245}{245}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01272}{on\+Custom\+Context\+Menu()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00163}{setup\+Results\+View()}}.
+
+\Hypertarget{classMainWindow_a496cc353e266db32e9fa9eebf649debd}\label{classMainWindow_a496cc353e266db32e9fa9eebf649debd} 
+\index{MainWindow@{MainWindow}!resultsViewModel@{resultsViewModel}}
+\index{resultsViewModel@{resultsViewModel}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{resultsViewModel}{resultsViewModel}}
+{\footnotesize\ttfamily std\+::unique\+\_\+ptr$<$QStandard\+Item\+Model$>$ Main\+Window\+::results\+View\+Model\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Model for results tree view. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00242}{242}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00234}{build\+Results\+Json()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01280}{Delete\+Results()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Execute()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00377}{Load\+Model()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01189}{on\+\_\+old\+\_\+result\+\_\+requested()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00163}{setup\+Results\+View()}}.
+
+\Hypertarget{classMainWindow_a74ac58eda0f1bf2de2b170d7c3d0243e}\label{classMainWindow_a74ac58eda0f1bf2de2b170d7c3d0243e} 
+\index{MainWindow@{MainWindow}!selectedTreeItemType@{selectedTreeItemType}}
+\index{selectedTreeItemType@{selectedTreeItemType}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{selectedTreeItemType}{selectedTreeItemType}}
+{\footnotesize\ttfamily QString Main\+Window\+::selected\+Tree\+Item\+Type = "{}None"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Currently selected tree item type. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00252}{252}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classMainWindow_ad982e95584e2d2c64f13ebd2c807def2}\label{classMainWindow_ad982e95584e2d2c64f13ebd2c807def2} 
+\index{MainWindow@{MainWindow}!sinkSheet@{sinkSheet}}
+\index{sinkSheet@{sinkSheet}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{sinkSheet}{sinkSheet}}
+{\footnotesize\ttfamily int Main\+Window\+::sink\+Sheet = -\/1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Index of sink sheet in Excel import. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00234}{234}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00535}{Read\+Excel()}}, and \mbox{\hyperlink{mainwindow_8h_source_l00053}{Set\+Sink\+Sheet()}}.
+
+\Hypertarget{classMainWindow_a36fdffdfe3665170b1aed18a5ba20b2a}\label{classMainWindow_a36fdffdfe3665170b1aed18a5ba20b2a} 
+\index{MainWindow@{MainWindow}!treeItemChangedProgramatically@{treeItemChangedProgramatically}}
+\index{treeItemChangedProgramatically@{treeItemChangedProgramatically}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{treeItemChangedProgramatically}{treeItemChangedProgramatically}}
+{\footnotesize\ttfamily bool Main\+Window\+::tree\+Item\+Changed\+Programatically = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flag for programmatic tree changes. 
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00253}{253}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}.
+
+\Hypertarget{classMainWindow_a35466a70ed47252a0191168126a352a5}\label{classMainWindow_a35466a70ed47252a0191168126a352a5} 
+\index{MainWindow@{MainWindow}!ui@{ui}}
+\index{ui@{ui}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily Ui\+::\+Main\+Window\texorpdfstring{$\ast$}{*} Main\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{mainwindow_8h_source_l00230}{230}} of file \mbox{\hyperlink{mainwindow_8h_source}{mainwindow.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l00056}{Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00194}{\texorpdfstring{$\sim$}{\string~}\+Main\+Window()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01508}{add\+Tool\+Bar\+Action()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01339}{add\+To\+Recent\+Files()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00502}{Initiate\+Tables()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01097}{on\+\_\+constituent\+\_\+properties\+\_\+triggered()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01158}{on\+\_\+tool\+\_\+executed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00830}{on\+\_\+tree\+\_\+selection\+Changed()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01272}{on\+Custom\+Context\+Menu()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01110}{on\+Include\+Exclude\+Sample()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01133}{on\+OMSize\+Correction()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01533}{Populate\+\_\+\+General\+\_\+\+Tool\+Bar()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00979}{preparetreeview\+Menu()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01476}{remove\+From\+Recent\+List()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00092}{setup\+Connections()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00163}{setup\+Results\+View()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00178}{setup\+Tool\+Bar()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00141}{setup\+Tools\+View()}}, \mbox{\hyperlink{mainwindow_8cpp_source_l00967}{Tree\+QString\+Selected\+Type()}}, and \mbox{\hyperlink{mainwindow_8cpp_source_l00729}{Write\+Message\+On\+Screen()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mainwindow_8h}{mainwindow.\+h}}\item 
+\mbox{\hyperlink{mainwindow_8cpp}{mainwindow.\+cpp}}\end{DoxyCompactItemize}

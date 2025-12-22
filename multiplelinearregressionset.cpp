@@ -16,10 +16,10 @@ MultipleLinearRegressionSet& MultipleLinearRegressionSet::operator=(const Multip
     Source = mp.Source; 
     return *this; 
 }
-QJsonObject MultipleLinearRegressionSet::toJsonObject()
+QJsonObject MultipleLinearRegressionSet::toJsonObject() const
 {
     QJsonObject out;
-    for (map<string,MultipleLinearRegression>::iterator it = begin(); it!= end(); it++)
+    for (map<string,MultipleLinearRegression>::const_iterator it = cbegin(); it!= cend(); it++)
     {
         out[QString::fromStdString(it->first)] = it->second.toJsonObject();
     }
@@ -46,10 +46,10 @@ bool MultipleLinearRegressionSet::Append(QString key, const MultipleLinearRegres
 
 }
 
-string MultipleLinearRegressionSet::ToString()
+string MultipleLinearRegressionSet::ToString() const
 {
     string out;
-    for (map<string,MultipleLinearRegression>::iterator it = begin(); it!= end(); it++)
+    for (map<string,MultipleLinearRegression>::const_iterator it = cbegin(); it!= cend(); it++)
     {
         out += it->first + ":\n";
         out += it->second.ToString();

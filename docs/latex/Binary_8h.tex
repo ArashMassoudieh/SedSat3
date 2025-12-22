@@ -1,0 +1,106 @@
+\doxysection{GA/\+Binary.h File Reference}
+\hypertarget{Binary_8h}{}\label{Binary_8h}\index{GA/Binary.h@{GA/Binary.h}}
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for Binary.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{Binary_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{Binary_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classCBinary}{CBinary}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCBinary}{CBinary}} \mbox{\hyperlink{Binary_8h_aaa7302c0e4e4afc104573a78157ccae8}{code}} (double \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, double minrange, double maxrange, int precision)
+\item 
+void \mbox{\hyperlink{Binary_8h_a7c36251d709a8fd53adab25e8c0266ed}{cross}} (\mbox{\hyperlink{classCBinary}{CBinary}} \&B1, \mbox{\hyperlink{classCBinary}{CBinary}} \&B2, int p)
+\item 
+void \mbox{\hyperlink{Binary_8h_ad5ce43ba19fd39840e025985327e4577}{cross}} (\mbox{\hyperlink{classCBinary}{CBinary}} \&B1, \mbox{\hyperlink{classCBinary}{CBinary}} \&B2, std\+::vector$<$ int $>$ p)
+\item 
+void \mbox{\hyperlink{Binary_8h_a149537236082821021f0466d066a35fa}{cross2p}} (\mbox{\hyperlink{classCBinary}{CBinary}} \&B1, \mbox{\hyperlink{classCBinary}{CBinary}} \&B2, int p1, int p2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{Binary_8h_aaa7302c0e4e4afc104573a78157ccae8}\label{Binary_8h_aaa7302c0e4e4afc104573a78157ccae8} 
+\index{Binary.h@{Binary.h}!code@{code}}
+\index{code@{code}!Binary.h@{Binary.h}}
+\doxysubsubsection{\texorpdfstring{code()}{code()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCBinary}{CBinary}} code (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{minrange,  }\item[{double}]{maxrange,  }\item[{int}]{precision }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00086}{86}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{CBinary\+::\+Digit}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{Binary_8h_source_l00014}{CBinary\+::n\+Digits}}, \mbox{\hyperlink{Binary_8h_source_l00016}{CBinary\+::precision}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00203}{CIndividual\+::mutate()}}.
+
+\Hypertarget{Binary_8h_a7c36251d709a8fd53adab25e8c0266ed}\label{Binary_8h_a7c36251d709a8fd53adab25e8c0266ed} 
+\index{Binary.h@{Binary.h}!cross@{cross}}
+\index{cross@{cross}!Binary.h@{Binary.h}}
+\doxysubsubsection{\texorpdfstring{cross()}{cross()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void cross (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B1,  }\item[{\mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B2,  }\item[{int}]{p }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00142}{142}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00014}{CBinary\+::n\+Digits}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00322}{CGA$<$ T $>$\+::crossover()}}.
+
+\Hypertarget{Binary_8h_ad5ce43ba19fd39840e025985327e4577}\label{Binary_8h_ad5ce43ba19fd39840e025985327e4577} 
+\index{Binary.h@{Binary.h}!cross@{cross}}
+\index{cross@{cross}!Binary.h@{Binary.h}}
+\doxysubsubsection{\texorpdfstring{cross()}{cross()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void cross (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B1,  }\item[{\mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B2,  }\item[{std\+::vector$<$ int $>$}]{p }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00014}{CBinary\+::n\+Digits}}.
+
+\Hypertarget{Binary_8h_a149537236082821021f0466d066a35fa}\label{Binary_8h_a149537236082821021f0466d066a35fa} 
+\index{Binary.h@{Binary.h}!cross2p@{cross2p}}
+\index{cross2p@{cross2p}!Binary.h@{Binary.h}}
+\doxysubsubsection{\texorpdfstring{cross2p()}{cross2p()}}
+{\footnotesize\ttfamily void cross2p (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B1,  }\item[{\mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B2,  }\item[{int}]{p1,  }\item[{int}]{p2 }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00190}{190}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00014}{CBinary\+::n\+Digits}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00322}{CGA$<$ T $>$\+::crossover()}}.
+

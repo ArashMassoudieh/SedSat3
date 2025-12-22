@@ -1,0 +1,21 @@
+<map id="generalplotter.h" name="generalplotter.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="317,5,428,31"/>
+<area shape="rect" id="Node000002" href="$generalplotter_8cpp.html" title=" " alt="" coords="173,79,297,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="340,39,259,81,257,76,337,34"/>
+<area shape="rect" id="Node000003" href="$mainwindow_8h.html" title=" " alt="" coords="321,79,424,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="375,44,375,79,370,79,370,44"/>
+<area shape="rect" id="Node000009" href="$plotwindow_8h.html" title=" " alt="" coords="469,79,565,104"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="409,34,494,76,492,81,407,39"/>
+<area shape="rect" id="Node000004" href="$conductor_8cpp.html" title=" " alt="" coords="5,152,108,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="309,110,108,154,107,149,308,104"/>
+<area shape="rect" id="Node000005" href="$genericform_8cpp.html" title=" " alt="" coords="133,152,247,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="332,111,221,154,219,149,330,106"/>
+<area shape="rect" id="Node000006" href="$indicatesheetsdialog_8cpp.html" title=" " alt="" coords="271,152,437,177"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="369,118,360,153,354,151,364,117"/>
+<area shape="rect" id="Node000007" href="$mainwindow_8cpp.html" title=" " alt="" coords="597,152,714,177"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="432,105,610,149,609,154,431,110"/>
+<area shape="rect" id="Node000008" href="$plotwindow_8cpp.html" title=" " alt="" coords="461,152,572,177"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="409,108,494,149,492,154,407,112"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="552,108,634,149,631,154,550,113"/>
+<area shape="poly" id="edge10_Node000009_Node000008" title=" " alt="" coords="519,118,519,152,514,152,514,118"/>
+</map>

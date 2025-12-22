@@ -1,0 +1,308 @@
+\doxysection{CBinary Class Reference}
+\hypertarget{classCBinary}{}\label{classCBinary}\index{CBinary@{CBinary}}
+
+
+{\ttfamily \#include $<$GA/\+Binary.\+h$>$}
+
+
+
+Collaboration diagram for CBinary\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classCBinary__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCBinary_a5191e53086fec004a0e9308660726b77}{CBinary}} ()
+\item 
+\mbox{\hyperlink{classCBinary_ae169bcfb91965eb524268364b34fee15}{CBinary}} (int n)
+\item 
+\mbox{\hyperlink{classCBinary_a664225c93b2e0fba40afda3d652b68c1}{CBinary}} (int n, int preci)
+\item 
+virtual \mbox{\hyperlink{classCBinary_a77aa3505438687b58cde6a691a5b0aba}{\texorpdfstring{$\sim$}{\string~}\+CBinary}} ()
+\item 
+\mbox{\hyperlink{classCBinary_a9ce5e3ccd45823f0cabadddac852bc3b}{CBinary}} (const \mbox{\hyperlink{classCBinary}{CBinary}} \&B)
+\item 
+\mbox{\hyperlink{classCBinary}{CBinary}} \mbox{\hyperlink{classCBinary_a29abeb41c5083debfb5e6dfc8859a4eb}{operator=}} (const \mbox{\hyperlink{classCBinary}{CBinary}} \&B)
+\item 
+\mbox{\hyperlink{classCBinary}{CBinary}} \mbox{\hyperlink{classCBinary_a1fcced08282fc274e77f8931bef40b80}{operator+}} (const \mbox{\hyperlink{classCBinary}{CBinary}} \&B)
+\item 
+\mbox{\hyperlink{classCBinary}{CBinary}} \mbox{\hyperlink{classCBinary_a1e0f9f380a09a42ec6822af1f895e374}{extract}} (int spoint, int epoint)
+\item 
+double \mbox{\hyperlink{classCBinary_aeae50497a5511248dab159dbcdd521d9}{decode}} (double minrange)
+\item 
+int \& \mbox{\hyperlink{classCBinary_a4f2ac88439e26b21a8c071045c7b3bd3}{operator\mbox{[}$\,$\mbox{]}}} (unsigned int i)
+\item 
+void \mbox{\hyperlink{classCBinary_a3d7b4e4a160425fa55db038322ab8fbb}{show}} ()
+\item 
+void \mbox{\hyperlink{classCBinary_a141be3b1218faca052bb4028e634e5de}{mutate}} (double mu)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classCBinary_ac7fbacb391c67783daca12eecc2c996c}{n\+Digits}} = 4
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classCBinary_a265b0e09e4f47ff693030f46319fcd94}{Digit}}
+\item 
+int \mbox{\hyperlink{classCBinary_a78867a9363dc4ad1fa98ce32f41f7880}{precision}}
+\item 
+bool \mbox{\hyperlink{classCBinary_aabcf53ce73b0c273b1630b4af8b5628c}{sign}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{Binary_8h_source_l00007}{7}} of file \mbox{\hyperlink{Binary_8h_source}{Binary.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCBinary_a5191e53086fec004a0e9308660726b77}\label{classCBinary_a5191e53086fec004a0e9308660726b77} 
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{CBinary()}{CBinary()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily CBinary\+::\+CBinary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}, \mbox{\hyperlink{Binary_8h_source_l00016}{precision}}, and \mbox{\hyperlink{Binary_8h_source_l00024}{sign}}.
+
+\Hypertarget{classCBinary_ae169bcfb91965eb524268364b34fee15}\label{classCBinary_ae169bcfb91965eb524268364b34fee15} 
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{CBinary()}{CBinary()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily CBinary\+::\+CBinary (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}, \mbox{\hyperlink{Binary_8h_source_l00016}{precision}}, and \mbox{\hyperlink{Binary_8h_source_l00024}{sign}}.
+
+\Hypertarget{classCBinary_a664225c93b2e0fba40afda3d652b68c1}\label{classCBinary_a664225c93b2e0fba40afda3d652b68c1} 
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{CBinary()}{CBinary()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily CBinary\+::\+CBinary (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int}]{preci }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}, \mbox{\hyperlink{Binary_8h_source_l00016}{precision}}, and \mbox{\hyperlink{Binary_8h_source_l00024}{sign}}.
+
+\Hypertarget{classCBinary_a77aa3505438687b58cde6a691a5b0aba}\label{classCBinary_a77aa3505438687b58cde6a691a5b0aba} 
+\index{CBinary@{CBinary}!````~CBinary@{\texorpdfstring{$\sim$}{\string~}CBinary}}
+\index{````~CBinary@{\texorpdfstring{$\sim$}{\string~}CBinary}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}CBinary()}{\string~CBinary()}}
+{\footnotesize\ttfamily CBinary\+::\texorpdfstring{$\sim$}{\string~}\+CBinary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+\Hypertarget{classCBinary_a9ce5e3ccd45823f0cabadddac852bc3b}\label{classCBinary_a9ce5e3ccd45823f0cabadddac852bc3b} 
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\index{CBinary@{CBinary}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{CBinary()}{CBinary()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily CBinary\+::\+CBinary (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}, \mbox{\hyperlink{Binary_8h_source_l00016}{precision}}, and \mbox{\hyperlink{Binary_8h_source_l00024}{sign}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCBinary_aeae50497a5511248dab159dbcdd521d9}\label{classCBinary_aeae50497a5511248dab159dbcdd521d9} 
+\index{CBinary@{CBinary}!decode@{decode}}
+\index{decode@{decode}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{decode()}{decode()}}
+{\footnotesize\ttfamily double CBinary\+::decode (\begin{DoxyParamCaption}\item[{double}]{minrange }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00072}{72}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}, and \mbox{\hyperlink{Binary_8h_source_l00016}{precision}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00203}{CIndividual\+::mutate()}}.
+
+\Hypertarget{classCBinary_a1e0f9f380a09a42ec6822af1f895e374}\label{classCBinary_a1e0f9f380a09a42ec6822af1f895e374} 
+\index{CBinary@{CBinary}!extract@{extract}}
+\index{extract@{extract}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{extract()}{extract()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCBinary}{CBinary}} CBinary\+::extract (\begin{DoxyParamCaption}\item[{int}]{spoint,  }\item[{int}]{epoint }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00120}{120}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}.
+
+\Hypertarget{classCBinary_a141be3b1218faca052bb4028e634e5de}\label{classCBinary_a141be3b1218faca052bb4028e634e5de} 
+\index{CBinary@{CBinary}!mutate@{mutate}}
+\index{mutate@{mutate}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{mutate()}{mutate()}}
+{\footnotesize\ttfamily void CBinary\+::mutate (\begin{DoxyParamCaption}\item[{double}]{mu }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00225}{225}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{GADistribution_8cpp_source_l00073}{GADistribution\+::\+Get\+Rnd\+Uni\+F()}}, and \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00203}{CIndividual\+::mutate()}}.
+
+\Hypertarget{classCBinary_a1fcced08282fc274e77f8931bef40b80}\label{classCBinary_a1fcced08282fc274e77f8931bef40b80} 
+\index{CBinary@{CBinary}!operator+@{operator+}}
+\index{operator+@{operator+}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCBinary}{CBinary}} CBinary\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00105}{105}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, and \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}.
+
+\Hypertarget{classCBinary_a29abeb41c5083debfb5e6dfc8859a4eb}\label{classCBinary_a29abeb41c5083debfb5e6dfc8859a4eb} 
+\index{CBinary@{CBinary}!operator=@{operator=}}
+\index{operator=@{operator=}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCBinary}{CBinary}} CBinary\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCBinary}{CBinary}} \&}]{B }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}, \mbox{\hyperlink{Binary_8h_source_l00016}{precision}}, and \mbox{\hyperlink{Binary_8h_source_l00024}{sign}}.
+
+\Hypertarget{classCBinary_a4f2ac88439e26b21a8c071045c7b3bd3}\label{classCBinary_a4f2ac88439e26b21a8c071045c7b3bd3} 
+\index{CBinary@{CBinary}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily int \& CBinary\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{unsigned int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}.
+
+\Hypertarget{classCBinary_a3d7b4e4a160425fa55db038322ab8fbb}\label{classCBinary_a3d7b4e4a160425fa55db038322ab8fbb} 
+\index{CBinary@{CBinary}!show@{show}}
+\index{show@{show}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{show()}{show()}}
+{\footnotesize\ttfamily void CBinary\+::show (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8cpp_source_l00216}{216}} of file \mbox{\hyperlink{Binary_8cpp_source}{Binary.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8h_source_l00015}{Digit}}, and \mbox{\hyperlink{Binary_8h_source_l00014}{n\+Digits}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCBinary_a265b0e09e4f47ff693030f46319fcd94}\label{classCBinary_a265b0e09e4f47ff693030f46319fcd94} 
+\index{CBinary@{CBinary}!Digit@{Digit}}
+\index{Digit@{Digit}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{Digit}{Digit}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ CBinary\+::\+Digit}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8h_source_l00015}{15}} of file \mbox{\hyperlink{Binary_8h_source}{Binary.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Binary_8cpp_source_l00019}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00051}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00028}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00037}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00086}{code()}}, \mbox{\hyperlink{Binary_8cpp_source_l00072}{decode()}}, \mbox{\hyperlink{Binary_8cpp_source_l00120}{extract()}}, \mbox{\hyperlink{Binary_8cpp_source_l00225}{mutate()}}, \mbox{\hyperlink{Binary_8cpp_source_l00105}{operator+()}}, \mbox{\hyperlink{Binary_8cpp_source_l00060}{operator=()}}, \mbox{\hyperlink{Binary_8cpp_source_l00133}{operator\mbox{[}$\,$\mbox{]}()}}, and \mbox{\hyperlink{Binary_8cpp_source_l00216}{show()}}.
+
+\Hypertarget{classCBinary_ac7fbacb391c67783daca12eecc2c996c}\label{classCBinary_ac7fbacb391c67783daca12eecc2c996c} 
+\index{CBinary@{CBinary}!nDigits@{nDigits}}
+\index{nDigits@{nDigits}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{nDigits}{nDigits}}
+{\footnotesize\ttfamily int CBinary\+::n\+Digits = 4}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8h_source_l00014}{14}} of file \mbox{\hyperlink{Binary_8h_source}{Binary.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Binary_8cpp_source_l00019}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00051}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00028}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00037}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00086}{code()}}, \mbox{\hyperlink{Binary_8cpp_source_l00142}{cross()}}, \mbox{\hyperlink{Binary_8cpp_source_l00162}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Binary_8cpp_source_l00190}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Binary_8cpp_source_l00072}{decode()}}, \mbox{\hyperlink{Binary_8cpp_source_l00225}{mutate()}}, \mbox{\hyperlink{Binary_8cpp_source_l00105}{operator+()}}, \mbox{\hyperlink{Binary_8cpp_source_l00060}{operator=()}}, and \mbox{\hyperlink{Binary_8cpp_source_l00216}{show()}}.
+
+\Hypertarget{classCBinary_a78867a9363dc4ad1fa98ce32f41f7880}\label{classCBinary_a78867a9363dc4ad1fa98ce32f41f7880} 
+\index{CBinary@{CBinary}!precision@{precision}}
+\index{precision@{precision}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{precision}{precision}}
+{\footnotesize\ttfamily int CBinary\+::precision}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8h_source_l00016}{16}} of file \mbox{\hyperlink{Binary_8h_source}{Binary.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Binary_8cpp_source_l00019}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00051}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00028}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00037}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00086}{code()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Binary_8cpp_source_l00072}{decode()}}, and \mbox{\hyperlink{Binary_8cpp_source_l00060}{operator=()}}.
+
+\Hypertarget{classCBinary_aabcf53ce73b0c273b1630b4af8b5628c}\label{classCBinary_aabcf53ce73b0c273b1630b4af8b5628c} 
+\index{CBinary@{CBinary}!sign@{sign}}
+\index{sign@{sign}!CBinary@{CBinary}}
+\doxysubsubsection{\texorpdfstring{sign}{sign}}
+{\footnotesize\ttfamily bool CBinary\+::sign = true}
+
+
+
+Definition at line \mbox{\hyperlink{Binary_8h_source_l00024}{24}} of file \mbox{\hyperlink{Binary_8h_source}{Binary.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{Binary_8cpp_source_l00019}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00051}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00028}{CBinary()}}, \mbox{\hyperlink{Binary_8cpp_source_l00037}{CBinary()}}, and \mbox{\hyperlink{Binary_8cpp_source_l00060}{operator=()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+GA/\mbox{\hyperlink{Binary_8h}{Binary.\+h}}\item 
+GA/\mbox{\hyperlink{Binary_8cpp}{Binary.\+cpp}}\end{DoxyCompactItemize}

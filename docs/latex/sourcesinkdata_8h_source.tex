@@ -1,0 +1,629 @@
+\doxysection{sourcesinkdata.\+h}
+\hypertarget{sourcesinkdata_8h_source}{}\label{sourcesinkdata_8h_source}\mbox{\hyperlink{sourcesinkdata_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SOURCESINKDATA\_H}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SOURCESINKDATA\_H}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{elemental__profile__set_8h}{elemental\_profile\_set.h}}>}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}vector"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{parameter_8h}{parameter.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{observation_8h}{observation.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{contribution_8h}{contribution.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{results_8h}{results.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ProgressWindow_8h}{ProgressWindow.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}fstream"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}qjsonobject.h"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbvector_8h}{cmbvector.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbvectorset_8h}{cmbvectorset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbvectorsetset_8h}{cmbvectorsetset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{MCMC_8h}{MCMC.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00018}\mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}{00018}}\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}{transformation}}\ \{\ \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa}{linear}},\ \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1ace2f1fbd249d24aabc07ac4488ab5b8c}{softmax}}\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00020}\mbox{\hyperlink{structprofiles__data}{00020}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structprofiles__data}{profiles\_data}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00022}\mbox{\hyperlink{structprofiles__data_a37b185f301e2b3e9a4a30c7a3d8b554d}{00022}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{structprofiles__data_a37b185f301e2b3e9a4a30c7a3d8b554d}{element\_names}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00023}\mbox{\hyperlink{structprofiles__data_ae1dbc607d8b143126007ffdcdb79aa8d}{00023}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{structprofiles__data_ae1dbc607d8b143126007ffdcdb79aa8d}{sample\_names}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00024}\mbox{\hyperlink{structprofiles__data_a0623e4c375793678736420ccfcd5922a}{00024}}\ \ \ \ \ vector<vector<double>>\ \mbox{\hyperlink{structprofiles__data_a0623e4c375793678736420ccfcd5922a}{values}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00025}00025\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00027}\mbox{\hyperlink{structelement__data}{00027}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structelement__data}{element\_data}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00029}\mbox{\hyperlink{structelement__data_a2db680a054f4685a34ca9f265c68eec0}{00029}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{structelement__data_a2db680a054f4685a34ca9f265c68eec0}{group\_name}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00030}\mbox{\hyperlink{structelement__data_a0a9d63977e8be6c56fcd342ddc4fd48e}{00030}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{structelement__data_a0a9d63977e8be6c56fcd342ddc4fd48e}{sample\_names}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00031}\mbox{\hyperlink{structelement__data_a5a037036e4fc7c93f3958e0af740ac50}{00031}}\ \ \ \ \ vector<double>\ \mbox{\hyperlink{structelement__data_a5a037036e4fc7c93f3958e0af740ac50}{values}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00032}00032\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00034}\mbox{\hyperlink{structelement__data__groups}{00034}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structelement__data__groups}{element\_data\_groups}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00035}00035\ \{}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00036}\mbox{\hyperlink{structelement__data__groups_aec421b6e62dbb80a7e1b2a7ca9afde42}{00036}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{structelement__data__groups_aec421b6e62dbb80a7e1b2a7ca9afde42}{group\_names}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00037}\mbox{\hyperlink{structelement__data__groups_a2db65a840ae98ef4529f83baae3c4754}{00037}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{structelement__data__groups_a2db65a840ae98ef4529f83baae3c4754}{sample\_names}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00038}\mbox{\hyperlink{structelement__data__groups_aa38792d9aef51b8e4d4394fad7b13a09}{00038}}\ \ \ \ \ vector<vector<double>>\ \mbox{\hyperlink{structelement__data__groups_aa38792d9aef51b8e4d4394fad7b13a09}{values}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00039}00039\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00041}\mbox{\hyperlink{structDFA__result}{00041}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structDFA__result}{DFA\_result}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00042}00042\ \{}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00043}\mbox{\hyperlink{structDFA__result_a4baba162124dbcbb7e8c9b388a3e2dbd}{00043}}\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}\ \mbox{\hyperlink{structDFA__result_a4baba162124dbcbb7e8c9b388a3e2dbd}{eigen\_vectors}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00044}\mbox{\hyperlink{structDFA__result_a1573bdd5a00661aa87e491a0e383fe87}{00044}}\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}\ \mbox{\hyperlink{structDFA__result_a1573bdd5a00661aa87e491a0e383fe87}{projected}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00045}\mbox{\hyperlink{structDFA__result_a1d6f731a69afa5c3a8d18cfe8da3ef00}{00045}}\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{structDFA__result_a1d6f731a69afa5c3a8d18cfe8da3ef00}{p\_values}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00046}\mbox{\hyperlink{structDFA__result_aef35bd24e0c56a6c5ad283232bdd95ad}{00046}}\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{structDFA__result_aef35bd24e0c56a6c5ad283232bdd95ad}{wilkslambda}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00047}\mbox{\hyperlink{structDFA__result_a9c2a96c369792bf85509ec730727b341}{00047}}\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{structDFA__result_a9c2a96c369792bf85509ec730727b341}{F\_test\_P\_value}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00048}\mbox{\hyperlink{structDFA__result_af17a1488bd2e77dff178653932597dec}{00048}}\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}\ \mbox{\hyperlink{structDFA__result_af17a1488bd2e77dff178653932597dec}{multi\_projected}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00049}00049\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00051}\mbox{\hyperlink{structANOVA__info}{00051}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structANOVA__info}{ANOVA\_info}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00052}00052\ \{}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00053}\mbox{\hyperlink{structANOVA__info_a5fde3bae7d7ead4299f34bc580015ee8}{00053}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_a5fde3bae7d7ead4299f34bc580015ee8}{F}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00054}\mbox{\hyperlink{structANOVA__info_a6e249a1dfe43c6cd9eef1a4e54c0aa72}{00054}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_a6e249a1dfe43c6cd9eef1a4e54c0aa72}{SST}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00055}\mbox{\hyperlink{structANOVA__info_a48f60580c4b3bc5d5819265317a549c9}{00055}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_a48f60580c4b3bc5d5819265317a549c9}{SSB}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00056}\mbox{\hyperlink{structANOVA__info_a6c7c31a2be33e1a431e4d46b1a1b2b84}{00056}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_a6c7c31a2be33e1a431e4d46b1a1b2b84}{SSW}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00057}\mbox{\hyperlink{structANOVA__info_aedcbc25ca8c86ec29b90a229a48ec09a}{00057}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_aedcbc25ca8c86ec29b90a229a48ec09a}{MSB}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00058}\mbox{\hyperlink{structANOVA__info_aa8235cd2ec26345a078cefbf3469f05c}{00058}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_aa8235cd2ec26345a078cefbf3469f05c}{MSW}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00059}\mbox{\hyperlink{structANOVA__info_abc31423f5cd26bad933877f4e4d92f7e}{00059}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{structANOVA__info_abc31423f5cd26bad933877f4e4d92f7e}{p\_value}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00060}00060\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00062}\mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{00062}}\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ \{\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa576eb2974a1ae0b087c914c7f3bf6958}{only\_contributions}},\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{elemental\_profile\_and\_contribution}},\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa326a5aa575058f786c83d801d8212225}{source\_elemental\_profiles\_based\_on\_source\_data}}\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00064}\mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27}{00064}}\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27}{negative\_reporting}}\ \{\ \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27a10ae9fc7d453b0dd525d0edf2ede7961}{list}},\ \mbox{\hyperlink{sourcesinkdata_8h_a8964fb3a37ecf1861352849ea96c1f27ad9a22d7a8178d5b42a8750123cbfe5b1}{complete}}\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00066}\mbox{\hyperlink{classSourceSinkData}{00066}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ :\ \textcolor{keyword}{public}\ map<string,\ Elemental\_Profile\_Set>}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00067}00067\ \{}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00068}00068\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ ==========\ Construction\ and\ Assignment\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00077}00077\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData_aff27de31d4d8993c2b22245b14370c21}{SourceSinkData}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00088}00088\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData_aff27de31d4d8993c2b22245b14370c21}{SourceSinkData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00099}00099\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\&\ \mbox{\hyperlink{classSourceSinkData_a2d282b984ddaa8043e5cc8b3060f925d}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\&\ other);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00101}00101\ \ \ \ \ \textcolor{comment}{//\ ==========\ Data\ Loading\ and\ Management\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00115}00115\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a42000159e6271e73d0e6c579c179bd7a}{Clear}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00128}00128\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}*\ \mbox{\hyperlink{classSourceSinkData_a413568f3c3ff963cb2b9bf3ae09b936b}{AppendSampleSet}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}},}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\&\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{elemental\_profile\_set}}\ =\ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}()}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00131}00131\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00143}00143\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a5592437cfe871bb362ea78f1a89dbdf7}{SourceGroupNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00156}00156\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a7fa2ba44dacff78c7a62087120f011f8}{SetSelectedTargetSample}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ sample\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00167}00167\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}*\ \mbox{\hyperlink{classSourceSinkData_a40f9baddce217a6d97eb20fa0fb04bf6}{GetSampleSet}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00178}00178\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_ade40142bb8e760d8595dab8f3bcb04bf}{SetTargetGroup}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ targroup);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00185}00185\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_acee70431beca1125d73882e4c20b77d7}{GetTargetGroup}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00187}00187\ \ \ \ \ \textcolor{comment}{//\ ==========\ Dataset\ Creation\ and\ Filtering\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00206}00206\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_aa8fc53bec8ebb39972402a417f452240}{CreateCorrectedDataset}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ target,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ omnsizecorrect,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00209}00209\ \ \ \ \ \ \ \ \ map<string,\ element\_information>*\ elementinfo}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00210}00210\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00231}00231\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_a77ce8bf55c447a3723fd7c521c7f39eb}{CreateCorrectedAndFilteredDataset}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00232}00232\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ exclude\_samples,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00233}00233\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ exclude\_elements,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ omnsizecorrect,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00235}00235\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ target\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00236}00236\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00248}00248\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_a2960a71fcab9a71850ae17855c616087}{ExtractChemicalElements}}(\textcolor{keywordtype}{bool}\ isotopes)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00273}00273\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_a3ef992e7b7757f4105273849836b96f1}{BoxCoxTransformed}}(\textcolor{keywordtype}{bool}\ calculate\_optimal\_lambda\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00275}00275\ \ \ \ \ \textcolor{comment}{//\ ==========\ Element\ Information\ Management\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00285}00285\ \ \ \ \ map<string,\ element\_information>*\ \mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00286}00286\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00300}00300\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a64bdfddb7abda167ac1335d48057b783}{IncludeExcludeElementsBasedOn}}(\textcolor{keyword}{const}\ vector<string>\&\ elements);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00312}00312\ \ \ \ \ \mbox{\hyperlink{classDistribution}{Distribution}}*\ \mbox{\hyperlink{classSourceSinkData_a4a51d9ca6a1f394c8be3a95fcf2d57bf}{GetFittedDistribution}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00313}00313\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00314}00314\ \ \ \ \ \textcolor{comment}{//\ ==========\ OM/Size\ Corrections\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00340}00340\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a146eb84093b492d9674b6eaed24eec47}{PerformRegressionVsOMAndSize}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ om,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00342}00342\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ particle\_size,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00343}00343\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91f}{regression\_form}}\ form,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00344}00344\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ p\_value\_threshold\ =\ 0.05}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00345}00345\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00346}00346\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00355}00355\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_afe753e4a82d8783058c6e4c3dbecc7b7}{OMandSizeConstituents}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00356}00356\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00370}00370\ \ \ \ \ vector<ResultItem>\ \mbox{\hyperlink{classSourceSinkData_a594ab5813abb8fa2cad92f0e98bbd304}{GetMLRResults}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00382}00382\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_ab1d2b253f64a9417c6e1f4404d44e12e}{FirstOMConstituent}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00393}00393\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_ad7c3a20da37b3e343acb79c6122c925e}{FirstSizeConstituent}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00401}00401\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a692422f690ee636294767cb8e5491719}{SetOMandSizeConstituents}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \_omconstituent,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \_sizeconsituent);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00402}00402\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00408}00408\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a692422f690ee636294767cb8e5491719}{SetOMandSizeConstituents}}(\textcolor{keyword}{const}\ vector<string>\&\ \_omsizeconstituents);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00409}00409\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00410}00410\ \ \ \ \ \textcolor{comment}{//\ ==========\ Outlier\ Analysis\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00411}00411\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00431}00431\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a325a438ff94e4c66eade5d9e56fa6a1e}{OutlierAnalysisForAll}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ lower\_threshold\ =\ -\/3,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ upper\_threshold\ =\ 3);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00432}00432\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00433}00433\ \ \ \ \ \textcolor{comment}{//\ ==========\ Validation\ Tests\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00434}00434\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00448}00448\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a7aeb3d65c7d76b5e104cccb0189d24cd}{NegativeValueCheck}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00449}00449\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00471}00471\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_a62cb150657a5dc6446271eff06e093e1}{BracketTest}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ target\_sample,\ \textcolor{keywordtype}{bool}\ correct\_based\_on\_om\_n\_size);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00472}00472\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00494}00494\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}\ \mbox{\hyperlink{classSourceSinkData_a62cb150657a5dc6446271eff06e093e1}{BracketTest}}(\textcolor{keywordtype}{bool}\ correct\_based\_on\_om\_n\_size,\ \textcolor{keywordtype}{bool}\ exclude\_elements,\ \textcolor{keywordtype}{bool}\ exclude\_samples);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00495}00495\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00496}00496\ \ \ \ \ \textcolor{comment}{//\ ==========\ Statistical\ Analysis\ -\/\ Discriminant\ Function\ Analysis\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00497}00497\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00519}00519\ \ \ \ \ \mbox{\hyperlink{structDFA__result}{DFA\_result}}\ \mbox{\hyperlink{classSourceSinkData_a86c761dcdfb70f7c4b0403277039f3f4}{DiscriminantFunctionAnalysis}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00520}00520\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00535}00535\ \ \ \ \ \mbox{\hyperlink{structDFA__result}{DFA\_result}}\ \mbox{\hyperlink{classSourceSinkData_a86c761dcdfb70f7c4b0403277039f3f4}{DiscriminantFunctionAnalysis}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00536}00536\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00549}00549\ \ \ \ \ \mbox{\hyperlink{structDFA__result}{DFA\_result}}\ \mbox{\hyperlink{classSourceSinkData_a86c761dcdfb70f7c4b0403277039f3f4}{DiscriminantFunctionAnalysis}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00550}00550\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00569}00569\ \ \ \ \ vector<CMBVector>\ \mbox{\hyperlink{classSourceSinkData_aa92043a6898cef91fc2377816989ad5b}{StepwiseDiscriminantFunctionAnalysis}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00570}00570\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00571}00571\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00572}00572\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00573}00573\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00587}00587\ \ \ \ \ vector<CMBVector>\ \mbox{\hyperlink{classSourceSinkData_aa92043a6898cef91fc2377816989ad5b}{StepwiseDiscriminantFunctionAnalysis}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00588}00588\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00601}00601\ \ \ \ \ vector<CMBVector>\ \mbox{\hyperlink{classSourceSinkData_aa92043a6898cef91fc2377816989ad5b}{StepwiseDiscriminantFunctionAnalysis}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00602}00602\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00603}00603\ \ \ \ \ \textcolor{comment}{//\ ==========\ Statistical\ Analysis\ -\/\ Differentiation\ Power\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00604}00604\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00624}00624\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\ \mbox{\hyperlink{classSourceSinkData_a9a30d061ffe488ba0c4b617ac8184ef9}{DifferentiationPower}}(\textcolor{keywordtype}{bool}\ use\_log,\ \textcolor{keywordtype}{bool}\ include\_target);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00625}00625\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00639}00639\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\ \mbox{\hyperlink{classSourceSinkData_a224aa0bcecbe077d041e54ce84437b10}{DifferentiationPower\_Percentage}}(\textcolor{keywordtype}{bool}\ include\_target);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00640}00640\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00653}00653\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\ \mbox{\hyperlink{classSourceSinkData_ad3fae8accdc18b5f7f673460f9513622}{DifferentiationPower\_P\_value}}(\textcolor{keywordtype}{bool}\ include\_target);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00654}00654\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00680}00680\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classSourceSinkData_a224aa0bcecbe077d041e54ce84437b10}{DifferentiationPower\_Percentage}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00681}00681\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00708}00708\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classSourceSinkData_a9a30d061ffe488ba0c4b617ac8184ef9}{DifferentiationPower}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2,\ \textcolor{keywordtype}{bool}\ use\_log);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00709}00709\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00732}00732\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classSourceSinkData_a498d4ebf48c3a462b5107fca33d81564}{t\_TestPValue}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2,\ \textcolor{keywordtype}{bool}\ use\_log);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00733}00733\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00734}00734\ \ \ \ \ \textcolor{comment}{//\ ==========\ Statistical\ Analysis\ -\/\ ANOVA\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00735}00735\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00752}00752\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_a3183de8d7688dfcebb122c711426f536}{ANOVA}}(\textcolor{keywordtype}{bool}\ use\_log);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00753}00753\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00771}00771\ \ \ \ \ \mbox{\hyperlink{structANOVA__info}{ANOVA\_info}}\ \mbox{\hyperlink{classSourceSinkData_a3183de8d7688dfcebb122c711426f536}{ANOVA}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element,\ \textcolor{keywordtype}{bool}\ use\_log);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00772}00772\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00773}00773\ \ \ \ \ \textcolor{comment}{//\ ==========\ Parameter\ and\ Observation\ Setup\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00774}00774\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00785}00785\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_a9ae183eb8ba992bbea038a28738963a8}{GetParameterName}}(\textcolor{keywordtype}{int}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00786}00786\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00804}00804\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a08a9298df90991f6735134ae8d6a0955}{InitializeParametersAndObservations}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00805}00805\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ targetsamplename,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00806}00806\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ est\_mode\ =\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{estimation\_mode::elemental\_profile\_and\_contribution}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00807}00807\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00808}00808\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00819}00819\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a404b15f9442985b50d10b6ef65cf7c76}{SetParameterEstimationMode}}(\mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ est\_mode);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00820}00820\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00844}00844\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a539a9ca46ec14ca1ba20adfea26fd073}{SetParameterValue}}(\textcolor{keywordtype}{size\_t}\ index,\ \textcolor{keywordtype}{double}\ value);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00845}00845\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00854}00854\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a1317075500eb87ca0a39c3ef76edee61}{SetProgressWindow}}(\mbox{\hyperlink{classProgressWindow}{ProgressWindow}}*\ \_rtw);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00855}00855\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00856}00856\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00857}00857\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00858}00858\ \ \ \ \ \textcolor{comment}{//\ ==========\ Optimization\ -\/\ Levenberg-\/Marquardt\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00859}00859\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00881}00881\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a32b45e92ee2e8f5fc7d2db0dbfde8272}{SolveLevenberg\_Marquardt}}(\mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}{transformation}}\ trans\ =\ \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1a9a932b3cb396238423eb2f33ec17d6aa}{transformation::linear}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00882}00882\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00899}00899\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \mbox{\hyperlink{classSourceSinkData_adc74c850deb3057a5d3a50123a781493}{LM\_Batch}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00900}00900\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sourcesinkdata_8h_a11d668d69b6bca08871d520d0315e9e1}{transformation}}\ transform,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00901}00901\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ apply\_om\_size\_correction,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00902}00902\ \ \ \ \ \ \ \ \ map<\textcolor{keywordtype}{string},\ vector<string>>\&\ negative\_elements}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00903}00903\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00904}00904\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00913}00913\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a670c9b114146a2294e7564f804ce806c}{GetPredictedValues}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00914}00914\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00932}00932\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_aa749b603f847f91cbb8465f73b686332}{GradientUpdate}}(\mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ estmode\ =\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{estimation\_mode::elemental\_profile\_and\_contribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00933}00933\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00934}00934\ \ \ \ \ \textcolor{comment}{//\ ==========\ MCMC\ Analysis\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00935}00935\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00955}00955\ \ \ \ \ \mbox{\hyperlink{classResults}{Results}}\ \mbox{\hyperlink{classSourceSinkData_a979f693b42247f216f3f0ee4f3590fc0}{MCMC}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00956}00956\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ target\_sample,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00957}00957\ \ \ \ \ \ \ \ \ map<string,\ string>\ arguments,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00958}00958\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMCMC}{CMCMC<SourceSinkData>}}*\ mcmc,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00959}00959\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}*\ progress\_window,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00960}00960\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ working\_folder}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00961}00961\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00962}00962\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00984}00984\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}\ \mbox{\hyperlink{classSourceSinkData_a4539fd86764aa18678766c9d9ec246fa}{MCMC\_Batch}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00985}00985\ \ \ \ \ \ \ \ \ map<string,\ string>\ arguments,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00986}00986\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMCMC}{CMCMC<SourceSinkData>}}*\ mcmc,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00987}00987\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}*\ progress\_window,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00988}00988\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ working\_folder}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00989}00989\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00990}00990\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00991}00991\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Likelihood\ and\ Objective\ Functions\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l00992}00992\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01002}01002\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_adafdb1e2e66a6690e93426a3cc0a31f4}{GetObjectiveFunctionValue}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01003}01003\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01014}01014\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_aa24df45c7fbb1388ac79eb6f41d83fea}{LogLikelihood}}(\mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ est\_mode\ =\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{estimation\_mode::elemental\_profile\_and\_contribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01015}01015\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01016}01016\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01017}01017\ \ \ \ \ \textcolor{comment}{//\ ==========\ Bootstrap\ and\ Validation\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01018}01018\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01035}01035\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \mbox{\hyperlink{classSourceSinkData_a24e812e067169f5a6d8a05d501205000}{BootStrap}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01036}01036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ percentage,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01037}01037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num\_iterations,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01038}01038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ target\_sample,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01039}01039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_softmax}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01040}01040\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01041}01041\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01062}01062\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a24e812e067169f5a6d8a05d501205000}{BootStrap}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01063}01063\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResults}{Results}}*\ results,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01064}01064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ percentage,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01065}01065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num\_iterations,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01066}01066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ target\_sample,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01067}01067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_softmax}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01068}01068\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01069}01069\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01088}01088\ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}\ \mbox{\hyperlink{classSourceSinkData_a7ed4c3053a2afaa56bd01f93da5c0a8f}{VerifySource}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01089}01089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source\_group,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01090}01090\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_softmax,}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01091}01091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ apply\_om\_size\_correction}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01092}01092\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01093}01093\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01094}01094\ \ \ \ \ \textcolor{comment}{//\ ==========\ Results\ Retrieval\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01095}01095\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01106}01106\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_ad4ae1cb496468b2ac32e53867ff69a03}{GetContribution}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01107}01107\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01118}01118\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_a1ebb6c021626f364c9b9de299fed5a0a}{GetObservedElementalProfile}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01119}01119\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01131}01131\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_ae5fa7b9362352354de974f60d8c60db2}{GetObservedElementalProfile\_Isotope}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01132}01132\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01145}01145\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_a652930719db6f94cc23c3bacc7a86216}{GetPredictedElementalProfile}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01146}01146\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01147}01147\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01148}01148\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01162}01162\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_a615bd445ce56457d8aa9334bb8358f79}{GetPredictedElementalProfile\_Isotope}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01163}01163\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01164}01164\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01165}01165\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01179}01179\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_abd5705a8b8ae3ec80c77501edfdf6739}{GetObservedvsModeledElementalProfile}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01180}01180\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01181}01181\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01182}01182\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01196}01196\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_afb3af3ace404ca507c6552a4c7048e7a}{GetObservedvsModeledElementalProfile\_Isotope}}(}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01197}01197\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01198}01198\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01199}01199\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01211}01211\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_a968841ec9a0bdbb1f72e974e001e79a2}{GetCalculatedElementMeans}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01212}01212\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01223}01223\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_a68978e67cec604be7eaff266f539799d}{GetCalculatedElementSigma}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01224}01224\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01235}01235\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_a1cd91c1a70e535751766e9dd1b16a1fd}{GetCalculatedElementMu}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01236}01236\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01247}01247\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_af8709f0969abd0f285d3f967e05f8984}{GetEstimatedElementMu}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01248}01248\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01259}01259\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_acd3ae50dd52327fbbe36c3ec1818df89}{GetEstimatedElementMean}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01260}01260\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01271}01271\ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \mbox{\hyperlink{classSourceSinkData_aaf8979b81a5b34867a56cd13bbc3b443}{GetEstimatedElementSigma}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01272}01272\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01283}01283\ \ \ \ \ vector<ResultItem>\ \mbox{\hyperlink{classSourceSinkData_a8a13cc38c041c8300440b00ebb02da78}{GetSourceProfiles}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01284}01284\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01285}01285\ \ \ \ \ \textcolor{comment}{//\ ==========\ Utility\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01286}01286\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01295}01295\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a838cf69e68590ac14230429cb9f454f4}{AddtoToolsUsed}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ tool);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01296}01296\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01297}01297\ \ \ \ \ \textcolor{comment}{//\ ==========\ Accessors\ (inline\ for\ performance)\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01298}01298\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01303}01303\ \ \ \ \ vector<Parameter>\&\ \mbox{\hyperlink{classSourceSinkData_a1b6a2bdaf16538696aecd2b4dbee792a}{Parameters}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01304}01304\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01309}01309\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classSourceSinkData_a134025242426be65ff4977970bd12006}{ParametersCount}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01310}01310\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01315}01315\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classSourceSinkData_aa4fcbd17f7c56da0657e42ac6e073fab}{ObservationsCount}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01316}01316\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01322}01322\ \ \ \ \ \mbox{\hyperlink{classParameter}{Parameter}}*\ \mbox{\hyperlink{classSourceSinkData_a699b39191b623657dba4ae384105f5a7}{parameter}}(\textcolor{keywordtype}{size\_t}\ i);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01323}01323\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01329}01329\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classParameter}{Parameter}}*\ \mbox{\hyperlink{classSourceSinkData_a699b39191b623657dba4ae384105f5a7}{parameter}}(\textcolor{keywordtype}{size\_t}\ i)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01330}01330\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01336}01336\ \ \ \ \ \mbox{\hyperlink{classObservation}{Observation}}*\ \mbox{\hyperlink{classSourceSinkData_a2b1107237ba890b84775187be96f2eaf}{observation}}(\textcolor{keywordtype}{size\_t}\ i);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01337}01337\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01342}01342\ \ \ \ \ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ \mbox{\hyperlink{classSourceSinkData_aca1690d7652bf7ce2886c5d7ccf2c0a2}{ParameterEstimationMode}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01343}01343\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01349}01349\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}*\ \mbox{\hyperlink{classSourceSinkData_a3c744756ef18da727f8e6e0dbff31c4e}{GetElementDistribution}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01350}01350\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01357}01357\ \ \ \ \ \mbox{\hyperlink{classConcentrationSet}{ConcentrationSet}}*\ \mbox{\hyperlink{classSourceSinkData_a3c744756ef18da727f8e6e0dbff31c4e}{GetElementDistribution}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ sample\_group);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01358}01358\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01365}01365\ \ \ \ \ \mbox{\hyperlink{structelement__information}{element\_information}}*\ \mbox{\hyperlink{classSourceSinkData_a80857e027bccb6e686332fabd5b9146e}{GetElementInformation}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01366}01366\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01367}01367\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Distribution\ Management\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01368}01368\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01379}01379\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_ad0c6334acce4ffd543ebbdee5d1f4967}{PopulateElementDistributions}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01380}01380\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01393}01393\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a8e28e36675290f18f90d2060fd8b78df}{PopulateElementInformation}}(\textcolor{keyword}{const}\ map<string,\ element\_information>*\ ElementInfo\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01394}01394\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01409}01409\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a058848caa99cfe960d968d36bfdf6e52}{AssignAllDistributions}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01410}01410\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01411}01411\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Data\ Extraction\ and\ Management\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01412}01412\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01423}01423\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSourceSinkData_ac1ad5dce1770a45f4281757bee200d15}{CountElements}}(\textcolor{keywordtype}{bool}\ exclude\_elements)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01424}01424\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01434}01434\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_aaa31775b3d948b8a29dbc0c45ed1c081}{GetSampleNames}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ group\_name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01435}01435\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01444}01444\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_abcad2b31ae834586fe2f88b3ff2bb6ab}{GetGroupNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01445}01445\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01455}01455\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a2546256c963959064c11aebc6a7e8c99}{GetElementNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01456}01456\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01466}01466\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_ab056c3bec74eba318e113c76c09d899f}{IncludeExcludeAllElements}}(\textcolor{keywordtype}{bool}\ include\_in\_analysis);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01467}01467\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01481}01481\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}\ \mbox{\hyperlink{classSourceSinkData_a0d35c0013351d3694217e68f730a1f8a}{Sample}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ sample\_name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01482}01482\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01493}01493\ \ \ \ \ \mbox{\hyperlink{structprofiles__data}{profiles\_data}}\ \mbox{\hyperlink{classSourceSinkData_a0454eea1c7073690f8852df45a613dbb}{ExtractConcentrationData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}<vector<string>>\&\ indicators)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01494}01494\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01505}01505\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\ \mbox{\hyperlink{classSourceSinkData_a62f7fd7fd2b547717ee17b758c74043d}{ExtractSamplesAsProfileSet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}<vector<string>>\&\ indicators)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01506}01506\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01518}01518\ \ \ \ \ \mbox{\hyperlink{structelement__data}{element\_data}}\ \mbox{\hyperlink{classSourceSinkData_acae37d39d14033361afd446719613006}{ExtractElementConcentrations}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ group)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01519}01519\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01530}01530\ \ \ \ \ map<string,\ vector<double>>\ \mbox{\hyperlink{classSourceSinkData_a20743506340f41d7589985d34b742a6c}{ExtractElementDataByGroup}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01531}01531\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01542}01542\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_ac5ab621b9220e26633b27fa5613e7c49}{ExtractSpecificElements}}(\textcolor{keyword}{const}\ vector<string>\&\ element\_list)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01543}01543\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01557}01557\ \ \ \ \ map<string,\ ConcentrationSet>\ \mbox{\hyperlink{classSourceSinkData_a4c911d6ed26da9dad7085d9ef575209e}{ExtractConcentrationSet}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01558}01558\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01559}01559\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Element\ Ordering\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01560}01560\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01571}01571\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a86f4c5d58291d1f09492baddae05d15b}{ElementsToBeUsedInCMB}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01572}01572\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01584}01584\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a0432078830ca97510b99a76e58a9ddae}{IsotopesToBeUsedInCMB}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01585}01585\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01601}01601\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a89f22f243adbc94da12f4c4b0a46e96d}{PopulateConstituentOrders}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01602}01602\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01608}01608\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_abcc5a9dcd66a398aa23955b5455f55a4}{SelectedTargetSample}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01609}01609\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01610}01610\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Tools\ Tracking\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01611}01611\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01621}01621\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a590c5b2344ab9f3acebe8273396554fd}{ToolsUsed}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ tool\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01622}01622\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01623}01623\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ File\ I/O\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01624}01624\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01633}01633\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_a06488b757c167410434fa523c18c350e}{GetOutputPath}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01634}01634\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01641}01641\ \ \ \ \ QMap<QString,\ double>*\ \mbox{\hyperlink{classSourceSinkData_a0ef8c7f15f6d99f3086b9193964ec734}{GetOptions}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01642}01642\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01652}01652\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a5eb0fd013da350b4d44ccbfe8669d635}{SetOutputPath}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ output\_path);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01653}01653\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01662}01662\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classSourceSinkData_a67ff4bf1e0967674a87a994090691d10}{ElementInformationToJsonObject}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01663}01663\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01672}01672\ \ \ \ \ QJsonArray\ \mbox{\hyperlink{classSourceSinkData_af0cb9194d718bd86866dc1f8756864f4}{ToolsUsedToJsonObject}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01673}01673\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01682}01682\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classSourceSinkData_a68a2c49275b9b42d67f52b20fc3bec3a}{OptionsToJsonObject}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01683}01683\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01690}01690\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a6a6a8ed0ce565688d4a815a503db6ca9}{ReadToolsUsedFromJsonObject}}(\textcolor{keyword}{const}\ QJsonArray\&\ jsonarray);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01691}01691\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01703}01703\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a1ec4d551973cac9a79b81081cc1b2ff1}{ReadElementInformationfromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ jsonobject);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01704}01704\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01716}01716\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a62e661534f4cf0e3db0c0d333e58d58e}{ReadElementDatafromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ jsonobject);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01717}01717\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01726}01726\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_ad8780ba32aa90c12432be3eaf3035fd5}{ReadOptionsfromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ jsonobject);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01727}01727\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01735}01735\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classSourceSinkData_a78ef10ef1ab315d2dca53d05fffadb25}{ElementDataToJsonObject}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01736}01736\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01748}01748\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_af37c5ec44dc9abf54272a0c2b61d3eb9}{WriteDataToFile}}(QFile*\ file);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01749}01749\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01758}01758\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_af4ac314e8aa15f6e4b420a9ad3e7fd7d}{WriteToFile}}(QFile*\ file);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01759}01759\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01772}01772\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a19f4b75f5b8d5e0c5d81f56e74effc9a}{ReadFromFile}}(QFile*\ fil);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01773}01773\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01774}01774\ \ \ \ \ \textcolor{comment}{//\ ==========\ Private\ Data\ Members\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01775}01775\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01776}01776\ \ \ \ \ \textcolor{comment}{//\ Element\ Metadata\ and\ Distributions}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01777}\mbox{\hyperlink{classSourceSinkData_a8d47c4d2c07cc7cb52fd8e700df95cf4}{01777}}\ \ \ \ \ map<string,\ element\_information>\ \mbox{\hyperlink{classSourceSinkData_a8d47c4d2c07cc7cb52fd8e700df95cf4}{element\_information\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01778}\mbox{\hyperlink{classSourceSinkData_a873a7bc5d6d1ec41d600298406562c85}{01778}}\ \ \ \ \ map<string,\ ConcentrationSet>\ \mbox{\hyperlink{classSourceSinkData_a873a7bc5d6d1ec41d600298406562c85}{element\_distributions\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01779}01779\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01780}01780\ \ \ \ \ \textcolor{comment}{//\ Counters}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01781}\mbox{\hyperlink{classSourceSinkData_aca42c4fbe5e2da2fb69649444d570d91}{01781}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSourceSinkData_aca42c4fbe5e2da2fb69649444d570d91}{numberofconstituents\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01782}\mbox{\hyperlink{classSourceSinkData_af0ee8b291ffa6e5d3107c878ce357617}{01782}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSourceSinkData_af0ee8b291ffa6e5d3107c878ce357617}{numberofisotopes\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01783}\mbox{\hyperlink{classSourceSinkData_a740ad11fd70ca07381edd903231b6b49}{01783}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSourceSinkData_a740ad11fd70ca07381edd903231b6b49}{numberofsourcesamplesets\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01784}01784\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01785}01785\ \ \ \ \ \textcolor{comment}{//\ MCMC/Optimization\ Data}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01786}\mbox{\hyperlink{classSourceSinkData_a49bb45d0d020cf98a6d1a2cdf8bdde97}{01786}}\ \ \ \ \ vector<Observation>\ \mbox{\hyperlink{classSourceSinkData_a49bb45d0d020cf98a6d1a2cdf8bdde97}{observations\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01787}\mbox{\hyperlink{classSourceSinkData_adcfacd8fb3eeba13bcb4883d32646bfa}{01787}}\ \ \ \ \ vector<Parameter>\ \mbox{\hyperlink{classSourceSinkData_adcfacd8fb3eeba13bcb4883d32646bfa}{parameters\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01788}01788\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01789}01789\ \ \ \ \ \textcolor{comment}{//\ File\ Paths}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01790}\mbox{\hyperlink{classSourceSinkData_a012773c53c34e3a34d2a42f01837c78c}{01790}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_a012773c53c34e3a34d2a42f01837c78c}{outputpath\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01791}01791\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01792}01792\ \ \ \ \ \textcolor{comment}{//\ Group\ and\ Sample\ Identifiers}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01793}\mbox{\hyperlink{classSourceSinkData_abe3fa24e47ef6d7889786a2ca02f6f2c}{01793}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_abe3fa24e47ef6d7889786a2ca02f6f2c}{target\_group\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01794}\mbox{\hyperlink{classSourceSinkData_ad8fb82d445d9fdbe8b10ab06da8af43c}{01794}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_ad8fb82d445d9fdbe8b10ab06da8af43c}{selected\_target\_sample\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01795}01795\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01796}01796\ \ \ \ \ \textcolor{comment}{//\ Ordering\ Vectors}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01797}\mbox{\hyperlink{classSourceSinkData_a9d57cc681f895f9d85471a45df2f5fb3}{01797}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a9d57cc681f895f9d85471a45df2f5fb3}{samplesetsorder\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01798}\mbox{\hyperlink{classSourceSinkData_a727a70bacca5d87cd3d8f634220468fd}{01798}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a727a70bacca5d87cd3d8f634220468fd}{constituent\_order\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01799}\mbox{\hyperlink{classSourceSinkData_a0616ffe6c665a8d8fee0e1c61629a03c}{01799}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a0616ffe6c665a8d8fee0e1c61629a03c}{element\_order\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01800}\mbox{\hyperlink{classSourceSinkData_a639057b501e1112fea404353c45da84a}{01800}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a639057b501e1112fea404353c45da84a}{isotope\_order\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01801}\mbox{\hyperlink{classSourceSinkData_a16e4c0e2814aaea107c224cbd0547c9f}{01801}}\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a16e4c0e2814aaea107c224cbd0547c9f}{size\_om\_order\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01802}01802\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01803}01803\ \ \ \ \ \textcolor{comment}{//\ Analysis\ Settings}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01804}\mbox{\hyperlink{classSourceSinkData_a5ce995d8078419273d3c9aef4544b5d1}{01804}}\ \ \ \ \ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ \mbox{\hyperlink{classSourceSinkData_a5ce995d8078419273d3c9aef4544b5d1}{parameter\_estimation\_mode\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01805}\mbox{\hyperlink{classSourceSinkData_aa97700609b5d932bab158c56a7b13c01}{01805}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_aa97700609b5d932bab158c56a7b13c01}{omconstituent\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01806}\mbox{\hyperlink{classSourceSinkData_af6c9d0f57e7b155683aa602c7dbced2c}{01806}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classSourceSinkData_af6c9d0f57e7b155683aa602c7dbced2c}{sizeconsituent\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01807}\mbox{\hyperlink{classSourceSinkData_a420c2455872e6c3f06f23d505143b026}{01807}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a420c2455872e6c3f06f23d505143b026}{regression\_p\_value\_threshold\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01808}\mbox{\hyperlink{classSourceSinkData_af6f5d9958ce8333f95b1a70de6742dda}{01808}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_af6f5d9958ce8333f95b1a70de6742dda}{distance\_coeff\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01809}\mbox{\hyperlink{classSourceSinkData_a376391201e6b85df12b3e10109075f38}{01809}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a376391201e6b85df12b3e10109075f38}{error\_stdev\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01810}\mbox{\hyperlink{classSourceSinkData_af0e42ce81c27793f869de21e41af0047}{01810}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_af0e42ce81c27793f869de21e41af0047}{error\_stdev\_isotope\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01811}\mbox{\hyperlink{classSourceSinkData_a2f8e952555287d4d5679be256c4c829e}{01811}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a2f8e952555287d4d5679be256c4c829e}{epsilon\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01812}01812\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01813}01813\ \ \ \ \ \textcolor{comment}{//\ UI\ and\ Tracking}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01814}\mbox{\hyperlink{classSourceSinkData_a8e9e1d106ac0a5c43239d4230aa893ac}{01814}}\ \ \ \ \ \mbox{\hyperlink{classProgressWindow}{ProgressWindow}}*\ \mbox{\hyperlink{classSourceSinkData_a8e9e1d106ac0a5c43239d4230aa893ac}{rtw\_}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01815}\mbox{\hyperlink{classSourceSinkData_a523f9e5405596821ca343ab91401cdbb}{01815}}\ \ \ \ \ list<string>\ \mbox{\hyperlink{classSourceSinkData_a523f9e5405596821ca343ab91401cdbb}{tools\_used\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01816}\mbox{\hyperlink{classSourceSinkData_a85a1a5ba7ae50da9e9b62c043ec5a31f}{01816}}\ \ \ \ \ QMap<QString,\ double>\ \mbox{\hyperlink{classSourceSinkData_a85a1a5ba7ae50da9e9b62c043ec5a31f}{options\_}};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01817}01817\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01818}01818\ \ \ \ \ \textcolor{comment}{//\ ==========\ Private\ Helper\ Methods\ ==========}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01819}01819\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01820}01820\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01834}01834\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}*\ \mbox{\hyperlink{classSourceSinkData_a01b12a412de1884e96d1f3fe6733fb42}{GetElementalProfile}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ sample\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01835}01835\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01836}01836\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Element\ Role\ Conversion\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01837}01837\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01856}01856\ \ \ \ \ QString\ \mbox{\hyperlink{classSourceSinkData_aa3d49727624bc2d7b42b175625c01f1d}{Role}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{element\_information::role}}\&\ role)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01857}01857\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01876}01876\ \ \ \ \ \mbox{\hyperlink{structelement__information_a927baa115e71066b2964052d16cc474c}{element\_information::role}}\ \mbox{\hyperlink{classSourceSinkData_aa3d49727624bc2d7b42b175625c01f1d}{Role}}(\textcolor{keyword}{const}\ QString\&\ role\_string)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01877}01877\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01878}01878\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Parameter\ Management\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01879}01879\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01888}01888\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a54f752b68cab04cd3616d0d6ce0acc63}{GetParameterValue}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01889}01889\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01901}01901\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_a539a9ca46ec14ca1ba20adfea26fd073}{SetParameterValue}}(\textcolor{keyword}{const}\ CVector\&\ values);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01902}01902\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01911}01911\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a54f752b68cab04cd3616d0d6ce0acc63}{GetParameterValue}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01912}01912\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01913}01913\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Contribution\ Initialization\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01914}01914\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01924}01924\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_aa1e435c4808c7cf179961e354c7528ea}{InitializeContributionsRandomly}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01925}01925\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01938}01938\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classSourceSinkData_ac624ea52343136867f18d26221ef6561}{InitializeContributionsRandomlySoftmax}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01939}01939\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01940}01940\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Contribution\ Accessors\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01941}01941\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01953}01953\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_ae9fef37263438a051d8329037f8045a6}{GetSourceContributions}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01954}01954\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01969}01969\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a2293066f6e29dfe77a4afd307dc013e9}{GetContributionVector}}(\textcolor{keywordtype}{bool}\ include\_all\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01970}01970\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01981}01981\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a6431d5205df586dc8a9f2ad823a1bf55}{GetContributionVectorSoftmax}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01982}01982\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01994}01994\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_af82838027045dfbaa2aafee84d161261}{SetContribution}}(\textcolor{keywordtype}{size\_t}\ source\_index,\ \textcolor{keywordtype}{double}\ contribution\_value);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l01995}01995\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02007}02007\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a7156addd3820d42a99f8081e69e609fc}{SetContributionSoftmax}}(\textcolor{keywordtype}{size\_t}\ source\_index,\ \textcolor{keywordtype}{double}\ softmax\_value);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02008}02008\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02019}02019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_af82838027045dfbaa2aafee84d161261}{SetContribution}}(\textcolor{keyword}{const}\ CVector\&\ contributions);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02020}02020\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02031}02031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSourceSinkData_a7156addd3820d42a99f8081e69e609fc}{SetContributionSoftmax}}(\textcolor{keyword}{const}\ CVector\&\ softmax\_params);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02032}02032\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02033}02033\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Distribution\ Parameter\ Accessors\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02034}02034\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02047}02047\ \ \ \ \ \mbox{\hyperlink{classParameter}{Parameter}}*\ \mbox{\hyperlink{classSourceSinkData_ac8339310d98e9239504b8f10913dd2aa}{GetElementDistributionMuParameter}}(\textcolor{keywordtype}{size\_t}\ element\_index,\ \textcolor{keywordtype}{size\_t}\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02048}02048\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02061}02061\ \ \ \ \ \mbox{\hyperlink{classParameter}{Parameter}}*\ \mbox{\hyperlink{classSourceSinkData_a055ccc810bfed30d756faf601260b200}{GetElementDistributionSigmaParameter}}(\textcolor{keywordtype}{size\_t}\ element\_index,\ \textcolor{keywordtype}{size\_t}\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02062}02062\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02070}02070\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a2510ccd2001c2fc113d1f77ba6a47b0b}{GetElementDistributionMuValue}}(\textcolor{keywordtype}{size\_t}\ element\_index,\ \textcolor{keywordtype}{size\_t}\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02071}02071\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02079}02079\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_aef8139027a9f63a5cededade8c527b4f}{GetElementDistributionSigmaValue}}(\textcolor{keywordtype}{size\_t}\ element\_index,\ \textcolor{keywordtype}{size\_t}\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02080}02080\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02081}02081\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Observation\ Data\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02082}02082\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02092}02092\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_ae39d5742f28c46cd59baf637d095c857}{ObservedDataforSelectedSample}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{classSourceSinkData_abcc5a9dcd66a398aa23955b5455f55a4}{SelectedTargetSample}}\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02093}02093\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02104}02104\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a5b2108982e44faeb2db8f198205681b7}{ObservedDataforSelectedSample\_Isotope}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{classSourceSinkData_abcc5a9dcd66a398aa23955b5455f55a4}{SelectedTargetSample}}\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02105}02105\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02115}02115\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a471e810a901ee0e044034acb10fc2ffd}{ObservedDataforSelectedSample\_Isotope\_delta}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{classSourceSinkData_abcc5a9dcd66a398aa23955b5455f55a4}{SelectedTargetSample}}\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02116}02116\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02117}02117\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Prediction\ Methods\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02118}02118\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02129}02129\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_ab74a1702330be6f3a0232d5c82bd401f}{PredictTarget}}(\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}{parameter\_mode::direct}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02130}02130\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02140}02140\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a32423ab17df1c6cfe7934c84702bf330}{PredictTarget\_Isotope}}(\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}{parameter\_mode::direct}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02141}02141\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02151}02151\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_ad43c2d95f13384cf36987f543603626e}{PredictTarget\_Isotope\_delta}}(\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02152}02152\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02165}02165\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_ae92fab07da68797022d01b43d13407ea}{BuildSourceMeanMatrix}}(\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02166}02166\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02181}02181\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_a8a5e71cad70a5ff1ba9053c9a02d3636}{BuildSourceMeanMatrix\_Isotopes}}(\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\_mode}}\ param\_mode\ =\ \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\_mode::based\_on\_fitted\_distribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02182}02182\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02183}02183\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Likelihood\ and\ Prior\ Calculations\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02192}02192\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a75683533aedbc28c8f94ea2e1d4d074c}{LogPriorContributions}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02193}02193\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02202}02202\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a9bb2d343ccd38f9f41805ad0d0d10676}{LogLikelihoodSourceElementalDistributions}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02203}02203\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02216}02216\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a45d96b41ced3b046afa5441bad678693}{LogLikelihoodModelvsMeasured}}(\mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ est\_mode\ =\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{estimation\_mode::elemental\_profile\_and\_contribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02217}02217\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02230}02230\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_af34516badaa45ca1b5e0c776215f102a}{LogLikelihoodModelvsMeasured\_Isotope}}(\mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ est\_mode\ =\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2aa1758518884935ab40d1191e04ff0cdd3}{estimation\_mode::elemental\_profile\_and\_contribution}});}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02231}02231\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02232}02232\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Optimization\ Helper\ Methods\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02233}02233\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02250}02250\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a6e3cabf9a8b003d42658aaf9252bb6c3}{Gradient}}(\textcolor{keyword}{const}\ CVector\&\ parameters,\ \mbox{\hyperlink{sourcesinkdata_8h_a7217c3f8d8d82605548bded13f396d2a}{estimation\_mode}}\ est\_mode);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02251}02251\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02265}02265\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a757825ce2eaf1183cd2497dfb148d52b}{ResidualVector}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02266}02266\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02275}02275\ \ \ \ \ CVector\_arma\ \mbox{\hyperlink{classSourceSinkData_ad61c1c8e5217d6606962c7ef1a274891}{ResidualVector\_arma}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02276}02276\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02290}02290\ \ \ \ \ CMatrix\_arma\ \mbox{\hyperlink{classSourceSinkData_a32fae169471b6b26be418a37cff32c56}{ResidualJacobian\_arma}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02291}02291\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02302}02302\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_ae74e06347663d7b93ffa91d5fa105a4e}{ResidualJacobian}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02303}02303\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02315}02315\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_a3f54ac56a4aca0fec4c70bf73d5d9f27}{ResidualJacobian\_softmax}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02316}02316\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02331}02331\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_a3f4afdfad5347db1c17c01149f5d4ef7}{OneStepLevenberg\_Marquardt}}(\textcolor{keywordtype}{double}\ lambda);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02332}02332\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02343}02343\ \ \ \ \ CVector\ \mbox{\hyperlink{classSourceSinkData_ab450e9386521e6f3e3561784a85cfd39}{OneStepLevenberg\_Marquardt\_softmax}}(\textcolor{keywordtype}{double}\ lambda);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02344}02344\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02350}02350\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_ae0c2628faf245ad0235ddfe2c4d6b96f}{GetSourceOrder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02351}02351\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02357}02357\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_af72afe1be3e4d911d86d224a1114f719}{SamplesetsOrder}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02358}02358\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02364}02364\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_ae21de4b1ccc8ed2718b6a6a0b0f3642a}{ConstituentOrder}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02365}02365\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02371}02371\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_ab9339976a6e53aa667a1742fb3e7f13c}{ElementOrder}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02372}02372\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02378}02378\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_abf6014c73ba77330662e923255d19909}{IsotopeOrder}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02379}02379\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02385}02385\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a89599696a1595e15ef2be29f4f44bf49}{SizeOMOrder}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02386}02386\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02387}02387\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Statistical\ Methods\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02388}02388\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02398}02398\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classSourceSinkData_ac7f3090bc8b1c1ee7085a55c8ad5bbe8}{TotalNumberofSourceSamples}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02399}02399\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02414}02414\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_ab03e2a43bf494e79340689a7ec9964fd}{GrandMean}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ element,\ \textcolor{keywordtype}{bool}\ use\_log);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02415}02415\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02425}02425\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\ \mbox{\hyperlink{classSourceSinkData_af1fc20c8d2084783d76894f56feb76a7}{LumpAllProfileSets}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02426}02426\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02427}02427\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Box-\/Cox\ Transformation\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02428}02428\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02448}02448\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_a31fcf5281c4834fdf930e7960f8bd438}{OptimalBoxCoxParameters}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02449}02449\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02450}02450\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Bootstrap\ Helpers\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02451}02451\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02464}02464\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_a6c08c566701510b587d2f134e04c3160}{RandomlyEliminateSourceSamples}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ percentage);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02465}02465\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02476}02476\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_ad64f7a97047285b05c679b1b347dfbf7}{AllSourceSampleNames}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02477}02477\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02490}02490\ \ \ \ \ vector<string>\ \mbox{\hyperlink{classSourceSinkData_a59696be3fb521e830c18083fd3e078fa}{RandomlypickSamples}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ percentage)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02491}02491\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02503}02503\ \ \ \ \ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}\ \mbox{\hyperlink{classSourceSinkData_a74f8c943d7c426e917751f5fc67e3dde}{ReplaceSourceAsTarget}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source\_sample\_name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02504}02504\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02505}02505\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ DFA\ Helper\ Methods\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02506}02506\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02520}02520\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_a454631d11e342150c90c9a87f6414158}{WithinGroupCovarianceMatrix}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02521}02521\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02534}02534\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_a038e6a8b3b2cefb414408686307fb66c}{BetweenGroupCovarianceMatrix}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02535}02535\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02550}02550\ \ \ \ \ CMatrix\ \mbox{\hyperlink{classSourceSinkData_aac25198517d6efee29b18a8b3d641636}{TotalScatterMatrix}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02551}02551\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02568}02568\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_a4c5fa40683b34fb16227aaeb2f374b41}{WilksLambda}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02569}02569\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02583}02583\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classSourceSinkData_acb96898e50a416a7701eaae0c1a22b1e}{DFA\_P\_Value}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02584}02584\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02593}02593\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}\ \mbox{\hyperlink{classSourceSinkData_a3731a90a3398d5b2655357e3c788c366}{DFA\_Projected}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02594}02594\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02604}02604\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}\ \mbox{\hyperlink{classSourceSinkData_a3731a90a3398d5b2655357e3c788c366}{DFA\_Projected}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02605}02605\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02618}02618\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}\ \mbox{\hyperlink{classSourceSinkData_a3731a90a3398d5b2655357e3c788c366}{DFA\_Projected}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \mbox{\hyperlink{classSourceSinkData}{SourceSinkData}}*\ original);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02619}02619\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02631}02631\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_af95e3059b73155e8cad00eba83b73b4e}{DFA\_eigvector}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02632}02632\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02645}02645\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_a408995e89dd5306cdb34891dea8b5b20}{DFA\_weight\_vector}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source2);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02646}02646\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02659}02659\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_adb361d971f26317cb7a9df2436c85c4c}{DFATransformed}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ eigenvector,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ source\_group);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02660}02660\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02672}02672\ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}\ \mbox{\hyperlink{classSourceSinkData_a2d92f2a7544a5e884c63907864b53e2d}{TheRest}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ excluded\_source);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02673}02673\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02674}02674\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Mean\ Calculation\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02675}02675\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02687}02687\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_aaaa4b6c87c20f22903afbbd6620ca482}{MeanElementalContent}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ group\_name);}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02688}02688\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02702}02702\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classSourceSinkData_aaaa4b6c87c20f22903afbbd6620ca482}{MeanElementalContent}}();}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02703}02703\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02704}02704\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02705}02705\ \};}
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02706}02706\ }
+\DoxyCodeLine{\Hypertarget{sourcesinkdata_8h_source_l02707}02707\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SOURCESINKDATA\_H}}
+
+\end{DoxyCode}

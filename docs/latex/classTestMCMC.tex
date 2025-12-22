@@ -1,0 +1,160 @@
+\doxysection{Test\+MCMC Class Reference}
+\hypertarget{classTestMCMC}{}\label{classTestMCMC}\index{TestMCMC@{TestMCMC}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/testmcmc.\+h$>$}
+
+
+
+Collaboration diagram for Test\+MCMC\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classTestMCMC__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTestMCMC_a4e18a2af29cb2d5cba35b09c257a6a7a}{Test\+MCMC}} ()
+\item 
+void \mbox{\hyperlink{classTestMCMC_a3c9a0f744972b7122297a586919004e6}{Initialize\+Parameters\+Observations}} (const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&mins, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&maxs)
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classParameter}{Parameter}} $>$ \& \mbox{\hyperlink{classTestMCMC_a8f712f367753cdb4c9f8ec4599cedff4}{Parameters}} ()
+\item 
+bool \mbox{\hyperlink{classTestMCMC_a22c9e08f6d3a87fb538fed6117b8db39}{Set\+Parameter\+Value}} (unsigned int i, double value)
+\item 
+double \mbox{\hyperlink{classTestMCMC_ae3d3adad147a8662abd34be5a28e9992}{Get\+Objective\+Function\+Value}} ()
+\item 
+CVector \mbox{\hyperlink{classTestMCMC_a1265f7ae0f60b0b8bd59c8b7346cd286}{Get\+Predicted\+Values}} ()
+\item 
+size\+\_\+t \mbox{\hyperlink{classTestMCMC_a9c1bc7f33261ddf88da730c72b7652c4}{Observations\+Count}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classParameter}{Parameter}} $>$ \mbox{\hyperlink{classTestMCMC_ab9df3932e6f347e4d89ea08c61c3e9f2}{parameters}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8h_source_l00009}{9}} of file \mbox{\hyperlink{testmcmc_8h_source}{testmcmc.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTestMCMC_a4e18a2af29cb2d5cba35b09c257a6a7a}\label{classTestMCMC_a4e18a2af29cb2d5cba35b09c257a6a7a} 
+\index{TestMCMC@{TestMCMC}!TestMCMC@{TestMCMC}}
+\index{TestMCMC@{TestMCMC}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{TestMCMC()}{TestMCMC()}}
+{\footnotesize\ttfamily Test\+MCMC\+::\+Test\+MCMC (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{testmcmc_8cpp_source}{testmcmc.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTestMCMC_ae3d3adad147a8662abd34be5a28e9992}\label{classTestMCMC_ae3d3adad147a8662abd34be5a28e9992} 
+\index{TestMCMC@{TestMCMC}!GetObjectiveFunctionValue@{GetObjectiveFunctionValue}}
+\index{GetObjectiveFunctionValue@{GetObjectiveFunctionValue}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{GetObjectiveFunctionValue()}{GetObjectiveFunctionValue()}}
+{\footnotesize\ttfamily double Test\+MCMC\+::\+Get\+Objective\+Function\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{testmcmc_8cpp_source}{testmcmc.\+cpp}}.
+
+\Hypertarget{classTestMCMC_a1265f7ae0f60b0b8bd59c8b7346cd286}\label{classTestMCMC_a1265f7ae0f60b0b8bd59c8b7346cd286} 
+\index{TestMCMC@{TestMCMC}!GetPredictedValues@{GetPredictedValues}}
+\index{GetPredictedValues@{GetPredictedValues}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{GetPredictedValues()}{GetPredictedValues()}}
+{\footnotesize\ttfamily CVector Test\+MCMC\+::\+Get\+Predicted\+Values (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{testmcmc_8cpp_source}{testmcmc.\+cpp}}.
+
+\Hypertarget{classTestMCMC_a3c9a0f744972b7122297a586919004e6}\label{classTestMCMC_a3c9a0f744972b7122297a586919004e6} 
+\index{TestMCMC@{TestMCMC}!InitializeParametersObservations@{InitializeParametersObservations}}
+\index{InitializeParametersObservations@{InitializeParametersObservations}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{InitializeParametersObservations()}{InitializeParametersObservations()}}
+{\footnotesize\ttfamily void Test\+MCMC\+::\+Initialize\+Parameters\+Observations (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{mins,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \&}]{maxs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{testmcmc_8cpp_source}{testmcmc.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, and \mbox{\hyperlink{testmcmc_8h_source_l00021}{parameters}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}.
+
+\Hypertarget{classTestMCMC_a9c1bc7f33261ddf88da730c72b7652c4}\label{classTestMCMC_a9c1bc7f33261ddf88da730c72b7652c4} 
+\index{TestMCMC@{TestMCMC}!ObservationsCount@{ObservationsCount}}
+\index{ObservationsCount@{ObservationsCount}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{ObservationsCount()}{ObservationsCount()}}
+{\footnotesize\ttfamily size\+\_\+t Test\+MCMC\+::\+Observations\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8h_source_l00018}{18}} of file \mbox{\hyperlink{testmcmc_8h_source}{testmcmc.\+h}}.
+
+\Hypertarget{classTestMCMC_a8f712f367753cdb4c9f8ec4599cedff4}\label{classTestMCMC_a8f712f367753cdb4c9f8ec4599cedff4} 
+\index{TestMCMC@{TestMCMC}!Parameters@{Parameters}}
+\index{Parameters@{Parameters}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{Parameters()}{Parameters()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ \mbox{\hyperlink{classParameter}{Parameter}} $>$ \& Test\+MCMC\+::\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8h_source_l00014}{14}} of file \mbox{\hyperlink{testmcmc_8h_source}{testmcmc.\+h}}.
+
+
+
+References \mbox{\hyperlink{testmcmc_8h_source_l00021}{parameters}}.
+
+\Hypertarget{classTestMCMC_a22c9e08f6d3a87fb538fed6117b8db39}\label{classTestMCMC_a22c9e08f6d3a87fb538fed6117b8db39} 
+\index{TestMCMC@{TestMCMC}!SetParameterValue@{SetParameterValue}}
+\index{SetParameterValue@{SetParameterValue}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{SetParameterValue()}{SetParameterValue()}}
+{\footnotesize\ttfamily bool Test\+MCMC\+::\+Set\+Parameter\+Value (\begin{DoxyParamCaption}\item[{unsigned int}]{i,  }\item[{double}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{testmcmc_8cpp_source}{testmcmc.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{testmcmc_8h_source_l00021}{parameters}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTestMCMC_ab9df3932e6f347e4d89ea08c61c3e9f2}\label{classTestMCMC_ab9df3932e6f347e4d89ea08c61c3e9f2} 
+\index{TestMCMC@{TestMCMC}!parameters@{parameters}}
+\index{parameters@{parameters}!TestMCMC@{TestMCMC}}
+\doxysubsubsection{\texorpdfstring{parameters}{parameters}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$\mbox{\hyperlink{classParameter}{Parameter}}$>$ Test\+MCMC\+::parameters\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{testmcmc_8h_source_l00021}{21}} of file \mbox{\hyperlink{testmcmc_8h_source}{testmcmc.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{testmcmc_8cpp_source_l00008}{Initialize\+Parameters\+Observations()}}, \mbox{\hyperlink{testmcmc_8h_source_l00014}{Parameters()}}, and \mbox{\hyperlink{testmcmc_8cpp_source_l00018}{Set\+Parameter\+Value()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{testmcmc_8h}{testmcmc.\+h}}\item 
+\mbox{\hyperlink{testmcmc_8cpp}{testmcmc.\+cpp}}\end{DoxyCompactItemize}

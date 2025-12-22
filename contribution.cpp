@@ -18,7 +18,7 @@ Contribution& Contribution::operator = (const Contribution &rhs)
     return *this;
 }
 
-string Contribution::ToString()
+string Contribution::ToString() const
 {
     string out;
     for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++ )
@@ -47,7 +47,7 @@ bool Contribution::Read(const QStringList &strlist)
     return true;
 }
 
-QJsonObject Contribution::toJsonObject()
+QJsonObject Contribution::toJsonObject() const
 {
     QJsonObject out;
     for (map<string,double>::const_iterator it=cbegin(); it!=cend(); it++ )

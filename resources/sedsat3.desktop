@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SedSat3
+Comment=Sediment Source Assessment Tool
+Exec=/usr/local/sedsat3/bin/SedSat3
+Icon=sedsat3
+Terminal=false
+Categories=Science;Education;
+

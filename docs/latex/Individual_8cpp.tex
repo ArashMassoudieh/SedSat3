@@ -1,0 +1,98 @@
+\doxysection{GA/\+Individual.cpp File Reference}
+\hypertarget{Individual_8cpp}{}\label{Individual_8cpp}\index{GA/Individual.cpp@{GA/Individual.cpp}}
+{\ttfamily \#include "{}Individual.\+h"{}}\newline
+{\ttfamily \#include "{}Binary.\+h"{}}\newline
+{\ttfamily \#include "{}Distribution\+NUnif.\+h"{}}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include "{}Quick\+Sort.\+h"{}}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+Include dependency graph for Individual.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Individual_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{Individual_8cpp_a90d26e64c764187d3995cb0133b026d1}{Get\+Rnd\+Unif}} (double xmin, double xmax)
+\item 
+void \mbox{\hyperlink{Individual_8cpp_a4908076579bb285a943d0729c857b7f3}{cross}} (const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&I1, const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&I2, \mbox{\hyperlink{classCIndividual}{CIndividual}} \&IR1, \mbox{\hyperlink{classCIndividual}{CIndividual}} \&IR2)
+\item 
+void \mbox{\hyperlink{Individual_8cpp_a45352715fec28dc99d19cef46f5ecee7}{cross\+\_\+\+RC\+\_\+L}} (const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&I1, const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&I2, \mbox{\hyperlink{classCIndividual}{CIndividual}} \&IR1, \mbox{\hyperlink{classCIndividual}{CIndividual}} \&IR2)
+\item 
+void \mbox{\hyperlink{Individual_8cpp_aaf926f52645804ac149f9e1eec70d389}{cross2p}} (const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&I1, const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&I2, \mbox{\hyperlink{classCIndividual}{CIndividual}} \&IR1, \mbox{\hyperlink{classCIndividual}{CIndividual}} \&IR2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{Individual_8cpp_a4908076579bb285a943d0729c857b7f3}\label{Individual_8cpp_a4908076579bb285a943d0729c857b7f3} 
+\index{Individual.cpp@{Individual.cpp}!cross@{cross}}
+\index{cross@{cross}!Individual.cpp@{Individual.cpp}}
+\doxysubsubsection{\texorpdfstring{cross()}{cross()}}
+{\footnotesize\ttfamily void cross (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{I1,  }\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{I2,  }\item[{\mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{IR1,  }\item[{\mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{IR2 }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00131}{131}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8cpp_source_l00086}{code()}}, \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Binary_8cpp_source_l00072}{CBinary\+::decode()}}, \mbox{\hyperlink{Binary_8cpp_source_l00120}{CBinary\+::extract()}}, \mbox{\hyperlink{Individual_8cpp_source_l00126}{Get\+Rnd\+Unif()}}, \mbox{\hyperlink{Individual_8h_source_l00023}{CIndividual\+::maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{CIndividual\+::minrange}}, \mbox{\hyperlink{Binary_8h_source_l00014}{CBinary\+::n\+Digits}}, \mbox{\hyperlink{Individual_8h_source_l00021}{CIndividual\+::n\+Params}}, \mbox{\hyperlink{Binary_8h_source_l00016}{CBinary\+::precision}}, \mbox{\hyperlink{Individual_8h_source_l00022}{CIndividual\+::precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{CIndividual\+::x}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}.
+
+\Hypertarget{Individual_8cpp_aaf926f52645804ac149f9e1eec70d389}\label{Individual_8cpp_aaf926f52645804ac149f9e1eec70d389} 
+\index{Individual.cpp@{Individual.cpp}!cross2p@{cross2p}}
+\index{cross2p@{cross2p}!Individual.cpp@{Individual.cpp}}
+\doxysubsubsection{\texorpdfstring{cross2p()}{cross2p()}}
+{\footnotesize\ttfamily void cross2p (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{I1,  }\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{I2,  }\item[{\mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{IR1,  }\item[{\mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{IR2 }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00214}{214}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Binary_8cpp_source_l00086}{code()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Binary_8cpp_source_l00072}{CBinary\+::decode()}}, \mbox{\hyperlink{Binary_8cpp_source_l00120}{CBinary\+::extract()}}, \mbox{\hyperlink{Individual_8cpp_source_l00126}{Get\+Rnd\+Unif()}}, \mbox{\hyperlink{Individual_8h_source_l00023}{CIndividual\+::maxrange}}, \mbox{\hyperlink{Individual_8h_source_l00023}{CIndividual\+::minrange}}, \mbox{\hyperlink{Binary_8h_source_l00014}{CBinary\+::n\+Digits}}, \mbox{\hyperlink{Individual_8h_source_l00021}{CIndividual\+::n\+Params}}, \mbox{\hyperlink{Binary_8h_source_l00016}{CBinary\+::precision}}, \mbox{\hyperlink{Individual_8h_source_l00022}{CIndividual\+::precision}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{CIndividual\+::x}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}.
+
+\Hypertarget{Individual_8cpp_a45352715fec28dc99d19cef46f5ecee7}\label{Individual_8cpp_a45352715fec28dc99d19cef46f5ecee7} 
+\index{Individual.cpp@{Individual.cpp}!cross\_RC\_L@{cross\_RC\_L}}
+\index{cross\_RC\_L@{cross\_RC\_L}!Individual.cpp@{Individual.cpp}}
+\doxysubsubsection{\texorpdfstring{cross\_RC\_L()}{cross\_RC\_L()}}
+{\footnotesize\ttfamily void cross\+\_\+\+RC\+\_\+L (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{I1,  }\item[{const \mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{I2,  }\item[{\mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{IR1,  }\item[{\mbox{\hyperlink{classCIndividual}{CIndividual}} \&}]{IR2 }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00188}{188}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{Individual_8cpp_source_l00126}{Get\+Rnd\+Unif()}}, \mbox{\hyperlink{Individual_8h_source_l00021}{CIndividual\+::n\+Params}}, and \mbox{\hyperlink{Individual_8h_source_l00014}{CIndividual\+::x}}.
+
+
+
+Referenced by \mbox{\hyperlink{GA_8cpp_source_l00351}{CGA$<$ T $>$\+::crossover\+RC()}}.
+
+\Hypertarget{Individual_8cpp_a90d26e64c764187d3995cb0133b026d1}\label{Individual_8cpp_a90d26e64c764187d3995cb0133b026d1} 
+\index{Individual.cpp@{Individual.cpp}!GetRndUnif@{GetRndUnif}}
+\index{GetRndUnif@{GetRndUnif}!Individual.cpp@{Individual.cpp}}
+\doxysubsubsection{\texorpdfstring{GetRndUnif()}{GetRndUnif()}}
+{\footnotesize\ttfamily double Get\+Rnd\+Unif (\begin{DoxyParamCaption}\item[{double}]{xmin,  }\item[{double}]{xmax }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{Individual_8cpp_source_l00126}{126}} of file \mbox{\hyperlink{Individual_8cpp_source}{Individual.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{Individual_8cpp_source_l00131}{cross()}}, \mbox{\hyperlink{Individual_8cpp_source_l00214}{cross2p()}}, \mbox{\hyperlink{Individual_8cpp_source_l00188}{cross\+\_\+\+RC\+\_\+\+L()}}, \mbox{\hyperlink{GA_8cpp_source_l00351}{CGA$<$ T $>$\+::crossover\+RC()}}, \mbox{\hyperlink{Individual_8cpp_source_l00115}{CIndividual\+::initialize()}}, and \mbox{\hyperlink{Individual_8cpp_source_l00277}{CIndividual\+::shake()}}.
+

@@ -1,0 +1,243 @@
+\doxysection{cmbmatrix.\+cpp}
+\hypertarget{cmbmatrix_8cpp_source}{}\label{cmbmatrix_8cpp_source}\mbox{\hyperlink{cmbmatrix_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbmatrix_8h}{cmbmatrix.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}QJsonArray"{}}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}Vector.h"{}}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QFile>}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00006}\mbox{\hyperlink{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}{00006}}\ \mbox{\hyperlink{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}{CMBMatrix::CMBMatrix}}():CMatrix(),\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00011}\mbox{\hyperlink{classCMBMatrix_ad86431977e241145d0ac8695aab5ca90}{00011}}\ \mbox{\hyperlink{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}{CMBMatrix::CMBMatrix}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}\&\ mp):CMatrix(mp)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}\ =\ mp.\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}\ =\ mp.\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}\ =\ mp.\mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}\ =\ mp.\mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}}\ =\ mp.\mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00020}\mbox{\hyperlink{classCMBMatrix_a1085554babb3f9b1c606aa53ac382134}{00020}}\ \mbox{\hyperlink{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}{CMBMatrix::CMBMatrix}}(\textcolor{keywordtype}{int}\ n):CMatrix(n),\ \mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}.resize(n);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}.resize(n);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00025}\mbox{\hyperlink{classCMBMatrix_a2809f932df1eb2a48eb601dbd3d018d3}{00025}}\ \mbox{\hyperlink{classCMBMatrix_a0a7daa7efa1e34c59903ecf1316a21fa}{CMBMatrix::CMBMatrix}}(\textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{int}\ m):CMatrix(m,n),\ \mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}.resize(m);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}.resize(n);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00031}\mbox{\hyperlink{classCMBMatrix_acc40ca3e43d77aeb7e48f531085e9d7b}{00031}}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}\&\ \mbox{\hyperlink{classCMBMatrix_acc40ca3e43d77aeb7e48f531085e9d7b}{CMBMatrix::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}\ \&mp)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}\ =\ mp.\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}\ =\ mp.\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}\ =\ mp.\mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}\ =\ mp.\mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}}\ =\ mp.\mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00038}00038\ \ \ \ \ CMatrix::operator=(mp);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00041}\mbox{\hyperlink{classCMBMatrix_a9b593e4be0122137740a8469eea5653a}{00041}}\ QJsonObject\ \mbox{\hyperlink{classCMBMatrix_a9b593e4be0122137740a8469eea5653a}{CMBMatrix::toJsonObject}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00042}00042\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00043}00043\ \ \ \ \ QJsonObject\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00044}00044\ \ \ \ \ QJsonArray\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<getnumrows();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00046}00046\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ QJsonArray\ row;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<getnumcols();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ row.append(\mbox{\hyperlink{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5}{valueAt}}(i,j));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}.append(row);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00051}00051\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00052}00052\ \ \ \ \ QJsonArray\ Row\_Labels;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00054}00054\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ Row\_Labels.append(QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i]));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00056}00056\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00057}00057\ \ \ \ \ QJsonArray\ Column\_Labels;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00059}00059\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ Column\_Labels.append(QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}[i]));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00062}00062\ \ \ \ \ out[\textcolor{stringliteral}{"{}Matrix"{}}]\ =\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00063}00063\ \ \ \ \ out[\textcolor{stringliteral}{"{}RowLabels"{}}]\ =\ Row\_Labels;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00064}00064\ \ \ \ \ out[\textcolor{stringliteral}{"{}ColumnLabels"{}}]\ =\ Column\_Labels;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00066}00066\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00067}\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{00067}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{CMBMatrix::ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00068}00068\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00069}00069\ \ \ \ \ QJsonArray\ array\ =\ jsonobject[\textcolor{stringliteral}{"{}Matrix"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00070}00070\ \ \ \ \ QJsonArray\ Row\_Labels\ =\ jsonobject[\textcolor{stringliteral}{"{}RowLabels"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00071}00071\ \ \ \ \ QJsonArray\ Column\_Labels\ =\ jsonobject[\textcolor{stringliteral}{"{}ColumnLabels"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (array.size()==0)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00075}00075\ \ \ \ \ Resize(array.size(),\ array[0].toArray().size());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00076}00076\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}.resize(Row\_Labels.size());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00077}00077\ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}.resize(Column\_Labels.size());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<array.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00080}00080\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j=0;\ j<array[i].toArray().size();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ matr[i][j]\ =\ array[i].toArray()[j].toDouble();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00085}00085\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<Row\_Labels.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i]\ =\ Row\_Labels[i].toString().toStdString();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00090}00090\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<Column\_Labels.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}[i]\ =\ Column\_Labels[i].toString().toStdString();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00094}00094\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00096}\mbox{\hyperlink{classCMBMatrix_afcbd91f9c11008e1707805ea7924fe89}{00096}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBMatrix_afcbd91f9c11008e1707805ea7924fe89}{CMBMatrix::writetofile}}(QFile*\ file)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00097}00097\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00098}00098\ \ \ \ \ file-\/>write(QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242}{ToString}}()).toUtf8());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00101}\mbox{\hyperlink{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242}{00101}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242}{CMBMatrix::ToString}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00102}00102\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{keywordtype}{string}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<getnumcols();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00105}00105\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{},"{}}\ +\ \mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}[j];}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00107}00107\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00108}00108\ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<getnumrows();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00110}00110\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ QJsonArray\ row;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ out+=\ \mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i];}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<getnumcols();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ out+=\textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ out+=QString::number(\mbox{\hyperlink{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5}{valueAt}}(i,j)).toStdString();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00119}00119\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00121}00121\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00122}\mbox{\hyperlink{classCMBMatrix_aaf48d4fae0de8950420bacaab8f0152b}{00122}}\ QTableWidget\ *\mbox{\hyperlink{classCMBMatrix_aaf48d4fae0de8950420bacaab8f0152b}{CMBMatrix::ToTable}}()}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00123}00123\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00124}00124\ \ \ \ \ QTableWidget\ *tablewidget\ =\ \textcolor{keyword}{new}\ QTableWidget();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00125}00125\ \ \ \ \ tablewidget-\/>setEditTriggers(QAbstractItemView::NoEditTriggers);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00126}00126\ \ \ \ \ tablewidget-\/>setColumnCount(getnumcols());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00127}00127\ \ \ \ \ tablewidget-\/>setRowCount(getnumrows());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00128}00128\ \ \ \ \ QStringList\ rowheaders;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00129}00129\ \ \ \ \ QStringList\ colheaders;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00131}00131\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<getnumcols();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ colheaders\ <<\ QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}[j]);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ getnumrows();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ rowheaders\ <<\ QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i]);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00137}00137\ \ \ \ \ tablewidget-\/>setHorizontalHeaderLabels(colheaders);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00138}00138\ \ \ \ \ tablewidget-\/>setVerticalHeaderLabels(rowheaders);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00139}00139\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ getnumrows();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00141}00141\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ getnumcols();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ QTableWidgetItem*\ item;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classCMBMatrix_a454f537af4d9658623cc5f8e462e8537}{boolean\_values}})}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item\ =\ \textcolor{keyword}{new}\ QTableWidgetItem(matr[i][j]\ ==\ 1\ ?\ \textcolor{stringliteral}{"{}Fail"{}}\ :\ \textcolor{stringliteral}{"{}Pass"{}});}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item\ =\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(matr[i][j]));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}})}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (matr[i][j]\ >\ \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}\ ||\ matr[i][j]\ <\ \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}})}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tablewidget-\/>verticalHeaderItem(i)-\/>setForeground(QBrush(Qt::red));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//item-\/>setData(Qt::ForegroundRole,\ QColor(Qt::red));}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item-\/>setBackground(QBrush(Qt::red));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item-\/>setForeground(QBrush(Qt::black));}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(i,\ j,\ item);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ tablewidget-\/>item(i,\ j)-\/>setTextAlignment(Qt::AlignCenter);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00174}00174\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00176}00176\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00177}00177\ \ \ \ \ \textcolor{keywordflow}{return}\ tablewidget;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00178}00178\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00180}\mbox{\hyperlink{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5}{00180}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMBMatrix_ae210ea1f4dc00139ce9b07264ceebec5}{CMBMatrix::valueAt}}(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00181}00181\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00182}00182\ \ \ \ \ \textcolor{keywordflow}{return}\ CMatrix::operator[](i).at(j);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00183}00183\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00185}\mbox{\hyperlink{cmbmatrix_8h_afb9b78d5aa1ef3c59c28126dfb412e56}{00185}}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{cmbmatrix_8cpp_afb9b78d5aa1ef3c59c28126dfb412e56}{operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}\ \&M,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&V)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00186}00186\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00187}00187\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ out\ =\ M.\mbox{\hyperlink{classCMBMatrix_a30ecc3a8a6abb44fe4970bf197ea7c8b}{toMatrix}}()*V.\mbox{\hyperlink{classCMBVector_a166ef62eecd6251e420a1467d531a468}{toVector}}();}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00188}00188\ \ \ \ \ out.\mbox{\hyperlink{classCMBVector_a2316d881437bfec2831e86dccc2c3590}{SetLabels}}(M.\mbox{\hyperlink{classCMBMatrix_af4be45ec3c91fdfaf6ebb3e47245124d}{RowLabels}}());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00189}00189\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00191}00191\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00193}\mbox{\hyperlink{classCMBMatrix_a30ecc3a8a6abb44fe4970bf197ea7c8b}{00193}}\ CMatrix\ \mbox{\hyperlink{classCMBMatrix_a30ecc3a8a6abb44fe4970bf197ea7c8b}{CMBMatrix::toMatrix}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00194}00194\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00195}00195\ \ \ \ \ CMatrix\ out(getnumrows(),\ getnumcols());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00196}00196\ \ \ \ \ out.matr\ =\ matr;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00197}00197\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00198}00198\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00200}\mbox{\hyperlink{classCMBMatrix_af2d9a2ae9bb0b91ab6f88036ab370f38}{00200}}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBMatrix_af2d9a2ae9bb0b91ab6f88036ab370f38}{CMBMatrix::GetRow}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&rowlabel)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00201}00201\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00202}00202\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ out(getnumcols());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00204}00204\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i]==rowlabel)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j=0;\ j<getnumcols();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[j]\ =\ matr[i][j];}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00210}00210\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00211}00211\ \ \ \ \ out.\mbox{\hyperlink{classCMBVector_a2316d881437bfec2831e86dccc2c3590}{SetLabels}}(\mbox{\hyperlink{classCMBMatrix_a1bd1d4a7a9f29e02e483a8869327ca95}{ColumnLabels}}());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00213}00213\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00214}\mbox{\hyperlink{classCMBMatrix_ae3274b6fd02e1eee4520e5c40743b503}{00214}}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ \mbox{\hyperlink{classCMBMatrix_ae3274b6fd02e1eee4520e5c40743b503}{CMBMatrix::GetColumn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&columnlabel)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00215}00215\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00216}00216\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\ out(getnumrows());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00217}00217\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00218}00218\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classCMBMatrix_ad42187326bd33fa8176fe19e9c4495a6}{columnlabels}}[i]==columnlabel)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j=0;\ j<getnumrows();\ j++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out[j]\ =\ matr[j][i];}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00224}00224\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00225}00225\ \ \ \ \ out.\mbox{\hyperlink{classCMBVector_a2316d881437bfec2831e86dccc2c3590}{SetLabels}}(\mbox{\hyperlink{classCMBMatrix_af4be45ec3c91fdfaf6ebb3e47245124d}{RowLabels}}());}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00226}00226\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00227}00227\ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00229}\mbox{\hyperlink{classCMBMatrix_ac1a8c32e4b78c21810949f04ef51a7b8}{00229}}\ QStringList\ \mbox{\hyperlink{classCMBMatrix_ac1a8c32e4b78c21810949f04ef51a7b8}{CMBMatrix::RowLabelCategories}}()}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00230}00230\ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00231}00231\ \ \ \ \ QStringList\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00232}00232\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00233}00233\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!out.contains(QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i])))}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ out<<QString::fromStdString(\mbox{\hyperlink{classCMBMatrix_afda7d7a640c806e296bb0399687460ee}{rowlabels}}[i]);}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00236}00236\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00237}00237\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{cmbmatrix_8cpp_source_l00238}00238\ \}}
+
+\end{DoxyCode}

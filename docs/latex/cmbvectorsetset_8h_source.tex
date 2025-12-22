@@ -1,0 +1,50 @@
+\doxysection{cmbvectorsetset.\+h}
+\hypertarget{cmbvectorsetset_8h_source}{}\label{cmbvectorsetset_8h_source}\mbox{\hyperlink{cmbvectorsetset_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ CMBVectorSetSetSET\_H}}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ CMBVectorSetSetSET\_H}}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interface_8h}{interface.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbvectorset_8h}{cmbvectorset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00017}\mbox{\hyperlink{classCMBVectorSetSet}{00017}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classInterface}{Interface}},\ \textcolor{keyword}{public}\ map<string,\ CMBVectorSet>}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00019}00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSetSet_a747c639e007d29825734da46d6e800df}{CMBVectorSetSet}}();}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSetSet_a747c639e007d29825734da46d6e800df}{CMBVectorSetSet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}\&\ \mbox{\hyperlink{classCMBVectorSetSet_acd91ec5ea707328d7e82df6d7a70ddc6}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}\&\ mp);}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00042}00042\ \ \ \ \ QJsonObject\ \mbox{\hyperlink{classCMBVectorSetSet_acc9cd8b63f62b8a9fd25aaf1eb88f67e}{toJsonObject}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBVectorSetSet_a2dba36384e0294acfd2448b5e7c34581}{ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\&\ jsonobject)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBVectorSetSet_a26445949d7659745b3169f604cfe00cf}{ToString}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00065}00065\ \ \ \ \ QTableWidget*\ \mbox{\hyperlink{classCMBVectorSetSet_a29faf2e27689a350944cbdf3cd37565e}{ToTable}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCMBVectorSetSet_aaf68e4571ace5fd2ce575b54829e526d}{writetofile}}(QFile*\ file)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00081}00081\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classCMBVectorSetSet_a6219fbaac1d819b1196e26eec9cf25f4}{Label}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ column,\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00090}00090\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMBVectorSetSet_a29c6b72994ca79e4e3c2f0b662d36b77}{valueAt}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ columnlabel,\ \textcolor{keywordtype}{int}\ j)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00098}00098\ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}\&\ \mbox{\hyperlink{classCMBVectorSetSet_a06b1f06507fd0b2de7fa388daa1c7668}{GetColumn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ columnlabel);}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00105}00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCMBVectorSetSet_a71447dcebafda9fa5fd767ac89aa614e}{Append}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ columnlabel,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}\&\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}});}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00111}00111\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCMBVectorSetSet_aa1af77c8fce57e0c6fa2df39a397de7a}{MaxSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00117}00117\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMBVectorSetSet_a0fda332cbc15164c151571558e80cb95}{max}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00123}00123\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classCMBVectorSetSet_a03978e3f47ede820d136eb9852d31377}{min}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00125}00125\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00127}00127\ \};}
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{cmbvectorsetset_8h_source_l00129}00129\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CMBVectorSetSetSET\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,260 @@
+\doxysection{Generic\+Form Class Reference}
+\hypertarget{classGenericForm}{}\label{classGenericForm}\index{GenericForm@{GenericForm}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/genericform.\+h$>$}
+
+
+
+Inheritance diagram for Generic\+Form\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{classGenericForm__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Generic\+Form\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classGenericForm__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGenericForm_aa27c907869afbf145201b7379b53ea71}{Generic\+Form}} (QJson\+Object \texorpdfstring{$\ast$}{*}formdata, QWidget \texorpdfstring{$\ast$}{*}parent, \mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}})
+\item 
+\mbox{\hyperlink{classGenericForm_ab72de58d7ddf4b10f17b13228fa17e4b}{\texorpdfstring{$\sim$}{\string~}\+Generic\+Form}} ()
+\item 
+bool \mbox{\hyperlink{classGenericForm_aa31d94bbd2d1edfb1681675666b04605}{Set\+Command}} (const QString \&cmd)
+\item 
+void \mbox{\hyperlink{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d}{on\+Proceed}} ()
+\item 
+void \mbox{\hyperlink{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2}{on\+Cancel}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QVector$<$ \mbox{\hyperlink{structparameter__property}{parameter\+\_\+property}} $>$ \mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\+\_\+\+Properties}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{button\+Ok}} = nullptr
+\item 
+QPush\+Button \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{button\+Cancel}} = nullptr
+\item 
+Ui\+::\+Generic\+Form \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}}
+\item 
+QString \mbox{\hyperlink{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e}{command}}
+\item 
+\mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}{main\+Window}} =nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00056}{56}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classGenericForm_aa27c907869afbf145201b7379b53ea71}\label{classGenericForm_aa27c907869afbf145201b7379b53ea71} 
+\index{GenericForm@{GenericForm}!GenericForm@{GenericForm}}
+\index{GenericForm@{GenericForm}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{GenericForm()}{GenericForm()}}
+{\footnotesize\ttfamily Generic\+Form\+::\+Generic\+Form (\begin{DoxyParamCaption}\item[{QJson\+Object \texorpdfstring{$\ast$}{*}}]{formdata,  }\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent,  }\item[{\mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*}}]{mainwindow }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{genericform_8cpp_source}{genericform.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{genericform_8h_source_l00068}{button\+Cancel}}, \mbox{\hyperlink{genericform_8h_source_l00067}{button\+Ok}}, \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada7ea0f1332ade5b23b34502a3bfe715a2}{Check\+Box}}, \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adafd249a0c28275ebf9d4c8464ca2225cf}{Combo\+Box}}, \mbox{\hyperlink{mainwindow_8h_source_l00066}{Main\+Window\+::\+Data()}}, \mbox{\hyperlink{genericform_8h_source_l00022}{parameter\+\_\+property\+::\+Default\+Value}}, \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adab5a7adde1af5c87d7fd797b6245c2a39}{Description}}, \mbox{\hyperlink{filebrowserpushbuttom_8h_source_l00015}{File\+Browser\+Push\+Buttom\+::dialog\+\_\+use}}, \mbox{\hyperlink{genericform_8h_source_l00019}{parameter\+\_\+property\+::\+Discription}}, \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada1b34cd3140f56af738be5b0275d2f8f7}{File\+Browser}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00420}{Source\+Sink\+Data\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00395}{Source\+Sink\+Data\+::\+Get\+Sample\+Names()}}, \mbox{\hyperlink{genericform_8h_source_l00021}{parameter\+\_\+property\+::\+Input\+Widget}}, \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada3b4def7eae2ce0235f1e056353572486}{Line\+Edit}}, \mbox{\hyperlink{genericform_8cpp_source_l00203}{mainwindow()}}, \mbox{\hyperlink{genericform_8h_source_l00072}{main\+Window}}, \mbox{\hyperlink{genericform_8cpp_source_l00198}{on\+Cancel()}}, \mbox{\hyperlink{genericform_8cpp_source_l00188}{on\+Proceed()}}, \mbox{\hyperlink{filebrowserpushbuttom_8h_a7aff7bb81bbcfcd49614760a2388b7bba7cef8a734855777c2a9d0caf42666e69}{open}}, \mbox{\hyperlink{genericform_8h_source_l00062}{Parameter\+\_\+\+Properties}}, \mbox{\hyperlink{filebrowserpushbuttom_8h_a7aff7bb81bbcfcd49614760a2388b7bba43781db5c40ecc39fd718685594f0956}{save}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l02162}{Source\+Sink\+Data\+::\+Source\+Group\+Names()}}, \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adaecb37eb700be076338f2598d896da7db}{Spin\+Box}}, \mbox{\hyperlink{genericform_8h_source_l00020}{parameter\+\_\+property\+::\+Type}}, and \mbox{\hyperlink{genericform_8h_source_l00069}{ui}}.
+
+\Hypertarget{classGenericForm_ab72de58d7ddf4b10f17b13228fa17e4b}\label{classGenericForm_ab72de58d7ddf4b10f17b13228fa17e4b} 
+\index{GenericForm@{GenericForm}!````~GenericForm@{\texorpdfstring{$\sim$}{\string~}GenericForm}}
+\index{````~GenericForm@{\texorpdfstring{$\sim$}{\string~}GenericForm}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GenericForm()}{\string~GenericForm()}}
+{\footnotesize\ttfamily Generic\+Form\+::\texorpdfstring{$\sim$}{\string~}\+Generic\+Form (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8cpp_source_l00182}{182}} of file \mbox{\hyperlink{genericform_8cpp_source}{genericform.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{genericform_8h_source_l00062}{Parameter\+\_\+\+Properties}}, and \mbox{\hyperlink{genericform_8h_source_l00069}{ui}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGenericForm_a0361b9222062ad73084193dd6f92fa75}\label{classGenericForm_a0361b9222062ad73084193dd6f92fa75} 
+\index{GenericForm@{GenericForm}!mainwindow@{mainwindow}}
+\index{mainwindow@{mainwindow}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{mainwindow()}{mainwindow()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMainWindow}{Main\+Window}} \texorpdfstring{$\ast$}{*} Generic\+Form\+::mainwindow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8cpp_source_l00203}{203}} of file \mbox{\hyperlink{genericform_8cpp_source}{genericform.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{genericform_8h_source_l00072}{main\+Window}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}, and \mbox{\hyperlink{genericform_8cpp_source_l00188}{on\+Proceed()}}.
+
+\Hypertarget{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2}\label{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2} 
+\index{GenericForm@{GenericForm}!onCancel@{onCancel}}
+\index{onCancel@{onCancel}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{onCancel()}{onCancel()}}
+{\footnotesize\ttfamily void Generic\+Form\+::on\+Cancel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8cpp_source_l00198}{198}} of file \mbox{\hyperlink{genericform_8cpp_source}{genericform.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}.
+
+\Hypertarget{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d}\label{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d} 
+\index{GenericForm@{GenericForm}!onProceed@{onProceed}}
+\index{onProceed@{onProceed}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{onProceed()}{onProceed()}}
+{\footnotesize\ttfamily void Generic\+Form\+::on\+Proceed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8cpp_source_l00188}{188}} of file \mbox{\hyperlink{genericform_8cpp_source}{genericform.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{genericform_8h_source_l00071}{command}}, \mbox{\hyperlink{mainwindow_8cpp_source_l01223}{Main\+Window\+::\+Execute()}}, \mbox{\hyperlink{genericform_8cpp_source_l00203}{mainwindow()}}, and \mbox{\hyperlink{genericform_8h_source_l00062}{Parameter\+\_\+\+Properties}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}.
+
+\Hypertarget{classGenericForm_aa31d94bbd2d1edfb1681675666b04605}\label{classGenericForm_aa31d94bbd2d1edfb1681675666b04605} 
+\index{GenericForm@{GenericForm}!SetCommand@{SetCommand}}
+\index{SetCommand@{SetCommand}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{SetCommand()}{SetCommand()}}
+{\footnotesize\ttfamily bool Generic\+Form\+::\+Set\+Command (\begin{DoxyParamCaption}\item[{const QString \&}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8cpp_source_l00209}{209}} of file \mbox{\hyperlink{genericform_8cpp_source}{genericform.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{genericform_8h_source_l00071}{command}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}\label{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b} 
+\index{GenericForm@{GenericForm}!buttonCancel@{buttonCancel}}
+\index{buttonCancel@{buttonCancel}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{buttonCancel}{buttonCancel}}
+{\footnotesize\ttfamily QPush\+Button\texorpdfstring{$\ast$}{*} Generic\+Form\+::button\+Cancel = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00068}{68}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}.
+
+\Hypertarget{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}\label{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab} 
+\index{GenericForm@{GenericForm}!buttonOk@{buttonOk}}
+\index{buttonOk@{buttonOk}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{buttonOk}{buttonOk}}
+{\footnotesize\ttfamily QPush\+Button\texorpdfstring{$\ast$}{*} Generic\+Form\+::button\+Ok = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00067}{67}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}.
+
+\Hypertarget{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e}\label{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e} 
+\index{GenericForm@{GenericForm}!command@{command}}
+\index{command@{command}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{command}{command}}
+{\footnotesize\ttfamily QString Generic\+Form\+::command\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00071}{71}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00188}{on\+Proceed()}}, and \mbox{\hyperlink{genericform_8cpp_source_l00209}{Set\+Command()}}.
+
+\Hypertarget{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}\label{classGenericForm_ae626097f052a9a1a508b8d8fba844abc} 
+\index{GenericForm@{GenericForm}!mainWindow@{mainWindow}}
+\index{mainWindow@{mainWindow}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{mainWindow}{mainWindow}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMainWindow}{Main\+Window}}\texorpdfstring{$\ast$}{*} Generic\+Form\+::main\+Window =nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00072}{72}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}, and \mbox{\hyperlink{genericform_8cpp_source_l00203}{mainwindow()}}.
+
+\Hypertarget{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}\label{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c} 
+\index{GenericForm@{GenericForm}!Parameter\_Properties@{Parameter\_Properties}}
+\index{Parameter\_Properties@{Parameter\_Properties}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{Parameter\_Properties}{Parameter\_Properties}}
+{\footnotesize\ttfamily QVector$<$\mbox{\hyperlink{structparameter__property}{parameter\+\_\+property}}$>$ Generic\+Form\+::\+Parameter\+\_\+\+Properties}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00062}{62}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}, \mbox{\hyperlink{genericform_8cpp_source_l00182}{\texorpdfstring{$\sim$}{\string~}\+Generic\+Form()}}, and \mbox{\hyperlink{genericform_8cpp_source_l00188}{on\+Proceed()}}.
+
+\Hypertarget{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}\label{classGenericForm_a7446d9366b134a66e8696151fa43f8a8} 
+\index{GenericForm@{GenericForm}!ui@{ui}}
+\index{ui@{ui}!GenericForm@{GenericForm}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily Ui\+::\+Generic\+Form\texorpdfstring{$\ast$}{*} Generic\+Form\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{genericform_8h_source_l00069}{69}} of file \mbox{\hyperlink{genericform_8h_source}{genericform.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{genericform_8cpp_source_l00006}{Generic\+Form()}}, and \mbox{\hyperlink{genericform_8cpp_source_l00182}{\texorpdfstring{$\sim$}{\string~}\+Generic\+Form()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{genericform_8h}{genericform.\+h}}\item 
+\mbox{\hyperlink{genericform_8cpp}{genericform.\+cpp}}\end{DoxyCompactItemize}

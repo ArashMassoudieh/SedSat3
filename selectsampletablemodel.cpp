@@ -17,11 +17,11 @@ QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {   if (index.column()==0)
         {
-            return QString::fromStdString(Data->operator[](selectedSource).SampleNames()[index.row()]);
+            return QString::fromStdString(Data->operator[](selectedSource).GetSampleNames()[index.row()]);
         }
         if (index.column()==1)
         {
-            if (GetProfileSet(index.row())->IncludedInAnalysis())
+            if (GetProfileSet(index.row())->IsIncludedInAnalysis())
                 return "Yes";
             else
                 return "No";
@@ -46,12 +46,12 @@ QVariant SelectSampleTableModel::data(const QModelIndex &index, int role) const
 
 Elemental_Profile* SelectSampleTableModel::GetProfileSet(int row)
 {
-    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).SampleNames()[row]];
+    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).GetSampleNames()[row]];
 }
 
 Elemental_Profile* SelectSampleTableModel::GetProfileSet(int row) const
 {
-    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).SampleNames()[row]];
+    return &Data->operator[](selectedSource)[Data->operator[](selectedSource).GetSampleNames()[row]];
 }
 QVariant SelectSampleTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
@@ -82,9 +82,9 @@ bool SelectSampleTableModel::setData(const QModelIndex & index, const QVariant &
         if (index.column()==1)
         {
             if (value.toString()=="Yes" || value.toBool())
-                GetProfileSet(index.row())->SetIncluded(true);
+                GetProfileSet(index.row())->SetIncludedInAnalysis(true);
             else
-                GetProfileSet(index.row())->SetIncluded(false);
+                GetProfileSet(index.row())->SetIncludedInAnalysis(false);
         }
 
     }

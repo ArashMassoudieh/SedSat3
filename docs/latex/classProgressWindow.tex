@@ -1,0 +1,338 @@
+\doxysection{Progress\+Window Class Reference}
+\hypertarget{classProgressWindow}{}\label{classProgressWindow}\index{ProgressWindow@{ProgressWindow}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/\+Progress\+Window.\+h$>$}
+
+
+
+Inheritance diagram for Progress\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{classProgressWindow__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Progress\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{classProgressWindow__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classProgressWindow_a47f70efe628537c018449c440c698efc}{Progress\+Window}} (QWidget \texorpdfstring{$\ast$}{*}parent=Q\+\_\+\+NULLPTR, int number\+\_\+of\+\_\+panels=1, bool extra\+\_\+label\+\_\+and\+\_\+progressbar=false)
+\item 
+\mbox{\hyperlink{classProgressWindow_abc292c67ca9d70e6e3f36cf7557da3c2}{\texorpdfstring{$\sim$}{\string~}\+Progress\+Window}} ()
+\item 
+void \mbox{\hyperlink{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}{Append\+Point}} (const double \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const double \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}, int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a8d4ea0027007ff871962e33689a63d13}{Set\+Progress}} (const double \&prog)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a00a1ad34901a0f57cad2f7c42141f1be}{Set\+Progress2}} (const double \&prog)
+\item 
+void \mbox{\hyperlink{classProgressWindow_ad4637c721fa053b31ad907b6bc724bcd}{Set\+Label}} (const QString \&label)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a586cab300f9f6b1632948dc0117bac81}{Set\+YRange}} (const double \&y0, const double \&y1, int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a6008666b00f8f5924a34927cb9f1885d}{Set\+XRange}} (const double \&x0, const double \&x1, int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_ac61e96c41b8fbb87f02d8cd5d438cf7b}{Set\+Title}} (const QString \&title, int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_aa6cd405c224f6a6981837d3545142560}{Set\+XAxis\+Title}} (const QString \&title, int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a13752e51360fccd4ecf5c95fa5a4aaa7}{Set\+YAxis\+Title}} (const QString \&title, int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a906a82fd66c5e67c3da0fa519f4066c7}{Clear\+Graph}} (int chart=0)
+\item 
+void \mbox{\hyperlink{classProgressWindow_a9a30b11b105012d62f7133525d7f7b46}{Set\+Chart\+Title}} (int i, const QString \&title)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\+::\+Progress\+Window \mbox{\hyperlink{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}{ui}}
+\item 
+QVector$<$ \mbox{\hyperlink{structChartCollection}{Chart\+Collection}} $>$ \mbox{\hyperlink{classProgressWindow_a77549c88b3080f4092256868fc495848}{Chart\+Items}}
+\item 
+QVector$<$ QString $>$ \mbox{\hyperlink{classProgressWindow_ad0dee0487688849664850affccc1a0c6}{charttitles}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8h_source_l00028}{28}} of file \mbox{\hyperlink{ProgressWindow_8h_source}{Progress\+Window.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classProgressWindow_a47f70efe628537c018449c440c698efc}\label{classProgressWindow_a47f70efe628537c018449c440c698efc} 
+\index{ProgressWindow@{ProgressWindow}!ProgressWindow@{ProgressWindow}}
+\index{ProgressWindow@{ProgressWindow}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{ProgressWindow()}{ProgressWindow()}}
+{\footnotesize\ttfamily Progress\+Window\+::\+Progress\+Window (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily Q\+\_\+NULLPTR},  }\item[{int}]{number\+\_\+of\+\_\+panels = {\ttfamily 1},  }\item[{bool}]{extra\+\_\+label\+\_\+and\+\_\+progressbar = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}, \mbox{\hyperlink{ProgressWindow_8h_source_l00055}{charttitles}}, and \mbox{\hyperlink{ProgressWindow_8h_source_l00053}{ui}}.
+
+\Hypertarget{classProgressWindow_abc292c67ca9d70e6e3f36cf7557da3c2}\label{classProgressWindow_abc292c67ca9d70e6e3f36cf7557da3c2} 
+\index{ProgressWindow@{ProgressWindow}!````~ProgressWindow@{\texorpdfstring{$\sim$}{\string~}ProgressWindow}}
+\index{````~ProgressWindow@{\texorpdfstring{$\sim$}{\string~}ProgressWindow}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ProgressWindow()}{\string~ProgressWindow()}}
+{\footnotesize\ttfamily Progress\+Window\+::\texorpdfstring{$\sim$}{\string~}\+Progress\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00065}{65}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2}\label{classProgressWindow_a4819025ac3a246b4419c4853a8e970c2} 
+\index{ProgressWindow@{ProgressWindow}!AppendPoint@{AppendPoint}}
+\index{AppendPoint@{AppendPoint}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{AppendPoint()}{AppendPoint()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Append\+Point (\begin{DoxyParamCaption}\item[{const double \&}]{x,  }\item[{const double \&}]{y,  }\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00069}{69}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01298}{Source\+Sink\+Data\+::\+Solve\+Levenberg\+\_\+\+Marquardt()}}, and \mbox{\hyperlink{MCMC_8hpp_source_l00393}{CMCMC$<$ T $>$\+::step()}}.
+
+\Hypertarget{classProgressWindow_a906a82fd66c5e67c3da0fa519f4066c7}\label{classProgressWindow_a906a82fd66c5e67c3da0fa519f4066c7} 
+\index{ProgressWindow@{ProgressWindow}!ClearGraph@{ClearGraph}}
+\index{ClearGraph@{ClearGraph}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{ClearGraph()}{ClearGraph()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Clear\+Graph (\begin{DoxyParamCaption}\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00089}{89}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classProgressWindow_a9a30b11b105012d62f7133525d7f7b46}\label{classProgressWindow_a9a30b11b105012d62f7133525d7f7b46} 
+\index{ProgressWindow@{ProgressWindow}!SetChartTitle@{SetChartTitle}}
+\index{SetChartTitle@{SetChartTitle}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetChartTitle()}{SetChartTitle()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+Chart\+Title (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8h_source_l00045}{45}} of file \mbox{\hyperlink{ProgressWindow_8h_source}{Progress\+Window.\+h}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}, and \mbox{\hyperlink{ProgressWindow_8h_source_l00055}{charttitles}}.
+
+\Hypertarget{classProgressWindow_ad4637c721fa053b31ad907b6bc724bcd}\label{classProgressWindow_ad4637c721fa053b31ad907b6bc724bcd} 
+\index{ProgressWindow@{ProgressWindow}!SetLabel@{SetLabel}}
+\index{SetLabel@{SetLabel}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetLabel()}{SetLabel()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+Label (\begin{DoxyParamCaption}\item[{const QString \&}]{label }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00106}{106}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00053}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03934}{Source\+Sink\+Data\+::\+LM\+\_\+\+Batch()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classProgressWindow_a8d4ea0027007ff871962e33689a63d13}\label{classProgressWindow_a8d4ea0027007ff871962e33689a63d13} 
+\index{ProgressWindow@{ProgressWindow}!SetProgress@{SetProgress}}
+\index{SetProgress@{SetProgress}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetProgress()}{SetProgress()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+Progress (\begin{DoxyParamCaption}\item[{const double \&}]{prog }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00053}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03699}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03744}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, \mbox{\hyperlink{conductor_8cpp_source_l00701}{Conductor\+::\+Execute\+DFA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00901}{Conductor\+::\+Execute\+DFAM()}}, \mbox{\hyperlink{conductor_8cpp_source_l00805}{Conductor\+::\+Execute\+DFAOnevs\+Rest()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Conductor\+::\+Execute\+Source\+Verify()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03934}{Source\+Sink\+Data\+::\+LM\+\_\+\+Batch()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01298}{Source\+Sink\+Data\+::\+Solve\+Levenberg\+\_\+\+Marquardt()}}, \mbox{\hyperlink{MCMC_8hpp_source_l00393}{CMCMC$<$ T $>$\+::step()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04843}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04908}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04773}{Source\+Sink\+Data\+::\+Stepwise\+Discriminant\+Function\+Analysis()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03861}{Source\+Sink\+Data\+::\+Verify\+Source()}}.
+
+\Hypertarget{classProgressWindow_a00a1ad34901a0f57cad2f7c42141f1be}\label{classProgressWindow_a00a1ad34901a0f57cad2f7c42141f1be} 
+\index{ProgressWindow@{ProgressWindow}!SetProgress2@{SetProgress2}}
+\index{SetProgress2@{SetProgress2}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetProgress2()}{SetProgress2()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+Progress2 (\begin{DoxyParamCaption}\item[{const double \&}]{prog }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00100}{100}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00053}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classProgressWindow_ac61e96c41b8fbb87f02d8cd5d438cf7b}\label{classProgressWindow_ac61e96c41b8fbb87f02d8cd5d438cf7b} 
+\index{ProgressWindow@{ProgressWindow}!SetTitle@{SetTitle}}
+\index{SetTitle@{SetTitle}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetTitle()}{SetTitle()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+Title (\begin{DoxyParamCaption}\item[{const QString \&}]{title,  }\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00307}{Conductor\+::\+Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classProgressWindow_aa6cd405c224f6a6981837d3545142560}\label{classProgressWindow_aa6cd405c224f6a6981837d3545142560} 
+\index{ProgressWindow@{ProgressWindow}!SetXAxisTitle@{SetXAxisTitle}}
+\index{SetXAxisTitle@{SetXAxisTitle}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetXAxisTitle()}{SetXAxisTitle()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+XAxis\+Title (\begin{DoxyParamCaption}\item[{const QString \&}]{title,  }\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00129}{129}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}.
+
+\Hypertarget{classProgressWindow_a6008666b00f8f5924a34927cb9f1885d}\label{classProgressWindow_a6008666b00f8f5924a34927cb9f1885d} 
+\index{ProgressWindow@{ProgressWindow}!SetXRange@{SetXRange}}
+\index{SetXRange@{SetXRange}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetXRange()}{SetXRange()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+XRange (\begin{DoxyParamCaption}\item[{const double \&}]{x0,  }\item[{const double \&}]{x1,  }\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00121}{121}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01298}{Source\+Sink\+Data\+::\+Solve\+Levenberg\+\_\+\+Marquardt()}}.
+
+\Hypertarget{classProgressWindow_a13752e51360fccd4ecf5c95fa5a4aaa7}\label{classProgressWindow_a13752e51360fccd4ecf5c95fa5a4aaa7} 
+\index{ProgressWindow@{ProgressWindow}!SetYAxisTitle@{SetYAxisTitle}}
+\index{SetYAxisTitle@{SetYAxisTitle}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetYAxisTitle()}{SetYAxisTitle()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+YAxis\+Title (\begin{DoxyParamCaption}\item[{const QString \&}]{title,  }\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00307}{Conductor\+::\+Execute\+GA\+\_\+\+Fixed\+Profile()}}, \mbox{\hyperlink{conductor_8cpp_source_l01423}{Conductor\+::\+Execute\+Test\+CMBBayesian()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classProgressWindow_a586cab300f9f6b1632948dc0117bac81}\label{classProgressWindow_a586cab300f9f6b1632948dc0117bac81} 
+\index{ProgressWindow@{ProgressWindow}!SetYRange@{SetYRange}}
+\index{SetYRange@{SetYRange}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{SetYRange()}{SetYRange()}}
+{\footnotesize\ttfamily void Progress\+Window\+::\+Set\+YRange (\begin{DoxyParamCaption}\item[{const double \&}]{y0,  }\item[{const double \&}]{y1,  }\item[{int}]{chart = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8cpp_source_l00113}{113}} of file \mbox{\hyperlink{ProgressWindow_8cpp_source}{Progress\+Window.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{Chart\+Items}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classProgressWindow_a77549c88b3080f4092256868fc495848}\label{classProgressWindow_a77549c88b3080f4092256868fc495848} 
+\index{ProgressWindow@{ProgressWindow}!ChartItems@{ChartItems}}
+\index{ChartItems@{ChartItems}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{ChartItems}{ChartItems}}
+{\footnotesize\ttfamily QVector$<$\mbox{\hyperlink{structChartCollection}{Chart\+Collection}}$>$ Progress\+Window\+::\+Chart\+Items\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8h_source_l00054}{54}} of file \mbox{\hyperlink{ProgressWindow_8h_source}{Progress\+Window.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{ProgressWindow_8cpp_source_l00005}{Progress\+Window()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00069}{Append\+Point()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00089}{Clear\+Graph()}}, \mbox{\hyperlink{ProgressWindow_8h_source_l00045}{Set\+Chart\+Title()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00060}{Set\+Title()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00129}{Set\+XAxis\+Title()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00121}{Set\+XRange()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00133}{Set\+YAxis\+Title()}}, and \mbox{\hyperlink{ProgressWindow_8cpp_source_l00113}{Set\+YRange()}}.
+
+\Hypertarget{classProgressWindow_ad0dee0487688849664850affccc1a0c6}\label{classProgressWindow_ad0dee0487688849664850affccc1a0c6} 
+\index{ProgressWindow@{ProgressWindow}!charttitles@{charttitles}}
+\index{charttitles@{charttitles}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{charttitles}{charttitles}}
+{\footnotesize\ttfamily QVector$<$QString$>$ Progress\+Window\+::charttitles\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8h_source_l00055}{55}} of file \mbox{\hyperlink{ProgressWindow_8h_source}{Progress\+Window.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{ProgressWindow_8cpp_source_l00005}{Progress\+Window()}}, and \mbox{\hyperlink{ProgressWindow_8h_source_l00045}{Set\+Chart\+Title()}}.
+
+\Hypertarget{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e}\label{classProgressWindow_a725711ba548552c42f7f18e6b3fe891e} 
+\index{ProgressWindow@{ProgressWindow}!ui@{ui}}
+\index{ui@{ui}!ProgressWindow@{ProgressWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily Ui\+::\+Progress\+Window Progress\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{ProgressWindow_8h_source_l00053}{53}} of file \mbox{\hyperlink{ProgressWindow_8h_source}{Progress\+Window.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{ProgressWindow_8cpp_source_l00005}{Progress\+Window()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00106}{Set\+Label()}}, \mbox{\hyperlink{ProgressWindow_8cpp_source_l00094}{Set\+Progress()}}, and \mbox{\hyperlink{ProgressWindow_8cpp_source_l00100}{Set\+Progress2()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ProgressWindow_8h}{Progress\+Window.\+h}}\item 
+\mbox{\hyperlink{ProgressWindow_8cpp}{Progress\+Window.\+cpp}}\end{DoxyCompactItemize}

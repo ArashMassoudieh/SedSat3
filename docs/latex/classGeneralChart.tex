@@ -1,0 +1,805 @@
+\doxysection{General\+Chart Class Reference}
+\hypertarget{classGeneralChart}{}\label{classGeneralChart}\index{GeneralChart@{GeneralChart}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/generalchart.\+h$>$}
+
+
+
+Inheritance diagram for General\+Chart\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classGeneralChart__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for General\+Chart\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classGeneralChart__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGeneralChart_a4865a4994135e2403524c6638bbfdb33}{General\+Chart}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+\mbox{\hyperlink{classGeneralChart_a5111c106cd0a8394dd76d52724a4c279}{\texorpdfstring{$\sim$}{\string~}\+General\+Chart}} ()
+\item 
+bool \mbox{\hyperlink{classGeneralChart_aa41242920bcfcf27fd3c7d8dfa655780}{Plot}} (\mbox{\hyperlink{classResultItem}{Result\+Item}} \texorpdfstring{$\ast$}{*}res)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_ac8a0ccd90583bfaa548a361ffe90647d}{Plot\+Vector}} (\mbox{\hyperlink{classCMBVector}{CMBVector}} \texorpdfstring{$\ast$}{*}profile, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a459ac148f1d8624d17f177f01b445226}{Plot\+Vector\+Set}} (\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}profile, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a976c7f9219d56f16766b61a85dc99c9f}{Plot\+Vector\+Set\+Set}} (\mbox{\hyperlink{classCMBVectorSetSet}{CMBVector\+Set\+Set}} \texorpdfstring{$\ast$}{*}profile, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a19ba5a6fe47d3197c52e329423b4decb}{Plot\+Matrix}} (\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a25f2d7ab97f485d64ee5cc7dcff6ca62}{Plot\+Profile\+Set}} (\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \texorpdfstring{$\ast$}{*}elementalprofileset, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a2e93817f5d2e03365807d5d7de987639}{Plot\+Contribution}} (\mbox{\hyperlink{classContribution}{Contribution}} \texorpdfstring{$\ast$}{*}contributions, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a954475246bbb4df7c3180a5f8a9761f8}{Plot\+Predicted\+Concentration}} (\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*}elemental\+\_\+profile, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_ad03ca2e474bc141d624a51a55bfa2c0f}{Plot\+Regression\+Set}} (\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}regressionset, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a91281e1f13642630892735f6f9b53eea}{Plot\+Time\+Series\+Set}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}regressionset, const QString \&title, const QString \&x\+\_\+axis\+\_\+title="{}"{}, const QString \&y\+\_\+axis\+\_\+title="{}"{})
+\item 
+bool \mbox{\hyperlink{classGeneralChart_aaa53c20d3045f601602e1c8fc1359458}{Plot\+Time\+Series\+Set\+\_\+M}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}timeseriesset, const QString \&title, const QString \&x\+\_\+axis\+\_\+title="{}"{}, const QString \&y\+\_\+axis\+\_\+title="{}"{})
+\item 
+bool \mbox{\hyperlink{classGeneralChart_aeb19c8725a6c990bd7dfd3afb9c7cfbb}{Plot\+Time\+Series\+Set\+\_\+A}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}timeseriesset, const QString \&title, const QString \&x\+\_\+axis\+\_\+title="{}"{}, const QString \&y\+\_\+axis\+\_\+title="{}"{})
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a0102869edc41298ddb074704cd24dfde}{Plot\+Time\+Series\+Set\+\_\+\+Stacked}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}timeseriesset, const QString \&title, const QString \&x\+\_\+axis\+\_\+title, const QString \&y\+\_\+axis\+\_\+title="{}"{})
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a16b5e429b0da935cd8a99c79b9a2dadb}{Plot\+Range\+Set}} (\mbox{\hyperlink{classRangeSet}{Range\+Set}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}, const QString \&title, const QString \&x\+\_\+axis\+\_\+title, const QString \&y\+\_\+axis\+\_\+title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_aee7e1d93e4a1267836be15f268399918}{Initialize\+MCMCSamples}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}mcmcsamples, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a221f18253527bfdc0431b0878d6b0c0f}{Initialize\+Distributions}} (\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}distributions, const QString \&title)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a51f6ee20f567af29f46aafd5cc6d0a5a}{Plot\+MCMCSamples}} (Time\+Series$<$ double $>$ \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}, const QString \&variable)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a038546200b48c8ba97f60693034f72b5}{Plot\+Distribution}} (Time\+Series$<$ double $>$ \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}, const QString \&variable)
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a2bf32624252555e427a06ec2a1984ca2}{Plot\+Scatter}} (\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}})
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a7ebe1753f307a129a285fb6e24629930}{Plot\+Scatter}} (\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}})
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a1f9127378fbb695c6e5cc3612fd98ad7}{Plot\+Scatter}} (\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}vectorset1, \mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}vectorset2, const QString \&xaxis\+\_\+title, const QString \&yaxistitle)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classGeneralChart_a7fdef8521041bed124e6ecc1736a6ec4}{Plot\+Regression}} (\mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \texorpdfstring{$\ast$}{*}timeseriesset, const QString \&independent\+\_\+var)
+\item 
+void \mbox{\hyperlink{classGeneralChart_a78204a55ba9ca83c9ba0eef2d88f6207}{on\+Independent\+Changed}} (int i\+\_\+independent)
+\item 
+void \mbox{\hyperlink{classGeneralChart_ac3fea0767b5c57e9bcd478b18bc3323b}{on\+Element\+Changed}} (int i\+\_\+constituent)
+\item 
+void \mbox{\hyperlink{classGeneralChart_aa315c2272d1cf57057fe19f299b67a0c}{on\+Pair\+Changed}} (int pair\+\_\+id)
+\item 
+void \mbox{\hyperlink{classGeneralChart_ab856b447ebf15ccb74dd192b012ba7e8}{on\+DFAPair\+Changed}} (int pair\+\_\+id)
+\item 
+void \mbox{\hyperlink{classGeneralChart_a2fed8fe095199f16f2a248b7a6c22195}{on\+MCMCVariable\+Changed}} (int)
+\item 
+void \mbox{\hyperlink{classGeneralChart_a17d6d1d152e24e55fd3bf0409fdb90da}{on\+Distributions\+Variable\+Changed}} (int)
+\item 
+void \mbox{\hyperlink{classGeneralChart_a662aebd00d08b5d89141f58f4cd21a5d}{on\+\_\+\+Exporttopng}} ()
+\item 
+std\+::vector$<$ QPointF $>$ \mbox{\hyperlink{classGeneralChart_a5b6f458971f336fc644aef6f3c666e9f}{calculate\+Rotated\+Ellipse\+Points}} (double centerX, double centerY, double semi\+Major\+Axis, double semi\+Minor\+Axis, double rotation\+Angle, double interval)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\+::\+General\+Chart \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a9d78901ec5f554d01f9d8b67b3a558eb}{ui}}
+\item 
+\mbox{\hyperlink{classChart}{Chart}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a3382fda0ee86e0ff74ed477e21ec3d18}{chart}}
+\item 
+\mbox{\hyperlink{classChartView}{Chart\+View}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a2c6abd124eceda7c9c4ed8c922ec8994}{chart\+View}}
+\item 
+QCombo\+Box \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a8684d52bb02a4b9c2f0cfa2fbe32b765}{element\+\_\+combo}}
+\item 
+QCombo\+Box \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a28952e94e08db7de7470cd8f1008756e}{source1\+\_\+combo}}
+\item 
+QCombo\+Box \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a5639fcc3e40822ef6a1d60227f37c96d}{source2\+\_\+combo}}
+\item 
+QCombo\+Box \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a9e172c91982f0e37bf67d707e0846882}{independent\+\_\+combo}}
+\item 
+\mbox{\hyperlink{classResultItem}{Result\+Item}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classGeneralChart_a9a1e2188743d3985eac595b387c48847}{result\+\_\+item}} =nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00027}{27}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classGeneralChart_a4865a4994135e2403524c6638bbfdb33}\label{classGeneralChart_a4865a4994135e2403524c6638bbfdb33} 
+\index{GeneralChart@{GeneralChart}!GeneralChart@{GeneralChart}}
+\index{GeneralChart@{GeneralChart}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{GeneralChart()}{GeneralChart()}}
+{\footnotesize\ttfamily General\+Chart\+::\+General\+Chart (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{generalchart_8h_source_l00058}{chart\+View}}, \mbox{\hyperlink{generalchart_8cpp_source_l01443}{on\+\_\+\+Exporttopng()}}, and \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+\Hypertarget{classGeneralChart_a5111c106cd0a8394dd76d52724a4c279}\label{classGeneralChart_a5111c106cd0a8394dd76d52724a4c279} 
+\index{GeneralChart@{GeneralChart}!````~GeneralChart@{\texorpdfstring{$\sim$}{\string~}GeneralChart}}
+\index{````~GeneralChart@{\texorpdfstring{$\sim$}{\string~}GeneralChart}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}GeneralChart()}{\string~GeneralChart()}}
+{\footnotesize\ttfamily General\+Chart\+::\texorpdfstring{$\sim$}{\string~}\+General\+Chart (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classGeneralChart_a5b6f458971f336fc644aef6f3c666e9f}\label{classGeneralChart_a5b6f458971f336fc644aef6f3c666e9f} 
+\index{GeneralChart@{GeneralChart}!calculateRotatedEllipsePoints@{calculateRotatedEllipsePoints}}
+\index{calculateRotatedEllipsePoints@{calculateRotatedEllipsePoints}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{calculateRotatedEllipsePoints()}{calculateRotatedEllipsePoints()}}
+{\footnotesize\ttfamily std\+::vector$<$ QPointF $>$ General\+Chart\+::calculate\+Rotated\+Ellipse\+Points (\begin{DoxyParamCaption}\item[{double}]{centerX,  }\item[{double}]{centerY,  }\item[{double}]{semi\+Major\+Axis,  }\item[{double}]{semi\+Minor\+Axis,  }\item[{double}]{rotation\+Angle,  }\item[{double}]{interval }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01461}{1461}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00878}{Plot\+Scatter()}}.
+
+\Hypertarget{classGeneralChart_a221f18253527bfdc0431b0878d6b0c0f}\label{classGeneralChart_a221f18253527bfdc0431b0878d6b0c0f} 
+\index{GeneralChart@{GeneralChart}!InitializeDistributions@{InitializeDistributions}}
+\index{InitializeDistributions@{InitializeDistributions}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{InitializeDistributions()}{InitializeDistributions()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Initialize\+Distributions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{distributions,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00540}{540}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l00627}{on\+Distributions\+Variable\+Changed()}}, and \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_aee7e1d93e4a1267836be15f268399918}\label{classGeneralChart_aee7e1d93e4a1267836be15f268399918} 
+\index{GeneralChart@{GeneralChart}!InitializeMCMCSamples@{InitializeMCMCSamples}}
+\index{InitializeMCMCSamples@{InitializeMCMCSamples}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{InitializeMCMCSamples()}{InitializeMCMCSamples()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Initialize\+MCMCSamples (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{mcmcsamples,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00520}{520}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l00620}{on\+MCMCVariable\+Changed()}}, and \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a662aebd00d08b5d89141f58f4cd21a5d}\label{classGeneralChart_a662aebd00d08b5d89141f58f4cd21a5d} 
+\index{GeneralChart@{GeneralChart}!on\_Exporttopng@{on\_Exporttopng}}
+\index{on\_Exporttopng@{on\_Exporttopng}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{on\_Exporttopng()}{on\_Exporttopng()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+\_\+\+Exporttopng (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01443}{1443}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, and \mbox{\hyperlink{generalchart_8h_source_l00058}{chart\+View}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00007}{General\+Chart()}}.
+
+\Hypertarget{classGeneralChart_ab856b447ebf15ccb74dd192b012ba7e8}\label{classGeneralChart_ab856b447ebf15ccb74dd192b012ba7e8} 
+\index{GeneralChart@{GeneralChart}!onDFAPairChanged@{onDFAPairChanged}}
+\index{onDFAPairChanged@{onDFAPairChanged}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{onDFAPairChanged()}{onDFAPairChanged()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+DFAPair\+Changed (\begin{DoxyParamCaption}\item[{int}]{pair\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00598}{598}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{generalchart_8cpp_source_l00777}{Plot\+Scatter()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{generalchart_8h_source_l00060}{source1\+\_\+combo}}, \mbox{\hyperlink{generalchart_8h_source_l00061}{source2\+\_\+combo}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00138}{Plot\+Vector\+Set\+Set()}}.
+
+\Hypertarget{classGeneralChart_a17d6d1d152e24e55fd3bf0409fdb90da}\label{classGeneralChart_a17d6d1d152e24e55fd3bf0409fdb90da} 
+\index{GeneralChart@{GeneralChart}!onDistributionsVariableChanged@{onDistributionsVariableChanged}}
+\index{onDistributionsVariableChanged@{onDistributionsVariableChanged}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{onDistributionsVariableChanged()}{onDistributionsVariableChanged()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+Distributions\+Variable\+Changed (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00627}{627}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l01057}{Plot\+Distribution()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, and \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00540}{Initialize\+Distributions()}}.
+
+\Hypertarget{classGeneralChart_ac3fea0767b5c57e9bcd478b18bc3323b}\label{classGeneralChart_ac3fea0767b5c57e9bcd478b18bc3323b} 
+\index{GeneralChart@{GeneralChart}!onElementChanged@{onElementChanged}}
+\index{onElementChanged@{onElementChanged}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{onElementChanged()}{onElementChanged()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+Element\+Changed (\begin{DoxyParamCaption}\item[{int}]{i\+\_\+constituent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00561}{561}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8h_source_l00062}{independent\+\_\+combo}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}, \mbox{\hyperlink{generalchart_8cpp_source_l00644}{Plot\+Regression()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, and \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00495}{Plot\+Regression\+Set()}}.
+
+\Hypertarget{classGeneralChart_a78204a55ba9ca83c9ba0eef2d88f6207}\label{classGeneralChart_a78204a55ba9ca83c9ba0eef2d88f6207} 
+\index{GeneralChart@{GeneralChart}!onIndependentChanged@{onIndependentChanged}}
+\index{onIndependentChanged@{onIndependentChanged}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{onIndependentChanged()}{onIndependentChanged()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+Independent\+Changed (\begin{DoxyParamCaption}\item[{int}]{i\+\_\+independent }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00634}{634}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8h_source_l00062}{independent\+\_\+combo}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}, \mbox{\hyperlink{generalchart_8cpp_source_l00644}{Plot\+Regression()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, and \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00495}{Plot\+Regression\+Set()}}.
+
+\Hypertarget{classGeneralChart_a2fed8fe095199f16f2a248b7a6c22195}\label{classGeneralChart_a2fed8fe095199f16f2a248b7a6c22195} 
+\index{GeneralChart@{GeneralChart}!onMCMCVariableChanged@{onMCMCVariableChanged}}
+\index{onMCMCVariableChanged@{onMCMCVariableChanged}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{onMCMCVariableChanged()}{onMCMCVariableChanged()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+MCMCVariable\+Changed (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00620}{620}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l00992}{Plot\+MCMCSamples()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, and \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00520}{Initialize\+MCMCSamples()}}.
+
+\Hypertarget{classGeneralChart_aa315c2272d1cf57057fe19f299b67a0c}\label{classGeneralChart_aa315c2272d1cf57057fe19f299b67a0c} 
+\index{GeneralChart@{GeneralChart}!onPairChanged@{onPairChanged}}
+\index{onPairChanged@{onPairChanged}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{onPairChanged()}{onPairChanged()}}
+{\footnotesize\ttfamily void General\+Chart\+::on\+Pair\+Changed (\begin{DoxyParamCaption}\item[{int}]{pair\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00577}{577}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l00184}{Plot\+Vector()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00163}{Plot\+Vector\+Set()}}.
+
+\Hypertarget{classGeneralChart_aa41242920bcfcf27fd3c7d8dfa655780}\label{classGeneralChart_aa41242920bcfcf27fd3c7d8dfa655780} 
+\index{GeneralChart@{GeneralChart}!Plot@{Plot}}
+\index{Plot@{Plot}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{Plot()}{Plot()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classResultItem}{Result\+Item}} \texorpdfstring{$\ast$}{*}}]{res }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00058}{chart\+View}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d}{dfa\+\_\+vectorsetset}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{distribution}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9}{distribution\+\_\+with\+\_\+observed}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{elemental\+\_\+profile\+\_\+set}}, \mbox{\hyperlink{generalchart_8cpp_source_l00540}{Initialize\+Distributions()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00520}{Initialize\+MCMCSamples()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a51292102a4c6b0d6bf7029cfaf800ed5}{matrix1vs1}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84}{mcmc\+\_\+samples}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}, \mbox{\hyperlink{resultitem_8h_source_l00022}{Result\+Item\+::\+Name()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00404}{Plot\+Contribution()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00266}{Plot\+Matrix()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00434}{Plot\+Predicted\+Concentration()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00344}{Plot\+Profile\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01173}{Plot\+Range\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00495}{Plot\+Regression\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00777}{Plot\+Scatter()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01131}{Plot\+Time\+Series\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01286}{Plot\+Time\+Series\+Set\+\_\+\+M()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01400}{Plot\+Time\+Series\+Set\+\_\+\+Stacked()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00184}{Plot\+Vector()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00163}{Plot\+Vector\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00138}{Plot\+Vector\+Set\+Set()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{predicted\+\_\+concentration}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920}{rangeset\+\_\+with\+\_\+observed}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{stacked\+\_\+bar\+\_\+chart}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843}{timeseries\+\_\+set}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa3ca99b9a7fdb189d57aa337bcdb86c4}{timeseries\+\_\+set\+\_\+first\+\_\+symbol}}, \mbox{\hyperlink{resultitem_8h_source_l00024}{Result\+Item\+::\+Type()}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}{vectorset\+\_\+groups}}, \mbox{\hyperlink{resultitem_8h_source_l00055}{Result\+Item\+::\+XAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_source_l00056}{Result\+Item\+::\+YAxis\+Title()}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00109}{Results\+Window\+::on\+\_\+result\+\_\+graph\+\_\+clicked()}}.
+
+\Hypertarget{classGeneralChart_a2e93817f5d2e03365807d5d7de987639}\label{classGeneralChart_a2e93817f5d2e03365807d5d7de987639} 
+\index{GeneralChart@{GeneralChart}!PlotContribution@{PlotContribution}}
+\index{PlotContribution@{PlotContribution}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotContribution()}{PlotContribution()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Contribution (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classContribution}{Contribution}} \texorpdfstring{$\ast$}{*}}]{contributions,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00404}{404}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, and \mbox{\hyperlink{generalchart_8h_source_l00058}{chart\+View}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a038546200b48c8ba97f60693034f72b5}\label{classGeneralChart_a038546200b48c8ba97f60693034f72b5} 
+\index{GeneralChart@{GeneralChart}!PlotDistribution@{PlotDistribution}}
+\index{PlotDistribution@{PlotDistribution}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotDistribution()}{PlotDistribution()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Distribution (\begin{DoxyParamCaption}\item[{Time\+Series$<$ double $>$ \texorpdfstring{$\ast$}{*}}]{mlr,  }\item[{const QString \&}]{variable }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01057}{1057}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9}{distribution\+\_\+with\+\_\+observed}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00127}{CMBTime\+Series\+Set\+::\+Observed\+Value()}}, \mbox{\hyperlink{resultitem_8h_source_l00017}{Result\+Item\+::\+Result()}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}, and \mbox{\hyperlink{resultitem_8h_source_l00024}{Result\+Item\+::\+Type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00627}{on\+Distributions\+Variable\+Changed()}}.
+
+\Hypertarget{classGeneralChart_a19ba5a6fe47d3197c52e329423b4decb}\label{classGeneralChart_a19ba5a6fe47d3197c52e329423b4decb} 
+\index{GeneralChart@{GeneralChart}!PlotMatrix@{PlotMatrix}}
+\index{PlotMatrix@{PlotMatrix}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotMatrix()}{PlotMatrix()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \texorpdfstring{$\ast$}{*}}]{matrix,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00266}{266}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_source_l00058}{Result\+Item\+::\+Abs\+Value()}}, \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{generalchart_8cpp_source_l00130}{round\+Down()}}, and \mbox{\hyperlink{resultitem_8h_source_l00027}{Result\+Item\+::\+YAxis\+Mode()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a51f6ee20f567af29f46aafd5cc6d0a5a}\label{classGeneralChart_a51f6ee20f567af29f46aafd5cc6d0a5a} 
+\index{GeneralChart@{GeneralChart}!PlotMCMCSamples@{PlotMCMCSamples}}
+\index{PlotMCMCSamples@{PlotMCMCSamples}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotMCMCSamples()}{PlotMCMCSamples()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+MCMCSamples (\begin{DoxyParamCaption}\item[{Time\+Series$<$ double $>$ \texorpdfstring{$\ast$}{*}}]{mlr,  }\item[{const QString \&}]{variable }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00992}{992}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00620}{on\+MCMCVariable\+Changed()}}.
+
+\Hypertarget{classGeneralChart_a954475246bbb4df7c3180a5f8a9761f8}\label{classGeneralChart_a954475246bbb4df7c3180a5f8a9761f8} 
+\index{GeneralChart@{GeneralChart}!PlotPredictedConcentration@{PlotPredictedConcentration}}
+\index{PlotPredictedConcentration@{PlotPredictedConcentration}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotPredictedConcentration()}{PlotPredictedConcentration()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Predicted\+Concentration (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*}}]{elemental\+\_\+profile,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00434}{434}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00839}{Elemental\+\_\+\+Profile\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00793}{Elemental\+\_\+\+Profile\+::\+Get\+Maximum()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00818}{Elemental\+\_\+\+Profile\+::\+Get\+Minimum()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{generalchart_8cpp_source_l00130}{round\+Down()}}, \mbox{\hyperlink{resultitem_8h_source_l00055}{Result\+Item\+::\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00027}{Result\+Item\+::\+YAxis\+Mode()}}, \mbox{\hyperlink{resultitem_8h_source_l00056}{Result\+Item\+::\+YAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_source_l00059}{Result\+Item\+::\+YLimit()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a25f2d7ab97f485d64ee5cc7dcff6ca62}\label{classGeneralChart_a25f2d7ab97f485d64ee5cc7dcff6ca62} 
+\index{GeneralChart@{GeneralChart}!PlotProfileSet@{PlotProfileSet}}
+\index{PlotProfileSet@{PlotProfileSet}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotProfileSet()}{PlotProfileSet()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Profile\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classElemental__Profile__Set}{Elemental\+\_\+\+Profile\+\_\+\+Set}} \texorpdfstring{$\ast$}{*}}]{elementalprofileset,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00344}{344}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00356}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Element\+Names()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00455}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Maximum()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00474}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Get\+Minimum()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{generalchart_8cpp_source_l00130}{round\+Down()}}, \mbox{\hyperlink{resultitem_8h_source_l00027}{Result\+Item\+::\+YAxis\+Mode()}}, and \mbox{\hyperlink{resultitem_8h_source_l00059}{Result\+Item\+::\+YLimit()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a16b5e429b0da935cd8a99c79b9a2dadb}\label{classGeneralChart_a16b5e429b0da935cd8a99c79b9a2dadb} 
+\index{GeneralChart@{GeneralChart}!PlotRangeSet@{PlotRangeSet}}
+\index{PlotRangeSet@{PlotRangeSet}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotRangeSet()}{PlotRangeSet()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Range\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classRangeSet}{Range\+Set}} \texorpdfstring{$\ast$}{*}}]{rangeset,  }\item[{const QString \&}]{title,  }\item[{const QString \&}]{x\+\_\+axis\+\_\+title,  }\item[{const QString \&}]{y\+\_\+axis\+\_\+title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01173}{1173}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{resultitem_8h_source_l00074}{Result\+Item\+::\+Fixed\+YLimit()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920}{rangeset\+\_\+with\+\_\+observed}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{resultitem_8h_source_l00024}{Result\+Item\+::\+Type()}}, \mbox{\hyperlink{resultitem_8h_source_l00027}{Result\+Item\+::\+YAxis\+Mode()}}, and \mbox{\hyperlink{resultitem_8h_source_l00059}{Result\+Item\+::\+YLimit()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a7fdef8521041bed124e6ecc1736a6ec4}\label{classGeneralChart_a7fdef8521041bed124e6ecc1736a6ec4} 
+\index{GeneralChart@{GeneralChart}!PlotRegression@{PlotRegression}}
+\index{PlotRegression@{PlotRegression}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotRegression()}{PlotRegression()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Regression (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMultipleLinearRegression}{Multiple\+Linear\+Regression}} \texorpdfstring{$\ast$}{*}}]{timeseriesset,  }\item[{const QString \&}]{independent\+\_\+var }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00644}{644}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{linear}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7afac131120365e920d07c1ef7f062c7b0}{mlr}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00561}{on\+Element\+Changed()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00634}{on\+Independent\+Changed()}}.
+
+\Hypertarget{classGeneralChart_ad03ca2e474bc141d624a51a55bfa2c0f}\label{classGeneralChart_ad03ca2e474bc141d624a51a55bfa2c0f} 
+\index{GeneralChart@{GeneralChart}!PlotRegressionSet@{PlotRegressionSet}}
+\index{PlotRegressionSet@{PlotRegressionSet}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotRegressionSet()}{PlotRegressionSet()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Regression\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMultipleLinearRegressionSet}{Multiple\+Linear\+Regression\+Set}} \texorpdfstring{$\ast$}{*}}]{regressionset,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00495}{495}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8h_source_l00062}{independent\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l00561}{on\+Element\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00634}{on\+Independent\+Changed()}}, and \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a2bf32624252555e427a06ec2a1984ca2}\label{classGeneralChart_a2bf32624252555e427a06ec2a1984ca2} 
+\index{GeneralChart@{GeneralChart}!PlotScatter@{PlotScatter}}
+\index{PlotScatter@{PlotScatter}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotScatter()}{PlotScatter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Scatter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBMatrix}{CMBMatrix}} \texorpdfstring{$\ast$}{*}}]{matrix }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00777}{777}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, and \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{matrix}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00598}{on\+DFAPair\+Changed()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a7ebe1753f307a129a285fb6e24629930}\label{classGeneralChart_a7ebe1753f307a129a285fb6e24629930} 
+\index{GeneralChart@{GeneralChart}!PlotScatter@{PlotScatter}}
+\index{PlotScatter@{PlotScatter}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotScatter()}{PlotScatter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Scatter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}}]{vectorset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00828}{828}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7af74520ca6b5c84969205cee862515c56}{vectorset}}, \mbox{\hyperlink{resultitem_8h_source_l00055}{Result\+Item\+::\+XAxis\+Title()}}, and \mbox{\hyperlink{resultitem_8h_source_l00056}{Result\+Item\+::\+YAxis\+Title()}}.
+
+\Hypertarget{classGeneralChart_a1f9127378fbb695c6e5cc3612fd98ad7}\label{classGeneralChart_a1f9127378fbb695c6e5cc3612fd98ad7} 
+\index{GeneralChart@{GeneralChart}!PlotScatter@{PlotScatter}}
+\index{PlotScatter@{PlotScatter}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotScatter()}{PlotScatter()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Scatter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}}]{vectorset1,  }\item[{\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}}]{vectorset2,  }\item[{const QString \&}]{xaxis\+\_\+title,  }\item[{const QString \&}]{yaxistitle }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00878}{878}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8cpp_source_l01461}{calculate\+Rotated\+Ellipse\+Points()}}, \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{cmbvectorset_8cpp_source_l00060}{CMBVector\+Set\+::max()}}, \mbox{\hyperlink{cmbvectorset_8cpp_source_l00069}{CMBVector\+Set\+::min()}}, \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}.
+
+\Hypertarget{classGeneralChart_a91281e1f13642630892735f6f9b53eea}\label{classGeneralChart_a91281e1f13642630892735f6f9b53eea} 
+\index{GeneralChart@{GeneralChart}!PlotTimeSeriesSet@{PlotTimeSeriesSet}}
+\index{PlotTimeSeriesSet@{PlotTimeSeriesSet}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotTimeSeriesSet()}{PlotTimeSeriesSet()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Time\+Series\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{regressionset,  }\item[{const QString \&}]{title,  }\item[{const QString \&}]{x\+\_\+axis\+\_\+title = {\ttfamily "{}"{}},  }\item[{const QString \&}]{y\+\_\+axis\+\_\+title = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01131}{1131}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_aeb19c8725a6c990bd7dfd3afb9c7cfbb}\label{classGeneralChart_aeb19c8725a6c990bd7dfd3afb9c7cfbb} 
+\index{GeneralChart@{GeneralChart}!PlotTimeSeriesSet\_A@{PlotTimeSeriesSet\_A}}
+\index{PlotTimeSeriesSet\_A@{PlotTimeSeriesSet\_A}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotTimeSeriesSet\_A()}{PlotTimeSeriesSet\_A()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Time\+Series\+Set\+\_\+A (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{timeseriesset,  }\item[{const QString \&}]{title,  }\item[{const QString \&}]{x\+\_\+axis\+\_\+title = {\ttfamily "{}"{}},  }\item[{const QString \&}]{y\+\_\+axis\+\_\+title = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01352}{1352}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{CMBTime\+Series\+Set\+::\+Label()}}, \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{low}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, and \mbox{\hyperlink{resultitem_8h_source_l00059}{Result\+Item\+::\+YLimit()}}.
+
+\Hypertarget{classGeneralChart_aaa53c20d3045f601602e1c8fc1359458}\label{classGeneralChart_aaa53c20d3045f601602e1c8fc1359458} 
+\index{GeneralChart@{GeneralChart}!PlotTimeSeriesSet\_M@{PlotTimeSeriesSet\_M}}
+\index{PlotTimeSeriesSet\_M@{PlotTimeSeriesSet\_M}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotTimeSeriesSet\_M()}{PlotTimeSeriesSet\_M()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Time\+Series\+Set\+\_\+M (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{timeseriesset,  }\item[{const QString \&}]{title,  }\item[{const QString \&}]{x\+\_\+axis\+\_\+title = {\ttfamily "{}"{}},  }\item[{const QString \&}]{y\+\_\+axis\+\_\+title = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01286}{1286}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, and \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{CMBTime\+Series\+Set\+::\+Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a0102869edc41298ddb074704cd24dfde}\label{classGeneralChart_a0102869edc41298ddb074704cd24dfde} 
+\index{GeneralChart@{GeneralChart}!PlotTimeSeriesSet\_Stacked@{PlotTimeSeriesSet\_Stacked}}
+\index{PlotTimeSeriesSet\_Stacked@{PlotTimeSeriesSet\_Stacked}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotTimeSeriesSet\_Stacked()}{PlotTimeSeriesSet\_Stacked()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Time\+Series\+Set\+\_\+\+Stacked (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTime\+Series\+Set}} \texorpdfstring{$\ast$}{*}}]{timeseriesset,  }\item[{const QString \&}]{title,  }\item[{const QString \&}]{x\+\_\+axis\+\_\+title,  }\item[{const QString \&}]{y\+\_\+axis\+\_\+title = {\ttfamily "{}"{}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l01400}{1400}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, and \mbox{\hyperlink{cmbtimeseriesset_8h_source_l00155}{CMBTime\+Series\+Set\+::\+Label()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_ac8a0ccd90583bfaa548a361ffe90647d}\label{classGeneralChart_ac8a0ccd90583bfaa548a361ffe90647d} 
+\index{GeneralChart@{GeneralChart}!PlotVector@{PlotVector}}
+\index{PlotVector@{PlotVector}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotVector()}{PlotVector()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Vector (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBVector}{CMBVector}} \texorpdfstring{$\ast$}{*}}]{profile,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00184}{184}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{resultitem_8h_source_l00058}{Result\+Item\+::\+Abs\+Value()}}, \mbox{\hyperlink{generalchart_8h_source_l00057}{chart}}, \mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{counter}}, \mbox{\hyperlink{cmbvector_8h_source_l00138}{CMBVector\+::\+Labels()}}, \mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{resultitem_8h_source_l00022}{Result\+Item\+::\+Name()}}, \mbox{\hyperlink{generalchart_8h_source_l00064}{result\+\_\+item}}, \mbox{\hyperlink{generalchart_8cpp_source_l00130}{round\+Down()}}, \mbox{\hyperlink{resultitem_8h_source_l00055}{Result\+Item\+::\+XAxis\+Title()}}, \mbox{\hyperlink{resultitem_8h_source_l00027}{Result\+Item\+::\+YAxis\+Mode()}}, and \mbox{\hyperlink{resultitem_8h_source_l00056}{Result\+Item\+::\+YAxis\+Title()}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00577}{on\+Pair\+Changed()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a459ac148f1d8624d17f177f01b445226}\label{classGeneralChart_a459ac148f1d8624d17f177f01b445226} 
+\index{GeneralChart@{GeneralChart}!PlotVectorSet@{PlotVectorSet}}
+\index{PlotVectorSet@{PlotVectorSet}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotVectorSet()}{PlotVectorSet()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Vector\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBVectorSet}{CMBVector\+Set}} \texorpdfstring{$\ast$}{*}}]{profile,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00163}{163}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8h_source_l00059}{element\+\_\+combo}}, \mbox{\hyperlink{generalchart_8cpp_source_l00577}{on\+Pair\+Changed()}}, and \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+\Hypertarget{classGeneralChart_a976c7f9219d56f16766b61a85dc99c9f}\label{classGeneralChart_a976c7f9219d56f16766b61a85dc99c9f} 
+\index{GeneralChart@{GeneralChart}!PlotVectorSetSet@{PlotVectorSetSet}}
+\index{PlotVectorSetSet@{PlotVectorSetSet}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{PlotVectorSetSet()}{PlotVectorSetSet()}}
+{\footnotesize\ttfamily bool General\+Chart\+::\+Plot\+Vector\+Set\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCMBVectorSetSet}{CMBVector\+Set\+Set}} \texorpdfstring{$\ast$}{*}}]{profile,  }\item[{const QString \&}]{title }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8cpp_source_l00138}{138}} of file \mbox{\hyperlink{generalchart_8cpp_source}{generalchart.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{generalchart_8cpp_source_l00598}{on\+DFAPair\+Changed()}}, \mbox{\hyperlink{generalchart_8h_source_l00060}{source1\+\_\+combo}}, \mbox{\hyperlink{generalchart_8h_source_l00061}{source2\+\_\+combo}}, and \mbox{\hyperlink{generalchart_8h_source_l00056}{ui}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classGeneralChart_a3382fda0ee86e0ff74ed477e21ec3d18}\label{classGeneralChart_a3382fda0ee86e0ff74ed477e21ec3d18} 
+\index{GeneralChart@{GeneralChart}!chart@{chart}}
+\index{chart@{chart}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{chart}{chart}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChart}{Chart}}\texorpdfstring{$\ast$}{*} General\+Chart\+::chart\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00057}{57}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00007}{General\+Chart()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01443}{on\+\_\+\+Exporttopng()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00598}{on\+DFAPair\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00577}{on\+Pair\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00404}{Plot\+Contribution()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01057}{Plot\+Distribution()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00266}{Plot\+Matrix()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00992}{Plot\+MCMCSamples()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00434}{Plot\+Predicted\+Concentration()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00344}{Plot\+Profile\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01173}{Plot\+Range\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00644}{Plot\+Regression()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00777}{Plot\+Scatter()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00828}{Plot\+Scatter()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00878}{Plot\+Scatter()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01131}{Plot\+Time\+Series\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01352}{Plot\+Time\+Series\+Set\+\_\+\+A()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01286}{Plot\+Time\+Series\+Set\+\_\+\+M()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01400}{Plot\+Time\+Series\+Set\+\_\+\+Stacked()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00184}{Plot\+Vector()}}.
+
+\Hypertarget{classGeneralChart_a2c6abd124eceda7c9c4ed8c922ec8994}\label{classGeneralChart_a2c6abd124eceda7c9c4ed8c922ec8994} 
+\index{GeneralChart@{GeneralChart}!chartView@{chartView}}
+\index{chartView@{chartView}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{chartView}{chartView}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classChartView}{Chart\+View}}\texorpdfstring{$\ast$}{*} General\+Chart\+::chart\+View\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00058}{58}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00007}{General\+Chart()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01443}{on\+\_\+\+Exporttopng()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00404}{Plot\+Contribution()}}.
+
+\Hypertarget{classGeneralChart_a8684d52bb02a4b9c2f0cfa2fbe32b765}\label{classGeneralChart_a8684d52bb02a4b9c2f0cfa2fbe32b765} 
+\index{GeneralChart@{GeneralChart}!element\_combo@{element\_combo}}
+\index{element\_combo@{element\_combo}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{element\_combo}{element\_combo}}
+{\footnotesize\ttfamily QCombo\+Box\texorpdfstring{$\ast$}{*} General\+Chart\+::element\+\_\+combo\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00059}{59}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00540}{Initialize\+Distributions()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00520}{Initialize\+MCMCSamples()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00627}{on\+Distributions\+Variable\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00561}{on\+Element\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00634}{on\+Independent\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00620}{on\+MCMCVariable\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00577}{on\+Pair\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00495}{Plot\+Regression\+Set()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00163}{Plot\+Vector\+Set()}}.
+
+\Hypertarget{classGeneralChart_a9e172c91982f0e37bf67d707e0846882}\label{classGeneralChart_a9e172c91982f0e37bf67d707e0846882} 
+\index{GeneralChart@{GeneralChart}!independent\_combo@{independent\_combo}}
+\index{independent\_combo@{independent\_combo}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{independent\_combo}{independent\_combo}}
+{\footnotesize\ttfamily QCombo\+Box\texorpdfstring{$\ast$}{*} General\+Chart\+::independent\+\_\+combo\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00062}{62}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00561}{on\+Element\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00634}{on\+Independent\+Changed()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00495}{Plot\+Regression\+Set()}}.
+
+\Hypertarget{classGeneralChart_a9a1e2188743d3985eac595b387c48847}\label{classGeneralChart_a9a1e2188743d3985eac595b387c48847} 
+\index{GeneralChart@{GeneralChart}!result\_item@{result\_item}}
+\index{result\_item@{result\_item}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{result\_item}{result\_item}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classResultItem}{Result\+Item}}\texorpdfstring{$\ast$}{*} General\+Chart\+::result\+\_\+item =nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00064}{64}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00598}{on\+DFAPair\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00627}{on\+Distributions\+Variable\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00561}{on\+Element\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00634}{on\+Independent\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00620}{on\+MCMCVariable\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00577}{on\+Pair\+Changed()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00024}{Plot()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01057}{Plot\+Distribution()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00266}{Plot\+Matrix()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00434}{Plot\+Predicted\+Concentration()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00344}{Plot\+Profile\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01173}{Plot\+Range\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00828}{Plot\+Scatter()}}, \mbox{\hyperlink{generalchart_8cpp_source_l01352}{Plot\+Time\+Series\+Set\+\_\+\+A()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00184}{Plot\+Vector()}}.
+
+\Hypertarget{classGeneralChart_a28952e94e08db7de7470cd8f1008756e}\label{classGeneralChart_a28952e94e08db7de7470cd8f1008756e} 
+\index{GeneralChart@{GeneralChart}!source1\_combo@{source1\_combo}}
+\index{source1\_combo@{source1\_combo}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{source1\_combo}{source1\_combo}}
+{\footnotesize\ttfamily QCombo\+Box\texorpdfstring{$\ast$}{*} General\+Chart\+::source1\+\_\+combo\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00060}{60}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00598}{on\+DFAPair\+Changed()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00138}{Plot\+Vector\+Set\+Set()}}.
+
+\Hypertarget{classGeneralChart_a5639fcc3e40822ef6a1d60227f37c96d}\label{classGeneralChart_a5639fcc3e40822ef6a1d60227f37c96d} 
+\index{GeneralChart@{GeneralChart}!source2\_combo@{source2\_combo}}
+\index{source2\_combo@{source2\_combo}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{source2\_combo}{source2\_combo}}
+{\footnotesize\ttfamily QCombo\+Box\texorpdfstring{$\ast$}{*} General\+Chart\+::source2\+\_\+combo\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00061}{61}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00598}{on\+DFAPair\+Changed()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00138}{Plot\+Vector\+Set\+Set()}}.
+
+\Hypertarget{classGeneralChart_a9d78901ec5f554d01f9d8b67b3a558eb}\label{classGeneralChart_a9d78901ec5f554d01f9d8b67b3a558eb} 
+\index{GeneralChart@{GeneralChart}!ui@{ui}}
+\index{ui@{ui}!GeneralChart@{GeneralChart}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily Ui\+::\+General\+Chart\texorpdfstring{$\ast$}{*} General\+Chart\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{generalchart_8h_source_l00056}{56}} of file \mbox{\hyperlink{generalchart_8h_source}{generalchart.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{generalchart_8cpp_source_l00007}{General\+Chart()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00019}{\texorpdfstring{$\sim$}{\string~}\+General\+Chart()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00540}{Initialize\+Distributions()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00520}{Initialize\+MCMCSamples()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00495}{Plot\+Regression\+Set()}}, \mbox{\hyperlink{generalchart_8cpp_source_l00163}{Plot\+Vector\+Set()}}, and \mbox{\hyperlink{generalchart_8cpp_source_l00138}{Plot\+Vector\+Set\+Set()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{generalchart_8h}{generalchart.\+h}}\item 
+\mbox{\hyperlink{generalchart_8cpp}{generalchart.\+cpp}}\end{DoxyCompactItemize}

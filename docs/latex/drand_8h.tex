@@ -1,0 +1,202 @@
+\doxysection{drand.\+h File Reference}
+\hypertarget{drand_8h}{}\label{drand_8h}\index{drand.h@{drand.h}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{drand_8h_ab202d98e55ab2e55560556dab887097f}{\+\_\+\+DRAND}}
+\item 
+\#define \mbox{\hyperlink{drand_8h_a27e29766bcd15100786b4dea6d0111d2}{RAND48\+\_\+\+SEED\+\_\+0}}~(0x330e)
+\item 
+\#define \mbox{\hyperlink{drand_8h_a881ca2fa55a0e564b6f259522b50216f}{RAND48\+\_\+\+SEED\+\_\+1}}~(0xabcd)
+\item 
+\#define \mbox{\hyperlink{drand_8h_a73e76d765fe9df910dc50ebd9f8bf819}{RAND48\+\_\+\+SEED\+\_\+2}}~(0x1234)
+\item 
+\#define \mbox{\hyperlink{drand_8h_acb241a41df8518af8f14fd46ad9b8ea9}{RAND48\+\_\+\+MULT\+\_\+0}}~(0xe66d)
+\item 
+\#define \mbox{\hyperlink{drand_8h_aea28133e7fe3b5412895bc6ed5810399}{RAND48\+\_\+\+MULT\+\_\+1}}~(0xdeec)
+\item 
+\#define \mbox{\hyperlink{drand_8h_a75e6352c9e6b817d557d3d99a6095f7e}{RAND48\+\_\+\+MULT\+\_\+2}}~(0x0005)
+\item 
+\#define \mbox{\hyperlink{drand_8h_a1c3309cc75ef547fa29f096e381c10c1}{RAND48\+\_\+\+ADD}}~(0x000b)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{drand_8h_a99b4c357ca67d940b0afea32a01c61a7}{\+\_\+dorand48}} (unsigned short xseed\mbox{[}3\mbox{]})
+\item 
+double \mbox{\hyperlink{drand_8h_a3ff12b6087fb14cc44ef9bbe568e7694}{erand48}} (unsigned short xseed\mbox{[}3\mbox{]})
+\item 
+double \mbox{\hyperlink{drand_8h_a0556ac4bd80375e8a98d85ae0f1b4486}{drand48}} ()
+\item 
+void \mbox{\hyperlink{drand_8h_a4a5823747f439773158a319359e28a1e}{srand48}} (long seed)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unsigned short \mbox{\hyperlink{drand_8h_aec3e59b6c6ac82c6766814ff9b9ba79d}{\+\_\+rand48\+\_\+seed}} \mbox{[}3\mbox{]}
+\item 
+unsigned short \mbox{\hyperlink{drand_8h_a52de9e2bb92ea1d817537db2d7e19910}{\+\_\+rand48\+\_\+mult}} \mbox{[}3\mbox{]}
+\item 
+unsigned short \mbox{\hyperlink{drand_8h_a3dc192626831c1b6ddfb8bb27a7d949c}{\+\_\+rand48\+\_\+add}} = (0x000b)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{drand_8h_ab202d98e55ab2e55560556dab887097f}\label{drand_8h_ab202d98e55ab2e55560556dab887097f} 
+\index{drand.h@{drand.h}!\_DRAND@{\_DRAND}}
+\index{\_DRAND@{\_DRAND}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{\_DRAND}{\_DRAND}}
+{\footnotesize\ttfamily \#define \+\_\+\+DRAND}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00003}{3}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_a1c3309cc75ef547fa29f096e381c10c1}\label{drand_8h_a1c3309cc75ef547fa29f096e381c10c1} 
+\index{drand.h@{drand.h}!RAND48\_ADD@{RAND48\_ADD}}
+\index{RAND48\_ADD@{RAND48\_ADD}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_ADD}{RAND48\_ADD}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+ADD~(0x000b)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00011}{11}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_acb241a41df8518af8f14fd46ad9b8ea9}\label{drand_8h_acb241a41df8518af8f14fd46ad9b8ea9} 
+\index{drand.h@{drand.h}!RAND48\_MULT\_0@{RAND48\_MULT\_0}}
+\index{RAND48\_MULT\_0@{RAND48\_MULT\_0}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_MULT\_0}{RAND48\_MULT\_0}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+MULT\+\_\+0~(0xe66d)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00008}{8}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_aea28133e7fe3b5412895bc6ed5810399}\label{drand_8h_aea28133e7fe3b5412895bc6ed5810399} 
+\index{drand.h@{drand.h}!RAND48\_MULT\_1@{RAND48\_MULT\_1}}
+\index{RAND48\_MULT\_1@{RAND48\_MULT\_1}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_MULT\_1}{RAND48\_MULT\_1}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+MULT\+\_\+1~(0xdeec)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00009}{9}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_a75e6352c9e6b817d557d3d99a6095f7e}\label{drand_8h_a75e6352c9e6b817d557d3d99a6095f7e} 
+\index{drand.h@{drand.h}!RAND48\_MULT\_2@{RAND48\_MULT\_2}}
+\index{RAND48\_MULT\_2@{RAND48\_MULT\_2}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_MULT\_2}{RAND48\_MULT\_2}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+MULT\+\_\+2~(0x0005)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00010}{10}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_a27e29766bcd15100786b4dea6d0111d2}\label{drand_8h_a27e29766bcd15100786b4dea6d0111d2} 
+\index{drand.h@{drand.h}!RAND48\_SEED\_0@{RAND48\_SEED\_0}}
+\index{RAND48\_SEED\_0@{RAND48\_SEED\_0}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_SEED\_0}{RAND48\_SEED\_0}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+SEED\+\_\+0~(0x330e)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00005}{5}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_a881ca2fa55a0e564b6f259522b50216f}\label{drand_8h_a881ca2fa55a0e564b6f259522b50216f} 
+\index{drand.h@{drand.h}!RAND48\_SEED\_1@{RAND48\_SEED\_1}}
+\index{RAND48\_SEED\_1@{RAND48\_SEED\_1}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_SEED\_1}{RAND48\_SEED\_1}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+SEED\+\_\+1~(0xabcd)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00006}{6}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_a73e76d765fe9df910dc50ebd9f8bf819}\label{drand_8h_a73e76d765fe9df910dc50ebd9f8bf819} 
+\index{drand.h@{drand.h}!RAND48\_SEED\_2@{RAND48\_SEED\_2}}
+\index{RAND48\_SEED\_2@{RAND48\_SEED\_2}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{RAND48\_SEED\_2}{RAND48\_SEED\_2}}
+{\footnotesize\ttfamily \#define RAND48\+\_\+\+SEED\+\_\+2~(0x1234)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00007}{7}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{drand_8h_a99b4c357ca67d940b0afea32a01c61a7}\label{drand_8h_a99b4c357ca67d940b0afea32a01c61a7} 
+\index{drand.h@{drand.h}!\_dorand48@{\_dorand48}}
+\index{\_dorand48@{\_dorand48}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{\_dorand48()}{\_dorand48()}}
+{\footnotesize\ttfamily void \+\_\+dorand48 (\begin{DoxyParamCaption}\item[{unsigned short}]{xseed\mbox{[}3\mbox{]} }\end{DoxyParamCaption})}
+
+\Hypertarget{drand_8h_a0556ac4bd80375e8a98d85ae0f1b4486}\label{drand_8h_a0556ac4bd80375e8a98d85ae0f1b4486} 
+\index{drand.h@{drand.h}!drand48@{drand48}}
+\index{drand48@{drand48}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{drand48()}{drand48()}}
+{\footnotesize\ttfamily double drand48 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\Hypertarget{drand_8h_a3ff12b6087fb14cc44ef9bbe568e7694}\label{drand_8h_a3ff12b6087fb14cc44ef9bbe568e7694} 
+\index{drand.h@{drand.h}!erand48@{erand48}}
+\index{erand48@{erand48}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{erand48()}{erand48()}}
+{\footnotesize\ttfamily double erand48 (\begin{DoxyParamCaption}\item[{unsigned short}]{xseed\mbox{[}3\mbox{]} }\end{DoxyParamCaption})}
+
+\Hypertarget{drand_8h_a4a5823747f439773158a319359e28a1e}\label{drand_8h_a4a5823747f439773158a319359e28a1e} 
+\index{drand.h@{drand.h}!srand48@{srand48}}
+\index{srand48@{srand48}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{srand48()}{srand48()}}
+{\footnotesize\ttfamily void srand48 (\begin{DoxyParamCaption}\item[{long}]{seed }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{drand_8h_a3dc192626831c1b6ddfb8bb27a7d949c}\label{drand_8h_a3dc192626831c1b6ddfb8bb27a7d949c} 
+\index{drand.h@{drand.h}!\_rand48\_add@{\_rand48\_add}}
+\index{\_rand48\_add@{\_rand48\_add}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{\_rand48\_add}{\_rand48\_add}}
+{\footnotesize\ttfamily unsigned short \+\_\+rand48\+\_\+add = (0x000b)}
+
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00023}{23}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_a52de9e2bb92ea1d817537db2d7e19910}\label{drand_8h_a52de9e2bb92ea1d817537db2d7e19910} 
+\index{drand.h@{drand.h}!\_rand48\_mult@{\_rand48\_mult}}
+\index{\_rand48\_mult@{\_rand48\_mult}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{\_rand48\_mult}{\_rand48\_mult}}
+{\footnotesize\ttfamily unsigned short \+\_\+rand48\+\_\+mult\mbox{[}3\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \ (0xe66d)\ ,}
+\DoxyCodeLine{\ \ \ \ \ (0xdeec)\ ,}
+\DoxyCodeLine{\ \ \ \ \ (0x0005)\ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00018}{18}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+
+\Hypertarget{drand_8h_aec3e59b6c6ac82c6766814ff9b9ba79d}\label{drand_8h_aec3e59b6c6ac82c6766814ff9b9ba79d} 
+\index{drand.h@{drand.h}!\_rand48\_seed@{\_rand48\_seed}}
+\index{\_rand48\_seed@{\_rand48\_seed}!drand.h@{drand.h}}
+\doxysubsubsection{\texorpdfstring{\_rand48\_seed}{\_rand48\_seed}}
+{\footnotesize\ttfamily unsigned short \+\_\+rand48\+\_\+seed\mbox{[}3\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \ (0x330e)\ ,}
+\DoxyCodeLine{\ \ \ \ \ (0xabcd)\ ,}
+\DoxyCodeLine{\ \ \ \ \ (0x1234)\ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{drand_8h_source_l00013}{13}} of file \mbox{\hyperlink{drand_8h_source}{drand.\+h}}.
+

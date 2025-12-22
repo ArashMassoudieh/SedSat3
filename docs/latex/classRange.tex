@@ -1,0 +1,471 @@
+\doxysection{Range Class Reference}
+\hypertarget{classRange}{}\label{classRange}\index{Range@{Range}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/range.\+h$>$}
+
+
+
+Inheritance diagram for Range\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classRange__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Range\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classRange__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRange_aa4407a93074fbb726deb613f7a067983}{Range}} ()
+\item 
+\mbox{\hyperlink{classRange_a7c4de3d5832fc76114a3d9bf93a27dcf}{Range}} (const \mbox{\hyperlink{classRange}{Range}} \&rhs)
+\item 
+\mbox{\hyperlink{classRange}{Range}} \& \mbox{\hyperlink{classRange_a0ac3373d3074cbcdf7a95a4b7f9b6fdd}{operator=}} (const \mbox{\hyperlink{classRange}{Range}} \&rhs)
+\item 
+QJson\+Object \mbox{\hyperlink{classRange_a3664300bcdc1dbcbcef2e1aeb6b276fa}{to\+Json\+Object}} () const override
+\item 
+bool \mbox{\hyperlink{classRange_a571f1a21e961a54b90afa03d9449df65}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject) override
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classRange_a0d95d827d04a96451baea3d88c2ef92e}{To\+String}} () const override
+\item 
+bool \mbox{\hyperlink{classRange_a904851d2ba8c0c2f47f4c4925a9f925a}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}) override
+\item 
+bool \mbox{\hyperlink{classRange_a1c9121fc9f3e87a69bf867d107a544f4}{Read}} (const QString\+List \&strlist) override
+\item 
+void \mbox{\hyperlink{classRange_a17d9f6e25fb4bdadca3b9fec2197a769}{Set}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+double \mbox{\hyperlink{classRange_affecd8e858494001db58ddd246f030a7}{Get}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh) const
+\item 
+double \mbox{\hyperlink{classRange_a096ad0c9f707c34da96fe7534da1ad12}{Mean}} () const
+\item 
+void \mbox{\hyperlink{classRange_afbe88c2e384f99abaaa8e67428336207}{Set\+Mean}} (const double \&m)
+\item 
+double \mbox{\hyperlink{classRange_a1b6fabc5ad519e52778a75c2cfd3f2ed}{Median}} () const
+\item 
+void \mbox{\hyperlink{classRange_a9cf1c0eebe0bdedfb59218b8fd58e1c0}{Set\+Median}} (const double \&m)
+\item 
+void \mbox{\hyperlink{classRange_a3d45e8fc0fd5ed2255be85344a2004a8}{Set\+Value}} (const double value)
+\item 
+double \mbox{\hyperlink{classRange_a5c3cb811927ca55bb557e578778c4b58}{Get\+Value}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{To\+Table}} ()
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classRange_ab60e8b6d7e32ed3630250ac0eecc0338}{range}}
+\item 
+double \mbox{\hyperlink{classRange_aef44d1f8639914f2628c3d3ec2f884b9}{median}} = 0
+\item 
+double \mbox{\hyperlink{classRange_a6cd6c9d98a0e57b33aac77fa29c58605}{mean}} = 0
+\item 
+double \mbox{\hyperlink{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c}{observed\+\_\+value}} =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classInterface}{Interface}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00007}{7}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classRange_aa4407a93074fbb726deb613f7a067983}\label{classRange_aa4407a93074fbb726deb613f7a067983} 
+\index{Range@{Range}!Range@{Range}}
+\index{Range@{Range}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Range()}{Range()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Range\+::\+Range (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+\Hypertarget{classRange_a7c4de3d5832fc76114a3d9bf93a27dcf}\label{classRange_a7c4de3d5832fc76114a3d9bf93a27dcf} 
+\index{Range@{Range}!Range@{Range}}
+\index{Range@{Range}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Range()}{Range()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Range\+::\+Range (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classRange}{Range}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00029}{mean}}, \mbox{\hyperlink{range_8h_source_l00028}{median}}, \mbox{\hyperlink{range_8h_source_l00030}{observed\+\_\+value}}, and \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classRange_affecd8e858494001db58ddd246f030a7}\label{classRange_affecd8e858494001db58ddd246f030a7} 
+\index{Range@{Range}!Get@{Get}}
+\index{Get@{Get}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily double Range\+::\+Get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}}}]{lowhigh }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00071}{71}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, and \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classRange_a5c3cb811927ca55bb557e578778c4b58}\label{classRange_a5c3cb811927ca55bb557e578778c4b58} 
+\index{Range@{Range}!GetValue@{GetValue}}
+\index{GetValue@{GetValue}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{GetValue()}{GetValue()}}
+{\footnotesize\ttfamily double Range\+::\+Get\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00025}{25}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00030}{observed\+\_\+value}}.
+
+\Hypertarget{classRange_a096ad0c9f707c34da96fe7534da1ad12}\label{classRange_a096ad0c9f707c34da96fe7534da1ad12} 
+\index{Range@{Range}!Mean@{Mean}}
+\index{Mean@{Mean}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Mean()}{Mean()}}
+{\footnotesize\ttfamily double Range\+::\+Mean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00020}{20}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00029}{mean}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classRange_a1b6fabc5ad519e52778a75c2cfd3f2ed}\label{classRange_a1b6fabc5ad519e52778a75c2cfd3f2ed} 
+\index{Range@{Range}!Median@{Median}}
+\index{Median@{Median}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Median()}{Median()}}
+{\footnotesize\ttfamily double Range\+::\+Median (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00022}{22}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00028}{median}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04314}{Source\+Sink\+Data\+::\+MCMC\+\_\+\+Batch()}}.
+
+\Hypertarget{classRange_a0ac3373d3074cbcdf7a95a4b7f9b6fdd}\label{classRange_a0ac3373d3074cbcdf7a95a4b7f9b6fdd} 
+\index{Range@{Range}!operator=@{operator=}}
+\index{operator=@{operator=}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classRange}{Range}} \& Range\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classRange}{Range}} \&}]{rhs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00029}{mean}}, \mbox{\hyperlink{range_8h_source_l00028}{median}}, \mbox{\hyperlink{range_8h_source_l00030}{observed\+\_\+value}}, \mbox{\hyperlink{interface_8cpp_source_l00014}{Interface\+::operator=()}}, and \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+\Hypertarget{classRange_a1c9121fc9f3e87a69bf867d107a544f4}\label{classRange_a1c9121fc9f3e87a69bf867d107a544f4} 
+\index{Range@{Range}!Read@{Read}}
+\index{Read@{Read}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily bool Range\+::\+Read (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{strlist }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+\Hypertarget{classRange_a571f1a21e961a54b90afa03d9449df65}\label{classRange_a571f1a21e961a54b90afa03d9449df65} 
+\index{Range@{Range}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Range\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00029}{mean}}, \mbox{\hyperlink{range_8h_source_l00028}{median}}, \mbox{\hyperlink{range_8h_source_l00030}{observed\+\_\+value}}, and \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+
+
+Referenced by \mbox{\hyperlink{rangeset_8cpp_source_l00028}{Range\+Set\+::\+Read\+From\+Json\+Object()}}.
+
+\Hypertarget{classRange_a17d9f6e25fb4bdadca3b9fec2197a769}\label{classRange_a17d9f6e25fb4bdadca3b9fec2197a769} 
+\index{Range@{Range}!Set@{Set}}
+\index{Set@{Set}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily void Range\+::\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}}}]{lowhigh,  }\item[{const double \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, and \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03744}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classRange_afbe88c2e384f99abaaa8e67428336207}\label{classRange_afbe88c2e384f99abaaa8e67428336207} 
+\index{Range@{Range}!SetMean@{SetMean}}
+\index{SetMean@{SetMean}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{SetMean()}{SetMean()}}
+{\footnotesize\ttfamily void Range\+::\+Set\+Mean (\begin{DoxyParamCaption}\item[{const double \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00021}{21}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00029}{mean}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03744}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classRange_a9cf1c0eebe0bdedfb59218b8fd58e1c0}\label{classRange_a9cf1c0eebe0bdedfb59218b8fd58e1c0} 
+\index{Range@{Range}!SetMedian@{SetMedian}}
+\index{SetMedian@{SetMedian}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{SetMedian()}{SetMedian()}}
+{\footnotesize\ttfamily void Range\+::\+Set\+Median (\begin{DoxyParamCaption}\item[{const double \&}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00023}{23}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00028}{median}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l03744}{Source\+Sink\+Data\+::\+Boot\+Strap()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classRange_a3d45e8fc0fd5ed2255be85344a2004a8}\label{classRange_a3d45e8fc0fd5ed2255be85344a2004a8} 
+\index{Range@{Range}!SetValue@{SetValue}}
+\index{SetValue@{SetValue}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{SetValue()}{SetValue()}}
+{\footnotesize\ttfamily void Range\+::\+Set\+Value (\begin{DoxyParamCaption}\item[{const double}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00024}{24}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00030}{observed\+\_\+value}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}.
+
+\Hypertarget{classRange_a3664300bcdc1dbcbcef2e1aeb6b276fa}\label{classRange_a3664300bcdc1dbcbcef2e1aeb6b276fa} 
+\index{Range@{Range}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Range\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00029}{mean}}, \mbox{\hyperlink{range_8h_source_l00028}{median}}, \mbox{\hyperlink{range_8h_source_l00030}{observed\+\_\+value}}, and \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+\Hypertarget{classRange_a0d95d827d04a96451baea3d88c2ef92e}\label{classRange_a0d95d827d04a96451baea3d88c2ef92e} 
+\index{Range@{Range}!ToString@{ToString}}
+\index{ToString@{ToString}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Range\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8h_source_l00027}{range}}.
+
+
+
+Referenced by \mbox{\hyperlink{range_8cpp_source_l00054}{writetofile()}}.
+
+\Hypertarget{classRange_a904851d2ba8c0c2f47f4c4925a9f925a}\label{classRange_a904851d2ba8c0c2f47f4c4925a9f925a} 
+\index{Range@{Range}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool Range\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{Interface}}.
+
+
+
+Definition at line \mbox{\hyperlink{range_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{range_8cpp_source}{range.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{range_8cpp_source_l00050}{To\+String()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classRange_a6cd6c9d98a0e57b33aac77fa29c58605}\label{classRange_a6cd6c9d98a0e57b33aac77fa29c58605} 
+\index{Range@{Range}!mean@{mean}}
+\index{mean@{mean}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{mean}{mean}}
+{\footnotesize\ttfamily double Range\+::mean = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00029}{29}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{range_8cpp_source_l00011}{Range()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l04047}{Source\+Sink\+Data\+::\+MCMC()}}, \mbox{\hyperlink{range_8h_source_l00020}{Mean()}}, \mbox{\hyperlink{range_8cpp_source_l00018}{operator=()}}, \mbox{\hyperlink{range_8cpp_source_l00040}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{range_8h_source_l00021}{Set\+Mean()}}, and \mbox{\hyperlink{range_8cpp_source_l00028}{to\+Json\+Object()}}.
+
+\Hypertarget{classRange_aef44d1f8639914f2628c3d3ec2f884b9}\label{classRange_aef44d1f8639914f2628c3d3ec2f884b9} 
+\index{Range@{Range}!median@{median}}
+\index{median@{median}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{median}{median}}
+{\footnotesize\ttfamily double Range\+::median = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00028}{28}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{range_8cpp_source_l00011}{Range()}}, \mbox{\hyperlink{range_8h_source_l00022}{Median()}}, \mbox{\hyperlink{range_8cpp_source_l00018}{operator=()}}, \mbox{\hyperlink{range_8cpp_source_l00040}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{range_8h_source_l00023}{Set\+Median()}}, and \mbox{\hyperlink{range_8cpp_source_l00028}{to\+Json\+Object()}}.
+
+\Hypertarget{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c}\label{classRange_a0abd9b5c6ef7b6903a8674817ad0da8c} 
+\index{Range@{Range}!observed\_value@{observed\_value}}
+\index{observed\_value@{observed\_value}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{observed\_value}{observed\_value}}
+{\footnotesize\ttfamily double Range\+::observed\+\_\+value =0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00030}{30}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{range_8cpp_source_l00011}{Range()}}, \mbox{\hyperlink{range_8h_source_l00025}{Get\+Value()}}, \mbox{\hyperlink{range_8cpp_source_l00018}{operator=()}}, \mbox{\hyperlink{range_8cpp_source_l00040}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{range_8h_source_l00024}{Set\+Value()}}, and \mbox{\hyperlink{range_8cpp_source_l00028}{to\+Json\+Object()}}.
+
+\Hypertarget{classRange_ab60e8b6d7e32ed3630250ac0eecc0338}\label{classRange_ab60e8b6d7e32ed3630250ac0eecc0338} 
+\index{Range@{Range}!range@{range}}
+\index{range@{range}!Range@{Range}}
+\doxysubsubsection{\texorpdfstring{range}{range}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ Range\+::range\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{range_8h_source_l00027}{27}} of file \mbox{\hyperlink{range_8h_source}{range.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{range_8cpp_source_l00006}{Range()}}, \mbox{\hyperlink{range_8cpp_source_l00011}{Range()}}, \mbox{\hyperlink{range_8cpp_source_l00071}{Get()}}, \mbox{\hyperlink{range_8cpp_source_l00018}{operator=()}}, \mbox{\hyperlink{range_8cpp_source_l00040}{Read\+From\+Json\+Object()}}, \mbox{\hyperlink{range_8cpp_source_l00064}{Set()}}, \mbox{\hyperlink{range_8cpp_source_l00028}{to\+Json\+Object()}}, and \mbox{\hyperlink{range_8cpp_source_l00050}{To\+String()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{range_8h}{range.\+h}}\item 
+\mbox{\hyperlink{range_8cpp}{range.\+cpp}}\end{DoxyCompactItemize}

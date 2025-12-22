@@ -1,0 +1,84 @@
+\doxysection{genericform.\+h}
+\hypertarget{genericform_8h_source}{}\label{genericform_8h_source}\mbox{\hyperlink{genericform_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ GENERICFORM\_H}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ GENERICFORM\_H}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}QJsonObject"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}QPushButton"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}QComboBox"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}QLineEdit"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}QCheckBox"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}QSpinBox"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{filebrowserpushbuttom_8h}{filebrowserpushbuttom.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00014}00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMainWindow}{MainWindow}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00016}\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ad}{00016}}\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ad}{delegate\_type}}\ \{\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada3b4def7eae2ce0235f1e056353572486}{LineEdit}},\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adafd249a0c28275ebf9d4c8464ca2225cf}{ComboBox}},\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada7ea0f1332ade5b23b34502a3bfe715a2}{CheckBox}},\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adaecb37eb700be076338f2598d896da7db}{SpinBox}},\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada1b34cd3140f56af738be5b0275d2f8f7}{FileBrowser}},\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adab5a7adde1af5c87d7fd797b6245c2a39}{Description}}\};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00017}\mbox{\hyperlink{structparameter__property}{00017}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structparameter__property}{parameter\_property}}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00019}\mbox{\hyperlink{structparameter__property_a2e56c9ff704efbbf41ab00d82efa884c}{00019}}\ \ \ \ \ QString\ \mbox{\hyperlink{structparameter__property_a2e56c9ff704efbbf41ab00d82efa884c}{Discription}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00020}\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{00020}}\ \ \ \ \ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ad}{delegate\_type}}\ \mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}\ =\ \mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada3b4def7eae2ce0235f1e056353572486}{delegate\_type::LineEdit}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00021}\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{00021}}\ \ \ \ \ QWidget\ *\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}}=\textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00022}\mbox{\hyperlink{structparameter__property_aca188ea3d2d43d7864c75e7829a8d7f9}{00022}}\ \ \ \ \ QString\ \mbox{\hyperlink{structparameter__property_aca188ea3d2d43d7864c75e7829a8d7f9}{DefaultValue}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00023}\mbox{\hyperlink{structparameter__property_a7ba036a679adcaa78e9417039abd1080}{00023}}\ \ \ \ \ QString\ \mbox{\hyperlink{structparameter__property_a7ba036a679adcaa78e9417039abd1080}{value}}()}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00024}00024\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}==\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada3b4def7eae2ce0235f1e056353572486}{delegate\_type::LineEdit}})}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}QLineEdit*\textcolor{keyword}{>}(\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}})-\/>text();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}==\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adafd249a0c28275ebf9d4c8464ca2225cf}{delegate\_type::ComboBox}})}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00030}00030\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}QComboBox*\textcolor{keyword}{>}(\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}})-\/>currentText();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}==\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada7ea0f1332ade5b23b34502a3bfe715a2}{delegate\_type::CheckBox}})}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{dynamic\_cast<}QCheckBox*\textcolor{keyword}{>}(\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}})-\/>checkState()==Qt::CheckState::Checked)}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}true"{}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}false"{}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}==\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591adaecb37eb700be076338f2598d896da7db}{delegate\_type::SpinBox}})}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ QString::number(\textcolor{keyword}{dynamic\_cast<}QSpinBox*\textcolor{keyword}{>}(\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}})-\/>\mbox{\hyperlink{structparameter__property_a7ba036a679adcaa78e9417039abd1080}{value}}());}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structparameter__property_ad40d457de5e806f7f13045e26d6ce96c}{Type}}==\mbox{\hyperlink{genericform_8h_a08aa8e6f7947752d6a77fd95594591ada1b34cd3140f56af738be5b0275d2f8f7}{delegate\_type::FileBrowser}})}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}\mbox{\hyperlink{classFileBrowserPushButtom}{FileBrowserPushButtom}}*\textcolor{keyword}{>}(\mbox{\hyperlink{structparameter__property_a0798d37811ec1bc737a34ecb047852d9}{InputWidget}})-\/>text();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00050}00050\ \};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00052}00052\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceUi}{Ui}}\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00053}00053\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGenericForm}{GenericForm}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00056}\mbox{\hyperlink{classGenericForm}{00056}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGenericForm}{GenericForm}}\ :\ \textcolor{keyword}{public}\ QWidget}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00057}00057\ \{}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00058}00058\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00060}00060\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00061}00061\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classGenericForm}{GenericForm}}(QJsonObject\ *formdata,\ QWidget\ *parent,\ \mbox{\hyperlink{classMainWindow}{MainWindow}}\ *\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}});}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00062}\mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{00062}}\ \ \ \ \ QVector<parameter\_property>\ \mbox{\hyperlink{classGenericForm_af0a97e8d1ab0fb83a10284e51f75703c}{Parameter\_Properties}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00063}00063\ \ \ \ \ \mbox{\hyperlink{classGenericForm_ab72de58d7ddf4b10f17b13228fa17e4b}{\string~GenericForm}}();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00064}00064\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classGenericForm_aa31d94bbd2d1edfb1681675666b04605}{SetCommand}}(\textcolor{keyword}{const}\ QString\ \&cmd);}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00066}00066\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00067}\mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{00067}}\ \ \ \ \ QPushButton\ *\mbox{\hyperlink{classGenericForm_ad28901c737a7d9c485b4bb76fa70b0ab}{buttonOk}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00068}\mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{00068}}\ \ \ \ \ QPushButton\ *\mbox{\hyperlink{classGenericForm_ac386d5d666454c5faa90a11c78d6d06b}{buttonCancel}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00069}\mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{00069}}\ \ \ \ \ Ui::GenericForm\ *\mbox{\hyperlink{classGenericForm_a7446d9366b134a66e8696151fa43f8a8}{ui}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{classMainWindow}{MainWindow}}\ *\mbox{\hyperlink{classGenericForm_a0361b9222062ad73084193dd6f92fa75}{mainwindow}}();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00071}\mbox{\hyperlink{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e}{00071}}\ \ \ \ \ QString\ \mbox{\hyperlink{classGenericForm_a59cc434a1a8f3e4511565f46fb8e577e}{command}};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00072}\mbox{\hyperlink{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}{00072}}\ \ \ \ \ \mbox{\hyperlink{classMainWindow}{MainWindow}}*\ \mbox{\hyperlink{classGenericForm_ae626097f052a9a1a508b8d8fba844abc}{mainWindow}}=\textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00073}00073\ \textcolor{keyword}{public}\ slots:}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00074}00074\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00075}00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGenericForm_a6b8a1015d7a5e23ba554c9d58bd1713d}{onProceed}}();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00076}00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classGenericForm_a631ecbb9d84d68be4355dd10ad8ce7f2}{onCancel}}();}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00077}00077\ \};}
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{genericform_8h_source_l00079}00079\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GENERICFORM\_H}}
+
+\end{DoxyCode}

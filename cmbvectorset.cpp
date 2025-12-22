@@ -16,10 +16,10 @@ CMBVectorSet& CMBVectorSet::operator=(const CMBVectorSet &mp)
     Interface::operator=(mp);
     return *this;
 }
-QJsonObject CMBVectorSet::toJsonObject()
+QJsonObject CMBVectorSet::toJsonObject() const
 {
     QJsonObject out;
-    for (map<string,CMBVector>::iterator it = begin(); it!=end();it++)
+    for (map<string,CMBVector>::const_iterator it = cbegin(); it!=cend();it++)
     {
         out[QString::fromStdString(it->first)]=it->second.toJsonObject();
     }
@@ -34,10 +34,10 @@ bool CMBVectorSet::ReadFromJsonObject(const QJsonObject &jsonobject)
     }
     return true;
 }
-string CMBVectorSet::ToString()
+string CMBVectorSet::ToString() const
 {
     string s;
-    for (map<string,CMBVector>::iterator it = begin(); it!=end();it++)
+    for (map<string,CMBVector>::const_iterator it = cbegin(); it!=cend();it++)
     {
         s+= "\n";
         s+=it->first + ":\n";

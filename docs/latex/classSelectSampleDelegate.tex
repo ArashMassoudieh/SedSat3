@@ -1,0 +1,226 @@
+\doxysection{Select\+Sample\+Delegate Class Reference}
+\hypertarget{classSelectSampleDelegate}{}\label{classSelectSampleDelegate}\index{SelectSampleDelegate@{SelectSampleDelegate}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/selectsampledelegate.\+h$>$}
+
+
+
+Inheritance diagram for Select\+Sample\+Delegate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classSelectSampleDelegate__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Select\+Sample\+Delegate\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classSelectSampleDelegate__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSelectSampleDelegate_a569c4bc66960e69c2e134627b34f626e}{Select\+Sample\+Delegate}} (\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}\+\_\+\+Data, QObject \texorpdfstring{$\ast$}{*}parent)
+\item 
+QWidget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classSelectSampleDelegate_a4d722b703bb7e94bd009f327a4c17fea}{create\+Editor}} (QWidget \texorpdfstring{$\ast$}{*}parent, const QStyle\+Option\+View\+Item \&option, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classSelectSampleDelegate_a5dee8e9189ae7e9d0069e69c343ede0c}{set\+Editor\+Data}} (QWidget \texorpdfstring{$\ast$}{*}editor, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classSelectSampleDelegate_a6c185788eaf139e670067cb6ec8759d8}{set\+Model\+Data}} (QWidget \texorpdfstring{$\ast$}{*}editor, QAbstract\+Item\+Model \texorpdfstring{$\ast$}{*}model, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classSelectSampleDelegate_adac495e7a64a02191e74010be3778f4a}{update\+Editor\+Geometry}} (QWidget \texorpdfstring{$\ast$}{*}editor, const QStyle\+Option\+View\+Item \&option, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classSelectSampleDelegate_ad578715097648deb044d35565d531272}{paint}} (QPainter \texorpdfstring{$\ast$}{*}painter, const QStyle\+Option\+View\+Item \&option, const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classSelectSampleDelegate_ab55e9f0e46ae08f40d05a9111c8a0643}{Set\+Mode}} (\mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167}{mode}} \+\_\+mode)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classSelectSampleDelegate_ab16d4697e5110aa4987017035adff0b8}{Data}}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167}{mode}} \mbox{\hyperlink{classSelectSampleDelegate_a14cc50890a6477c4287a4ea42b928cb0}{Mode}}
+\item 
+QVector$<$ \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3}{column\+\_\+type}} $>$ \mbox{\hyperlink{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}{column\+Types}}
+\item 
+int \mbox{\hyperlink{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0}{numberofcolumns}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8h_source_l00014}{14}} of file \mbox{\hyperlink{selectsampledelegate_8h_source}{selectsampledelegate.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSelectSampleDelegate_a569c4bc66960e69c2e134627b34f626e}\label{classSelectSampleDelegate_a569c4bc66960e69c2e134627b34f626e} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!SelectSampleDelegate@{SelectSampleDelegate}}
+\index{SelectSampleDelegate@{SelectSampleDelegate}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{SelectSampleDelegate()}{SelectSampleDelegate()}}
+{\footnotesize\ttfamily Select\+Sample\+Delegate\+::\+Select\+Sample\+Delegate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{\+\_\+\+Data,  }\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_source_l00037}{Data}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSelectSampleDelegate_a4d722b703bb7e94bd009f327a4c17fea}\label{classSelectSampleDelegate_a4d722b703bb7e94bd009f327a4c17fea} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!createEditor@{createEditor}}
+\index{createEditor@{createEditor}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{createEditor()}{createEditor()}}
+{\footnotesize\ttfamily QWidget \texorpdfstring{$\ast$}{*} Select\+Sample\+Delegate\+::create\+Editor (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent,  }\item[{const QStyle\+Option\+View\+Item \&}]{option,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_source_l00039}{column\+Types}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{yesno}}.
+
+\Hypertarget{classSelectSampleDelegate_ad578715097648deb044d35565d531272}\label{classSelectSampleDelegate_ad578715097648deb044d35565d531272} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!paint@{paint}}
+\index{paint@{paint}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{paint()}{paint()}}
+{\footnotesize\ttfamily void Select\+Sample\+Delegate\+::paint (\begin{DoxyParamCaption}\item[{QPainter \texorpdfstring{$\ast$}{*}}]{painter,  }\item[{const QStyle\+Option\+View\+Item \&}]{option,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00093}{93}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+\Hypertarget{classSelectSampleDelegate_a5dee8e9189ae7e9d0069e69c343ede0c}\label{classSelectSampleDelegate_a5dee8e9189ae7e9d0069e69c343ede0c} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!setEditorData@{setEditorData}}
+\index{setEditorData@{setEditorData}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{setEditorData()}{setEditorData()}}
+{\footnotesize\ttfamily void Select\+Sample\+Delegate\+::set\+Editor\+Data (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{editor,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_source_l00039}{column\+Types}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{yesno}}.
+
+\Hypertarget{classSelectSampleDelegate_ab55e9f0e46ae08f40d05a9111c8a0643}\label{classSelectSampleDelegate_ab55e9f0e46ae08f40d05a9111c8a0643} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!SetMode@{SetMode}}
+\index{SetMode@{SetMode}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{SetMode()}{SetMode()}}
+{\footnotesize\ttfamily void Select\+Sample\+Delegate\+::\+Set\+Mode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167}{mode}}}]{\+\_\+mode }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_source_l00039}{column\+Types}}, \mbox{\hyperlink{selectsampledelegate_8h_source_l00038}{Mode}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df}{number}}, \mbox{\hyperlink{selectsampledelegate_8h_source_l00040}{numberofcolumns}}, \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167a6265b3d48ef4f0f8b9ffa14675098709}{regressions}}, \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167a6ef9161b900632671022358216c7dfe7}{samples}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{yesno}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsamples_8cpp_source_l00048}{Select\+Samples\+::combo\+Changed()}}, and \mbox{\hyperlink{selectsamples_8cpp_source_l00019}{Select\+Samples\+::\+Set\+Data()}}.
+
+\Hypertarget{classSelectSampleDelegate_a6c185788eaf139e670067cb6ec8759d8}\label{classSelectSampleDelegate_a6c185788eaf139e670067cb6ec8759d8} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!setModelData@{setModelData}}
+\index{setModelData@{setModelData}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{setModelData()}{setModelData()}}
+{\footnotesize\ttfamily void Select\+Sample\+Delegate\+::set\+Model\+Data (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{editor,  }\item[{QAbstract\+Item\+Model \texorpdfstring{$\ast$}{*}}]{model,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00071}{71}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampledelegate_8h_source_l00039}{column\+Types}}, \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297}{name}}, and \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3acc74e9b9aaac7367488cc146dfb078db}{yesno}}.
+
+\Hypertarget{classSelectSampleDelegate_adac495e7a64a02191e74010be3778f4a}\label{classSelectSampleDelegate_adac495e7a64a02191e74010be3778f4a} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!updateEditorGeometry@{updateEditorGeometry}}
+\index{updateEditorGeometry@{updateEditorGeometry}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{updateEditorGeometry()}{updateEditorGeometry()}}
+{\footnotesize\ttfamily void Select\+Sample\+Delegate\+::update\+Editor\+Geometry (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{editor,  }\item[{const QStyle\+Option\+View\+Item \&}]{option,  }\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{selectsampledelegate_8cpp_source}{selectsampledelegate.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4}\label{classSelectSampleDelegate_a2dcedb3abdafc886ae88d459d3bf16f4} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!columnTypes@{columnTypes}}
+\index{columnTypes@{columnTypes}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{columnTypes}{columnTypes}}
+{\footnotesize\ttfamily QVector$<$\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3}{column\+\_\+type}}$>$ Select\+Sample\+Delegate\+::column\+Types\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8h_source_l00039}{39}} of file \mbox{\hyperlink{selectsampledelegate_8h_source}{selectsampledelegate.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00039}{create\+Editor()}}, \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00054}{set\+Editor\+Data()}}, \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00013}{Set\+Mode()}}, and \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00071}{set\+Model\+Data()}}.
+
+\Hypertarget{classSelectSampleDelegate_ab16d4697e5110aa4987017035adff0b8}\label{classSelectSampleDelegate_ab16d4697e5110aa4987017035adff0b8} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!Data@{Data}}
+\index{Data@{Data}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{Data}{Data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}\texorpdfstring{$\ast$}{*} Select\+Sample\+Delegate\+::\+Data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8h_source_l00037}{37}} of file \mbox{\hyperlink{selectsampledelegate_8h_source}{selectsampledelegate.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00008}{Select\+Sample\+Delegate()}}.
+
+\Hypertarget{classSelectSampleDelegate_a14cc50890a6477c4287a4ea42b928cb0}\label{classSelectSampleDelegate_a14cc50890a6477c4287a4ea42b928cb0} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!Mode@{Mode}}
+\index{Mode@{Mode}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{Mode}{Mode}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_a1a6b6fb557d8d37d59700faf4e4c9167}{mode}} Select\+Sample\+Delegate\+::\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8h_source_l00038}{38}} of file \mbox{\hyperlink{selectsampledelegate_8h_source}{selectsampledelegate.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00013}{Set\+Mode()}}.
+
+\Hypertarget{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0}\label{classSelectSampleDelegate_ada72e1daf7aa8afe8bb20cbc7b1413e0} 
+\index{SelectSampleDelegate@{SelectSampleDelegate}!numberofcolumns@{numberofcolumns}}
+\index{numberofcolumns@{numberofcolumns}!SelectSampleDelegate@{SelectSampleDelegate}}
+\doxysubsubsection{\texorpdfstring{numberofcolumns}{numberofcolumns}}
+{\footnotesize\ttfamily int Select\+Sample\+Delegate\+::numberofcolumns\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampledelegate_8h_source_l00040}{40}} of file \mbox{\hyperlink{selectsampledelegate_8h_source}{selectsampledelegate.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampledelegate_8cpp_source_l00013}{Set\+Mode()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h}{selectsampledelegate.\+h}}\item 
+\mbox{\hyperlink{selectsampledelegate_8cpp}{selectsampledelegate.\+cpp}}\end{DoxyCompactItemize}

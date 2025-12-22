@@ -6,7 +6,7 @@ ElementTableModel::ElementTableModel(SourceSinkData *_data, QObject *parent) : Q
 }
 int ElementTableModel::rowCount(const QModelIndex &index) const
 {
-    return Data->ElementNames().size();;
+    return Data->GetElementNames().size();;
 }
 int ElementTableModel::columnCount(const QModelIndex &index) const
 {
@@ -17,39 +17,39 @@ QVariant ElementTableModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole)
     {   if (index.column()==0)
         {
-            return QString::fromStdString(Data->ElementNames()[index.row()]);
+            return QString::fromStdString(Data->GetElementNames()[index.row()]);
         }
         if (index.column()==1)
         {
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::do_not_include)
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::do_not_include)
                 return "Exclude";
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::element)
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::element)
                 return "Element";
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::isotope)
                 return "Isotope";
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::particle_size)
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::particle_size)
                 return "Particle Size";
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::organic_carbon)
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::organic_carbon)
                 return "Organic Carbon";
 
         }
         if (index.column()==2)
         {
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
-                return QString::fromStdString(Data->GetElementInformation(Data->ElementNames()[index.row()])->base_element);
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::isotope)
+                return QString::fromStdString(Data->GetElementInformation(Data->GetElementNames()[index.row()])->base_element);
             else
                 return "";
         }
         if (index.column()==3)
         {
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
-                return QString::number(Data->GetElementInformation(Data->ElementNames()[index.row()])->standard_ratio);
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::isotope)
+                return QString::number(Data->GetElementInformation(Data->GetElementNames()[index.row()])->standard_ratio);
             else
                 return "";
         }
         if (index.column()==4)
         {
-            if (Data->GetElementInformation(Data->ElementNames()[index.row()])->include_in_analysis)
+            if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->include_in_analysis)
                 return "Yes";
             else
                 return "No";
@@ -58,7 +58,7 @@ QVariant ElementTableModel::data(const QModelIndex &index, int role) const
     if (role == Qt::ItemIsEnabled)
     {
         if (index.column()==2 || index.column()==3)
-        {   if (Data->GetElementInformation(Data->ElementNames()[index.row()])->Role == element_information::role::isotope)
+        {   if (Data->GetElementInformation(Data->GetElementNames()[index.row()])->Role == element_information::role::isotope)
                 return true;
             else
                 return false;
@@ -101,7 +101,7 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
     if (role==Qt::EditRole)
     {
 
-        string element = Data->ElementNames()[index.row()];
+        string element = Data->GetElementNames()[index.row()];
         if (index.column()==1)
         {
             if (value.toString()=="Element")

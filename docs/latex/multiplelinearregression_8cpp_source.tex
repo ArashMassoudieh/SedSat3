@@ -1,0 +1,352 @@
+\doxysection{multiplelinearregression.\+cpp}
+\hypertarget{multiplelinearregression_8cpp_source}{}\label{multiplelinearregression_8cpp_source}\mbox{\hyperlink{multiplelinearregression_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{multiplelinearregression_8h}{multiplelinearregression.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <gsl/gsl\_multifit.h>}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}Vector.h"{}}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <gsl/gsl\_statistics\_double.h>}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <gsl/gsl\_cdf.h>}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <qjsonarray.h>}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00009}\mbox{\hyperlink{classMultipleLinearRegression_a0284341b84ecab694690ba857e7dd21b}{00009}}\ \mbox{\hyperlink{classMultipleLinearRegression_a0284341b84ecab694690ba857e7dd21b}{MultipleLinearRegression::MultipleLinearRegression}}():\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00014}\mbox{\hyperlink{classMultipleLinearRegression_a492c8ef9b5885a50858c0ece5c5f989b}{00014}}\ \mbox{\hyperlink{classMultipleLinearRegression_a0284341b84ecab694690ba857e7dd21b}{MultipleLinearRegression::MultipleLinearRegression}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegression}{MultipleLinearRegression}}\&\ mp):\mbox{\hyperlink{classInterface}{Interface}}(mp)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\_matrix\_}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\_matrix\_}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}{dependent\_variable\_name}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}{dependent\_variable\_name}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}{p\_value\_threshold}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}{p\_value\_threshold}};\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00031}\mbox{\hyperlink{classMultipleLinearRegression_a332f83cac77f3c9dc442084b585f95e2}{00031}}\ \mbox{\hyperlink{classMultipleLinearRegression}{MultipleLinearRegression}}\&\ \mbox{\hyperlink{classMultipleLinearRegression_a332f83cac77f3c9dc442084b585f95e2}{MultipleLinearRegression::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classMultipleLinearRegression}{MultipleLinearRegression}}\ \&mp)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{Interface::operator=}}(mp);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00039}00039\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\_matrix\_}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\_matrix\_}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}{dependent\_variable\_name}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}{dependent\_variable\_name}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00044}00044\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}{p\_value\_threshold}}\ =\ mp.\mbox{\hyperlink{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}{p\_value\_threshold}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00050}\mbox{\hyperlink{classMultipleLinearRegression_a8c69e2229173c5669bd69ab200cb0c90}{00050}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classMultipleLinearRegression_a8c69e2229173c5669bd69ab200cb0c90}{MultipleLinearRegression::SSE\_reduced\_model}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}<vector<double>>\ \&independent,\ \textcolor{keyword}{const}\ vector<double>\ dependent,\ \textcolor{keywordtype}{int}\ eliminated\_var)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00051}00051\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (independent.size()==0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{if}\ (independent[0].size()!=dependent.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{int}\ number\_of\_data\_points\ =\ dependent.size();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{int}\ number\_of\_variables\ =\ independent.size();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00057}00057\ \ \ \ \ gsl\_matrix\ *X,\ *cov;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00058}00058\ \ \ \ \ gsl\_vector\ *\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ *w,\ *c;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{double}\ SSE=0;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (number\_of\_variables==1)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00063}00063\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ ==\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ SSE\ =\ pow(CVector(dependent).stdev(),2)*(dependent.size()-\/1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ SSE\ =\ pow(CVector(dependent).Log().stdev(),2)*(dependent.size()-\/1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ SSE;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00069}00069\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00071}00071\ \ \ \ \ X\ =\ gsl\_matrix\_alloc\ (number\_of\_data\_points,\ number\_of\_variables);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00072}00072\ \ \ \ \ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}\ =\ gsl\_vector\_alloc\ (number\_of\_data\_points);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00073}00073\ \ \ \ \ w\ =\ gsl\_vector\_alloc\ (number\_of\_data\_points);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00075}00075\ \ \ \ \ c\ =\ gsl\_vector\_alloc\ (number\_of\_variables);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00076}00076\ \ \ \ \ cov\ =\ gsl\_matrix\_alloc\ (number\_of\_variables,\ number\_of\_variables);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00078}00078\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ number\_of\_data\_points;\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00079}00079\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ 0,\ 1.0);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<number\_of\_variables;\ j++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j<eliminated\_var)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}==\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ j+1,\ independent[j][i]);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ j+1,\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(independent[j][i]));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (j>eliminated\_var)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}==\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ j,\ independent[j][i]);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ j,\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(independent[j][i]));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}==\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_vector\_set\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ i,\ dependent[i]);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_vector\_set\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ i,\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(dependent[i]));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_vector\_set\ (w,\ i,\ 1.0);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00103}00103\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ gsl\_multifit\_linear\_workspace\ *\ work}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ =\ gsl\_multifit\_linear\_alloc\ (number\_of\_data\_points,\ number\_of\_variables);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ gsl\_multifit\_wlinear\ (X,\ w,\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ c,\ cov,\&SSE,\ work);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ gsl\_multifit\_linear\_free\ (work);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00108}00108\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00110}00110\ \ \ \ \ \textcolor{keywordflow}{return}\ SSE;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00112}00112\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00114}\mbox{\hyperlink{classMultipleLinearRegression_ac989cf62f3745b53849a4597441b1642}{00114}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classMultipleLinearRegression_ac989cf62f3745b53849a4597441b1642}{MultipleLinearRegression::Regress}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}<vector<double>>\ \&independent,\ \textcolor{keyword}{const}\ vector<double>\ dependent,\ \textcolor{keyword}{const}\ vector<string>\ \&indep\_var\_names)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00115}00115\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00116}00116\ \ \ \ \ \textcolor{keywordflow}{if}\ (independent.size()==0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{if}\ (independent[0].size()!=dependent.size())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00118}00118\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}\ =\ indep\_var\_names;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00119}00119\ \ \ \ \ \textcolor{keywordtype}{int}\ number\_of\_data\_points\ =\ dependent.size();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{keywordtype}{int}\ number\_of\_variables\ =\ independent.size();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00122}00122\ \ \ \ \ gsl\_matrix\ *X,\ *cov;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00123}00123\ \ \ \ \ gsl\_vector\ *\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ *w,\ *c;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00125}00125\ \ \ \ \ X\ =\ gsl\_matrix\_alloc\ (number\_of\_data\_points,\ number\_of\_variables+1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00126}00126\ \ \ \ \ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}\ =\ gsl\_vector\_alloc\ (number\_of\_data\_points);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00127}00127\ \ \ \ \ w\ =\ gsl\_vector\_alloc\ (number\_of\_data\_points);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00129}00129\ \ \ \ \ c\ =\ gsl\_vector\_alloc\ (number\_of\_variables+1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00130}00130\ \ \ \ \ cov\ =\ gsl\_matrix\_alloc\ (number\_of\_variables+1,\ number\_of\_variables+1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00131}00131\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}\ =\ independent;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00132}00132\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}}\ =\ dependent;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00133}00133\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ number\_of\_data\_points;\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00134}00134\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ 0,\ 1.0);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ vector<double>\ independent\_column;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<number\_of\_variables;\ j++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}==\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ j+1,\ independent[j][i]);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_matrix\_set\ (X,\ i,\ j+1,\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(independent[j][i]));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}==\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_vector\_set\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ i,\ dependent[i]);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ gsl\_vector\_set\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ i,\ \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}(dependent[i]));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ gsl\_vector\_set\ (w,\ i,\ 1.0);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00152}00152\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00154}00154\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ gsl\_multifit\_linear\_workspace\ *\ work}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ =\ gsl\_multifit\_linear\_alloc\ (number\_of\_data\_points,\ number\_of\_variables+1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ gsl\_multifit\_wlinear\ (X,\ w,\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}},\ c,\ cov,\&\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}},\ work);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ gsl\_multifit\_linear\_free\ (work);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00159}00159\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00162}00162\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}.resize(number\_of\_variables+1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<number\_of\_variables+1;\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00164}00164\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[i]\ =\ gsl\_vector\_get(c,i);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00166}00166\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00168}00168\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\_matrix\_}}\ =\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}(number\_of\_variables+1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00169}00169\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<number\_of\_variables+1;\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j=0;\ j<number\_of\_variables+1;\ j++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_af250aa24d0ff3074bc7f473da9020237}{correlation\_matrix\_}}[i][j]\ =\ gsl\_matrix\_get(cov,i,j);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00173}00173\ \ \ \ \ \textcolor{keywordtype}{double}\ var\_y\ =\ gsl\_stats\_tss(\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}-\/>data,\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}-\/>stride,\ \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}}-\/>size);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00175}00175\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}}\ =\ 1-\/\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}/var\_y;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00176}00176\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}}\ =\ 1-\/(\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}/(number\_of\_data\_points-\/(number\_of\_variables+1))/(var\_y/(number\_of\_data\_points-\/1)));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00177}00177\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}.clear();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00178}00178\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}}.clear();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00179}00179\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=0;\ i<number\_of\_variables;\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00180}00180\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ SSE\_reduced\ =\ \mbox{\hyperlink{classMultipleLinearRegression_a8c69e2229173c5669bd69ab200cb0c90}{SSE\_reduced\_model}}(independent,dependent,\ i);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ F\ =\ (SSE\_reduced\ -\/\ \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}})/\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}*(number\_of\_data\_points-\/number\_of\_variables-\/1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}.push\_back(gsl\_cdf\_fdist\_Q\ (F,\ number\_of\_variables,\ number\_of\_data\_points-\/(number\_of\_variables)));}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}[i]<\mbox{\hyperlink{classMultipleLinearRegression_afb5c45e455523f5c84baac000205053b}{p\_value\_threshold}}\ \&\&\ aquiutils::lookup(\mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}},\mbox{\hyperlink{classMultipleLinearRegression_a70d6bb6412d59e5a7688e832dec621f9}{dependent\_variable\_name}})==-\/1)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}}.push\_back(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}}.push\_back(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ qDebug()<<\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}<<\textcolor{stringliteral}{"{},"{}}<<SSE\_reduced<<\textcolor{stringliteral}{"{},"{}}<<F<<\textcolor{stringliteral}{"{},"{}}<<\mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}[i];}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00190}00190\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00192}00192\ \ \ \ \ gsl\_matrix\_free\ (X);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00193}00193\ \ \ \ \ gsl\_vector\_free\ (\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea415290769594460e2e485922904f345d}{y}});}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00194}00194\ \ \ \ \ gsl\_vector\_free\ (w);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00195}00195\ \ \ \ \ gsl\_vector\_free\ (c);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00196}00196\ \ \ \ \ gsl\_matrix\_free\ (cov);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00198}00198\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00200}00200\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00201}\mbox{\hyperlink{classMultipleLinearRegression_a1adb6f0d901a5ab97971a2c04476425d}{00201}}\ QJsonObject\ \mbox{\hyperlink{classMultipleLinearRegression_a1adb6f0d901a5ab97971a2c04476425d}{MultipleLinearRegression::toJsonObject}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00202}00202\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00203}00203\ \ \ \ \ QJsonObject\ out;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00204}00204\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}==\mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ out[\textcolor{stringliteral}{"{}form"{}}]=\textcolor{stringliteral}{"{}Linear"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ out[\textcolor{stringliteral}{"{}form"{}}]=\textcolor{stringliteral}{"{}Power"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00208}00208\ \ \ \ \ out[\textcolor{stringliteral}{"{}Intercept"{}}]\ =\ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[0];}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00209}00209\ \ \ \ \ QJsonArray\ json\_dependent\_data;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00210}00210\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ json\_dependent\_data\ <<\ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}}[i];}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00213}00213\ \ \ \ \ out[\textcolor{stringliteral}{"{}Dependent\ Data"{}}]\ =\ json\_dependent\_data;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00214}00214\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00215}00215\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00216}00216\ \ \ \ \ QJsonArray\ json\_independent\_data;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00217}00217\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}.size();\ j++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00218}00218\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ QJsonArray\ json\_independent\_data\_item;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}[j].size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ json\_independent\_data\_item.append(\mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}[j][i]);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ json\_independent\_data.append(json\_independent\_data\_item);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00224}00224\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00226}00226\ \ \ \ \ out[\textcolor{stringliteral}{"{}Independent\ Data"{}}]\ =\ json\_independent\_data;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00229}00229\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=1;\ i<\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00230}00230\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ out[QString::fromStdString(\textcolor{stringliteral}{"{}Coefficient\ for;"{}}\ +\ aquiutils::numbertostring(i)+\textcolor{stringliteral}{"{};"{}}\ +\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i-\/1])]\ =\ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[i];}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ out[QString::fromStdString(\textcolor{stringliteral}{"{}P-\/value\ for;"{}}\ +\ aquiutils::numbertostring(i)+\textcolor{stringliteral}{"{};"{}}\ +\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i-\/1])]\ =\ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}[i-\/1];}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ out[QString::fromStdString(\textcolor{stringliteral}{"{}Effective\ for;"{}}\ +\ aquiutils::numbertostring(i)+\textcolor{stringliteral}{"{};"{}}\ +\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i-\/1])]\ =\ \mbox{\hyperlink{classMultipleLinearRegression_aed9f6643ae7bd0cc934f5eca7d3928b3}{Effective}}(i-\/1);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00235}00235\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00238}00238\ \ \ \ \ out[\textcolor{stringliteral}{"{}Chisq"{}}]\ =\ \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00239}00239\ \ \ \ \ out[\textcolor{stringliteral}{"{}R2"{}}]\ =\ \mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00240}00240\ \ \ \ \ out[\textcolor{stringliteral}{"{}R2\_adjusted"{}}]=\mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00243}00243\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00245}00245\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00246}\mbox{\hyperlink{classMultipleLinearRegression_ad4aff860f70c3a01d6fe5fce3278b9f1}{00246}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMultipleLinearRegression_ad4aff860f70c3a01d6fe5fce3278b9f1}{MultipleLinearRegression::ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00247}00247\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00248}00248\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}.clear();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00249}00249\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}.clear();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00250}00250\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}.clear();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00251}00251\ \ \ \ \ \textcolor{keywordflow}{if}\ (jsonobject[\textcolor{stringliteral}{"{}form"{}}]==\textcolor{stringliteral}{"{}Power"{}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ =\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa62cd275989e78ee56a81f0265a87562e}{regression\_form::power}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00253}00253\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ =\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00255}00255\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}.push\_back(jsonobject[\textcolor{stringliteral}{"{}Intercept"{}}].toDouble());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00256}00256\ \ \ \ \ \textcolor{keywordtype}{int}\ i=1;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00257}00257\ \ \ \ \ \textcolor{keywordflow}{for}(QString\ key:\ jsonobject.keys()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Coefficient\ for"{}}))}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \{\ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}.push\_back(jsonobject[key].toDouble());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}.push\_back(key.split(\textcolor{stringliteral}{"{};"{}})[2].toStdString());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}P-\/value\ for"{}}))}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}.push\_back(jsonobject[key].toDouble());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Effective\ for"{}}))}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5e34974bf6fd85710f2a84f90a84eee3}{make\_effective}}.push\_back(jsonobject[key].toBool());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00271}00271\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00272}00272\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00273}00273\ \textcolor{comment}{//\ Read\ dependent\ and\ independent\ data\ here}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00274}00274\ \ \ \ \ QJsonArray\ json\_dependent\_data\ =\ jsonobject[\textcolor{stringliteral}{"{}Dependent\ Data"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00275}00275\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ json\_dependent\_data.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00276}00276\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a5907bd44c81c814f82f40a32bd3f623d}{dependent\_data}}.push\_back(json\_dependent\_data[i].toDouble());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00278}00278\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00280}00280\ \ \ \ \ QJsonArray\ json\_independent\_data\ =\ jsonobject[\textcolor{stringliteral}{"{}Independent\ Data"{}}].toArray();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00281}00281\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ json\_independent\_data.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00282}00282\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ vector<double>\ independent\_data\_item;\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ QJsonArray\ json\_independent\_data\_item\ =\ json\_independent\_data[i].toArray();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ json\_independent\_data\_item.size();\ j++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ independent\_data\_item.push\_back(json\_independent\_data\_item[j].toDouble());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}.push\_back(independent\_data\_item);}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00290}00290\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00292}00292\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}}\ =\ jsonobject[\textcolor{stringliteral}{"{}R2"{}}].toDouble();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00293}00293\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}}\ =\ jsonobject[\textcolor{stringliteral}{"{}R2\_adjusted"{}}].toDouble();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00294}00294\ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}\ =\ jsonobject[\textcolor{stringliteral}{"{}Chisq"{}}].toDouble();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00295}00295\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00296}00296\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00297}00297\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00298}\mbox{\hyperlink{classMultipleLinearRegression_ad4415c3c95e05d20e7d41d81469ec909}{00298}}\ vector<double>\ \mbox{\hyperlink{classMultipleLinearRegression_ad4415c3c95e05d20e7d41d81469ec909}{MultipleLinearRegression::CoefficientsIntercept}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00299}00299\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00300}00300\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00301}00301\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00304}\mbox{\hyperlink{classMultipleLinearRegression_a5573d3d6ce38a733dd70ad3b2b9f1c6f}{00304}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classMultipleLinearRegression_a5573d3d6ce38a733dd70ad3b2b9f1c6f}{MultipleLinearRegression::MeanIndependentVar}}(\textcolor{keywordtype}{int}\ i)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00305}00305\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00306}00306\ \ \ \ \ \textcolor{keywordflow}{return}\ CVector(\mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}[i]).mean();}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00307}00307\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00309}\mbox{\hyperlink{classMultipleLinearRegression_afc85ea2e3d4ca1c2cc550a50e72195c1}{00309}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classMultipleLinearRegression_afc85ea2e3d4ca1c2cc550a50e72195c1}{MultipleLinearRegression::GeoMeanIndependentVar}}(\textcolor{keywordtype}{int}\ i)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00310}00310\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00311}00311\ \ \ \ \ \textcolor{keywordflow}{return}\ exp(CVector(\mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}[i]).Log().mean());}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00312}00312\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00313}\mbox{\hyperlink{classMultipleLinearRegression_ab68a76599eb9a701fd280a11e79310ec}{00313}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classMultipleLinearRegression_ab68a76599eb9a701fd280a11e79310ec}{MultipleLinearRegression::ToString}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00314}00314\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00315}00315\ \ \ \ \ \textcolor{keywordtype}{string}\ out;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00316}00316\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ ==\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00317}00317\ \ \ \ \ \{\ \ \ out\ +=\ \textcolor{stringliteral}{"{}form:\ Linear\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}Coefficient:\ "{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[0]).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00319}00319\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00320}00320\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00321}00321\ \ \ \ \ \{\ \ \ out\ +=\ \textcolor{stringliteral}{"{}form:\ Power\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00322}00322\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}Coefficient:\ "{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[0]).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00323}00323\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00324}00324\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00325}00325\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i=1;\ i<\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00326}00326\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classMultipleLinearRegression_a284676916574695867958825f0596872}{regressionEquation}}\ ==\ \mbox{\hyperlink{multiplelinearregression_8h_a126d68f6f19dcf3ad6b16e179766a91fa9a932b3cb396238423eb2f33ec17d6aa}{regression\_form::linear}})}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}Coefficient\ for\ "{}}\ +\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i-\/1]\ +\textcolor{stringliteral}{"{}:"{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[i]).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}Exponent\ for\ "{}}\ +\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i-\/1]\ +\textcolor{stringliteral}{"{}:"{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a117a9e06f19a3b113dab0cfa6bfa5eeb}{coefficients\_intercept\_}}[i]).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00331}00331\ \ \ \ \ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}P-\/value\ for\ "{}}\ +\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i-\/1]\ +\textcolor{stringliteral}{"{}:"{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a154123f3a291fd7f889d2acd24085714}{p\_value}}[i-\/1]).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00333}00333\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00334}00334\ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}Chisq:\ "{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_ac50b3f232cc69bd4792b2ea52d67343a}{chisq}}).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00335}00335\ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}R2:\ "{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a8f70a82774925717fc9dde9e38ba1dea}{R2}}).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00336}00336\ \ \ \ \ out\ +=\ \textcolor{stringliteral}{"{}Adusted\ R2:\ "{}}\ +\ QString::number(\mbox{\hyperlink{classMultipleLinearRegression_a590a79f13585dbf7a7a6bd288c10470e}{R2\_adj}}).toStdString()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00337}00337\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00338}00338\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00339}00339\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00340}\mbox{\hyperlink{classMultipleLinearRegression_a2151cb47ae6af9d4d581d1821c58d04a}{00340}}\ vector<double>\ \&\mbox{\hyperlink{classMultipleLinearRegression_a2151cb47ae6af9d4d581d1821c58d04a}{MultipleLinearRegression::IndependentData}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&var\_name)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00341}00341\ \{}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00342}00342\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i=0;\ i<\mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}.size();\ i++)}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (var\_name\ ==\ \mbox{\hyperlink{classMultipleLinearRegression_ae4b85697968a1e7582ef75a4a0edbb4d}{independent\_variables\_names}}[i])}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMultipleLinearRegression_ae38467094982ca8a98cf7a260209dec5}{independent\_data}}[i];}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00346}00346\ \}}
+\DoxyCodeLine{\Hypertarget{multiplelinearregression_8cpp_source_l00347}00347\ }
+
+\end{DoxyCode}

@@ -10,9 +10,9 @@ public:
     RangeSet();
     RangeSet(const RangeSet &rhs);
     RangeSet& operator = (const RangeSet &rhs);
-    QJsonObject toJsonObject() override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    string ToString() override;
+    string ToString() const override;
     bool writetofile(QFile*) override;
     bool Read(const QStringList &strlist) override;
     QTableWidget *ToTable() override;

@@ -1,0 +1,580 @@
+\doxysection{Interface Class Reference}
+\hypertarget{classInterface}{}\label{classInterface}\index{Interface@{Interface}}
+
+
+{\ttfamily \#include $<$interface.\+h$>$}
+
+
+
+Inheritance diagram for Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classInterface__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Interface\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classInterface__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}} ()
+\item 
+\mbox{\hyperlink{classInterface_a212e053de37823070cff09902f7dd706}{Interface}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+\mbox{\hyperlink{classInterface}{Interface}} \& \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}} (const \mbox{\hyperlink{classInterface}{Interface}} \&intf)
+\item 
+virtual \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{To\+String}} () const
+\item 
+virtual QJson\+Object \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{to\+Json\+Object}} () const
+\item 
+virtual bool \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{Read\+From\+Json\+Object}} (const QJson\+Object \&jsonobject)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{writetofile}} (QFile \texorpdfstring{$\ast$}{*}file)
+\item 
+virtual bool \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}} (const QString\+List \&strlist)
+\item 
+virtual QTable\+Widget \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{To\+Table}} ()
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{Get\+Notes}} () const
+\item 
+void \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{Set\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{Appendto\+Notes}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&note)
+\item 
+void \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{Clear\+Notes}} ()
+\item 
+void \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{Set\+Limit}} (\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}} lowhigh, const double \&value)
+\item 
+void \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{Set\+Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt, bool val)
+\item 
+bool \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}} (\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}} opt)
+\item 
+\mbox{\hyperlink{structoptions}{options}} \& \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{Get\+Options}} ()
+\item 
+QString \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxis\+Label}} () const
+\item 
+QString \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxis\+Label}} () const
+\item 
+bool \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{Set\+XAxis\+Label}} (const QString \&label)
+\item 
+bool \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{Set\+YAxis\+Label}} (const QString \&label)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}
+\item 
+double \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}
+\item 
+bool \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}}
+\item 
+\mbox{\hyperlink{structoptions}{options}} \mbox{\hyperlink{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}{Options}}
+\item 
+QString \mbox{\hyperlink{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11}{XAxis\+\_\+\+Label}} = "{}Sample"{}
+\item 
+QString \mbox{\hyperlink{classInterface_ad05b39ef62dc6445f12f44af441f593c}{YAxis\+\_\+\+Label}} = "{}Value"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00025}{25}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}\label{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1} 
+\index{Interface@{Interface}!Interface@{Interface}}
+\index{Interface@{Interface}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{Interface()}{Interface()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Interface\+::\+Interface (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+\Hypertarget{classInterface_a212e053de37823070cff09902f7dd706}\label{classInterface_a212e053de37823070cff09902f7dd706} 
+\index{Interface@{Interface}!Interface@{Interface}}
+\index{Interface@{Interface}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{Interface()}{Interface()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Interface\+::\+Interface (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classInterface}{Interface}} \&}]{intf }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00085}{Options}}, \mbox{\hyperlink{interface_8h_source_l00086}{XAxis\+\_\+\+Label}}, and \mbox{\hyperlink{interface_8h_source_l00087}{YAxis\+\_\+\+Label}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classInterface_ac306ba09e5a125a82db4960ce548efd7}\label{classInterface_ac306ba09e5a125a82db4960ce548efd7} 
+\index{Interface@{Interface}!AppendtoNotes@{AppendtoNotes}}
+\index{AppendtoNotes@{AppendtoNotes}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{AppendtoNotes()}{AppendtoNotes()}}
+{\footnotesize\ttfamily void Interface\+::\+Appendto\+Notes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{note }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00041}{41}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00084}{Notes}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00810}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+Detect\+Outliers()}}.
+
+\Hypertarget{classInterface_af34476e4a79cf6d527fc75e67b848a08}\label{classInterface_af34476e4a79cf6d527fc75e67b848a08} 
+\index{Interface@{Interface}!ClearNotes@{ClearNotes}}
+\index{ClearNotes@{ClearNotes}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{ClearNotes()}{ClearNotes()}}
+{\footnotesize\ttfamily void Interface\+::\+Clear\+Notes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00048}{48}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00084}{Notes}}.
+
+\Hypertarget{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}\label{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02} 
+\index{Interface@{Interface}!GetNotes@{GetNotes}}
+\index{GetNotes@{GetNotes}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{GetNotes()}{GetNotes()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Interface\+::\+Get\+Notes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00037}{37}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00084}{Notes}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00015}{Select\+Sample\+Table\+Model\+::data()}}.
+
+\Hypertarget{classInterface_a4f6e773c949a1210279131caa00471a1}\label{classInterface_a4f6e773c949a1210279131caa00471a1} 
+\index{Interface@{Interface}!GetOptions@{GetOptions}}
+\index{GetOptions@{GetOptions}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{GetOptions()}{GetOptions()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structoptions}{options}} \& Interface\+::\+Get\+Options (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00071}{71}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00085}{Options}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00463}{Conductor\+::\+Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Conductor\+::\+Execute\+Source\+Verify()}}, \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}, and \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00167}{CMBTime\+Series\+Set\+::\+To\+Table()}}.
+
+\Hypertarget{classInterface_a46a0a0162fc808dd547bc10cf24224ee}\label{classInterface_a46a0a0162fc808dd547bc10cf24224ee} 
+\index{Interface@{Interface}!operator=@{operator=}}
+\index{operator=@{operator=}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterface}{Interface}} \& Interface\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classInterface}{Interface}} \&}]{intf }\end{DoxyParamCaption})}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00085}{Options}}, \mbox{\hyperlink{interface_8h_source_l00086}{XAxis\+\_\+\+Label}}, and \mbox{\hyperlink{interface_8h_source_l00087}{YAxis\+\_\+\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvectorset_8cpp_source_l00013}{CMBVector\+Set\+::operator=()}}, \mbox{\hyperlink{cmbvectorsetset_8cpp_source_l00013}{CMBVector\+Set\+Set\+::operator=()}}, \mbox{\hyperlink{contribution_8cpp_source_l00014}{Contribution\+::operator=()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00083}{Elemental\+\_\+\+Profile\+::operator=()}}, \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00030}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::operator=()}}, \mbox{\hyperlink{multiplelinearregression_8cpp_source_l00031}{Multiple\+Linear\+Regression\+::operator=()}}, \mbox{\hyperlink{multiplelinearregressionset_8cpp_source_l00012}{Multiple\+Linear\+Regression\+Set\+::operator=()}}, \mbox{\hyperlink{range_8cpp_source_l00018}{Range\+::operator=()}}, \mbox{\hyperlink{rangeset_8cpp_source_l00013}{Range\+Set\+::operator=()}}, and \mbox{\hyperlink{resultitem_8cpp_source_l00022}{Result\+Item\+::operator=()}}.
+
+\Hypertarget{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}\label{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9} 
+\index{Interface@{Interface}!Option@{Option}}
+\index{Option@{Option}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{Option()}{Option()}}
+{\footnotesize\ttfamily bool Interface\+::\+Option (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}}}]{opt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00064}{64}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00085}{Options}}, \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\+\_\+column\+\_\+x}}, and \mbox{\hyperlink{interface_8h_source_l00019}{options\+::single\+\_\+column\+\_\+x}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbtimeseriesset_8cpp_source_l00167}{CMBTime\+Series\+Set\+::\+To\+Table()}}.
+
+\Hypertarget{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}\label{classInterface_aeb067aea3cf92b200e7876052bdf6ea9} 
+\index{Interface@{Interface}!Read@{Read}}
+\index{Read@{Read}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{Read()}{Read()}}
+{\footnotesize\ttfamily bool Interface\+::\+Read (\begin{DoxyParamCaption}\item[{const QString\+List \&}]{strlist }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classElemental__Profile_af63837f23db8c25fbd1414451c367403}{Elemental\+\_\+\+Profile}}, \mbox{\hyperlink{classContribution_a31574a2fe8e4734b76f57aba0ab93d7f}{Contribution}}, \mbox{\hyperlink{classElemental__Profile__Set_a5e6d31d25e0dfbbf5ec37ed09db75b54}{Elemental\+\_\+\+Profile\+\_\+\+Set}}, \mbox{\hyperlink{classRange_a1c9121fc9f3e87a69bf867d107a544f4}{Range}}, and \mbox{\hyperlink{classRangeSet_adb16031285ef4ad4de95f62a5924b373}{Range\+Set}}.
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+\Hypertarget{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}\label{classInterface_a4d7c5474353bc7785ff409c6231bcdcd} 
+\index{Interface@{Interface}!ReadFromJsonObject@{ReadFromJsonObject}}
+\index{ReadFromJsonObject@{ReadFromJsonObject}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{ReadFromJsonObject()}{ReadFromJsonObject()}}
+{\footnotesize\ttfamily bool Interface\+::\+Read\+From\+Json\+Object (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{jsonobject }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{Elemental\+\_\+\+Profile}}, \mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{CMBMatrix}}, \mbox{\hyperlink{classCMBTimeSeries_a20d086d44d2a573e04d3364baa97a30f}{CMBTime\+Series}}, \mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{CMBTime\+Series\+Set}}, \mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{CMBVector}}, \mbox{\hyperlink{classCMBVectorSet_af3547375177fbb595243945fcbfcfaf0}{CMBVector\+Set}}, \mbox{\hyperlink{classCMBVectorSetSet_a2dba36384e0294acfd2448b5e7c34581}{CMBVector\+Set\+Set}}, \mbox{\hyperlink{classContribution_a2d8dddc79dd2a69dae3e83324652b845}{Contribution}}, \mbox{\hyperlink{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}{Elemental\+\_\+\+Profile\+\_\+\+Set}}, \mbox{\hyperlink{classMultipleLinearRegression_ad4aff860f70c3a01d6fe5fce3278b9f1}{Multiple\+Linear\+Regression}}, \mbox{\hyperlink{classMultipleLinearRegressionSet_a1ac51ba3e71a8d67f2196c90b57a22f5}{Multiple\+Linear\+Regression\+Set}}, \mbox{\hyperlink{classRange_a571f1a21e961a54b90afa03d9449df65}{Range}}, and \mbox{\hyperlink{classRangeSet_a20bdcffd84c2c60e716d3ee4f3f221fa}{Range\+Set}}.
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+\Hypertarget{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}\label{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd} 
+\index{Interface@{Interface}!SetLimit@{SetLimit}}
+\index{SetLimit@{SetLimit}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{SetLimit()}{SetLimit()}}
+{\footnotesize\ttfamily void Interface\+::\+Set\+Limit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\+\_\+range}}}]{lowhigh,  }\item[{const double \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00051}{51}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{high}}, \mbox{\hyperlink{interface_8h_source_l00050}{highlightoutsideoflimit}}, \mbox{\hyperlink{interface_8h_source_l00049}{highlimit}}, and \mbox{\hyperlink{interface_8h_source_l00049}{lowlimit}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l01969}{Conductor\+::\+Execute\+ANOVA()}}, \mbox{\hyperlink{conductor_8cpp_source_l00652}{Conductor\+::\+Execute\+Correlation\+Matrix()}}, \mbox{\hyperlink{conductor_8cpp_source_l01763}{Conductor\+::\+Execute\+EDP()}}, \mbox{\hyperlink{conductor_8cpp_source_l01874}{Conductor\+::\+Execute\+EDPM()}}, \mbox{\hyperlink{conductor_8cpp_source_l01725}{Conductor\+::\+Execute\+Outlier\+Analysis()}}, and \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}.
+
+\Hypertarget{classInterface_a3a6a440e64c8c5847feed43f16efbd76}\label{classInterface_a3a6a440e64c8c5847feed43f16efbd76} 
+\index{Interface@{Interface}!SetNotes@{SetNotes}}
+\index{SetNotes@{SetNotes}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{SetNotes()}{SetNotes()}}
+{\footnotesize\ttfamily void Interface\+::\+Set\+Notes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{note }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00040}{40}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00084}{Notes}}.
+
+\Hypertarget{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}\label{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3} 
+\index{Interface@{Interface}!SetOption@{SetOption}}
+\index{SetOption@{SetOption}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{SetOption()}{SetOption()}}
+{\footnotesize\ttfamily void Interface\+::\+Set\+Option (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\+\_\+key}}}]{opt,  }\item[{bool}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00059}{59}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00085}{Options}}, \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\+\_\+column\+\_\+x}}, and \mbox{\hyperlink{interface_8h_source_l00019}{options\+::single\+\_\+column\+\_\+x}}.
+
+
+
+Referenced by \mbox{\hyperlink{conductor_8cpp_source_l00463}{Conductor\+::\+Execute\+Levenberg\+Marquardt\+Batch()}}, \mbox{\hyperlink{conductor_8cpp_source_l02086}{Conductor\+::\+Execute\+Source\+Verify()}}, and \mbox{\hyperlink{results_8cpp_source_l00041}{Results\+::\+Read\+From\+Json()}}.
+
+\Hypertarget{classInterface_a9543100e7a8dfce3db64dec59d5bef60}\label{classInterface_a9543100e7a8dfce3db64dec59d5bef60} 
+\index{Interface@{Interface}!SetXAxisLabel@{SetXAxisLabel}}
+\index{SetXAxisLabel@{SetXAxisLabel}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{SetXAxisLabel()}{SetXAxisLabel()}}
+{\footnotesize\ttfamily bool Interface\+::\+Set\+XAxis\+Label (\begin{DoxyParamCaption}\item[{const QString \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00077}{77}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00086}{XAxis\+\_\+\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00707}{Elemental\+\_\+\+Profile\+::\+Read\+From\+Json\+Object()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00081}{CMBVector\+::\+Read\+From\+Json\+Object()}}, and \mbox{\hyperlink{resultitem_8h_source_l00031}{Result\+Item\+::set\+XAxis\+Title()}}.
+
+\Hypertarget{classInterface_afc32c062b437f34324478d35cfeb54b5}\label{classInterface_afc32c062b437f34324478d35cfeb54b5} 
+\index{Interface@{Interface}!SetYAxisLabel@{SetYAxisLabel}}
+\index{SetYAxisLabel@{SetYAxisLabel}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{SetYAxisLabel()}{SetYAxisLabel()}}
+{\footnotesize\ttfamily bool Interface\+::\+Set\+YAxis\+Label (\begin{DoxyParamCaption}\item[{const QString \&}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00078}{78}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00087}{YAxis\+\_\+\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{elemental__profile_8cpp_source_l00707}{Elemental\+\_\+\+Profile\+::\+Read\+From\+Json\+Object()}}, and \mbox{\hyperlink{resultitem_8h_source_l00039}{Result\+Item\+::set\+YAxis\+Title()}}.
+
+\Hypertarget{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}\label{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2} 
+\index{Interface@{Interface}!toJsonObject@{toJsonObject}}
+\index{toJsonObject@{toJsonObject}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{toJsonObject()}{toJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Interface\+::to\+Json\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classCMBMatrix_a9b593e4be0122137740a8469eea5653a}{CMBMatrix}}, \mbox{\hyperlink{classCMBTimeSeries_a9175810d151e40686ae069781e6152f9}{CMBTime\+Series}}, \mbox{\hyperlink{classCMBTimeSeriesSet_a92f6681f8145b4582de54347e2de65c7}{CMBTime\+Series\+Set}}, \mbox{\hyperlink{classCMBVector_a4841a1e52bd7c09e54cd8567ecfdebe5}{CMBVector}}, \mbox{\hyperlink{classCMBVectorSet_a3da45b41c9c45707dc79dfbcf5080e38}{CMBVector\+Set}}, \mbox{\hyperlink{classCMBVectorSetSet_acc9cd8b63f62b8a9fd25aaf1eb88f67e}{CMBVector\+Set\+Set}}, \mbox{\hyperlink{classContribution_a529de1fba55974ab913a5e34c09ceec1}{Contribution}}, \mbox{\hyperlink{classElemental__Profile_ae6d76197a4334b6db6160b19610d3c9d}{Elemental\+\_\+\+Profile}}, \mbox{\hyperlink{classElemental__Profile__Set_a8a96dfcaf637ae59c04e88282cb5418d}{Elemental\+\_\+\+Profile\+\_\+\+Set}}, \mbox{\hyperlink{classMultipleLinearRegression_a1adb6f0d901a5ab97971a2c04476425d}{Multiple\+Linear\+Regression}}, \mbox{\hyperlink{classMultipleLinearRegressionSet_a9379678d44cb047cac943710f1dff514}{Multiple\+Linear\+Regression\+Set}}, \mbox{\hyperlink{classRange_a3664300bcdc1dbcbcef2e1aeb6b276fa}{Range}}, and \mbox{\hyperlink{classRangeSet_ad288bd31f7d7dca903f096474f9702f7}{Range\+Set}}.
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{results_8cpp_source_l00030}{Results\+::to\+Json\+Object()}}.
+
+\Hypertarget{classInterface_a685fc497a17443695cde6876efd144c8}\label{classInterface_a685fc497a17443695cde6876efd144c8} 
+\index{Interface@{Interface}!ToString@{ToString}}
+\index{ToString@{ToString}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{ToString()}{ToString()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Interface\+::\+To\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classCMBMatrix_a463466319d4ca9559d69a55e5d7b8242}{CMBMatrix}}, \mbox{\hyperlink{classCMBTimeSeries_add4f30dff6138071cae4dfde8a798c2c}{CMBTime\+Series}}, \mbox{\hyperlink{classCMBTimeSeriesSet_aed8de0898761176dc2e4073d802b6c76}{CMBTime\+Series\+Set}}, \mbox{\hyperlink{classCMBVector_a64a8b90af0d90b394b61ab7f322f1b77}{CMBVector}}, \mbox{\hyperlink{classCMBVectorSet_acf441cbf3da7e407b45fb6d472bed139}{CMBVector\+Set}}, \mbox{\hyperlink{classCMBVectorSetSet_a26445949d7659745b3169f604cfe00cf}{CMBVector\+Set\+Set}}, \mbox{\hyperlink{classContribution_a9c80795d1e46124a4a3f2435720eb0d2}{Contribution}}, \mbox{\hyperlink{classElemental__Profile_ac8b5f0c66844ed8a06be1bb5c600ea1e}{Elemental\+\_\+\+Profile}}, \mbox{\hyperlink{classElemental__Profile__Set_a91f6ad83445213f5e932917e882ecd01}{Elemental\+\_\+\+Profile\+\_\+\+Set}}, \mbox{\hyperlink{classMultipleLinearRegression_ab68a76599eb9a701fd280a11e79310ec}{Multiple\+Linear\+Regression}}, \mbox{\hyperlink{classMultipleLinearRegressionSet_a549de598f07741da493baa2f940df0fd}{Multiple\+Linear\+Regression\+Set}}, \mbox{\hyperlink{classRange_a0d95d827d04a96451baea3d88c2ef92e}{Range}}, and \mbox{\hyperlink{classRangeSet_affe74ed2a77264038a430c221a77cf56}{Range\+Set}}.
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+
+
+Referenced by \mbox{\hyperlink{resultswindow_8cpp_source_l00031}{Results\+Window\+::\+Append\+Result()}}.
+
+\Hypertarget{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}\label{classInterface_a8d4ef73a3756cb5218325018ec0f88f6} 
+\index{Interface@{Interface}!ToTable@{ToTable}}
+\index{ToTable@{ToTable}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{ToTable()}{ToTable()}}
+{\footnotesize\ttfamily QTable\+Widget \texorpdfstring{$\ast$}{*} Interface\+::\+To\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classCMBMatrix_aaf48d4fae0de8950420bacaab8f0152b}{CMBMatrix}}, \mbox{\hyperlink{classCMBTimeSeries_ad595f1f53e16418cce5fb54a74a03f24}{CMBTime\+Series}}, \mbox{\hyperlink{classCMBTimeSeriesSet_aca318fabba7532a390a23a225d87f984}{CMBTime\+Series\+Set}}, \mbox{\hyperlink{classCMBVector_a1f437b9720b5d134f80078826dbc1ca5}{CMBVector}}, \mbox{\hyperlink{classCMBVectorSet_a013bd1b6dbab4d9f0116e17fcaa0eda7}{CMBVector\+Set}}, \mbox{\hyperlink{classCMBVectorSetSet_a29faf2e27689a350944cbdf3cd37565e}{CMBVector\+Set\+Set}}, \mbox{\hyperlink{classContribution_a0d955eb0c9d0727e54eab577af30c088}{Contribution}}, \mbox{\hyperlink{classElemental__Profile_a9339549be3522fda11453bf97d405ce0}{Elemental\+\_\+\+Profile}}, \mbox{\hyperlink{classElemental__Profile__Set_a9c72da3d9219bc698eb4e3f173007b26}{Elemental\+\_\+\+Profile\+\_\+\+Set}}, \mbox{\hyperlink{classMultipleLinearRegressionSet_a60ad63f334b5b570eb565aeaf4652d82}{Multiple\+Linear\+Regression\+Set}}, and \mbox{\hyperlink{classRangeSet_ad1c6a47702f158f715b1c68021636d1c}{Range\+Set}}.
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+\Hypertarget{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}\label{classInterface_ab1c5bf7d61102d8155f08b137c741ba2} 
+\index{Interface@{Interface}!writetofile@{writetofile}}
+\index{writetofile@{writetofile}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{writetofile()}{writetofile()}}
+{\footnotesize\ttfamily bool Interface\+::writetofile (\begin{DoxyParamCaption}\item[{QFile \texorpdfstring{$\ast$}{*}}]{file }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented in \mbox{\hyperlink{classCMBTimeSeries_a6976722f7e30dba9f07e4dd9eee375ad}{CMBTime\+Series}}, \mbox{\hyperlink{classCMBTimeSeriesSet_a4b250708074517799b94809a63b9bab0}{CMBTime\+Series\+Set}}, \mbox{\hyperlink{classContribution_a9f0b8cd1d881e3fe13665d80e738002d}{Contribution}}, \mbox{\hyperlink{classRange_a904851d2ba8c0c2f47f4c4925a9f925a}{Range}}, \mbox{\hyperlink{classRangeSet_a2cfd2399ea2897af2eadaa22e089a7e6}{Range\+Set}}, \mbox{\hyperlink{classCMBMatrix_afcbd91f9c11008e1707805ea7924fe89}{CMBMatrix}}, \mbox{\hyperlink{classCMBVector_a208ac7624eb69b64542d0c487df60348}{CMBVector}}, \mbox{\hyperlink{classCMBVectorSet_a67b48894dc34add069ce10bb709ccf05}{CMBVector\+Set}}, \mbox{\hyperlink{classCMBVectorSetSet_aaf68e4571ace5fd2ce575b54829e526d}{CMBVector\+Set\+Set}}, \mbox{\hyperlink{classElemental__Profile_adff28a214b4cd5d4abef75d7067fc942}{Elemental\+\_\+\+Profile}}, and \mbox{\hyperlink{classElemental__Profile__Set_a184f90e41d8fec64ad7d4f8dd991fdb0}{Elemental\+\_\+\+Profile\+\_\+\+Set}}.
+
+
+
+Definition at line \mbox{\hyperlink{interface_8cpp_source_l00038}{38}} of file \mbox{\hyperlink{interface_8cpp_source}{interface.\+cpp}}.
+
+\Hypertarget{classInterface_a6cec95c20f7c8c8328f7dfc922309749}\label{classInterface_a6cec95c20f7c8c8328f7dfc922309749} 
+\index{Interface@{Interface}!XAxisLabel@{XAxisLabel}}
+\index{XAxisLabel@{XAxisLabel}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{XAxisLabel()}{XAxisLabel()}}
+{\footnotesize\ttfamily QString Interface\+::\+XAxis\+Label (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00075}{75}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00086}{XAxis\+\_\+\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvector_8cpp_source_l00065}{CMBVector\+::to\+Json\+Object()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00674}{Elemental\+\_\+\+Profile\+::to\+Json\+Object()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00107}{CMBVector\+::\+To\+String()}}, and \mbox{\hyperlink{resultitem_8h_source_l00055}{Result\+Item\+::\+XAxis\+Title()}}.
+
+\Hypertarget{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}\label{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a} 
+\index{Interface@{Interface}!YAxisLabel@{YAxisLabel}}
+\index{YAxisLabel@{YAxisLabel}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{YAxisLabel()}{YAxisLabel()}}
+{\footnotesize\ttfamily QString Interface\+::\+YAxis\+Label (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00076}{76}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+References \mbox{\hyperlink{interface_8h_source_l00087}{YAxis\+\_\+\+Label}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbvector_8cpp_source_l00065}{CMBVector\+::to\+Json\+Object()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00674}{Elemental\+\_\+\+Profile\+::to\+Json\+Object()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00107}{CMBVector\+::\+To\+String()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00157}{CMBVector\+::\+To\+Table()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00632}{Elemental\+\_\+\+Profile\+::\+To\+Table()}}, and \mbox{\hyperlink{resultitem_8h_source_l00056}{Result\+Item\+::\+YAxis\+Title()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classInterface_acec157511b980b04f19ca39c97b19054}\label{classInterface_acec157511b980b04f19ca39c97b19054} 
+\index{Interface@{Interface}!highlightoutsideoflimit@{highlightoutsideoflimit}}
+\index{highlightoutsideoflimit@{highlightoutsideoflimit}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{highlightoutsideoflimit}{highlightoutsideoflimit}}
+{\footnotesize\ttfamily bool Interface\+::highlightoutsideoflimit = false}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00050}{50}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00011}{CMBMatrix\+::\+CMBMatrix()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00011}{CMBVector\+::\+CMBVector()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00031}{CMBMatrix\+::operator=()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00038}{CMBVector\+::operator=()}}, \mbox{\hyperlink{interface_8h_source_l00051}{Set\+Limit()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{CMBMatrix\+::\+To\+Table()}}, \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00065}{CMBTime\+Series\+::\+To\+Table()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00157}{CMBVector\+::\+To\+Table()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00632}{Elemental\+\_\+\+Profile\+::\+To\+Table()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00719}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+To\+Table()}}.
+
+\Hypertarget{classInterface_afc616e2f2efcfa4bc781498b69384df2}\label{classInterface_afc616e2f2efcfa4bc781498b69384df2} 
+\index{Interface@{Interface}!highlimit@{highlimit}}
+\index{highlimit@{highlimit}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{highlimit}{highlimit}}
+{\footnotesize\ttfamily double Interface\+::highlimit}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00049}{49}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00011}{CMBMatrix\+::\+CMBMatrix()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00011}{CMBVector\+::\+CMBVector()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00031}{CMBMatrix\+::operator=()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00038}{CMBVector\+::operator=()}}, \mbox{\hyperlink{interface_8h_source_l00051}{Set\+Limit()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{CMBMatrix\+::\+To\+Table()}}, \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00065}{CMBTime\+Series\+::\+To\+Table()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00157}{CMBVector\+::\+To\+Table()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00632}{Elemental\+\_\+\+Profile\+::\+To\+Table()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00719}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+To\+Table()}}.
+
+\Hypertarget{classInterface_a24f0b4b925a432fdd21783e280997e9a}\label{classInterface_a24f0b4b925a432fdd21783e280997e9a} 
+\index{Interface@{Interface}!lowlimit@{lowlimit}}
+\index{lowlimit@{lowlimit}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{lowlimit}{lowlimit}}
+{\footnotesize\ttfamily double Interface\+::lowlimit}
+
+\begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2arash_2Projects_2SedSat3_2src_2elemental_profile_8cpp-example}{/home/arash/\+Projects/\+Sed\+Sat3/src/elemental\+\_\+profile.\+cpp}}.\end{Desc}
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00049}{49}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbmatrix_8cpp_source_l00011}{CMBMatrix\+::\+CMBMatrix()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00011}{CMBVector\+::\+CMBVector()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00031}{CMBMatrix\+::operator=()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00038}{CMBVector\+::operator=()}}, \mbox{\hyperlink{interface_8h_source_l00051}{Set\+Limit()}}, \mbox{\hyperlink{cmbmatrix_8cpp_source_l00122}{CMBMatrix\+::\+To\+Table()}}, \mbox{\hyperlink{cmbtimeseries_8cpp_source_l00065}{CMBTime\+Series\+::\+To\+Table()}}, \mbox{\hyperlink{cmbvector_8cpp_source_l00157}{CMBVector\+::\+To\+Table()}}, \mbox{\hyperlink{elemental__profile_8cpp_source_l00632}{Elemental\+\_\+\+Profile\+::\+To\+Table()}}, and \mbox{\hyperlink{elemental__profile__set_8cpp_source_l00719}{Elemental\+\_\+\+Profile\+\_\+\+Set\+::\+To\+Table()}}.
+
+\Hypertarget{classInterface_aa17442a40d4c1f315581c77314cb78fc}\label{classInterface_aa17442a40d4c1f315581c77314cb78fc} 
+\index{Interface@{Interface}!Notes@{Notes}}
+\index{Notes@{Notes}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{Notes}{Notes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} Interface\+::\+Notes\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00084}{84}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{interface_8h_source_l00041}{Appendto\+Notes()}}, \mbox{\hyperlink{interface_8h_source_l00048}{Clear\+Notes()}}, \mbox{\hyperlink{interface_8h_source_l00037}{Get\+Notes()}}, and \mbox{\hyperlink{interface_8h_source_l00040}{Set\+Notes()}}.
+
+\Hypertarget{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}\label{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390} 
+\index{Interface@{Interface}!Options@{Options}}
+\index{Options@{Options}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{Options}{Options}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structoptions}{options}} Interface\+::\+Options\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00085}{85}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{interface_8cpp_source_l00008}{Interface()}}, \mbox{\hyperlink{interface_8h_source_l00071}{Get\+Options()}}, \mbox{\hyperlink{interface_8cpp_source_l00014}{operator=()}}, \mbox{\hyperlink{interface_8h_source_l00064}{Option()}}, and \mbox{\hyperlink{interface_8h_source_l00059}{Set\+Option()}}.
+
+\Hypertarget{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11}\label{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11} 
+\index{Interface@{Interface}!XAxis\_Label@{XAxis\_Label}}
+\index{XAxis\_Label@{XAxis\_Label}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{XAxis\_Label}{XAxis\_Label}}
+{\footnotesize\ttfamily QString Interface\+::\+XAxis\+\_\+\+Label = "{}Sample"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00086}{86}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{interface_8cpp_source_l00008}{Interface()}}, \mbox{\hyperlink{interface_8cpp_source_l00014}{operator=()}}, \mbox{\hyperlink{interface_8h_source_l00077}{Set\+XAxis\+Label()}}, and \mbox{\hyperlink{interface_8h_source_l00075}{XAxis\+Label()}}.
+
+\Hypertarget{classInterface_ad05b39ef62dc6445f12f44af441f593c}\label{classInterface_ad05b39ef62dc6445f12f44af441f593c} 
+\index{Interface@{Interface}!YAxis\_Label@{YAxis\_Label}}
+\index{YAxis\_Label@{YAxis\_Label}!Interface@{Interface}}
+\doxysubsubsection{\texorpdfstring{YAxis\_Label}{YAxis\_Label}}
+{\footnotesize\ttfamily QString Interface\+::\+YAxis\+\_\+\+Label = "{}Value"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{interface_8h_source_l00087}{87}} of file \mbox{\hyperlink{interface_8h_source}{interface.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{interface_8cpp_source_l00008}{Interface()}}, \mbox{\hyperlink{interface_8cpp_source_l00014}{operator=()}}, \mbox{\hyperlink{interface_8h_source_l00078}{Set\+YAxis\+Label()}}, and \mbox{\hyperlink{interface_8h_source_l00076}{YAxis\+Label()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{interface_8h}{interface.\+h}}\item 
+\mbox{\hyperlink{interface_8cpp}{interface.\+cpp}}\end{DoxyCompactItemize}

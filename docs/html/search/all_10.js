@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['n_0',['n',['../classGADistribution.html#af855f5fdd2c589f19ad4fa6d827089c8',1,'GADistribution::n'],['../structGA__Twiking__parameters.html#a249012c7ac32104e49fe845344720790',1,'GA_Twiking_parameters::N']]],
+  ['name_1',['name',['../selectsampledelegate_8h.html#acfe2faf5163390c1dcc12b16ac4b97b3ab068931cc450442b63f5b3d276ea4297',1,'name:&#160;selectsampledelegate.h'],['../classResults.html#ad68c10e52be16019c48c35ee2a252ad8',1,'Results::name'],['../classResultItem.html#acf2bae3e328d536e6e61a4d146c7f580',1,'ResultItem::name'],['../classParameter.html#a5edfa174bd9b40f80819b0390a030498',1,'Parameter::name'],['../classResultItem.html#a16987bd4fd294603070db8e7cbddf50e',1,'ResultItem::Name()'],['../classParameter.html#aea80affe8325c10d538a08e438f58af1',1,'Parameter::Name()'],['../classObservation.html#af13e7976e2af370508b5fac020f61f2f',1,'Observation::name'],['../classObservation.html#a37f1e01a1a07f620b66d91fa6deadd54',1,'Observation::Name()']]],
+  ['ndigits_2',['nDigits',['../classCBinary.html#ac7fbacb391c67783daca12eecc2c996c',1,'CBinary']]],
+  ['negative_5freporting_3',['negative_reporting',['../sourcesinkdata_8h.html#a8964fb3a37ecf1861352849ea96c1f27',1,'sourcesinkdata.h']]],
+  ['negativevaluecheck_4',['NegativeValueCheck',['../classSourceSinkData.html#a7aeb3d65c7d76b5e104cccb0189d24cd',1,'SourceSinkData']]],
+  ['ngen_5',['nGen',['../structGA__Twiking__parameters.html#ad22f25876be7a056249ecd4fc3217178',1,'GA_Twiking_parameters']]],
+  ['no_5fbins_6',['no_bins',['../structGA__Twiking__parameters.html#aec325a0da7ad40293b6f24fc79e76a96',1,'GA_Twiking_parameters']]],
+  ['noinipurt_7',['noinipurt',['../struct__MCMC__settings.html#a63a84c74b76c6977a682a8ccc1b7d57b',1,'_MCMC_settings']]],
+  ['noise_5frealization_5fwriteout_8',['noise_realization_writeout',['../struct__MCMC__settings.html#ad8034317c35639b42875b6f278665632',1,'_MCMC_settings']]],
+  ['none_9',['none',['../cmbdistribution_8h.html#aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8',1,'cmbdistribution.h']]],
+  ['normal_10',['normal',['../resultitem_8h.html#a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555',1,'normal:&#160;resultitem.h'],['../generalplotter_8h.html#a59a611294e28b1fc7fe031295c99895dafea087517c26fadd409bd4b9dc642555',1,'normal:&#160;generalplotter.h'],['../cmbdistribution_8h.html#aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555',1,'normal:&#160;cmbdistribution.h']]],
+  ['notes_11',['Notes',['../classInterface.html#aa17442a40d4c1f315581c77314cb78fc',1,'Interface']]],
+  ['nparam_12',['nParam',['../structGA__Twiking__parameters.html#a68df164c4f0449585470d237a80a8665',1,'GA_Twiking_parameters']]],
+  ['nparams_13',['nParams',['../classCIndividual.html#a7037fbe2f43cea02b5b98d69aa8714d2',1,'CIndividual']]],
+  ['num_5fenh_14',['num_enh',['../structGA__Twiking__parameters.html#ace042d02cc08fc76806c283ed08e412d',1,'GA_Twiking_parameters']]],
+  ['number_15',['number',['../selectsampledelegate_8h.html#acfe2faf5163390c1dcc12b16ac4b97b3ab1bc248a7ff2b2e95569f56de68615df',1,'selectsampledelegate.h']]],
+  ['number_5fof_5fchains_16',['number_of_chains',['../struct__MCMC__settings.html#a05b8327df4905c3c4f8085410221e461',1,'_MCMC_settings']]],
+  ['number_5fof_5fparameters_17',['number_of_parameters',['../struct__MCMC__settings.html#aa51b74881f1f29a0ef35a44ba2d56a7b',1,'_MCMC_settings']]],
+  ['number_5fof_5fpost_5festimate_5frealizations_18',['number_of_post_estimate_realizations',['../struct__MCMC__settings.html#a3125c9b55e1f3b4643165dce6d7d4b42',1,'_MCMC_settings']]],
+  ['numberofcolumns_19',['numberofcolumns',['../classSelectSampleDelegate.html#ada72e1daf7aa8afe8bb20cbc7b1413e0',1,'SelectSampleDelegate']]],
+  ['numberofconstituents_5f_20',['numberofconstituents_',['../classSourceSinkData.html#aca42c4fbe5e2da2fb69649444d570d91',1,'SourceSinkData']]],
+  ['numberofisotopes_5f_21',['numberofisotopes_',['../classSourceSinkData.html#af0ee8b291ffa6e5d3107c878ce357617',1,'SourceSinkData']]],
+  ['numberofsourcesamplesets_5f_22',['numberofsourcesamplesets_',['../classSourceSinkData.html#a740ad11fd70ca07381edd903231b6b49',1,'SourceSinkData']]],
+  ['numberofthreads_23',['numberofthreads',['../classCGA.html#ac3609bac5bfe4364d88aeecc5f821e92',1,'CGA::numberOfThreads'],['../struct__MCMC__settings.html#a5f43519e1c57be528177f908945fbfe4',1,'_MCMC_settings::numberOfThreads']]],
+  ['numenhancements_24',['numenhancements',['../structGA__Twiking__parameters.html#ab45f62a455e300dc96ec37d9789b707a',1,'GA_Twiking_parameters']]]
+];

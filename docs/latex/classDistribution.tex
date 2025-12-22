@@ -1,0 +1,401 @@
+\doxysection{Distribution Class Reference}
+\hypertarget{classDistribution}{}\label{classDistribution}\index{Distribution@{Distribution}}
+
+
+{\ttfamily \#include $<$cmbdistribution.\+h$>$}
+
+
+
+Collaboration diagram for Distribution\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classDistribution__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classDistribution_ada837c9a1da728290d6bbea0bb6b266f}{Distribution}} ()
+\item 
+\mbox{\hyperlink{classDistribution_a388dee988dc700f4f3efed05f60be714}{Distribution}} (const \mbox{\hyperlink{classDistribution}{Distribution}} \&dist)
+\item 
+\mbox{\hyperlink{classDistribution}{Distribution}} \& \mbox{\hyperlink{classDistribution_a76f3562c61aaf39c9557c98f0d98e171}{operator=}} (const \mbox{\hyperlink{classDistribution}{Distribution}} \&dist)
+\item 
+double \mbox{\hyperlink{classDistribution_a1258bb45fce590457c70883810aec965}{Eval}} (const double \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}) const
+\item 
+double \mbox{\hyperlink{classDistribution_a2d10131db1296151b1b48b573a5875ab}{Eval\+Log}} (const double \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}})
+\item 
+Time\+Series$<$ double $>$ \mbox{\hyperlink{classDistribution_a48494d70a0ae29130a68e0bb872ea0e5}{Evaluate\+As\+Time\+Series}} (int numberofpoint=100, const double \&stdcoeff=4)
+\item 
+void \mbox{\hyperlink{classDistribution_a83b93685cbbb8d50eb9d0de2caa28c9f}{Set\+Type}} (const \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \&typ)
+\item 
+double \mbox{\hyperlink{classDistribution_aafe0575c6cc5538c225396f8685a2098}{Mean}} (\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\+\_\+mode}} param\+\_\+mode=\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\+\_\+mode\+::based\+\_\+on\+\_\+fitted\+\_\+distribution}})
+\item 
+void \mbox{\hyperlink{classDistribution_a699eff037c6b65e142e3c777a16cb229}{Set\+Data\+Mean}} (const double \&val)
+\item 
+void \mbox{\hyperlink{classDistribution_abd5fb273f8557b524475e3e0cc4a6e03}{Set\+Data\+STDev}} (const double \&val)
+\item 
+double \mbox{\hyperlink{classDistribution_a495bb641e5fa498b0ffbd7b686d94f94}{Data\+Mean}} ()
+\item 
+double \mbox{\hyperlink{classDistribution_a69cfc1c6443a2279d022b9cc897824fd}{Data\+STDev}} ()
+\item 
+bool \mbox{\hyperlink{classDistribution_ad8bafbd75c4bb169d0cd481fef178644}{operator==}} (const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&dist\+\_\+type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static double \mbox{\hyperlink{classDistribution_acd4e81b00e9985b2b149055393aa8d92}{Eval}} (const double \&\mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \mbox{\hyperlink{classDistribution_a4fc8230c695573d88ec4dd6d93ddb98b}{distribution}})
+\item 
+static Time\+Series$<$ double $>$ \mbox{\hyperlink{classDistribution_a383e3c3365dee962a80cf29201271262}{Evaluate\+As\+Time\+Series}} (int numberofpoints, const double \&stdcoeff, const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \&dist\+\_\+type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$ \mbox{\hyperlink{classDistribution_a226e02cddcdb5209bde9f8238a409577}{parameters}}
+\item 
+\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \mbox{\hyperlink{classDistribution_a4fc8230c695573d88ec4dd6d93ddb98b}{distribution}} = \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8}{distribution\+\_\+type\+::none}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classDistribution_aae3955c78e002a7f56bc7030c7b351c8}{mean\+\_\+val}} =0
+\item 
+double \mbox{\hyperlink{classDistribution_a3fb06436325040c5d14ef5699b89ee5f}{std\+\_\+val}} =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static double \mbox{\hyperlink{classDistribution_a9f3e5a64fb97f4c7d98ed781be93fb98}{pi}} = 4 \texorpdfstring{$\ast$}{*} atan(1.\+0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00010}{10}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classDistribution_ada837c9a1da728290d6bbea0bb6b266f}\label{classDistribution_ada837c9a1da728290d6bbea0bb6b266f} 
+\index{Distribution@{Distribution}!Distribution@{Distribution}}
+\index{Distribution@{Distribution}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{Distribution()}{Distribution()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Distribution\+::\+Distribution (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+\Hypertarget{classDistribution_a388dee988dc700f4f3efed05f60be714}\label{classDistribution_a388dee988dc700f4f3efed05f60be714} 
+\index{Distribution@{Distribution}!Distribution@{Distribution}}
+\index{Distribution@{Distribution}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{Distribution()}{Distribution()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Distribution\+::\+Distribution (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classDistribution}{Distribution}} \&}]{dist }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{90}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00032}{mean\+\_\+val}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00031}{pi}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00110}{Set\+Type()}}, and \mbox{\hyperlink{cmbdistribution_8h_source_l00033}{std\+\_\+val}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classDistribution_a495bb641e5fa498b0ffbd7b686d94f94}\label{classDistribution_a495bb641e5fa498b0ffbd7b686d94f94} 
+\index{Distribution@{Distribution}!DataMean@{DataMean}}
+\index{DataMean@{DataMean}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{DataMean()}{DataMean()}}
+{\footnotesize\ttfamily double Distribution\+::\+Data\+Mean (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00027}{27}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00032}{mean\+\_\+val}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01492}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01530}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix\+\_\+\+Isotopes()}}.
+
+\Hypertarget{classDistribution_a69cfc1c6443a2279d022b9cc897824fd}\label{classDistribution_a69cfc1c6443a2279d022b9cc897824fd} 
+\index{Distribution@{Distribution}!DataSTDev@{DataSTDev}}
+\index{DataSTDev@{DataSTDev}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{DataSTDev()}{DataSTDev()}}
+{\footnotesize\ttfamily double Distribution\+::\+Data\+STDev (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00028}{28}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00033}{std\+\_\+val}}.
+
+\Hypertarget{classDistribution_a1258bb45fce590457c70883810aec965}\label{classDistribution_a1258bb45fce590457c70883810aec965} 
+\index{Distribution@{Distribution}!Eval@{Eval}}
+\index{Eval@{Eval}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{Eval()}{Eval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double Distribution\+::\+Eval (\begin{DoxyParamCaption}\item[{const double \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec}{dirichlet}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00031}{pi}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee}{uniform}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+
+
+Referenced by \mbox{\hyperlink{concentrationset_8cpp_source_l00233}{Concentration\+Set\+::\+Calculate\+Log\+Likelihood()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00321}{Concentration\+Set\+::\+Create\+Fitted\+Distribution()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00051}{Evaluate\+As\+Time\+Series()}}, and \mbox{\hyperlink{cmbdistribution_8cpp_source_l00070}{Evaluate\+As\+Time\+Series()}}.
+
+\Hypertarget{classDistribution_acd4e81b00e9985b2b149055393aa8d92}\label{classDistribution_acd4e81b00e9985b2b149055393aa8d92} 
+\index{Distribution@{Distribution}!Eval@{Eval}}
+\index{Eval@{Eval}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{Eval()}{Eval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily double Distribution\+::\+Eval (\begin{DoxyParamCaption}\item[{const double \&}]{x,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{parameters,  }\item[{\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}}}]{distribution }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec}{dirichlet}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00031}{pi}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee}{uniform}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classDistribution_a2d10131db1296151b1b48b573a5875ab}\label{classDistribution_a2d10131db1296151b1b48b573a5875ab} 
+\index{Distribution@{Distribution}!EvalLog@{EvalLog}}
+\index{EvalLog@{EvalLog}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{EvalLog()}{EvalLog()}}
+{\footnotesize\ttfamily double Distribution\+::\+Eval\+Log (\begin{DoxyParamCaption}\item[{const double \&}]{x }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec}{dirichlet}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{generalplotter_8h_a59a611294e28b1fc7fe031295c99895dadc1d71bbb5c4d2a5e936db79ef10c19f}{log}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00031}{pi}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee}{uniform}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+
+
+Referenced by \mbox{\hyperlink{parameter_8cpp_source_l00090}{Parameter\+::\+Calc\+Log\+Prior\+Probability()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00961}{Source\+Sink\+Data\+::\+Log\+Likelihood\+Source\+Elemental\+Distributions()}}.
+
+\Hypertarget{classDistribution_a48494d70a0ae29130a68e0bb872ea0e5}\label{classDistribution_a48494d70a0ae29130a68e0bb872ea0e5} 
+\index{Distribution@{Distribution}!EvaluateAsTimeSeries@{EvaluateAsTimeSeries}}
+\index{EvaluateAsTimeSeries@{EvaluateAsTimeSeries}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{EvaluateAsTimeSeries()}{EvaluateAsTimeSeries()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Time\+Series$<$ double $>$ Distribution\+::\+Evaluate\+As\+Time\+Series (\begin{DoxyParamCaption}\item[{int}]{numberofpoint = {\ttfamily 100},  }\item[{const double \&}]{stdcoeff = {\ttfamily 4} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00011}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+
+
+Referenced by \mbox{\hyperlink{mainwindow_8cpp_source_l01017}{Main\+Window\+::showdistributionsforelements()}}.
+
+\Hypertarget{classDistribution_a383e3c3365dee962a80cf29201271262}\label{classDistribution_a383e3c3365dee962a80cf29201271262} 
+\index{Distribution@{Distribution}!EvaluateAsTimeSeries@{EvaluateAsTimeSeries}}
+\index{EvaluateAsTimeSeries@{EvaluateAsTimeSeries}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{EvaluateAsTimeSeries()}{EvaluateAsTimeSeries()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Time\+Series$<$ double $>$ Distribution\+::\+Evaluate\+As\+Time\+Series (\begin{DoxyParamCaption}\item[{int}]{numberofpoints,  }\item[{const double \&}]{stdcoeff,  }\item[{const \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$ double $>$}]{parameters,  }\item[{\mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \&}]{dist\+\_\+type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8cpp_source_l00011}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, and \mbox{\hyperlink{generalplotter_8h_ae3996976d8ffb3e58d88f58227473f8ea9dd4e461268c8034f5c8564e155c67a6}{x}}.
+
+\Hypertarget{classDistribution_aafe0575c6cc5538c225396f8685a2098}\label{classDistribution_aafe0575c6cc5538c225396f8685a2098} 
+\index{Distribution@{Distribution}!Mean@{Mean}}
+\index{Mean@{Mean}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{Mean()}{Mean()}}
+{\footnotesize\ttfamily double Distribution\+::\+Mean (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050}{parameter\+\_\+mode}}}]{param\+\_\+mode = {\ttfamily \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a3ad0f57b14ff8d7c60839ecd67c0543c}{parameter\+\_\+mode\+::based\+\_\+on\+\_\+fitted\+\_\+distribution}}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00120}{120}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_a6d27fff92d4cb5d365077d0a4381c050a7caa701b2bd5a182b80c72b9bdf88e2d}{direct}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00032}{mean\+\_\+val}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, and \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}.
+
+
+
+Referenced by \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01492}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix()}}, and \mbox{\hyperlink{sourcesinkdata_8cpp_source_l01530}{Source\+Sink\+Data\+::\+Build\+Source\+Mean\+Matrix\+\_\+\+Isotopes()}}.
+
+\Hypertarget{classDistribution_a76f3562c61aaf39c9557c98f0d98e171}\label{classDistribution_a76f3562c61aaf39c9557c98f0d98e171} 
+\index{Distribution@{Distribution}!operator=@{operator=}}
+\index{operator=@{operator=}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDistribution}{Distribution}} \& Distribution\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classDistribution}{Distribution}} \&}]{dist }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{99}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00032}{mean\+\_\+val}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00031}{pi}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00110}{Set\+Type()}}, and \mbox{\hyperlink{cmbdistribution_8h_source_l00033}{std\+\_\+val}}.
+
+\Hypertarget{classDistribution_ad8bafbd75c4bb169d0cd481fef178644}\label{classDistribution_ad8bafbd75c4bb169d0cd481fef178644} 
+\index{Distribution@{Distribution}!operator==@{operator==}}
+\index{operator==@{operator==}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Distribution\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}} \&}]{dist\+\_\+type }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a503b9bc8f55d2a048f0cb35ddf3fb4ec}{dirichlet}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, and \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88aa489ffed938ef1b9e86889bc413501ee}{uniform}}.
+
+\Hypertarget{classDistribution_a699eff037c6b65e142e3c777a16cb229}\label{classDistribution_a699eff037c6b65e142e3c777a16cb229} 
+\index{Distribution@{Distribution}!SetDataMean@{SetDataMean}}
+\index{SetDataMean@{SetDataMean}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{SetDataMean()}{SetDataMean()}}
+{\footnotesize\ttfamily void Distribution\+::\+Set\+Data\+Mean (\begin{DoxyParamCaption}\item[{const double \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00025}{25}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00032}{mean\+\_\+val}}.
+
+
+
+Referenced by \mbox{\hyperlink{concentrationset_8cpp_source_l00199}{Concentration\+Set\+::\+Estimate\+Distribution\+Parameters()}}.
+
+\Hypertarget{classDistribution_abd5fb273f8557b524475e3e0cc4a6e03}\label{classDistribution_abd5fb273f8557b524475e3e0cc4a6e03} 
+\index{Distribution@{Distribution}!SetDataSTDev@{SetDataSTDev}}
+\index{SetDataSTDev@{SetDataSTDev}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{SetDataSTDev()}{SetDataSTDev()}}
+{\footnotesize\ttfamily void Distribution\+::\+Set\+Data\+STDev (\begin{DoxyParamCaption}\item[{const double \&}]{val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00026}{26}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00033}{std\+\_\+val}}.
+
+
+
+Referenced by \mbox{\hyperlink{concentrationset_8cpp_source_l00199}{Concentration\+Set\+::\+Estimate\+Distribution\+Parameters()}}.
+
+\Hypertarget{classDistribution_a83b93685cbbb8d50eb9d0de2caa28c9f}\label{classDistribution_a83b93685cbbb8d50eb9d0de2caa28c9f} 
+\index{Distribution@{Distribution}!SetType@{SetType}}
+\index{SetType@{SetType}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{SetType()}{SetType()}}
+{\footnotesize\ttfamily void Distribution\+::\+Set\+Type (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} \&}]{typ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{cmbdistribution_8cpp_source}{cmbdistribution.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{distribution}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a755025229ae92770a8fdb6bb55975c88}{lognormal}}, \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88afea087517c26fadd409bd4b9dc642555}{normal}}, and \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{parameters}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{Distribution()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00199}{Concentration\+Set\+::\+Estimate\+Distribution\+Parameters()}}, and \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{operator=()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classDistribution_a4fc8230c695573d88ec4dd6d93ddb98b}\label{classDistribution_a4fc8230c695573d88ec4dd6d93ddb98b} 
+\index{Distribution@{Distribution}!distribution@{distribution}}
+\index{distribution@{distribution}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{distribution}{distribution}}
+{\footnotesize\ttfamily \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88}{distribution\+\_\+type}} Distribution\+::distribution = \mbox{\hyperlink{cmbdistribution_8h_aef4282c72dadd0ee53d4778760c25f88a334c4a4c42fdb79d7ebc3e73b517e6f8}{distribution\+\_\+type\+::none}}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00022}{22}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{Distribution()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00557}{Source\+Sink\+Data\+::\+Assign\+All\+Distributions()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00233}{Concentration\+Set\+::\+Calculate\+Log\+Likelihood()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00199}{Concentration\+Set\+::\+Estimate\+Distribution\+Parameters()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00011}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00024}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00037}{Eval\+Log()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00051}{Evaluate\+As\+Time\+Series()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00120}{Mean()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{operator=()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00133}{operator==()}}, \mbox{\hyperlink{parameter_8h_source_l00014}{Parameter\+::\+Set\+Prior\+Distribution()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00110}{Set\+Type()}}, and \mbox{\hyperlink{parameter_8cpp_source_l00073}{Parameter\+::\+Update\+Prior\+Distribution()}}.
+
+\Hypertarget{classDistribution_aae3955c78e002a7f56bc7030c7b351c8}\label{classDistribution_aae3955c78e002a7f56bc7030c7b351c8} 
+\index{Distribution@{Distribution}!mean\_val@{mean\_val}}
+\index{mean\_val@{mean\_val}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{mean\_val}{mean\_val}}
+{\footnotesize\ttfamily double Distribution\+::mean\+\_\+val =0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00032}{32}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{Distribution()}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00027}{Data\+Mean()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00120}{Mean()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{operator=()}}, and \mbox{\hyperlink{cmbdistribution_8h_source_l00025}{Set\+Data\+Mean()}}.
+
+\Hypertarget{classDistribution_a226e02cddcdb5209bde9f8238a409577}\label{classDistribution_a226e02cddcdb5209bde9f8238a409577} 
+\index{Distribution@{Distribution}!parameters@{parameters}}
+\index{parameters@{parameters}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{parameters}{parameters}}
+{\footnotesize\ttfamily \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{vector}}$<$double$>$ Distribution\+::parameters}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00021}{21}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{Distribution()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00557}{Source\+Sink\+Data\+::\+Assign\+All\+Distributions()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00233}{Concentration\+Set\+::\+Calculate\+Log\+Likelihood()}}, \mbox{\hyperlink{concentrationset_8cpp_source_l00199}{Concentration\+Set\+::\+Estimate\+Distribution\+Parameters()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00011}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00024}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00037}{Eval\+Log()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00051}{Evaluate\+As\+Time\+Series()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00070}{Evaluate\+As\+Time\+Series()}}, \mbox{\hyperlink{concentrationset_8h_source_l00142}{Concentration\+Set\+::\+Get\+Estimated\+Mu()}}, \mbox{\hyperlink{concentrationset_8h_source_l00151}{Concentration\+Set\+::\+Get\+Estimated\+Sigma()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00676}{Source\+Sink\+Data\+::\+Initialize\+Parameters\+And\+Observations()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00120}{Mean()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{operator=()}}, \mbox{\hyperlink{concentrationset_8h_source_l00143}{Concentration\+Set\+::\+Set\+Estimated\+Mu()}}, \mbox{\hyperlink{concentrationset_8h_source_l00152}{Concentration\+Set\+::\+Set\+Estimated\+Sigma()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00110}{Set\+Type()}}, and \mbox{\hyperlink{parameter_8cpp_source_l00073}{Parameter\+::\+Update\+Prior\+Distribution()}}.
+
+\Hypertarget{classDistribution_a9f3e5a64fb97f4c7d98ed781be93fb98}\label{classDistribution_a9f3e5a64fb97f4c7d98ed781be93fb98} 
+\index{Distribution@{Distribution}!pi@{pi}}
+\index{pi@{pi}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{pi}{pi}}
+{\footnotesize\ttfamily double Distribution\+::pi = 4 \texorpdfstring{$\ast$}{*} atan(1.\+0)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00031}{31}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{Distribution()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00011}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00024}{Eval()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00037}{Eval\+Log()}}, and \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{operator=()}}.
+
+\Hypertarget{classDistribution_a3fb06436325040c5d14ef5699b89ee5f}\label{classDistribution_a3fb06436325040c5d14ef5699b89ee5f} 
+\index{Distribution@{Distribution}!std\_val@{std\_val}}
+\index{std\_val@{std\_val}!Distribution@{Distribution}}
+\doxysubsubsection{\texorpdfstring{std\_val}{std\_val}}
+{\footnotesize\ttfamily double Distribution\+::std\+\_\+val =0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cmbdistribution_8h_source_l00033}{33}} of file \mbox{\hyperlink{cmbdistribution_8h_source}{cmbdistribution.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{cmbdistribution_8cpp_source_l00090}{Distribution()}}, \mbox{\hyperlink{cmbdistribution_8h_source_l00028}{Data\+STDev()}}, \mbox{\hyperlink{cmbdistribution_8cpp_source_l00099}{operator=()}}, and \mbox{\hyperlink{cmbdistribution_8h_source_l00026}{Set\+Data\+STDev()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cmbdistribution_8h}{cmbdistribution.\+h}}\item 
+\mbox{\hyperlink{cmbdistribution_8cpp}{cmbdistribution.\+cpp}}\end{DoxyCompactItemize}

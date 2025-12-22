@@ -10,8 +10,8 @@ public:
     MultipleLinearRegressionSet();
     MultipleLinearRegressionSet(const MultipleLinearRegressionSet& mp);
     MultipleLinearRegressionSet& operator=(const MultipleLinearRegressionSet &mp);
-    string ToString() override;
-    QJsonObject toJsonObject() override;
+    string ToString() const override;
+    QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
     bool Append(QString key, const MultipleLinearRegression &MLR);
     void SetSource(const string& source) { Source = source; }

@@ -62,7 +62,7 @@ CMBVector& CMBVector::operator=(const CVector &mp)
 }
 
 
-QJsonObject CMBVector::toJsonObject()
+QJsonObject CMBVector::toJsonObject() const
 {
     QJsonObject out;
     QJsonArray vector;
@@ -104,7 +104,7 @@ bool CMBVector::ReadFromJsonObject(const QJsonObject &jsonobject)
 }
 
 
-string CMBVector::ToString()
+string CMBVector::ToString() const
 {
     string out;
     out += XAxisLabel().toStdString() + "," + YAxisLabel().toStdString() + "\n";

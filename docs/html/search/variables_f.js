@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['r2_0',['R2',['../classMultipleLinearRegression.html#a8f70a82774925717fc9dde9e38ba1dea',1,'MultipleLinearRegression']]],
+  ['r2_5fadj_1',['R2_adj',['../classMultipleLinearRegression.html#a590a79f13585dbf7a7a6bd288c10470e',1,'MultipleLinearRegression']]],
+  ['radio_5fbuttons_5fsinks_2',['radio_buttons_sinks',['../classIndicateSheetsDialog.html#a3c85da09d819d3e60a8e856574763da3',1,'IndicateSheetsDialog']]],
+  ['radio_5fbuttons_5fsources_3',['radio_buttons_sources',['../classIndicateSheetsDialog.html#a8477e20e2f9a2c32d255e355b2bcaa6f',1,'IndicateSheetsDialog']]],
+  ['range_4',['range',['../classParameter.html#abc836883782b357d56b48b6f2799828d',1,'Parameter::range'],['../classRange.html#ab60e8b6d7e32ed3630250ac0eecc0338',1,'Range::range']]],
+  ['rank_5',['rank',['../classCIndividual.html#a3654c90e71215259c44679b1af4c8efe',1,'CIndividual']]],
+  ['rcga_6',['RCGA',['../structGA__Twiking__parameters.html#ada9414ad61cb3a7b96e5b04f1fa92b9f',1,'GA_Twiking_parameters']]],
+  ['readfromgafile_7',['readfromgafile',['../structGA__Twiking__parameters.html#ac042205263ec0c88d43da6db2569ea5f',1,'GA_Twiking_parameters']]],
+  ['realized_5fparamslist_8',['realized_paramsList',['../classCMCMC.html#acc8f8fd81c1ea8b960a65743da848830',1,'CMCMC']]],
+  ['recentfiles_9',['recentFiles',['../classMainWindow.html#a0bb6ce195389689bf99a93361e00b817',1,'MainWindow']]],
+  ['regression_5fp_5fvalue_5fthreshold_5f_10',['regression_p_value_threshold_',['../classSourceSinkData.html#a420c2455872e6c3f06f23d505143b026',1,'SourceSinkData']]],
+  ['regressionequation_11',['regressionEquation',['../classMultipleLinearRegression.html#a284676916574695867958825f0596872',1,'MultipleLinearRegression']]],
+  ['result_12',['result',['../classResultItem.html#a6c1c550ee500e46bc6e8d4f0d12035e8',1,'ResultItem::result'],['../classResultSetItem.html#a7486164d84b4c52715fa63ff6a61fac0',1,'ResultSetItem::result']]],
+  ['result_5fitem_13',['result_item',['../classGeneralChart.html#a9a1e2188743d3985eac595b387c48847',1,'GeneralChart']]],
+  ['result_5fitem_5fcounter_14',['result_item_counter',['../classResultsWindow.html#abb43a92dc422c1b6e147023756dfdbc4',1,'ResultsWindow']]],
+  ['results_15',['results',['../classConductor.html#adafa0659295420dc960073884ed0852c',1,'Conductor::results'],['../classResultsWindow.html#a01da2127d4dee1ad4a8a629770c708bd',1,'ResultsWindow::results']]],
+  ['resultscontextmenu_16',['ResultscontextMenu',['../classMainWindow.html#a0edf3626621f7671410ae4d7bd79f495',1,'MainWindow']]],
+  ['resultsviewmodel_17',['resultsViewModel',['../classMainWindow.html#a496cc353e266db32e9fa9eebf649debd',1,'MainWindow']]],
+  ['role_18',['Role',['../structelement__information.html#a5f9e4723fe2c080ca91b31a8f697dd4e',1,'element_information']]],
+  ['rowlabels_19',['rowlabels',['../classCMBMatrix.html#afda7d7a640c806e296bb0399687460ee',1,'CMBMatrix']]],
+  ['rtw_20',['rtw',['../classCGA.html#adc111546d2a3a199d63a00cc915a7295',1,'CGA::rtw'],['../classCMCMC.html#ab1540f4ed1b79842cdafeefe067f6781',1,'CMCMC::rtw']]],
+  ['rtw_5f_21',['rtw_',['../classSourceSinkData.html#a8e9e1d106ac0a5c43239d4230aa893ac',1,'SourceSinkData']]]
+];

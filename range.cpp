@@ -25,7 +25,7 @@ Range& Range::operator = (const Range &rhs)
     return *this;
 }
 
-QJsonObject Range::toJsonObject()
+QJsonObject Range::toJsonObject() const
 {
     QJsonObject out;
     QJsonArray array;
@@ -47,7 +47,7 @@ bool Range::ReadFromJsonObject(const QJsonObject &jsonobject)
     median = jsonobject["median"].toDouble();
     return true;
 }
-string Range::ToString()
+string Range::ToString() const
 {
     return ("[" + QString::number(range[0])+ "," + QString::number(range[1]) + "]\n").toStdString();
 }
@@ -68,7 +68,7 @@ void Range::Set(_range lowhigh,const double &value)
     else
         range[0]=value;
 }
-double Range::Get(_range lowhigh)
+double Range::Get(_range lowhigh) const
 {
     if (lowhigh==_range::high)
         return range[1];

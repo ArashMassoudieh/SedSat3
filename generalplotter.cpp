@@ -305,7 +305,7 @@ void GeneralPlotter::Clear()
  clearGraphs();
 }
 
-bool GeneralPlotter::AddNoneUniformScatter(const map<string,vector<double>> &data, int shape_counter)
+bool GeneralPlotter::AddNonUniformScatter(const map<string,vector<double>> &data, int shape_counter)
 {
     x_max_min_range[0] = double(0);
     x_max_min_range[1] = double(data.size()*1.1);

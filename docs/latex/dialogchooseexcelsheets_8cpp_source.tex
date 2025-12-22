@@ -1,0 +1,48 @@
+\doxysection{dialogchooseexcelsheets.\+cpp}
+\hypertarget{dialogchooseexcelsheets_8cpp_source}{}\label{dialogchooseexcelsheets_8cpp_source}\mbox{\hyperlink{dialogchooseexcelsheets_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dialogchooseexcelsheets_8h}{dialogchooseexcelsheets.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}ui\_dialogchooseexcelsheets.h"{}}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <QListWidgetItem>}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00005}\mbox{\hyperlink{classDialogChooseExcelSheets_aaf4b2fd0ba86aa64553e4d150db6b70e}{00005}}\ \mbox{\hyperlink{classDialogChooseExcelSheets_aaf4b2fd0ba86aa64553e4d150db6b70e}{DialogChooseExcelSheets::DialogChooseExcelSheets}}(QWidget\ *parent,\ QStringList\ **\_items)\ :}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00006}00006\ \ \ \ \ QDialog(parent),}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00007}00007\ \ \ \ \ ui(new\ \mbox{\hyperlink{namespaceUi}{Ui}}::\mbox{\hyperlink{classDialogChooseExcelSheets}{DialogChooseExcelSheets}})}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00009}00009\ \ \ \ \ *\_items\ =\ \textcolor{keyword}{new}\ QStringList();}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classDialogChooseExcelSheets_a86eb3d2ff9a5c045e9004b46a1e745b1}{items}}\ =\ *\_items;}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classDialogChooseExcelSheets_a4716b2e98698e9a28bbd158a2a14fcf2}{ui}}-\/>setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00014}\mbox{\hyperlink{classDialogChooseExcelSheets_afbf16011e936d0e28538066f7459dbef}{00014}}\ \mbox{\hyperlink{classDialogChooseExcelSheets_afbf16011e936d0e28538066f7459dbef}{DialogChooseExcelSheets::\string~DialogChooseExcelSheets}}()}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classDialogChooseExcelSheets_a4716b2e98698e9a28bbd158a2a14fcf2}{ui}};}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00019}\mbox{\hyperlink{classDialogChooseExcelSheets_a40e334c1a4d8c2f99d3e0607174dadde}{00019}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classDialogChooseExcelSheets_a40e334c1a4d8c2f99d3e0607174dadde}{DialogChooseExcelSheets::AddItem}}(\textcolor{keyword}{const}\ QString\ \&item)}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00021}00021\ \ \ \ \ QListWidgetItem\ *listItem\ =\ \textcolor{keyword}{new}\ QListWidgetItem(item,\mbox{\hyperlink{classDialogChooseExcelSheets_a4716b2e98698e9a28bbd158a2a14fcf2}{ui}}-\/>listWidget);}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00022}00022\ \ \ \ \ listItem-\/>setCheckState(Qt::Unchecked);}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{classDialogChooseExcelSheets_a4716b2e98698e9a28bbd158a2a14fcf2}{ui}}-\/>listWidget-\/>addItem(listItem);}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00025}00025\ \}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00027}\mbox{\hyperlink{classDialogChooseExcelSheets_a9c698e78f665282dc0981c8d1e138099}{00027}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classDialogChooseExcelSheets_a9c698e78f665282dc0981c8d1e138099}{DialogChooseExcelSheets::reject}}()}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00029}00029\ \ \ \ \ QDialog::reject();}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00031}\mbox{\hyperlink{classDialogChooseExcelSheets_aa06827fb513a12dad212211b6424397a}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classDialogChooseExcelSheets_aa06827fb513a12dad212211b6424397a}{DialogChooseExcelSheets::accept}}()}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{classDialogChooseExcelSheets_a4716b2e98698e9a28bbd158a2a14fcf2}{ui}}-\/>listWidget-\/>count();\ ++i)}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00035}00035\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ QListWidgetItem*\ item\ =\ \mbox{\hyperlink{classDialogChooseExcelSheets_a4716b2e98698e9a28bbd158a2a14fcf2}{ui}}-\/>listWidget-\/>item(i);}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (item-\/>checkState())}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classDialogChooseExcelSheets_a86eb3d2ff9a5c045e9004b46a1e745b1}{items}}-\/>append(item-\/>text());}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00042}00042\ \ \ \ \ QDialog::accept();}
+\DoxyCodeLine{\Hypertarget{dialogchooseexcelsheets_8cpp_source_l00043}00043\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,568 @@
+\doxysection{results.\+cpp}
+\hypertarget{results_8cpp_source}{}\label{results_8cpp_source}\mbox{\hyperlink{results_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{results_8h}{results.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{resultitem_8h}{resultitem.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{contribution_8h}{contribution.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{elemental__profile__set_8h}{elemental\_profile\_set.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{rangeset_8h}{rangeset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbvectorset_8h}{cmbvectorset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cmbvectorsetset_8h}{cmbvectorsetset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00009}\mbox{\hyperlink{classResults_ae15a9e843b67c54e98a6f59a56104e1f}{00009}}\ \mbox{\hyperlink{classResults_ae15a9e843b67c54e98a6f59a56104e1f}{Results::Results}}()}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00014}\mbox{\hyperlink{classResults_ad763563bd2a15401cc5f42d69fb943b7}{00014}}\ \mbox{\hyperlink{classResults_ae15a9e843b67c54e98a6f59a56104e1f}{Results::Results}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classResults}{Results}}\ \&rhs):\ map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ \mbox{\hyperlink{classResultItem}{ResultItem}}>(rhs)}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00015}00015\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classResults_ad68c10e52be16019c48c35ee2a252ad8}{name}}\ =\ rhs.\mbox{\hyperlink{classResults_ad68c10e52be16019c48c35ee2a252ad8}{name}};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00018}\mbox{\hyperlink{classResults_a6964b981eace04ac35f4a3165968fa7f}{00018}}\ \mbox{\hyperlink{classResults}{Results}}\&\ \mbox{\hyperlink{classResults_a6964b981eace04ac35f4a3165968fa7f}{Results::operator\ =\ }}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classResults}{Results}}\ \&rhs)}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00019}00019\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00020}00020\ \ \ \ \ map<string,\ ResultItem>::operator=(rhs);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{classResults_ad68c10e52be16019c48c35ee2a252ad8}{name}}\ =\ rhs.\mbox{\hyperlink{classResults_ad68c10e52be16019c48c35ee2a252ad8}{name}};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00023}00023\ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00025}\mbox{\hyperlink{classResults_a2204340fba7e5b01d474d2ad3aa3d215}{00025}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classResults_a2204340fba7e5b01d474d2ad3aa3d215}{Results::Append}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classResultItem}{ResultItem}}\ \&ritem)}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00027}00027\ \ \ \ \ operator[](aquiutils::numbertostring(\textcolor{keywordtype}{int}(size())+1)+\textcolor{stringliteral}{"{}:"{}}+\ ritem.\mbox{\hyperlink{classResultItem_a16987bd4fd294603070db8e7cbddf50e}{Name}}())\ =\ ritem;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00030}\mbox{\hyperlink{classResults_a339dc75445f96422237388fe269253bd}{00030}}\ QJsonObject\ \mbox{\hyperlink{classResults_a339dc75445f96422237388fe269253bd}{Results::toJsonObject}}()}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00031}00031\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00032}00032\ \ \ \ \ QJsonObject\ out;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,ResultItem>::iterator\ it\ =\ begin();\ it!=end();\ it++)}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00034}00034\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ out[QString::fromStdString(it-\/>first)]\ =\ it-\/>second.\mbox{\hyperlink{classResultItem_aa053bf6933bae3d1057b574d85da5b26}{Result}}()-\/>\mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{toJsonObject}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00039}00039\ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00041}\mbox{\hyperlink{classResults_ae37c72323b02946acb1a8b482036f539}{00041}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classResults_ae37c72323b02946acb1a8b482036f539}{Results::ReadFromJson}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00042}00042\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{for}\ (QString\ key\ :\ jsonobject.keys())\ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Contributions"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classContribution}{Contribution}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classContribution}{Contribution}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}}-\/>ReadFromJsonObject(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{result\_type::contribution}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aef4122484fa6a4caa4155938431fbace}{contribution}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Modeled\ Elemental\ Profile"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{result\_type::predicted\_concentration}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Multiway\ Projected\ Elemental\ Profiles"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}*\ projected\_elements\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVectorSetSet}{CMBVectorSetSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ projected\_elements-\/>\mbox{\hyperlink{classCMBVectorSetSet_a2dba36384e0294acfd2448b5e7c34581}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a70ccd538c247099ee5a1381e72ebed5d}{result\_type::dfa\_vectorsetset}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(projected\_elements);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Projected\ Elemental\ Profiles"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}*\ projected\_elements\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVectorSet}{CMBVectorSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ projected\_elements-\/>\mbox{\hyperlink{classCMBVectorSet_af3547375177fbb595243945fcbfcfaf0}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7acd43ac3eb7bfd0e057e020bc0069fba6}{result\_type::vectorset\_groups}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(projected\_elements);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Elemental\ Profiles"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{result\_type::elemental\_profile\_set}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Observed\ vs\ Modeled\ Elemental\ Profile"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}*\ modeled\_vs\_measured\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ modeled\_vs\_measured-\/>\mbox{\hyperlink{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{result\_type::elemental\_profile\_set}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled\_vs\_measured);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}OM\ \&\ Size\ MLR\ for\ "{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classMultipleLinearRegressionSet}{MultipleLinearRegressionSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}}-\/>ReadFromJsonObject(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{result\_type::mlrset}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d1b26fdeb30b0eac7989216e40ecf2f}{mlrset}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}MCMC\ samples"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}-\/>ReadFromJsonObject(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7aa1a0824bc9270c85ceeca0b780351c84}{result\_type::mcmc\_samples}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Posterior\ Distributions"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}}-\/>ReadFromJsonObject(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6d67f73778176fef8d2cfc697e03d59e}{result\_type::distribution}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ef9161b900632671022358216c7dfe7}{samples}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Source\ Contribution\ Credible\ Intervals"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRangeSet}{RangeSet}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classRangeSet}{RangeSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}-\/>ReadFromJsonObject(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{result\_type::rangeset}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1.0);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Posterior\ Predicted\ Constituents"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ posterior\_predicted\_distribution\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ posterior\_predicted\_distribution-\/>\mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0450d0d961503b96a3c57b8e130890d9}{result\_type::distribution\_with\_observed}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(posterior\_predicted\_distribution);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Predicted\ Samples\ Credible\ Intervals"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRangeSet}{RangeSet}}*\ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classRangeSet}{RangeSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}}-\/>ReadFromJsonObject(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a1c3f9c17b788db34761856183d11a920}{result\_type::rangeset\_with\_observed}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7abaa55f2b3685578fe153106313a61414}{rangeset}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Stepwise\ DFA"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Multigroup\ DFA\ Analysis"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{result\_type::matrix}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}DFA\ "{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Chi-\/squared\ P-\/Value"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ chisquarepvalue\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ chisquarepvalue-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00253}00253\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(chisquarepvalue);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00258}00258\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Wilks'\ Lambda"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ wilkslambda\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00263}00263\ \ \ \ \ \ \ \ \ \ \ \ \ wilkslambda-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(wilkslambda);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}F-\/test\ P-\/Value"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ ftestpvalue\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ ftestpvalue-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(ftestpvalue);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Eigen\ vector"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ eigenvector\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00294}00294\ \ \ \ \ \ \ \ \ \ \ \ \ eigenvector-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00302}00302\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278adc1d71bbb5c4d2a5e936db79ef10c19f}{yaxis\_mode::log}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00303}00303\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(eigenvector);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00304}00304\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00305}00305\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Box-\/Cox\ parameters"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00308}00308\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00310}00310\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00311}00311\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00312}00312\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00313}00313\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00314}00314\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a17f9e142021ee8a248bb8703099c5d6e}{SetAbsoluteValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00315}00315\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}DFA\ transformed"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00326}00326\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00327}00327\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00328}00328\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a51292102a4c6b0d6bf7029cfaf800ed5}{result\_type::matrix1vs1}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00329}00329\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00330}00330\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00331}00331\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00332}00332\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00333}00333\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Correlation\ Matrix"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00334}00334\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00335}00335\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00336}00336\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{SetLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}},\ -\/0.75);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{SetLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 0.75);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00342}00342\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00343}00343\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{result\_type::matrix}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Covariance\ Matrix"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}*\ dfaresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ dfaresults-\/>\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{result\_type::matrix}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(dfaresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Bracketing\ results"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}*\ bracketingresults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ bracketingresults-\/>\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ \ \ bracketingresults-\/>\mbox{\hyperlink{classCMBMatrix_ac19c12cdcb082591ff3e8d0502467971}{SetBooleanValue}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(bracketingresults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Outlier\ Analysis"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}*\ outliermatrix\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBMatrix}{CMBMatrix}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \ \ outliermatrix-\/>\mbox{\hyperlink{classCMBMatrix_a6d2fb9731656c13894ff647fcf76f4b6}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \ \ \ \ outliermatrix-\/>\mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{SetLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 3);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \ \ \ \ outliermatrix-\/>\mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{SetLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}},\ -\/3);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00382}00382\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a21b72c0b7adc5c7b4a50ffcb90d92dd6}{result\_type::matrix}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(outliermatrix);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Kolmogorov–Smirnov\ statististics\ for\ constituent"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ KSResults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ KSResults-\/>\mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00396}00396\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00398}00398\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00401}00401\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a2ccb2b4ece3a2145eb4a06ae40dc5843}{result\_type::timeseries\_set}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(KSResults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00404}00404\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Kolmogorov–Smirnov\ statististics"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00407}00407\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ KSResults\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ KSResults-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00410}00410\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(KSResults);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key\ ==\ \textcolor{stringliteral}{"{}Multi-\/way\ element\ discriminant\ power"{}})}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{result\_type::elemental\_profile\_set}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Discrimination\ power"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key\ ==\ \textcolor{stringliteral}{"{}Multi-\/way\ discriminat\ fraction"{}})}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile__Set}{Elemental\_Profile\_Set}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classElemental__Profile__Set_a5e0284ebdc58a20af049a2855815bff1}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00439}00439\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a3f73da4c343d883329238d62ae9ecb4f}{result\_type::elemental\_profile\_set}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Percentage\ discriminated"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00450}00450\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key\ ==\ \textcolor{stringliteral}{"{}Two-\/way\ element\ discriminant\ power"{}})}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{result\_type::predicted\_concentration}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Discrimination\ power"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key\ ==\ \textcolor{stringliteral}{"{}Discriminat\ fraction"{}})}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classElemental__Profile}{Elemental\_Profile}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classElemental__Profile_ae0bbd09b3e12a3eeb806c07c64ace333}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a0edc9dc04aa44be123930a1a36fd4f98}{result\_type::predicted\_concentration}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Percentage\ discriminated"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00477}00477\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00479}00479\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}ANOVA"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00480}00480\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00481}00481\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBVector}{CMBVector}}*\ modeled\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBVector}{CMBVector}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00482}00482\ \ \ \ \ \ \ \ \ \ \ \ \ modeled-\/>\mbox{\hyperlink{classCMBVector_aa12efe8ddb6796a8594f6d0795b1cfc5}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00483}00483\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00484}00484\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00485}00485\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00486}00486\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00487}00487\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00488}00488\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a6ba8844da718b4a65f60dbfd0d92d6ef}{result\_type::vector}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00489}00489\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00490}00490\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}P-\/Value"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00491}00491\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(modeled);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Error\ Analysis"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ contributions\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{result\_type::stacked\_bar\_chart}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00505}00505\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00506}00506\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Contribution"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00507}00507\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ad359438cf781a9463f1b9c484b607518}{setXAxisTitle}}(\textcolor{stringliteral}{"{}Sample"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00508}00508\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00509}00509\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}},\ 0);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a45d72a36ef4008c62c1d603073573a4c}{SetXAxisMode}}(\mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{xaxis\_mode::counter}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(contributions);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00514}00514\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Source\ Verification"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00515}00515\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ contributions\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a1a3144925ce8951b685b4e518d1c1ef3}{X\_suffix}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a753501ec8fbfcb20059084b4db149870}{Y\_suffix}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{SetOption}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00521}00521\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{result\_type::stacked\_bar\_chart}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Contribution"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ad359438cf781a9463f1b9c484b607518}{setXAxisTitle}}(\textcolor{stringliteral}{"{}Sample"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}},\ 0);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a45d72a36ef4008c62c1d603073573a4c}{SetXAxisMode}}(\mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{xaxis\_mode::counter}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(contributions);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (key.contains(\textcolor{stringliteral}{"{}Levenberg-\/Marquardt-\/Batch"{}}))}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}*\ contributions\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCMBTimeSeriesSet}{CMBTimeSeriesSet}}();}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classCMBTimeSeriesSet_a72dcfef426da1e3c2fc4e000f8d24f89}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a1a3144925ce8951b685b4e518d1c1ef3}{X\_suffix}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}().\mbox{\hyperlink{structoptions_a753501ec8fbfcb20059084b4db149870}{Y\_suffix}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ contributions-\/>\mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{SetOption}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classResultItem}{ResultItem}}\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a986cb6fd9bcd2324013247ae3b0b7485}{SetName}}(key.toStdString());}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_af73a2d1d965ca3b4ae2876adf4585f7e}{SetShowAsString}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_acc3fe55c3360f6c0137ac9ff23979d41}{SetShowTable}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a28e49e44c8a4d94c2ee8a23b698d7e81}{SetShowGraph}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_afa0b857086ac758c07b1dbc0ded34984}{SetType}}(\mbox{\hyperlink{resultitem_8h_ae0bada42736b9c6772b26fad4557dbd7a312eebfa4c589c1c952fffaad46feb28}{result\_type::stacked\_bar\_chart}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ae5d1dd224f44917b866005d2112674d8}{SetYAxisMode}}(\mbox{\hyperlink{resultitem_8h_a21817ce80cc80ec6f19ae2be5e602278afea087517c26fadd409bd4b9dc642555}{yaxis\_mode::normal}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a40e245c746768c110457f702ef6be5b8}{setYAxisTitle}}(\textcolor{stringliteral}{"{}Contribution"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_ad359438cf781a9463f1b9c484b607518}{setXAxisTitle}}(\textcolor{stringliteral}{"{}Sample"{}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}},\ 1);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00553}00553\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a861d4c2be7231e9a00a57d929192b446}{SetYLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}},\ 0);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00554}00554\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_a45d72a36ef4008c62c1d603073573a4c}{SetXAxisMode}}(\mbox{\hyperlink{resultitem_8h_a5a36f167d24dbe6666fc990f3c158ebea886bb73b3156b0aa24aac99d2de0b238}{xaxis\_mode::counter}});}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00555}00555\ \ \ \ \ \ \ \ \ \ \ \ \ res\_item.\mbox{\hyperlink{classResultItem_aa0e3893ef128dd242482a27d39378293}{SetResult}}(contributions);}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00556}00556\ \ \ \ \ \ \ \ \ \ \ \ \ operator[](key.toStdString())\ =\ res\_item;}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00557}00557\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00558}00558\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00559}00559\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00560}00560\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00561}00561\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00562}00562\ }
+\DoxyCodeLine{\Hypertarget{results_8cpp_source_l00563}00563\ \}}
+
+\end{DoxyCode}

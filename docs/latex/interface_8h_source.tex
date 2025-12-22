@@ -1,0 +1,97 @@
+\doxysection{interface.\+h}
+\hypertarget{interface_8h_source}{}\label{interface_8h_source}\mbox{\hyperlink{interface_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ INTERFACE\_H}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ INTERFACE\_H}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QStringList>}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <qjsonobject.h>}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <qtablewidget.h>}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{parameter_8h}{parameter.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00010}00010\ \textcolor{keyword}{class\ }QFile;\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00012}00012\ \textcolor{comment}{//using\ namespace\ std;}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00014}\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{00014}}\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\_key}}\ \{\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{single\_column\_x}}\};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00017}\mbox{\hyperlink{structoptions}{00017}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structoptions}{options}}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00018}00018\ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00019}\mbox{\hyperlink{structoptions_a20e2e95f1fbe97624b823c78f6fa6574}{00019}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structoptions_a20e2e95f1fbe97624b823c78f6fa6574}{single\_column\_x}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00020}\mbox{\hyperlink{structoptions_a1a3144925ce8951b685b4e518d1c1ef3}{00020}}\ \ \ \ \ QString\ \mbox{\hyperlink{structoptions_a1a3144925ce8951b685b4e518d1c1ef3}{X\_suffix}}\ =\ \textcolor{stringliteral}{"{}x-\/value"{}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00021}\mbox{\hyperlink{structoptions_a753501ec8fbfcb20059084b4db149870}{00021}}\ \ \ \ \ QString\ \mbox{\hyperlink{structoptions_a753501ec8fbfcb20059084b4db149870}{Y\_suffix}}\ =\ \textcolor{stringliteral}{"{}y-\/value"{}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00023}00023\ \};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00025}\mbox{\hyperlink{classInterface}{00025}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classInterface}{Interface}}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00027}00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}}();}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classInterface}{Interface}}\ \&intf);}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classInterface}{Interface}}\&\ \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classInterface}{Interface}}\ \&intf);}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classInterface_a685fc497a17443695cde6876efd144c8}{ToString}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{virtual}\ QJsonObject\ \mbox{\hyperlink{classInterface_aba46ca54d137dd7af43c42d6eaf0fbf2}{toJsonObject}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00033}00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_a4d7c5474353bc7785ff409c6231bcdcd}{ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject);}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_ab1c5bf7d61102d8155f08b137c741ba2}{writetofile}}(QFile*\ file);}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00035}00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_aeb067aea3cf92b200e7876052bdf6ea9}{Read}}(\textcolor{keyword}{const}\ QStringList\ \&strlist);}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00036}00036\ \ \ \ \ \textcolor{keyword}{virtual}\ QTableWidget\ *\mbox{\hyperlink{classInterface_a8d4ef73a3756cb5218325018ec0f88f6}{ToTable}}();}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00037}\mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{00037}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classInterface_a049d5bdfb7fd6e5ef5f1e8652adb7a02}{GetNotes}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00040}\mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{00040}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classInterface_a3a6a440e64c8c5847feed43f16efbd76}{SetNotes}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&note)\ \{\mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}}\ =\ note;\}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00041}\mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{00041}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classInterface_ac306ba09e5a125a82db4960ce548efd7}{AppendtoNotes}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&note)}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00042}00042\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}}\ ==\ \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}}\ +=\ note;}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}}\ +=\ \textcolor{stringliteral}{"{};\ "{}}\ +\ note;}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00047}00047\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00048}\mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{00048}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classInterface_af34476e4a79cf6d527fc75e67b848a08}{ClearNotes}}()\ \{\mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}}\ =\ \textcolor{stringliteral}{"{}"{}};\}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00049}\mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{00049}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}},\mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00050}\mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{00050}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00051}\mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{00051}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classInterface_aa48af03d7ebd6ca8445d8fb6985542cd}{SetLimit}}(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2}{\_range}}\ lowhigh,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \&value)}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00052}00052\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lowhigh\ ==\ \mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}})}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_afc616e2f2efcfa4bc781498b69384df2}{highlimit}}\ =\ value;}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_a24f0b4b925a432fdd21783e280997e9a}{lowlimit}}\ =\ value;}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_acec157511b980b04f19ca39c97b19054}{highlightoutsideoflimit}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00058}00058\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00059}\mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{00059}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classInterface_a567fe576336f3d50b5863f9bf3a7f9a3}{SetOption}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\_key}}\ opt,\ \textcolor{keywordtype}{bool}\ val)}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00060}00060\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (opt\ ==\ \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}})}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}{Options}}.\mbox{\hyperlink{structoptions_a20e2e95f1fbe97624b823c78f6fa6574}{single\_column\_x}}\ =\ val;}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00063}00063\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00064}\mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{00064}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_af6fd2c5d6aaae59cf795f09c152f9ca9}{Option}}(\mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78}{options\_key}}\ opt)}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00065}00065\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (opt\ ==\ \mbox{\hyperlink{interface_8h_ab5df2b9cfcebc10e46c7bed730729c78a7e0acabe408dd65fe5730aa63abf1f7e}{options\_key::single\_column\_x}})}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}{Options}}.\mbox{\hyperlink{structoptions_a20e2e95f1fbe97624b823c78f6fa6574}{single\_column\_x}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00070}00070\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00071}\mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{00071}}\ \ \ \ \ \mbox{\hyperlink{structoptions}{options}}\&\ \mbox{\hyperlink{classInterface_a4f6e773c949a1210279131caa00471a1}{GetOptions}}()}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00072}00072\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}{Options}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00075}\mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{00075}}\ \ \ \ \ QString\ \mbox{\hyperlink{classInterface_a6cec95c20f7c8c8328f7dfc922309749}{XAxisLabel}}()\textcolor{keyword}{\ const\ }\{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11}{XAxis\_Label}};\}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00076}\mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{00076}}\ \ \ \ \ QString\ \mbox{\hyperlink{classInterface_ac0dc8a4ab6de18b9538d3764eb8bbf5a}{YAxisLabel}}()\textcolor{keyword}{\ const\ }\{\textcolor{keywordflow}{return}\ \mbox{\hyperlink{classInterface_ad05b39ef62dc6445f12f44af441f593c}{YAxis\_Label}};\}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00077}\mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{00077}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_a9543100e7a8dfce3db64dec59d5bef60}{SetXAxisLabel}}(\textcolor{keyword}{const}\ QString\ \&label)\ \{\mbox{\hyperlink{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11}{XAxis\_Label}}\ =\ label;\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00078}\mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{00078}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classInterface_afc32c062b437f34324478d35cfeb54b5}{SetYAxisLabel}}(\textcolor{keyword}{const}\ QString\ \&label)}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00079}00079\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classInterface_ad05b39ef62dc6445f12f44af441f593c}{YAxis\_Label}}\ =\ label;}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00082}00082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00083}00083\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00084}\mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{00084}}\ \ \ \ \ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classInterface_aa17442a40d4c1f315581c77314cb78fc}{Notes}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00085}\mbox{\hyperlink{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}{00085}}\ \ \ \ \ \mbox{\hyperlink{structoptions}{options}}\ \mbox{\hyperlink{classInterface_a3dc6ba8f3af1d4292612ed1d93b84390}{Options}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00086}\mbox{\hyperlink{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11}{00086}}\ \ \ \ \ QString\ \mbox{\hyperlink{classInterface_a3b4d878aaae66bbcb41ffdcfacc91e11}{XAxis\_Label}}\ =\ \textcolor{stringliteral}{"{}Sample"{}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00087}\mbox{\hyperlink{classInterface_ad05b39ef62dc6445f12f44af441f593c}{00087}}\ \ \ \ \ QString\ \mbox{\hyperlink{classInterface_ad05b39ef62dc6445f12f44af441f593c}{YAxis\_Label}}\ =\ \textcolor{stringliteral}{"{}Value"{}};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00090}00090\ \};}
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{interface_8h_source_l00092}00092\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ INTERFACE\_H}}
+
+\end{DoxyCode}

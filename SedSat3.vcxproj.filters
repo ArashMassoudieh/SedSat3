@@ -55,9 +55,6 @@
     <ClCompile Include="contribution.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="customplotbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dialogchooseexcelsheets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -139,9 +136,6 @@
     <ClCompile Include="selectsampletablemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testmcmc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="toolboxitem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -184,31 +178,40 @@
     <ClCompile Include="..\qcustomplot6\qcustomplot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Utilities\Matrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Utilities\Matrix_arma.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Utilities\QuickSort.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Utilities\Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Utilities\Vector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Utilities\Vector_arma.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Utilities\NormalDist.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="aboutdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cmbvectorsetset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\Matrix_arma.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\NormalDist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\QuickSort.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\Utilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\Vector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include=".\Utilities\Vector_arma.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="optionsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testmcmc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralChartPlotter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -270,6 +273,12 @@
     <QtMoc Include="..\qcustomplot6\qcustomplot.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="optionsdialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GeneralChartPlotter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chart.h">
@@ -294,9 +303,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="contribution.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="customplotbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="generalplotter.h">
@@ -324,9 +330,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="selectsampledelegate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="testmcmc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="toolboxitem.h">
@@ -383,47 +386,47 @@
     <ClInclude Include="include\MCMC\MCMC.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Utilities\BTC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\BTC.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\BTCSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\BTCSet.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\Matrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\Matrix_arma.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\QuickSort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\Vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\Vector_arma.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Utilities\NormalDist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cmbvectorsetset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\TimeSeries.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\TimeSeries.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\TimeSeriesSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\TimeSeriesSet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\Matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\Matrix_arma.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\NormalDist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\QuickSort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\Vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include=".\Utilities\Vector_arma.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testmcmc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="aboutdialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="dialogchooseexcelsheets.ui">
       <Filter>Form Files</Filter>
     </QtUic>

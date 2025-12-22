@@ -1,0 +1,257 @@
+\doxysection{Select\+Sample\+Table\+Model Class Reference}
+\hypertarget{classSelectSampleTableModel}{}\label{classSelectSampleTableModel}\index{SelectSampleTableModel@{SelectSampleTableModel}}
+
+
+{\ttfamily \#include $<$/home/arash/\+Projects/\+Sed\+Sat3/selectsampletablemodel.\+h$>$}
+
+
+
+Inheritance diagram for Select\+Sample\+Table\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{classSelectSampleTableModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Select\+Sample\+Table\+Model\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classSelectSampleTableModel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSelectSampleTableModel_ad2ee70215c6f4c9d4f2fea1f2296534d}{Select\+Sample\+Table\+Model}} (\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}, QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+int \mbox{\hyperlink{classSelectSampleTableModel_ad11e67fc0f2c5c2c18ef5ef2691fe09f}{row\+Count}} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+int \mbox{\hyperlink{classSelectSampleTableModel_a6b9dd1384a515628827079a9c8aa2aa3}{column\+Count}} (const QModel\+Index \&parent=QModel\+Index()) const override
+\item 
+QVariant \mbox{\hyperlink{classSelectSampleTableModel_a4a7f7b3c1db53e2053465a86e85772d4}{data}} (const QModel\+Index \&index, int role=Qt\+::\+Display\+Role) const override
+\item 
+QVariant \mbox{\hyperlink{classSelectSampleTableModel_ac982608ddd36be53b85a9642bea97204}{header\+Data}} (int section, Qt\+::\+Orientation orientation, int role) const override
+\item 
+bool \mbox{\hyperlink{classSelectSampleTableModel_a2a20771b771780e2399d65803a74ae78}{set\+Data}} (const QModel\+Index \&index, const QVariant \&value, int role=Qt\+::\+Edit\+Role) override
+\item 
+Qt\+::\+Item\+Flags \mbox{\hyperlink{classSelectSampleTableModel_a80f3d945c8295c824661c643cef091d1}{flags}} (const QModel\+Index \&index) const override
+\item 
+void \mbox{\hyperlink{classSelectSampleTableModel_a1a2a32f77699cdb73de51149718ebca2}{Set\+Selected\+Source}} (const string \&group)
+\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}{Get\+Profile\+Set}} (int row)
+\item 
+\mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classSelectSampleTableModel_afdaf310a1642da21c6cff3dd7aefe6f4}{Get\+Profile\+Set}} (int row) const
+\item 
+void \mbox{\hyperlink{classSelectSampleTableModel_af0954caea064dca4028023efd211dd40}{edit\+Completed}} (const QString \&)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}{Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}{selected\+Source}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8h_source_l00009}{9}} of file \mbox{\hyperlink{selectsampletablemodel_8h_source}{selectsampletablemodel.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSelectSampleTableModel_ad2ee70215c6f4c9d4f2fea1f2296534d}\label{classSelectSampleTableModel_ad2ee70215c6f4c9d4f2fea1f2296534d} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!SelectSampleTableModel@{SelectSampleTableModel}}
+\index{SelectSampleTableModel@{SelectSampleTableModel}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{SelectSampleTableModel()}{SelectSampleTableModel()}}
+{\footnotesize\ttfamily Select\+Sample\+Table\+Model\+::\+Select\+Sample\+Table\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}} \texorpdfstring{$\ast$}{*}}]{Data,  }\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampletablemodel_8h_source_l00023}{Data}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSelectSampleTableModel_a6b9dd1384a515628827079a9c8aa2aa3}\label{classSelectSampleTableModel_a6b9dd1384a515628827079a9c8aa2aa3} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!columnCount@{columnCount}}
+\index{columnCount@{columnCount}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{columnCount()}{columnCount()}}
+{\footnotesize\ttfamily int Select\+Sample\+Table\+Model\+::column\+Count (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{parent = {\ttfamily QModelIndex()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+\Hypertarget{classSelectSampleTableModel_a4a7f7b3c1db53e2053465a86e85772d4}\label{classSelectSampleTableModel_a4a7f7b3c1db53e2053465a86e85772d4} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!data@{data}}
+\index{data@{data}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}}
+{\footnotesize\ttfamily QVariant Select\+Sample\+Table\+Model\+::data (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index,  }\item[{int}]{role = {\ttfamily Qt\+:\+:DisplayRole} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampletablemodel_8h_source_l00023}{Data}}, \mbox{\hyperlink{interface_8h_source_l00037}{Interface\+::\+Get\+Notes()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00047}{Get\+Profile\+Set()}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00395}{Source\+Sink\+Data\+::\+Get\+Sample\+Names()}}, \mbox{\hyperlink{elemental__profile_8h_source_l00399}{Elemental\+\_\+\+Profile\+::\+Is\+Included\+In\+Analysis()}}, and \mbox{\hyperlink{selectsampletablemodel_8h_source_l00013}{selected\+Source}}.
+
+\Hypertarget{classSelectSampleTableModel_af0954caea064dca4028023efd211dd40}\label{classSelectSampleTableModel_af0954caea064dca4028023efd211dd40} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!editCompleted@{editCompleted}}
+\index{editCompleted@{editCompleted}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{editCompleted()}{editCompleted()}}
+{\footnotesize\ttfamily void Select\+Sample\+Table\+Model\+::edit\+Completed (\begin{DoxyParamCaption}\item[{const QString \&}]{ }\end{DoxyParamCaption})}
+
+
+
+Referenced by \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00077}{set\+Data()}}.
+
+\Hypertarget{classSelectSampleTableModel_a80f3d945c8295c824661c643cef091d1}\label{classSelectSampleTableModel_a80f3d945c8295c824661c643cef091d1} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!flags@{flags}}
+\index{flags@{flags}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{flags()}{flags()}}
+{\footnotesize\ttfamily Qt\+::\+Item\+Flags Select\+Sample\+Table\+Model\+::flags (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00095}{95}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+\Hypertarget{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6}\label{classSelectSampleTableModel_a1bd3c6b698342d884027d0e51c1aedf6} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!GetProfileSet@{GetProfileSet}}
+\index{GetProfileSet@{GetProfileSet}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{GetProfileSet()}{GetProfileSet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} Select\+Sample\+Table\+Model\+::\+Get\+Profile\+Set (\begin{DoxyParamCaption}\item[{int}]{row }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampletablemodel_8h_source_l00023}{Data}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00395}{Source\+Sink\+Data\+::\+Get\+Sample\+Names()}}, and \mbox{\hyperlink{selectsampletablemodel_8h_source_l00013}{selected\+Source}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00015}{data()}}, and \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00077}{set\+Data()}}.
+
+\Hypertarget{classSelectSampleTableModel_afdaf310a1642da21c6cff3dd7aefe6f4}\label{classSelectSampleTableModel_afdaf310a1642da21c6cff3dd7aefe6f4} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!GetProfileSet@{GetProfileSet}}
+\index{GetProfileSet@{GetProfileSet}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{GetProfileSet()}{GetProfileSet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classElemental__Profile}{Elemental\+\_\+\+Profile}} \texorpdfstring{$\ast$}{*} Select\+Sample\+Table\+Model\+::\+Get\+Profile\+Set (\begin{DoxyParamCaption}\item[{int}]{row }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampletablemodel_8h_source_l00023}{Data}}, \mbox{\hyperlink{sourcesinkdata_8cpp_source_l00395}{Source\+Sink\+Data\+::\+Get\+Sample\+Names()}}, and \mbox{\hyperlink{selectsampletablemodel_8h_source_l00013}{selected\+Source}}.
+
+\Hypertarget{classSelectSampleTableModel_ac982608ddd36be53b85a9642bea97204}\label{classSelectSampleTableModel_ac982608ddd36be53b85a9642bea97204} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!headerData@{headerData}}
+\index{headerData@{headerData}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{headerData()}{headerData()}}
+{\footnotesize\ttfamily QVariant Select\+Sample\+Table\+Model\+::header\+Data (\begin{DoxyParamCaption}\item[{int}]{section,  }\item[{Qt\+::\+Orientation}]{orientation,  }\item[{int}]{role }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+\Hypertarget{classSelectSampleTableModel_ad11e67fc0f2c5c2c18ef5ef2691fe09f}\label{classSelectSampleTableModel_ad11e67fc0f2c5c2c18ef5ef2691fe09f} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!rowCount@{rowCount}}
+\index{rowCount@{rowCount}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{rowCount()}{rowCount()}}
+{\footnotesize\ttfamily int Select\+Sample\+Table\+Model\+::row\+Count (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{parent = {\ttfamily QModelIndex()} }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{selectsampletablemodel_8h_source_l00023}{Data}}, and \mbox{\hyperlink{selectsampletablemodel_8h_source_l00013}{selected\+Source}}.
+
+\Hypertarget{classSelectSampleTableModel_a2a20771b771780e2399d65803a74ae78}\label{classSelectSampleTableModel_a2a20771b771780e2399d65803a74ae78} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!setData@{setData}}
+\index{setData@{setData}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{setData()}{setData()}}
+{\footnotesize\ttfamily bool Select\+Sample\+Table\+Model\+::set\+Data (\begin{DoxyParamCaption}\item[{const QModel\+Index \&}]{index,  }\item[{const QVariant \&}]{value,  }\item[{int}]{role = {\ttfamily Qt\+:\+:EditRole} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00077}{77}} of file \mbox{\hyperlink{selectsampletablemodel_8cpp_source}{selectsampletablemodel.\+cpp}}.
+
+
+
+References \mbox{\hyperlink{classSelectSampleTableModel_af0954caea064dca4028023efd211dd40}{edit\+Completed()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00047}{Get\+Profile\+Set()}}, and \mbox{\hyperlink{elemental__profile_8h_source_l00406}{Elemental\+\_\+\+Profile\+::\+Set\+Included\+In\+Analysis()}}.
+
+\Hypertarget{classSelectSampleTableModel_a1a2a32f77699cdb73de51149718ebca2}\label{classSelectSampleTableModel_a1a2a32f77699cdb73de51149718ebca2} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!SetSelectedSource@{SetSelectedSource}}
+\index{SetSelectedSource@{SetSelectedSource}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{SetSelectedSource()}{SetSelectedSource()}}
+{\footnotesize\ttfamily void Select\+Sample\+Table\+Model\+::\+Set\+Selected\+Source (\begin{DoxyParamCaption}\item[{const string \&}]{group }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8h_source_l00024}{24}} of file \mbox{\hyperlink{selectsampletablemodel_8h_source}{selectsampletablemodel.\+h}}.
+
+
+
+References \mbox{\hyperlink{selectsampletablemodel_8h_source_l00013}{selected\+Source}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsamples_8cpp_source_l00048}{Select\+Samples\+::combo\+Changed()}}, and \mbox{\hyperlink{selectsamples_8cpp_source_l00019}{Select\+Samples\+::\+Set\+Data()}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf}\label{classSelectSampleTableModel_aa4e054b69e532e089c3cfaa451d112cf} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!Data@{Data}}
+\index{Data@{Data}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{Data}{Data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSourceSinkData}{Source\+Sink\+Data}}\texorpdfstring{$\ast$}{*} Select\+Sample\+Table\+Model\+::\+Data}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8h_source_l00023}{23}} of file \mbox{\hyperlink{selectsampletablemodel_8h_source}{selectsampletablemodel.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00003}{Select\+Sample\+Table\+Model()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00015}{data()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00047}{Get\+Profile\+Set()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00052}{Get\+Profile\+Set()}}, and \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00007}{row\+Count()}}.
+
+\Hypertarget{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785}\label{classSelectSampleTableModel_a62fae864f1be5dee528c5d6fb209f785} 
+\index{SelectSampleTableModel@{SelectSampleTableModel}!selectedSource@{selectedSource}}
+\index{selectedSource@{selectedSource}!SelectSampleTableModel@{SelectSampleTableModel}}
+\doxysubsubsection{\texorpdfstring{selectedSource}{selectedSource}}
+{\footnotesize\ttfamily string Select\+Sample\+Table\+Model\+::selected\+Source\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{selectsampletablemodel_8h_source_l00013}{13}} of file \mbox{\hyperlink{selectsampletablemodel_8h_source}{selectsampletablemodel.\+h}}.
+
+
+
+Referenced by \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00015}{data()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00047}{Get\+Profile\+Set()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00052}{Get\+Profile\+Set()}}, \mbox{\hyperlink{selectsampletablemodel_8cpp_source_l00007}{row\+Count()}}, and \mbox{\hyperlink{selectsampletablemodel_8h_source_l00024}{Set\+Selected\+Source()}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{selectsampletablemodel_8h}{selectsampletablemodel.\+h}}\item 
+\mbox{\hyperlink{selectsampletablemodel_8cpp}{selectsampletablemodel.\+cpp}}\end{DoxyCompactItemize}

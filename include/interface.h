@@ -28,8 +28,8 @@ public:
     Interface();
     Interface(const Interface &intf);
     Interface& operator=(const Interface &intf);
-    virtual string ToString();
-    virtual QJsonObject toJsonObject();
+    virtual string ToString() const;
+    virtual QJsonObject toJsonObject() const;
     virtual bool ReadFromJsonObject(const QJsonObject &jsonobject);
     virtual bool writetofile(QFile* file);
     virtual bool Read(const QStringList &strlist);
@@ -72,8 +72,8 @@ public:
     {
         return Options;
     }
-    QString XAxisLabel() {return XAxis_Label;}
-    QString YAxisLabel() {return YAxis_Label;}
+    QString XAxisLabel() const {return XAxis_Label;}
+    QString YAxisLabel() const {return YAxis_Label;}
     bool SetXAxisLabel(const QString &label) {XAxis_Label = label; return true;}
     bool SetYAxisLabel(const QString &label)
     {

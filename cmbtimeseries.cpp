@@ -23,7 +23,7 @@ CMBTimeSeries& CMBTimeSeries::operator=(const CMBTimeSeries &mp)
     CMBTimeSeries::operator=(mp);
     return *this;
 }
-QJsonObject CMBTimeSeries::toJsonObject()
+QJsonObject CMBTimeSeries::toJsonObject() const
 {
     QJsonObject out;
     QJsonArray t_values;
@@ -45,7 +45,7 @@ bool CMBTimeSeries::ReadFromJsonObject(const QJsonObject &jsonobject)
 }
 
 
-string CMBTimeSeries::ToString()
+string CMBTimeSeries::ToString() const
 {
     string out;
     for (int i=0; i<size(); i++)

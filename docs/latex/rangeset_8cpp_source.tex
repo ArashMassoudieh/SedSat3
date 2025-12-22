@@ -1,0 +1,110 @@
+\doxysection{rangeset.\+cpp}
+\hypertarget{rangeset_8cpp_source}{}\label{rangeset_8cpp_source}\mbox{\hyperlink{rangeset_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{rangeset_8h}{rangeset.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <QFile>}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00004}\mbox{\hyperlink{classRangeSet_a92262ebd91d5cea9b4c43ffa491232d9}{00004}}\ \mbox{\hyperlink{classRangeSet_a92262ebd91d5cea9b4c43ffa491232d9}{RangeSet::RangeSet}}():map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ \mbox{\hyperlink{classRange}{Range}}>(),\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00005}00005\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00007}00007\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00009}\mbox{\hyperlink{classRangeSet_a384499c6960f7e000c8ac722bc382ce2}{00009}}\ \mbox{\hyperlink{classRangeSet_a92262ebd91d5cea9b4c43ffa491232d9}{RangeSet::RangeSet}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classRangeSet}{RangeSet}}\ \&rhs):map<\mbox{\hyperlink{selectsampledelegate_8h_acfe2faf5163390c1dcc12b16ac4b97b3ab45cffe084dd3d20d928bee85e7b0f21}{string}},\ \mbox{\hyperlink{classRange}{Range}}>(),\mbox{\hyperlink{classInterface}{Interface}}()}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00013}\mbox{\hyperlink{classRangeSet_aa457e1536baaf8cf01a0a9258bb06de8}{00013}}\ \mbox{\hyperlink{classRangeSet}{RangeSet}}\&\ \mbox{\hyperlink{classRangeSet_aa457e1536baaf8cf01a0a9258bb06de8}{RangeSet::operator\ =\ }}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classRangeSet}{RangeSet}}\ \&rhs)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00014}00014\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classInterface_a46a0a0162fc808dd547bc10cf24224ee}{Interface::operator=}}(rhs);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00016}00016\ \ \ \ \ map<string,Range>::operator=(rhs);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00019}\mbox{\hyperlink{classRangeSet_ad288bd31f7d7dca903f096474f9702f7}{00019}}\ QJsonObject\ \mbox{\hyperlink{classRangeSet_ad288bd31f7d7dca903f096474f9702f7}{RangeSet::toJsonObject}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00020}00020\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00021}00021\ \ \ \ \ QJsonObject\ out;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,Range>::const\_iterator\ it=cbegin();\ it!=cend();\ it++)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00023}00023\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ out[QString::fromStdString(it-\/>first)]\ =\ it-\/>second.toJsonObject();}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00028}\mbox{\hyperlink{classRangeSet_a20bdcffd84c2c60e716d3ee4f3f221fa}{00028}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRangeSet_a20bdcffd84c2c60e716d3ee4f3f221fa}{RangeSet::ReadFromJsonObject}}(\textcolor{keyword}{const}\ QJsonObject\ \&jsonobject)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00029}00029\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{for}\ (QString\ key:\ jsonobject.keys())}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00031}00031\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classRange}{Range}}\ range;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ range.\mbox{\hyperlink{classRange_a571f1a21e961a54b90afa03d9449df65}{ReadFromJsonObject}}(jsonobject[key].toObject());}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ this-\/>operator[](key.toStdString())\ =\ range;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00037}00037\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00038}\mbox{\hyperlink{classRangeSet_affe74ed2a77264038a430c221a77cf56}{00038}}\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{classRangeSet_affe74ed2a77264038a430c221a77cf56}{RangeSet::ToString}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00039}00039\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{string}\ out;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,Range>::const\_iterator\ it=cbegin();\ it!=cend();\ it++)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00042}00042\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ out.append(it-\/>first\ +\ \textcolor{stringliteral}{"{}:"{}}\ +\ it-\/>second.ToString());}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00044}00044\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00046}00046\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00048}\mbox{\hyperlink{classRangeSet_a2cfd2399ea2897af2eadaa22e089a7e6}{00048}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRangeSet_a2cfd2399ea2897af2eadaa22e089a7e6}{RangeSet::writetofile}}(QFile*\ file)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00049}00049\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00050}00050\ \ \ \ \ file-\/>write(QString::fromStdString(\mbox{\hyperlink{classRangeSet_affe74ed2a77264038a430c221a77cf56}{ToString}}()).toUtf8());}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00053}00053\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00054}\mbox{\hyperlink{classRangeSet_adb16031285ef4ad4de95f62a5924b373}{00054}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classRangeSet_adb16031285ef4ad4de95f62a5924b373}{RangeSet::Read}}(\textcolor{keyword}{const}\ QStringList\ \&strlist)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00055}00055\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00059}\mbox{\hyperlink{classRangeSet_a9e0606fa542daeacb51a3307b7d2f7b6}{00059}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRangeSet_a9e0606fa542daeacb51a3307b7d2f7b6}{RangeSet::maxval}}()}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00060}00060\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{double}\ out\ =\ -\/1e24;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,Range>::iterator\ it=begin();\ it!=end();\ it++)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00063}00063\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ out\ =\ max(out,it-\/>second.Get(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}}));}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>second.GetValue()!=0)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ max(out,it-\/>second.GetValue());}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00067}00067\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00069}00069\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00070}\mbox{\hyperlink{classRangeSet_a843a403e67959b74f27c1f87c967bd00}{00070}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classRangeSet_a843a403e67959b74f27c1f87c967bd00}{RangeSet::minval}}()}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00071}00071\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{double}\ out\ =\ 1e24;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,Range>::iterator\ it=begin();\ it!=end();\ it++)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ out\ =\ min(out,it-\/>second.Get(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}}));}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>second.GetValue()!=0)}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ min(out,it-\/>second.GetValue());}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00078}00078\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00080}00080\ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00082}\mbox{\hyperlink{classRangeSet_ad1c6a47702f158f715b1c68021636d1c}{00082}}\ QTableWidget\ *\mbox{\hyperlink{classRangeSet_ad1c6a47702f158f715b1c68021636d1c}{RangeSet::ToTable}}()}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00083}00083\ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00084}00084\ \ \ \ \ QTableWidget\ *tablewidget\ =\ \textcolor{keyword}{new}\ QTableWidget();}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00085}00085\ \ \ \ \ tablewidget-\/>setEditTriggers(QAbstractItemView::NoEditTriggers);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00086}00086\ \ \ \ \ tablewidget-\/>setColumnCount(4);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00087}00087\ \ \ \ \ tablewidget-\/>setRowCount(size());}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00088}00088\ \ \ \ \ QStringList\ headers;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00089}00089\ \ \ \ \ headers<<\textcolor{stringliteral}{"{}Low"{}}<<\textcolor{stringliteral}{"{}High"{}}<<\textcolor{stringliteral}{"{}Median"{}}<<\textcolor{stringliteral}{"{}Mean"{}};}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00090}00090\ \ \ \ \ QStringList\ constituents;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{keywordtype}{int}\ row\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{for}\ (map<string,Range>::iterator\ it=begin();\ it!=end();\ it++\ )}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00093}00093\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(row,0,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(it-\/>second.Get(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a53cced8d281a1a0ace3cb6594daaa4f7}{\_range::low}}))));}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(row,1,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(it-\/>second.Get(\mbox{\hyperlink{parameter_8h_a22be35c7d52e536f1220013c9d7424d2a8d966b2253a917086c8604959e152243}{\_range::high}}))));}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(row,2,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(it-\/>second.Median())));}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ tablewidget-\/>setItem(row,3,\ \textcolor{keyword}{new}\ QTableWidgetItem(QString::number(it-\/>second.Mean())));}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ row++;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ constituents\ <<\ QString::fromStdString(it-\/>first);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00100}00100\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00102}00102\ \ \ \ \ tablewidget-\/>setHorizontalHeaderLabels(headers);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00103}00103\ \ \ \ \ tablewidget-\/>setVerticalHeaderLabels(constituents);}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{keywordflow}{return}\ tablewidget;}
+\DoxyCodeLine{\Hypertarget{rangeset_8cpp_source_l00105}00105\ \}}
+
+\end{DoxyCode}

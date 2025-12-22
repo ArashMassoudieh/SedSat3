@@ -1,0 +1,15 @@
+<map id="CMBTimeSeriesSet" name="CMBTimeSeriesSet">
+<area shape="rect" id="Node000001" title="Collection of time series with labels and observed values." alt="" coords="193,729,354,995"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,451,168,517"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,528,210,728,205,730,106,530"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title=" " alt="" coords="193,301,354,667"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="276,681,276,729,271,729,271,681"/>
+<area shape="rect" id="Node000004" href="$structoptions.html" title=" " alt="" coords="212,133,335,239"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="276,239,276,285,271,285,271,239"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="379,451,517,517"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="436,518,368,668,345,716,341,713,363,666,431,516"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="394,153,502,219"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="451,233,451,451,445,451,445,233"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="437,5,459,71"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="451,71,451,137,445,137,445,71"/>
+</map>

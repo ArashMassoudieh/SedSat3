@@ -1,0 +1,20 @@
+[33m33439f9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m ConcentrationSet refactored
+[33m009aef0[m Refactoring ElementalProfile.
+[33m0cdac16[m Options
+[33maeadb20[m CMakefile
+[33m1f8984f[m Merge remote-tracking branch 'origin/main'
+[33mdaeab27[m CmakeList
+[33m860a4b6[m Update User Manual link in README.md
+[33m74f4a60[m Update README.md for clarity and corrections
+[33m1b63e4c[m Revise Linux installation section in README
+[33mf5b1701[m[33m ([m[1;33mtag: [m[1;33mv1.0.25[m[33m, [m[1;33mtag: [m[1;33mLatest[m[33m)[m Update citation for SedSAT3 reference
+[33m402345e[m Revise README for installation and build instructions
+[33mc934584[m Merge remote-tracking branch 'origin/main'
+[33mb4d9fcd[m Getting ready for CMake
+[33m8db0dcd[m Add QXlsx as submodule
+[33m819c0f0[m Update README with SedSAT3 details and instructions
+[33md07ead9[m Utilities on Windows
+[33m273fc99[m Merge remote-tracking branch 'origin/main'
+[33md34195c[m gitignore
+[33mcba52dc[m Utilities as submodule
+[33m32957e9[m MCMC fix

@@ -20,8 +20,8 @@ public:
     double GetRange(_range lowhigh);
     void SetRange(_range, double value);
     void SetName(const string &nam) {name = nam;}
-    string Name() {return name;}
-    double Value() {return value;}
+    string Name() const {return name;}
+    double Value() const {return value;}
     void SetValue(double val) {value = val;}
     double GetValue() {return value;}
     void UpdatePriorDistribution();

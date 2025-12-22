@@ -114,7 +114,7 @@ CGA<T>::CGA(T *model)
 	GA_params.RCGA = false;
     numberOfThreads = 20;
 	loged.clear();
-    filenames.pathname = Model->OutputPath();
+    filenames.pathname = Model->GetOutputPath();
     GA_params.maxpop = max(1,GA_params.maxpop);
     for (unsigned int i=0; i<Model->Parameters().size(); i++)
 	{
@@ -136,7 +136,7 @@ CGA<T>::CGA(T *model)
         else
             loged.push_back(0);
 
-        paramname.push_back(Model->GetNameForParameterID(i));
+        paramname.push_back(Model->GetParameterName(i));
 
 	}
 
@@ -185,7 +185,7 @@ void CGA<T>::InitiatePopulation()
         else
             loged.push_back(0);
 
-        paramname.push_back(Model->GetNameForParameterID(i));
+        paramname.push_back(Model->GetParameterName(i));
 
     }
 

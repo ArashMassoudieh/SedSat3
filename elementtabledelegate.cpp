@@ -37,7 +37,7 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
     if (index.column()==2)
     {
         QComboBox *editor = new QComboBox(parent);
-        vector<string> element_names = Data->ElementNames();
+        vector<string> element_names = Data->GetElementNames();
         if (index.sibling(index.row(),1).data(Qt::DisplayRole)!="Isotope")
         {   editor->setEnabled(false);
             editor->setCurrentText("");

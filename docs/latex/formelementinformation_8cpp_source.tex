@@ -1,0 +1,44 @@
+\doxysection{formelementinformation.\+cpp}
+\hypertarget{formelementinformation_8cpp_source}{}\label{formelementinformation_8cpp_source}\mbox{\hyperlink{formelementinformation_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{formelementinformation_8h}{formelementinformation.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}ui\_formelementinformation.h"{}}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{elementstablemodel_8h}{elementstablemodel.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00005}\mbox{\hyperlink{classFormElementInformation_aceb6e8984d88b19eff5a30a1fbcf0770}{00005}}\ \mbox{\hyperlink{classFormElementInformation_aceb6e8984d88b19eff5a30a1fbcf0770}{FormElementInformation::FormElementInformation}}(QWidget\ *parent)\ :}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00006}00006\ \ \ \ \ QWidget(parent),}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00007}00007\ \ \ \ \ ui(new\ \mbox{\hyperlink{namespaceUi}{Ui}}::\mbox{\hyperlink{classFormElementInformation}{FormElementInformation}})}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>Include\_Exclude\_All\_checkBox-\/>setText(\textcolor{stringliteral}{"{}Exclude\ all\ elements"{}});}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00011}00011\ \ \ \ \ connect(\mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>Include\_Exclude\_All\_checkBox,SIGNAL(stateChanged(\textcolor{keywordtype}{int})),\textcolor{keyword}{this},SLOT(\mbox{\hyperlink{classFormElementInformation_a90e09a836a81b99d26bd3596a6c3153c}{on\_Include\_Exclude\_Change}}()));}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00015}\mbox{\hyperlink{classFormElementInformation_a2beec81ecf16825548b4bed301946aa4}{00015}}\ \mbox{\hyperlink{classFormElementInformation_a2beec81ecf16825548b4bed301946aa4}{FormElementInformation::\string~FormElementInformation}}()}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00016}00016\ \{}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}};}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00020}\mbox{\hyperlink{classFormElementInformation_ac2d4f9cc5f638e2b035150dbc3326e9e}{00020}}\ QTableView\ *\mbox{\hyperlink{classFormElementInformation_ac2d4f9cc5f638e2b035150dbc3326e9e}{FormElementInformation::table}}()}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>tableView;}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00023}00023\ \}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00026}\mbox{\hyperlink{classFormElementInformation_a90e09a836a81b99d26bd3596a6c3153c}{00026}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classFormElementInformation_a90e09a836a81b99d26bd3596a6c3153c}{FormElementInformation::on\_Include\_Exclude\_Change}}()}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00027}00027\ \{}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>Include\_Exclude\_All\_checkBox-\/>checkState()==Qt::CheckState::Checked)}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00029}00029\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>Include\_Exclude\_All\_checkBox-\/>setText(\textcolor{stringliteral}{"{}Include\ all\ elements"{}});}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classElementTableModel}{ElementTableModel}}*\textcolor{keyword}{>}(\mbox{\hyperlink{classFormElementInformation_ac2d4f9cc5f638e2b035150dbc3326e9e}{table}}()-\/>model())-\/>Data-\/>IncludeExcludeAllElements(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00032}00032\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00034}00034\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classFormElementInformation_ae0984f045b47aec784c1d0d40724afd2}{ui}}-\/>Include\_Exclude\_All\_checkBox-\/>setText(\textcolor{stringliteral}{"{}Exclude\ all\ elements"{}});}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{classElementTableModel}{ElementTableModel}}*\textcolor{keyword}{>}(\mbox{\hyperlink{classFormElementInformation_ac2d4f9cc5f638e2b035150dbc3326e9e}{table}}()-\/>model())-\/>Data-\/>IncludeExcludeAllElements(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00037}00037\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00038}00038\ \}}
+\DoxyCodeLine{\Hypertarget{formelementinformation_8cpp_source_l00039}00039\ }
+
+\end{DoxyCode}

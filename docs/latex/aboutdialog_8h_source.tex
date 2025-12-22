@@ -1,0 +1,51 @@
+\doxysection{aboutdialog.\+h}
+\hypertarget{aboutdialog_8h_source}{}\label{aboutdialog_8h_source}\mbox{\hyperlink{aboutdialog_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ ABOUTDIALOG\_H}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ ABOUTDIALOG\_H}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QDialog>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <QHBoxLayout>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <QTextBrowser>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <QPixmap>}}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00019}\mbox{\hyperlink{classAboutDialog}{00019}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAboutDialog}{AboutDialog}}\ :\ \textcolor{keyword}{public}\ QDialog}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00020}00020\ \{}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00021}00021\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00023}00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classAboutDialog}{AboutDialog}}(QWidget*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00033}\mbox{\hyperlink{classAboutDialog_a3bc1c8623ef9e819aba26bea12b73d25}{00033}}\ \ \ \ \ \mbox{\hyperlink{classAboutDialog_a3bc1c8623ef9e819aba26bea12b73d25}{\string~AboutDialog}}()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_a2f4720983102050bb6e30d392a836df7}{setVersion}}(\textcolor{keyword}{const}\ QString\&\ \mbox{\hyperlink{mainwindow_8cpp_ae1e8d82e2faa5d90a6ab07852f3d74d2}{version}});}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_afd45defb6d940f64730b19e39d5cf309}{setBuildDate}}(\textcolor{keyword}{const}\ QString\&\ date);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_ad47fe9e184d788cc9a0a2bb120ff4699}{appendText}}(\textcolor{keyword}{const}\ QString\&\ text);}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_aee3b296ee6e293706f42f269b2e63af5}{clearText}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00058}00058\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classAboutDialog_a4e96b4ef69c7573aeb76d537bac668e0}{setupUI}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00068}00068\ \ \ \ \ QWidget*\ \mbox{\hyperlink{classAboutDialog_af5e67d8eed68cb69a41278c33ddc57d2}{createHeader}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00074}00074\ \ \ \ \ QWidget*\ \mbox{\hyperlink{classAboutDialog_ab5b132b7df3059d7cbb9a9b095bb1b13}{createInfoSection}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00080}00080\ \ \ \ \ QTextBrowser*\ \mbox{\hyperlink{classAboutDialog_ac7931d6dde55061b63316e46c982e74e}{createDescriptionSection}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00086}00086\ \ \ \ \ QWidget*\ \mbox{\hyperlink{classAboutDialog_a23e76a4672ca260daf3e57e9c1678ef4}{createFooter}}();}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00088}00088\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00089}\mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{00089}}\ \ \ \ \ QLabel*\ \mbox{\hyperlink{classAboutDialog_abf9c5ff19b21d8d74c1389c42076d4cb}{versionLabel}};}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00090}\mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{00090}}\ \ \ \ \ QLabel*\ \mbox{\hyperlink{classAboutDialog_abd48ec024ec9e6c42251c715a8cf37f4}{buildDateLabel}};}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00091}\mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{00091}}\ \ \ \ \ QTextBrowser*\ \mbox{\hyperlink{classAboutDialog_a7120552e15f140a2256b751fdf257d78}{descriptionBrowser}};}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00092}00092\ \};}
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{aboutdialog_8h_source_l00094}00094\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ABOUTDIALOG\_H}}
+
+\end{DoxyCode}
