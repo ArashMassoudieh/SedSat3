@@ -1,0 +1,7 @@
+<map id="Elemental_Profile_Set" name="Elemental_Profile_Set">
+<area shape="rect" id="Node000001" title="Manages a collection of elemental profiles (samples) for source fingerprinting analysis." alt="" coords="45,439,268,784"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,155,132,241"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,254,122,438,117,439,78,255"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="157,5,333,391"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="203,404,196,439,191,438,198,403"/>
+</map>

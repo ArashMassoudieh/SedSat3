@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['data_0',['data',['../classOmSizeCorrectionTableModel.html#a683f92c0513c14a6b0a3781c87528b8d',1,'OmSizeCorrectionTableModel::data()'],['../classSelectSampleTableModel.html#a4a7f7b3c1db53e2053465a86e85772d4',1,'SelectSampleTableModel::data()'],['../classToolBoxItem.html#a56734fe1cbf049b0b5c535a15299a37a',1,'ToolBoxItem::data()'],['../classConductor.html#aa7cb67835ba4d08b30e5ed84f3b574fa',1,'Conductor::Data()'],['../classMainWindow.html#a0e4849de10342238c2a91304de641386',1,'MainWindow::Data()'],['../classMainWindow.html#a4a7ee7221d3692a003a842dc081b6249',1,'MainWindow::Data() const'],['../classPlotWindow.html#a0172bea937dd292b68c896b71400ff25',1,'PlotWindow::Data()'],['../classElementTableModel.html#a9d8ccceb27fb7a314b893bf22285b650',1,'ElementTableModel::data()']]],
+  ['datamean_1',['DataMean',['../classDistribution.html#a495bb641e5fa498b0ffbd7b686d94f94',1,'Distribution']]],
+  ['datastdev_2',['DataSTDev',['../classDistribution.html#a69cfc1c6443a2279d022b9cc897824fd',1,'Distribution']]],
+  ['decode_3',['decode',['../classCBinary.html#aeae50497a5511248dab159dbcdd521d9',1,'CBinary']]],
+  ['deleteresults_4',['DeleteResults',['../classMainWindow.html#a11826c39856be257dc3187b51d951951',1,'MainWindow']]],
+  ['dependentdata_5',['DependentData',['../classMultipleLinearRegression.html#a8acfa9705e46c58cdd7721b17e71e94a',1,'MultipleLinearRegression']]],
+  ['dependentvariablename_6',['DependentVariableName',['../classMultipleLinearRegression.html#a61f13d1be3034e240a01c4134ffd23bc',1,'MultipleLinearRegression']]],
+  ['detectoutliers_7',['DetectOutliers',['../classElemental__Profile__Set.html#ac38b2db14f971d9d79bb0c013e642b6d',1,'Elemental_Profile_Set']]],
+  ['dfa_5feigvector_8',['DFA_eigvector',['../classSourceSinkData.html#af95e3059b73155e8cad00eba83b73b4e',1,'SourceSinkData']]],
+  ['dfa_5fp_5fvalue_9',['DFA_P_Value',['../classSourceSinkData.html#acb96898e50a416a7701eaae0c1a22b1e',1,'SourceSinkData']]],
+  ['dfa_5fprojected_10',['dfa_projected',['../classSourceSinkData.html#a3731a90a3398d5b2655357e3c788c366',1,'SourceSinkData::DFA_Projected()'],['../classSourceSinkData.html#a945a5626a315d863a6860b78c390aed1',1,'SourceSinkData::DFA_Projected(const string &amp;source1, SourceSinkData *original)'],['../classSourceSinkData.html#a74958b68b0d0b7dad7136c4d9345fa9e',1,'SourceSinkData::DFA_Projected(const string &amp;source1, const string &amp;source2)']]],
+  ['dfa_5fweight_5fvector_11',['DFA_weight_vector',['../classSourceSinkData.html#a408995e89dd5306cdb34891dea8b5b20',1,'SourceSinkData']]],
+  ['dfatransformed_12',['DFATransformed',['../classSourceSinkData.html#adb361d971f26317cb7a9df2436c85c4c',1,'SourceSinkData']]],
+  ['dialogchooseexcelsheets_13',['DialogChooseExcelSheets',['../classDialogChooseExcelSheets.html#aaf4b2fd0ba86aa64553e4d150db6b70e',1,'DialogChooseExcelSheets']]],
+  ['differentiationpower_14',['differentiationpower',['../classSourceSinkData.html#a9a30d061ffe488ba0c4b617ac8184ef9',1,'SourceSinkData::DifferentiationPower(bool use_log, bool include_target)'],['../classSourceSinkData.html#a424843f8e0b3b303b201bd6995240197',1,'SourceSinkData::DifferentiationPower(const string &amp;source1, const string &amp;source2, bool use_log)']]],
+  ['differentiationpower_5fp_5fvalue_15',['DifferentiationPower_P_value',['../classSourceSinkData.html#ad3fae8accdc18b5f7f673460f9513622',1,'SourceSinkData']]],
+  ['differentiationpower_5fpercentage_16',['differentiationpower_percentage',['../classSourceSinkData.html#a224aa0bcecbe077d041e54ce84437b10',1,'SourceSinkData::DifferentiationPower_Percentage(bool include_target)'],['../classSourceSinkData.html#afd001b852df4d2164085ec05733ad19c',1,'SourceSinkData::DifferentiationPower_Percentage(const string &amp;source1, const string &amp;source2)']]],
+  ['discriminantfunctionanalysis_17',['discriminantfunctionanalysis',['../classSourceSinkData.html#a86c761dcdfb70f7c4b0403277039f3f4',1,'SourceSinkData::DiscriminantFunctionAnalysis()'],['../classSourceSinkData.html#aa597a9035299622727eda06017cdb101',1,'SourceSinkData::DiscriminantFunctionAnalysis(const string &amp;source1, const string &amp;source2)'],['../classSourceSinkData.html#adaae145db53aeb55fb69dae8de835128',1,'SourceSinkData::DiscriminantFunctionAnalysis(const string &amp;source1)']]],
+  ['distribution_18',['distribution',['../classDistribution.html#ada837c9a1da728290d6bbea0bb6b266f',1,'Distribution::Distribution()'],['../classDistribution.html#a388dee988dc700f4f3efed05f60be714',1,'Distribution::Distribution(const Distribution &amp;dist)']]],
+  ['drand48_19',['drand48',['../drand_8h.html#a0556ac4bd80375e8a98d85ae0f1b4486',1,'drand.h']]]
+];

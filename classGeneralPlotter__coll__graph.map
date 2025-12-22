@@ -1,0 +1,11 @@
+<map id="GeneralPlotter" name="GeneralPlotter">
+<area shape="rect" id="Node000001" title=" " alt="" coords="8,404,197,909"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,261,104,327"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,340,72,404,67,404,58,341"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="128,261,285,327"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="200,328,182,389,177,388,195,327"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="146,133,267,199"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="209,213,209,261,204,261,204,213"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="195,5,218,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="209,71,209,117,204,117,204,71"/>
+</map>
