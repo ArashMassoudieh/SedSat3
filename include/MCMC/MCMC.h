@@ -1,4 +1,8 @@
+#ifndef CMCMCCLASS
+#define CMCMCCLASS
+
 #pragma once
+
 #include <vector>
 #include "math.h"
 #include <iostream>
@@ -12,130 +16,859 @@
 
 class ProgressWindow;
 
-//using namespace std;
-
-/*struct Param
-{
-	int param_ID;
-	int type; // 0: normal, 1: lognormal, 2: uniform
-	double low, high;
-	bool loged;
-	double mean, std;
-};*/
-
+/**
+ * @struct _MCMC_file_names
+ * @brief File paths for MCMC input/output operations
+ *
+ * Contains paths for saving MCMC results and diagnostics.
+ */
 struct _MCMC_file_names
 {
-    string outputpath;
-    string outputfilename;
+    string outputpath;       ///< Directory path for output files
+    string outputfilename;   ///< Base filename for MCMC results (without extension)
 };
 
-
+/**
+ * @struct _MCMC_settings
+ * @brief Configuration parameters for Markov Chain Monte Carlo sampling
+ *
+ * Contains all tuning parameters and settings that control MCMC algorithm behavior,
+ * including chain length, burn-in, proposal distribution tuning, and parallelization.
+ */
 struct _MCMC_settings
 {
+    /**
+     * @brief Total number of MCMC samples to generate per chain
+     *
+     * The total chain length including burn-in. Typical values: 10,000-100,000+
+     * depending on parameter dimensionality and convergence speed.
+     */
     unsigned int total_number_of_samples;
+
+    /**
+     * @brief Number of parallel MCMC chains to run
+     *
+     * Running multiple chains allows:
+     * - Convergence diagnostics (Gelman-Rubin statistic)
+     * - Detection of multimodal posteriors
+     * - Parallel computation speedup
+     *
+     * Typical value: 3-8 chains
+     */
     unsigned int number_of_chains;
+
+    /**
+     * @brief Number of initial samples to discard as burn-in
+     *
+     * Initial samples before the chain reaches the stationary distribution
+     * are discarded. Typical: 10-50% of total_number_of_samples.
+     *
+     * @note Burn-in samples are not included in posterior statistics
+     */
     unsigned int burnout_samples;
+
+    /**
+     * @brief Initial perturbation factor for proposal distribution
+     *
+     * Controls the size of initial random perturbations when starting chains.
+     * Larger values explore more broadly initially.
+     * Default: 1.0
+     */
     double ini_purt_fact = 1;
+
+    /**
+     * @brief Perturbation factor for proposal distribution during sampling
+     *
+     * Controls the standard deviation of proposal distribution as fraction of
+     * parameter range. Smaller values = smaller steps = higher acceptance rate
+     * but slower mixing.
+     *
+     * Typical: 0.01-0.1
+     * Default: 0.05 (5% of parameter range)
+     */
     double purturbation_factor = 0.05;
+
+    /**
+     * @brief Number of model parameters to estimate
+     *
+     * Dimensionality of the parameter space. For sediment fingerprinting,
+     * this typically equals the number of sources being apportioned.
+     */
     unsigned int number_of_parameters;
-    //int nActParams;
-    //int numBTCs;
-    //int nsamples;
-    //int n_ts;
-    int save_interval=1;
+
+    /**
+     * @brief Interval for saving MCMC samples to output
+     *
+     * Save every nth sample to reduce file size and memory usage.
+     * save_interval=1 saves every sample, save_interval=10 saves every 10th.
+     *
+     * Default: 1 (save all samples)
+     */
+    int save_interval = 1;
+
+    /**
+     * @brief Filename to continue a previous MCMC run
+     *
+     * If continue_mcmc is true, this file contains the chain state to resume from.
+     * Useful for extending chains that haven't converged or adding more samples.
+     */
     string continue_filename;
-    //bool mixederror;
+
+    /**
+     * @brief Skip initial random perturbation of starting values
+     *
+     * If true, chains start exactly at provided initial values without random jitter.
+     * If false, initial values are randomly perturbed within parameter ranges.
+     *
+     * Default: false (apply initial perturbation)
+     */
     bool noinipurt;
+
+    /**
+     * @brief Use sensitivity-based adaptive proposal distribution
+     *
+     * If true, proposal variance is adapted based on parameter sensitivity,
+     * allowing larger steps for less sensitive parameters.
+     *
+     * Default: false
+     */
     bool sensbasedpurt;
+
+    /**
+     * @brief Perform global sensitivity analysis during MCMC
+     *
+     * If true, calculates parameter sensitivity at sampled points to assess
+     * which parameters most influence model predictions.
+     *
+     * Default: false (sensitivity analysis disabled)
+     */
     bool global_sensitivity;
+
+    /**
+     * @brief Continue from a previous MCMC run
+     *
+     * If true, resume chains from state saved in continue_filename.
+     * Allows extending MCMC runs without starting over.
+     *
+     * Default: false
+     */
     bool continue_mcmc = false;
+
+    /**
+     * @brief Number of posterior predictive realizations to generate
+     *
+     * After MCMC completes, this many realizations of model predictions
+     * are generated by sampling from the posterior parameter distribution.
+     * Used for uncertainty propagation and prediction intervals.
+     *
+     * Typical: 1000-10,000
+     */
     unsigned int number_of_post_estimate_realizations;
+
+    /**
+     * @brief Finite difference step size for sensitivity analysis
+     *
+     * Fractional change in parameter value for numerical derivative calculation.
+     * Typical: 0.001-0.01 (0.1%-1% of parameter value)
+     */
     double dp_sens;
+
+    /**
+     * @brief Write out posterior predictive realizations with observation noise
+     *
+     * If true, saves model predictions including simulated measurement errors.
+     * Useful for assessing prediction uncertainty including observational uncertainty.
+     *
+     * Default: false
+     */
     bool noise_realization_writeout;
+
+    /**
+     * @brief Number of parallel threads for MCMC computation
+     *
+     * Chains can be run in parallel across multiple threads for speedup.
+     * Should not exceed number of physical CPU cores.
+     *
+     * Default: 8
+     */
     unsigned int numberOfThreads = 8;
+
+    /**
+     * @brief Target acceptance rate for Metropolis-Hastings algorithm
+     *
+     * Optimal acceptance rate for efficient MCMC sampling. Proposal distribution
+     * variance is adaptively tuned to achieve this rate.
+     *
+     * Theoretical optimal: ~0.234 for high dimensions, ~0.44 for 1-D
+     * Practical default: 0.15 (15%)
+     */
     double acceptance_rate = 0.15;
+
+    /**
+     * @brief Scale factor for adaptive perturbation adjustment
+     *
+     * When acceptance rate deviates from target, perturbation factor is
+     * multiplied/divided by this value to bring acceptance rate closer to target.
+     *
+     * Default: 0.75 (aggressive tuning)
+     */
     double purt_change_scale = 0.75;
-    bool dissolve_chains=false;
+
+    /**
+     * @brief Merge all chains into single posterior sample
+     *
+     * If true, combines samples from all chains after discarding burn-in.
+     * If false, keeps chains separate for convergence diagnostics.
+     *
+     * Default: false
+     */
+    bool dissolve_chains = false;
 };
 
+/**
+ * @struct int_value_pair
+ * @brief Utility structure pairing an integer counter with a double value
+ *
+ * Used internally for tracking extrema (min/max) values across chains
+ * along with their chain index.
+ */
 struct int_value_pair
 {
-    int counter;
-    double value;
+    int counter;    ///< Chain or sample index
+    double value;   ///< Associated value (likelihood, parameter, etc.)
 };
 
-
+/**
+ * @class CMCMC
+ * @brief Markov Chain Monte Carlo sampler for Bayesian parameter estimation
+ *
+ * The CMCMC class implements a sophisticated Metropolis-Hastings MCMC algorithm
+ * with advanced features for Bayesian inference in sediment source fingerprinting.
+ *
+ * ## Algorithm Overview
+ *
+ * MCMC generates samples from the posterior distribution p(θ|data) ∝ p(data|θ) × p(θ)
+ * using a random walk with accept/reject steps:
+ *
+ * 1. **Propose**: Generate candidate θ* from proposal distribution q(θ*|θ_current)
+ * 2. **Evaluate**: Calculate posterior ratio R = p(θ*|data) / p(θ_current|data)
+ * 3. **Accept/Reject**: Accept θ* with probability min(1, R), else keep θ_current
+ * 4. **Repeat**: Continue until desired number of samples obtained
+ *
+ * ## Key Features
+ *
+ * - **Multiple parallel chains** for convergence diagnostics
+ * - **Adaptive proposal tuning** to achieve target acceptance rate
+ * - **Sensitivity-based proposals** for efficient exploration
+ * - **Posterior predictive sampling** for uncertainty quantification
+ * - **Progress tracking** with GUI integration
+ * - **Checkpoint/resume capability** for long runs
+ *
+ * ## Usage in SedSat3
+ *
+ * MCMC provides fully Bayesian estimates of source contributions with uncertainty:
+ * - Mean contributions from posterior means
+ * - Credible intervals (e.g., 95% intervals) from percentiles
+ * - Correlation between source contributions
+ * - Posterior predictive distributions for tracer concentrations
+ *
+ * ## Mathematical Details
+ *
+ * **Log-posterior calculation**:
+ * @code
+ * log p(θ|data) = log p(data|θ) + log p(θ) + constant
+ *               = Σ log N(y_i | model(θ)_i, σ_i²) + Σ log p(θ_j)
+ * @endcode
+ *
+ * Where:
+ * - y_i are observed tracer concentrations
+ * - model(θ)_i are predicted concentrations from mixing model
+ * - σ_i are measurement uncertainties
+ * - p(θ_j) are parameter prior distributions
+ *
+ * @tparam T Model class type (e.g., SourceSinkData) that provides:
+ *           - Parameter evaluation interface
+ *           - Likelihood calculation
+ *           - Model predictions
+ *
+ * @note Thread-safe: Multiple chains can run in parallel
+ * @warning Requires careful tuning of proposal distribution for efficiency
+ *
+ * @see Parameter
+ * @see Observation
+ * @see SourceSinkData
+ *
+ * Example usage:
+ * @code
+ * // Create MCMC sampler for source apportionment
+ * CMCMC<SourceSinkData> mcmc(&sourceData);
+ *
+ * // Configure settings
+ * mcmc.MCMC_Settings.total_number_of_samples = 50000;
+ * mcmc.MCMC_Settings.number_of_chains = 4;
+ * mcmc.MCMC_Settings.burnout_samples = 10000;
+ * mcmc.MCMC_Settings.acceptance_rate = 0.234;
+ *
+ * // Set parameters and observations
+ * mcmc.parameters = &sourceParameters;
+ * mcmc.observations = &tracerObservations;
+ *
+ * // Run MCMC
+ * mcmc.Perform();
+ *
+ * // Extract results
+ * mcmc.writeoutput("mcmc_results.txt");
+ * mcmc.get_outputpercentiles(results);  // Get credible intervals
+ * @endcode
+ */
 template<class T>
 class CMCMC
 {
 public:
-
+    /**
+     * @brief Pointer to the model object being calibrated
+     *
+     * The model provides likelihood evaluation and predictions.
+     * For SedSat3, this is typically a SourceSinkData object.
+     */
     T* Model;
+
+    /**
+     * @brief Output model state after MCMC completion
+     *
+     * Contains model configured with best-fit or posterior mean parameters.
+     */
     T Model_out;
-	CMCMC(void);
-	CMCMC(int nn, int nn_chains);
+
+    /**
+     * @brief Default constructor
+     *
+     * Creates an uninitialized MCMC object. Must call other initialization
+     * methods before running.
+     */
+    CMCMC(void);
+
+    /**
+     * @brief Constructor with chain configuration
+     * @param nn Number of parameters
+     * @param nn_chains Number of parallel chains
+     *
+     * Initializes MCMC with specified dimensions and chain count.
+     */
+    CMCMC(int nn, int nn_chains);
+
+    /**
+     * @brief Constructor with model pointer
+     * @param system Pointer to model object to be calibrated
+     *
+     * Preferred constructor that links MCMC to a specific model instance.
+     */
     CMCMC(T *system);
+
+    /**
+     * @brief Set MCMC properties from string key-value pairs
+     * @param varname Property name (e.g., "number_of_samples", "acceptance_rate")
+     * @param value Property value as string
+     * @return true if property was recognized and set successfully
+     *
+     * Allows configuration from text files or user input.
+     */
     bool SetProperty(const string &varname, const string &value);
-	~CMCMC(void);
+
+    /**
+     * @brief Destructor
+     *
+     * Cleans up allocated memory and closes output files.
+     */
+    ~CMCMC(void);
+
+    /**
+     * @brief MCMC algorithm configuration settings
+     *
+     * All tuning parameters and flags controlling MCMC behavior.
+     * Modify before calling Perform() or initialize().
+     */
     _MCMC_settings MCMC_Settings;
-    //vector<Param> MCMCParam;
-	vector<vector<double>> Params;
-	vector<double> pertcoeff;
-	vector<double> logp;
-	vector<double> logp1;
-	vector<double> u;
-    //double posterior(vector<double> par, int ID = -1);
-    void initialize(CMBTimeSeriesSet *results,bool random=false);
+
+    /**
+     * @brief Parameter values for all samples and chains
+     *
+     * Storage structure: Params[chain_index][parameter_index]
+     * Dimensions: [number_of_chains][number_of_parameters]
+     */
+    vector<vector<double>> Params;
+
+    /**
+     * @brief Perturbation coefficients for each parameter
+     *
+     * Adaptive proposal standard deviations, one per parameter.
+     * Updated during sampling to achieve target acceptance rate.
+     */
+    vector<double> pertcoeff;
+
+    /**
+     * @brief Log-posterior values for current state of each chain
+     *
+     * Dimensions: [number_of_chains]
+     * Updated after each MCMC step.
+     */
+    vector<double> logp;
+
+    /**
+     * @brief Log-posterior values for proposed states
+     *
+     * Temporary storage for evaluating proposed parameter values.
+     * Dimensions: [number_of_chains]
+     */
+    vector<double> logp1;
+
+    /**
+     * @brief Uniform random values for Metropolis-Hastings accept/reject
+     *
+     * Pre-generated uniform random numbers U(0,1) for comparing with
+     * acceptance probability.
+     * Dimensions: [number_of_chains]
+     */
+    vector<double> u;
+
+    /**
+     * @brief Initialize MCMC chains with starting parameter values
+     * @param results Pointer to results structure to store output (optional)
+     * @param random If true, randomize initial values within parameter ranges
+     *
+     * Sets up chains at initial parameter values. If random=true and noinipurt=false,
+     * adds random perturbations to explore different starting regions.
+     *
+     * @pre parameters and observations must be set
+     * @post Chains are positioned at starting values
+     */
+    void initialize(CMBTimeSeriesSet *results, bool random=false);
+
+    /**
+     * @brief Initialize all chains with specific parameter values
+     * @param par Vector of parameter values [p1, p2, ..., pn]
+     *
+     * All chains start at the same parameter values (may be perturbed if noinipurt=false).
+     */
     void initialize(vector<double> par);
+
+    /**
+     * @brief Perform single MCMC step for one chain
+     * @param k Sample iteration number
+     * @param chain_counter Index of chain to advance
+     * @return true if proposed state was accepted, false if rejected
+     *
+     * Executes one Metropolis-Hastings update:
+     * 1. Propose new parameters
+     * 2. Calculate log-posterior
+     * 3. Accept/reject based on Metropolis ratio
+     * 4. Update acceptance statistics
+     */
     bool step(int k, int chain_counter);
+
+    /**
+     * @brief Perform multiple MCMC steps with progress tracking and output
+     * @param k Starting sample number
+     * @param nsamps Number of samples to generate
+     * @param filename Output file for saving samples
+     * @param results Pointer to results structure (optional)
+     * @param _rtw Pointer to progress window for GUI updates (optional)
+     * @return true if completed successfully
+     *
+     * Runs the main MCMC loop with:
+     * - Periodic output saving
+     * - Adaptive proposal tuning
+     * - Progress bar updates
+     * - Convergence monitoring
+     *
+     * @see ProgressWindow
+     */
     bool step(int k, int nsamps, string filename, CMBTimeSeriesSet *results = nullptr, ProgressWindow* _rtw = 0);
-	vector<double> purturb(int k);
+
+    /**
+     * @brief Generate proposed parameter values by perturbing current state
+     * @param k Chain index to perturb
+     * @return Vector of proposed parameter values
+     *
+     * Proposal distribution: θ* ~ N(θ_current, diag(pertcoeff²))
+     * Respects parameter bounds by reflecting or rejecting out-of-bounds proposals.
+     */
+    vector<double> purturb(int k);
+
+    /**
+     * @brief Temporary storage for predicted model outputs
+     *
+     * Used during likelihood evaluation to store model predictions
+     * for each chain without modifying the main model object.
+     */
     vector<CVector> temp_predicted;
+
+    /**
+     * @brief Model predictions as time series set
+     *
+     * Contains predicted tracer concentrations for plotting and comparison
+     * with observations.
+     */
     CMBTimeSeriesSet predicted;
+
+    /**
+     * @brief Copies of model object for parallel chain evaluation
+     *
+     * Each chain gets its own model copy to allow thread-safe parallel execution.
+     * Dimensions: [number_of_chains]
+     */
     vector<T> CopiedModels;
+
+    /**
+     * @brief Write MCMC results to output file
+     * @param filename Path to output file
+     *
+     * Saves:
+     * - Parameter samples (after burn-in)
+     * - Acceptance rates
+     * - Posterior statistics (mean, std dev, percentiles)
+     * - Convergence diagnostics
+     *
+     * Format is typically tab-delimited text for easy import into analysis software.
+     */
     void writeoutput(string filename);
-	vector<int> params;
+
+    /**
+     * @brief Parameter indices for model evaluation
+     *
+     * Maps MCMC parameter space to model parameter space.
+     * May be a subset if some parameters are fixed.
+     */
+    vector<int> params;
+
+    /**
+     * @brief Measured data (observations) for likelihood calculation
+     *
+     * Contains observed tracer concentrations and their uncertainties.
+     * Used to calculate likelihood: p(data|θ).
+     */
     TimeSeriesSet<double> MData;
+
+    /**
+     * @brief File paths for MCMC input/output
+     *
+     * Configuration structure containing output directory and filenames.
+     */
     _MCMC_file_names FileInformation;
+
+    /**
+     * @brief Calculate log-posterior probability for given parameters
+     * @param par Parameter vector [θ1, θ2, ..., θn]
+     * @param chain_counter Chain index for thread-safe model evaluation
+     * @return ln(p(θ|data)) = ln(p(data|θ)) + ln(p(θ))
+     *
+     * Computes:
+     * 1. **Log-likelihood**: Σ ln N(y_observed | y_predicted(θ), σ²)
+     * 2. **Log-prior**: Σ ln p(θ_i) from Parameter::CalcLogPriorProbability()
+     * 3. **Log-posterior**: Sum of above
+     *
+     * @note Uses log-space to prevent numerical underflow
+     * @see Parameter::CalcLogPriorProbability()
+     */
     double posterior(vector<double> par, int chain_counter);
+
+    /**
+     * @brief Evaluate model with given parameters
+     * @param Model1 Pointer to model object to evaluate
+     * @param par Parameter values to use
+     *
+     * Sets parameters in model and computes predictions.
+     * Used within posterior() for likelihood calculation.
+     */
     void model(T *Model1 , vector<double> par);
-    int getparamno(int i,int ts)const;
+
+    /**
+     * @brief Get parameter index for a specific variable and time series
+     * @param i Variable index
+     * @param ts Time series index
+     * @return Parameter index in MCMC parameter vector
+     */
+    int getparamno(int i, int ts) const;
+
+    /**
+     * @brief Get active parameter number (legacy, may be unused)
+     * @param i Parameter index
+     * @return Active parameter number
+     */
     int get_act_paramno(int i);
+
+    /**
+     * @brief Get time series index for parameter (legacy, may be unused)
+     * @param i Parameter index
+     * @return Time series index
+     */
     int get_time_series(int i);
-	vector<bool> apply_to_all;
+
+    /**
+     * @brief Flags indicating if parameter applies to all entities
+     *
+     * Used for shared parameters across multiple sources or observations.
+     */
+    vector<bool> apply_to_all;
+
+    /**
+     * @brief Pointer to vector of Parameter objects
+     *
+     * Contains prior distributions, ranges, and names for all parameters.
+     * Must be set before running MCMC.
+     */
     vector<Parameter> *parameters = nullptr;
+
+    /**
+     * @brief Pointer to vector of Observation objects
+     *
+     * Contains observed tracer concentrations and measurement uncertainties.
+     * Must be set before running MCMC.
+     */
     vector<Observation> *observations = nullptr;
+
+    /**
+     * @brief Get pointer to specific parameter
+     * @param i Parameter index
+     * @return Pointer to Parameter object
+     */
     Parameter* parameter(int i);
+
+    /**
+     * @brief Get pointer to specific observation
+     * @param i Observation index
+     * @return Pointer to Observation object
+     */
     Observation *observation(int i);
+
+    /**
+     * @brief Calculate sensitivity of model output to parameters
+     * @param d Finite difference step size (fractional)
+     * @param par Current parameter values
+     * @return Vector of sensitivities dOutput/dθ for each parameter
+     *
+     * Computes numerical derivatives using forward finite differences:
+     * S_i = (model(θ + δθ_i) - model(θ)) / δθ_i
+     *
+     * Used for sensitivity-based proposal adaptation.
+     */
     CVector sensitivity(double d, vector<double> par);
+
+    /**
+     * @brief Calculate log-space sensitivity (for lognormal parameters)
+     * @param d Finite difference step size (fractional)
+     * @param par Current parameter values in log-space
+     * @return Vector of log-space sensitivities
+     */
     CVector sensitivity_ln(double d, vector<double> par);
+
 #ifdef Q_GUI_SUPPORT
-    ProgressWindow *rtw=nullptr;
+    /**
+     * @brief Pointer to progress window for GUI updates
+     *
+     * If not nullptr, MCMC will update progress bar and display current
+     * acceptance rate, parameter values, etc.
+     */
+    ProgressWindow *rtw = nullptr;
 #endif // QT_version
+
+    /**
+     * @brief Calculate lumped sensitivity matrix
+     * @param d Finite difference step size
+     * @param par Current parameter values
+     * @return Matrix of sensitivities [outputs × parameters]
+     *
+     * Computes full Jacobian matrix of model outputs with respect to parameters.
+     * Used for global sensitivity analysis and identifiability assessment.
+     */
     CMatrix sensitivity_mat_lumped(double d, vector<double> par);
+
+    /**
+     * @brief Generate histogram of prior distributions
+     * @param n_bins Number of bins for histogram
+     * @return TimeSeriesSet containing prior PDFs for each parameter
+     *
+     * Creates visual representation of priors for plotting and comparison
+     * with posteriors.
+     */
     TimeSeriesSet<double> prior_distribution(int n_bins);
 
+    /**
+     * @brief Read MCMC state from file to continue previous run
+     * @param filename Path to file containing saved MCMC state
+     * @return Number of samples read, or negative value on error
+     *
+     * Restores:
+     * - Current parameter values for each chain
+     * - Perturbation coefficients
+     * - Acceptance statistics
+     *
+     * Allows resuming long MCMC runs without starting over.
+     */
     int readfromfile(string filename);
+
+    /**
+     * @brief Evaluate model for given parameters and return predictions
+     * @param par Parameter values
+     * @return TimeSeriesSet of model predictions
+     *
+     * Wrapper for model evaluation that returns predictions in convenient format.
+     */
     TimeSeriesSet<double> model(vector<double> par);
+
+    /**
+     * @brief Posterior predictive samples for observations
+     *
+     * Model predictions at sampled parameter values.
+     * Structure: BTCout_obs[observation][realization]
+     */
     vector<vector<TimeSeriesSet<double>>> BTCout_obs;
+
+    /**
+     * @brief Posterior predictive samples with simulated measurement noise
+     *
+     * As BTCout_obs but with added observation errors sampled from measurement
+     * uncertainty distributions.
+     */
     vector<vector<TimeSeriesSet<double>>> BTCout_obs_noise;
+
+    /**
+     * @brief Percentiles of posterior predictive distribution
+     *
+     * Credible intervals for model predictions (e.g., 2.5%, 50%, 97.5% percentiles).
+     */
     vector<vector<TimeSeriesSet<double>>> BTCout_obs_prcntle;
+
+    /**
+     * @brief Percentiles of posterior predictive distribution with noise
+     *
+     * Credible intervals including measurement uncertainty.
+     */
     vector<vector<TimeSeriesSet<double>>> BTCout_obs_prcntle_noise;
-	vector<CMatrix> global_sens_lumped;
+
+    /**
+     * @brief Global sensitivity analysis results (lumped)
+     *
+     * Sensitivity matrices calculated across posterior samples.
+     */
+    vector<CMatrix> global_sens_lumped;
+
+    /**
+     * @brief List of all parameter samples from MCMC
+     *
+     * Complete chain history after burn-in for posterior analysis.
+     */
     TimeSeriesSet<double> paramsList;
+
+    /**
+     * @brief Parameter samples for posterior predictive realizations
+     *
+     * Subset of posterior samples used to generate model predictions.
+     */
     TimeSeriesSet<double> realized_paramsList;
+
+    /**
+     * @brief Generate posterior predictive realizations
+     * @param MCMCout TimeSeriesSet containing MCMC samples
+     *
+     * Samples parameters from posterior and evaluates model to create
+     * posterior predictive distribution for uncertainty quantification.
+     *
+     * Number of realizations set by MCMC_Settings.number_of_post_estimate_realizations.
+     */
     void ProduceRealizations(TimeSeriesSet<double> &MCMCout);
+
+    /**
+     * @brief Calculate percentiles of model outputs from MCMC samples
+     * @param MCMCout TimeSeriesSet containing MCMC samples
+     *
+     * Computes credible intervals (percentiles specified in calc_output_percentiles)
+     * for all model outputs, providing uncertainty bounds on predictions.
+     */
     void get_outputpercentiles(TimeSeriesSet<double> &MCMCout);
 
-	vector<double> calc_output_percentiles;
-    void SetRunTimeWindow(ProgressWindow *_rtw);
-	double accepted_count=0, total_count=0;
-    string last_error;
-    void Perform();
-private:
-    int_value_pair Min(const vector<double> &vec, int current_counter, int n_chains);
-    int_value_pair Max(const vector<double> &vec, int current_counter, int n_chains);
+    /**
+     * @brief Percentiles to calculate for output distributions
+     *
+     * Vector of percentile values (0-1 scale) to compute.
+     * Typical: {0.025, 0.16, 0.5, 0.84, 0.975} for 95% and 68% intervals.
+     */
+    vector<double> calc_output_percentiles;
 
+    /**
+     * @brief Set progress window for GUI updates
+     * @param _rtw Pointer to ProgressWindow object
+     *
+     * Links MCMC to a progress dialog for real-time status updates.
+     */
+    void SetRunTimeWindow(ProgressWindow *_rtw);
+
+    /**
+     * @brief Count of accepted proposals
+     *
+     * Running total across all chains and samples.
+     * Used to calculate overall acceptance rate.
+     */
+    double accepted_count = 0;
+
+    /**
+     * @brief Count of total proposals (accepted + rejected)
+     *
+     * Running total of all MCMC steps attempted.
+     */
+    double total_count = 0;
+
+    /**
+     * @brief Last error message from MCMC execution
+     *
+     * If MCMC fails or encounters issues, error description is stored here.
+     */
+    string last_error;
+
+    /**
+     * @brief Main entry point to run complete MCMC analysis
+     *
+     * Executes full MCMC workflow:
+     * 1. Initialize chains
+     * 2. Run burn-in samples
+     * 3. Run production samples
+     * 4. Calculate statistics and diagnostics
+     * 5. Generate posterior predictive distributions
+     * 6. Save results to files
+     *
+     * @pre parameters and observations must be set
+     * @pre MCMC_Settings must be configured
+     * @post Results written to output files
+     * @post paramsList contains posterior samples
+     *
+     * @see MCMC_Settings
+     */
+    void Perform();
+
+private:
+    /**
+     * @brief Find minimum value and its chain index
+     * @param vec Vector of values (one per chain)
+     * @param current_counter Current sample number
+     * @param n_chains Number of chains
+     * @return Pair containing chain index and minimum value
+     *
+     * Utility for tracking best (highest likelihood) chain.
+     */
+    int_value_pair Min(const vector<double> &vec, int current_counter, int n_chains);
+
+    /**
+     * @brief Find maximum value and its chain index
+     * @param vec Vector of values (one per chain)
+     * @param current_counter Current sample number
+     * @param n_chains Number of chains
+     * @return Pair containing chain index and maximum value
+     *
+     * Utility for tracking worst (lowest likelihood) chain.
+     */
+    int_value_pair Max(const vector<double> &vec, int current_counter, int n_chains);
 };
 
 #include "MCMC.hpp"
+
+#endif // MCMC_H
