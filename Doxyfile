@@ -7,7 +7,7 @@
 DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = "SedSat3"
-PROJECT_NUMBER         = "1.1.3"
+PROJECT_NUMBER         = "1.1.6"
 PROJECT_BRIEF          = "Sediment Source Apportionment Tool - Advanced statistical methods for environmental pollution research"
 PROJECT_LOGO           = 
 

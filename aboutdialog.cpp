@@ -100,7 +100,7 @@ QWidget* AboutDialog::createInfoSection()
     QLabel* authorsText = new QLabel(
         tr("Arash Massoudieh<br>"
             "Allen Gellis<br>"
-            "Cara Peterman"),
+            "Cara Peterman Phipps"),
         infoWidget
     );
     authorsText->setIndent(20);
