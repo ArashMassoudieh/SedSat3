@@ -111,9 +111,11 @@ After installation, you can start SedSAT3 in several ways:
 
 ## Quickstart Example
 
-1. Prepare your source and target sediment data in Excel format, following the standard tab layout (see sample files in the `examples/` folder).  
+A sample dataset, `examples/SampleData.xlsx`, is provided to help you get started. It follows the standard tab layout: a `Mixture` sheet containing the target (receptor) samples and one sheet per source (`Forest`, `Crop`, `Pasture`, `Bank`). Each sheet has a `sample` column, particle-size (`D50`) and organic-carbon (`TOC`) columns used for size and organic-matter corrections, and one column per elemental or isotopic tracer.
+
+1. Prepare your source and target sediment data in Excel format, following the standard tab layout (see `examples/SampleData.xlsx`).  
 2. Launch SedSAT3 and create a new project.  
-3. Import your Excel file through the GUI.  
+3. Import the Excel file through the GUI.  
 4. Apply preprocessing (e.g., tracer selection, corrections).  
 5. Configure an apportionment method (e.g., MCMC) and run the analysis.  
 6. View outputs such as posterior distributions, source contribution estimates, and diagnostic plots.  
