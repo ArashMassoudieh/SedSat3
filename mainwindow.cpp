@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->setupUi(this);
 
     // Set window icon
-    QIcon mainIcon(qApp->applicationDirPath() + "/../../resources/Icons/CMBSource_Icon.png");
+    QIcon mainIcon(resourcesPath() + "Icons/CMBSource_Icon.png");
     setWindowIcon(mainIcon);
 
     // Initialize conductor
@@ -142,7 +142,7 @@ void MainWindow::setupConnections()
 void MainWindow::setupToolsView()
 {
     // Load tools configuration from JSON
-    QString toolsPath = qApp->applicationDirPath() + "/../../resources/tools.json";
+    QString toolsPath = resourcesPath() + + "/tools.json";
     qDebug() << "Loading tools from:" << toolsPath;
 
     QJsonDocument tools = loadJson(toolsPath);
@@ -153,7 +153,7 @@ void MainWindow::setupToolsView()
     ui->treeViewtools->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // Load forms structure
-    QString formsPath = qApp->applicationDirPath() + "/../../resources/forms_structures.json";
+    QString formsPath = resourcesPath() + "/forms_structures.json";
     formsstructure = loadJson(formsPath);
 
     // Configure tree view settings
@@ -189,12 +189,12 @@ void MainWindow::setupResultsView()
 void MainWindow::setupToolBar()
 {
     // Setup table view button
-    QIcon iconTable(qApp->applicationDirPath() + "/../../resources/Icons/table.png");
+    QIcon iconTable(resourcesPath()+"/Icons/table.png");
     ui->ShowTabular->setIcon(iconTable);
     ui->ShowTabular->setEnabled(false);
 
     // Setup zoom button
-    QIcon iconZoom(qApp->applicationDirPath() + "/../../resources/Icons/Zoom_Extends.png");
+    QIcon iconZoom(resourcesPath()+"/Icons/Zoom_Extends.png");
     ui->btnZoom->setIcon(iconZoom);
     ui->btnZoom->setEnabled(false);
 
@@ -1563,7 +1563,7 @@ void MainWindow::addToolBarAction(const QString& text,
 
 void MainWindow::Populate_General_ToolBar()
 {
-    QString iconPath = qApp->applicationDirPath() + "/../../resources/Icons/";
+    QString iconPath = resourcesPath()+"/Icons/";
 
     // Import Excel
     addToolBarAction(
@@ -1652,4 +1652,16 @@ void MainWindow::on_Options_triggered()
     OptionsDialog dlg(Data()->GetOptions());
     dlg.exec();
 
+}
+
+QString MainWindow::resourcesPath() const
+{
+#ifdef Q_OS_MAC
+    // Inside the .app bundle, resources live at Contents/Resources/
+    // applicationDirPath() returns .../SedSat3.app/Contents/MacOS, so go up one level
+    return qApp->applicationDirPath() + "/../Resources";
+#else
+    // Linux/Windows: resources sit next to the project root, two levels up from build dir
+    return qApp->applicationDirPath() + "/../../resources";
+#endif
 }

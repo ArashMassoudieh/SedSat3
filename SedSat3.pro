@@ -76,6 +76,7 @@ SOURCES += \
 
 HEADERS += \
     GeneralChartPlotter.h \
+    Utilities/Distribution.h \
     Utilities/TimeSeries.h \
     Utilities/TimeSeries.hpp \
     Utilities/TimeSeriesSet.h \
@@ -155,17 +156,58 @@ INCLUDEPATH += \
     thirdparty/qcustomplot6 \
     thirdparty/QXlsx/QXlsx/header
 
-# QXlsx (prebuilt static library)
-INCLUDEPATH += thirdparty/QXlsx/QXlsx/header
-LIBS += $$PWD/thirdparty/QXlsx/libQXlsx.a
 
 
 # Libraries
 unix:!macx {
     LIBS += -larmadillo -llapack -lblas -lgsl -lpthread
+    # QXlsx (prebuilt static library)
+    INCLUDEPATH += thirdparty/QXlsx/QXlsx/header
+    LIBS += $$PWD/thirdparty/QXlsx/libQXlsx.a
+
 }
 macx {
-    LIBS += -larmadillo -llapack -lblas -lgsl -lpthread
+    # Detect Homebrew prefix (Apple Silicon vs Intel)
+    exists(/opt/homebrew/include) {
+        HOMEBREW_PREFIX = /opt/homebrew
+    } else {
+        HOMEBREW_PREFIX = /usr/local
+    }
+
+    INCLUDEPATH += $${HOMEBREW_PREFIX}/include
+    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/libomp/include
+    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/armadillo/include
+    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/gsl/include
+    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/openblas/include
+
+    DEFINES += ARMA_DONT_USE_HDF5
+    DEFINES += ARMA_DONT_USE_SUPERLU
+    DEFINES += ARMA_DONT_USE_ARPACK
+
+    QMAKE_MOC_OPTIONS += -DARMA_DONT_USE_HDF5
+    QMAKE_MOC_OPTIONS += -DARMA_DONT_USE_SUPERLU
+    QMAKE_MOC_OPTIONS += -DARMA_DONT_USE_ARPACK
+
+    LIBS += -L$${HOMEBREW_PREFIX}/lib
+    LIBS += -L$${HOMEBREW_PREFIX}/opt/libomp/lib
+    LIBS += -larmadillo -lgsl -lgslcblas -llapack -lblas -lpthread
+
+    # OpenMP on Apple clang requires explicit flags
+    QMAKE_CXXFLAGS += -Xpreprocessor -fopenmp
+    QMAKE_LFLAGS   += -lomp
+    LIBS += -lomp
+
+    # QXlsx (compiled inline with project)
+    include(thirdparty/QXlsx/QXlsx/QXlsx.pri)
+
+
+    # Copy resources folder into the .app bundle after each build
+    # Lands at SedSat3.app/resources/ to match the existing applicationDirPath() + "/../../resources" code
+    COPY_RESOURCES.commands = $(COPY_DIR) \"$$PWD/resources/\" \"$$OUT_PWD/$${TARGET}.app/Contents/Resources/\"
+        COPY_RESOURCES.depends = FORCE
+        QMAKE_EXTRA_TARGETS += COPY_RESOURCES
+        POST_TARGETDEPS += COPY_RESOURCES
+
 }
 
 # OpenMP

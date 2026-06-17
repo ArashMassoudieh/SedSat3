@@ -122,6 +122,8 @@ private:
      */
     bool ReadExcel(const QString& filename);
 
+    QString resourcesPath() const;
+
     // Model conversion methods
     QStandardItemModel* ToQStandardItemModel(const SourceSinkData* srcsinkdata);
     QStandardItem* ToQStandardItem(const QString& key, const SourceSinkData* srcsinkdata);
