@@ -7,12 +7,12 @@
 # Prerequisites:
 #   - The Release build must already exist at BUILD_DIR/SedSat3.app
 #     (build it in Qt Creator first, or via qmake + make Release)
-#   - Homebrew packages installed: armadillo, gsl, libomp, gcc (for libgfortran/libgcc_s)
+#   - Homebrew packages installed: armadillo, gsl, libomp, gcc (for libgfortran/libgcc_s/libquadmath)
 #
 # What this script does:
 #   1. Validate prerequisites
 #   2. Bundle Qt + Homebrew dependencies via macdeployqt
-#   3. Patch transitive dependencies macdeployqt misses (libgcc_s etc.)
+#   3. Patch transitive dependencies macdeployqt misses (libgcc_s, libquadmath)
 #   4. Verify no unbundled dependencies remain
 #   5. Ad-hoc code-sign the bundle
 #   6. Package as a versioned .dmg
@@ -90,14 +90,14 @@ codesign --remove-signature "$APP_BUNDLE" 2>/dev/null || true
 # ----------------------------
 info "[3/6] Patching transitive dependencies..."
 
-# libgcc_s.1.1.dylib — required by libgfortran (transitively by Armadillo via OpenBLAS)
-# macdeployqt typically misses this one.
-patch_libgcc_s() {
-    local target_lib="libgcc_s.1.1.dylib"
+# Generic patcher: locate a missing library on the system, bundle it,
+# and rewrite all bundled references to use the bundled copy.
+patch_dylib() {
+    local target_lib="$1"
     local dest="${FRAMEWORKS_DIR}/${target_lib}"
 
     if [ -f "$dest" ]; then
-        info "  $target_lib already bundled — skipping copy"
+        info "  $target_lib already bundled — skipping"
         return
     fi
 
@@ -113,20 +113,23 @@ patch_libgcc_s() {
     cp "$src" "$dest"
 
     # Make the library's own install name point to its bundle location
-    install_name_tool -id "@executable_path/../Frameworks/${target_lib}" "$dest"
+    install_name_tool -id "@executable_path/../Frameworks/${target_lib}" "$dest" 2>/dev/null
 
-    # Fix any reference in libgfortran (and other bundled libs) to use the bundled copy
+    # Fix any reference in other bundled libs to use the bundled copy
     for lib in "${FRAMEWORKS_DIR}"/*.dylib; do
         if otool -L "$lib" 2>/dev/null | grep -q "@rpath/${target_lib}"; then
             info "    Rewriting ${target_lib} reference in $(basename "$lib")"
             install_name_tool -change "@rpath/${target_lib}" \
                 "@executable_path/../Frameworks/${target_lib}" \
-                "$lib"
+                "$lib" 2>/dev/null
         fi
     done
 }
 
-patch_libgcc_s
+# Bundle gfortran's transitive dependencies that macdeployqt misses.
+# Add more patch_dylib calls here if new missing libraries appear.
+patch_dylib "libgcc_s.1.1.dylib"
+patch_dylib "libquadmath.0.dylib"
 
 # ----------------------------
 # Step 4: Verify no unbundled dependencies remain
@@ -137,9 +140,10 @@ UNBUNDLED=0
 check_lib() {
     local lib="$1"
     local bad
-    # Anything pointing to @rpath, /opt/homebrew, or /usr/local is unbundled
+    # Real problems: paths to /opt/homebrew, /usr/local, or @rpath references
+    # to plain dylibs (not Qt frameworks, which macdeployqt configures correctly).
     bad=$(otool -L "$lib" 2>/dev/null | tail -n +2 | \
-        grep -E "@rpath|/opt/homebrew|/usr/local" || true)
+        grep -E "/opt/homebrew|/usr/local|@rpath/lib[^/]+\.dylib" || true)
     if [ -n "$bad" ]; then
         warn "Unbundled dependencies in $(basename "$lib"):"
         echo "$bad" | sed 's/^/    /'
@@ -158,7 +162,7 @@ done
 if [ "$UNBUNDLED" -gt 0 ]; then
     warn "$UNBUNDLED libraries have unbundled dependencies."
     warn "The DMG may fail to launch on machines without Homebrew."
-    warn "Continuing anyway — fix manually if testing fails."
+    warn "Add patch_dylib calls in Step 3 for the missing libraries, then re-run."
 else
     info "All dependencies properly bundled."
 fi
@@ -170,13 +174,9 @@ info "[5/6] Ad-hoc signing bundle..."
 
 codesign --force --deep --sign - "$APP_BUNDLE"
 
-if ! codesign --verify --verbose "$APP_BUNDLE" 2>&1 | grep -q "valid on disk"; then
-    # Some macOS versions print "valid on disk", others print nothing on success.
-    # Re-check explicitly.
-    if ! codesign --verify "$APP_BUNDLE"; then
-        error "Code signing verification failed."
-        exit 1
-    fi
+if ! codesign --verify "$APP_BUNDLE" 2>/dev/null; then
+    error "Code signing verification failed."
+    exit 1
 fi
 
 info "Signature verified."
