@@ -1,0 +1,16 @@
+<map id="conductor.h" name="conductor.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="174,5,271,31"/>
+<area shape="rect" id="Node000002" href="$conductor_8cpp.html" title=" " alt="" coords="5,152,117,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="201,42,76,154,72,150,198,38"/>
+<area shape="rect" id="Node000003" href="$mainwindow_8h.html" title=" " alt="" coords="237,79,353,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="246,39,285,77,281,80,243,43"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="245,110,100,154,98,149,244,105"/>
+<area shape="rect" id="Node000004" href="$genericform_8cpp.html" title=" " alt="" coords="141,152,269,177"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="271,115,222,154,218,150,268,110"/>
+<area shape="rect" id="Node000005" href="$indicatesheetsdialog_8cpp.html" title=" " alt="" coords="293,152,477,177"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="322,110,372,150,369,154,319,115"/>
+<area shape="rect" id="Node000006" href="$mainwindow_8cpp.html" title=" " alt="" coords="501,152,632,177"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="352,105,523,149,522,154,351,110"/>
+<area shape="rect" id="Node000007" href="$plotwindow_8cpp.html" title=" " alt="" coords="656,152,779,177"/>
+<area shape="poly" id="edge7_Node000003_Node000007" title=" " alt="" coords="367,102,656,150,655,156,366,107"/>
+</map>

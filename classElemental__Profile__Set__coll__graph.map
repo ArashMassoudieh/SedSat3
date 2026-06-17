@@ -1,0 +1,40 @@
+<map id="Elemental_Profile_Set" name="Elemental_Profile_Set">
+<area shape="rect" id="Node000001" title="Manages a collection of elemental profiles (samples) for source fingerprinting analysis." alt="" coords="673,1703,896,2008"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="609,133,736,199"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="693,211,712,273,718,308,721,343,721,1504,728,1605,746,1702,740,1703,723,1605,715,1504,715,343,713,309,707,274,688,213"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="623,5,645,71"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="646,70,661,117,656,118,641,72"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="425,133,552,199"/>
+<area shape="poly" id="edge17_Node000015_Node000003" title=" " alt="" coords="624,55,569,111,552,125,548,121,566,107,621,51"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="316,5,339,71"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="340,41,393,62,461,92,486,107,594,139,593,144,484,112,458,97,390,67,338,46"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="212,223,333,288"/>
+<area shape="poly" id="edge11_Node000011_Node000004" title=" " alt="" coords="318,52,302,72,288,96,275,152,273,206,267,206,270,151,284,94,298,68,314,49"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="76,133,197,199"/>
+<area shape="poly" id="edge15_Node000014_Node000004" title=" " alt="" coords="316,43,287,47,248,55,205,71,168,97,152,119,148,116,164,93,203,67,246,50,286,41,316,37"/>
+<area shape="poly" id="edge18_Node000015_Node000004" title=" " alt="" coords="341,57,360,82,384,107,412,127,409,132,380,111,356,86,337,60"/>
+<area shape="rect" id="Node000005" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="977,937,1153,1303"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="1063,1317,1051,1406,1030,1501,998,1594,977,1638,952,1680,898,1749,894,1745,948,1677,972,1636,993,1592,1025,1499,1046,1405,1058,1316"/>
+<area shape="rect" id="Node000016" href="$classMultipleLinearRegressionSet.html" title=" " alt="" coords="755,1365,955,1640"/>
+<area shape="poly" id="edge21_Node000016_Node000005" title=" " alt="" coords="972,1294,933,1366,928,1364,968,1292"/>
+<area shape="rect" id="Node000006" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="996,590,1133,695"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1067,696,1067,921,1062,921,1062,696"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="345,1463,568,1543"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="471,1542,499,1608,519,1644,543,1677,599,1733,661,1780,658,1784,595,1737,539,1680,515,1647,495,1611,467,1544"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="372,1087,451,1153"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="415,1153,418,1238,427,1341,446,1446,441,1447,422,1342,413,1238,409,1153"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="310,603,441,683"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="382,696,412,1087,406,1087,377,697"/>
+<area shape="rect" id="Node000010" href="$classConcentrationSet.html" title="Manages a collection of concentration measurements with statistical analysis." alt="" coords="189,987,348,1253"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="307,1252,343,1340,377,1397,415,1448,411,1451,373,1400,338,1343,302,1254"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="275,302,272,987,267,987,270,302"/>
+<area shape="rect" id="Node000012" href="$classDistribution.html" title="Represents a parametric probability distribution for uncertainty quantification." alt="" coords="5,440,191,845"/>
+<area shape="poly" id="edge12_Node000010_Node000012" title=" " alt="" coords="84,845,90,880,99,912,114,946,134,978,180,1035,176,1039,129,981,110,949,94,914,85,881,79,846"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="42,312,199,377"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="121,378,117,424,112,423,116,377"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="125,213,123,223,120,269,121,312,116,312,115,269,118,222,120,212"/>
+<area shape="poly" id="edge16_Node000007_Node000015" title=" " alt="" coords="491,213,491,343,491,1121,488,1218,481,1313,465,1463,459,1462,476,1313,483,1218,486,1121,486,343,486,213"/>
+<area shape="poly" id="edge19_Node000001_Node000016" title=" " alt="" coords="830,1641,821,1687,816,1686,825,1640"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="756,1080,952,1160"/>
+<area shape="poly" id="edge20_Node000016_Node000017" title=" " alt="" coords="857,1174,858,1365,852,1365,852,1174"/>
+</map>

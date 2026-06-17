@@ -1,0 +1,23 @@
+<map id="Elemental_Profile" name="Elemental_Profile">
+<area shape="rect" id="Node000001" title="Container for elemental concentration data of a single sediment sample." alt="" coords="212,744,383,1009"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="423,168,550,233"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="494,247,499,338,496,458,489,524,478,591,462,658,438,721,415,763,385,801,381,797,410,760,434,719,457,656,473,590,484,523,491,458,493,338,489,247"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="537,13,559,78"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="561,78,564,101,560,125,540,157,535,154,555,123,559,101,556,78"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="273,168,399,233"/>
+<area shape="poly" id="edge10_Node000010_Node000003" title=" " alt="" coords="538,67,515,97,483,126,464,136,448,140,432,143,413,150,393,161,391,157,411,146,431,138,447,135,462,131,480,122,511,93,534,63"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="366,13,389,78"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="387,77,395,100,406,123,434,155,430,159,402,125,390,102,382,79"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="367,54,331,75,312,91,298,110,295,131,302,153,297,155,290,132,294,108,308,87,328,70,364,49"/>
+<area shape="rect" id="Node000005" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="5,316,181,681"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="191,673,228,742,223,745,186,676"/>
+<area shape="rect" id="Node000006" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="9,148,146,253"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="83,253,85,300,80,300,77,254"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="210,466,385,531"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="300,531,300,727,295,727,295,531"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="170,168,249,233"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="221,233,286,450,281,451,216,234"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="144,5,275,85"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="212,99,212,168,207,168,207,99"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="333,247,304,466,299,466,327,247"/>
+</map>

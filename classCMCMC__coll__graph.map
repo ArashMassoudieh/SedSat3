@@ -1,0 +1,32 @@
+<map id="CMCMC&lt; T &gt;" name="CMCMC&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Markov Chain Monte Carlo sampler for Bayesian parameter estimation." alt="" coords="622,1188,769,1693"/>
+<area shape="rect" id="Node000002" href="$struct__MCMC__settings.html" title="Configuration parameters for Markov Chain Monte Carlo sampling." alt="" coords="35,820,233,1085"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,1084,225,1125,256,1162,297,1201,341,1238,434,1303,527,1357,608,1398,606,1403,524,1362,432,1308,338,1242,293,1205,252,1166,221,1128,194,1087"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="413,451,570,517"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="492,517,485,643,479,820,480,997,486,1070,497,1125,518,1183,547,1240,580,1292,614,1340,609,1343,576,1295,543,1242,514,1185,491,1126,481,1071,475,997,473,820,479,643,486,517"/>
+<area shape="rect" id="Node000006" href="$classCMBTimeSeriesSet.html" title="Collection of time series with labels and observed values." alt="" coords="257,820,430,1085"/>
+<area shape="poly" id="edge9_Node000006_Node000003" title=" " alt="" coords="485,518,456,592,433,633,402,669,387,678,372,680,359,683,348,692,335,718,326,745,320,804,314,804,321,744,330,716,344,689,357,678,371,675,385,673,399,665,428,630,451,590,480,516"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="605,153,727,219"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="597,229,577,245,560,264,534,311,515,362,503,411,497,451,492,451,498,410,510,361,529,309,556,261,573,241,593,225"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="601,691,731,756"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="669,233,669,691,663,691,663,233"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="738,691,879,756"/>
+<area shape="poly" id="edge14_Node000012_Node000004" title=" " alt="" coords="706,228,726,261,749,320,767,382,792,504,805,612,810,690,805,691,800,613,787,505,762,383,743,322,721,264,701,231"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="655,5,677,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="669,71,669,137,663,137,663,71"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="356,1085,368,1125,384,1163,432,1230,490,1291,551,1343,610,1384,606,1389,548,1347,486,1295,428,1234,380,1165,363,1127,351,1087"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,451,188,517"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="122,528,276,818,271,821,117,530"/>
+<area shape="rect" id="Node000008" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="213,301,389,667"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="315,680,322,756,329,819,324,820,317,756,310,680"/>
+<area shape="rect" id="Node000009" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="232,133,369,239"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="303,239,303,285,298,285,298,239"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="670,756,687,1172,682,1172,665,756"/>
+<area shape="rect" id="Node000011" href="$struct__MCMC__file__names.html" title="File paths for MCMC input/output operations." alt="" coords="927,910,1069,995"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="980,997,911,1127,846,1230,780,1326,776,1323,841,1227,906,1124,976,994"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="807,757,786,915,755,1126,748,1173,742,1172,750,1125,781,915,802,756"/>
+<area shape="rect" id="Node000013" href="$classProgressWindow.html" title=" " alt="" coords="1093,780,1250,1125"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="1095,1112,1083,1127,1011,1204,932,1275,854,1336,784,1386,781,1381,851,1332,929,1271,1007,1200,1079,1124,1090,1108"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="1138,451,1205,517"/>
+<area shape="poly" id="edge16_Node000013_Node000014" title=" " alt="" coords="1174,531,1174,780,1169,780,1169,531"/>
+</map>

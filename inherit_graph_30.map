@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,203,80,228"/>
+<area shape="rect" id="Node000001" href="$classAboutDialog.html" title="Professional about dialog for SedSat3 application." alt="" coords="172,5,275,31"/>
+<area shape="poly" id="edge34_Node000000_Node000001" title=" " alt="" coords="47,189,56,155,72,115,95,74,126,40,148,27,171,20,173,25,150,32,130,44,99,77,77,117,61,156,52,190"/>
+<area shape="rect" id="Node000002" href="$classDialogChooseExcelSheets.html" title=" " alt="" coords="128,55,319,80"/>
+<area shape="poly" id="edge35_Node000000_Node000002" title=" " alt="" coords="52,189,80,138,101,112,126,89,148,78,151,82,130,94,105,115,85,141,57,191"/>
+<area shape="rect" id="Node000003" href="$classGeneralChart.html" title=" " alt="" coords="169,104,277,129"/>
+<area shape="poly" id="edge36_Node000000_Node000003" title=" " alt="" coords="63,190,91,163,127,138,168,123,170,128,129,143,95,167,66,194"/>
+<area shape="rect" id="Node000004" href="$classIndicateSheetsDialog.html" title=" " alt="" coords="143,153,303,179"/>
+<area shape="poly" id="edge37_Node000000_Node000004" title=" " alt="" coords="92,198,127,187,170,176,171,181,129,193,94,203"/>
+<area shape="rect" id="Node000005" href="$classOptionsDialog.html" title=" " alt="" coords="166,203,281,228"/>
+<area shape="poly" id="edge38_Node000000_Node000005" title=" " alt="" coords="93,213,166,213,166,218,93,218"/>
+<area shape="rect" id="Node000006" href="$classPlotWindow.html" title=" " alt="" coords="174,252,273,277"/>
+<area shape="poly" id="edge39_Node000000_Node000006" title=" " alt="" coords="94,227,129,237,175,249,173,254,127,242,93,232"/>
+<area shape="rect" id="Node000007" href="$classProgressWindow.html" title=" " alt="" coords="158,301,289,327"/>
+<area shape="poly" id="edge40_Node000000_Node000007" title=" " alt="" coords="66,236,95,263,129,286,160,299,158,304,127,291,91,267,63,240"/>
+<area shape="rect" id="Node000008" href="$classResultTableViewer.html" title=" " alt="" coords="152,351,295,376"/>
+<area shape="poly" id="edge41_Node000000_Node000008" title=" " alt="" coords="57,239,85,289,106,314,130,336,153,348,151,353,126,340,102,318,81,292,52,242"/>
+<area shape="rect" id="Node000009" href="$classResultsWindow.html" title=" " alt="" coords="162,400,285,425"/>
+<area shape="poly" id="edge42_Node000000_Node000009" title=" " alt="" coords="52,241,62,274,77,313,100,352,130,385,145,395,163,402,161,407,143,400,126,389,95,355,73,316,57,276,47,242"/>
+</map>
