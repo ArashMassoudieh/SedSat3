@@ -1,0 +1,44 @@
+{
+  "Deterministic Sediment Fingerprinting": 
+  {
+		"1-Outlier Analysis": "Outlier",
+		"2-Organic matter and particle size correction": "MLR",
+		"3-Bracketing Analysis": "Bracketing Analysis Batch",
+		"4-Stepwise discriminant function analysis (Multiway)": "SDFAM",
+		"5-Fingerprinting": "Levenberg-Marquardt",
+		"6-Fingerprinting (Batch)": "Levenberg-Marquardt-Batch"
+  },
+  "Bayesian Sediment Fingerprinting": 
+  {
+		"1-Outlier Analysis": "Outlier",
+		"2-Organic matter and particle size correction": "MLR",
+		"3-Bracketing Analysis": "Bracketing Analysis Batch",
+		"4-Stepwise discriminant function analysis (Multiway)": "SDFAM",
+		"5-Bayesian Chemical Mass Balance Analysis": "CMB Bayesian",
+		"6-Bayesian Chemical Mass Balance Analysis (Batch)": "CMB Bayesian-Batch"
+  },
+  "Other Statistical Tools":
+  {
+    "Elements' correlation matrix": "CorMat",
+    "Outlier Analysis": "Outlier",
+    "Analysis of Variance for element selection": "ANOVA",
+    "Auto-select elements": "AutoSelect",
+	"Distribution Fitting": "DF",
+    "Kolmogorov–Smirnov for individual group/element": "KS-individual",
+    "Kolmogorov–Smirnov for a group": "KS",
+    "Optimal BoxCox parameters": "BoxCox",
+    "Elements' discriminant power (Two-way)": "EDP",
+    "Elements' discriminant power (Multiple-way)": "EDPM",
+    "Error Analysis": "Error_Analysis",
+    "Source Verification": "Source_Verify",
+    "Discriminant function analysis (one vs. one)": "DFA",
+    "Discriminant function analysis (Multiway)": "DFAM",
+    "Discriminant function analysis (one vs. the rest)": "DFAOnevsRest",
+    "Stepwise discriminant function analysis (one vs. one)": "SDFA",
+    "Stepwise discriminant function analysis (Multiway)": "SDFAM",
+    "Stepwise discriminant function analysis (one vs. the rest)": "SDFAOnevsRest",
+    "Correct based on size and organic matter": "OM-Size Correct",
+    "Discriminant power evaluation": "DFAM"
+  }
+}
+  

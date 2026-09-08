@@ -1,0 +1,863 @@
+{
+	"GA": {
+    		"Number of Generations": {
+   			"type": "spinBox",
+   			"default": "100",
+			"maximum": "1000",
+			"minimum": "10"
+    		},
+    		"Population": {
+   			"type": "spinBox",
+			"default": "100",
+			"maximum": "200",
+			"minimum": "10"
+    		},
+    		"Cross-over probability": {
+   			"type": "lineEdit",
+			"default": "1.0"
+    		},
+    		"Shake coefficient": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Shake coefficient reduction factor": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    		},
+    		"Number of threads to be used": {
+   			"type": "spinBox",
+			"default": "8"
+    		},
+    		"Mutation probability": {
+   			"type": "lineEdit",
+			"default": "0.02"
+    		},
+    		"Numerical cross-over": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+    		"GA output file": {
+    			"type": "fileBrowser_Save",
+    			"default": "GA_Output.txt"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
+    		},
+    		"Steepest Descent":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs sediment fingerprinting using the <b>Genetic Algorithm</b> optimization. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated as part of the maximization of the likelihood of observing the measured target sample elemental profile."
+    		}
+	},
+	"GA (disregarding targets)": {
+    		"Number of Generations": {
+   			"type": "spinBox",
+   			"default": "40",
+			"maximum": "1000",
+			"minimum": "10"
+    		},
+    		"Population": {
+   			"type": "spinBox",
+			"default": "40",
+			"maximum": "200",
+			"minimum": "10"
+    		},
+    		"Cross-over probability": {
+   			"type": "lineEdit",
+			"default": "1.0"
+    		},
+    		"Shake coefficient": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Shake coefficient reduction factor": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    		},
+    		"Number of threads to be used": {
+   			"type": "spinBox",
+			"default": "8"
+    		},
+    		"Mutation probability": {
+   			"type": "lineEdit",
+			"default": "0.02"
+    		},
+    		"Numerical cross-over": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"GA output file": {
+    			"type": "fileBrowser_Save",
+    			"default": "GA_Output.txt"
+    		}
+	},
+	"GA (fixed elemental contribution)": {
+    		"Number of Generations": {
+   			"type": "spinBox",
+   			"default": "40",
+			"maximum": "1000",
+			"minimum": "10"
+    		},
+    		"Population": {
+   			"type": "spinBox",
+			"default": "40",
+			"maximum": "200",
+			"minimum": "10"
+    		},
+    		"Cross-over probability": {
+   			"type": "lineEdit",
+			"default": "1.0"
+    		},
+    		"Shake coefficient": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Shake coefficient reduction factor": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    		},
+    		"Number of threads to be used": {
+   			"type": "spinBox",
+			"default": "8"
+    		},
+    		"Mutation probability": {
+   			"type": "lineEdit",
+			"default": "0.02"
+    		},
+    		"Numerical cross-over": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+    		"GA output file": {
+    			"type": "fileBrowser_Save",
+    			"default": "GA_Output.txt"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs sediment fingerprinting using the <b>Genetic Algorithm</b> optimization. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples."
+    		} 
+	},
+	"Levenberg-Marquardt": {
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples."
+    		} 
+	},
+	"Levenberg-Marquardt-Batch": {
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs sediment fingerprinting using the <b>Levenberg-Marquardt</b> optimization algorithm on all target samples. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples.This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples."
+    		} 
+	},
+	"OM-Size Correct" : 
+	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool shows the corrected elemental profiles of source groups after adjusting based on size and organic matter. The correction is done based on the size and organic matter associated with the selected target. The regressions as a result of the last organic and size correction will be used to perform the adjustment." 
+    		}
+	},
+        "MLR": {
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Organic Matter constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList+Blank+OM"
+    		},
+    		"Particle Size constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList+Blank+Size"
+    		},
+    		"Equation": {
+    			"type": "comboBox",
+    			"source": "Items:Linear,Power"
+    		},
+			"P-value threshold": {
+				"type": "lineEdit",
+				"default": "0.05"
+    		},
+    		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool performs the regression analysis for organic and size correction on all source groups." 
+    		}
+	},
+	"CovMat": {
+		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Description": 
+    		{
+    			"type": "Description",
+    			"default": "This tool calculates the covariance matrix between the elemental contents of various elements for the specified source group." 
+    		}
+	},
+	"CorMat": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Threshold": {
+   			"type": "lineEdit",
+			"default": "0.75"
+    	},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+	    	"Discription": {
+	    		"type": "Description",
+   			"default": "This tool generates the element correlation matrix for the chosen source group. To perform the correlation analysis on the corrected elemental profiles based on size and organic matter, select the target sample based on which the correction to be performed." 
+		}
+	},
+	"DFA": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs Discriminant Function Analysis between the two source groups indicated. It provides the p-value, and the scatter matrix of projected elemental profiles based on the principle eigen vector of the discriminant hyper-plane." 
+		}
+	},
+	"DFAM": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
+	},
+	"DFAOnevsRest": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Source group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
+	},
+	"SDFA": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
+	},
+	"SDFAM": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		},
+		"Modify the included elements based on the results": {
+				"type": "checkBox",
+				"default": "false"
+		}
+	},
+	"SDFAOnevsRest": {
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Source group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+		}
+	},
+	"KS-individual": 
+	{
+ 		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		},
+    		"Distribution": 
+    		{
+			"type": "comboBox",
+    			"source": "Items:Normal,Lognormal"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of a given element is to normal or log-normal distribution for the specified source group."
+		}
+	},
+	"KS": 
+	{
+ 		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Distribution": 
+    		{
+			"type": "comboBox",
+    			"source": "Items:Normal,Lognormal"
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of all elements are to normal or log-normal distribution for the specified source group."
+		}
+	},
+	"CMB Bayesian":
+	{
+		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+		"Number of chains": {
+			"type": "spinBox",
+			"default": "8",
+			"maximum": "64",
+			"minimum": "4"
+		},
+		"Number of samples": {
+			"type": "spinBox",
+			"default": "1000",
+			"maximum": "200000",
+			"minimum": "1000"
+		},
+		"Samples to be discarded (burnout)": {
+			"type": "spinBox",
+			"default": "100",
+			"maximum": "50000",
+			"minimum": "100"
+		},
+		"Samples File Name": {
+    			"type": "fileBrowser_Save",
+    			"default": "MCMC_Output.txt"
+    		},
+    		"Dissolve Chains": {
+   			"type": "checkBox",
+			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target samle."
+		}
+	},
+	"CMB Bayesian-Batch":
+	{
+		"Number of chains": {
+			"type": "spinBox",
+			"default": "8",
+			"maximum": "64",
+			"minimum": "4"
+		},
+		"Number of samples": {
+			"type": "spinBox",
+			"default": "1000",
+			"maximum": "200000",
+			"minimum": "1000"
+		},
+		"Samples to be discarded (burnout)": {
+			"type": "spinBox",
+			"default": "100",
+			"maximum": "50000",
+			"minimum": "100"
+		},
+		"Samples File Name": {
+    			"type": "fileBrowser_Save",
+    			"default": "MCMC_Output.txt"
+    		},
+    		"Dissolve Chains": {
+   			"type": "checkBox",
+			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target samle."
+		}
+
+	},
+	"Test CMB Bayesian":
+	{
+		"Number of chains": {
+			"type": "spinBox",
+			"default": "8",
+			"maximum": "64",
+			"minimum": "4"
+		},
+		"Number of samples": {
+			"type": "spinBox",
+			"default": "1000",
+			"maximum": "200000",
+			"minimum": "1000"
+		},
+		"Samples to be discarded (burnout)": {
+			"type": "spinBox",
+			"default": "100",
+			"maximum": "20000",
+			"minimum": "100"
+		},
+		"samples_file_name": {
+    			"type": "fileBrowser_Save",
+    			"default": "MCMC_Output.txt"
+    		}
+	},
+	"DF": 
+	{
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Constituent": {
+    			"type": "comboBox",
+    			"source": "ElementsList"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool shows fitted normal and log-normal distributions to the elemental content of the specified element in the specified source group."
+		}
+	},
+	"Bracketing Analysis":
+	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    	"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Correct based on size and organic matter": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool shows whether the elemental content of the elements in the specified target sample is outside of the range of the elemental contents in all source groups."
+		}
+    	},
+    	"BoxCox":
+    	{
+    		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool calculates the optimal lambda value in the Box-Cox transformation for the elements in the specified source group to achieve normality."
+		}
+    	},
+        "Bracketing Analysis Batch":
+        {
+            "Use only selected elements": {
+                   "type": "checkBox",
+					"default": "false"
+                },
+                "Use only selected samples": {
+                   "type": "checkBox",
+					"default": "false"
+                },
+				"Correct based on size and organic matter": {
+					"type": "checkBox",
+					"default": "false"
+				},
+                "Discription": {
+	    		"type": "Description",
+   			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples."
+		}
+        },
+    	"Outlier":
+    	{
+    		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Source/Target group" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Threshold": {
+   			"type": "lineEdit",
+			"default": "3"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool conducts outlier analysis on the elemental profiles for the specified source group. The analysis begins by applying a Box-Cox transformation to each elemental content, followed by calculating the standardized value using the formula (x - mean) / std. Any absolute values exceeding the user-defined threshold are highlighted." 
+		}
+    	},
+    	"EDP": 
+    	{
+    		"Source/Target group I" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Source/Target group II" : {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+    		"P-value threshold": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool calculates the measures of discriminant power of elements between the two specified source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value."
+		}
+
+ 	},
+    	"EDPM": 
+    	{
+		"Include target samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"P-value threshold": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool calculates the measures of discriminant power of elements between all pairs of source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value."
+		}
+ 	},
+ 	"ANOVA": 
+    	{
+		"Use only selected elements": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Use only selected samples": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+		"Log Transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"Box-cox transformation": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"P-value threshold": {
+   			"type": "lineEdit",
+			"default": "0.05"
+    		},
+    		"Modify the included elements based on the results": {
+   			"type": "checkBox",
+			"default": "false"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool performs analysis of variance. The resulting p-value indicates the power of a certain element in discriminating between all source groups."
+		}
+ 	},
+ 	"Error_Analysis":
+ 	{
+ 		"Pecentage eliminated": {
+   			"type": "spinBox",
+			"default": "20",
+			"maximum": "50",
+			"minimum": "5"
+    		},
+    		"Number of realizations": {
+   			"type": "spinBox",
+			"default": "1000",
+			"maximum": "10000",
+			"minimum": "5"
+    		},
+    		"Sample": {
+    			"type": "comboBox",
+    			"source": "TargetSamplesList"
+    		},
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect of elmination of the indicated percentage of source samples on the fingerprinting results."
+		}
+ 	},
+ 	"Source_Verify": {
+ 		"Source Group": {
+			"type": "comboBox",
+			"source": "SourceList"
+		},
+		"Apply size and organic matter correction":
+    		{
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+    		"Softmax transformation": {
+    			"type": "checkBox",
+    			"default": "true"
+    		},
+		"Discription": {
+	    		"type": "Description",
+   			"default": "This tool evaluates weather the finger-printing algorithm is capable of correctly infer the source samples based on their elemental profiles. The analysis is done by treating individial source samples from the specified source group as target samples and the use the Levenberg-Marquardt optimization to infer the contribution of sources into it."
+		}
+ 	},
+ 	"AutoSelect": {
+ 		"Number of elements from each pair": {
+   			"type": "spinBox",
+			"default": "3",
+			"maximum": "8",
+			"minimum": "1"
+    		},
+    		"OM and Size Correct based on target sample":{
+			"type": "comboBox",
+			"source": "TargetSamplesList+Blank"
+		},
+    		"Description": {
+    			"type": "Description",
+    			"default": "The <b>Auto-select</b> tool selects a minimum number of elements with discriminatory power to differenciate between all source pair combinations. It performs a <i>t-test</i> between each pair of source groups and select the elements with the lowest p-values from each pair. The number of elements choosen from each pair is indicated in the box labeled 'Number of elements from each pair'" 
+    		},
+    		"Modify the included elements based on the results": {
+				"type": "checkBox",
+				"default": "false"
+    		},
+    		"Include Isotopes": {
+				"type": "checkBox",
+				"default": "false"
+    		}
+ 	}
+}

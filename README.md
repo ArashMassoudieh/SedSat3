@@ -1,93 +1,161 @@
-# SedSATv3
+# SedSAT3 (Sediment Source Assessment Tool, version 1.1.6)
 
+SedSAT3 is an open-source software package developed by the Arash Massoudieh, Allen Gellis, and Cara Peterman-Phippss for sediment source fingerprinting using chemical and isotopic tracers. It provides a graphical user interface and a suite of tools for preprocessing, tracer selection, source apportionment, and diagnostic analysis. The software supports multiple apportionment approaches, including deterministic maximum likelihood estimation, metaheuristic search with genetic algorithms, and Bayesian inference through Markov Chain Monte Ca...
 
+---
 
-## Getting started
+## Features
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **Cross-platform GUI** built with Qt6 for managing projects, configuring simulations, and visualizing results.  
+- **Data import** from Microsoft Excel files with a standardized tab structure.  
+- **Preprocessing tools** including outlier detection, particle size and organic matter corrections, bracketing analysis, and discriminant function analysis (DFA).  
+- **Statistical routines** such as ANOVA, automated tracer selection, tracer discriminant power evaluation, distribution fitting, correlation matrices, t-tests, error analysis, Kolmogorov–Smirnov tests, and Box–Cox transformations.  
+- **Source apportionment methods**:
+  - Deterministic maximum likelihood (Levenberg–Marquardt optimization)  
+  - Genetic algorithms for global search  
+  - Bayesian inference via MCMC sampling  
+- **Results output** with visual and tabular summaries, including credible intervals, posterior distributions, predicted concentrations, and diagnostic plots.  
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://code.usgs.gov/cphipps/SedimentSourceAssessmentTool3.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-* [Set up project integrations](https://code.usgs.gov/cphipps/SedimentSourceAssessmentTool3/-/settings/integrations)
-
-## Collaborate with your team
-
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+---
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Windows
+A precompiled installer is available at:  
+https://sedsat.org/download
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Linux (Ubuntu/Debian)
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+You can install SedSAT3 from the prebuilt `.deb` package:
+
+```bash
+wget https://github.com/ArashMassoudieh/SedSat3/releases/download/Latest/SedSat3-Linux.deb
+sudo apt install ./SedSat3-Linux.deb
+```
+
+This installs SedSAT3 to `/usr/local/sedsat3` with:
+
+- Executable at `/usr/local/sedsat3/bin/SedSat3`
+- Resources at `/usr/local/sedsat3/resources`
+- A symlink `/usr/local/bin/sedsat3` so you can run the app by typing `sedsat3`
+- A desktop launcher at `/usr/share/applications/sedsat3.desktop`, so the app appears in your GNOME/KDE menu with its icon.
+
+### macOS
+Build from source (instructions below).
+
+---
+
+## Build from Source
+
+SedSAT3 can be compiled on Windows, macOS, and Linux. The software depends on several third-party libraries and a Git submodule.
+
+### Prerequisites
+
+- Qt 6 (including `qmake` or CMake)  
+- GNU Scientific Library (GSL)  
+- Armadillo  
+- QXlsx (included as a submodule)  
+- A C++17 or newer compiler (MSVC, g++, or clang)  
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/ArashMassoudieh/SedSat3.git
+cd SedSat3
+```
+
+Initialize and update the `Utilities` submodule:
+
+```bash
+git submodule init
+git submodule update
+```
+
+### Build Instructions
+
+#### Using qmake (quick testing)
+
+```bash
+qmake SedSat3.pro
+make        # or `nmake` on Windows
+```
+
+#### Using CMake (for packaging and distribution)
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build . --parallel
+cpack -G DEB   # to generate a Debian package
+```
+
+The `.deb` file will appear in the `build/` folder.
+
+---
+
+## Running SedSAT3
+
+After installation, you can start SedSAT3 in several ways:
+
+- From the terminal:
+  ```bash
+  sedsat3
+  ```
+- From the applications menu (look for "SedSat3" with its icon).  
+- Or directly:
+  ```bash
+  /usr/local/sedsat3/bin/SedSat3
+  ```
+
+---
+
+## Quickstart Example
+
+A sample dataset, `examples/SampleData.xlsx`, is provided to help you get started. It follows the standard tab layout: a `Mixture` sheet containing the target (receptor) samples and one sheet per source (`Forest`, `Crop`, `Pasture`, `Bank`). Each sheet has a `sample` column, particle-size (`D50`) and organic-carbon (`TOC`) columns used for size and organic-matter corrections, and one column per elemental or isotopic tracer.
+
+1. Prepare your source and target sediment data in Excel format, following the standard tab layout (see `examples/SampleData.xlsx`).  
+2. Launch SedSAT3 and create a new project.  
+3. Import the Excel file through the GUI.  
+4. Apply preprocessing (e.g., tracer selection, corrections).  
+5. Configure an apportionment method (e.g., MCMC) and run the analysis.  
+6. View outputs such as posterior distributions, source contribution estimates, and diagnostic plots.  
+
+---
+
+## Documentation
+
+- **User Manual**: Detailed descriptions of preprocessing routines, tracer selection methods, and apportionment algorithms are provided in the SedSAT3 User’s Manual:(https://github.com/ArashMassoudieh/SedSat-User-s-Manual/blob/main/SedSat_User_s_Manual.pdf)  
+
+---
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Contributions are welcome! Please fork the repository and submit pull requests. Issues can be reported through the GitHub Issues tab: https://github.com/ArashMassoudieh/SedSat3/issues
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+---
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+SedSAT3 is distributed under the GNU General Public License v3.0 (GPL-3.0). See [LICENSE.md](LICENSE.md).
+
+---
+
+## Disclaimer
+
+This software is preliminary or provisional and is subject to revision. It is being provided to meet the need for timely best science. The software has not received final approval by the U.S. Geological Survey (USGS). No warranty, expressed or implied, is made by the USGS or the U.S. Government as to the functionality of the software and related material nor shall the fact of release constitute any such warranty. The software is provided on the condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from the authorized or unauthorized use of the software.
+
+See [DISCLAIMER.md](DISCLAIMER.md).
+
+---
+
+## Citation
+
+If you use SedSAT3 in your research, please cite:
+
+Massoudieh, A., et al. (2023). *SedSAT3: An open-source software for sediment source apportionment*. U.S. Geological Survey. https://github.com/ArashMassoudieh/SedSat3
+
+---
+
+## Acknowledgments
+
+SedSAT3 builds on several open-source libraries, including Qt, GSL, Armadillo, and QXlsx. The project also uses the `Utilities` submodule developed and maintained separately.
