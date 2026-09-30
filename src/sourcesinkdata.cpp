@@ -1395,6 +1395,13 @@ bool SourceSinkData::SolveLevenberg_Marquardt(transformation trans)
         iteration++;
     }
 
+    // The reported fraction approaches 1 without reaching it, because the loop
+    // exits once the parameter change falls below the tolerance rather than
+    // when it reaches zero. Report completion explicitly so the display does
+    // not stop short of the end.
+    if (rtw_)
+        rtw_->SetProgress(1.0);
+
     // TODO: Return convergence status instead of always false
     return false;
 }
