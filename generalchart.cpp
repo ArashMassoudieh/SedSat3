@@ -194,8 +194,8 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
     axisX->append(categories);
     chart->addAxis(axisX, Qt::AlignBottom);
     axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
-    QLogValueAxis* axisYLog;
-    QValueAxis* axisYNormal;
+    QLogValueAxis* axisYLog = nullptr;
+    QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     double profile_min;
     if (result_item->AbsValue())
@@ -276,8 +276,8 @@ bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &title)
     axisX->append(categories);
     chart->addAxis(axisX, Qt::AlignBottom);
 
-    QLogValueAxis* axisYLog;
-    QValueAxis* axisYNormal;
+    QLogValueAxis* axisYLog = nullptr;
+    QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     double matrix_min;
     if (result_item->AbsValue())
@@ -351,8 +351,8 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
         axisX->append(QString::fromStdString(element_names[i]),double(i+1));
 
 
-    QLogValueAxis* axisYLog;
-    QValueAxis* axisYNormal;
+    QLogValueAxis* axisYLog = nullptr;
+    QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     if (profile_sets->GetMinimum()>0 && _log)
     {
@@ -373,6 +373,10 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
         axisYNormal->setLabelFormat("%g");
         axisYNormal->setMinorTickCount(5);
         chart->addAxis(axisYNormal, Qt::AlignLeft);
+        // A linear axis was built, so the series must attach to it. PlotVector
+        // already does this; without it, data whose minimum is not positive
+        // takes the log branch below and attaches to an axis never created.
+        _log = false;
     }
 
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -441,8 +445,8 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
         axisX->append(QString::fromStdString(element_names[i]), double(i + 1)*10);
 
 
-    QLogValueAxis* axisYLog;
-    QValueAxis* axisYNormal;
+    QLogValueAxis* axisYLog = nullptr;
+    QValueAxis* axisYNormal = nullptr;
     axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     if (profile_set->GetMinimum()>0 && _log)
@@ -466,6 +470,10 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
         axisYNormal->setMinorTickCount(5);
         axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
+        // A linear axis was built, so the series must attach to it. PlotVector
+        // already does this; without it, data whose minimum is not positive
+        // takes the log branch below and attaches to an axis never created.
+        _log = false;
     }
 
     chart->addAxis(axisX, Qt::AlignBottom);
