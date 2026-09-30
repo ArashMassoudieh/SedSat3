@@ -10,8 +10,8 @@
 #include "GA.h"
 #include "MCMC.h"
 #include "results.h"
+#include "analysishost.h"
 
-class MainWindow;
 class QString;
 
 /**
@@ -39,10 +39,11 @@ class Conductor
 {
 public:
     /**
-     * @brief Constructs a Conductor associated with a MainWindow
-     * @param mainwindow Pointer to the parent MainWindow (non-owning, must outlive Conductor)
+     * @brief Constructs a Conductor that reports through @p host
+     * @param host Environment the analyses run in, supplying warnings and
+     *        progress reporters (non-owning, must outlive Conductor)
      */
-    explicit Conductor(MainWindow* mainwindow);
+    explicit Conductor(AnalysisHost* host);
 
     /**
      * @brief Executes a specified analysis command with given parameters
@@ -118,7 +119,7 @@ public:
      * @param data Pointer to SourceSinkData to check (uses this->data if nullptr)
      * @return true if all concentrations are valid (non-negative), false otherwise
      *
-     * @note Presents warning dialog to user via MainWindow if validation fails
+     * @note Reports the problem through the AnalysisHost if validation fails
      */
     bool CheckNegativeElements(SourceSinkData* data = nullptr);
 
@@ -141,7 +142,7 @@ private:
     std::unique_ptr<CMCMC<SourceSinkData>> MCMC;   ///< MCMC sampler (owned)
     Results results;                                ///< Current analysis results (cleared each Execute)
     QString workingfolder;                          ///< Output directory path
-    MainWindow* mainwindow;                         ///< Non-owning pointer to parent window
+    AnalysisHost* host;                             ///< Non-owning pointer to the running environment
 
     /**
      * @brief Executes Genetic Algorithm optimization

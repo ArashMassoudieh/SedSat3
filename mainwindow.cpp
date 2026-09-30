@@ -73,8 +73,11 @@ MainWindow::MainWindow(QWidget* parent)
     QIcon mainIcon(resourcesPath() + "Icons/CMBSource_Icon.png");
     setWindowIcon(mainIcon);
 
-    // Initialize conductor
-    conductor = std::make_unique<Conductor>(this);
+    // Initialize conductor. It reports warnings and progress through the host
+    // rather than reaching into this window directly, so that the same
+    // analyses can run with no interface present.
+    analysis_host = std::make_unique<GuiHost>(this);
+    conductor = std::make_unique<Conductor>(analysis_host.get());
     conductor->SetWorkingFolder(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 
     // Setup UI components

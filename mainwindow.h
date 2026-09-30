@@ -17,6 +17,7 @@
 
 #include "formelementinformation.h"
 #include "conductor.h"
+#include "guihost.h"
 
 enum ItemDataRoles {
     elementRole = Qt::ItemDataRole::UserRole + 1,
@@ -272,6 +273,7 @@ private:
     // Main components
     std::unique_ptr<QMenu> menu;                        ///< Main menu
     std::unique_ptr<QWidget> centralform;               ///< Central form widget
+    std::unique_ptr<GuiHost> analysis_host;             ///< Reports analyses through this window
     std::unique_ptr<Conductor> conductor;               ///< Analysis command coordinator
     QModelIndex indexresultselected;                    ///< Currently selected result index
 };

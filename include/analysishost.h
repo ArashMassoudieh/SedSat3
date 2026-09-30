@@ -64,4 +64,44 @@ public:
     virtual void DisposeProgressReporter(ProgressReporter* reporter) = 0;
 };
 
+/**
+ * @class ScopedProgressReporter
+ * @brief Holds a progress reporter for the duration of one analysis
+ *
+ * Obtains a reporter from the host on construction and returns it on
+ * destruction, so that an analysis leaving by any of its return paths still
+ * releases it. It converts to ProgressReporter* and forwards operator->, so it
+ * can be used wherever a reporter pointer was used before.
+ */
+class ScopedProgressReporter
+{
+public:
+    ScopedProgressReporter(AnalysisHost* host,
+                           int number_of_panels = 1,
+                           bool extra_label_and_progressbar = false)
+        : host_(host),
+          reporter_(host ? host->CreateProgressReporter(number_of_panels,
+                                                        extra_label_and_progressbar)
+                         : nullptr)
+    {
+    }
+
+    ~ScopedProgressReporter()
+    {
+        if (host_)
+            host_->DisposeProgressReporter(reporter_);
+    }
+
+    ScopedProgressReporter(const ScopedProgressReporter&) = delete;
+    ScopedProgressReporter& operator=(const ScopedProgressReporter&) = delete;
+
+    ProgressReporter* Get() const { return reporter_; }
+    ProgressReporter* operator->() const { return reporter_; }
+    operator ProgressReporter*() const { return reporter_; }
+
+private:
+    AnalysisHost* host_;
+    ProgressReporter* reporter_;
+};
+
 #endif // ANALYSISHOST_H

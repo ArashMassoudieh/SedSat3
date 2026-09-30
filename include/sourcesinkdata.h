@@ -851,7 +851,7 @@ public:
      *
      * @param _rtw Pointer to ProgressReporter object (nullptr to disable progress reporting)
      */
-    void SetProgressWindow(ProgressReporter* _rtw);
+    void SetProgressReporter(ProgressReporter* _rtw);
 
     
 

@@ -3887,7 +3887,7 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
         // Apply corrections if requested
         SourceSinkData corrected_dataset = test_dataset.CreateCorrectedDataset(
             sample->first, apply_om_size_correction, test_dataset.GetElementInformation());
-        corrected_dataset.SetProgressWindow(rtw_);
+        corrected_dataset.SetProgressReporter(rtw_);
 
         // Check for negative values (would cause problems in CMB)
         vector<string> negative_elements = corrected_dataset.NegativeValueCheck();
@@ -5048,7 +5048,7 @@ estimation_mode SourceSinkData::ParameterEstimationMode()
     return parameter_estimation_mode_;
 }
 
-void SourceSinkData::SetProgressWindow(ProgressReporter* _rtw)
+void SourceSinkData::SetProgressReporter(ProgressReporter* _rtw)
 {
     rtw_ = _rtw;
 }
