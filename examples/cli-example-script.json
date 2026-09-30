@@ -1,0 +1,15 @@
+{
+  "project": "../path/to/your-project.cmb",
+  "output": "report.json",
+  "on_error": "continue",
+  "steps": [
+    {
+      "command": "Levenberg-Marquardt",
+      "arguments": {
+        "Sample": "CTAIL1",
+        "Softmax transformation": "true",
+        "Apply size and organic matter correction": "false"
+      }
+    }
+  ]
+}
