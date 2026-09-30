@@ -1833,6 +1833,7 @@ private:
      */
     Elemental_Profile* GetElementalProfile(const string& sample_name);
 
+public:
     // --- Element Role Conversion ---
 
     /**
@@ -1874,6 +1875,7 @@ private:
      * @note Returns do_not_include for unrecognized strings
      */
     element_information::role Role(const QString& role_string) const;
+private:
 
     // --- Parameter Management ---
 

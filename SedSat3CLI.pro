@@ -37,6 +37,8 @@ INCLUDEPATH += \
 SOURCES += \
     cli/main_cli.cpp \
     cli/consolehost.cpp \
+    cli/commandcatalog.cpp \
+    cli/setupcommands.cpp \
     cli/scriptrunner.cpp \
     Utilities/Distribution.cpp \
     Utilities/Matrix.cpp \
@@ -76,6 +78,8 @@ SOURCES += \
 
 HEADERS += \
     cli/consolehost.h \
+    cli/commandcatalog.h \
+    cli/setupcommands.h \
     cli/scriptrunner.h \
     include/analysishost.h \
     include/progressreporter.h \

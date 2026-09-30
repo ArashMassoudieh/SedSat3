@@ -1,4 +1,6 @@
+#include "commandcatalog.h"
 #include "consolehost.h"
+#include "setupcommands.h"
 #include "scriptrunner.h"
 
 #include <QCoreApplication>
@@ -42,6 +44,10 @@ void PrintUsage()
            "                   \"output\", and defaults to standard output.\n"
            "  --quiet          Suppress progress and step narration on standard error.\n"
            "                   Warnings are still reported.\n"
+           "  --resources <d>  Directory holding forms_structures.json. Also read from\n"
+           "                   SEDSAT3_RESOURCES, otherwise looked for near the program.\n"
+           "  --list-commands  List every command a script may use.\n"
+           "  --describe <c>   Describe one command and its arguments.\n"
            "  --help           Show this message.\n"
            "\n"
            "Relative paths in the script are resolved against the script's directory.\n"
@@ -58,7 +64,10 @@ int main(int argc, char* argv[])
 
     QString script_path;
     QString output_path;
+    QString resources_path;
+    QString describe_command;
     bool quiet = false;
+    bool list_commands = false;
 
     const QStringList arguments = QCoreApplication::arguments();
     for (int i = 1; i < arguments.size(); i++)
@@ -73,6 +82,28 @@ int main(int argc, char* argv[])
         else if (argument == "--quiet" || argument == "-q")
         {
             quiet = true;
+        }
+        else if (argument == "--list-commands")
+        {
+            list_commands = true;
+        }
+        else if (argument == "--describe")
+        {
+            if (i + 1 >= arguments.size())
+            {
+                std::cerr << "error: --describe needs a command name" << std::endl;
+                return 1;
+            }
+            describe_command = arguments[++i];
+        }
+        else if (argument == "--resources")
+        {
+            if (i + 1 >= arguments.size())
+            {
+                std::cerr << "error: --resources needs a directory" << std::endl;
+                return 1;
+            }
+            resources_path = arguments[++i];
         }
         else if (argument == "--output" || argument == "-o")
         {
@@ -100,14 +131,54 @@ int main(int argc, char* argv[])
         }
     }
 
+    // The catalog defines what a script may say. It is also what --list-commands
+    // and --describe report, so the two can never disagree with the forms.
+    CommandCatalog catalog;
+    const bool catalog_loaded = catalog.Load(resources_path);
+
+    if (list_commands || !describe_command.isEmpty())
+    {
+        if (!catalog_loaded)
+        {
+            std::cerr << "error: " << catalog.Error().toStdString() << std::endl;
+            return 1;
+        }
+
+        if (list_commands)
+        {
+            std::cout << "Analysis commands:\n" << catalog.List().toStdString();
+            std::cout << "\nSetup commands (these change the project before the analyses run):\n";
+            for (const QString& name : SetupCommands::Names())
+                std::cout << "  " << name.toStdString() << "\n";
+        }
+
+        if (!describe_command.isEmpty())
+        {
+            std::cout << (SetupCommands::IsSetupCommand(describe_command)
+                              ? SetupCommands::Describe(describe_command).toStdString()
+                              : catalog.Describe(describe_command).toStdString());
+        }
+        return 0;
+    }
+
     if (script_path.isEmpty())
     {
         PrintUsage();
         return 1;
     }
 
+    if (!catalog_loaded && !quiet)
+    {
+        // Without the form definitions a script still runs, but nothing checks
+        // it and omitted arguments are not filled in, which the analyses do
+        // not tolerate. Say so rather than failing obscurely later.
+        std::cerr << "warning: " << catalog.Error().toStdString() << std::endl;
+        std::cerr << "warning: steps will not be checked and omitted arguments "
+                     "will not be filled in." << std::endl;
+    }
+
     ConsoleHost host(quiet);
-    ScriptRunner runner(&host, quiet);
+    ScriptRunner runner(&host, catalog_loaded ? &catalog : nullptr, quiet);
 
     const bool succeeded = runner.Run(script_path);
 

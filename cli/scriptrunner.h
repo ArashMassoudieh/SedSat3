@@ -1,12 +1,14 @@
 #ifndef SCRIPTRUNNER_H
 #define SCRIPTRUNNER_H
 
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QString>
 
 #include <string>
 
 class ConsoleHost;
+class CommandCatalog;
 
 /**
  * @class ScriptRunner
@@ -42,7 +44,7 @@ public:
      * @param host Host the analyses report through (non-owning)
      * @param quiet Suppresses step narration on standard error
      */
-    ScriptRunner(ConsoleHost* host, bool quiet);
+    ScriptRunner(ConsoleHost* host, const CommandCatalog* catalog, bool quiet);
 
     /**
      * @brief Loads and runs a script
@@ -65,9 +67,12 @@ public:
 
 private:
     bool LoadProject(const QString& project_path);
+    bool ValidateSteps(const QJsonArray& steps);
     QJsonObject RunStep(const QJsonObject& step, int index);
+    QJsonObject RunSetupStep(const QJsonObject& step, int index, const QString& command);
 
-    ConsoleHost* host;   ///< Non-owning, supplies warnings and progress
+    ConsoleHost* host;              ///< Non-owning, supplies warnings and progress
+    const CommandCatalog* catalog;  ///< Non-owning, defines the commands
     bool quiet;          ///< Suppresses narration
     QJsonObject report;  ///< Accumulated run report
     QString error;       ///< Why the script could not be started

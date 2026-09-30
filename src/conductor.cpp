@@ -22,112 +22,101 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
     if (command == "GA")
     {
-        ExecuteGA(arguments);
+        return ExecuteGA(arguments);
     }
     if (command == "GA (fixed elemental contribution)")
     {
-		ExecuteGA_FixedProfile(arguments);
+		return ExecuteGA_FixedProfile(arguments);
     }
     if (command == "GA (disregarding targets)")
     {
-        ExecuteGA_NoTargets(arguments);
+        return ExecuteGA_NoTargets(arguments);
     }
     if (command == "Levenberg-Marquardt")
     {
-        ExecuteLevenbergMarquardt(arguments); 
+        return ExecuteLevenbergMarquardt(arguments);
     }
     if (command == "Levenberg-Marquardt-Batch")
     {
-		ExecuteLevenbergMarquardtBatch(arguments);
-
+		return ExecuteLevenbergMarquardtBatch(arguments);
     }
     if (command == "OM-Size Correct")
     {
-		ExecuteOMSizeCorrect(arguments);
+		return ExecuteOMSizeCorrect(arguments);
     }
     if (command == "MLR")
     {
-		ExecuteMLR(arguments);
+		return ExecuteMLR(arguments);
     }
     if (command == "CovMat")
     {
-		ExecuteCovarianceMatrix(arguments);
-
+		return ExecuteCovarianceMatrix(arguments);
     }
     if (command == "CorMat")
     {
-		ExecuteCorrelationMatrix(arguments);
+		return ExecuteCorrelationMatrix(arguments);
     }
     if (command == "DFA")
     {
-		ExecuteDFA(arguments);
+		return ExecuteDFA(arguments);
     }
 
     if (command == "DFAOnevsRest")
     {
-		ExecuteDFAOnevsRest(arguments);
-
+		return ExecuteDFAOnevsRest(arguments);
     }
     if (command == "DFAM")
     {
-		ExecuteDFAM(arguments);
-
+		return ExecuteDFAM(arguments);
     }
     if (command == "SDFA")
     {
-		ExecuteSDFA(arguments);
-
+		return ExecuteSDFA(arguments);
     }
 
     if (command == "SDFAM")
     {
-		ExecuteSDFAM(arguments);
+		return ExecuteSDFAM(arguments);
     }
 
     if (command == "SDFAOnevsRest")
     {
-		ExecuteSDFAOnevsRest(arguments);
-
+		return ExecuteSDFAOnevsRest(arguments);
     }
 
     if (command == "KS")
     {
-		ExecuteKolmogorovSmirnov(arguments);
+		return ExecuteKolmogorovSmirnov(arguments);
     }
     if (command == "KS-individual")
     {
-		ExecuteKolmogorovSmirnovIndividual(arguments);
+		return ExecuteKolmogorovSmirnovIndividual(arguments);
     }
     if (command == "CMB Bayesian")
     {
-		ExecuteCMBBayesian(arguments);
+		return ExecuteCMBBayesian(arguments);
     }
     if (command == "CMB Bayesian-Batch")
     {
-		ExecuteCMBBayesianBatch(arguments);
+		return ExecuteCMBBayesianBatch(arguments);
     }
     if (command == "Test CMB Bayesian")
     {
-		ExecuteTestCMBBayesian(arguments);
-
-
+		return ExecuteTestCMBBayesian(arguments);
     }
 
     if (command == "DF")
     {
-		ExecuteDistributionFitting(arguments);
-
+		return ExecuteDistributionFitting(arguments);
     }
 
     if (command == "Bracketing Analysis")
     {
-		ExecuteBracketingAnalysis(arguments);
-
+		return ExecuteBracketingAnalysis(arguments);
     }
     if (command == "Bracketing Analysis Batch")
     {
-		ExecuteBracketingAnalysisBatch(arguments);
-
+		return ExecuteBracketingAnalysisBatch(arguments);
     }
     if (command == "BoxCox")
     {
@@ -211,6 +200,7 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
         return false;
     }
 
+    return true;
 }
 
 bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)

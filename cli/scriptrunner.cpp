@@ -1,5 +1,7 @@
 #include "scriptrunner.h"
 #include "consolehost.h"
+#include "commandcatalog.h"
+#include "setupcommands.h"
 
 #include "conductor.h"
 #include "sourcesinkdata.h"
@@ -11,6 +13,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QJsonArray>
+#include <stdexcept>
 #include <QJsonDocument>
 
 #include <iostream>
@@ -38,10 +41,93 @@ QString ResolveAgainst(const QString& base_dir, const QString& path)
 // the dataset and later steps read what earlier ones changed.
 static SourceSinkData script_data;
 
-ScriptRunner::ScriptRunner(ConsoleHost* _host, bool _quiet)
+ScriptRunner::ScriptRunner(ConsoleHost* _host, const CommandCatalog* _catalog, bool _quiet)
     : host(_host),
+      catalog(_catalog),
       quiet(_quiet)
 {
+}
+
+bool ScriptRunner::ValidateSteps(const QJsonArray& steps)
+{
+    // Every step is checked before any of them runs. A script is a pipeline
+    // whose later steps read what earlier ones changed, so stopping halfway
+    // through because of a typo in the last step would leave the project in a
+    // state nobody asked for.
+    QStringList problems;
+
+    for (int i = 0; i < steps.size(); i++)
+    {
+        const QJsonObject step = steps[i].toObject();
+        const QString command = step["command"].toString();
+        const QString where = "step " + QString::number(i + 1) + ": ";
+
+        if (command.isEmpty())
+        {
+            problems << where + "no \"command\" given.";
+            continue;
+        }
+
+        if (SetupCommands::IsSetupCommand(command))
+            continue;
+
+        if (catalog == nullptr || !catalog->IsLoaded())
+            continue;
+
+        for (const QString& problem :
+             catalog->Problems(command, step["arguments"].toObject().keys()))
+        {
+            problems << where + problem;
+        }
+    }
+
+    if (problems.isEmpty())
+        return true;
+
+    error = "The script was not run because of the following:\n  " + problems.join("\n  ");
+    return false;
+}
+
+QJsonObject ScriptRunner::RunSetupStep(const QJsonObject& step, int index, const QString& command)
+{
+    QJsonObject step_report;
+    step_report["step"] = index + 1;
+    step_report["command"] = command;
+    step_report["arguments"] = step["arguments"].toObject();
+
+    if (!quiet)
+        std::cerr << "[" << index + 1 << "] " << command.toStdString() << std::endl;
+
+    QStringList changes;
+    QString setup_error;
+
+    const bool applied = SetupCommands::Apply(command,
+                                              step["arguments"].toObject(),
+                                              &script_data,
+                                              changes,
+                                              setup_error);
+
+    if (!applied)
+    {
+        step_report["status"] = "failed";
+        step_report["error"] = setup_error;
+        if (!quiet)
+            std::cerr << "  error: " << setup_error.toStdString() << std::endl;
+        return step_report;
+    }
+
+    step_report["status"] = "succeeded";
+
+    QJsonArray change_array;
+    for (const QString& change : changes)
+    {
+        change_array.append(change);
+        if (!quiet)
+            std::cerr << "  " << change.toStdString() << std::endl;
+    }
+    step_report["changes"] = change_array;
+
+    return step_report;
 }
 
 bool ScriptRunner::LoadProject(const QString& project_path)
@@ -97,6 +183,21 @@ QJsonObject ScriptRunner::RunStep(const QJsonObject& step, int index)
         arguments[key.toStdString()] = as_text.toStdString();
         echoed_arguments[key] = as_text;
     }
+    // The analyses read their arguments with std::map::at(), which throws when
+    // a key is absent. The form would always have supplied every field, so
+    // anything the script left out is filled from the form's default.
+    if (catalog != nullptr && catalog->IsLoaded())
+    {
+        const QStringList filled = catalog->FillDefaults(command, arguments);
+        if (!filled.isEmpty())
+        {
+            QJsonArray defaulted;
+            for (const QString& name : filled)
+                defaulted.append(name);
+            step_report["defaulted"] = defaulted;
+        }
+    }
+
     step_report["arguments"] = echoed_arguments;
 
     if (!quiet)
@@ -109,7 +210,20 @@ QJsonObject ScriptRunner::RunStep(const QJsonObject& step, int index)
 
     QElapsedTimer timer;
     timer.start();
-    const bool succeeded = conductor.Execute(command.toStdString(), arguments);
+
+    bool succeeded = false;
+    try
+    {
+        succeeded = conductor.Execute(command.toStdString(), arguments);
+    }
+    catch (const std::exception& exception)
+    {
+        step_report["status"] = "failed";
+        step_report["error"] = QString("The analysis stopped with an error: ") + exception.what();
+        step_report["seconds"] = timer.elapsed() / 1000.0;
+        return step_report;
+    }
+
     step_report["seconds"] = timer.elapsed() / 1000.0;
 
     // Warnings explain why a command declined to run, so they belong in the
@@ -195,12 +309,22 @@ bool ScriptRunner::Run(const QString& script_path)
     report["started"] = QDateTime::currentDateTime().toString(Qt::ISODate);
 
     const QJsonArray steps = script["steps"].toArray();
+
+    if (!ValidateSteps(steps))
+        return false;
+
     QJsonArray step_reports;
     bool all_succeeded = true;
 
     for (int i = 0; i < steps.size(); i++)
     {
-        const QJsonObject step_report = RunStep(steps[i].toObject(), i);
+        const QJsonObject step = steps[i].toObject();
+        const QString step_command = step["command"].toString();
+
+        const QJsonObject step_report =
+            SetupCommands::IsSetupCommand(step_command)
+                ? RunSetupStep(step, i, step_command)
+                : RunStep(step, i);
         step_reports.append(step_report);
 
         if (step_report["status"].toString() != "succeeded")
