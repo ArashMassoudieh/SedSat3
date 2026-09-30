@@ -4048,9 +4048,16 @@ Results SourceSinkData::MCMC(
     const string& target_sample,
     map<string, string> arguments,
     CMCMC<SourceSinkData>* mcmc,
-    ProgressWindow* progress_window,
+    ProgressReporter* progress_window,
     const string& working_folder)
 {
+    // A null reporter stands in for a missing one so that the progress calls
+    // below need no null test. Callers that want no progress display pass
+    // nullptr.
+    NullProgressReporter discarded_progress;
+    if (progress_window == nullptr)
+        progress_window = &discarded_progress;
+
     // Initialize results container
     Results results;
     results.SetName("MCMC results for '" + target_sample + "'");
@@ -4087,7 +4094,7 @@ Results SourceSinkData::MCMC(
     progress_window->SetYAxisTitle("Acceptance Rate", 0);
     progress_window->SetYAxisTitle("Purturbation Factor", 1);
     progress_window->SetYAxisTitle("Log posterior value", 2);
-    progress_window->show();
+    progress_window->Start();
 
     // ========== Run MCMC Sampling ==========
     corrected_data.InitializeParametersAndObservations(target_sample);
@@ -4314,9 +4321,16 @@ Results SourceSinkData::MCMC(
 CMBMatrix SourceSinkData::MCMC_Batch(
     map<string, string> arguments,
     CMCMC<SourceSinkData>* mcmc,
-    ProgressWindow* progress_window,
+    ProgressReporter* progress_window,
     const string& working_folder)
 {
+    // A null reporter stands in for a missing one so that the progress calls
+    // below need no null test. Callers that want no progress display pass
+    // nullptr.
+    NullProgressReporter discarded_progress;
+    if (progress_window == nullptr)
+        progress_window = &discarded_progress;
+
     // Initialize with first target sample
     InitializeParametersAndObservations(at(target_group_).begin()->first);
 
@@ -5034,7 +5048,7 @@ estimation_mode SourceSinkData::ParameterEstimationMode()
     return parameter_estimation_mode_;
 }
 
-void SourceSinkData::SetProgressWindow(ProgressWindow* _rtw)
+void SourceSinkData::SetProgressWindow(ProgressReporter* _rtw)
 {
     rtw_ = _rtw;
 }

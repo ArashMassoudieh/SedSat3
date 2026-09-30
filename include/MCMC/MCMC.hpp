@@ -8,7 +8,9 @@
 #include <omp.h>
 #endif
 #include "MCMC.h"
-#include "ProgressWindow.h"
+#include "progressreporter.h"
+#include <QCoreApplication>
+#include <QEventLoop>
 #include "Utilities.h"
 
 
@@ -390,7 +392,7 @@ vector<double> CMCMC<T>::purturb(int k)
 }
 
 template<class T>
-bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *results, ProgressWindow *rtw)
+bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *results, ProgressReporter *rtw)
 {
 	FILE *file;
     if (!MCMC_Settings.continue_mcmc)
@@ -527,7 +529,7 @@ qDebug()<<7;
 }
 
 template<class T>
-void CMCMC<T>::SetRunTimeWindow(ProgressWindow *_rtw)
+void CMCMC<T>::SetRunTimeWindow(ProgressReporter *_rtw)
 {
     rtw = _rtw;
 }

@@ -7,7 +7,7 @@
 #include "observation.h"
 #include "contribution.h"
 #include "results.h"
-#include "ProgressWindow.h"
+#include "progressreporter.h"
 #include "fstream"
 #include "qjsonobject.h"
 #include "cmbvector.h"
@@ -849,9 +849,9 @@ public:
      * Assigns a progress window that will receive updates during long-running
      * operations like MCMC sampling, bootstrap analysis, or batch processing.
      *
-     * @param _rtw Pointer to ProgressWindow object (nullptr to disable progress display)
+     * @param _rtw Pointer to ProgressReporter object (nullptr to disable progress reporting)
      */
-    void SetProgressWindow(ProgressWindow* _rtw);
+    void SetProgressWindow(ProgressReporter* _rtw);
 
     
 
@@ -944,7 +944,7 @@ public:
      * @param target_sample Name of target sample to apportion
      * @param arguments Map of MCMC settings (number of samples, chains, burnin, etc.)
      * @param mcmc Pointer to MCMC sampler object
-     * @param progress_window Pointer to progress window for updates
+     * @param progress_window Pointer to progress reporter for updates
      * @param working_folder Base directory for output files
      *
      * @return Results object containing all MCMC outputs and credible intervals
@@ -956,7 +956,7 @@ public:
         const string& target_sample,
         map<string, string> arguments,
         CMCMC<SourceSinkData>* mcmc,
-        ProgressWindow* progress_window,
+        ProgressReporter* progress_window,
         const string& working_folder
     );
 
@@ -973,7 +973,7 @@ public:
      *
      * @param arguments Map of MCMC settings
      * @param mcmc Pointer to MCMC sampler object
-     * @param progress_window Pointer to progress window for updates
+     * @param progress_window Pointer to progress reporter for updates
      * @param working_folder Base directory for output folders
      *
      * @return CMBMatrix containing credible interval statistics for all samples
@@ -984,7 +984,7 @@ public:
     CMBMatrix MCMC_Batch(
         map<string, string> arguments,
         CMCMC<SourceSinkData>* mcmc,
-        ProgressWindow* progress_window,
+        ProgressReporter* progress_window,
         const string& working_folder
     );
 
@@ -1811,7 +1811,7 @@ private:
     double epsilon_;
 
     // UI and Tracking
-    ProgressWindow* rtw_ = nullptr;
+    ProgressReporter* rtw_ = nullptr;
     list<string> tools_used_;
     QMap<QString, double> options_;
 
