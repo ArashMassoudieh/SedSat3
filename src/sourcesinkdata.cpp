@@ -673,6 +673,39 @@ bool SourceSinkData::InitializeContributionsRandomlySoftmax()
 }
 
 
+namespace {
+
+/**
+ * @brief Whether a fitted distribution can supply the parameters a range needs
+ *
+ * Distribution parameters are derived from the data rather than stored in a
+ * project file, so a dataset that has not had PopulateElementDistributions()
+ * and AssignAllDistributions() called on it carries empty parameter vectors.
+ * Reading them is an out-of-range access, so every use is checked and the
+ * omission reported.
+ *
+ * @param fitted Distribution to read from, possibly null
+ * @param needed Number of parameters the caller is about to read
+ * @param element_name Constituent being set up, for the message
+ * @param group_name Group being set up, for the message
+ */
+bool FittedParametersAvailable(const Distribution* fitted,
+                               size_t needed,
+                               const string& element_name,
+                               const string& group_name)
+{
+    if (fitted != nullptr && fitted->parameters.size() >= needed)
+        return true;
+
+    std::cerr << "InitializeParametersAndObservations: no fitted distribution for '"
+              << element_name << "' in group '" << group_name
+              << "'. Build the distributions with PopulateElementDistributions() "
+                 "and AssignAllDistributions() before initializing." << std::endl;
+    return false;
+}
+
+} // namespace
+
 bool SourceSinkData::InitializeParametersAndObservations(
     const string& targetsamplename,
     estimation_mode est_mode)
@@ -797,13 +830,23 @@ bool SourceSinkData::InitializeParametersAndObservations(
                         p.SetName(group_name + "_" + element_name + "_mu");
                         p.SetPriorDistribution(distribution_type::normal);
 
+                        // A dataset that has not had its distributions built
+                        // has no fitted parameters to centre the range on.
+                        // Reading them anyway is an out-of-range access on an
+                        // empty vector, so report the omission instead.
+                        Distribution* estimated = profile_set.GetEstimatedDistribution(element_name);
+                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (estimated == nullptr ||
+                            !FittedParametersAvailable(fitted, 1, element_name, group_name))
+                        {
+                            return false;
+                        }
+
                         // Set estimated distribution type
-                        profile_set.GetEstimatedDistribution(element_name)->SetType(
-                            distribution_type::lognormal
-                        );
+                        estimated->SetType(distribution_type::lognormal);
 
                         // Set parameter range around fitted mu
-                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
                         p.SetRange(fitted->parameters[0] - 0.2, fitted->parameters[0] + 0.2);
 
                         parameters_.push_back(p);
@@ -825,13 +868,19 @@ bool SourceSinkData::InitializeParametersAndObservations(
                         p.SetName(group_name + "_" + element_name + "_mu");
                         p.SetPriorDistribution(distribution_type::normal);
 
+                        Distribution* estimated = profile_set.GetEstimatedDistribution(element_name);
+                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (estimated == nullptr ||
+                            !FittedParametersAvailable(fitted, 1, element_name, group_name))
+                        {
+                            return false;
+                        }
+
                         // Set estimated distribution type
-                        profile_set.GetEstimatedDistribution(element_name)->SetType(
-                            distribution_type::normal
-                        );
+                        estimated->SetType(distribution_type::normal);
 
                         // Set parameter range around fitted mu
-                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
                         p.SetRange(fitted->parameters[0] - 0.2, fitted->parameters[0] + 0.2);
 
                         parameters_.push_back(p);
@@ -855,6 +904,10 @@ bool SourceSinkData::InitializeParametersAndObservations(
 
                         // Set parameter range around fitted sigma (with bounds)
                         const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (!FittedParametersAvailable(fitted, 2, element_name, group_name))
+                            return false;
+
                         double lower = std::max(fitted->parameters[1] * 0.8, 0.001);
                         double upper = std::max(fitted->parameters[1] / 0.8, 2.0);
                         p.SetRange(lower, upper);
@@ -880,6 +933,10 @@ bool SourceSinkData::InitializeParametersAndObservations(
 
                         // Set parameter range around fitted sigma (with bounds)
                         const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (!FittedParametersAvailable(fitted, 2, element_name, group_name))
+                            return false;
+
                         double lower = std::max(fitted->parameters[1] * 0.8, 0.001);
                         double upper = std::max(fitted->parameters[1] / 0.8, 2.0);
                         p.SetRange(lower, upper);

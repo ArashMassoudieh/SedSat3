@@ -11,6 +11,7 @@
 #include "progressreporter.h"
 #include <QCoreApplication>
 #include <QEventLoop>
+#include <iostream>
 #include "Utilities.h"
 
 
@@ -396,13 +397,30 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 {
 	FILE *file;
     if (!MCMC_Settings.continue_mcmc)
-	{	file = fopen(filename.c_str(),"w");
+    {
+        // fopen returns null when the path cannot be written, for instance
+        // when no working folder has been set and the name resolves to the
+        // root of the filesystem. Passing that to fclose or fprintf crashes,
+        // so refuse the run and say which path failed.
+        file = fopen(filename.c_str(),"w");
+        if (file == nullptr)
+        {
+            std::cerr << "MCMC: could not open '" << filename
+                      << "' to write the sample output." << std::endl;
+            return false;
+        }
 		fclose(file);
 	}
     qDebug()<<5;
     if (!MCMC_Settings.continue_mcmc)
 	{
 		file = fopen(filename.c_str(),"a");
+        if (file == nullptr)
+        {
+            std::cerr << "MCMC: could not append to '" << filename
+                      << "' to write the sample output." << std::endl;
+            return false;
+        }
         fprintf(file,"%s, ", "no.");
         for (unsigned int i=0; i<MCMC_Settings.number_of_parameters; i++)
         {   fprintf(file, "%s, ", parameter(i)->Name().c_str());

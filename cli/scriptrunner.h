@@ -76,6 +76,7 @@ private:
     bool quiet;          ///< Suppresses narration
     QJsonObject report;  ///< Accumulated run report
     QString error;       ///< Why the script could not be started
+    QString working_folder; ///< Where analyses write files of their own
 };
 
 #endif // SCRIPTRUNNER_H

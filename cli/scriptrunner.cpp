@@ -149,6 +149,13 @@ bool ScriptRunner::LoadProject(const QString& project_path)
         return false;
     }
 
+    // Reading the file is only half of loading a project. Distribution
+    // parameters are derived from the data rather than stored, and the
+    // analyses read them, so they have to be built here exactly as
+    // MainWindow::LoadModel builds them after reading the same file.
+    script_data.PopulateElementDistributions();
+    script_data.AssignAllDistributions();
+
     return true;
 }
 
@@ -207,6 +214,11 @@ QJsonObject ScriptRunner::RunStep(const QJsonObject& step, int index)
 
     Conductor conductor(host);
     conductor.SetData(&script_data);
+
+    // Analyses that write files of their own resolve the name against the
+    // working folder. The graphical application always sets one; without it
+    // the name resolves to the root of the filesystem and the write fails.
+    conductor.SetWorkingFolder(working_folder);
 
     QElapsedTimer timer;
     timer.start();
@@ -292,6 +304,13 @@ bool ScriptRunner::Run(const QString& script_path)
         return false;
     }
 
+    // Files an analysis writes land beside the script unless the script says
+    // otherwise, which keeps a run self-contained and predictable.
+    working_folder = script.contains("working_folder")
+        ? ResolveAgainst(script_dir, script["working_folder"].toString())
+        : script_dir;
+    QDir().mkpath(working_folder);
+
     const QString project_path = ResolveAgainst(script_dir, script["project"].toString());
     if (project_path.isEmpty())
     {
@@ -306,6 +325,7 @@ bool ScriptRunner::Run(const QString& script_path)
 
     report["script"] = QFileInfo(script_path).absoluteFilePath();
     report["project"] = project_path;
+    report["working_folder"] = working_folder;
     report["started"] = QDateTime::currentDateTime().toString(Qt::ISODate);
 
     const QJsonArray steps = script["steps"].toArray();
