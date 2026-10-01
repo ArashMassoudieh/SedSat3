@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['n_0',['n',['../classGADistribution.html#af855f5fdd2c589f19ad4fa6d827089c8',1,'GADistribution::n'],['../structGA__Tweaking__parameters.html#ad40fb8e35f8c5aa37ad80f5d5f52bcd6',1,'GA_Tweaking_parameters::N']]],
+  ['name_1',['name',['../classObservation.html#af13e7976e2af370508b5fac020f61f2f',1,'Observation::name'],['../classParameter.html#a5edfa174bd9b40f80819b0390a030498',1,'Parameter::name'],['../classResultItem.html#acf2bae3e328d536e6e61a4d146c7f580',1,'ResultItem::name'],['../classResults.html#ad68c10e52be16019c48c35ee2a252ad8',1,'Results::name']]],
+  ['ndigits_2',['nDigits',['../classCBinary.html#ac7fbacb391c67783daca12eecc2c996c',1,'CBinary']]],
+  ['ngen_3',['nGen',['../structGA__Tweaking__parameters.html#a00c48bb809c5f88398bc8b84d790774a',1,'GA_Tweaking_parameters']]],
+  ['no_5fbins_4',['no_bins',['../structGA__Tweaking__parameters.html#a49e6da2058a1377d0a27e3f03f27714d',1,'GA_Tweaking_parameters']]],
+  ['noinipurt_5',['noinipurt',['../struct__MCMC__settings.html#a63a84c74b76c6977a682a8ccc1b7d57b',1,'_MCMC_settings']]],
+  ['noise_5frealization_5fwriteout_6',['noise_realization_writeout',['../struct__MCMC__settings.html#ad8034317c35639b42875b6f278665632',1,'_MCMC_settings']]],
+  ['notes_7',['Notes',['../classInterface.html#aa17442a40d4c1f315581c77314cb78fc',1,'Interface']]],
+  ['nparam_8',['nParam',['../structGA__Tweaking__parameters.html#aea9f94de709fb56618da8e65a3704f73',1,'GA_Tweaking_parameters']]],
+  ['nparams_9',['nParams',['../classCIndividual.html#a7037fbe2f43cea02b5b98d69aa8714d2',1,'CIndividual']]],
+  ['num_5fenh_10',['num_enh',['../structGA__Tweaking__parameters.html#a55ed6afa4a14a2ea4a7c468e792abc22',1,'GA_Tweaking_parameters']]],
+  ['number_5fof_5fchains_11',['number_of_chains',['../struct__MCMC__settings.html#a05b8327df4905c3c4f8085410221e461',1,'_MCMC_settings']]],
+  ['number_5fof_5fparameters_12',['number_of_parameters',['../struct__MCMC__settings.html#aa51b74881f1f29a0ef35a44ba2d56a7b',1,'_MCMC_settings']]],
+  ['number_5fof_5fpost_5festimate_5frealizations_13',['number_of_post_estimate_realizations',['../struct__MCMC__settings.html#a3125c9b55e1f3b4643165dce6d7d4b42',1,'_MCMC_settings']]],
+  ['numberofcolumns_14',['numberofcolumns',['../classSelectSampleDelegate.html#ada72e1daf7aa8afe8bb20cbc7b1413e0',1,'SelectSampleDelegate']]],
+  ['numberofconstituents_5f_15',['numberofconstituents_',['../classSourceSinkData.html#aca42c4fbe5e2da2fb69649444d570d91',1,'SourceSinkData']]],
+  ['numberofisotopes_5f_16',['numberofisotopes_',['../classSourceSinkData.html#af0ee8b291ffa6e5d3107c878ce357617',1,'SourceSinkData']]],
+  ['numberofsourcesamplesets_5f_17',['numberofsourcesamplesets_',['../classSourceSinkData.html#a740ad11fd70ca07381edd903231b6b49',1,'SourceSinkData']]],
+  ['numberofthreads_18',['numberofthreads',['../classCGA.html#ac3609bac5bfe4364d88aeecc5f821e92',1,'CGA::numberOfThreads'],['../struct__MCMC__settings.html#a5f43519e1c57be528177f908945fbfe4',1,'_MCMC_settings::numberOfThreads']]],
+  ['numenhancements_19',['numenhancements',['../structGA__Tweaking__parameters.html#abc46ec38c07ae639d9537e69350d1059',1,'GA_Tweaking_parameters']]]
+];

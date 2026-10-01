@@ -1,0 +1,27 @@
+var classCIndividual =
+[
+    [ "CIndividual", "classCIndividual.html#a99f8770a2ced6c434e3ea73a4ee76c81", null ],
+    [ "CIndividual", "classCIndividual.html#a5499e3acbe12670f73d95f36c00bf8c6", null ],
+    [ "CIndividual", "classCIndividual.html#aaffb1c345f2e88638875be918e12d491", null ],
+    [ "~CIndividual", "classCIndividual.html#aaed3bf3848b909905f744b83de05363f", null ],
+    [ "initialize", "classCIndividual.html#a75526b341a075d56577e52db02b7a85f", null ],
+    [ "mutate", "classCIndividual.html#a57872dc367fb8cc07ca2d90b7efc6c27", null ],
+    [ "operator=", "classCIndividual.html#a7aafaf915575aa9d2a118e34152c2f04", null ],
+    [ "shake", "classCIndividual.html#a0fbe8581e789a590519311adb674237c", null ],
+    [ "actual_fitness", "classCIndividual.html#a30f511767109626c0463b39689828e27", null ],
+    [ "actual_fitness2", "classCIndividual.html#ac5dec8c1dd0e84e47ed8757786061220", null ],
+    [ "dir", "classCIndividual.html#a55b41388577ffa9e635dbe4fc753d66e", null ],
+    [ "fit_measures", "classCIndividual.html#ad4f4b1185144c410fdd644fdae190ffb", null ],
+    [ "fitness", "classCIndividual.html#ae82ac7b36d85ed31f18c85b994d0b014", null ],
+    [ "maxrange", "classCIndividual.html#ad8faa3d3f5d86e00fc6f75de83ab8146", null ],
+    [ "minrange", "classCIndividual.html#ab1ae74906e074fb3c91ae2cb7f9de91b", null ],
+    [ "nParams", "classCIndividual.html#a7037fbe2f43cea02b5b98d69aa8714d2", null ],
+    [ "parent1", "classCIndividual.html#a444ae9b1ce4808984c6c95dce0d25a77", null ],
+    [ "parent2", "classCIndividual.html#a733ea523cb211159494bad4dea4a2db7", null ],
+    [ "pert", "classCIndividual.html#a642aa0b8a04bfbadf5745c4d63d2b732", null ],
+    [ "perteff", "classCIndividual.html#a76406c7fe6bace5bdab6e6d62f4a669c", null ],
+    [ "precision", "classCIndividual.html#a99916bd730c41e4debeb97eafdcc46d9", null ],
+    [ "rank", "classCIndividual.html#a3654c90e71215259c44679b1af4c8efe", null ],
+    [ "x", "classCIndividual.html#a897eabc77d82add8ae4ba0453069763b", null ],
+    [ "xsite", "classCIndividual.html#a1255113ec2014e5c1d45cf3fc344dfbc", null ]
+];

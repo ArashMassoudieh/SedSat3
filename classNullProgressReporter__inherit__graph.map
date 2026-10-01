@@ -1,0 +1,5 @@
+<map id="NullProgressReporter" name="NullProgressReporter">
+<area shape="rect" id="Node000001" title="ProgressReporter that discards everything reported to it." alt="" coords="10,379,162,644"/>
+<area shape="rect" id="Node000002" href="$classProgressReporter.html" title="Abstract sink for progress information produced by a running analysis." alt="" coords="5,5,167,331"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,344,89,378,83,378,83,344"/>
+</map>

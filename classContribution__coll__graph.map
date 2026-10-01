@@ -1,0 +1,9 @@
+<map id="Contribution" name="Contribution">
+<area shape="rect" id="Node000001" title="Source contribution container for Chemical Mass Balance results." alt="" coords="56,588,229,813"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,323,168,389"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,402,127,587,122,588,91,403"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="192,173,368,539"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,552,190,589,185,587,200,550"/>
+<area shape="rect" id="Node000004" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="211,5,349,111"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="283,111,283,157,277,157,277,111"/>
+</map>

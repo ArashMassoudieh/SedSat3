@@ -1,0 +1,52 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="36,5,109,31"/>
+<area shape="rect" id="Node000001" href="$classCMBMatrix.html" title="Matrix class with labeled rows and columns for Chemical Mass Balance analysis." alt="" coords="245,5,339,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="124,15,245,15,245,21,124,21"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="37,55,109,80"/>
+<area shape="rect" id="Node000007" href="$classCMBVector.html" title="Vector class with string labels for Chemical Mass Balance analysis." alt="" coords="245,55,339,80"/>
+<area shape="poly" id="edge2_Node000008_Node000007" title=" " alt="" coords="122,65,245,65,245,70,122,70"/>
+<area shape="rect" id="Node000002" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="33,325,113,351"/>
+<area shape="poly" id="edge3_Node000002_Node000001" title=" " alt="" coords="84,312,137,189,148,146,152,109,160,75,170,58,186,40,214,24,244,16,245,22,216,29,190,44,174,61,165,77,157,110,153,147,143,191,89,314"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="83,311,186,90,214,74,244,67,245,72,216,79,190,93,88,314"/>
+<area shape="rect" id="Node000003" href="$classCMBTimeSeries.html" title="Time series data container with Interface support." alt="" coords="229,104,355,129"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="79,311,93,272,116,225,146,178,186,139,206,127,228,120,230,125,209,132,190,143,150,182,120,228,98,274,84,313"/>
+<area shape="rect" id="Node000005" href="$classCMBTimeSeriesSet.html" title="Collection of time series with labels and observed values." alt="" coords="219,153,365,179"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="84,312,124,249,152,216,187,188,217,174,220,179,189,192,156,220,128,252,88,315"/>
+<area shape="rect" id="Node000009" href="$classCMBVectorSet.html" title="Collection of named CMBVector objects for multi&#45;variable analysis." alt="" coords="235,548,349,573"/>
+<area shape="poly" id="edge7_Node000002_Node000009" title=" " alt="" coords="90,362,148,465,190,533,211,545,235,553,234,558,209,550,186,537,143,468,85,364"/>
+<area shape="rect" id="Node000011" href="$classCMBVectorSetSet.html" title="Collection of named CMBVectorSet objects for hierarchical data organization." alt="" coords="225,351,359,376"/>
+<area shape="poly" id="edge8_Node000002_Node000011" title=" " alt="" coords="126,341,225,353,224,358,126,347"/>
+<area shape="rect" id="Node000012" href="$classContribution.html" title="Source contribution container for Chemical Mass Balance results." alt="" coords="241,400,343,425"/>
+<area shape="poly" id="edge9_Node000002_Node000012" title=" " alt="" coords="114,354,189,385,241,400,240,405,187,390,112,359"/>
+<area shape="rect" id="Node000016" href="$classElemental__Profile.html" title="Container for elemental concentration data of a single sediment sample." alt="" coords="224,647,360,672"/>
+<area shape="poly" id="edge10_Node000002_Node000016" title=" " alt="" coords="92,361,117,406,142,460,151,487,155,511,156,554,163,593,173,612,190,632,206,643,225,651,223,656,203,648,186,636,168,615,158,595,151,555,149,511,146,488,138,462,112,409,87,364"/>
+<area shape="rect" id="Node000018" href="$classElemental__Profile__Set.html" title="Manages a collection of elemental profiles (samples) for source fingerprinting analysis." alt="" coords="210,696,374,721"/>
+<area shape="poly" id="edge11_Node000002_Node000018" title=" " alt="" coords="92,361,118,406,143,460,152,494,155,525,153,580,154,606,158,630,169,655,190,681,211,696,208,700,186,685,165,658,153,632,148,606,148,580,150,525,147,495,137,462,113,408,88,364"/>
+<area shape="rect" id="Node000020" href="$classMultipleLinearRegression.html" title=" " alt="" coords="199,203,385,228"/>
+<area shape="poly" id="edge12_Node000002_Node000020" title=" " alt="" coords="92,313,133,274,159,254,187,237,216,226,218,231,189,242,162,258,137,278,96,317"/>
+<area shape="rect" id="Node000013" href="$classMultipleLinearRegressionSet.html" title=" " alt="" coords="188,449,396,475"/>
+<area shape="poly" id="edge13_Node000002_Node000013" title=" " alt="" coords="96,359,137,398,162,418,189,434,221,447,219,452,187,439,159,422,133,402,92,363"/>
+<area shape="rect" id="Node000021" href="$classRange.html" title=" " alt="" coords="261,252,323,277"/>
+<area shape="poly" id="edge14_Node000002_Node000021" title=" " alt="" coords="111,317,187,286,260,268,261,273,189,291,113,322"/>
+<area shape="rect" id="Node000014" href="$classRangeSet.html" title=" " alt="" coords="250,499,334,524"/>
+<area shape="poly" id="edge15_Node000002_Node000014" title=" " alt="" coords="89,362,128,424,156,456,189,484,219,498,250,505,249,510,217,503,187,488,153,460,124,427,84,365"/>
+<area shape="rect" id="Node000022" href="$classResultItem.html" title=" " alt="" coords="245,301,339,327"/>
+<area shape="poly" id="edge16_Node000002_Node000022" title=" " alt="" coords="126,330,245,316,245,322,126,335"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="47,473,98,499"/>
+<area shape="poly" id="edge17_Node000010_Node000009" title=" " alt="" coords="111,501,189,533,235,546,234,551,187,538,109,506"/>
+<area shape="poly" id="edge18_Node000010_Node000011" title=" " alt="" coords="92,461,133,422,159,402,187,385,223,371,225,376,189,390,162,406,137,426,96,465"/>
+<area shape="poly" id="edge19_Node000010_Node000012" title=" " alt="" coords="110,466,187,434,240,420,241,425,189,439,112,471"/>
+<area shape="poly" id="edge20_Node000010_Node000013" title=" " alt="" coords="111,479,187,471,188,476,112,484"/>
+<area shape="poly" id="edge21_Node000010_Node000014" title=" " alt="" coords="112,488,250,504,250,509,111,493"/>
+<area shape="rect" id="Node000015" href="$classResults.html" title=" " alt="" coords="257,597,327,623"/>
+<area shape="poly" id="edge22_Node000010_Node000015" title=" " alt="" coords="96,507,137,546,162,566,189,582,223,595,257,603,256,608,222,601,187,587,159,570,133,550,92,511"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="5,696,140,721"/>
+<area shape="poly" id="edge23_Node000017_Node000016" title=" " alt="" coords="142,690,234,669,235,675,144,696"/>
+<area shape="poly" id="edge24_Node000017_Node000018" title=" " alt="" coords="154,706,210,706,210,711,154,711"/>
+<area shape="rect" id="Node000019" href="$classSourceSinkData.html" title=" " alt="" coords="229,745,355,771"/>
+<area shape="poly" id="edge25_Node000017_Node000019" title=" " alt="" coords="144,722,235,743,234,748,142,727"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="25,104,120,129"/>
+<area shape="poly" id="edge26_Node000004_Node000003" title=" " alt="" coords="134,114,229,114,229,119,134,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="15,153,131,179"/>
+<area shape="poly" id="edge27_Node000006_Node000005" title=" " alt="" coords="145,163,219,163,219,169,145,169"/>
+</map>
