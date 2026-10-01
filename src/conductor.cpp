@@ -1380,14 +1380,24 @@ bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>
     rtw->Start();
 
     // Execute batch MCMC sampling
+    std::vector<std::string> failed_writes;
     CMBMatrix* contributions = new CMBMatrix(
         Data()->MCMC_Batch(
             arguments,
             MCMC.get(),
             rtw,
-            workingfolder.toStdString()
+            workingfolder.toStdString(),
+            &failed_writes
         )
     );
+
+    if (!failed_writes.empty())
+    {
+        std::string message = "Some per-sample result files could not be written:\n";
+        for (const std::string& failure : failed_writes)
+            message += failure + "\n";
+        host->ShowWarning(message);
+    }
 
     results.SetName("CMB Bayesian-Batch");
 

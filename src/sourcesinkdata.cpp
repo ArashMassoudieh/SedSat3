@@ -4382,11 +4382,28 @@ Results SourceSinkData::MCMC(
 }
 
 
+// Replaces the characters Windows does not allow in a file or folder name, and
+// the trailing dots and spaces it silently strips, so that the same name works
+// on every platform.
+static QString SafeFileName(const QString& name)
+{
+    QString safe = name;
+    for (QChar& c : safe)
+    {
+        if (c.unicode() < 32 || QStringLiteral("\\/:*?\"<>|").contains(c))
+            c = QLatin1Char('_');
+    }
+    while (safe.endsWith(QLatin1Char('.')) || safe.endsWith(QLatin1Char(' ')))
+        safe.chop(1);
+    return safe.isEmpty() ? QStringLiteral("_") : safe;
+}
+
 CMBMatrix SourceSinkData::MCMC_Batch(
     map<string, string> arguments,
     CMCMC<SourceSinkData>* mcmc,
     ProgressReporter* progress_window,
-    const string& working_folder)
+    const string& working_folder,
+    vector<string>* failed_writes)
 {
     // A null reporter stands in for a missing one so that the progress calls
     // below need no null test. Callers that want no progress display pass
@@ -4422,10 +4439,13 @@ CMBMatrix SourceSinkData::MCMC_Batch(
         const string& sample_name = sample->first;
 
         // Create output directory for this sample
-        QDir sample_dir(QString::fromStdString(working_folder) + "/" + QString::fromStdString(sample_name));
-        if (!sample_dir.exists())
+        QDir sample_dir(QString::fromStdString(working_folder) + "/" +
+            SafeFileName(QString::fromStdString(sample_name)));
+        const bool sample_dir_ok = sample_dir.exists() || sample_dir.mkpath(".");
+        if (!sample_dir_ok && failed_writes != nullptr)
         {
-            sample_dir.mkpath(".");
+            failed_writes->push_back("could not create folder " +
+                sample_dir.absolutePath().toStdString());
         }
 
         // Set matrix row label
@@ -4437,17 +4457,30 @@ CMBMatrix SourceSinkData::MCMC_Batch(
         // Run MCMC analysis for this sample
         Results mcmc_results = MCMC(sample_name, arguments, mcmc, progress_window, working_folder);
 
-        // Save all result items to text files
+        // Save all result items to text files. The result keys have the form
+        // "<index>:<name>", and a colon in a path on Windows names an NTFS
+        // alternate data stream, so the key must be made safe before use.
         for (map<string, ResultItem>::iterator result_item = mcmc_results.begin();
-            result_item != mcmc_results.end();
+            sample_dir_ok && result_item != mcmc_results.end();
             result_item++)
         {
             QString file_path = sample_dir.absolutePath() + "/" +
-                QString::fromStdString(result_item->first) + ".txt";
+                SafeFileName(QString::fromStdString(result_item->first)) + ".txt";
             QFile output_file(file_path);
-            output_file.open(QIODevice::WriteOnly | QIODevice::Text);
+            if (!output_file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                if (failed_writes != nullptr)
+                    failed_writes->push_back(file_path.toStdString() + ": " +
+                        output_file.errorString().toStdString());
+                continue;
+            }
             result_item->second.Result()->writetofile(&output_file);
             output_file.close();
+            if (output_file.error() != QFileDevice::NoError && failed_writes != nullptr)
+            {
+                failed_writes->push_back(file_path.toStdString() + ": " +
+                    output_file.errorString().toStdString());
+            }
         }
 
         // Extract contribution statistics from credible intervals

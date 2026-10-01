@@ -975,17 +975,22 @@ public:
      * @param mcmc Pointer to MCMC sampler object
      * @param progress_window Pointer to progress reporter for updates
      * @param working_folder Base directory for output folders
+     * @param failed_writes If not null, receives one line for each output folder
+     *        or file that could not be written
      *
      * @return CMBMatrix containing credible interval statistics for all samples
      *
      * @note Creates subdirectory for each target sample
-     * @note All ResultItems saved as text files
+     * @note All ResultItems saved as text files. Characters that are not
+     *       allowed in Windows file names are replaced with '_', so the result
+     *       "1:MCMC samples" is written to "1_MCMC samples.txt"
      */
     CMBMatrix MCMC_Batch(
         map<string, string> arguments,
         CMCMC<SourceSinkData>* mcmc,
         ProgressReporter* progress_window,
-        const string& working_folder
+        const string& working_folder,
+        vector<string>* failed_writes = nullptr
     );
 
     // --- Likelihood and Objective Functions ---

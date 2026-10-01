@@ -115,6 +115,28 @@ macx {
     QMAKE_LFLAGS   += -lomp
 }
 
+# Windows with MSVC, using the same dependency layout as SedSat3.vcxproj:
+# armadillo and vcpkg checked out next to this repository.
+win32-msvc {
+    DEPS_ROOT = $$clean_path($$PWD/..)
+
+    INCLUDEPATH += $${DEPS_ROOT}/armadillo/armadillo-header
+    INCLUDEPATH += $${DEPS_ROOT}/vcpkg/installed/x64-windows/include
+
+    DEFINES += NOMINMAX ARMA_USE_LAPACK ARMA_USE_BLAS
+
+    LIBS += -L$${DEPS_ROOT}/armadillo/lapack-blas_lib_win64
+    LIBS += -L$${DEPS_ROOT}/vcpkg/installed/x64-windows/lib
+    LIBS += -lblas_win64_MT -llapack_win64_MT -lgsl -lgslcblas
+
+    QMAKE_CXXFLAGS += /Zc:__cplusplus
+
+    # The bundled armadillo has no SuperLU, so spsolve() is unavailable. The
+    # sparse matrix class is not used by any analysis, and SedSat3.vcxproj
+    # leaves it out for the same reason.
+    SOURCES -= Utilities/Matrix_arma_sp.cpp
+}
+
 QMAKE_CXXFLAGS += $$QMAKE_CXXFLAGS_OPENMP
 QMAKE_LFLAGS   += $$QMAKE_LFLAGS_OPENMP
 
