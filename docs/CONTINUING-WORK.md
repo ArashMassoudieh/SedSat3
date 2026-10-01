@@ -220,9 +220,27 @@ Notes:
 
 ## 6. Open problems, in the order they matter
 
-### 6.1 Result files are blank on Windows — blocking the reviewer
+### 6.1 Result files are blank on Windows — FIXED
 
-**This is the one to fix first.** Lillian reports that every text output file
+**Fixed in `05ac925`, verified on Windows.** Result keys and sample names are
+passed through `SafeFileName` before use as paths, so `1:MCMC samples` is now
+written to `1_MCMC samples.txt`. Folder creation, file open and the final write
+are checked, and failures come back to `Conductor::ExecuteCMBBayesianBatch`,
+which shows them as a warning. A batch run of `Isotope_test.cmb` with the
+CLI on Windows wrote 119 files, none empty, with no alternate data streams.
+The same commit adds a `win32-msvc` section to `SedSat3CLI.pro`, so the CLI
+builds on Windows with the `..\armadillo` and `..\vcpkg` layout that
+`SedSat3.vcxproj` uses.
+
+When results first became visible, they looked unconverged. That is expected at
+the settings used: `Number of samples` and the burn-in both count samples
+**across all chains**, so 1000 samples with 8 chains is 125 steps per chain,
+and 100 burn-in discards about 12 steps per chain. At 40000 samples with 20000
+burn-in, the validation targets `CTAIL2`–`CTAIL5` come out at 85–99% to the
+correct source, agreeing with Levenberg-Marquardt. The sampler is fine; the
+dialog does not make the units clear.
+
+The original diagnosis follows. Lillian reports that every text output file
 from the Bayesian batch is blank. It is not a sample-count problem: running her
 exact settings (1000 samples, 8 chains, 100 burn-in) on Linux produced 119
 files, 7 per sample for all 17 samples, none of them empty.
@@ -261,7 +279,11 @@ alternate data streams, so the data will appear as `1:MCMC samples.txt:$DATA`
 under a 0-byte `1`. The data is recoverable with
 `more < "1:MCMC samples.txt" > out.txt`.
 
-### 6.2 `MCMC_Output.txt` is overwritten by every sample
+### 6.2 `MCMC_Output.txt` is overwritten by every sample — FIXED
+
+**Fixed in `784f4f9`, verified on Windows.** Each sample's log is now written
+to its own folder, falling back to the working folder only if the sample
+folder could not be created. The original diagnosis follows.
 
 `MCMC_Batch` creates a per-sample directory and then calls `MCMC(...)` passing
 the **parent** `working_folder` (`src/sourcesinkdata.cpp:4438`), so the raw
@@ -365,8 +387,10 @@ reviewer as one pattern rather than five tickets.
 
 ## 8. What the reviewers are waiting on
 
-- **Lillian Gorman Sanisaca** — blank output files (6.1). Until that is fixed
-  she can use the results window's own save and the table viewer's Export to
+- **Lillian Gorman Sanisaca** — blank output files (6.1). Fixed in `05ac925`,
+  but she needs a new build to get it. She should also be told that sample
+  counts span all chains (see 6.1), or her results will look unconverged.
+  Until she has the build she can use the results window's own save and the table viewer's Export to
   CSV: both use a file dialog where she types the name, so neither hits the
   colon problem, and both check that the file opened. Her existing output is
   also recoverable from the NTFS streams as described in 6.1. She does not have
