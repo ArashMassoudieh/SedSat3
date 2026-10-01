@@ -14,7 +14,7 @@
 #include "parameter.h"
 #include "cmbtimeseriesset.h"
 
-class ProgressWindow;
+class ProgressReporter;
 
 /**
  * @struct _MCMC_file_names
@@ -481,9 +481,9 @@ public:
      * - Progress bar updates
      * - Convergence monitoring
      *
-     * @see ProgressWindow
+     * @see ProgressReporter
      */
-    bool step(int k, int nsamps, string filename, CMBTimeSeriesSet *results = nullptr, ProgressWindow* _rtw = 0);
+    bool step(int k, int nsamps, string filename, CMBTimeSeriesSet *results = nullptr, ProgressReporter* _rtw = 0);
 
     /**
      * @brief Generate proposed parameter values by perturbing current state
@@ -669,7 +669,7 @@ public:
      * If not nullptr, MCMC will update progress bar and display current
      * acceptance rate, parameter values, etc.
      */
-    ProgressWindow *rtw = nullptr;
+    ProgressReporter *rtw = nullptr;
 #endif // QT_version
 
     /**
@@ -797,11 +797,11 @@ public:
 
     /**
      * @brief Set progress window for GUI updates
-     * @param _rtw Pointer to ProgressWindow object
+     * @param _rtw Pointer to ProgressReporter object
      *
      * Links MCMC to a progress dialog for real-time status updates.
      */
-    void SetRunTimeWindow(ProgressWindow *_rtw);
+    void SetRunTimeWindow(ProgressReporter *_rtw);
 
     /**
      * @brief Count of accepted proposals

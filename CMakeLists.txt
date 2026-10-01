@@ -58,6 +58,8 @@ set(PROJECT_SOURCES
     filebrowserpushbuttom.cpp
     formelementinformation.cpp
     generalchart.cpp
+    guihost.cpp
+    guihost.h
     generalplotter.cpp
     genericform.cpp
     indicatesheetsdialog.cpp

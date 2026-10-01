@@ -9,9 +9,10 @@
 #endif
 
 #include "parameter.h"
+#include <QCoreApplication>
 
 #ifdef Q_version
-    #include "ProgressWindow.h"
+    #include "progressreporter.h"
 #endif
 
 template<class T>

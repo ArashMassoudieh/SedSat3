@@ -40,6 +40,7 @@ SOURCES += \
     filebrowserpushbuttom.cpp \
     formelementinformation.cpp \
     generalchart.cpp \
+    guihost.cpp \
     generalplotter.cpp \
     genericform.cpp \
     indicatesheetsdialog.cpp \
@@ -109,6 +110,7 @@ HEADERS += \
     filebrowserpushbuttom.h \
     formelementinformation.h \
     generalchart.h \
+    guihost.h \
     generalplotter.h \
     genericform.h \
     include/GA/Binary.h \

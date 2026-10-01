@@ -1,17 +1,16 @@
 #include "conductor.h"
-#include "ProgressWindow.h"
+#include "analysishost.h"
+#include "progressreporter.h"
 #include "results.h"
 #include "contribution.h"
 #include "resultitem.h"
 #include "testmcmc.h"
 #include "rangeset.h"
-#include <QMessageBox>
 
-#include "mainwindow.h"
 
-Conductor::Conductor(MainWindow* mainwindow)
+Conductor::Conductor(AnalysisHost* host)
     : data(nullptr),
-    mainwindow(mainwindow)
+    host(host)
 {
 }
 
@@ -23,112 +22,101 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
 
     if (command == "GA")
     {
-        ExecuteGA(arguments);
+        return ExecuteGA(arguments);
     }
     if (command == "GA (fixed elemental contribution)")
     {
-		ExecuteGA_FixedProfile(arguments);
+		return ExecuteGA_FixedProfile(arguments);
     }
     if (command == "GA (disregarding targets)")
     {
-        ExecuteGA_NoTargets(arguments);
+        return ExecuteGA_NoTargets(arguments);
     }
     if (command == "Levenberg-Marquardt")
     {
-        ExecuteLevenbergMarquardt(arguments); 
+        return ExecuteLevenbergMarquardt(arguments);
     }
     if (command == "Levenberg-Marquardt-Batch")
     {
-		ExecuteLevenbergMarquardtBatch(arguments);
-
+		return ExecuteLevenbergMarquardtBatch(arguments);
     }
     if (command == "OM-Size Correct")
     {
-		ExecuteOMSizeCorrect(arguments);
+		return ExecuteOMSizeCorrect(arguments);
     }
     if (command == "MLR")
     {
-		ExecuteMLR(arguments);
+		return ExecuteMLR(arguments);
     }
     if (command == "CovMat")
     {
-		ExecuteCovarianceMatrix(arguments);
-
+		return ExecuteCovarianceMatrix(arguments);
     }
     if (command == "CorMat")
     {
-		ExecuteCorrelationMatrix(arguments);
+		return ExecuteCorrelationMatrix(arguments);
     }
     if (command == "DFA")
     {
-		ExecuteDFA(arguments);
+		return ExecuteDFA(arguments);
     }
 
     if (command == "DFAOnevsRest")
     {
-		ExecuteDFAOnevsRest(arguments);
-
+		return ExecuteDFAOnevsRest(arguments);
     }
     if (command == "DFAM")
     {
-		ExecuteDFAM(arguments);
-
+		return ExecuteDFAM(arguments);
     }
     if (command == "SDFA")
     {
-		ExecuteSDFA(arguments);
-
+		return ExecuteSDFA(arguments);
     }
 
     if (command == "SDFAM")
     {
-		ExecuteSDFAM(arguments);
+		return ExecuteSDFAM(arguments);
     }
 
     if (command == "SDFAOnevsRest")
     {
-		ExecuteSDFAOnevsRest(arguments);
-
+		return ExecuteSDFAOnevsRest(arguments);
     }
 
     if (command == "KS")
     {
-		ExecuteKolmogorovSmirnov(arguments);
+		return ExecuteKolmogorovSmirnov(arguments);
     }
     if (command == "KS-individual")
     {
-		ExecuteKolmogorovSmirnovIndividual(arguments);
+		return ExecuteKolmogorovSmirnovIndividual(arguments);
     }
     if (command == "CMB Bayesian")
     {
-		ExecuteCMBBayesian(arguments);
+		return ExecuteCMBBayesian(arguments);
     }
     if (command == "CMB Bayesian-Batch")
     {
-		ExecuteCMBBayesianBatch(arguments);
+		return ExecuteCMBBayesianBatch(arguments);
     }
     if (command == "Test CMB Bayesian")
     {
-		ExecuteTestCMBBayesian(arguments);
-
-
+		return ExecuteTestCMBBayesian(arguments);
     }
 
     if (command == "DF")
     {
-		ExecuteDistributionFitting(arguments);
-
+		return ExecuteDistributionFitting(arguments);
     }
 
     if (command == "Bracketing Analysis")
     {
-		ExecuteBracketingAnalysis(arguments);
-
+		return ExecuteBracketingAnalysis(arguments);
     }
     if (command == "Bracketing Analysis Batch")
     {
-		ExecuteBracketingAnalysisBatch(arguments);
-
+		return ExecuteBracketingAnalysisBatch(arguments);
     }
     if (command == "BoxCox")
     {
@@ -185,7 +173,7 @@ bool Conductor::CheckNegativeElements(SourceSinkData *_data)
         {
             message += QString::fromStdString(NegativeCheckResults[i]+"\n");
         }
-        QMessageBox::warning(mainwindow, "SedSAT3",message, QMessageBox::Ok);
+        host->ShowWarning(message.toStdString());
         return false;
     }
     return true;
@@ -208,15 +196,16 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
     }
 
     if (message!="")
-    {   QMessageBox::warning(mainwindow, "SedSAT3",message, QMessageBox::Ok);
+    {   host->ShowWarning(message.toStdString());
         return false;
     }
 
+    return true;
 }
 
 bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow);
+    ScopedProgressReporter rtw(host);
 
     bool organic_size_correction;
     if (arguments.at("Apply size and organic matter correction") == "true")
@@ -224,7 +213,7 @@ bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)
         organic_size_correction = true;
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -239,7 +228,7 @@ bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)
         Data()->GetElementInformation()
     );
 
-    rtw->show();
+    rtw->Start();
     corrected_data.InitializeParametersAndObservations(arguments.at("Sample"));
 
     if (!CheckNegativeElements(&corrected_data))
@@ -306,7 +295,7 @@ bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)
 
 bool Conductor::ExecuteGA_FixedProfile(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow);
+    ScopedProgressReporter rtw(host);
     rtw->SetTitle("Fitness", 0);
     rtw->SetYAxisTitle("Fitness", 0);
 
@@ -316,7 +305,7 @@ bool Conductor::ExecuteGA_FixedProfile(const std::map<std::string, std::string>&
         organic_size_correction = true;
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -334,7 +323,7 @@ bool Conductor::ExecuteGA_FixedProfile(const std::map<std::string, std::string>&
     if (!CheckNegativeElements(&corrected_data))
         return false;
 
-    rtw->show();
+    rtw->Start();
     corrected_data.InitializeParametersAndObservations(
         arguments.at("Sample"),
         estimation_mode::only_contributions
@@ -364,8 +353,8 @@ bool Conductor::ExecuteGA_FixedProfile(const std::map<std::string, std::string>&
 
 bool Conductor::ExecuteGA_NoTargets(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow);
-    rtw->show();
+    ScopedProgressReporter rtw(host);
+    rtw->Start();
 
     Data()->InitializeParametersAndObservations(
         arguments.at("Sample"),
@@ -399,7 +388,7 @@ bool Conductor::ExecuteGA_NoTargets(const std::map<std::string, std::string>& ar
 
 bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow);
+    ScopedProgressReporter rtw(host);
 
     bool organic_size_correction;
     if (arguments.at("Apply size and organic matter correction") == "true")
@@ -407,7 +396,7 @@ bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::strin
         organic_size_correction = true;
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -416,7 +405,7 @@ bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::strin
         organic_size_correction = false;
     }
 
-    rtw->show();
+    rtw->Start();
 
     SourceSinkData corrected_data = Data()->CreateCorrectedDataset(
         arguments.at("Sample"),
@@ -428,7 +417,7 @@ bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::strin
         return false;
 
     corrected_data.InitializeParametersAndObservations(arguments.at("Sample"));
-    corrected_data.SetProgressWindow(rtw);
+    corrected_data.SetProgressReporter(rtw);
 
     if (arguments.at("Softmax transformation") == "true")
     {
@@ -462,7 +451,7 @@ bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::strin
 
 bool Conductor::ExecuteLevenbergMarquardtBatch(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
+    ScopedProgressReporter rtw(host, 0);
 
     bool organic_size_correction;
     if (arguments.at("Apply size and organic matter correction") == "true")
@@ -470,7 +459,7 @@ bool Conductor::ExecuteLevenbergMarquardtBatch(const std::map<std::string, std::
         organic_size_correction = true;
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -479,9 +468,9 @@ bool Conductor::ExecuteLevenbergMarquardtBatch(const std::map<std::string, std::
         organic_size_correction = false;
     }
 
-    rtw->show();
+    rtw->Start();
 
-    Data()->SetProgressWindow(rtw);
+    Data()->SetProgressReporter(rtw);
 
     CMBTimeSeriesSet* contributions;
     std::map<std::string, std::vector<std::string>> negative_elements;
@@ -563,12 +552,8 @@ bool Conductor::ExecuteMLR(const std::map<std::string, std::string>& arguments)
     if (arguments.at("Organic Matter constituent") == "" &&
         arguments.at("Particle Size constituent") == "")
     {
-        QMessageBox::information(
-            mainwindow,
-            "Exclude Elements",
-            "At least one of Organic Matter constituent and Particle Size constituent must be selected",
-            QMessageBox::Ok
-        );
+        host->ShowWarning("At least one of Organic Matter constituent and "
+                          "Particle Size constituent must be selected");
         return false;
     }
 
@@ -675,7 +660,7 @@ bool Conductor::ExecuteCorrelationMatrix(const std::map<std::string, std::string
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = transformed_data.CreateCorrectedDataset(
@@ -702,12 +687,12 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
 {
     if (arguments.at("Source/Target group I") == arguments.at("Source/Target group II"))
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "The selected sources must be different", QMessageBox::Ok);
+        host->ShowWarning("The selected sources must be different");
         return false;
     }
 
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
-    rtw->show();
+    ScopedProgressReporter rtw(host, 0);
+    rtw->Start();
 
     results.SetName("DFA between " + arguments.at("Source/Target group I") +
         "&" + arguments.at("Source/Target group II"));
@@ -721,7 +706,7 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = transformed_data.CreateCorrectedDataset(
@@ -737,7 +722,7 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
         false
     );
 
-    transformed_data.SetProgressWindow(rtw);
+    transformed_data.SetProgressReporter(rtw);
 
     if (arguments.at("Box-cox transformation") == "true")
     {
@@ -751,7 +736,7 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
 
     if (dfa_result.eigen_vectors.size() == 0)
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+        host->ShowWarning("Singular matrix in within group scatter matrix!\n");
         return false;
     }
 
@@ -804,8 +789,8 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
 
 bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
-    rtw->show();
+    ScopedProgressReporter rtw(host, 0);
+    rtw->Start();
 
     results.SetName("DFA between " + arguments.at("Source group") + "& the rest");
 
@@ -818,7 +803,7 @@ bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& ar
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = transformed_data.CreateCorrectedDataset(
@@ -834,7 +819,7 @@ bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& ar
         false
     );
 
-    transformed_data.SetProgressWindow(rtw);
+    transformed_data.SetProgressReporter(rtw);
 
     if (arguments.at("Box-cox transformation") == "true")
     {
@@ -847,7 +832,7 @@ bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& ar
 
     if (dfa_result.eigen_vectors.size() == 0)
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+        host->ShowWarning("Singular matrix in within group scatter matrix!\n");
         return false;
     }
 
@@ -900,8 +885,8 @@ bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& ar
 
 bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
-    rtw->show();
+    ScopedProgressReporter rtw(host, 0);
+    rtw->Start();
 
     results.SetName("Multi-way DFA analysis");
 
@@ -914,7 +899,7 @@ bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = transformed_data.CreateCorrectedDataset(
@@ -933,7 +918,7 @@ bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
     if (!CheckNegativeElements(&transformed_data))
         return false;
 
-    transformed_data.SetProgressWindow(rtw);
+    transformed_data.SetProgressReporter(rtw);
 
     if (arguments.at("Box-cox transformation") == "true")
     {
@@ -944,7 +929,7 @@ bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
 
     if (dfa_result.eigen_vectors.size() == 0)
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+        host->ShowWarning("Singular matrix in within group scatter matrix!\n");
         return false;
     }
 
@@ -999,12 +984,12 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
 {
     if (arguments.at("Source/Target group I") == arguments.at("Source/Target group II"))
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "The selected sources must be different", QMessageBox::Ok);
+        host->ShowWarning("The selected sources must be different");
         return false;
     }
 
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
-    rtw->show();
+    ScopedProgressReporter rtw(host, 0);
+    rtw->Start();
 
     results.SetName("Stepwise DFA between " + arguments.at("Source/Target group I") +
         "&" + arguments.at("Source/Target group II"));
@@ -1018,7 +1003,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -1044,7 +1029,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
         transformed_data = transformed_data.BoxCoxTransformed(true);
     }
 
-    transformed_data.SetProgressWindow(rtw);
+    transformed_data.SetProgressReporter(rtw);
 
     std::vector<CMBVector> sdfa_results = transformed_data.StepwiseDiscriminantFunctionAnalysis(
         arguments.at("Source/Target group I"),
@@ -1053,7 +1038,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
 
     if (sdfa_results[0].size() == 0)
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+        host->ShowWarning("Singular matrix in within group scatter matrix!\n");
         return false;
     }
 
@@ -1098,8 +1083,8 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
 
 bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
-    rtw->show();
+    ScopedProgressReporter rtw(host, 0);
+    rtw->Start();
 
     results.SetName("Multiway Stepwise DFA");
 
@@ -1112,7 +1097,7 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -1138,13 +1123,13 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
         transformed_data = transformed_data.BoxCoxTransformed(true);
     }
 
-    transformed_data.SetProgressWindow(rtw);
+    transformed_data.SetProgressReporter(rtw);
 
     std::vector<CMBVector> sdfa_results = transformed_data.StepwiseDiscriminantFunctionAnalysis();
 
     if (sdfa_results[0].size() == 0)
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+        host->ShowWarning("Singular matrix in within group scatter matrix!\n");
         return false;
     }
 
@@ -1214,8 +1199,8 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
 
 bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& arguments)
 {
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
-    rtw->show();
+    ScopedProgressReporter rtw(host, 0);
+    rtw->Start();
 
     results.SetName("Stepwise DFA between " + arguments.at("Source group") + "& the rest");
 
@@ -1228,7 +1213,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -1254,7 +1239,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
         transformed_data = transformed_data.BoxCoxTransformed(true);
     }
 
-    transformed_data.SetProgressWindow(rtw);
+    transformed_data.SetProgressReporter(rtw);
 
     std::vector<CMBVector> sdfa_results = transformed_data.StepwiseDiscriminantFunctionAnalysis(
         arguments.at("Source group")
@@ -1262,7 +1247,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
 
     if (sdfa_results[0].size() == 0)
     {
-        QMessageBox::warning(mainwindow, "SedSAT3", "Singular matrix in within group scatter matrix!\n", QMessageBox::Ok);
+        host->ShowWarning("Singular matrix in within group scatter matrix!\n");
         return false;
     }
 
@@ -1376,7 +1361,7 @@ bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -1385,24 +1370,34 @@ bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>
     MCMC = std::make_unique<CMCMC<SourceSinkData>>();
 
     // Create progress window with 3 charts for monitoring (with batch mode enabled)
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 3, true);
+    ScopedProgressReporter rtw(host, 3, true);
     rtw->SetTitle("Acceptance Rate", 0);
     rtw->SetTitle("Purturbation Factor", 1);
     rtw->SetTitle("Log posterior value", 2);
     rtw->SetYAxisTitle("Acceptance Rate", 0);
     rtw->SetYAxisTitle("Purturbation Factor", 1);
     rtw->SetYAxisTitle("Log posterior value", 2);
-    rtw->show();
+    rtw->Start();
 
     // Execute batch MCMC sampling
+    std::vector<std::string> failed_writes;
     CMBMatrix* contributions = new CMBMatrix(
         Data()->MCMC_Batch(
             arguments,
             MCMC.get(),
             rtw,
-            workingfolder.toStdString()
+            workingfolder.toStdString(),
+            &failed_writes
         )
     );
+
+    if (!failed_writes.empty())
+    {
+        std::string message = "Some per-sample result files could not be written:\n";
+        for (const std::string& failure : failed_writes)
+            message += failure + "\n";
+        host->ShowWarning(message);
+    }
 
     results.SetName("CMB Bayesian-Batch");
 
@@ -1438,14 +1433,14 @@ bool Conductor::ExecuteTestCMBBayesian(const std::map<std::string, std::string>&
     mcmc_for_testing->Model = &testing_model;
 
     // Create progress window with 3 charts
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 3);
+    ScopedProgressReporter rtw(host, 3);
     rtw->SetTitle("Acceptance Rate", 0);
     rtw->SetTitle("Purturbation Factor", 1);
     rtw->SetTitle("Log posterior value", 2);
     rtw->SetYAxisTitle("Acceptance Rate", 0);
     rtw->SetYAxisTitle("Purturbation Factor", 1);
     rtw->SetYAxisTitle("Log posterior value", 2);
-    rtw->show();
+    rtw->Start();
 
     // Set up parameter bounds for test model
     std::vector<double> mins;
@@ -1535,7 +1530,7 @@ bool Conductor::ExecuteDistributionFitting(const std::map<std::string, std::stri
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -1681,7 +1676,7 @@ bool Conductor::ExecuteBracketingAnalysisBatch(const std::map<std::string, std::
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -1774,7 +1769,7 @@ bool Conductor::ExecuteEDP(const std::map<std::string, std::string>& arguments)
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -1882,7 +1877,7 @@ bool Conductor::ExecuteEDPM(const std::map<std::string, std::string>& arguments)
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -1978,7 +1973,7 @@ bool Conductor::ExecuteANOVA(const std::map<std::string, std::string>& arguments
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -2038,7 +2033,7 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& a
 {
     results.SetName("Error Analysis");
 
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
+    ScopedProgressReporter rtw(host, 0);
 
     bool organic_size_correction;
     if (arguments.at("Apply size and organic matter correction") == "true")
@@ -2046,7 +2041,7 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& a
         organic_size_correction = true;
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -2055,7 +2050,7 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& a
         organic_size_correction = false;
     }
 
-    rtw->show();
+    rtw->Start();
 
     SourceSinkData corrected_data = Data()->CreateCorrectedDataset(
         arguments.at("Sample"),
@@ -2063,7 +2058,7 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& a
         Data()->GetElementInformation()
     );
 
-    corrected_data.SetProgressWindow(rtw);
+    corrected_data.SetProgressReporter(rtw);
 
     if (!CheckNegativeElements(&corrected_data))
         return false;
@@ -2087,7 +2082,7 @@ bool Conductor::ExecuteSourceVerify(const std::map<std::string, std::string>& ar
 {
     results.SetName("Source Verification");
 
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
+    ScopedProgressReporter rtw(host, 0);
 
     bool organic_size_correction;
     if (arguments.at("Apply size and organic matter correction") == "true")
@@ -2095,7 +2090,7 @@ bool Conductor::ExecuteSourceVerify(const std::map<std::string, std::string>& ar
         organic_size_correction = true;
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -2104,10 +2099,10 @@ bool Conductor::ExecuteSourceVerify(const std::map<std::string, std::string>& ar
         organic_size_correction = false;
     }
 
-    rtw->show();
+    rtw->Start();
 
     SourceSinkData corrected_data = *Data();
-    corrected_data.SetProgressWindow(rtw);
+    corrected_data.SetProgressReporter(rtw);
 
     if (!CheckNegativeElements(&corrected_data))
         return false;
@@ -2158,7 +2153,7 @@ bool Conductor::ExecuteAutoSelect(const std::map<std::string, std::string>& argu
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
         transformed_data = Data()->CreateCorrectedDataset(
@@ -2228,7 +2223,7 @@ bool Conductor::ExecuteCMBBayesian(const std::map<std::string, std::string>& arg
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
         {
-            QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+            host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
     }
@@ -2237,14 +2232,14 @@ bool Conductor::ExecuteCMBBayesian(const std::map<std::string, std::string>& arg
     MCMC = std::make_unique<CMCMC<SourceSinkData>>();
 
     // Create progress window with 3 charts for monitoring
-    ProgressWindow* rtw = new ProgressWindow(mainwindow, 3);
+    ScopedProgressReporter rtw(host, 3);
     rtw->SetTitle("Acceptance Rate", 0);
     rtw->SetTitle("Purturbation Factor", 1);
     rtw->SetTitle("Log posterior value", 2);
     rtw->SetYAxisTitle("Acceptance Rate", 0);
     rtw->SetYAxisTitle("Purturbation Factor", 1);
     rtw->SetYAxisTitle("Log posterior value", 2);
-    rtw->show();
+    rtw->Start();
 
     // Execute MCMC sampling
     results = Data()->MCMC(
@@ -2258,7 +2253,7 @@ bool Conductor::ExecuteCMBBayesian(const std::map<std::string, std::string>& arg
     // Check for errors during execution
     if (results.Error() != "")
     {
-        QMessageBox::warning(mainwindow, "SedSat3", QString::fromStdString(results.Error()), QMessageBox::Ok);
+        host->ShowWarning(results.Error());
         return false;
     }
 

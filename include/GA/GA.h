@@ -13,7 +13,7 @@
 #endif
 
 // Forward declaration for GUI support
-class ProgressWindow;
+class ProgressReporter;
 
 /**
  * @struct GA_Tweaking_parameters
@@ -675,7 +675,7 @@ public:
 #ifdef Q_GUI_SUPPORT
     /**
      * @brief Set progress window for GUI updates
-     * @param _rtw Pointer to ProgressWindow object
+     * @param _rtw Pointer to ProgressReporter object
      *
      * Links GA to progress dialog for real-time status updates including:
      * - Current generation number
@@ -683,7 +683,7 @@ public:
      * - Population statistics
      * - Convergence plots
      */
-    void SetRunTimeWindow(ProgressWindow *_rtw) {
+    void SetRunTimeWindow(ProgressReporter *_rtw) {
         rtw = _rtw;
     }
 #endif
@@ -999,7 +999,7 @@ private:
      * If not nullptr, GA updates progress bar and displays current
      * generation, best fitness, convergence plot, etc.
      */
-    ProgressWindow *rtw = nullptr;
+    ProgressReporter *rtw = nullptr;
 #endif
 };
 

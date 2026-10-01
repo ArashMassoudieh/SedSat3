@@ -673,6 +673,39 @@ bool SourceSinkData::InitializeContributionsRandomlySoftmax()
 }
 
 
+namespace {
+
+/**
+ * @brief Whether a fitted distribution can supply the parameters a range needs
+ *
+ * Distribution parameters are derived from the data rather than stored in a
+ * project file, so a dataset that has not had PopulateElementDistributions()
+ * and AssignAllDistributions() called on it carries empty parameter vectors.
+ * Reading them is an out-of-range access, so every use is checked and the
+ * omission reported.
+ *
+ * @param fitted Distribution to read from, possibly null
+ * @param needed Number of parameters the caller is about to read
+ * @param element_name Constituent being set up, for the message
+ * @param group_name Group being set up, for the message
+ */
+bool FittedParametersAvailable(const Distribution* fitted,
+                               size_t needed,
+                               const string& element_name,
+                               const string& group_name)
+{
+    if (fitted != nullptr && fitted->parameters.size() >= needed)
+        return true;
+
+    std::cerr << "InitializeParametersAndObservations: no fitted distribution for '"
+              << element_name << "' in group '" << group_name
+              << "'. Build the distributions with PopulateElementDistributions() "
+                 "and AssignAllDistributions() before initializing." << std::endl;
+    return false;
+}
+
+} // namespace
+
 bool SourceSinkData::InitializeParametersAndObservations(
     const string& targetsamplename,
     estimation_mode est_mode)
@@ -797,13 +830,23 @@ bool SourceSinkData::InitializeParametersAndObservations(
                         p.SetName(group_name + "_" + element_name + "_mu");
                         p.SetPriorDistribution(distribution_type::normal);
 
+                        // A dataset that has not had its distributions built
+                        // has no fitted parameters to centre the range on.
+                        // Reading them anyway is an out-of-range access on an
+                        // empty vector, so report the omission instead.
+                        Distribution* estimated = profile_set.GetEstimatedDistribution(element_name);
+                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (estimated == nullptr ||
+                            !FittedParametersAvailable(fitted, 1, element_name, group_name))
+                        {
+                            return false;
+                        }
+
                         // Set estimated distribution type
-                        profile_set.GetEstimatedDistribution(element_name)->SetType(
-                            distribution_type::lognormal
-                        );
+                        estimated->SetType(distribution_type::lognormal);
 
                         // Set parameter range around fitted mu
-                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
                         p.SetRange(fitted->parameters[0] - 0.2, fitted->parameters[0] + 0.2);
 
                         parameters_.push_back(p);
@@ -825,13 +868,19 @@ bool SourceSinkData::InitializeParametersAndObservations(
                         p.SetName(group_name + "_" + element_name + "_mu");
                         p.SetPriorDistribution(distribution_type::normal);
 
+                        Distribution* estimated = profile_set.GetEstimatedDistribution(element_name);
+                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (estimated == nullptr ||
+                            !FittedParametersAvailable(fitted, 1, element_name, group_name))
+                        {
+                            return false;
+                        }
+
                         // Set estimated distribution type
-                        profile_set.GetEstimatedDistribution(element_name)->SetType(
-                            distribution_type::normal
-                        );
+                        estimated->SetType(distribution_type::normal);
 
                         // Set parameter range around fitted mu
-                        const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
                         p.SetRange(fitted->parameters[0] - 0.2, fitted->parameters[0] + 0.2);
 
                         parameters_.push_back(p);
@@ -855,6 +904,10 @@ bool SourceSinkData::InitializeParametersAndObservations(
 
                         // Set parameter range around fitted sigma (with bounds)
                         const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (!FittedParametersAvailable(fitted, 2, element_name, group_name))
+                            return false;
+
                         double lower = std::max(fitted->parameters[1] * 0.8, 0.001);
                         double upper = std::max(fitted->parameters[1] / 0.8, 2.0);
                         p.SetRange(lower, upper);
@@ -880,6 +933,10 @@ bool SourceSinkData::InitializeParametersAndObservations(
 
                         // Set parameter range around fitted sigma (with bounds)
                         const Distribution* fitted = profile_set.GetFittedDistribution(element_name);
+
+                        if (!FittedParametersAvailable(fitted, 2, element_name, group_name))
+                            return false;
+
                         double lower = std::max(fitted->parameters[1] * 0.8, 0.001);
                         double upper = std::max(fitted->parameters[1] / 0.8, 2.0);
                         p.SetRange(lower, upper);
@@ -1394,6 +1451,13 @@ bool SourceSinkData::SolveLevenberg_Marquardt(transformation trans)
 
         iteration++;
     }
+
+    // The reported fraction approaches 1 without reaching it, because the loop
+    // exits once the parameter change falls below the tolerance rather than
+    // when it reaches zero. Report completion explicitly so the display does
+    // not stop short of the end.
+    if (rtw_)
+        rtw_->SetProgress(1.0);
 
     // TODO: Return convergence status instead of always false
     return false;
@@ -3887,7 +3951,7 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
         // Apply corrections if requested
         SourceSinkData corrected_dataset = test_dataset.CreateCorrectedDataset(
             sample->first, apply_om_size_correction, test_dataset.GetElementInformation());
-        corrected_dataset.SetProgressWindow(rtw_);
+        corrected_dataset.SetProgressReporter(rtw_);
 
         // Check for negative values (would cause problems in CMB)
         vector<string> negative_elements = corrected_dataset.NegativeValueCheck();
@@ -4048,9 +4112,16 @@ Results SourceSinkData::MCMC(
     const string& target_sample,
     map<string, string> arguments,
     CMCMC<SourceSinkData>* mcmc,
-    ProgressWindow* progress_window,
+    ProgressReporter* progress_window,
     const string& working_folder)
 {
+    // A null reporter stands in for a missing one so that the progress calls
+    // below need no null test. Callers that want no progress display pass
+    // nullptr.
+    NullProgressReporter discarded_progress;
+    if (progress_window == nullptr)
+        progress_window = &discarded_progress;
+
     // Initialize results container
     Results results;
     results.SetName("MCMC results for '" + target_sample + "'");
@@ -4087,7 +4158,7 @@ Results SourceSinkData::MCMC(
     progress_window->SetYAxisTitle("Acceptance Rate", 0);
     progress_window->SetYAxisTitle("Purturbation Factor", 1);
     progress_window->SetYAxisTitle("Log posterior value", 2);
-    progress_window->show();
+    progress_window->Start();
 
     // ========== Run MCMC Sampling ==========
     corrected_data.InitializeParametersAndObservations(target_sample);
@@ -4311,12 +4382,36 @@ Results SourceSinkData::MCMC(
 }
 
 
+// Replaces the characters Windows does not allow in a file or folder name, and
+// the trailing dots and spaces it silently strips, so that the same name works
+// on every platform.
+static QString SafeFileName(const QString& name)
+{
+    QString safe = name;
+    for (QChar& c : safe)
+    {
+        if (c.unicode() < 32 || QStringLiteral("\\/:*?\"<>|").contains(c))
+            c = QLatin1Char('_');
+    }
+    while (safe.endsWith(QLatin1Char('.')) || safe.endsWith(QLatin1Char(' ')))
+        safe.chop(1);
+    return safe.isEmpty() ? QStringLiteral("_") : safe;
+}
+
 CMBMatrix SourceSinkData::MCMC_Batch(
     map<string, string> arguments,
     CMCMC<SourceSinkData>* mcmc,
-    ProgressWindow* progress_window,
-    const string& working_folder)
+    ProgressReporter* progress_window,
+    const string& working_folder,
+    vector<string>* failed_writes)
 {
+    // A null reporter stands in for a missing one so that the progress calls
+    // below need no null test. Callers that want no progress display pass
+    // nullptr.
+    NullProgressReporter discarded_progress;
+    if (progress_window == nullptr)
+        progress_window = &discarded_progress;
+
     // Initialize with first target sample
     InitializeParametersAndObservations(at(target_group_).begin()->first);
 
@@ -4344,10 +4439,13 @@ CMBMatrix SourceSinkData::MCMC_Batch(
         const string& sample_name = sample->first;
 
         // Create output directory for this sample
-        QDir sample_dir(QString::fromStdString(working_folder) + "/" + QString::fromStdString(sample_name));
-        if (!sample_dir.exists())
+        QDir sample_dir(QString::fromStdString(working_folder) + "/" +
+            SafeFileName(QString::fromStdString(sample_name)));
+        const bool sample_dir_ok = sample_dir.exists() || sample_dir.mkpath(".");
+        if (!sample_dir_ok && failed_writes != nullptr)
         {
-            sample_dir.mkpath(".");
+            failed_writes->push_back("could not create folder " +
+                sample_dir.absolutePath().toStdString());
         }
 
         // Set matrix row label
@@ -4357,19 +4455,36 @@ CMBMatrix SourceSinkData::MCMC_Batch(
         progress_window->SetLabel(QString::fromStdString(sample_name));
 
         // Run MCMC analysis for this sample
-        Results mcmc_results = MCMC(sample_name, arguments, mcmc, progress_window, working_folder);
+        // The raw chain log goes in the sample's own folder, so that each sample
+        // keeps its log instead of the next sample truncating a shared one. If
+        // that folder could not be created, the log falls back to the parent.
+        const string sample_folder = sample_dir_ok ? sample_dir.absolutePath().toStdString() : working_folder;
+        Results mcmc_results = MCMC(sample_name, arguments, mcmc, progress_window, sample_folder);
 
-        // Save all result items to text files
+        // Save all result items to text files. The result keys have the form
+        // "<index>:<name>", and a colon in a path on Windows names an NTFS
+        // alternate data stream, so the key must be made safe before use.
         for (map<string, ResultItem>::iterator result_item = mcmc_results.begin();
-            result_item != mcmc_results.end();
+            sample_dir_ok && result_item != mcmc_results.end();
             result_item++)
         {
             QString file_path = sample_dir.absolutePath() + "/" +
-                QString::fromStdString(result_item->first) + ".txt";
+                SafeFileName(QString::fromStdString(result_item->first)) + ".txt";
             QFile output_file(file_path);
-            output_file.open(QIODevice::WriteOnly | QIODevice::Text);
+            if (!output_file.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+                if (failed_writes != nullptr)
+                    failed_writes->push_back(file_path.toStdString() + ": " +
+                        output_file.errorString().toStdString());
+                continue;
+            }
             result_item->second.Result()->writetofile(&output_file);
             output_file.close();
+            if (output_file.error() != QFileDevice::NoError && failed_writes != nullptr)
+            {
+                failed_writes->push_back(file_path.toStdString() + ": " +
+                    output_file.errorString().toStdString());
+            }
         }
 
         // Extract contribution statistics from credible intervals
@@ -5034,7 +5149,7 @@ estimation_mode SourceSinkData::ParameterEstimationMode()
     return parameter_estimation_mode_;
 }
 
-void SourceSinkData::SetProgressWindow(ProgressWindow* _rtw)
+void SourceSinkData::SetProgressReporter(ProgressReporter* _rtw)
 {
     rtw_ = _rtw;
 }
