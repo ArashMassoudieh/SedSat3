@@ -4455,7 +4455,11 @@ CMBMatrix SourceSinkData::MCMC_Batch(
         progress_window->SetLabel(QString::fromStdString(sample_name));
 
         // Run MCMC analysis for this sample
-        Results mcmc_results = MCMC(sample_name, arguments, mcmc, progress_window, working_folder);
+        // The raw chain log goes in the sample's own folder, so that each sample
+        // keeps its log instead of the next sample truncating a shared one. If
+        // that folder could not be created, the log falls back to the parent.
+        const string sample_folder = sample_dir_ok ? sample_dir.absolutePath().toStdString() : working_folder;
+        Results mcmc_results = MCMC(sample_name, arguments, mcmc, progress_window, sample_folder);
 
         // Save all result items to text files. The result keys have the form
         // "<index>:<name>", and a colon in a path on Windows names an NTFS
