@@ -1349,18 +1349,32 @@ void MainWindow::readRecentFilesList()
         return;
     }
 
-    QTextStream in(&file);
-    QStringList allLines;
+    // Read the whole file in one call rather than looping on QTextStream. If the
+    // device cannot actually be read - for example an offline OneDrive placeholder
+    // that cannot be hydrated - readLine() never advances and atEnd() never becomes
+    // true, so the loop spins forever and startup never completes.
+    const QByteArray contents = file.readAll();
+    const bool readFailed = (file.error() != QFileDevice::NoError);
+    const QString readError = file.errorString();
+    file.close();
 
-    while (!in.atEnd())
+    if (readFailed)
     {
-        QString line = in.readLine().trimmed();
+        qWarning() << "Failed to read recent files list:" << readError;
+        return;
+    }
+
+    QStringList allLines;
+    const QStringList rawLines = QString::fromUtf8(contents).split('\n', Qt::SkipEmptyParts);
+
+    for (const QString& rawLine : rawLines)
+    {
+        const QString line = rawLine.trimmed();
         if (!line.isEmpty())
         {
             allLines.append(line);
         }
     }
-    file.close();
 
     // Add only the most recent files (up to max_num_recent_files)
     int startIndex = qMax(0, allLines.size() - max_num_recent_files);
