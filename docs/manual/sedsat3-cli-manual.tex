@@ -1,0 +1,758 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\makeindex
+
+% A straight double quote, so that script fragments can be quoted in running
+% text without the usual LaTeX curly substitution.
+\newcommand{\dq}{\char`\"}
+
+\definecolor{codebg}{gray}{0.96}
+\definecolor{codekey}{rgb}{0.10,0.30,0.60}
+\definecolor{codestr}{rgb}{0.55,0.20,0.10}
+\definecolor{codecom}{rgb}{0.35,0.45,0.35}
+
+\lstdefinestyle{shell}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framerule=0pt,
+  xleftmargin=4pt,
+  framexleftmargin=4pt,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+}
+
+\lstdefinelanguage{scriptjson}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  framerule=0pt,
+  xleftmargin=4pt,
+  framexleftmargin=4pt,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  morestring=[b]",
+  stringstyle=\color{codestr},
+  comment=[l]{//},
+  commentstyle=\color{codecom}\itshape,
+}
+
+\lstset{style=shell}
+
+% Argument tables in the command reference.
+\newenvironment{argtable}
+  {\par\vspace{2pt}\footnotesize
+   \setlength{\tabcolsep}{4pt}%
+   \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.28\textwidth}%
+                       >{\raggedright\arraybackslash}p{0.15\textwidth}%
+                       >{\raggedright\arraybackslash}p{0.20\textwidth}%
+                       >{\raggedright\arraybackslash}p{0.27\textwidth}@{}}
+   \toprule
+   \textbf{Argument} & \textbf{Value} & \textbf{Default} & \textbf{Notes} \\
+   \midrule
+   \endfirsthead
+   \toprule
+   \textbf{Argument} & \textbf{Value} & \textbf{Default} & \textbf{Notes} \\
+   \midrule
+   \endhead
+   \bottomrule
+   \endfoot}
+  {\end{longtable}\normalsize\par}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\title{\Huge SedSAT3 \\[0.3cm]
+       \Large Command Line User's Manual \\[0.6cm]
+       \large \texttt{sedsat3-cli}}
+\author{Sediment Source Assessment Tool, version 1.1.6}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+\texttt{sedsat3-cli} runs SedSAT3 analyses from a script instead of from the
+graphical interface. It loads a project, carries out a list of commands against
+it in order, and writes a report of what each one produced.
+
+It is the same software. The command line build drives the same analysis code
+the windowed application drives, using the same command names and the same
+argument names, so anything that can be done through the dialogs can be
+written down in a script and repeated exactly.
+
+This manual is for someone running analyses. It assumes familiarity with
+sediment fingerprinting and with SedSAT3 itself, but not with programming.
+\end{abstract}
+
+\tableofcontents
+
+%======================================================================
+\chapter{Introduction}
+
+\section{What it is for}
+
+The graphical interface is the right way to explore a dataset: you can see the
+plots, adjust a setting, and look again. It is a poor way to do the same thing
+twenty times, and it leaves no record of what was done.
+
+The command line build addresses three things the interface cannot:
+
+\begin{description}[style=nextline,leftmargin=0pt]
+  \item[A run you can repeat] A script is a file. It states which project was
+    loaded, which constituents were included, and which analyses were carried
+    out with which settings. Running it again a year later produces the same
+    thing, and anyone else can run it too.
+  \item[A run you can vary] Comparing five tracer sets means five scripts
+    differing in one line, not five sessions of clicking and remembering.
+  \item[A run you can automate] It needs no display, so it can run on a server,
+    in a scheduled job, or as part of a test that checks the results have not
+    changed.
+\end{description}
+
+\section{What it is not}
+
+It does not replace the interface. There are no plots, and there is no way to
+look at an intermediate result and change your mind. Use the interface to
+decide what to do, and a script to do it repeatedly.
+
+One limitation is worth stating plainly at the outset: \textbf{the command line
+build cannot import from Excel}. It requires a project file that has already
+been saved from the interface. Importing a spreadsheet involves choosing which
+sheets to use and what each one holds, and those choices are made in dialogs
+that have no command line equivalent yet.
+
+\section{How this manual is arranged}
+
+Chapter~\ref{ch:installing} covers obtaining and building the program.
+Chapter~\ref{ch:quickstart} walks through a first run from beginning to end.
+Chapter~\ref{ch:scripts} describes the script file in detail.
+Chapter~\ref{ch:setup} covers the commands that configure a project, and
+chapter~\ref{ch:commands} is the reference for every analysis command.
+Chapter~\ref{ch:report} explains the report that a run produces, and
+chapter~\ref{ch:troubleshooting} covers what to do when something goes wrong.
+
+%======================================================================
+\chapter{Installing}
+\label{ch:installing}
+
+\section{Requirements}
+
+The command line build needs the same libraries as the graphical one: Qt~6,
+the GNU Scientific Library, Armadillo, and a C++17 compiler. It links Qt
+Widgets but never opens a window, so it runs on a machine with no display.
+
+\section{Building}
+
+From the top of the source tree:
+
+\begin{lstlisting}
+qmake6 SedSat3CLI.pro
+make -j8
+\end{lstlisting}
+
+This produces \texttt{sedsat3-cli} in the build directory. On Windows, use the
+\texttt{qmake} supplied with the Qt~6 kit and the build tool that goes with
+your compiler; the project file is the same.
+
+\begin{quote}
+\small
+On systems with both Qt~5 and Qt~6 installed, the plain \texttt{qmake} command
+often resolves to Qt~5 and the build fails immediately. Use \texttt{qmake6},
+or the full path to the Qt~6 one.
+\end{quote}
+
+\section{Telling it where the resources are}
+
+The program reads \texttt{resources/forms\_structures.json}, which defines
+every command and its arguments. It uses that file to check a script before
+running it and to answer \texttt{--list-commands} and \texttt{--describe}.
+
+It looks for the file next to the program and in the usual places relative to
+it. If your build directory is somewhere unusual, say where to look:
+
+\begin{lstlisting}
+export SEDSAT3_RESOURCES=/path/to/SedSat3/resources
+\end{lstlisting}
+
+or on Windows:
+
+\begin{lstlisting}
+set SEDSAT3_RESOURCES=C:\path\to\SedSat3\resources
+\end{lstlisting}
+
+The \texttt{--resources} option does the same thing for a single run.
+
+If the file cannot be found the program still runs, but it warns you, and two
+things stop working: scripts are no longer checked, and arguments you leave out
+are no longer filled in with their defaults. The second of those matters more
+than it sounds, so it is worth setting the variable properly.
+
+%======================================================================
+\chapter{A first run}
+\label{ch:quickstart}
+
+\section{Seeing what is available}
+
+\begin{lstlisting}
+sedsat3-cli --list-commands
+\end{lstlisting}
+
+lists every command, and
+
+\begin{lstlisting}
+sedsat3-cli --describe "Levenberg-Marquardt"
+\end{lstlisting}
+
+prints one command's description and its arguments, with the default for each.
+These come from the same definitions the dialogs are built from, so they
+describe the software as it actually is.
+
+\section{Writing a script}
+
+A script is a text file containing JSON. Save the following as
+\texttt{run.json}, next to your project file:
+
+\begin{lstlisting}[language=scriptjson]
+{
+  "project": "my-project.cmb",
+  "output": "report.json",
+  "steps": [
+    {
+      "command": "Levenberg-Marquardt",
+      "arguments": {
+        "Sample": "CTAIL1",
+        "Apply size and organic matter correction": "false"
+      }
+    }
+  ]
+}
+\end{lstlisting}
+
+That is the whole thing: the project to load, where to put the report, and one
+analysis to carry out.
+
+\section{Running it}
+
+\begin{lstlisting}
+sedsat3-cli run.json
+\end{lstlisting}
+
+You will see the step announced and its progress, and then where the report was
+written:
+
+\begin{lstlisting}
+[1] Levenberg-Marquardt
+  100%
+report written to /home/you/work/report.json
+\end{lstlisting}
+
+\section{Reading the result}
+
+The report is JSON. Each step records what was asked for, whether it succeeded,
+how long it took, and what it produced. The source contributions from the run
+above are under that step's results:
+
+\begin{lstlisting}[language=scriptjson]
+"1:Contributions": {
+  "Bank":    0.2122,
+  "Crop":    0.4104,
+  "Forest":  0.1822,
+  "Pasture": 0.1953
+}
+\end{lstlisting}
+
+If you have the \texttt{jq} utility, it is a convenient way to pick things out:
+
+\begin{lstlisting}
+jq '.steps[] | {command, status, seconds}' report.json
+\end{lstlisting}
+
+%======================================================================
+\chapter{Scripts}
+\label{ch:scripts}
+
+\section{Structure}
+
+A script is a JSON object with four keys. Only two of them are required.
+
+\begin{longtable}{@{}p{0.22\textwidth}p{0.70\textwidth}@{}}
+\toprule
+\textbf{Key} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\texttt{project} & The project file to load. Required. \\
+\addlinespace
+\texttt{steps} & The commands to carry out, as an array. Required. \\
+\addlinespace
+\texttt{output} & Where to write the report. If absent, the report is printed
+  to standard output. \\
+\addlinespace
+\texttt{on\_error} & \texttt{\dq{}stop\dq{}} (the default) abandons the run
+  after a step fails; \texttt{\dq{}continue\dq{}} carries on with the
+  remaining steps. \\
+\addlinespace
+\texttt{working\_folder} & Where analyses that write files of their own should
+  put them. Defaults to the directory holding the script. \\
+\bottomrule
+\end{longtable}
+
+\section{Steps run in order, and they share one project}
+
+\texttt{steps} is an array rather than an object, and that is deliberate: the
+order matters. All the steps act on one dataset, and several of them change
+it. Outlier removal, the organic matter and particle size correction, and the
+element selection commands all alter what the steps after them will see.
+
+This is the main thing to understand about scripts. A script is not a list of
+independent jobs; it is a sequence, in the same way that a session in the
+interface is a sequence.
+
+\section{Steps}
+
+Each step is an object with a command and its arguments:
+
+\begin{lstlisting}[language=scriptjson]
+{
+  "command": "Outlier",
+  "arguments": { "Threshold": "3" }
+}
+\end{lstlisting}
+
+The command names and the argument names are exactly those the dialogs use,
+including their capitalisation and spacing. \texttt{--describe} will tell you
+what a command accepts.
+
+Argument values are written as text. Numbers and \texttt{true}/\texttt{false}
+are also accepted and converted, so both of these work:
+
+\begin{lstlisting}[language=scriptjson]
+"arguments": { "Number of samples": "1000", "Dissolve Chains": "true"  }
+"arguments": { "Number of samples": 1000,   "Dissolve Chains": true    }
+\end{lstlisting}
+
+\section{You need only give what you want to change}
+
+Anything you leave out is filled in with the default the dialog would have
+shown. The report lists what was filled in, under \texttt{defaulted}, so the
+record of the run is complete even where the script was not.
+
+This is worth relying on. Specify the two or three settings that matter for
+what you are doing and leave the rest alone; the run is still reproducible,
+because the report records the values that were actually used.
+
+\section{Paths}
+
+A path in a script that is not absolute is interpreted relative to the
+directory holding the script. A script and its project can therefore be moved
+or copied together, and sent to someone else, without editing.
+
+Files that an analysis writes itself, such as the MCMC sample output, go to
+\texttt{working\_folder}, which defaults to the script's directory.
+
+\section{Checking before running}
+
+Every step is checked before any of them runs: that the command exists, and
+that each argument is one the command accepts. If anything is wrong, nothing
+is carried out and the problems are listed:
+
+\begin{lstlisting}
+error: The script was not run because of the following:
+  step 1: Unknown command 'Levenberg-Marquart'. Did you mean
+          'Levenberg-Marquardt'?
+  step 2: Command 'Levenberg-Marquardt' has no argument 'Sampel'.
+          Did you mean 'Sample'?
+\end{lstlisting}
+
+Checking everything first matters because of the previous section. A script
+that stopped halfway through because of a spelling mistake in the last step
+would leave the project in a state you did not ask for.
+
+%======================================================================
+\chapter{Configuring the project}
+\label{ch:setup}
+
+The analyses work on whatever the project file was saved with: which
+constituents are included, which samples are in use, what each constituent is,
+and which group holds the targets. In the interface those are set in tables and
+dialogs rather than through the analysis menus.
+
+The four commands in this chapter set them from a script. Where one of them
+disagrees with the project file, the command wins: running one is how a script
+says it wants something other than what was saved.
+
+They are what make a script useful for more than replaying a saved
+configuration. Comparing tracer sets, or correcting an isotope's settings, is a
+matter of one step.
+
+\section{\texttt{set-target-group}}
+
+Chooses which group holds the target samples.
+
+\begin{argtable}
+\texttt{group} & name & --- & a group name in the project \\
+\end{argtable}
+
+\begin{lstlisting}[language=scriptjson]
+{ "command": "set-target-group", "arguments": { "group": "Mixture" } }
+\end{lstlisting}
+
+\section{\texttt{set-elements}}
+
+Chooses which constituents take part.
+
+\begin{argtable}
+\texttt{only} & name or list & --- & include exactly these, exclude everything else \\
+\texttt{include} & name or list & --- & include these, leave the rest alone \\
+\texttt{exclude} & name or list & --- & exclude these, leave the rest alone \\
+\end{argtable}
+
+\texttt{only} is applied first, then \texttt{include}, then \texttt{exclude}.
+Every name is checked before anything is changed, so a misspelling cannot leave
+the project half configured.
+
+\begin{lstlisting}[language=scriptjson]
+{ "command": "set-elements",
+  "arguments": { "only": ["Aluminum", "Barium", "Lead", "Zinc"] } }
+\end{lstlisting}
+
+\section{\texttt{set-samples}}
+
+Chooses which samples in a group take part.
+
+\begin{argtable}
+\texttt{group} & name & --- & required \\
+\texttt{only} & name or list & --- & include exactly these within the group \\
+\texttt{include} & name or list & --- & include these \\
+\texttt{exclude} & name or list & --- & exclude these \\
+\end{argtable}
+
+\begin{lstlisting}[language=scriptjson]
+{ "command": "set-samples",
+  "arguments": { "group": "Bank", "exclude": ["B7", "B12"] } }
+\end{lstlisting}
+
+\section{\texttt{set-element-role}}
+
+Sets what a constituent is, and for an isotope what it is measured against.
+
+\begin{argtable}
+\texttt{element} & name & --- & required \\
+\texttt{role} & name & --- & \texttt{Element}, \texttt{Isotope},
+  \texttt{ParticleSize}, \texttt{OM} or \texttt{DoNotInclude} \\
+\texttt{base element} & name & --- & for an isotope: the constituent supplying
+  its concentration \\
+\texttt{standard ratio} & number & --- & for an isotope: the standard isotopic
+  ratio \\
+\end{argtable}
+
+\begin{lstlisting}[language=scriptjson]
+{ "command": "set-element-role",
+  "arguments": { "element": "C13", "role": "Isotope",
+                 "base element": "TOC", "standard ratio": "0.011113" } }
+\end{lstlisting}
+
+\begin{quote}
+\small
+\textbf{Isotopes need their base element to be part of the analysis.} An
+isotope is measured as a delta value, and converting that to a concentration
+requires the concentration of the constituent it is referenced against. If the
+base element is not included, the conversion has nothing to work with.
+
+A base element must also have the role \texttt{Element}. Constituents whose
+role is \texttt{OM} or \texttt{ParticleSize} are set aside before the analyses
+run, so an isotope referenced against organic carbon needs that constituent
+given the role \texttt{Element} and included:
+
+\begin{lstlisting}[language=scriptjson]
+{ "command": "set-element-role",
+  "arguments": { "element": "TOC", "role": "Element" } },
+{ "command": "set-elements", "arguments": { "include": ["TOC"] } }
+\end{lstlisting}
+
+Note that this also makes the base element a fingerprinting tracer in its own
+right, which changes the apportionment. That is a modelling decision, so make
+it deliberately.
+\end{quote}
+
+%======================================================================
+\chapter{Analysis commands}
+\label{ch:commands}
+
+Every command the software accepts is listed here, with its arguments, the
+values each one takes, and its default. The descriptions are the same ones the
+dialogs show.
+
+The \textbf{Value} column says what kind of thing to write in the script.
+Where it says ``name'', the accepted names come from the loaded project --- a
+target sample, a source group or a constituent --- and the \textbf{Notes}
+column says which.
+
+\input{commands}
+
+%======================================================================
+\chapter{The report}
+\label{ch:report}
+
+A run produces one JSON file describing everything that happened. It is both
+the result and the record: it states which project was used, what each step was
+asked to do, what it did, and what came out.
+
+\section{What is in it}
+
+\begin{longtable}{@{}p{0.24\textwidth}p{0.68\textwidth}@{}}
+\toprule
+\textbf{Key} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\texttt{script} & The script that was run. \\
+\texttt{project} & The project that was loaded. \\
+\texttt{working\_folder} & Where analyses wrote files of their own. \\
+\texttt{started}, \texttt{finished} & When the run began and ended. \\
+\texttt{succeeded} & Whether every step succeeded. \\
+\texttt{steps} & One entry per step, in the order they ran. \\
+\texttt{stopped\_at\_step} & Present only if the run was abandoned after a
+  failure. \\
+\bottomrule
+\end{longtable}
+
+And within each step:
+
+\begin{longtable}{@{}p{0.24\textwidth}p{0.68\textwidth}@{}}
+\toprule
+\textbf{Key} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\texttt{step}, \texttt{command} & Position in the script, and what was run. \\
+\texttt{arguments} & The arguments as given. \\
+\texttt{defaulted} & Arguments that were not given and were filled in. \\
+\texttt{status} & \texttt{succeeded} or \texttt{failed}. \\
+\texttt{seconds} & How long it took. \\
+\texttt{warnings} & Anything the analysis reported, such as a reason it
+  declined to run. \\
+\texttt{results} & What it produced. \\
+\texttt{changes} & For a setup command, what it altered. \\
+\bottomrule
+\end{longtable}
+
+\section{Results}
+
+Results are numbered in the order the analysis produced them, as they are in
+the interface: \texttt{1:Contributions}, \texttt{2:Modeled Elemental Profile},
+and so on. What each contains depends on the analysis; a contribution is a
+figure per source, while a credible interval is a low and high value per
+source.
+
+\section{Exit status}
+
+The program exits with status 0 only if every step succeeded, and 1 otherwise.
+A script can rely on this:
+
+\begin{lstlisting}
+sedsat3-cli run.json && echo "all steps succeeded"
+\end{lstlisting}
+
+%======================================================================
+\chapter{Options}
+
+\begin{longtable}{@{}p{0.30\textwidth}p{0.62\textwidth}@{}}
+\toprule
+\textbf{Option} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\texttt{--output \textit{file}} & Where to write the report, overriding the
+  script. \\
+\addlinespace
+\texttt{--quiet} & Do not print progress or announce each step. Warnings are
+  still printed, and the report is unchanged. \\
+\addlinespace
+\texttt{--resources \textit{dir}} & Where to find
+  \texttt{forms\_structures.json}. \\
+\addlinespace
+\texttt{--list-commands} & List every command and stop. \\
+\addlinespace
+\texttt{--describe \textit{cmd}} & Describe one command and stop. \\
+\addlinespace
+\texttt{--help} & Print usage and stop. \\
+\bottomrule
+\end{longtable}
+
+%======================================================================
+\chapter{Worked examples}
+
+\section{A deterministic workflow}
+
+The sequence the interface presents under \emph{Deterministic Sediment
+Fingerprinting}, written down. Note that the steps build on one another: the
+correction has to happen before the fingerprinting that relies on it.
+
+\begin{lstlisting}[language=scriptjson]
+{
+  "project": "my-project.cmb",
+  "output": "deterministic.json",
+  "on_error": "stop",
+  "steps": [
+    { "command": "Outlier",
+      "arguments": { "Threshold": "3" } },
+
+    { "command": "MLR",
+      "arguments": { "Organic Matter constituent": "TOC",
+                     "Particle Size constituent": "D50" } },
+
+    { "command": "Bracketing Analysis Batch",
+      "arguments": {} },
+
+    { "command": "SDFAM",
+      "arguments": { "Use only selected elements": "true" } },
+
+    { "command": "Levenberg-Marquardt-Batch",
+      "arguments": { "Apply size and organic matter correction": "true" } }
+  ]
+}
+\end{lstlisting}
+
+\section{A Bayesian run}
+
+\begin{lstlisting}[language=scriptjson]
+{
+  "project": "my-project.cmb",
+  "output": "bayesian.json",
+  "steps": [
+    { "command": "CMB Bayesian-Batch",
+      "arguments": {
+        "Number of samples": "1000",
+        "Number of chains": "8",
+        "Samples to be discarded (burnout)": "100",
+        "Apply size and organic matter correction": "false"
+      } }
+  ]
+}
+\end{lstlisting}
+
+This writes a good deal besides the report: for each target sample, a folder
+containing the chains, the posterior distributions, the credible intervals and
+the predicted concentrations. They go under \texttt{working\_folder}.
+
+\section{Comparing two tracer sets}
+
+The case the command line build is best at. Two scripts differing in one line,
+each writing its own report, and the two compared afterwards.
+
+\begin{lstlisting}[language=scriptjson]
+{
+  "project": "my-project.cmb",
+  "output": "with-isotopes.json",
+  "steps": [
+    { "command": "set-elements",
+      "arguments": { "only": ["Aluminum","Barium","Lead","Zinc",
+                              "TOC","N","C13","N15"] } },
+    { "command": "Levenberg-Marquardt-Batch",
+      "arguments": { "Apply size and organic matter correction": "false" } }
+  ]
+}
+\end{lstlisting}
+
+and the same with the isotopes left out:
+
+\begin{lstlisting}[language=scriptjson]
+    { "command": "set-elements",
+      "arguments": { "only": ["Aluminum","Barium","Lead","Zinc"] } },
+\end{lstlisting}
+
+Because the only difference between the two runs is recorded in the scripts,
+the comparison means something, and it can be repeated.
+
+%======================================================================
+\chapter{When something goes wrong}
+\label{ch:troubleshooting}
+
+\section{The script was not run}
+
+Every step is checked first, so this means a command or argument name was not
+recognised. The message names the step and suggests the closest accepted name.
+Names must match the dialogs exactly, including spaces and capitalisation;
+\texttt{--describe} is the authority.
+
+\section{A step failed}
+
+The step's entry in the report says so, and its \texttt{warnings} usually say
+why. The common ones:
+
+\begin{sloppypar}
+\begin{description}[style=nextline,leftmargin=0pt]
+  \item[Perform Organic Matter and Size Correction first] An analysis was asked
+    to apply the correction, but the correction has not been carried out. Add
+    an \texttt{MLR} step before it, or set
+    \texttt{\dq{}Apply size and organic matter correction\dq{}} to
+    \texttt{\dq{}false\dq{}}.
+  \item[Zero or negative values for element \ldots] A constituent has values a
+    log-normal distribution cannot represent. Exclude it with
+    \texttt{set-elements}, or exclude the samples responsible with
+    \texttt{set-samples}.
+  \item[Singular matrix in within group scatter matrix] A discriminant analysis
+    was given constituents that do not carry independent information. Reduce
+    the set.
+\end{description}
+\end{sloppypar}
+
+\section{Nothing seems to be included in the analysis}
+
+Projects saved by older versions do not record which constituents are included,
+and they load with none of them selected. Put a \texttt{set-elements} step at
+the start of the script to say explicitly what should be used.
+
+\section{Warnings about a singular system}
+
+Messages of the form
+
+\begin{lstlisting}
+warning: solve(): system is singular (rcond: 1.0e-19);
+attempting approx solution
+\end{lstlisting}
+
+come from the matrix library during the Levenberg-Marquardt fit. They are
+normally emitted in the last few iterations, after the fit has converged and
+the remaining steps are negligible, and in that case the result is sound ---
+check that the contributions are sensible and sum to one.
+
+If they appear from the beginning of a fit rather than at the end, the
+parameters are not identifiable from the data: there are too few informative
+tracers for the number of sources, or the tracers chosen do not distinguish
+them. Reducing the source count or choosing better tracers is the remedy, not
+running longer.
+
+\section{It cannot find the command definitions}
+
+The program warns at startup if it cannot find
+\texttt{resources/forms\_structures.json}, and the message lists everywhere it
+looked. Set \texttt{SEDSAT3\_RESOURCES} or pass \texttt{--resources}. Without
+it, scripts are not checked and omitted arguments are not filled in, so
+analyses may fail in confusing ways.
+
+\printindex
+
+\end{document}

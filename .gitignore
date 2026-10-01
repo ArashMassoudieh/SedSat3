@@ -158,3 +158,19 @@ moc_predefs.h
 # Manual backup files
 *.back.aip
 * - Backup*.vcxproj.user
+
+# The manual's own Makefile is not the qmake-generated one ignored above
+!docs/manual/Makefile
+
+# LaTeX build products for the CLI user's manual (the PDF itself is committed,
+# so reviewers do not need a TeX installation)
+docs/manual/*.aux
+docs/manual/*.log
+docs/manual/*.toc
+docs/manual/*.out
+docs/manual/*.idx
+docs/manual/*.ilg
+docs/manual/*.ind
+docs/manual/*.fls
+docs/manual/*.fdb_latexmk
+docs/manual/*.synctex.gz
