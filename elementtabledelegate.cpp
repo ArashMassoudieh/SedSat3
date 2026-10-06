@@ -149,7 +149,7 @@ void ElementTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
     if (index.column() == 4)
     {
         QCheckBox *chkbox = static_cast<QCheckBox*>(editor);
-        qDebug()<<chkbox->checkState();
+        // qDebug()<<chkbox->checkState();
         if (chkbox->checkState()==Qt::CheckState::Checked)
             model->setData(index,true);
         else

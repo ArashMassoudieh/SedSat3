@@ -185,7 +185,7 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
             make_effective.push_back(true);
         else
             make_effective.push_back(false);
-        qDebug()<<chisq<<","<<SSE_reduced<<","<<F<<","<<p_value[i];
+        // qDebug()<<chisq<<","<<SSE_reduced<<","<<F<<","<<p_value[i];
 
     }
 

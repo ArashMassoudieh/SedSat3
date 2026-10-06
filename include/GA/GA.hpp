@@ -380,8 +380,8 @@ int counter=0;
 
             if (GA_params.Steepest_Descent && k<min(GA_params.maxpop/10,1))
             {
-                    if (k==0)
-                        qDebug()<<"Prior Likelihood: " <<Models[k].GetObjectiveFunctionValue();
+                    // if (k==0)
+                        // qDebug()<<"Prior Likelihood: " <<Models[k].GetObjectiveFunctionValue();
                     CVector updated_params;
                     for (int j=0; j<5; j++)
                         updated_params = Models[k].GradientUpdate();
@@ -400,8 +400,8 @@ int counter=0;
                         }
                     }
 
-                    if (k==0)
-                        qDebug()<<"Posterior Likelihood: " <<Models[k].GetObjectiveFunctionValue();
+                    // if (k==0)
+                        // qDebug()<<"Posterior Likelihood: " <<Models[k].GetObjectiveFunctionValue();
 
             }
 

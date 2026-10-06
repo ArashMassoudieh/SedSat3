@@ -108,7 +108,7 @@ void ResultsWindow::AppendResult(const ResultItem &resultitem)
 
 void ResultsWindow::on_result_graph_clicked()
 {
-    qDebug()<<sender()->objectName();
+    // qDebug()<<sender()->objectName();
     GeneralChart *resultgraph = new GeneralChart(this);
     resultgraph->setWindowFlag(Qt::WindowMinMaxButtonsHint);
     resultgraph->setWindowTitle(QString::fromStdString(results->operator[](sender()->objectName().toStdString()).Name()));
@@ -119,7 +119,7 @@ void ResultsWindow::on_result_graph_clicked()
 
 void ResultsWindow::on_result_table_clicked()
 {
-    qDebug()<<sender()->objectName();
+    // qDebug()<<sender()->objectName();
     ResultTableViewer *tableviewer = new ResultTableViewer(this);
     tableviewer->setWindowFlag(Qt::WindowMinMaxButtonsHint);
     QTableWidget *tablewidget = results->operator[](sender()->objectName().toStdString()).Result()->ToTable();
@@ -133,7 +133,7 @@ void ResultsWindow::on_result_table_clicked()
 
 void ResultsWindow::on_result_export_clicked()
 {
-    qDebug()<<sender()->objectName();
+    // qDebug()<<sender()->objectName();
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save"), "",
         tr("text file (*.txt)"));

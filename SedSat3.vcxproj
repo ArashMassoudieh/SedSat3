@@ -148,6 +148,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="src\cmbdistribution.cpp" />
     <ClCompile Include="src\concentrationset.cpp" />
     <ClCompile Include="src\conductor.cpp" />
+    <ClCompile Include="guihost.cpp" />
     <ClCompile Include="src\elemental_profile.cpp" />
     <ClCompile Include="src\elemental_profile_set.cpp" />
     <ClCompile Include="src\GA\Binary.cpp" />
@@ -212,6 +213,9 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="include\cmbdistribution.h" />
     <ClInclude Include="include\concentrationset.h" />
     <ClInclude Include="include\conductor.h" />
+    <ClInclude Include="guihost.h" />
+    <ClInclude Include="include\analysishost.h" />
+    <ClInclude Include="include\progressreporter.h" />
     <ClInclude Include="include\drand.h" />
     <ClInclude Include="include\elemental_profile.h" />
     <ClInclude Include="include\elemental_profile_set.h" />

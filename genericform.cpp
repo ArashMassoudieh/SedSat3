@@ -91,7 +91,7 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                                 if (element!="")
                                     combobox->setCurrentIndex(combobox->findText(element));
                                 int i = combobox->findText(element);
-                                qDebug() << i;
+                                // qDebug() << i;
                             }
                             if (object.value("source").toString().contains("Size"))
                             {
@@ -99,7 +99,7 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                                 if (element!="")
                                     combobox->setCurrentIndex(combobox->findText(element));
                                 int i = combobox->findText(element);
-                                qDebug() << i;
+                                // qDebug() << i;
                             }
                         }
                     }

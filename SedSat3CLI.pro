@@ -22,6 +22,12 @@ TEMPLATE = app
 
 DEFINES += _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT Qt6
 
+# qDebug() tracing was written for the GUI, where it goes nowhere. On a console
+# it ran to tens of megabytes per MCMC run. The project's own calls are now
+# commented out; this also silences those in the Utilities submodule.
+# qWarning() and above are unaffected.
+DEFINES += QT_NO_DEBUG_OUTPUT
+
 QT_VERSION = $$[QT_VERSION]
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtCore/$${QT_VERSION}/QtCore/private
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtGui/$${QT_VERSION}/QtGui/private

@@ -1140,7 +1140,7 @@ CVector SourceSinkData::ResidualVector()
     // Check for invalid predictions
     if (!predicted_concentrations.is_finite())
     {
-        qDebug() << "Warning: Non-finite predicted concentrations detected in ResidualVector()";
+        // qDebug() << "Warning: Non-finite predicted concentrations detected in ResidualVector()";
     }
 
     // Get observed values for the selected target sample
@@ -3987,7 +3987,7 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
             // Negative values detected - skip this sample and report
             for (size_t i = 0; i < negative_elements.size(); i++)
             {
-                qDebug() << QString::fromStdString(negative_elements[i]);
+                // qDebug() << QString::fromStdString(negative_elements[i]);
             }
         }
     }

@@ -283,7 +283,7 @@ install(FILES ${CMAKE_SOURCE_DIR}/resources/icons/sedsat3.png
 # Packaging metadata
 # ----------------------------
 set(CPACK_PACKAGE_NAME "sedsat3")
-set(CPACK_PACKAGE_VERSION "1.1.6")
+set(CPACK_PACKAGE_VERSION "1.1.7")
 set(CPACK_PACKAGE_CONTACT "Arash Massoudieh <massoudieh@cua.edu>")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Arash Massoudieh") # required
 set(CPACK_DEBIAN_PACKAGE_SECTION "science")

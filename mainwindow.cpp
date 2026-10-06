@@ -49,8 +49,8 @@
 #endif
 
 
-#define version "1.1.6"
-#define date_compiled "12/20/2025"
+#define version "1.1.7"
+#define date_compiled "10/06/2026"
 
 using namespace QXlsx;
 
@@ -146,7 +146,7 @@ void MainWindow::setupToolsView()
 {
     // Load tools configuration from JSON
     QString toolsPath = resourcesPath() + + "/tools.json";
-    qDebug() << "Loading tools from:" << toolsPath;
+    // qDebug() << "Loading tools from:" << toolsPath;
 
     QJsonDocument tools = loadJson(toolsPath);
     QStandardItemModel* toolsModel = ToQStandardItemModel(tools);
@@ -562,7 +562,7 @@ bool MainWindow::ReadExcel(const QString& filename)
         return false;
     }
 
-    qDebug() << "[debug] Successfully loaded xlsx file.";
+    // qDebug() << "[debug] Successfully loaded xlsx file.";
     QStringList allSheetNames = xlsxR.sheetNames();
 
     // Clear existing data
@@ -575,7 +575,7 @@ bool MainWindow::ReadExcel(const QString& filename)
     for (const QString& sheetName : allSheetNames)
     {
         chooseSheetsDlg->AddItem(sheetName);
-        qDebug() << sheetName;
+        // qDebug() << sheetName;
     }
 
     chooseSheetsDlg->exec();
@@ -606,7 +606,7 @@ bool MainWindow::ReadExcel(const QString& filename)
     indicateSheetDlg->Populate_Table(selectedSheets);
     indicateSheetDlg->exec();
 
-    qDebug() << "Sink Sheet is:" << sinkSheet;
+    // qDebug() << "Sink Sheet is:" << sinkSheet;
 
     // Validate element names are consistent across all sheets
     QList<QStringList> elementNamesBySheet;
@@ -629,7 +629,7 @@ bool MainWindow::ReadExcel(const QString& filename)
                 break;
 
             elementNames.append(elemName);
-            qDebug() << elemName;
+            // qDebug() << elemName;
             col++;
         }
 
@@ -737,7 +737,7 @@ bool MainWindow::ReadExcel(const QString& filename)
     dataCollection.PopulateElementDistributions();
     dataCollection.AssignAllDistributions();
 
-    qDebug() << "Reading element information done!";
+    // qDebug() << "Reading element information done!";
 
     return true;
 }
@@ -845,7 +845,7 @@ QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsi
 }
 void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 {
-    qDebug()<<"Selection changed "<<changed;
+    // qDebug()<<"Selection changed "<<changed;
     ui->ShowTabular->setEnabled(false);
     if (treeItemChangedProgramatically) return;
     if (plotter==nullptr)
@@ -880,7 +880,7 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
     }
     for (int i=0; i<indexes.size(); i++)
     {
-        qDebug()<<indexes[i].data(Qt::UserRole).toString();
+        // qDebug()<<indexes[i].data(Qt::UserRole).toString();
         if (indexes[i].data(Qt::UserRole).toString()=="Group")
         {
             QString Group_Name_Selected = indexes[i].data().toString();
@@ -902,11 +902,11 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
         }
         if (indexes[i].data(Qt::UserRole).toString()=="Element")
         {
-            qDebug()<<"Element selected!";
+            // qDebug()<<"Element selected!";
             PlotType = plottype::element_scatters;
             QString Element_Name_Selected = indexes[i].data().toString();
             map<string,vector<double>> extracted_data = dataCollection.ExtractElementDataByGroup(Element_Name_Selected.toStdString());
-            qDebug()<<"Data extracted!";
+            // qDebug()<<"Data extracted!";
             if (plotter==nullptr)
             {
 #ifdef USE_QCHARTS
@@ -1020,9 +1020,9 @@ void MainWindow::preparetreeviewMenu(const QPoint& pos)
         return;
     }
 
-    qDebug() << index.data(elementRole);
-    qDebug() << index.data(groupRole);
-    qDebug() << index.data(sampleRole);
+    // qDebug() << index.data(elementRole);
+    // qDebug() << index.data(groupRole);
+    // qDebug() << index.data(sampleRole);
 
     menu = std::make_unique<QMenu>(this);
 
@@ -1191,7 +1191,7 @@ void MainWindow::onOMSizeCorrection()
 
 void MainWindow::on_tool_executed(const QModelIndex& index)
 {
-    qDebug() << "Tool executed" << index.data() << ":" << index.data(Qt::UserRole);
+    // qDebug() << "Tool executed" << index.data() << ":" << index.data(Qt::UserRole);
 
     // Check if data has been loaded
     if (dataCollection.GetElementNames().empty())
@@ -1210,7 +1210,7 @@ void MainWindow::on_tool_executed(const QModelIndex& index)
 
     if (mainJsonObject.contains(toolName))
     {
-        qDebug() << toolName;
+        // qDebug() << toolName;
 
         QJsonObject formObject = mainJsonObject.value(toolName).toObject();
 
@@ -1345,7 +1345,7 @@ void MainWindow::readRecentFilesList()
     QFile file(recentFilePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "No recent files list found";
+        // qDebug() << "No recent files list found";
         return;
     }
 
@@ -1501,7 +1501,7 @@ void MainWindow::writeRecentFilesList()
 QString localAppFolderAddress()
 {
     QString localAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-    qDebug() << "Local AppData Folder:" << localAppDataPath;
+    // qDebug() << "Local AppData Folder:" << localAppDataPath;
     return localAppDataPath;
 }
 

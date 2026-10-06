@@ -254,7 +254,6 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
                 logp1[j] = logp[j]+pp;
             }
             results->SetRow(j,j,Params[j]);
-            cout<<"success!";
             predicted.SetRow(j,j,CopiedModels[j].GetPredictedValues().vec);
             temp_predicted[j] = CopiedModels[j].GetPredictedValues();
         }
@@ -411,7 +410,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
         }
 		fclose(file);
 	}
-    qDebug()<<5;
+    // qDebug()<<5;
     if (!MCMC_Settings.continue_mcmc)
 	{
 		file = fopen(filename.c_str(),"a");
@@ -437,7 +436,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 
     MCMC_Settings.ini_purt_fact = pertcoeff[0];
 	int k_0 = k;
-    qDebug()<<6;
+    // qDebug()<<6;
     for (unsigned int kk=k; kk<k+nsamps+MCMC_Settings.number_of_chains; kk+=MCMC_Settings.number_of_chains)
 	{
         QCoreApplication::processEvents(QEventLoop::AllEvents,10*1000);
@@ -453,13 +452,13 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 			srand(int(time(NULL)) ^ omp_get_thread_num() + kk);
 		}
 #endif
-qDebug()<<7;
+// qDebug()<<7;
 #pragma omp parallel for
         for (int jj = kk; jj < min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples); jj++)
 		{
-            qDebug() << "Starting step: " + QString::number(jj);
+            // qDebug() << "Starting step: " + QString::number(jj);
             bool stepstuck = !step(jj,jj-kk);
-            qDebug() << "Step: " + QString::number(jj) + "Done!";
+            // qDebug() << "Step: " + QString::number(jj) + "Done!";
             if (stepstuck)
             {   stuckcounter[jj - kk]++;
                 accepted[jj-kk]=0;
@@ -482,7 +481,7 @@ qDebug()<<7;
             {   int_value_pair minchain = Min(logp,min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples),MCMC_Settings.number_of_chains);
                 int_value_pair maxchain = Max(logp,min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples),MCMC_Settings.number_of_chains);
                 double ratio = maxchain.value-minchain.value;
-                qDebug()<<"Ratio:"<<ratio;
+                // qDebug()<<"Ratio:"<<ratio;
                 if (ratio>5)
                 {
                     Params[minchain.counter] = Params[maxchain.counter];
@@ -542,7 +541,7 @@ qDebug()<<7;
             QCoreApplication::processEvents();
 		}
 	}
-    qDebug()<<"MCMC done!";
+    // qDebug()<<"MCMC done!";
 	return 0;
 }
 

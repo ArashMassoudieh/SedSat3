@@ -438,7 +438,7 @@ bool GeneralChart::PlotContribution(Contribution* contributions, const QString &
 bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, const QString &title)
 {
     QCategoryAxis* axisX = new QCategoryAxis();
-    qDebug() << profile_set->GetElementNames().size();
+    // qDebug() << profile_set->GetElementNames().size();
     axisX->setRange(0, profile_set->size()*10);
     vector<string> element_names = profile_set->GetElementNames();
     for (int i = 0; i < element_names.size(); i++)
@@ -619,8 +619,8 @@ void GeneralChart::onDFAPairChanged(int pair_id)
         chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
     }
     CMBVectorSetSet* vectorset = static_cast<CMBVectorSetSet*>(result_item->Result());
-    qDebug()<<source1_combo->currentText();
-    qDebug()<<source2_combo->currentText();
+    // qDebug()<<source1_combo->currentText();
+    // qDebug()<<source2_combo->currentText();
     if (source1_combo->currentText()!="" && source2_combo->currentText()!="")
         PlotScatter(&vectorset->at(source1_combo->currentText().toStdString()),&vectorset->at(source2_combo->currentText().toStdString()), "WB_" + source1_combo->currentText(), "WB_" + source2_combo->currentText() );
 }
@@ -654,12 +654,12 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
 
     for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
     {
-        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
+        // qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
     }
 
     for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
     {
-        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
+        // qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
     }
 
     chart->removeAllSeries();
@@ -669,16 +669,16 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
         //delete chart->axes()[i];
     }
 
-    qDebug()<<"After:";
+    // qDebug()<<"After:";
     for (int i=0; i<chart->axes(Qt::Horizontal).size(); i++)
     {
-        qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
+        // qDebug()<<chart->axes(Qt::Horizontal)[i]->objectName();
         chart->removeAxis(chart->axes(Qt::Horizontal)[i]);
     }
 
     for (int i=0; i<chart->axes(Qt::Vertical).size(); i++)
     {
-        qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
+        // qDebug()<<chart->axes(Qt::Vertical)[i]->objectName();
         chart->removeAxis(chart->axes(Qt::Vertical)[i]);
     }
     chart->axes().clear();
@@ -742,10 +742,10 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     series->setName(QString::fromStdString(mlr->DependentVariableName()));
     series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
     series->setMarkerSize(15.0);
-    qDebug()<<independent_var;
+    // qDebug()<<independent_var;
     for (unsigned int i=0; i<mlr->IndependentData(independent_var.toStdString()).size(); i++)
     {
-        qDebug()<<mlr->DependentData()[i] << ","<< mlr->IndependentData(independent_var.toStdString())[i];
+        // qDebug()<<mlr->DependentData()[i] << ","<< mlr->IndependentData(independent_var.toStdString())[i];
         series->append(mlr->IndependentData(independent_var.toStdString())[i],mlr->DependentData()[i]);
     }
 
@@ -811,7 +811,7 @@ bool GeneralChart::PlotScatter(CMBMatrix *matrix)
     for (int i=0; i<rowcategories.size();i++)
     {
         QScatterSeries* series = new QScatterSeries();
-        qDebug()<<rowcategories[i];
+        // qDebug()<<rowcategories[i];
         for (int j=0; j<matrix->getnumrows(); j++)
             if (QString::fromStdString(matrix->RowLabel(j))==rowcategories[i])
                 series->append(matrix->matr[j][0],matrix->matr[j][1]);
@@ -959,12 +959,12 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
         }
         double orientation = 0.5*atan(2*rho*std1*std2/(std1*std1-std2*std2));
 
-        qDebug()<<"Std1="<<std1;
-        qDebug()<<"Std2="<<std2;
-        qDebug()<<"Rho="<<rho;
-        qDebug()<<"Major diagonal="<<major_diagonal;
-        qDebug()<<"Minor diagonal="<<minor_diagonal;
-        qDebug()<<"Orienation="<<orientation;
+        // qDebug()<<"Std1="<<std1;
+        // qDebug()<<"Std2="<<std2;
+        // qDebug()<<"Rho="<<rho;
+        // qDebug()<<"Major diagonal="<<major_diagonal;
+        // qDebug()<<"Minor diagonal="<<minor_diagonal;
+        // qDebug()<<"Orienation="<<orientation;
         vector<QPointF> ellipsepoints = calculateRotatedEllipsePoints(mean1, mean2, major_diagonal, minor_diagonal, orientation, M_PI/30.0);
         QLineSeries* seriesellipse = new QLineSeries();
         seriesellipse->setName(QString::fromStdString(vec->first));
@@ -1266,7 +1266,7 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
     for (map<string, Range>::iterator it = rangeset->begin(); it!=rangeset->end(); it++)
     {
         QBoxSet *boxSet = new QBoxSet();
-        qDebug()<<it->second.Get(_range::low)<<","<<it->second.Get(_range::high)<<","<<it->second.GetValue();
+        // qDebug()<<it->second.Get(_range::low)<<","<<it->second.Get(_range::high)<<","<<it->second.GetValue();
         boxSet->setValue(QBoxSet::LowerExtreme, max(it->second.Get(_range::low),y_min_val));
         boxSet->setValue(QBoxSet::UpperExtreme, it->second.Get(_range::high));
         boxSet->setValue(QBoxSet::LowerQuartile, max(it->second.Get(_range::low),y_min_val));
