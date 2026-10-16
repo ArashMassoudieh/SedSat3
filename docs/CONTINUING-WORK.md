@@ -22,9 +22,8 @@ c79f71d  Add a command line build that runs analyses from a script
 acfc109  Attach plotted series to the axis that was actually created
 ```
 
-GitHub remote: `https://github.com/ArashMassoudieh/SedSat3.git`. Note that the
-remote named `origin` is the repository's old name, `CMBSource`; GitHub
-redirects, so both names reach the same repository.
+Development remote: the author's development mirror (not the USGS repository).
+The USGS GitLab repository below is the authoritative copy.
 
 ### Not merged
 
@@ -57,22 +56,21 @@ git pull origin main
 git submodule update --init --recursive
 ```
 
-The submodule step is not optional. `Utilities` and `thirdparty/QXlsx` are
-submodules, and the CLI build needs `Utilities` — without it the build fails on
-missing headers rather than saying anything useful.
+The submodule step is not optional: `thirdparty/QXlsx` is a submodule. (`Utilities`
+used to be one too; since the October 2026 review it is part of this repository.)
 
 If `git pull` complains that the remote has moved, that is expected: the remote
 named `origin` is the repository's old name, `CMBSource`, and GitHub redirects
 to `SedSat3`. It still works. To point it at the current name:
 
 ```
-git remote set-url origin https://github.com/ArashMassoudieh/SedSat3.git
+git remote set-url origin <development mirror URL>
 ```
 
 For a fresh clone:
 
 ```
-git clone --recurse-submodules https://github.com/ArashMassoudieh/SedSat3.git
+git clone --recurse-submodules <<https://code.usgs.gov/...final group path...>>.git
 ```
 
 Authentication is a token, not a password — GitHub stopped accepting passwords

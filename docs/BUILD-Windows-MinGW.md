@@ -60,12 +60,12 @@ path, you are in the wrong MSYS2 shell.
 
 ## 3. Clone the repository with submodules
 
-SedSAT3 has two submodules (`Utilities` and `thirdparty/QXlsx`). The `--recursive` flag
+SedSAT3 has one submodule (`thirdparty/QXlsx`). The `--recursive` flag
 is required; a plain clone will fail to configure.
 
 ```bash
-git clone --recursive https://github.com/ArashMassoudieh/CMBSource.git
-cd CMBSource
+git clone --recursive <<https://code.usgs.gov/...final group path...>>.git SedSAT3
+cd SedSAT3
 ```
 
 If you already cloned without `--recursive`:

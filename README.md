@@ -1,161 +1,167 @@
-# SedSAT3 (Sediment Source Assessment Tool, version 1.1.6)
+# SedSAT3 — Sediment Source Assessment Tool, version 3
 
-SedSAT3 is an open-source software package developed by the Arash Massoudieh, Allen Gellis, and Cara Peterman-Phippss for sediment source fingerprinting using chemical and isotopic tracers. It provides a graphical user interface and a suite of tools for preprocessing, tracer selection, source apportionment, and diagnostic analysis. The software supports multiple apportionment approaches, including deterministic maximum likelihood estimation, metaheuristic search with genetic algorithms, and Bayesian inference through Markov Chain Monte Ca...
+SedSAT3 is U.S. Geological Survey software for sediment source fingerprinting
+and apportionment using chemical and isotopic tracers. It provides a graphical
+user interface and a command line program with tools for preprocessing, tracer
+selection, source apportionment and diagnostics.
+
+Repository: <<https://code.usgs.gov/...final group path...>>
 
 ---
 
 ## Features
 
-- **Cross-platform GUI** built with Qt6 for managing projects, configuring simulations, and visualizing results.  
-- **Data import** from Microsoft Excel files with a standardized tab structure.  
-- **Preprocessing tools** including outlier detection, particle size and organic matter corrections, bracketing analysis, and discriminant function analysis (DFA).  
-- **Statistical routines** such as ANOVA, automated tracer selection, tracer discriminant power evaluation, distribution fitting, correlation matrices, t-tests, error analysis, Kolmogorov–Smirnov tests, and Box–Cox transformations.  
-- **Source apportionment methods**:
-  - Deterministic maximum likelihood (Levenberg–Marquardt optimization)  
-  - Genetic algorithms for global search  
-  - Bayesian inference via MCMC sampling  
-- **Results output** with visual and tabular summaries, including credible intervals, posterior distributions, predicted concentrations, and diagnostic plots.  
+- **Graphical interface** built with Qt 6 for managing projects, configuring
+  analyses and viewing results.
+- **Command line program** (`sedsat3-cli`) that runs the same analyses from a
+  JSON script, for batch work and reproducible runs.
+- **Data import** from Microsoft Excel files with a standard sheet layout.
+- **Preprocessing**: outlier detection, particle-size and organic-matter
+  correction, bracketing analysis and discriminant function analysis (DFA).
+- **Statistics**: ANOVA, automated tracer selection, tracer discriminant power,
+  distribution fitting, correlation and covariance matrices, error analysis,
+  Kolmogorov–Smirnov tests and Box–Cox transformations.
+- **Source apportionment**:
+  - deterministic: Levenberg–Marquardt maximum-likelihood fit
+  - Bayesian: Markov chain Monte Carlo (MCMC) sampling, with a user-set
+    random seed that is written to the output so any run can be repeated
+- **Results** as tables and plots, including credible intervals, posterior
+  distributions and predicted concentrations.
+
+A genetic-algorithm (GA) solver is included in the source but disabled by
+default, because Levenberg–Marquardt solves the same problem more efficiently
+and offering two deterministic methods would confuse users (see
+[Build options](#build-options)).
 
 ---
 
-## Installation
+## User manual
 
-### Windows
-A precompiled installer is available at:  
-https://sedsat.org/download
+The SedSAT3 user's manual is available at <<USGS manual URL/DOI>>.
 
-### Linux (Ubuntu/Debian)
-
-You can install SedSAT3 from the prebuilt `.deb` package:
-
-```bash
-wget https://github.com/ArashMassoudieh/SedSat3/releases/download/Latest/SedSat3-Linux.deb
-sudo apt install ./SedSat3-Linux.deb
-```
-
-This installs SedSAT3 to `/usr/local/sedsat3` with:
-
-- Executable at `/usr/local/sedsat3/bin/SedSat3`
-- Resources at `/usr/local/sedsat3/resources`
-- A symlink `/usr/local/bin/sedsat3` so you can run the app by typing `sedsat3`
-- A desktop launcher at `/usr/share/applications/sedsat3.desktop`, so the app appears in your GNOME/KDE menu with its icon.
-
-### macOS
-Build from source (instructions below).
+The command line program has its own manual in
+[`docs/manual/sedsat3-cli-manual.pdf`](docs/manual/sedsat3-cli-manual.pdf).
 
 ---
 
-## Build from Source
+## Running the portable Windows build
 
-SedSAT3 can be compiled on Windows, macOS, and Linux. The software depends on several third-party libraries and a Git submodule.
+The portable build needs no installer and no administrator rights.
+
+1. Download `SedSAT3-<version>-windows-x64-portable.zip` from the repository's
+   releases page.
+2. Optionally check the download against the SHA-256 checksum published with it
+   (`certutil -hashfile SedSAT3-<version>-windows-x64-portable.zip SHA256`).
+3. Unzip it to any folder you can write to, for example your Desktop or
+   `%LOCALAPPDATA%\SedSAT3`.
+4. Double-click `SedSat3.exe`.
+
+Keep the `resources` folder next to the executable; the program reads its tool
+and form definitions from it. To remove SedSAT3, delete the folder.
+
+---
+
+## Build instructions
+
+SedSAT3 builds on Windows, macOS and Linux.
 
 ### Prerequisites
 
-- Qt 6 (including `qmake` or CMake)  
-- GNU Scientific Library (GSL)  
-- Armadillo  
-- QXlsx (included as a submodule)  
-- A C++17 or newer compiler (MSVC, g++, or clang)  
+- Qt 6.2 or later with the Charts and PrintSupport modules (Qt 6.8 is tested)
+- GNU Scientific Library (GSL)
+- Armadillo, with LAPACK and BLAS
+- A C++17 compiler with OpenMP (GCC, Clang or MSVC)
+- QXlsx, included as a git submodule and compiled with SedSAT3
 
-### Clone the Repository
-
-```bash
-git clone https://github.com/ArashMassoudieh/SedSat3.git
-cd SedSat3
-```
-
-Initialize and update the `Utilities` submodule:
+### Get the source
 
 ```bash
-git submodule init
-git submodule update
+git clone --recurse-submodules <<https://code.usgs.gov/...final group path...>>.git SedSAT3
+cd SedSAT3
 ```
 
-### Build Instructions
+If you cloned without `--recurse-submodules`, run
+`git submodule update --init --recursive`.
 
-#### Using qmake (quick testing)
+### Build with qmake (GUI and command line)
 
 ```bash
-qmake SedSat3.pro
-make        # or `nmake` on Windows
+qmake6 SedSat3.pro        # use the qmake of your Qt 6 kit
+make -j8                  # nmake or jom with MSVC
+
+qmake6 SedSat3CLI.pro     # command line program
+make -j8
 ```
 
-#### Using CMake (for packaging and distribution)
+### Build with CMake
 
 ```bash
-mkdir build && cd build
-cmake ..
-cmake --build . --parallel
-cpack -G DEB   # to generate a Debian package
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64
+cmake --build build --parallel
+ctest --test-dir build          # unit tests
 ```
 
-The `.deb` file will appear in the `build/` folder.
+### Build options
+
+| qmake | CMake | Default | Effect |
+|---|---|---|---|
+| `CONFIG+=ga` | `-DENABLE_GA=ON` | off | builds the genetic-algorithm solver and its commands |
+| — | `-DBUILD_TESTING=OFF` | on | skips the unit tests |
+
+### Windows
+
+See [`docs/BUILD-Windows-MinGW.md`](docs/BUILD-Windows-MinGW.md) for an MSYS2/MinGW
+build and [`docs/PACKAGE-Windows-Portable.md`](docs/PACKAGE-Windows-Portable.md) for
+producing the portable ZIP from an MSVC build.
+
+### Tests
+
+```bash
+tests/regression/run.sh path/to/sedsat3-cli
+```
+
+runs the deterministic analyses on the projects in `tests/data/` and compares
+them with `tests/baseline/`. See [`tests/README.md`](tests/README.md).
 
 ---
 
-## Running SedSAT3
+## Quick start
 
-After installation, you can start SedSAT3 in several ways:
+A sample dataset, `examples/SampleData.xlsx`, follows the standard layout: a
+`Mixture` sheet with the target samples and one sheet per source (`Forest`,
+`Crop`, `Pasture`, `Bank`). Each sheet has a `sample` column, particle-size
+(`D50`) and organic-carbon (`TOC`) columns for the size and organic-matter
+corrections, and one column per elemental or isotopic tracer. Every cell must
+hold a finite number; empty cells, text, `NaN` and `Inf` are rejected at import
+with the sheet, row and column of the cell.
 
-- From the terminal:
-  ```bash
-  sedsat3
-  ```
-- From the applications menu (look for "SedSat3" with its icon).  
-- Or directly:
-  ```bash
-  /usr/local/sedsat3/bin/SedSat3
-  ```
-
----
-
-## Quickstart Example
-
-A sample dataset, `examples/SampleData.xlsx`, is provided to help you get started. It follows the standard tab layout: a `Mixture` sheet containing the target (receptor) samples and one sheet per source (`Forest`, `Crop`, `Pasture`, `Bank`). Each sheet has a `sample` column, particle-size (`D50`) and organic-carbon (`TOC`) columns used for size and organic-matter corrections, and one column per elemental or isotopic tracer.
-
-1. Prepare your source and target sediment data in Excel format, following the standard tab layout (see `examples/SampleData.xlsx`).  
-2. Launch SedSAT3 and create a new project.  
-3. Import the Excel file through the GUI.  
-4. Apply preprocessing (e.g., tracer selection, corrections).  
-5. Configure an apportionment method (e.g., MCMC) and run the analysis.  
-6. View outputs such as posterior distributions, source contribution estimates, and diagnostic plots.  
-
----
-
-## Documentation
-
-- **User Manual**: Detailed descriptions of preprocessing routines, tracer selection methods, and apportionment algorithms are provided in the SedSAT3 User’s Manual:(https://github.com/ArashMassoudieh/SedSat-User-s-Manual/blob/main/SedSat_User_s_Manual.pdf)  
-
----
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit pull requests. Issues can be reported through the GitHub Issues tab: https://github.com/ArashMassoudieh/SedSat3/issues
-
----
-
-## License
-
-SedSAT3 is distributed under the GNU General Public License v3.0 (GPL-3.0). See [LICENSE.md](LICENSE.md).
+1. Launch SedSAT3 and import the Excel file.
+2. Choose the tracers to include (constituents with zero or negative values,
+   such as δ¹³C, must be excluded or given the isotope role).
+3. Apply preprocessing (outlier analysis, size and organic-matter correction).
+4. Run an apportionment method and review the results.
 
 ---
 
 ## Disclaimer
 
-This software is preliminary or provisional and is subject to revision. It is being provided to meet the need for timely best science. The software has not received final approval by the U.S. Geological Survey (USGS). No warranty, expressed or implied, is made by the USGS or the U.S. Government as to the functionality of the software and related material nor shall the fact of release constitute any such warranty. The software is provided on the condition that neither the USGS nor the U.S. Government shall be held liable for any damages resulting from the authorized or unauthorized use of the software.
+This software is preliminary or provisional and is subject to revision. See
+[DISCLAIMER.md](DISCLAIMER.md).
 
-See [DISCLAIMER.md](DISCLAIMER.md).
+---
+
+## License
+
+See [LICENSE.md](LICENSE.md). Third-party components and their licenses are
+listed in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
 ---
 
 ## Citation
 
-If you use SedSAT3 in your research, please cite:
+<<Massoudieh, A., Peterman-Phipps, C., Gellis, A.C., … confirm full list>>,
+<<year>>, SedSAT3—Sediment Source Assessment Tool, version 3 (version
+<<version>>): U.S. Geological Survey software release,
+https://doi.org/<<10.5066/XXXXXXX>>.
 
-Massoudieh, A., et al. (2023). *SedSAT3: An open-source software for sediment source apportionment*. U.S. Geological Survey. https://github.com/ArashMassoudieh/SedSat3
-
----
-
-## Acknowledgments
-
-SedSAT3 builds on several open-source libraries, including Qt, GSL, Armadillo, and QXlsx. The project also uses the `Utilities` submodule developed and maintained separately.
+Machine-readable citation metadata is in [CITATION.cff](CITATION.cff).

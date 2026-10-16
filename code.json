@@ -2,24 +2,25 @@
     {
         "name": "SedSAT3",
         "organization": "U.S. Geological Survey",
-        "description": "Open-source software for sediment source fingerprinting and apportionment using chemical and isotopic tracers, with deterministic maximum-likelihood, genetic-algorithm, and Bayesian (MCMC) methods.",
-        "version": "1.1.6",
+        "description": "Software for sediment source fingerprinting and apportionment using chemical and isotopic tracers, with deterministic (Levenberg-Marquardt) and Bayesian (MCMC) methods.",
+        "version": "<<version>>",
         "status": "Development",
         "permissions": {
             "usageType": "openSource",
             "licenses": [
                 {
-                    "name": "GPL-3.0-only",
-                    "URL": "https://github.com/ArashMassoudieh/SedSat3/blob/main/LICENSE.md"
+                    "name": "<<CC0-1.0 or MIT — confirm with Cara>>",
+                    "URL": "<<https://code.usgs.gov/...final group path...>>/-/raw/main/LICENSE.md"
                 }
             ]
         },
-        "homepageURL": "https://github.com/ArashMassoudieh/SedSat3",
-        "downloadURL": "https://github.com/ArashMassoudieh/SedSat3/archive/refs/tags/v1.1.6.tar.gz",
-        "disclaimerURL": "https://github.com/ArashMassoudieh/SedSat3/blob/main/DISCLAIMER.md",
-        "repositoryURL": "https://github.com/ArashMassoudieh/SedSat3.git",
+        "homepageURL": "<<https://code.usgs.gov/...final group path...>>",
+        "downloadURL": "<<https://code.usgs.gov/...final group path...>>/-/archive/<<version>>/SedSAT3-<<version>>.zip",
+        "disclaimerURL": "<<https://code.usgs.gov/...final group path...>>/-/raw/main/DISCLAIMER.md",
+        "repositoryURL": "<<https://code.usgs.gov/...final group path...>>.git",
         "vcs": "git",
         "laborHours": 2000,
+        "doi": "<<10.5066/XXXXXXX>>",
         "tags": [
             "sediment",
             "source-apportionment",
@@ -34,11 +35,11 @@
             "C++"
         ],
         "contact": {
-            "name": "Arash Massoudieh",
-            "email": "massoudieh@cua.edu"
+            "name": "<<contact name>>",
+            "email": "<<contact email>>"
         },
         "date": {
-            "metadataLastUpdated": "2026-06-15"
+            "metadataLastUpdated": "2026-10-16"
         }
     }
 ]

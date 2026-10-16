@@ -1,3 +1,6 @@
+// SedSAT3 â€“ Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 
 /**
  * @file elemental_profile.cpp
@@ -977,13 +980,13 @@ double Elemental_Profile::GetValue(const string& element_name) const
   * @brief Sort elements by concentration value
   *
   * Creates a CMBVector containing elements sorted by their concentration.
-  * Uses selection sort algorithm (O(n²) - consider std::sort for large profiles).
+  * Uses selection sort algorithm (O(nÂ²) - consider std::sort for large profiles).
   *
   * @param ascending true for ascending order (low to high), false for descending
   * @return CMBVector with sorted element names and values
   *
   * @note Original profile unchanged (const method)
-  * @note Performance: O(n²) - fine for typical profile sizes (<100 elements)
+  * @note Performance: O(nÂ²) - fine for typical profile sizes (<100 elements)
   */
  CMBVector Elemental_Profile::SortByConcentration(bool ascending) const
  {

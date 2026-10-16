@@ -1,3 +1,6 @@
+// SedSAT3 – Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 #include "elemental_profile_set.h"
 #include <iostream>
 #include <gsl/gsl_statistics_double.h>

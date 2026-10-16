@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "SedSAT3: Sediment Source Assessment Tool, version 3"
+version: "<<version>>"
+doi: "<<10.5066/XXXXXXX>>"
+date-released: "<<YYYY-MM-DD>>"
+publisher:
+  name: "U.S. Geological Survey"
+repository-code: "<<https://code.usgs.gov/...final group path...>>"
+license: "<<CC0-1.0 or MIT — confirm with Cara>>"
+# <<Massoudieh, A.; Peterman-Phipps, C.; Gellis, A.C.; … confirm full list>>
+authors:
+  - family-names: "Massoudieh"
+    given-names: "Arash"
+  - family-names: "Peterman-Phipps"
+    given-names: "Cara"
+  - family-names: "Gellis"
+    given-names: "Allen C."
+keywords:
+  - sediment
+  - source apportionment
+  - sediment fingerprinting
+  - chemical mass balance
+  - Bayesian inference
+  - MCMC

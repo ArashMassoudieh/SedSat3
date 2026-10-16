@@ -8,9 +8,9 @@
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPPRODUCTICON" Value="CMBSource_Icon.exe" Type="8"/>
-    <ROW Property="ARPURLINFOABOUT" Value="www.SedSat.org"/>
-    <ROW Property="ARPURLUPDATEINFO" Value="www.SedSat.org/download"/>
-    <ROW Property="Manufacturer" Value="EnviroInformatics"/>
+    <ROW Property="ARPURLINFOABOUT" Value="&lt;&lt;https://code.usgs.gov/...final group path...&gt;&gt;"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="&lt;&lt;https://code.usgs.gov/...final group path...&gt;&gt;/-/releases"/>
+    <ROW Property="Manufacturer" Value="U.S. Geological Survey"/>
     <ROW Property="ProductCode" Value="1033:{78E11952-1C20-4363-98A8-A1260F4FADD6} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="SedSat3"/>

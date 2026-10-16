@@ -1,4 +1,7 @@
-﻿#include "concentrationset.h"
+// SedSAT3 – Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
+#include "concentrationset.h"
 #include "math.h"
 #include "Utilities.h"
 #include <gsl/gsl_cdf.h>

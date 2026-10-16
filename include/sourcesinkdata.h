@@ -1,4 +1,7 @@
-﻿#ifndef SOURCESINKDATA_H
+// SedSAT3 – Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
+#ifndef SOURCESINKDATA_H
 #define SOURCESINKDATA_H
 
 #include <elemental_profile_set.h>

@@ -1,3 +1,6 @@
+// SedSAT3 – Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 // Binary.cpp: implementation of the CBinary class.
 //
 //////////////////////////////////////////////////////////////////////

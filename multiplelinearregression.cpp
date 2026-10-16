@@ -1,3 +1,6 @@
+// SedSAT3 – Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 #include "multiplelinearregression.h"
 #include <gsl/gsl_multifit.h>
 #include "Vector.h"

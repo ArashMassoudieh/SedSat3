@@ -1,3 +1,6 @@
+// SedSAT3 â€“ Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 #include "aboutdialog.h"
 #include <QApplication>
 #include <QScreen>
@@ -59,7 +62,7 @@ QWidget* AboutDialog::createHeader()
 
     // Subtitle
     QLabel* subtitleLabel = new QLabel(
-        tr("Sediment Source Apportionment Tool"),
+        tr("Sediment Source Assessment Tool, version 3"),
         headerWidget
     );
     QFont subtitleFont = subtitleLabel->font();
@@ -163,7 +166,8 @@ QWidget* AboutDialog::createFooter()
 
     // Copyright
     QLabel* copyrightLabel = new QLabel(
-        tr("© 2025 SedSat3 Development Team"),
+        tr("U.S. Geological Survey software. This software is preliminary or provisional;\n"
+           "see DISCLAIMER.md and LICENSE.md distributed with it."),
         footerWidget
     );
     copyrightLabel->setAlignment(Qt::AlignCenter);

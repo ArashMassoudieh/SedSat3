@@ -1,3 +1,6 @@
+// SedSAT3 â€“ Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 #ifndef CONDUCTOR_H
 #define CONDUCTOR_H
 
@@ -558,7 +561,7 @@ private:
      * Performs Box-Cox based outlier detection to identify samples with unusual
      * elemental concentrations within a source or target group. After Box-Cox
      * transformation to normality, calculates standardized residuals and flags
-     * values exceeding the specified threshold (typically ±2 or ±3 standard
+     * values exceeding the specified threshold (typically Â±2 or Â±3 standard
      * deviations). Supports sample and element filtering.
      *
      * @param arguments Map of configuration parameters including:

@@ -1,3 +1,6 @@
+// SedSAT3 – Sediment Source Assessment Tool, version 3
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
 #ifndef ELEMENTAL_PROFILE_SET_H
 #define ELEMENTAL_PROFILE_SET_H
 
@@ -368,7 +371,7 @@ public:
     CMBVector CalculateDotProduct(const CVector& v) const;
 
     /**
-     * @brief Convert to matrix format (samples � elements)
+     * @brief Convert to matrix format (samples × elements)
      */
     CMBMatrix ToMatrix() const;
 
