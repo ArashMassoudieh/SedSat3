@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "conductor.h"
+#include "randomstream.h"
 #include "analysishost.h"
 #include "progressreporter.h"
 #include "results.h"
@@ -219,6 +220,19 @@ void Conductor::ReportBoxCoxSkips(SourceSinkData& data, const std::string& group
     if (!message.empty())
         host->ShowWarning("The Box-Cox transformation needs positive values, so these constituents "
                           "with zero or negative values were not transformed; " + consequence + ":\n" + message);
+}
+
+bool Conductor::ResolveRandomSeed(std::map<std::string, std::string>& arguments, std::uint64_t& seed)
+{
+    const std::string text = arguments.count("Random seed") ? arguments.at("Random seed") : "";
+    if (!ParseRandomSeed(text, seed))
+    {
+        host->ShowWarning("The random seed '" + text + "' is not a whole number between 0 and "
+                          "18446744073709551615. Leave it blank to have one chosen.");
+        return false;
+    }
+    arguments["Random seed"] = std::to_string(seed);
+    return true;
 }
 
 SourceSinkData Conductor::BoxCoxTransformedWithReport(SourceSinkData& data)
@@ -1379,8 +1393,14 @@ bool Conductor::ExecuteKolmogorovSmirnovIndividual(const std::map<std::string, s
     return true;
 }
 
-bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>& arguments)
+bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>& given_arguments)
 {
+    // Every sample uses the same seed, which is recorded in the results name
+    std::map<std::string, std::string> arguments = given_arguments;
+    std::uint64_t seed = 0;
+    if (!ResolveRandomSeed(arguments, seed))
+        return false;
+
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
@@ -1423,7 +1443,7 @@ bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>
         host->ShowWarning(message);
     }
 
-    results.SetName("CMB Bayesian-Batch");
+    results.SetName("CMB Bayesian-Batch (random seed " + std::to_string(seed) + ")");
 
     // Create result item for contribution range matrix
     ResultItem contribution_matrix_item;
@@ -1439,9 +1459,14 @@ bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>
     return true;
 }
 
-bool Conductor::ExecuteTestCMBBayesian(const std::map<std::string, std::string>& arguments)
+bool Conductor::ExecuteTestCMBBayesian(const std::map<std::string, std::string>& given_arguments)
 {
-    results.SetName("MCMC results for testing MCMC'");
+    std::map<std::string, std::string> arguments = given_arguments;
+    std::uint64_t seed = 0;
+    if (!ResolveRandomSeed(arguments, seed))
+        return false;
+
+    results.SetName("MCMC results for testing MCMC (random seed " + std::to_string(seed) + ")");
 
     // Create MCMC samples result item
     ResultItem mcmc_samples;
@@ -1481,6 +1506,7 @@ bool Conductor::ExecuteTestCMBBayesian(const std::map<std::string, std::string>&
     mcmc_for_testing->SetProperty("number_of_chains", arguments.at("Number of chains"));
     mcmc_for_testing->SetProperty("number_of_burnout_samples", arguments.at("Samples to be discarded (burnout)"));
 
+    mcmc_for_testing->SetRandomSeed(seed);
     mcmc_for_testing->initialize(samples, true);
 
     // Determine output folder path
@@ -2273,8 +2299,13 @@ bool Conductor::ExecuteAutoSelect(const std::map<std::string, std::string>& argu
     return true;
 }
 
-bool Conductor::ExecuteCMBBayesian(const std::map<std::string, std::string>& arguments)
+bool Conductor::ExecuteCMBBayesian(const std::map<std::string, std::string>& given_arguments)
 {
+    std::map<std::string, std::string> arguments = given_arguments;
+    std::uint64_t seed = 0;
+    if (!ResolveRandomSeed(arguments, seed))
+        return false;
+
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")

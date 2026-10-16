@@ -476,6 +476,10 @@
 	},
 	"CMB Bayesian":
 	{
+		"Random seed": {
+			"type": "lineEdit",
+			"default": ""
+		},
 		"Sample": {
     			"type": "comboBox",
     			"source": "TargetSamplesList"
@@ -513,11 +517,15 @@
     		},
     		"Discription": {
 	    		"type": "Description",
-   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target samle."
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly."
 		}
 	},
 	"CMB Bayesian-Batch":
 	{
+		"Random seed": {
+			"type": "lineEdit",
+			"default": ""
+		},
 		"Number of chains": {
 			"type": "spinBox",
 			"default": "8",
@@ -551,12 +559,16 @@
     		},
     		"Discription": {
 	    		"type": "Description",
-   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target samle."
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly."
 		}
 
 	},
 	"Test CMB Bayesian":
 	{
+		"Random seed": {
+			"type": "lineEdit",
+			"default": ""
+		},
 		"Number of chains": {
 			"type": "spinBox",
 			"default": "8",

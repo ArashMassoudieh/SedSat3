@@ -6,6 +6,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "TimeSeries.h"
+#include "randomstream.h"
 #include "math.h"
 #include "string.h"
 #include <cmath>
@@ -260,7 +261,7 @@ void TimeSeries<T>::CreateOUProcess(const T& t_start, const T& t_end, const T& d
     ensureGSLInitialized();
     T x = T{ 0 };
     for (T t = t_start; t <= t_end; t += dt) {
-        x += -theta * x * dt + std::sqrt(2 * theta * dt) * gsl_ran_gaussian(r_, 1.0);
+        x += -theta * x * dt + std::sqrt(2 * theta * dt) * ThreadRandomStream().StandardNormal();
         append(t, x);
     }
 }
@@ -422,15 +423,9 @@ void TimeSeries<T>::ensureGSLInitialized() {
         gsl_set_error_handler_off();  // Disable default error handler
         });
 
-    if (A_ == nullptr) {
-        A_ = gsl_rng_default;
-    }
-
-    if (r_ == nullptr) {
-        r_ = gsl_rng_alloc(A_);
-        unsigned long seed = static_cast<unsigned long>(std::time(nullptr));
-        gsl_rng_set(r_, seed);
-    }
+    // Random numbers come from ThreadRandomStream() (randomstream.h); the
+    // GSL generator used to be seeded from the clock, which made results
+    // unrepeatable.
 }
 #endif
 
@@ -768,7 +763,7 @@ T TimeSeries<T>::interpol(const T& x,
         double rho = std::exp(-(NormalScores.front().t - x) / correlationlength);
         double mean = rho * NormalScores.front().c;  // shrinks toward 0
         double stdev = std::sqrt(1.0 - rho * rho);
-        normalscore = mean + gsl_ran_ugaussian(r_) * stdev;
+        normalscore = mean + ThreadRandomStream().StandardNormal() * stdev;
     }
 
     // Case 2: x is after the last point
@@ -776,7 +771,7 @@ T TimeSeries<T>::interpol(const T& x,
         double rho = std::exp(-(x - NormalScores.back().t) / correlationlength);
         double mean = rho * NormalScores.back().c;
         double stdev = std::sqrt(1.0 - rho * rho);
-        normalscore = mean + gsl_ran_ugaussian(r_) * stdev;
+        normalscore = mean + ThreadRandomStream().StandardNormal() * stdev;
     }
 
     // Case 3: x is between two points
@@ -797,7 +792,7 @@ T TimeSeries<T>::interpol(const T& x,
                           (1.0 - rho12 * rho12);
 
             double stdev = std::sqrt(var);
-            normalscore = mean + gsl_ran_ugaussian(r_) * stdev;
+            normalscore = mean + ThreadRandomStream().StandardNormal() * stdev;
 
         }
     }
@@ -1749,20 +1744,8 @@ TimeSeries<T> TimeSeries<T>::add_noise(T stddev, bool logd) const {
     TimeSeries<T> noisy;
     noisy.reserve(this->size());
 
-#ifdef GSL
-    ensureGSLInitialized();
-#else
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::normal_distribution<T> dist(0, stddev);
-#endif
-
     for (const auto& pt : *this) {
-#ifdef GSL
-        T noise = gsl_ran_gaussian(r_, stddev);
-#else
-        T noise = dist(gen);
-#endif
+        T noise = static_cast<T>(ThreadRandomStream().Normal(0.0, static_cast<double>(stddev)));
         T new_val = logd ? pt.c * std::exp(noise) : pt.c + noise;
         noisy.emplace_back(DataPoint<T>{pt.t, new_val, pt.d});
     }

@@ -172,7 +172,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="cmbvectorset.cpp" />
     <ClCompile Include="contribution.cpp" />
     <ClCompile Include="dialogchooseexcelsheets.cpp" />
-    <ClCompile Include="drand.cpp" />
     <ClCompile Include="elementstablemodel.cpp" />
     <ClCompile Include="elementtabledelegate.cpp" />
     <ClCompile Include="filebrowserpushbuttom.cpp" />
@@ -218,7 +217,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="guihost.h" />
     <ClInclude Include="include\analysishost.h" />
     <ClInclude Include="include\progressreporter.h" />
-    <ClInclude Include="include\drand.h" />
     <ClInclude Include="include\elemental_profile.h" />
     <ClInclude Include="include\elemental_profile_set.h" />
     <ClInclude Include="include\GA\Binary.h" />
@@ -232,6 +230,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="include\observation.h" />
     <ClInclude Include="include\parameter.h" />
     <ClInclude Include="include\sourcesinkdata.h" />
+    <ClInclude Include="include\randomstream.h" />
     <ClInclude Include="multiplelinearregression.h" />
     <ClInclude Include="multiplelinearregressionset.h" />
     <ClInclude Include="range.h" />

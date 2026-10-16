@@ -95,7 +95,8 @@ HEADERS += \
     include/analysishost.h \
     include/progressreporter.h \
     include/conductor.h \
-    include/sourcesinkdata.h
+    include/sourcesinkdata.h \
+    include/randomstream.h
 
 unix:!macx {
     LIBS += -larmadillo -llapack -lblas -lgsl -lpthread -lgomp

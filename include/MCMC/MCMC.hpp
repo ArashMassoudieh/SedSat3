@@ -239,6 +239,13 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
         }
     }
 
+    // One stream per chain, seeded from the master seed and the chain index
+    if (!random_seed_set_)
+        random_seed_ = DrawRandomSeed();
+    chain_streams_.clear();
+    for (unsigned int j=0; j<MCMC_Settings.number_of_chains; j++)
+        chain_streams_.emplace_back(random_seed_, j);
+
     if (random)
     {   for (int j=0; j<MCMC_Settings.number_of_chains; j++)
         {
@@ -246,9 +253,9 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
             while (posterior_value<-1e6)
             {   for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
                 {	if (parameter(i)->GetPriorDistribution()=="log-normal")
-                        Params[j][i] = exp(log(parameter(i)->GetRange(_range::low))+(log(parameter(i)->GetRange(_range::high))-log(parameter(i)->GetRange(_range::low)))*unitrandom());
+                        Params[j][i] = exp(log(parameter(i)->GetRange(_range::low))+(log(parameter(i)->GetRange(_range::high))-log(parameter(i)->GetRange(_range::low)))*chain_streams_[j].Uniform());
                     else
-                        Params[j][i] = parameter(i)->GetRange(_range::low)+(parameter(i)->GetRange(_range::high)-parameter(i)->GetRange(_range::low))*unitrandom();
+                        Params[j][i] = parameter(i)->GetRange(_range::low)+(parameter(i)->GetRange(_range::high)-parameter(i)->GetRange(_range::low))*chain_streams_[j].Uniform();
                     if (parameter(i)->GetPriorDistribution()=="log-normal")
                         pp += log(Params[j][i]);
                 }
@@ -317,6 +324,12 @@ void CMCMC<T>::initialize(vector<double> par)
     if (MCMC_Settings.noinipurt == true) alpha = 0; else alpha = 1;
 
 
+    if (!random_seed_set_)
+        random_seed_ = DrawRandomSeed();
+    chain_streams_.clear();
+    for (unsigned int j=0; j<MCMC_Settings.number_of_chains; j++)
+        chain_streams_.emplace_back(random_seed_, j);
+
     for (int j = 0; j<MCMC_Settings.number_of_chains; j++)
 	{
         Params[j].resize(MCMC_Settings.number_of_parameters);
@@ -324,14 +337,14 @@ void CMCMC<T>::initialize(vector<double> par)
         for (int i = 0; i<MCMC_Settings.number_of_parameters; i++)
 		{
             if (parameter(i).Get_Distribution()=="normal" || parameter(i).Get_Distribution()=="uniform")
-                Params[j][i] = par[i] + alpha*getnormalrand(0, pertcoeff[i]);
+                Params[j][i] = par[i] + alpha*chain_streams_[j].Normal(0, pertcoeff[i]);
             else
-            {   Params[j][i] = par[i] * exp(alpha*getnormalrand(0, pertcoeff[i]));
+            {   Params[j][i] = par[i] * exp(alpha*chain_streams_[j].Normal(0, pertcoeff[i]));
                 pp+=log(par[i]);
             }
             if (parameter(i).Get_Distribution()=="uniform")
                 while ((Params[j][i]<parameter(i).GetRange().low) || (Params[j][i]>parameter(i).GetRange(_range::high)))
-                    Params[j][i] = par[i] + alpha*getnormalrand(0, pertcoeff[i]);
+                    Params[j][i] = par[i] + alpha*chain_streams_[j].Normal(0, pertcoeff[i]);
 
 		}
 		logp[j] = posterior(Params[j]);
@@ -343,7 +356,7 @@ template<class T>
 bool CMCMC<T>::step(int k, int chain_counter)
 {
 
-    vector<double> X = purturb(k-MCMC_Settings.number_of_chains);
+    vector<double> X = purturb(k-MCMC_Settings.number_of_chains, chain_counter);
     double pp =0;
     for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
     {
@@ -357,12 +370,15 @@ bool CMCMC<T>::step(int k, int chain_counter)
 	bool res = false;
 
 
-    if (unitrandom() <exp(logp_0-logp[k-MCMC_Settings.number_of_chains]) && !isnan(logp_0))
+    if (chain_streams_[chain_counter].Uniform() <exp(logp_0-logp[k-MCMC_Settings.number_of_chains]) && !isnan(logp_0))
 	{
 		res=true;
 		Params[k] = X;
 		logp[k] = logp_0;
 		logp1[k] = logp_1;
+        // SetRow also updates each series' cached maximum, which all
+        // chains share, so the writes are serialised
+#pragma omp critical(mcmc_predicted)
         predicted.SetRow(k,k,temp_predicted[chain_counter].vec);
 
         //accepted_count += 1;
@@ -373,6 +389,7 @@ bool CMCMC<T>::step(int k, int chain_counter)
         Params[k] = Params[k-MCMC_Settings.number_of_chains];
         logp[k] = logp[k-MCMC_Settings.number_of_chains];
 		logp1[k] = logp_1;
+#pragma omp critical(mcmc_predicted)
         predicted.SetRow(k,k,predicted.getrow(k-MCMC_Settings.number_of_chains));
 	}
     //total_count += 1;
@@ -380,16 +397,17 @@ bool CMCMC<T>::step(int k, int chain_counter)
 }
 
 template<class T>
-vector<double> CMCMC<T>::purturb(int k)
+vector<double> CMCMC<T>::purturb(int k, int chain_counter)
 {
+    RandomStream& stream = chain_streams_[chain_counter];
 	vector<double> X;
     X.resize(MCMC_Settings.number_of_parameters);
     for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
 	{
         if (parameter(i)->GetPriorDistribution() == "log-normal")
-            X[i] = Params[k][i]*exp(pertcoeff[i]*getstdnormalrand());
+            X[i] = Params[k][i]*exp(pertcoeff[i]*stream.StandardNormal());
 		else
-            X[i] = Params[k][i]+pertcoeff[i]*getstdnormalrand();
+            X[i] = Params[k][i]+pertcoeff[i]*stream.StandardNormal();
 
 	}
 	return X;
@@ -424,6 +442,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
                       << "' to write the sample output." << std::endl;
             return false;
         }
+        fprintf(file,"# SedSAT3 MCMC random seed: %llu\n", static_cast<unsigned long long>(random_seed_));
         fprintf(file,"%s, ", "no.");
         for (unsigned int i=0; i<MCMC_Settings.number_of_parameters; i++)
         {   fprintf(file, "%s, ", parameter(i)->Name().c_str());
@@ -450,12 +469,8 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 #endif
 
 
-#ifdef WIN64
-#pragma omp parallel
-		{
-			srand(int(time(NULL)) ^ omp_get_thread_num() + kk);
-		}
-#endif
+        // Each iteration below advances one chain and draws only from that
+        // chain's stream, so the result does not depend on thread scheduling.
 // qDebug()<<7;
 #pragma omp parallel for
         for (int jj = kk; jj < min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples); jj++)
@@ -547,6 +562,13 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 	}
     // qDebug()<<"MCMC done!";
 	return 0;
+}
+
+template<class T>
+void CMCMC<T>::SetRandomSeed(std::uint64_t seed)
+{
+    random_seed_ = seed;
+    random_seed_set_ = true;
 }
 
 template<class T>

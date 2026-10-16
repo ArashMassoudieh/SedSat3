@@ -6,6 +6,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "GADistribution.h"
+#include "randomstream.h"
 #include "math.h"
 #include <stdlib.h>
 
@@ -75,7 +76,5 @@ int GADistribution::GetRand()
 
 double GADistribution::GetRndUniF(double xmin, double xmax)
 {
-    double a = double(rand());
-    double k = double(RAND_MAX);
-    return a/k*(xmax-xmin) + xmin;
+    return ThreadRandomStream().Uniform()*(xmax-xmin) + xmin;
 }

@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "sourcesinkdata.h"
+#include "randomstream.h"
 #include <cmath>
 #include "iostream"
 #include "NormalDist.h"
@@ -645,7 +646,7 @@ string SourceSinkData::GetParameterName(int index) const
     return "";
 }
 
-bool SourceSinkData::InitializeContributionsRandomly()
+bool SourceSinkData::InitializeContributionsRandomly(RandomStream& stream)
 {
     // Set first source to dummy value to force recalculation
     GetSampleSet(GetSourceOrder()[0])->SetContribution(1.2);
@@ -655,20 +656,22 @@ bool SourceSinkData::InitializeContributionsRandomly()
     {
         for (size_t i = 0; i < samplesetsorder_.size() - 1; i++)
         {
-            SetContribution(i, unitrandom());
+            SetContribution(i, stream.Uniform());
         }
     }
 
     return true;
 }
 
-bool SourceSinkData::InitializeContributionsRandomlySoftmax()
+bool SourceSinkData::InitializeContributionsRandomlySoftmax(RandomStream& stream)
 {
     // Set first source to dummy value
     GetSampleSet(GetSourceOrder()[0])->SetContribution(1.2);
 
     // Generate random normal values
-    CVector X = getnormal(samplesetsorder_.size(), 0, 1).vec;
+    CVector X(static_cast<int>(samplesetsorder_.size()));
+    for (size_t i = 0; i < samplesetsorder_.size(); i++)
+        X[i] = stream.StandardNormal();
 
     // Apply softmax transformation to ensure sum = 1
     SetContributionSoftmax(X);
@@ -1358,11 +1361,15 @@ CVector SourceSinkData::OneStepLevenberg_Marquardt_softmax(double lambda)
 
 bool SourceSinkData::SolveLevenberg_Marquardt(transformation trans)
 {
-    // Initialize contributions based on parameterization
+    // Initialize contributions based on parameterization. The starting
+    // point comes from a stream with a fixed seed, created for each solve,
+    // so a fit does not depend on what ran before it (it used rand(), whose
+    // state other analyses changed) and is the same on every platform.
+    RandomStream starting_point(DefaultRandomSeed);
     if (trans == transformation::linear)
-        InitializeContributionsRandomly();
+        InitializeContributionsRandomly(starting_point);
     else if (trans == transformation::softmax)
-        InitializeContributionsRandomlySoftmax();
+        InitializeContributionsRandomlySoftmax(starting_point);
 
     // Algorithm parameters
     const double tolerance = 1e-10;
@@ -4128,7 +4135,17 @@ Results SourceSinkData::MCMC(
 
     // Initialize results container
     Results results;
-    results.SetName("MCMC results for '" + target_sample + "'");
+
+    // The seed is recorded in the results name and in the sample file so
+    // the run can be repeated; a blank seed is drawn here
+    std::uint64_t seed = 0;
+    if (!ParseRandomSeed(arguments["Random seed"], seed))
+    {
+        results.SetError("The random seed '" + arguments["Random seed"] + "' is not a whole number.");
+        return results;
+    }
+    mcmc->SetRandomSeed(seed);
+    results.SetName("MCMC results for '" + target_sample + "' (random seed " + std::to_string(seed) + ")");
 
     // Parse OM/size correction setting
     bool apply_om_size_correction = (arguments["Apply size and organic matter correction"] == "true");

@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "Distribution.h"
+#include "randomstream.h"
 #include <cmath>
 #include "gsl/gsl_cdf.h"
 #include "Utilities.h"
@@ -269,9 +270,7 @@ double CDistribution::inverseCDF(double u,bool flux_w)
 
 double unifrandom(double xmin, double xmax)
 {
-	double a = double(rand());
-	double k = double(RAND_MAX);
-	return a / k*(xmax - xmin) + xmin;
+	return ThreadRandomStream().Uniform()*(xmax - xmin) + xmin;
 }
 
 #ifdef GSL
@@ -517,18 +516,12 @@ double CDistribution::CumulativeValue(double x)
 
 double CDistribution::unitrandom()
 {
-    double x1 = rand();
-    double x2 = rand();
-    return (x1 + x2 * (double(RAND_MAX) - 1)) / (double(RAND_MAX) * double(RAND_MAX));
+    return ThreadRandomStream().Uniform();
 }
 
 double CDistribution::getstdnormalrand()
 {
-    double x1 = unitrandom();
-    double x2 = unitrandom();
-    double pi = atan(1.0) * 4;
-    double y1 = sqrt(-2 * log(x1)) * cos(2 * pi * x2);
-    return y1;
+    return ThreadRandomStream().StandardNormal();
 }
 
 double CDistribution::getnormalrand(double mu, double std)
@@ -538,18 +531,12 @@ double CDistribution::getnormalrand(double mu, double std)
 
 double unitrandom()
 {
-    double x1 = rand();
-    double x2 = rand();
-    return (x1 + x2 * (double(RAND_MAX) - 1)) / (double(RAND_MAX) * double(RAND_MAX));
+    return ThreadRandomStream().Uniform();
 }
 
 double getstdnormalrand()
 {
-    double x1 = unitrandom();
-    double x2 = unitrandom();
-    double pi = atan(1.0) * 4;
-    double y1 = sqrt(-2 * log(x1)) * cos(2 * pi * x2);
-    return y1;
+    return ThreadRandomStream().StandardNormal();
 }
 
 double getnormalrand(double mu, double std)

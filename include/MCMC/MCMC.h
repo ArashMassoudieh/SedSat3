@@ -16,6 +16,8 @@
 #include "observation.h"
 #include "parameter.h"
 #include "cmbtimeseriesset.h"
+#include "randomstream.h"
+#include <cstdint>
 
 class ProgressReporter;
 
@@ -496,7 +498,20 @@ public:
      * Proposal distribution: θ* ~ N(θ_current, diag(pertcoeff²))
      * Respects parameter bounds by reflecting or rejecting out-of-bounds proposals.
      */
-    vector<double> purturb(int k);
+    vector<double> purturb(int k, int chain_counter);
+
+    /**
+     * @brief Sets the master seed for the chains' random streams
+     *
+     * Chain i draws from RandomStream(seed, i), so the same seed and settings
+     * give the same samples however many threads run the chains. Call before
+     * initialize(); if it is not called, initialize() draws a seed from the
+     * operating system. RandomSeed() returns the seed used either way.
+     */
+    void SetRandomSeed(std::uint64_t seed);
+
+    /// The master seed of the current run
+    std::uint64_t RandomSeed() const { return random_seed_; }
 
     /**
      * @brief Temporary storage for predicted model outputs
@@ -813,6 +828,13 @@ public:
      * Used to calculate overall acceptance rate.
      */
     double accepted_count = 0;
+
+    /// Master seed for the chains' random streams; see SetRandomSeed()
+    std::uint64_t random_seed_ = 0;
+    bool random_seed_set_ = false;
+
+    /// One random stream per chain, so no generator is shared between threads
+    vector<RandomStream> chain_streams_;
 
     /**
      * @brief Count of total proposals (accepted + rejected)

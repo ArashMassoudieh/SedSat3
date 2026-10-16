@@ -58,9 +58,6 @@
     <ClCompile Include="dialogchooseexcelsheets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="drand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="elementstablemodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -342,9 +339,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\conductor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\drand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\elemental_profile.h">

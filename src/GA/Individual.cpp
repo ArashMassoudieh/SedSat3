@@ -6,6 +6,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "Individual.h"
+#include "randomstream.h"
 #include "Binary.h"
 #include "DistributionNUnif.h"
 #include <cstdlib>
@@ -128,7 +129,7 @@ void CIndividual::initialize()
 
 double GetRndUnif(double xmin, double xmax)
 {
-	return double(rand())/double(RAND_MAX)*(xmax-xmin) + xmin;
+	return ThreadRandomStream().Uniform()*(xmax-xmin) + xmin;
 }
 
 void cross(const CIndividual &I1, const CIndividual &I2, CIndividual &IR1, CIndividual &IR2)

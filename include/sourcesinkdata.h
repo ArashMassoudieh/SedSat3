@@ -66,6 +66,8 @@ enum class estimation_mode { only_contributions, elemental_profile_and_contribut
 
 enum class negative_reporting { list, complete };
 
+class RandomStream;
+
 class SourceSinkData : public map<string, Elemental_Profile_Set>
 {
 public:
@@ -1929,9 +1931,10 @@ private:
      * they sum to 1.0 and all values are non-negative. Uses uniform random
      * sampling with rejection until valid contributions are found.
      *
+     * @param stream Source of the random numbers
      * @return Always returns true
      */
-    bool InitializeContributionsRandomly();
+    bool InitializeContributionsRandomly(RandomStream& stream);
 
     /**
      * @brief Initialize source contributions randomly (softmax transformation)
@@ -1943,9 +1946,10 @@ private:
      * Softmax transformation: contribution_i = exp(X_i) / sum(exp(X_j))
      * where X ~ N(0,1)
      *
+     * @param stream Source of the random numbers
      * @return Always returns true
      */
-    bool InitializeContributionsRandomlySoftmax();
+    bool InitializeContributionsRandomlySoftmax(RandomStream& stream);
 
     // --- Contribution Accessors ---
 

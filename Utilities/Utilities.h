@@ -13,6 +13,7 @@
 #include <fstream>
 #include <cmath>
 #include <sstream>
+#include "randomstream.h"
 
 #define SMALLNUMBER 1e-23
 #define PI 3.14159265359
@@ -109,7 +110,7 @@ namespace aquiutils
     template<class T>
     T randompick(const std::vector<T> &vec)
     {
-        unsigned int i=rand()%vec.size();
+        std::size_t i = static_cast<std::size_t>(ThreadRandomStream().Index(vec.size()));
         return vec[i];
     };
     template<typename T> bool isfinite(T arg);

@@ -157,6 +157,18 @@ public:
      */
     SourceSinkData BoxCoxTransformedWithReport(SourceSinkData& data);
 
+    /**
+     * @brief Resolves the "Random seed" argument of an MCMC analysis
+     *
+     * A blank seed is replaced by one drawn from the operating system, so the
+     * seed actually used can be recorded and the run repeated.
+     *
+     * @param arguments Analysis arguments; "Random seed" is set to the seed used
+     * @param seed Set to the seed used
+     * @return false, after a warning, if the seed is not a non-negative integer
+     */
+    bool ResolveRandomSeed(std::map<std::string, std::string>& arguments, std::uint64_t& seed);
+
 private:
     SourceSinkData* data;                          ///< Non-owning pointer to analysis data
     std::unique_ptr<CGA<SourceSinkData>> GA;       ///< Genetic Algorithm optimizer (owned)

@@ -147,6 +147,7 @@ set(PROJECT_HEADERS
     include/observation.h
     include/parameter.h
     include/sourcesinkdata.h
+    include/randomstream.h
     indicatesheetsdialog.h
     mainwindow.h
     multiplelinearregression.h
