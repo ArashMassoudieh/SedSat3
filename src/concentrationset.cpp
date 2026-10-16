@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "concentrationset.h"
+#include <limits>
 #include "math.h"
 #include "Utilities.h"
 #include <gsl/gsl_cdf.h>
@@ -272,6 +273,11 @@ distribution_type ConcentrationSet::SelectBestDistribution()
 
 // ========== Goodness-of-Fit Testing ==========
 
+bool ConcentrationSet::CanFitDistribution() const
+{
+    return size() >= 2 && GetMinimum() < GetMaximum();
+}
+
 CMBTimeSeries ConcentrationSet::CreateDataCDF() const
 {
     vector<double> sorted_data = QSort(*this);
@@ -293,6 +299,10 @@ CMBTimeSeriesSet ConcentrationSet::CreateCDFComparison(distribution_type dist_ty
 
     // Add empirical CDF
     comparison.append(CreateDataCDF(), "Observed");
+
+    // A zero-width range would never end the loop below
+    if (!CanFitDistribution())
+        return comparison;
 
     // Generate fitted CDF
     CMBTimeSeries fitted_cdf;
@@ -328,6 +338,10 @@ CMBTimeSeriesSet ConcentrationSet::CreateFittedDistribution(distribution_type di
     // Add empirical CDF
     result.append(CreateDataCDF(), "Observed");
 
+    // A zero-width range would never end the loop below
+    if (!CanFitDistribution())
+        return result;
+
     // Get distribution parameters
     vector<double> parameters;
     if (dist_type == distribution_type::normal) {
@@ -349,8 +363,13 @@ CMBTimeSeriesSet ConcentrationSet::CreateFittedDistribution(distribution_type di
         fitted_pdf.append(x, Distribution::Eval(x, parameters, dist_type));
     }
 
-    // Scale observed data for comparison with PDF
-    result["Observed"] = fitted_pdf.maxC() / 2.0;
+    // Draw the observed values at half the height of the fitted PDF.
+    // (Assigning the number to the series itself, as this used to do,
+    // converted it through TimeSeries(size_t) and replaced the series with
+    // an unnamed empty one, so the later lookup of "Observed" threw.)
+    const double observed_height = fitted_pdf.maxC() / 2.0;
+    for (auto& point : result["Observed"])
+        point.c = observed_height;
     result.append(fitted_pdf, "Fitted");
 
     return result;
@@ -361,6 +380,10 @@ double ConcentrationSet::CalculateKolmogorovSmirnovStatistic(
 {
     CMBTimeSeriesSet observed_fitted = CreateCDFComparison(dist_type);
 
+    // No fitted CDF for fewer than two values or constant data
+    if (!observed_fitted.Contains("Error"))
+        return std::numeric_limits<double>::quiet_NaN();
+
     // K-S statistic is maximum absolute difference between CDFs
     double max_positive_diff = fabs(observed_fitted[2].maxC());
     double max_negative_diff = fabs(observed_fitted[2].minC());
@@ -370,41 +393,53 @@ double ConcentrationSet::CalculateKolmogorovSmirnovStatistic(
 
 // ========== Transformations ==========
 
+double ConcentrationSet::BoxCoxTransformValue(double x, double lambda)
+{
+    // lambda == 0 is the log limit. Near 0, (x^lambda - 1) cancels and loses
+    // digits (the old code switched to log x below 1e-5, an approximation off
+    // by about lambda (log x)^2 / 2), so expm1 is used there. Elsewhere the
+    // formula is unchanged, which keeps optimal lambdas from moving by
+    // round-off: the Kolmogorov-Smirnov grid search is sensitive to it.
+    if (lambda == 0.0)
+        return std::log(x);
+    if (std::fabs(lambda) < 0.01)
+        return std::expm1(lambda * std::log(x)) / lambda;
+    return (std::pow(x, lambda) - 1.0) / lambda;
+}
+
+bool ConcentrationSet::CanBoxCoxTransform() const
+{
+    return !empty() && GetMinimum() > 0;
+}
+
 double ConcentrationSet::CalculateBoxCoxLogLikelihood(double lambda) const
 {
+    if (!CanBoxCoxTransform())
+        return std::numeric_limits<double>::quiet_NaN();
+
     ConcentrationSet transformed = ApplyBoxCoxTransform(lambda, true);
 
     double transformed_mean = transformed.CalculateMean();
     double std_dev = CalculateStdDev();
 
+    // The variance term used to be accumulated with a negative sign, so its
+    // log was always NaN. (This function has no callers.)
     double variance_term = 0.0;
     double jacobian_term = 0.0;
 
     for (size_t i = 0; i < size(); i++) {
-        variance_term += -1.0 / static_cast<double>(size()) *
+        variance_term += 1.0 / static_cast<double>(size()) *
             pow(transformed[i] - transformed_mean, 2);
         jacobian_term += (lambda - 1.0) * log(at(i) / std_dev);
     }
 
-    return -static_cast<double>(size()) / 2.0 * log(variance_term) - jacobian_term;
+    return -static_cast<double>(size()) / 2.0 * log(variance_term) + jacobian_term;
 }
 
 ConcentrationSet ConcentrationSet::ApplyBoxCoxTransform(
     double lambda,
     bool normalize) const
 {
-    // Cannot transform negative values
-    if (GetMinimum() < 0) {
-        ConcentrationSet scaled(size());
-        double std_dev = normalize ? CalculateStdDev() : 1.0;
-
-        for (size_t i = 0; i < size(); i++) {
-            scaled[i] = at(i) / std_dev;
-        }
-
-        return scaled;
-    }
-
     // Scale data by standard deviation if normalizing
     ConcentrationSet scaled(size());
     double std_dev = normalize ? CalculateStdDev() : 1.0;
@@ -413,18 +448,17 @@ ConcentrationSet ConcentrationSet::ApplyBoxCoxTransform(
         scaled[i] = at(i) / std_dev;
     }
 
-    // Apply Box-Cox transformation
+    // Box-Cox is undefined for zero or negative values (log(0), 0^lambda for
+    // lambda < 0): leave the data untransformed. This used to test only for
+    // negative values, so a zero produced -inf or inf.
+    if (!CanBoxCoxTransform()) {
+        return scaled;
+    }
+
     ConcentrationSet transformed(size());
 
     for (size_t i = 0; i < size(); i++) {
-        if (fabs(lambda) > 1e-5) {
-            // Standard Box-Cox: (x^lambda - 1) / lambda
-            transformed[i] = (pow(scaled[i], lambda) - 1.0) / lambda;
-        }
-        else {
-            // When lambda ≈ 0, use log transformation (limiting case)
-            transformed[i] = log(scaled[i]);
-        }
+        transformed[i] = BoxCoxTransformValue(scaled[i], lambda);
     }
 
     return transformed;
@@ -435,8 +469,8 @@ double ConcentrationSet::FindOptimalBoxCoxParameter(
     double max_lambda,
     int n_intervals) const
 {
-    // Cannot transform negative values or constant data
-    if (GetMinimum() < 0 || GetMinimum() == GetMaximum()) {
+    // Cannot transform zero or negative values or constant data
+    if (!CanBoxCoxTransform() || GetMinimum() == GetMaximum()) {
         return 1.0;
     }
 

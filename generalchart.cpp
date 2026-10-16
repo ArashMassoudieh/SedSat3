@@ -4,6 +4,7 @@
 #include "generalchart.h"
 #include "ui_generalchart.h"
 #include "resultitem.h"
+#include <cmath>
 #include <string>
 
 
@@ -200,7 +201,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
     QLogValueAxis* axisYLog = nullptr;
     QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
-    double profile_min;
+    double profile_min = NAN;
     if (result_item->AbsValue())
         profile_min = profile->abs().min();
     else
@@ -282,7 +283,7 @@ bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &title)
     QLogValueAxis* axisYLog = nullptr;
     QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
-    double matrix_min;
+    double matrix_min = NAN;
     if (result_item->AbsValue())
         matrix_min = matrix->abs().min();
     else
@@ -693,7 +694,7 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     QLineSeries *lineseries = new QLineSeries();
     double x_min_val = CVector(mlr->IndependentData(independent_var.toStdString())).min();
     double x_max_val = CVector(mlr->IndependentData(independent_var.toStdString())).max();
-    double y_min_val, y_max_val;
+    double y_min_val = NAN, y_max_val = NAN;
 
     if (mlr->Equation()==regression_form::linear)
     {   y_min_val = mlr->CoefficientsIntercept()[0];
@@ -948,8 +949,8 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
         series->attachAxis(axisX);
         series->attachAxis(axisYNormal);
         double rho = Cov/(std1*std2);
-        double major_diagonal;
-        double minor_diagonal;
+        double major_diagonal = NAN;
+        double minor_diagonal = NAN;
         if (std1>=std2)
         {
             major_diagonal = 2*sqrt(2*((std1*std1+std2*std2)/2.0 + sqrt(pow((std1*std1-std2*std2)/2.0,2)+pow(rho*std1*std2,2))));

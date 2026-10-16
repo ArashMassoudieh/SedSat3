@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "Distribution.h"
+#include <cmath>
 #include "gsl/gsl_cdf.h"
 #include "Utilities.h"
 #ifdef _interface
@@ -100,13 +101,14 @@ double CDistribution::evaluate(double x)
 
 double Gammapdf(double x, double k, double theta)
 {
-	return 1 / pow(theta, k)*pow(x, k - 1)*exp(-x / theta) / gamma(k);
+	return 1 / pow(theta, k)*pow(x, k - 1)*exp(-x / theta) / GammaFunction(k);
 }
 
-double gamma(double x)
+// Named GammaFunction rather than gamma, which clashes with ::gamma from <math.h>
+double GammaFunction(double x)
 {
-	int i, k, m;
-	double ga, gr, r, z;
+	int i = 0, k = 0, m = 0;
+	double ga = NAN, gr = NAN, r = NAN, z = NAN;
 	double m_PI = atan(1.0)*4.0;
 	static double g[] = {
 		1.0,
@@ -294,6 +296,8 @@ double CDistribution::evaluate_CDF(double x, bool flux_w)
         else
             return gsl_cdf_lognormal_P(x, params[0], params[1]);
 	}
+    // Only the log-normal CDF is implemented
+    return std::nan("");
 }
 #endif
 
@@ -674,7 +678,7 @@ double stdnormal_cdf(double u)
         1.00000000000000000e00,2.56852019228982242e00,1.87295284992346047e00,
         5.27905102951428412e-1,6.05183413124413191e-2,2.33520497626869185e-3
     };
-    double y, z;
+    double y = NAN, z = NAN;
 
     if (std::isnan(u))
         return NAN;
@@ -733,7 +737,7 @@ double stdnormal_inv(double p)
         2.445134137142996e+00,  3.754408661907416e+00
     };
 
-    double q, t, u;
+    double q = NAN, t = NAN, u = NAN;
 
     if (std::isnan(p) || p > 1.0 || p < 0.0)
         return NAN;

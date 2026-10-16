@@ -1,6 +1,11 @@
 QT += core gui widgets printsupport charts
 
 CONFIG += c++17
+
+# A non-void function that falls off its end is undefined behaviour; make it a
+# build error rather than a warning (USGS code review, Oct 2026)
+gcc|clang: QMAKE_CXXFLAGS += -Werror=return-type
+msvc: QMAKE_CXXFLAGS += /we4715
 DEFINES += _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT USE_QCHARTS
 
 greaterThan(QT_MAJOR_VERSION, 5): DEFINES += Qt6

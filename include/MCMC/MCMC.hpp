@@ -4,6 +4,7 @@
 // MCMC.cpp : Defines the entry point for the console application.
 //
 
+#include <cmath>
 #include <vector>
 #include "NormalDist.h"
 #include <string>
@@ -312,7 +313,7 @@ void CMCMC<T>::initialize(vector<double> par)
                 pertcoeff[j] = MCMC_Settings.purturbation_factor*(-log(parameter(j)->GetRange().low) + log(parameter(j)->GetRange().high));
 			}
 		}
-	double alpha;
+	double alpha = NAN;
     if (MCMC_Settings.noinipurt == true) alpha = 0; else alpha = 1;
 
 
@@ -353,7 +354,7 @@ bool CMCMC<T>::step(int k, int chain_counter)
 
 
     double logp_1 = logp_0;
-	bool res;
+	bool res = false;
 
 
     if (unitrandom() <exp(logp_0-logp[k-MCMC_Settings.number_of_chains]) && !isnan(logp_0))
@@ -397,7 +398,7 @@ vector<double> CMCMC<T>::purturb(int k)
 template<class T>
 bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *results, ProgressReporter *rtw)
 {
-	FILE *file;
+	FILE *file = nullptr;
     if (!MCMC_Settings.continue_mcmc)
     {
         // fopen returns null when the path cannot be written, for instance
@@ -634,7 +635,7 @@ TimeSeriesSet<double> CMCMC<T>::prior_distribution(int n_bins)
     TimeSeriesSet<double> prior_dist(MCMC_Settings.number_of_parameters);
     TimeSeries<double> B(n_bins);
 
-	double min_range , max_range;
+	double min_range  = NAN, max_range = NAN;
 
     for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
 	{
@@ -792,7 +793,7 @@ void CMCMC<T>::Perform()
 template<class T>
 int_value_pair CMCMC<T>::Min(const vector<double> &vec, int current_counter, int n_chains)
 {
-    int_value_pair out;
+    int_value_pair out{};
     out.value = 1e12;
     for (unsigned int i=max(current_counter-n_chains,0); i<current_counter; i++)
     {
@@ -808,7 +809,7 @@ int_value_pair CMCMC<T>::Min(const vector<double> &vec, int current_counter, int
 template<class T>
 int_value_pair CMCMC<T>::Max(const vector<double> &vec, int current_counter, int n_chains)
 {
-    int_value_pair out;
+    int_value_pair out{};
     out.value = -1e12;
     for (unsigned int i=max(current_counter-n_chains,0); i<current_counter; i++)
     {

@@ -155,7 +155,7 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
             if (object.contains("type"))
             {
 
-                QLabel *label;
+                QLabel *label = nullptr;
                 if (object["type"].toString()=="Description")
                     label = new QLabel(parameter_prop.Discription, this);
                 QString typeval = object.value("type").toString();
@@ -207,7 +207,6 @@ void GenericForm::onCancel()
 
 MainWindow *GenericForm::mainwindow()
 {
-    if (mainWindow!=nullptr)
     return mainWindow;
 }
 

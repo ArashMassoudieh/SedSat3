@@ -211,8 +211,8 @@ public:
         Notes = "";
     }
 
-    double lowlimit;   ///< Lower threshold for value highlighting (when enabled)
-    double highlimit;  ///< Upper threshold for value highlighting (when enabled)
+    double lowlimit{};   ///< Lower threshold for value highlighting (when enabled)
+    double highlimit{};  ///< Upper threshold for value highlighting (when enabled)
 
     /**
      * @brief Flag indicating whether to highlight values outside defined limits

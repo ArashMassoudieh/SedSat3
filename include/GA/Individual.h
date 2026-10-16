@@ -18,15 +18,15 @@ public:
 	std::vector<double> pert;
 	std::vector<int> dir;
 	std::vector<double> perteff;
-	double fitness;
-	double actual_fitness, actual_fitness2;
-	int parent1, parent2, xsite;
+	double fitness{};
+	double actual_fitness{}, actual_fitness2{};
+	int parent1{}, parent2{}, xsite{};
 	int nParams;
 	std::vector<int> precision;
 	std::vector<double> minrange, maxrange;
     void initialize();
     void mutate(double mu);
-	int rank;
+	int rank{};
     void shake(double shakescale);
     std::vector<double> fit_measures;
 

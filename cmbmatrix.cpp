@@ -144,7 +144,7 @@ QTableWidget *CMBMatrix::ToTable()
     {
         for (int j = 0; j < getnumcols(); j++)
         {
-            QTableWidgetItem* item;
+            QTableWidgetItem* item = nullptr;
 
             if (boolean_values)
             {

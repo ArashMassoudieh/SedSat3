@@ -26,8 +26,8 @@
   */
 template<typename T>
 struct DataPoint {
-    T t;                         ///< Time
-    T c;                         ///< Value
+    T t{};                       ///< Time
+    T c{};                       ///< Value
     std::optional<T> d;          ///< Duration or distance (optional)
 };
 
@@ -44,7 +44,7 @@ public:
     // -------------------------------------------------------------------------
 
     TimeSeries();                                          ///< Default constructor
-    TimeSeries(size_t n);                                  ///< Create with n default-initialized points
+    explicit TimeSeries(size_t n);                         ///< Create with n default-initialized points (explicit: a number must not silently become a series)
     TimeSeries(const Base& points);                        ///< Construct from vector of DataPoints
     TimeSeries(const std::vector<T>& t, const std::vector<T>& c); ///< From separate time and value vectors
     TimeSeries(const TimeSeries<T>& other);                ///< Copy constructor

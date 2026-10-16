@@ -8,6 +8,7 @@
 #include "TimeSeries.h"
 #include "math.h"
 #include "string.h"
+#include <cmath>
 #include <iostream>
 #include <fstream>
 //#include "StringOP.h"
@@ -760,7 +761,7 @@ T TimeSeries<T>::interpol(const T& x,
     ensureGSLInitialized();
     // Convert to normal scores
     TimeSeries<T> NormalScores = ConvertToNormalScore();
-    double normalscore;
+    double normalscore = NAN;
     // Case 1: x is before the first point
     if (x <= NormalScores.front().t) {
         // Extrapolate from first point toward prior mean (0 for normal scores)

@@ -88,10 +88,9 @@ double & CMatrix_arma_sp::operator()(int i, int j)
 
 vector<double*> CMatrix_arma_sp::get(int i)
 {
+	// Not implemented: the loop that filled v was commented out, which made
+	// the return the loop body. Returns an empty vector, as it effectively did.
 	vector<double*> v;
-	for (int j = 0; j < numrows; j++)
-	//	v[j] = &matr(i, j);
-
 	return v;
 }
 

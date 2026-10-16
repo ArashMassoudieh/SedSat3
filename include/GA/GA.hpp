@@ -6,6 +6,9 @@
 // GA.cpp: implementation of the CGA class.
 ////////////////////////////////////////////////////////////////////////
 #include "GA.h"
+#include <memory>
+#include <cmath>
+#include <cstdio>
 #include <stdlib.h>
 #ifndef mac_version
 #include <omp.h>
@@ -17,6 +20,21 @@
 #ifdef Q_version
     #include "progressreporter.h"
 #endif
+
+// Files are opened through this handle so they are always closed exactly
+// once and a failed fopen is never written to.
+using GAFile = std::unique_ptr<FILE, int (*)(FILE*)>;
+inline GAFile OpenGAFile(const std::string& path, const char* mode)
+{
+    return GAFile(fopen(path.c_str(), mode), &fclose);
+}
+
+// fit_measures holds MSE, R2 and NSE for each observation when it is filled;
+// a missing value is written as nan rather than read past the end.
+inline double GAFitMeasure(const std::vector<double>& fit_measures, size_t index)
+{
+    return index < fit_measures.size() ? fit_measures[index] : std::nan("");
+}
 
 template<class T>
 CGA<T>::CGA()
@@ -343,7 +361,7 @@ void CGA<T>::assignfitnesses()
 
 	vector<double> time_(GA_params.maxpop);
 	vector<int> epochs(GA_params.maxpop);
-	clock_t t0,t1;
+	clock_t t0 = 0,t1 = 0;
     //Models.clear();
 
 	for (int k = 0; k < GA_params.maxpop; k++)
@@ -408,21 +426,19 @@ int counter=0;
 
             }
 
-            FILE *FileOut;
 #pragma omp critical
             {
-                FileOut = fopen((filenames.pathname+"detail_GA.txt").c_str(),"a");
-                fprintf(FileOut, "%i, ", k);
-                for (int l=0; l<Ind[0].nParams; l++)
-                    if (loged[l]==1)
-                        fprintf(FileOut, "%le, ", pow(10,Ind[k].x[l]));
-                    else
-                        fprintf(FileOut, "%le, ", Ind[k].x[l]);
-
-                //fprintf(FileOut, "%le, %le, %i, %e, %i, %i", Ind[k].actual_fitness, Ind[k].fitness, Ind[k].rank, time_[k], threads_num[k],num_threads[k]);
-                //fprintf(FileOut, "%le, %le, %i, %e", Ind[k].actual_fitness, Ind[k].fitness, Ind[k].rank, time_[k]);
-                fprintf(FileOut, "\n");
-                fclose(FileOut);
+                GAFile FileOut = OpenGAFile(filenames.pathname+"detail_GA.txt","a");
+                if (FileOut)
+                {
+                    fprintf(FileOut.get(), "%i, ", k);
+                    for (int l=0; l<Ind[0].nParams; l++)
+                        if (loged[l]==1)
+                            fprintf(FileOut.get(), "%le, ", pow(10,Ind[k].x[l]));
+                        else
+                            fprintf(FileOut.get(), "%le, ", Ind[k].x[l]);
+                    fprintf(FileOut.get(), "\n");
+                }
             }
             time_t t0 = time(nullptr);
 
@@ -434,6 +450,7 @@ int counter=0;
 
 //			epochs[k] += Models[k].EpochCount();
             time_[k] = time(nullptr)-t0;
+#pragma omp atomic
             counter++;
 #pragma omp critical
         {
@@ -569,11 +586,9 @@ double CGA<T>::avgfitness()
 template<class T>
 void CGA<T>::write_to_detailed_GA(string s)
 {
-	FILE *FileOut;
-
-    FileOut = fopen((filenames.pathname + "detail_GA.txt").c_str(), "a");
-    fprintf(FileOut, "%s\n", s.c_str());
-	fclose(FileOut);
+    GAFile FileOut = OpenGAFile(filenames.pathname + "detail_GA.txt", "a");
+    if (FileOut)
+        fprintf(FileOut.get(), "%s\n", s.c_str());
 
 }
 
@@ -585,13 +600,9 @@ int CGA<T>::optimize()
 	#endif // Q_version
 	string RunFileName = filenames.pathname + filenames.outputfilename;
 
-	FILE *FileOut;
-	FILE *FileOut1;
-
-	FileOut = fopen(RunFileName.c_str(),"w");
-	fclose(FileOut);
-    FileOut1 = fopen((filenames.pathname + "detail_GA.txt").c_str(), "w");
-	fclose(FileOut1);
+	// Truncate both output files
+	OpenGAFile(RunFileName, "w");
+	OpenGAFile(filenames.pathname + "detail_GA.txt", "w");
 
 	double shakescaleini = GA_params.shakescale;
 
@@ -615,39 +626,41 @@ int CGA<T>::optimize()
         assignfitnesses();
 
 		write_to_detailed_GA("Assigning fitnesses done!");
-		FileOut = fopen(RunFileName.c_str(),"a");
         printf("Generation: %i\n", current_generation);
-        fprintf(FileOut, "Generation: %i\n", current_generation);
-		fprintf(FileOut, "ID, ");
+		GAFile FileOut = OpenGAFile(RunFileName, "a");
+		if (FileOut)
+		{
+        fprintf(FileOut.get(), "Generation: %i\n", current_generation);
+		fprintf(FileOut.get(), "ID, ");
 		for (int k=0; k<Ind[0].nParams; k++)
-			fprintf(FileOut, "%s, ", paramname[k].c_str());
+			fprintf(FileOut.get(), "%s, ", paramname[k].c_str());
 
-        //fprintf(FileOut, "%s, %s, %s, ", "likelihood", "Fitness", "Rank");
+        //fprintf(FileOut.get(), "%s, %s, %s, ", "likelihood", "Fitness", "Rank");
         for (unsigned int i=0; i<Model->ObservationsCount();i++)
         {
-            fprintf(FileOut, "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
+            fprintf(FileOut.get(), "%s, %s, %s", (Model->observation(i)->GetName()+"_MSE").c_str(), (Model->observation(i)->GetName()+"_R2").c_str(), (Model->observation(i)->GetName()+"_NSE").c_str());
         }
-        fprintf(FileOut, "\n");
+        fprintf(FileOut.get(), "\n");
         write_to_detailed_GA("Generation: " + aquiutils::numbertostring(current_generation));
 		for (int j1=0; j1<GA_params.maxpop; j1++)
 		{
 
-			fprintf(FileOut, "%i, ", j1);
+			fprintf(FileOut.get(), "%i, ", j1);
 
 			for (int k=0; k<Ind[0].nParams; k++)
 				if (loged[k] == 1)
-					fprintf(FileOut, "%le, ", pow(10, Ind[j1].x[k]));
+					fprintf(FileOut.get(), "%le, ", pow(10, Ind[j1].x[k]));
 				else
-					fprintf(FileOut, "%le, ", Ind[j1].x[k]);
+					fprintf(FileOut.get(), "%le, ", Ind[j1].x[k]);
 
-            fprintf(FileOut, "%le, %le, %i, ", Ind[j1].actual_fitness, Ind[j1].fitness, Ind[j1].rank);
+            fprintf(FileOut.get(), "%le, %le, %i, ", Ind[j1].actual_fitness, Ind[j1].fitness, Ind[j1].rank);
             for (unsigned int i=0; i<Model->ObservationsCount();i++)
             {
-                fprintf(FileOut, ",%le, %le, %le", Ind[j1].fit_measures[i]);
+                fprintf(FileOut.get(), ",%le, %le, %le", GAFitMeasure(Ind[j1].fit_measures, 3*i), GAFitMeasure(Ind[j1].fit_measures, 3*i+1), GAFitMeasure(Ind[j1].fit_measures, 3*i+2));
             }
-			fprintf(FileOut, "\n");
+			fprintf(FileOut.get(), "\n");
 		}
-		fclose(FileOut);
+		}
 
 		int j = maxfitness();
 
@@ -728,10 +741,12 @@ int CGA<T>::optimize()
 	}
 
     assignfitnesses();
-	FileOut = fopen(RunFileName.c_str(), "a");
-	fprintf(FileOut, "Final Enhancements\n");
-
 	int j = maxfitness();
+	{
+	GAFile FileOut = OpenGAFile(RunFileName, "a");
+	FILE* out = FileOut ? FileOut.get() : nullptr;
+	if (out) fprintf(out, "Final Enhancements\n");
+
 
 	MaxFitness = Ind[j].actual_fitness;
 	final_params.resize(GA_params.nParam);
@@ -740,15 +755,15 @@ int CGA<T>::optimize()
 	for (int k = 0; k<Ind[0].nParams; k++)
 	{
 		if (loged[k] == 1) final_params[k] = pow(10, Ind[j].x[k]); else final_params[k] = Ind[j].x[k];
-		fprintf(FileOut, "%s, ", paramname[k].c_str());
-		fprintf(FileOut, "%le, ", final_params[k]);
-		fprintf(FileOut, "%le, %le\n", Ind[j].actual_fitness, Ind[j].fitness);
+		if (out) fprintf(out, "%s, ", paramname[k].c_str());
+		if (out) fprintf(out, "%le, ", final_params[k]);
+		if (out) fprintf(out, "%le, %le\n", Ind[j].actual_fitness, Ind[j].fitness);
 	}
     for (unsigned int i=0; i<Model->ObservationsCount();i++)
     {
-        fprintf(FileOut, ",%le, %le, %le\n", Ind[j].fit_measures[i]);
+        if (out) fprintf(out, ",%le, %le, %le\n", GAFitMeasure(Ind[j].fit_measures, 3*i), GAFitMeasure(Ind[j].fit_measures, 3*i+1), GAFitMeasure(Ind[j].fit_measures, 3*i+2));
     }
-    fclose(FileOut);
+	} // closes the run file
 
 	assignfitnesses(final_params);
 

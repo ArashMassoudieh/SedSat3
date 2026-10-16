@@ -1135,7 +1135,7 @@ void MainWindow::on_constituent_properties_triggered()
 {
     FormElementInformation* formElems = new FormElementInformation(this);
     ElementTableModel* elementTableModel = new ElementTableModel(&dataCollection, this);
-    formElems->table()->setModel(elementTableModel);
+    formElems->setModel(elementTableModel);
 
     ElementTableDelegate* elemDelegate = new ElementTableDelegate(&dataCollection, this);
     formElems->table()->setItemDelegate(elemDelegate);
@@ -1261,7 +1261,26 @@ bool MainWindow::Execute(const std::string& command, std::map<std::string, std::
 {
     conductor->SetData(&dataCollection);
 
-    bool outcome = conductor->Execute(command, arguments);
+    // An exception escaping an analysis would otherwise terminate the program
+    bool outcome = false;
+    try
+    {
+        outcome = conductor->Execute(command, arguments);
+    }
+    catch (const std::exception& exception)
+    {
+        QMessageBox::critical(this, tr("Analysis failed"),
+                              tr("The analysis '%1' stopped with an error:\n%2")
+                                  .arg(QString::fromStdString(command), QString::fromUtf8(exception.what())));
+        return false;
+    }
+    catch (...)
+    {
+        QMessageBox::critical(this, tr("Analysis failed"),
+                              tr("The analysis '%1' stopped with an unknown error.")
+                                  .arg(QString::fromStdString(command)));
+        return false;
+    }
     if (!outcome)
     {
         return false;

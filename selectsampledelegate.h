@@ -38,9 +38,9 @@ public slots:
 
 private:
     SourceSinkData *Data;
-    mode Mode;
+    mode Mode{};
     QVector<column_type> columnTypes;
-    int numberofcolumns;
+    int numberofcolumns = 0;
 
 
 };

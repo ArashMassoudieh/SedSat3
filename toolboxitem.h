@@ -15,7 +15,7 @@ public:
     QVariant data(int role = Qt::UserRole + 1) const override;
 
 private:
-    SourceSinkData *Data;
+    SourceSinkData *Data = nullptr;
 };
 
 #endif // TOOLBOXITEM_H

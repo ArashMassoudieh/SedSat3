@@ -57,8 +57,8 @@ double MultipleLinearRegression::SSE_reduced_model(const vector<vector<double>> 
     int number_of_data_points = dependent.size();
     int number_of_variables = independent.size();
 
-    gsl_matrix *X, *cov;
-    gsl_vector *y, *w, *c;
+    gsl_matrix *X = nullptr, *cov = nullptr;
+    gsl_vector *y = nullptr, *w = nullptr, *c = nullptr;
 
     double SSE=0;
 
@@ -122,8 +122,8 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
     int number_of_data_points = dependent.size();
     int number_of_variables = independent.size();
 
-    gsl_matrix *X, *cov;
-    gsl_vector *y, *w, *c;
+    gsl_matrix *X = nullptr, *cov = nullptr;
+    gsl_vector *y = nullptr, *w = nullptr, *c = nullptr;
 
     X = gsl_matrix_alloc (number_of_data_points, number_of_variables+1);
     y = gsl_vector_alloc (number_of_data_points);
@@ -346,5 +346,6 @@ vector<double> &MultipleLinearRegression::IndependentData(const string &var_name
         if (var_name == independent_variables_names[i])
             return independent_data[i];
 
+    throw std::out_of_range("MultipleLinearRegression: no independent variable named '" + var_name + "'");
 }
 

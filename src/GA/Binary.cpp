@@ -8,6 +8,8 @@
 #include "Binary.h"
 #include "math.h"
 #include <iostream>
+#include <stdexcept>
+#include <string>
 #include "GADistribution.h"
 #ifdef QT_version
 #include "qdebug.h"
@@ -135,11 +137,11 @@ CBinary CBinary::extract(int spoint, int epoint)
 
 int& CBinary::operator[](unsigned int i)
 {
-    int *p = 0;
-    if (i<Digit.size())
-        return this->Digit[i];
-    else
-        return *p;
+    // This used to dereference a null pointer for an out-of-range index
+    if (i >= Digit.size())
+        throw std::out_of_range("CBinary::operator[]: digit " + std::to_string(i) +
+                                " requested from a binary of " + std::to_string(Digit.size()) + " digits");
+    return Digit[i];
 }
 
 void cross(CBinary &B1, CBinary &B2, int p)

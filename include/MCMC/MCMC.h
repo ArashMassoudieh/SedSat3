@@ -46,7 +46,7 @@ struct _MCMC_settings
      * The total chain length including burn-in. Typical values: 10,000-100,000+
      * depending on parameter dimensionality and convergence speed.
      */
-    unsigned int total_number_of_samples;
+    unsigned int total_number_of_samples{};
 
     /**
      * @brief Number of parallel MCMC chains to run
@@ -58,7 +58,7 @@ struct _MCMC_settings
      *
      * Typical value: 3-8 chains
      */
-    unsigned int number_of_chains;
+    unsigned int number_of_chains{};
 
     /**
      * @brief Number of initial samples to discard as burn-in
@@ -68,7 +68,7 @@ struct _MCMC_settings
      *
      * @note Burn-in samples are not included in posterior statistics
      */
-    unsigned int burnout_samples;
+    unsigned int burnout_samples{};
 
     /**
      * @brief Initial perturbation factor for proposal distribution
@@ -97,7 +97,7 @@ struct _MCMC_settings
      * Dimensionality of the parameter space. For sediment fingerprinting,
      * this typically equals the number of sources being apportioned.
      */
-    unsigned int number_of_parameters;
+    unsigned int number_of_parameters{};
 
     /**
      * @brief Interval for saving MCMC samples to output
@@ -125,7 +125,7 @@ struct _MCMC_settings
      *
      * Default: false (apply initial perturbation)
      */
-    bool noinipurt;
+    bool noinipurt{};
 
     /**
      * @brief Use sensitivity-based adaptive proposal distribution
@@ -135,7 +135,7 @@ struct _MCMC_settings
      *
      * Default: false
      */
-    bool sensbasedpurt;
+    bool sensbasedpurt{};
 
     /**
      * @brief Perform global sensitivity analysis during MCMC
@@ -145,7 +145,7 @@ struct _MCMC_settings
      *
      * Default: false (sensitivity analysis disabled)
      */
-    bool global_sensitivity;
+    bool global_sensitivity{};
 
     /**
      * @brief Continue from a previous MCMC run
@@ -166,7 +166,7 @@ struct _MCMC_settings
      *
      * Typical: 1000-10,000
      */
-    unsigned int number_of_post_estimate_realizations;
+    unsigned int number_of_post_estimate_realizations{};
 
     /**
      * @brief Finite difference step size for sensitivity analysis
@@ -174,7 +174,7 @@ struct _MCMC_settings
      * Fractional change in parameter value for numerical derivative calculation.
      * Typical: 0.001-0.01 (0.1%-1% of parameter value)
      */
-    double dp_sens;
+    double dp_sens{};
 
     /**
      * @brief Write out posterior predictive realizations with observation noise
@@ -184,7 +184,7 @@ struct _MCMC_settings
      *
      * Default: false
      */
-    bool noise_realization_writeout;
+    bool noise_realization_writeout{};
 
     /**
      * @brief Number of parallel threads for MCMC computation

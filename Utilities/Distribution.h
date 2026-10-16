@@ -39,12 +39,12 @@ public:
     vector<string> commands();
     static vector<string> Commands();
     double pi;
-	int n;
+	int n = 0;
 	vector<double> s;
 	vector<double> e;
     TimeSeries<double> inverse_cumulative;
     TimeSeries<double> density;
-    distribution__type DistributionType;
+    distribution__type DistributionType{};
     CDistribution(int nn);
 	CDistribution(const CDistribution &C);
     bool SetInverseCumulative(const map<string,string> &arguments);
@@ -73,7 +73,7 @@ public:
 //double erf(double x);
 //double erfc(double x);
 double Gammapdf(double x, double k, double theta);
-double gamma(double x);
+double GammaFunction(double x);
 double unitrandom();
 double getstdnormalrand();
 double getnormalrand(double mu, double std);

@@ -34,7 +34,7 @@ struct GA_Tweaking_parameters
      * Dimensionality of the parameter space. For sediment fingerprinting,
      * typically equals the number of sources to be apportioned.
      */
-    int totnumparams;
+    int totnumparams{};
 
     /**
      * @brief Maximum population size (number of individuals)
@@ -52,19 +52,19 @@ struct GA_Tweaking_parameters
      *
      * Number of active parameters being optimized (non-fixed parameters).
      */
-    int nParam;
+    int nParam{};
 
     /**
      * @brief Number of enhancement iterations
      *
      * Additional optimization refinements applied to best solutions.
      */
-    int numenhancements;
+    int numenhancements{};
 
     /**
      * @brief Current enhancement iteration counter
      */
-    int num_enh;
+    int num_enh{};
 
     /**
      * @brief Number of generations to evolve
@@ -74,7 +74,7 @@ struct GA_Tweaking_parameters
      *
      * Typical: 100-1000 generations
      */
-    int nGen;
+    int nGen{};
 
     /**
      * @brief Crossover operator type
@@ -85,7 +85,7 @@ struct GA_Tweaking_parameters
      * - Type 2: Uniform crossover
      * - Other: Problem-specific operators
      */
-    int cross_over_type;
+    int cross_over_type{};
 
     /**
      * @brief Number of bins for fitness distribution
@@ -93,7 +93,7 @@ struct GA_Tweaking_parameters
      * Used in fitness proportionate selection to discretize fitness values
      * for roulette wheel selection.
      */
-    int no_bins;
+    int no_bins{};
 
     /**
      * @brief Output sensitivity analysis results
@@ -125,7 +125,7 @@ struct GA_Tweaking_parameters
      *
      * Default: false
      */
-    bool readfromgafile;
+    bool readfromgafile{};
 
     /**
      * @brief Apply steepest descent local search
@@ -145,7 +145,7 @@ struct GA_Tweaking_parameters
      *
      * Typical: 1.5-2.0
      */
-    double N;
+    double N{};
 
     /**
      * @brief Crossover probability
@@ -208,7 +208,7 @@ struct GA_Tweaking_parameters
      * - 'C': Custom fitness function
      * - Other: Problem-specific functions
      */
-    char fitnesstype;
+    char fitnesstype{};
 };
 
 /**
@@ -358,7 +358,7 @@ public:
      * Used for fitness proportionate selection (roulette wheel).
      * Updated after each fitness evaluation.
      */
-    double sumfitness;
+    double sumfitness{};
 
     /**
      * @brief Maximum fitness value in current population
@@ -993,7 +993,7 @@ private:
      *
      * Controls parallelization of fitness calculations across population.
      */
-    int numberOfThreads;
+    int numberOfThreads{};
 
 #ifdef Q_GUI_SUPPORT
     /**

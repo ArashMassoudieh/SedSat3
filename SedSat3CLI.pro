@@ -15,6 +15,11 @@
 
 QT += core gui widgets
 CONFIG += c++17 console
+
+# A non-void function that falls off its end is undefined behaviour; make it a
+# build error rather than a warning (USGS code review, Oct 2026)
+gcc|clang: QMAKE_CXXFLAGS += -Werror=return-type
+msvc: QMAKE_CXXFLAGS += /we4715
 CONFIG -= app_bundle
 
 TARGET = sedsat3-cli

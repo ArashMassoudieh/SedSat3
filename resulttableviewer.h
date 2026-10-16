@@ -22,7 +22,7 @@ public:
 
 private:
     Ui::ResultTableViewer *ui;
-    QTableWidget *tablewidget;
+    QTableWidget *tablewidget{};
 public slots:
     void on_ExportToCSV();
 };

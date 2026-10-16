@@ -17,6 +17,7 @@ int OmSizeCorrectionTableModel::columnCount(const QModelIndex &index) const
         return 8;
     else if (MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames().size()==1)
         return 5;
+    return 0;
 }
 QVariant OmSizeCorrectionTableModel::data(const QModelIndex &index, int role) const
 {

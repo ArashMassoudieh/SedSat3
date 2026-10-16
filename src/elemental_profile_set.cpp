@@ -794,6 +794,17 @@ Elemental_Profile_Set Elemental_Profile_Set::ApplyOrganicMatterAndSizeCorrection
 }
 // ========== Box-Cox Transformations ==========
 
+vector<string> Elemental_Profile_Set::ElementsNotBoxCoxTransformable() const
+{
+    vector<string> elements;
+    for (const auto& [element_name, distribution] : element_distributions_)
+    {
+        if (!distribution.CanBoxCoxTransform())
+            elements.push_back(element_name);
+    }
+    return elements;
+}
+
 CMBVector Elemental_Profile_Set::CalculateBoxCoxParameters()
 {
     CMBVector lambda_values(element_distributions_.size());
@@ -823,8 +834,10 @@ CMBMatrix Elemental_Profile_Set::DetectOutliers(
     // Calculate means and standard deviations of Box-Cox transformed distributions
     vector<double> means;
     vector<double> stds;
+    vector<bool> transformable;
     means.reserve(element_distributions_.size());
     stds.reserve(element_distributions_.size());
+    transformable.reserve(element_distributions_.size());
 
     size_t elem_idx = 0;
     for (auto& [element_name, distribution] : element_distributions_)
@@ -832,6 +845,7 @@ CMBMatrix Elemental_Profile_Set::DetectOutliers(
         ConcentrationSet transformed = distribution.ApplyBoxCoxTransform(lambdas[elem_idx], false);
         means.push_back(transformed.CalculateMean());
         stds.push_back(transformed.CalculateStdDev());
+        transformable.push_back(distribution.CanBoxCoxTransform());
         elem_idx++;
     }
 
@@ -847,9 +861,13 @@ CMBMatrix Elemental_Profile_Set::DetectOutliers(
         {
             outlier_magnitude.SetColumnLabel(element_idx, element_name);
 
-            // Apply Box-Cox transformation
+            // Apply the same Box-Cox transformation the means and standard
+            // deviations were computed with. (This used its own formula, which
+            // turned untransformed values x into x - 1 for constituents with
+            // zero or negative values, shifting their scores by 1/std.)
             double lambda = lambdas[element_idx];
-            double transformed_value = (pow(concentration, lambda) - 1.0) / lambda;
+            double transformed_value = transformable[element_idx] ?
+                ConcentrationSet::BoxCoxTransformValue(concentration, lambda) : concentration;
 
             // Calculate standardized score
             double z_score = (transformed_value - means[element_idx]) / stds[element_idx];

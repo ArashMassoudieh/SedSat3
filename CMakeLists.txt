@@ -222,6 +222,13 @@ target_link_libraries(SedSat3 PRIVATE
     OpenMP::OpenMP_CXX
 )
 
+# A non-void function that falls off its end is undefined behaviour; make it a
+# build error rather than a warning (USGS code review, Oct 2026)
+target_compile_options(SedSat3 PRIVATE
+    $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Werror=return-type>
+    $<$<CXX_COMPILER_ID:MSVC>:/we4715>
+)
+
 # ----------------------------
 # Definitions
 # ----------------------------

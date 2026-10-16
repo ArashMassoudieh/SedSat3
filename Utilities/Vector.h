@@ -39,7 +39,7 @@ public:
 	virtual ~CVector();
     CVector Extract(int start, int end);
     static CVector Extract(const std::vector<double> &x, int start, int end);
-	int num;
+	int num{};
 	int range(int);
 	CVector& operator=(const CVector&);
 	CVector& operator=(const std::vector<double>&);

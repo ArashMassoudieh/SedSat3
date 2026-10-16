@@ -71,7 +71,7 @@ void GeneralPlotter::mouseReleaseEvent(QMouseEvent * event)
         if (mRubberBand->geometry().height() > 5 && mRubberBand->geometry().width() > 5)
         {
             const QRect & zoomRect = mRubberBand->geometry();
-            int xp1, yp1, xp2, yp2;
+            int xp1 = 0, yp1 = 0, xp2 = 0, yp2 = 0;
             zoomRect.getCoords(&xp1, &yp1, &xp2, &yp2);
             auto x1 = xAxis->pixelToCoord(xp1);
             auto x2 = xAxis->pixelToCoord(xp2);

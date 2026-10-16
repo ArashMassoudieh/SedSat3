@@ -139,6 +139,24 @@ public:
      */
     bool CheckNegativeElements(std::map<std::string, std::vector<std::string>> negative_elements);
 
+    /**
+     * @brief Warns about constituents the Box-Cox transformation leaves untransformed
+     *
+     * Box-Cox is defined for positive values only; constituents with a zero or
+     * negative value are skipped and used as they are. This lists them, by
+     * group, through the AnalysisHost.
+     *
+     * @param data Dataset about to be transformed
+     * @param group Only this group, or every group if empty
+     * @param consequence What happens to the skipped constituents, for the message
+     */
+    void ReportBoxCoxSkips(SourceSinkData& data, const std::string& group, const std::string& consequence);
+
+    /**
+     * @brief Box-Cox transforms data with optimal lambdas, reporting skipped constituents
+     */
+    SourceSinkData BoxCoxTransformedWithReport(SourceSinkData& data);
+
 private:
     SourceSinkData* data;                          ///< Non-owning pointer to analysis data
     std::unique_ptr<CGA<SourceSinkData>> GA;       ///< Genetic Algorithm optimizer (owned)

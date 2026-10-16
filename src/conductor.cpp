@@ -206,11 +206,32 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
     return true;
 }
 
+void Conductor::ReportBoxCoxSkips(SourceSinkData& data, const std::string& group, const std::string& consequence)
+{
+    std::string message;
+    for (auto& [group_name, profile_set] : data)
+    {
+        if (!group.empty() && group_name != group)
+            continue;
+        for (const std::string& element : profile_set.ElementsNotBoxCoxTransformable())
+            message += "\t" + element + " in group '" + group_name + "'\n";
+    }
+    if (!message.empty())
+        host->ShowWarning("The Box-Cox transformation needs positive values, so these constituents "
+                          "with zero or negative values were not transformed; " + consequence + ":\n" + message);
+}
+
+SourceSinkData Conductor::BoxCoxTransformedWithReport(SourceSinkData& data)
+{
+    ReportBoxCoxSkips(data, "", "they were used untransformed");
+    return data.BoxCoxTransformed(true);
+}
+
 bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)
 {
     ScopedProgressReporter rtw(host);
 
-    bool organic_size_correction;
+    bool organic_size_correction = false;
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         organic_size_correction = true;
@@ -302,7 +323,7 @@ bool Conductor::ExecuteGA_FixedProfile(const std::map<std::string, std::string>&
     rtw->SetTitle("Fitness", 0);
     rtw->SetYAxisTitle("Fitness", 0);
 
-    bool organic_size_correction;
+    bool organic_size_correction = false;
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         organic_size_correction = true;
@@ -393,7 +414,7 @@ bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::strin
 {
     ScopedProgressReporter rtw(host);
 
-    bool organic_size_correction;
+    bool organic_size_correction = false;
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         organic_size_correction = true;
@@ -456,7 +477,7 @@ bool Conductor::ExecuteLevenbergMarquardtBatch(const std::map<std::string, std::
 {
     ScopedProgressReporter rtw(host, 0);
 
-    bool organic_size_correction;
+    bool organic_size_correction = false;
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         organic_size_correction = true;
@@ -475,7 +496,7 @@ bool Conductor::ExecuteLevenbergMarquardtBatch(const std::map<std::string, std::
 
     Data()->SetProgressReporter(rtw);
 
-    CMBTimeSeriesSet* contributions;
+    CMBTimeSeriesSet* contributions = nullptr;
     std::map<std::string, std::vector<std::string>> negative_elements;
 
     if (arguments.at("Softmax transformation") == "true")
@@ -729,7 +750,7 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     DFA_result dfa_result = transformed_data.DiscriminantFunctionAnalysis(
@@ -826,7 +847,7 @@ bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& ar
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     DFA_result dfa_result = transformed_data.DiscriminantFunctionAnalysis(
@@ -925,7 +946,7 @@ bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     DFA_result dfa_result = transformed_data.DiscriminantFunctionAnalysis();
@@ -1029,7 +1050,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     transformed_data.SetProgressReporter(rtw);
@@ -1123,7 +1144,7 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     transformed_data.SetProgressReporter(rtw);
@@ -1239,7 +1260,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     transformed_data.SetProgressReporter(rtw);
@@ -1302,7 +1323,7 @@ bool Conductor::ExecuteKolmogorovSmirnov(const std::map<std::string, std::string
     ks_item.SetType(result_type::vector);
     ks_item.SetYAxisMode(yaxis_mode::normal);
 
-    distribution_type dist;
+    distribution_type dist = distribution_type::normal;
     if (arguments.at("Distribution") == "Normal")
     {
         dist = distribution_type::normal;
@@ -1335,7 +1356,7 @@ bool Conductor::ExecuteKolmogorovSmirnovIndividual(const std::map<std::string, s
         arguments.at("Source/Target group"));
     ks_item.SetType(result_type::timeseries_set);
 
-    distribution_type dist;
+    distribution_type dist = distribution_type::normal;
     if (arguments.at("Distribution") == "Normal")
     {
         dist = distribution_type::normal;
@@ -1552,65 +1573,92 @@ bool Conductor::ExecuteDistributionFitting(const std::map<std::string, std::stri
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
+    }
+
+    const std::string& group = arguments.at("Source/Target group");
+    const std::string& constituent = arguments.at("Constituent");
+    const bool box_cox = (arguments.at("Box-cox transformation") == "true");
+
+    if (transformed_data.count(group) == 0)
+    {
+        host->ShowWarning("Group '" + group + "' was not found in the data.");
+        return false;
+    }
+    ConcentrationSet* distribution = transformed_data.at(group).GetElementDistribution(constituent);
+    if (distribution == nullptr)
+    {
+        host->ShowWarning("Constituent '" + constituent + "' was not found in group '" + group + "'.");
+        return false;
+    }
+    if (distribution->size() < 2)
+    {
+        host->ShowWarning("Distribution fitting needs at least two samples of '" + constituent +
+                          "' in group '" + group + "'; there are " + std::to_string(distribution->size()) + ".");
+        return false;
+    }
+    if (!distribution->CanFitDistribution())
+    {
+        host->ShowWarning("All values of '" + constituent + "' in group '" + group +
+                          "' are equal, so no distribution can be fitted.");
+        return false;
+    }
+    if (!box_cox && distribution->GetMinimum() <= 0)
+    {
+        host->ShowWarning("'" + constituent + "' in group '" + group +
+                          "' has zero or negative values, so a log-normal distribution cannot be fitted.");
+        return false;
     }
 
     // Fit normal distribution
-    CMBTimeSeriesSet fitted_normal = transformed_data.at(arguments.at("Source/Target group"))
-        .GetElementDistribution(arguments.at("Constituent"))
-        ->CreateFittedDistribution(distribution_type::normal);
+    CMBTimeSeriesSet fitted_normal = distribution->CreateFittedDistribution(distribution_type::normal);
 
     // Fit lognormal distribution (only if not Box-Cox transformed)
     CMBTimeSeriesSet fitted_lognormal;
-    if (arguments.at("Box-cox transformation") != "true")
+    if (!box_cox)
     {
-        fitted_lognormal = transformed_data.at(arguments.at("Source/Target group"))
-            .GetElementDistribution(arguments.at("Constituent"))
-            ->CreateFittedDistribution(distribution_type::lognormal);
+        fitted_lognormal = distribution->CreateFittedDistribution(distribution_type::lognormal);
     }
 
     // Create CDF comparisons for normal
-    CMBTimeSeriesSet observed_fitted_normal_cdf = transformed_data.at(arguments.at("Source/Target group"))
-        .GetElementDistribution(arguments.at("Constituent"))
-        ->CreateCDFComparison(distribution_type::normal);
+    CMBTimeSeriesSet observed_fitted_normal_cdf = distribution->CreateCDFComparison(distribution_type::normal);
 
     // Create CDF comparisons for lognormal (only if not Box-Cox transformed)
     CMBTimeSeriesSet observed_fitted_lognormal_cdf;
-    if (arguments.at("Box-cox transformation") != "true")
+    if (!box_cox)
     {
-        observed_fitted_lognormal_cdf = transformed_data.at(arguments.at("Source/Target group"))
-            .GetElementDistribution(arguments.at("Constituent"))
-            ->CreateCDFComparison(distribution_type::lognormal);
+        observed_fitted_lognormal_cdf = distribution->CreateCDFComparison(distribution_type::lognormal);
     }
 
-    // Build PDF result
-    CMBTimeSeriesSet* pdf = new CMBTimeSeriesSet();
-    pdf->append(fitted_normal["Observed"]);
-    pdf->append(fitted_normal["Fitted"]);
-    if (arguments.at("Box-cox transformation") != "true")
+    // Every series used below must exist; report rather than throw if not
+    bool complete = fitted_normal.Contains("Observed") && fitted_normal.Contains("Fitted") &&
+                    observed_fitted_normal_cdf.Contains("Observed") && observed_fitted_normal_cdf.Contains("Fitted");
+    if (!box_cox)
+        complete = complete && fitted_lognormal.Contains("Fitted") && observed_fitted_lognormal_cdf.Contains("Fitted");
+    if (!complete)
     {
-        pdf->append(fitted_lognormal["Fitted"]);
+        host->ShowWarning("The distributions of '" + constituent + "' in group '" + group + "' could not be fitted.");
+        return false;
     }
-    pdf->setname(0, "Samples");
-    pdf->setname(1, "Normal");
-    if (arguments.at("Box-cox transformation") != "true")
+
+    // Build PDF result. Each series is added under its final name: append()
+    // refuses a name that is already in the set, so adding the two "Fitted"
+    // series under their own names would silently drop the second one.
+    CMBTimeSeriesSet* pdf = new CMBTimeSeriesSet();
+    pdf->append(fitted_normal["Observed"], "Samples");
+    pdf->append(fitted_normal["Fitted"], "Normal");
+    if (!box_cox)
     {
-        pdf->setname(2, "Log-normal");
+        pdf->append(fitted_lognormal["Fitted"], "Log-normal");
     }
 
     // Build CDF result
     CMBTimeSeriesSet* cdf = new CMBTimeSeriesSet();
-    cdf->append(observed_fitted_normal_cdf["Observed"]);
-    cdf->append(observed_fitted_normal_cdf["Fitted"]);
-    if (arguments.at("Box-cox transformation") != "true")
+    cdf->append(observed_fitted_normal_cdf["Observed"], "Observed");
+    cdf->append(observed_fitted_normal_cdf["Fitted"], "Normal");
+    if (!box_cox)
     {
-        cdf->append(observed_fitted_lognormal_cdf["Fitted"]);
-    }
-    cdf->setname(0, "Observed");
-    cdf->setname(1, "Normal");
-    if (arguments.at("Box-cox transformation") != "true")
-    {
-        cdf->setname(2, "Log-normal");
+        cdf->append(observed_fitted_lognormal_cdf["Fitted"], "Log-normal");
     }
 
     distribution_item.SetResult(pdf);
@@ -1710,6 +1758,8 @@ bool Conductor::ExecuteBoxCox(const std::map<std::string, std::string>& argument
     boxcox_result_item.SetShowGraph(true);
     boxcox_result_item.SetYAxisMode(yaxis_mode::normal);
 
+    ReportBoxCoxSkips(*Data(), arguments.at("Source/Target group"), "their lambda is shown as 1");
+
     CMBVector* boxcox_params = new CMBVector(
         Data()->at(arguments.at("Source/Target group")).CalculateBoxCoxParameters()
     );
@@ -1744,6 +1794,9 @@ bool Conductor::ExecuteOutlierAnalysis(const std::map<std::string, std::string>&
     outlier_result_item.SetShowGraph(false);
 
     double threshold = QString::fromStdString(arguments.at("Threshold")).toDouble();
+
+    ReportBoxCoxSkips(transformed_data, arguments.at("Source/Target group"),
+                      "their scores are computed from the untransformed values");
 
     CMBMatrix* outlier_matrix = new CMBMatrix(
         transformed_data.at(arguments.at("Source/Target group")).DetectOutliers(-threshold, threshold)
@@ -1791,7 +1844,7 @@ bool Conductor::ExecuteEDP(const std::map<std::string, std::string>& arguments)
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     // Discriminant difference to standard deviation ratio
@@ -1899,7 +1952,7 @@ bool Conductor::ExecuteEDPM(const std::map<std::string, std::string>& arguments)
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
     results.SetName("Multi-way element discriminant power between '" +
@@ -1995,7 +2048,7 @@ bool Conductor::ExecuteANOVA(const std::map<std::string, std::string>& arguments
 
     if (arguments.at("Box-cox transformation") == "true")
     {
-        transformed_data = transformed_data.BoxCoxTransformed(true);
+        transformed_data = BoxCoxTransformedWithReport(transformed_data);
         log_transformation = false;
     }
 
@@ -2038,7 +2091,7 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& a
 
     ScopedProgressReporter rtw(host, 0);
 
-    bool organic_size_correction;
+    bool organic_size_correction = false;
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         organic_size_correction = true;
@@ -2087,7 +2140,7 @@ bool Conductor::ExecuteSourceVerify(const std::map<std::string, std::string>& ar
 
     ScopedProgressReporter rtw(host, 0);
 
-    bool organic_size_correction;
+    bool organic_size_correction = false;
     if (arguments.at("Apply size and organic matter correction") == "true")
     {
         organic_size_correction = true;

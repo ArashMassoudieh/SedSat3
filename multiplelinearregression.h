@@ -58,7 +58,7 @@ private:
     string dependent_variable_name;
     vector<string> independent_variables_names;
     CMBMatrix correlation_matrix_;
-    double chisq, R2, R2_adj;
+    double chisq{}, R2{}, R2_adj{};
     vector<double> p_value;
     double p_value_threshold = 0.05;
     vector<bool> make_effective;

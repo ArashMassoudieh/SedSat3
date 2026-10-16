@@ -308,8 +308,15 @@ public:
 
     /**
      * @brief Calculate optimal Box-Cox lambda for each element
+     * @note Elements with zero or negative values get lambda = 1 and are not
+     *       transformed; see ElementsNotBoxCoxTransformable()
      */
     CMBVector CalculateBoxCoxParameters();
+
+    /**
+     * @brief Elements with a zero or negative value, which Box-Cox leaves untransformed
+     */
+    vector<string> ElementsNotBoxCoxTransformable() const;
 
     /**
      * @brief Apply Box-Cox transformation to all profiles

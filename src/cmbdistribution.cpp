@@ -2,6 +2,8 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "cmbdistribution.h"
+
+#include <cmath>
 #include "math.h"
 
 double Distribution::pi = 4 * atan(1.0);
@@ -54,7 +56,7 @@ double Distribution::EvalLog(const double &x)
 TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff)
 {
     TimeSeries<double> out;
-    double x;
+    double x = NAN;
     for (int i=0; i<numberofpoints; i++)
     {
         if (distribution == distribution_type::normal)
@@ -73,7 +75,7 @@ TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const 
 TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type)
 {
     TimeSeries<double> out;
-    double x;
+    double x = NAN;
     for (int i=0; i<numberofpoints; i++)
     {
         if (dist_type == distribution_type::normal)

@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "sourcesinkdata.h"
+#include <cmath>
 #include "iostream"
 #include "NormalDist.h"
 #include "qjsondocument.h"
@@ -1621,8 +1622,8 @@ CMatrix SourceSinkData::BuildSourceMeanMatrix_Isotopes(parameter_mode param_mode
             Distribution* base_element_dist = source_group->GetEstimatedDistribution(base_element);
 
             // Retrieve mean values based on parameter mode
-            double mean_delta;
-            double mean_base_concentration;
+            double mean_delta = NAN;
+            double mean_base_concentration = NAN;
 
             if (param_mode == parameter_mode::based_on_fitted_distribution) {
                 // Use parametric means from fitted distributions
@@ -3281,7 +3282,7 @@ Elemental_Profile SourceSinkData::t_TestPValue(const string& source1, const stri
         ConcentrationSet concentration_set2 = *at(source2).GetElementDistribution(element_names[i]);
 
         // Compute statistics in appropriate space
-        double std1, std2, mean1, mean2;
+        double std1 = NAN, std2 = NAN, mean1 = NAN, mean2 = NAN;
         if (!use_log)
         {
             // Linear-space statistics
@@ -3333,7 +3334,7 @@ Elemental_Profile SourceSinkData::DifferentiationPower(const string& source1, co
         ConcentrationSet concentration_set2 = *at(source2).GetElementDistribution(element_names[i]);
 
         // Compute statistics in appropriate space
-        double std1, std2, mean1, mean2;
+        double std1 = NAN, std2 = NAN, mean1 = NAN, mean2 = NAN;
         if (!use_log)
         {
             // Linear-space statistics
@@ -4696,7 +4697,7 @@ double SourceSinkData::DFA_P_Value()
     double chi_squared = -(sample_size - 1.0 - correction_factor) * log(wilks_lambda);
 
     // Compute degrees of freedom
-    double degrees_of_freedom;
+    double degrees_of_freedom = NAN;
     if (target_group_ != "")
     {
         // Target group present: exclude from group count
@@ -4910,8 +4911,8 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(
         // Find best element to add next
         double best_p_value = 100.0;
         string best_element;
-        double best_wilks_lambda;
-        double best_f_test_p_value;
+        double best_wilks_lambda = NAN;
+        double best_f_test_p_value = NAN;
 
         // Test each unselected element
         for (size_t j = 0; j < element_names.size(); j++)
@@ -4978,8 +4979,8 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis()
         // Find best element to add next
         double best_p_value = 100.0;
         string best_element;
-        double best_wilks_lambda;
-        double best_f_test_p_value;
+        double best_wilks_lambda = NAN;
+        double best_f_test_p_value = NAN;
 
         // Test each unselected element
         for (size_t j = 0; j < element_names.size(); j++)
@@ -5043,8 +5044,8 @@ vector<CMBVector> SourceSinkData::StepwiseDiscriminantFunctionAnalysis(const str
         // Find best element to add next
         double best_p_value = 100.0;
         string best_element;
-        double best_wilks_lambda;
-        double best_f_test_p_value;
+        double best_wilks_lambda = NAN;
+        double best_f_test_p_value = NAN;
 
         // Test each unselected element
         for (size_t j = 0; j < element_names.size(); j++)

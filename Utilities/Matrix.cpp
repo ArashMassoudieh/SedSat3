@@ -7,6 +7,7 @@
 
 #include "Matrix.h"
 #include "math.h"
+#include <cmath>
 #include <iostream>
 #include <fstream>
 #define ARMA_DONT_PRINT_ERRORS
@@ -94,7 +95,7 @@ CMatrix CMatrix::Diag(int n)
 CMatrix::CMatrix(std::string filename)
 {
 
-    bool file_not_found;
+    bool file_not_found = false;
 
 	std::ifstream file(filename);
 	std::vector<std::string> s;
@@ -449,10 +450,10 @@ CMatrix Invert(const CMatrix &M1)
 #endif
 CMatrix Cholesky_factor(CMatrix &M)
 {
-	int i;
-	int j;
-	int k;
-	double s;
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	double s = NAN;
 	CMatrix b(M.getnumcols(), M.getnumcols());
 	int n = M.getnumcols();
 	for ( j = 0; j < n; j++ )
@@ -496,10 +497,10 @@ CMatrix Cholesky_factor(CMatrix &M)
 CMatrix CMatrix::Cholesky_factor()
 {
 	CMatrix M = *this;
-	int i;
-	int j;
-	int k;
-	double s;
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	double s = NAN;
 	CMatrix b(M.getnumcols(), M.getnumcols());
 	int n = M.getnumcols();
 	for ( j = 0; j < n; j++ )
@@ -542,8 +543,8 @@ CMatrix CMatrix::Cholesky_factor()
 
 CMatrix LU_decomposition(CMatrix &M)
 {
-	double AMAX,DUM, SUM;
-	int  I,IMAX,J,K;
+	double AMAX = NAN,DUM = NAN, SUM = NAN;
+	int  I = 0,IMAX = 0,J = 0,K = 0;
 	int d=0;
 	int n = M.getnumrows();
 	CVector VV(n);
@@ -617,8 +618,8 @@ double CMatrix::det()
 CMatrix CMatrix::LU_decomposition()
 {
     CMatrix A = *this;
-	double AMAX,DUM, SUM;
-	int  I,IMAX,J,K;
+	double AMAX = NAN,DUM = NAN, SUM = NAN;
+	int  I = 0,IMAX = 0,J = 0,K = 0;
 
 	int n = A.getnumrows();
 	CVector VV(n);

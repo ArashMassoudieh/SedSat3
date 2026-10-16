@@ -370,7 +370,7 @@ double CVector_arma::abs_max()
 int CVector_arma::abs_max_elems()
 {
 	double a = -1E14;
-	int ii;
+	int ii = 0;
     for (int i = 0; i<num(); i++)
 	{
         if (fabs(at(i)) > a)

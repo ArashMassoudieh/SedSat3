@@ -59,10 +59,10 @@ private:
     Ui::GeneralChart *ui;
     Chart* chart;
     ChartView *chartView;
-    QComboBox *element_combo;
-    QComboBox *source1_combo;
-    QComboBox *source2_combo;
-    QComboBox *independent_combo;
+    QComboBox *element_combo{};
+    QComboBox *source1_combo{};
+    QComboBox *source2_combo{};
+    QComboBox *independent_combo{};
     bool PlotRegression(MultipleLinearRegression *timeseriesset,const QString& independent_var);
     ResultItem* result_item=nullptr;
 private slots:

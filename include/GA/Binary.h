@@ -16,13 +16,13 @@ public:
 	virtual ~CBinary();
     int nDigits = 4;
     std::vector<int> Digit;
-	int precision;
+	int precision = 3;
 	CBinary(const CBinary &B);
     CBinary operator = (const CBinary &B);
     CBinary operator + (const CBinary &B);
     CBinary extract(int spoint, int epoint);
     double decode(double minrange);
-    int& operator[](unsigned int i);
+    int& operator[](unsigned int i); ///< Digit i; throws std::out_of_range if i >= Digit.size()
     void show();
 	bool sign = true;
     void mutate(double mu);

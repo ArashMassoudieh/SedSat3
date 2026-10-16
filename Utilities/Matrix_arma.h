@@ -23,8 +23,8 @@ class CMatrix_arma: public arma::mat
 {
 
 private:
-	int numrows;
-	int numcols;
+	int numrows{};
+	int numcols{};
 
 public:
     //mat matr;

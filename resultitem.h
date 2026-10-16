@@ -84,7 +84,7 @@ public:
     bool ShowGraph() const {return showGraph;}
 private:
     string name;
-    result_type type;
+    result_type type{};
     Interface *result = nullptr;
     yaxis_mode y_axis_mode = yaxis_mode::log;
     xaxis_mode x_axis_mode = xaxis_mode::real;

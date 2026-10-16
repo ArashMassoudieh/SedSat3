@@ -7,6 +7,8 @@
 #include <QWidget>
 #include <QTableView>
 
+class ElementTableModel;
+
 namespace Ui {
 class FormElementInformation;
 }
@@ -19,11 +21,13 @@ public:
     explicit FormElementInformation(QWidget *parent = nullptr);
     ~FormElementInformation();
     QTableView *table();
+    void setModel(ElementTableModel *model); ///< Sets the table model and the check box state from it
 private:
     Ui::FormElementInformation *ui;
 
 private slots:
     void on_Include_Exclude_Change();
+    void SyncIncludeAllCheckBox(); ///< Checked exactly when every element is included
 };
 
 #endif // FORMELEMENTINFORMATION_H

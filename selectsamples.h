@@ -24,8 +24,8 @@ public:
     void SetMode(mode _mode) {Mode=_mode;}
 private:
     Ui::SelectSamples *ui;
-    SourceSinkData *data;
-    mode Mode;
+    SourceSinkData *data = nullptr;
+    mode Mode{};
 public slots:
     void comboChanged();
 };

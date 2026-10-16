@@ -12,7 +12,7 @@ class GADistribution
 public:
     GADistribution();
     virtual ~GADistribution();
-	int n;
+	int n{};
 	std::vector<double> s;
 	std::vector<double> e;
     GADistribution(int nn);

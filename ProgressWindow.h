@@ -67,7 +67,7 @@ public:
     /// @brief Closes the dialog. Named Finish() because QWidget::close() is not virtual.
     void Finish() override { close(); }
 private:
-	Ui::ProgressWindow ui;
+	Ui::ProgressWindow ui{};
     QVector<ChartCollection> ChartItems;
     QVector<QString> charttitles;
 };

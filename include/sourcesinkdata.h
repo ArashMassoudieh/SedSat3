@@ -1814,9 +1814,9 @@ private:
     string sizeconsituent_;
     double regression_p_value_threshold_;
     double distance_coeff_;
-    double error_stdev_;
-    double error_stdev_isotope_;
-    double epsilon_;
+    double error_stdev_ = 0;
+    double error_stdev_isotope_ = 0;
+    double epsilon_ = 0;
 
     // UI and Tracking
     ProgressReporter* rtw_ = nullptr;

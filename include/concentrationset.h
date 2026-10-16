@@ -99,6 +99,16 @@ public:
      */
     double GetMaximum() const;
 
+    /**
+     * @brief Whether a distribution can be fitted to the data
+     * @return true if there are at least two values and they are not all equal
+     *
+     * With fewer values, or with constant data, the fitted curves have zero
+     * width and the fitting and Kolmogorov-Smirnov routines return only the
+     * observed series.
+     */
+    bool CanFitDistribution() const;
+
     // ========== Distribution Fitting ==========
 
     /**
@@ -166,11 +176,15 @@ public:
 
     /**
      * @brief Create comparison of empirical vs fitted CDF
+     * @return series named "Observed", "Fitted" and "Error"; only "Observed"
+     *         when CanFitDistribution() is false
      */
     CMBTimeSeriesSet CreateCDFComparison(distribution_type dist_type) const;
 
     /**
      * @brief Create fitted distribution visualization
+     * @return series named "Observed" and "Fitted"; only "Observed" when
+     *         CanFitDistribution() is false
      */
     CMBTimeSeriesSet CreateFittedDistribution(distribution_type dist_type) const;
 
@@ -187,7 +201,28 @@ public:
     ConcentrationSet CreateLogTransformed() const;
 
     /**
-     * @brief Calculate Box-Cox log-likelihood for given lambda
+     * @brief Box-Cox transform of a single positive value
+     *
+     * (x^lambda - 1) / lambda; for |lambda| < 0.01 computed as
+     * expm1(lambda * log x) / lambda so that it stays accurate near 0;
+     * lambda == 0 gives log x, the limiting case. x must be positive.
+     */
+    static double BoxCoxTransformValue(double x, double lambda);
+
+    /**
+     * @brief Whether the Box-Cox transformation applies: all values positive
+     *
+     * Box-Cox is defined for positive data only. Sets with a zero or negative
+     * value are left untransformed by ApplyBoxCoxTransform(), and
+     * FindOptimalBoxCoxParameter() returns 1 for them; analyses report which
+     * constituents were skipped.
+     */
+    bool CanBoxCoxTransform() const;
+
+    /**
+     * @brief Box-Cox profile log-likelihood for given lambda
+     * @return -n/2 log(variance of transformed data) + (lambda - 1) sum log x_i,
+     *         or NaN when CanBoxCoxTransform() is false
      */
     double CalculateBoxCoxLogLikelihood(double lambda) const;
 
@@ -195,6 +230,8 @@ public:
      * @brief Apply Box-Cox transformation
      * @param lambda Transformation parameter
      * @param normalize If true, scale by standard deviation
+     * @return transformed values; if CanBoxCoxTransform() is false, the
+     *         (scaled) values untransformed
      */
     ConcentrationSet ApplyBoxCoxTransform(double lambda, bool normalize) const;
 

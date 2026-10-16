@@ -64,7 +64,7 @@ struct element_information
         organic_carbon   ///< Organic carbon content
     } Role = role::element;
 
-    double standard_ratio;      ///< Standard isotopic ratio for normalization
+    double standard_ratio = 0;  ///< Standard isotopic ratio for normalization
     string base_element;        ///< Parent element for isotopes
     bool include_in_analysis = true;  ///< Whether to include in statistical analyses
 };

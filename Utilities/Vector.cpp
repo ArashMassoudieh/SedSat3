@@ -9,6 +9,7 @@
 #include "math.h"
 #include "Matrix.h"
 #include <cfloat>
+#include <cmath>
 #ifdef _arma
 #include "Vector_arma.h"
 #endif
@@ -33,7 +34,7 @@ static CVector CreateVector(int n,double value)
 {
     CVector out = CVector(n);
     out=value;
-
+    return out;
 }
 
 CVector::CVector(const std::vector<double> a, int n)
@@ -249,7 +250,7 @@ CVector operator-(const CVector &v1, const CVector &v2)
 
 double dotproduct(CVector v1, CVector v2)
 {
-	double d;
+	double d = NAN;
 	if (v1.num == v2.num)
 	{
         d = 0;
@@ -456,7 +457,7 @@ double CVector::abs_max()
 int CVector::abs_max_elems()
 {
 	double a = -1E14;
-	int ii;
+	int ii = 0;
 	for (int i = 0; i<num; i++)
 	{
 		if (fabs(vec[i]) > a)
