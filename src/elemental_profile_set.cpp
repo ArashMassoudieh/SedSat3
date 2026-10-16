@@ -342,7 +342,7 @@ bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject& jsonobject, QS
 
     return true;
 }
-bool Elemental_Profile_Set::Read(const QStringList &strlist)
+bool Elemental_Profile_Set::Read(const QStringList &/*strlist*/)
 {
 
 

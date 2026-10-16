@@ -26,7 +26,7 @@ private:
     Ui::FormElementInformation *ui;
 
 private slots:
-    void on_Include_Exclude_Change();
+    void OnIncludeAllToggled();
     void SyncIncludeAllCheckBox(); ///< Checked exactly when every element is included
 };
 

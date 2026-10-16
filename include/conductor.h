@@ -10,7 +10,9 @@
 #include <memory>
 
 #include "sourcesinkdata.h"
+#ifdef SEDSAT3_ENABLE_GA
 #include "GA.h"
+#endif
 #include "MCMC.h"
 #include "results.h"
 #include "analysishost.h"
@@ -52,9 +54,8 @@ public:
      * @brief Executes a specified analysis command with given parameters
      *
      * Supported commands include:
-     * - "GA": Genetic Algorithm optimization
-     * - "GA (fixed elemental contribution)": GA with fixed source profiles
-     * - "GA (disregarding targets)": GA without target constraints
+     * - "GA", "GA (fixed elemental contribution)", "GA (disregarding targets)":
+     *   genetic algorithm, only in builds with SEDSAT3_ENABLE_GA
      * - "Levenberg-Marquardt": Nonlinear least squares optimization
      * - "MCMC": Markov Chain Monte Carlo sampling
      * - "Bootstrap": Bootstrap uncertainty analysis
@@ -146,16 +147,16 @@ public:
      * negative value are skipped and used as they are. This lists them, by
      * group, through the AnalysisHost.
      *
-     * @param data Dataset about to be transformed
+     * @param dataset Dataset about to be transformed
      * @param group Only this group, or every group if empty
      * @param consequence What happens to the skipped constituents, for the message
      */
-    void ReportBoxCoxSkips(SourceSinkData& data, const std::string& group, const std::string& consequence);
+    void ReportBoxCoxSkips(SourceSinkData& dataset, const std::string& group, const std::string& consequence);
 
     /**
      * @brief Box-Cox transforms data with optimal lambdas, reporting skipped constituents
      */
-    SourceSinkData BoxCoxTransformedWithReport(SourceSinkData& data);
+    SourceSinkData BoxCoxTransformedWithReport(SourceSinkData& dataset);
 
     /**
      * @brief Resolves the "Random seed" argument of an MCMC analysis
@@ -171,12 +172,15 @@ public:
 
 private:
     SourceSinkData* data;                          ///< Non-owning pointer to analysis data
+#ifdef SEDSAT3_ENABLE_GA
     std::unique_ptr<CGA<SourceSinkData>> GA;       ///< Genetic Algorithm optimizer (owned)
+#endif
     std::unique_ptr<CMCMC<SourceSinkData>> MCMC;   ///< MCMC sampler (owned)
     Results results;                                ///< Current analysis results (cleared each Execute)
     QString workingfolder;                          ///< Output directory path
     AnalysisHost* host;                             ///< Non-owning pointer to the running environment
 
+#ifdef SEDSAT3_ENABLE_GA
     /**
      * @brief Executes Genetic Algorithm optimization
      *
@@ -222,6 +226,7 @@ private:
      * @return true if execution completed successfully, false if validation failed
      */
     bool ExecuteGA_NoTargets(const std::map<std::string, std::string>& arguments);
+#endif // SEDSAT3_ENABLE_GA
 
     /**
      * @brief Executes Levenberg-Marquardt nonlinear optimization

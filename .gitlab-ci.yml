@@ -1,0 +1,154 @@
+# SedSAT3 – Sediment Source Assessment Tool, version 3
+# U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+#
+# GitLab CI for code.usgs.gov: build (Linux; Windows when a runner is
+# available), unit and regression tests, clang-tidy and cppcheck, and the
+# Doxygen documentation on GitLab Pages. The GitHub Actions workflow in
+# .github/workflows/docs.yml does the same documentation build for the
+# development mirror.
+
+stages:
+  - build
+  - test
+  - analysis
+  - deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  DEBIAN_FRONTEND: noninteractive
+
+default:
+  image: ubuntu:24.04
+
+.linux-dependencies:
+  before_script:
+    - apt-get update -qq
+    - >
+      apt-get install -y -qq --no-install-recommends
+      build-essential cmake ninja-build git python3
+      qt6-base-dev qt6-base-dev-tools qt6-base-private-dev libqt6charts6-dev
+      libgl1-mesa-dev libxkbcommon-dev
+      libarmadillo-dev libgsl-dev liblapack-dev libblas-dev
+
+# ---------------------------------------------------------------------------
+# Build
+# ---------------------------------------------------------------------------
+
+build:linux:
+  stage: build
+  extends: .linux-dependencies
+  script:
+    - cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+    - cmake --build build --parallel 2>&1 | tee build-warnings.log
+  artifacts:
+    paths:
+      - build/
+      - build-warnings.log
+    expire_in: 1 day
+
+# The genetic algorithm is off by default; make sure it still builds
+build:linux-ga:
+  stage: build
+  extends: .linux-dependencies
+  script:
+    - cmake -S . -B build-ga -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_GA=ON
+    - cmake --build build-ga --parallel
+
+# The qmake projects are what Qt Creator users build
+build:linux-qmake:
+  stage: build
+  extends: .linux-dependencies
+  script:
+    - mkdir -p build-qmake/gui build-qmake/cli build-qmake/unit
+    - (cd build-qmake/gui && qmake6 ../../SedSat3.pro && make -j"$(nproc)")
+    - (cd build-qmake/cli && qmake6 ../../SedSat3CLI.pro && make -j"$(nproc)")
+    - (cd build-qmake/unit && qmake6 ../../tests/unit/unittests.pro && make -j"$(nproc)" && QT_QPA_PLATFORM=offscreen ./sedsat3-unittests)
+
+# Windows: runs on a runner tagged "windows" with Visual Studio 2022, Qt 6
+# (MSVC 2022 64-bit) and the armadillo/vcpkg layout described in
+# docs/BUILD-Windows-MinGW.md and SedSat3CLI.pro. Manual until such a runner
+# is registered for the project.
+build:windows:
+  stage: build
+  tags:
+    - windows
+  when: manual
+  allow_failure: true
+  script:
+    - '& "$env:QT_DIR\bin\qmake.exe" SedSat3CLI.pro'
+    - nmake
+    - '& "$env:QT_DIR\bin\qmake.exe" tests\unit\unittests.pro'
+    - nmake
+    - $env:QT_QPA_PLATFORM = "offscreen"; .\release\sedsat3-unittests.exe
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+
+test:linux:
+  stage: test
+  extends: .linux-dependencies
+  needs: ["build:linux"]
+  script:
+    - ctest --test-dir build --output-on-failure
+  artifacts:
+    when: on_failure
+    paths:
+      - build/regression/
+    expire_in: 1 week
+
+# ---------------------------------------------------------------------------
+# Static analysis (configuration in .clang-tidy)
+# ---------------------------------------------------------------------------
+
+clang-tidy:
+  stage: analysis
+  extends: .linux-dependencies
+  needs: ["build:linux"]
+  script:
+    - apt-get install -y -qq --no-install-recommends clang-tidy
+    # First-party sources only; the uninitialised-variable checks are errors
+    - run-clang-tidy -p build -quiet '^(?!.*(thirdparty|_autogen|mocs_compilation)).*\.cpp$' 2>&1 | tee clang-tidy.txt
+  artifacts:
+    when: always
+    paths:
+      - clang-tidy.txt
+
+cppcheck:
+  stage: analysis
+  needs: []
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq --no-install-recommends cppcheck
+  script:
+    - >
+      cppcheck --std=c++17 --language=c++ --enable=warning,performance,portability
+      --inline-suppr --suppress=missingIncludeSystem --suppress=unknownMacro
+      -I include -I include/MCMC -I include/GA -I Utilities -I cli
+      -i thirdparty -i build -i tests/baseline
+      --error-exitcode=1 --xml . 2> cppcheck.xml
+  # Reported, not yet enforced: cppcheck runs here for the first time
+  allow_failure: true
+  artifacts:
+    when: always
+    paths:
+      - cppcheck.xml
+
+# ---------------------------------------------------------------------------
+# Documentation (GitLab Pages)
+# ---------------------------------------------------------------------------
+
+pages:
+  stage: deploy
+  needs: []
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq --no-install-recommends doxygen graphviz
+  script:
+    - doxygen Doxyfile
+    - mv docs/html public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

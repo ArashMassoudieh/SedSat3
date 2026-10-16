@@ -496,7 +496,9 @@ double CDistribution::CumulativeValue(double x)
 {
     double out = 0;
     int m = NumberOfCoreParameters(name)+1;
-    int n = params.size() / (NumberOfCoreParameters(name)+1);
+    if (m <= 0)
+        return std::nan("");  // unknown distribution name
+    int n = params.size() / m;
     if (this->name == "lognormal")
     {
         for (int i = 0; i < n; i++)

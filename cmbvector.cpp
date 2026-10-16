@@ -11,7 +11,7 @@ CMBVector::CMBVector():CVector(),Interface()
 
 }
 
-CMBVector::CMBVector(const CMBVector& mp):CVector(mp), Interface()
+CMBVector::CMBVector(const CMBVector& mp):CVector(mp), Interface(mp)
 {
     labels = mp.labels;
     boolean_values = mp.boolean_values;

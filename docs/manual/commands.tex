@@ -72,13 +72,14 @@ This tool shows whether the elemental content of the elements in target samples 
 \label{cmd:cmb-bayesian}
 \index{CMB Bayesian}
 
-This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target samle.
+This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly.
 
 \begin{argtable}
 \texttt{Apply size and organic matter correction} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
 \texttt{Dissolve Chains} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\
 \texttt{Number of chains} & whole number & \texttt{\dq{}8\dq{}} & --- \\
 \texttt{Number of samples} & whole number & \texttt{\dq{}1000\dq{}} & --- \\
+\texttt{Random seed} & number or text & --- & --- \\
 \texttt{Sample} & name & --- & a target sample name \\
 \texttt{Samples File Name} & file name & \texttt{\dq{}MCMC\_Output.txt\dq{}} & --- \\
 \texttt{Samples to be discarded (burnout)} & whole number & \texttt{\dq{}100\dq{}} & --- \\
@@ -88,13 +89,14 @@ This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algori
 \label{cmd:cmb-bayesian-batch}
 \index{CMB Bayesian-Batch}
 
-This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target samle.
+This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly.
 
 \begin{argtable}
 \texttt{Apply size and organic matter correction} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
 \texttt{Dissolve Chains} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\
 \texttt{Number of chains} & whole number & \texttt{\dq{}8\dq{}} & --- \\
 \texttt{Number of samples} & whole number & \texttt{\dq{}1000\dq{}} & --- \\
+\texttt{Random seed} & number or text & --- & --- \\
 \texttt{Samples File Name} & file name & \texttt{\dq{}MCMC\_Output.txt\dq{}} & --- \\
 \texttt{Samples to be discarded (burnout)} & whole number & \texttt{\dq{}100\dq{}} & --- \\
 \end{argtable}
@@ -220,63 +222,6 @@ This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect 
 \texttt{Pecentage eliminated} & whole number & \texttt{\dq{}20\dq{}} & --- \\
 \texttt{Sample} & name & --- & a target sample name \\
 \texttt{Softmax transformation} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\
-\end{argtable}
-
-\subsection{\texttt{GA}}
-\label{cmd:ga}
-\index{GA}
-
-This tool performs sediment fingerprinting using the \textbf{Genetic Algorithm} optimization. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated as part of the maximization of the likelihood of observing the measured target sample elemental profile.
-
-\begin{argtable}
-\texttt{Apply size and organic matter correction} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
-\texttt{Cross-over probability} & number or text & \texttt{\dq{}1.0\dq{}} & --- \\
-\texttt{GA output file} & file name & \texttt{\dq{}GA\_Output.txt\dq{}} & --- \\
-\texttt{Mutation probability} & number or text & \texttt{\dq{}0.02\dq{}} & --- \\
-\texttt{Number of Generations} & whole number & \texttt{\dq{}100\dq{}} & --- \\
-\texttt{Number of threads to be used} & whole number & \texttt{\dq{}8\dq{}} & --- \\
-\texttt{Numerical cross-over} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
-\texttt{Population} & whole number & \texttt{\dq{}100\dq{}} & --- \\
-\texttt{Sample} & name & --- & a target sample name \\
-\texttt{Shake coefficient} & number or text & \texttt{\dq{}0.05\dq{}} & --- \\
-\texttt{Shake coefficient reduction factor} & number or text & \texttt{\dq{}0.75\dq{}} & --- \\
-\texttt{Steepest Descent} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\
-\end{argtable}
-
-\subsection{\texttt{GA (disregarding targets)}}
-\label{cmd:ga-disregarding-targets}
-\index{GA (disregarding targets)}
-
-\begin{argtable}
-\texttt{Cross-over probability} & number or text & \texttt{\dq{}1.0\dq{}} & --- \\
-\texttt{GA output file} & file name & \texttt{\dq{}GA\_Output.txt\dq{}} & --- \\
-\texttt{Mutation probability} & number or text & \texttt{\dq{}0.02\dq{}} & --- \\
-\texttt{Number of Generations} & whole number & \texttt{\dq{}40\dq{}} & --- \\
-\texttt{Number of threads to be used} & whole number & \texttt{\dq{}8\dq{}} & --- \\
-\texttt{Numerical cross-over} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
-\texttt{Population} & whole number & \texttt{\dq{}40\dq{}} & --- \\
-\texttt{Shake coefficient} & number or text & \texttt{\dq{}0.05\dq{}} & --- \\
-\texttt{Shake coefficient reduction factor} & number or text & \texttt{\dq{}0.75\dq{}} & --- \\
-\end{argtable}
-
-\subsection{\texttt{GA (fixed elemental contribution)}}
-\label{cmd:ga-fixed-elemental-contribution}
-\index{GA (fixed elemental contribution)}
-
-This tool performs sediment fingerprinting using the \textbf{Genetic Algorithm} optimization. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples.
-
-\begin{argtable}
-\texttt{Apply size and organic matter correction} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
-\texttt{Cross-over probability} & number or text & \texttt{\dq{}1.0\dq{}} & --- \\
-\texttt{GA output file} & file name & \texttt{\dq{}GA\_Output.txt\dq{}} & --- \\
-\texttt{Mutation probability} & number or text & \texttt{\dq{}0.02\dq{}} & --- \\
-\texttt{Number of Generations} & whole number & \texttt{\dq{}40\dq{}} & --- \\
-\texttt{Number of threads to be used} & whole number & \texttt{\dq{}8\dq{}} & --- \\
-\texttt{Numerical cross-over} & \texttt{true} / \texttt{false} & \texttt{\dq{}false\dq{}} & --- \\
-\texttt{Population} & whole number & \texttt{\dq{}40\dq{}} & --- \\
-\texttt{Sample} & name & --- & a target sample name \\
-\texttt{Shake coefficient} & number or text & \texttt{\dq{}0.05\dq{}} & --- \\
-\texttt{Shake coefficient reduction factor} & number or text & \texttt{\dq{}0.75\dq{}} & --- \\
 \end{argtable}
 
 \subsection{\texttt{KS}}
@@ -426,6 +371,7 @@ This tool evaluates weather the finger-printing algorithm is capable of correctl
 \begin{argtable}
 \texttt{Number of chains} & whole number & \texttt{\dq{}8\dq{}} & --- \\
 \texttt{Number of samples} & whole number & \texttt{\dq{}1000\dq{}} & --- \\
+\texttt{Random seed} & number or text & --- & --- \\
 \texttt{Samples to be discarded (burnout)} & whole number & \texttt{\dq{}100\dq{}} & --- \\
 \texttt{samples\_file\_name} & file name & \texttt{\dq{}MCMC\_Output.txt\dq{}} & --- \\
 \end{argtable}

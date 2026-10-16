@@ -24,6 +24,7 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     if (!CheckNegativeElements(Data()))
         return false;
 
+#ifdef SEDSAT3_ENABLE_GA
     if (command == "GA")
     {
         return ExecuteGA(arguments);
@@ -36,6 +37,14 @@ bool Conductor::Execute(const string &command, map<string,string> arguments)
     {
         return ExecuteGA_NoTargets(arguments);
     }
+#else
+    if (command.rfind("GA", 0) == 0)
+    {
+        host->ShowWarning("The genetic algorithm is not included in this build of SedSAT3. "
+                          "Use Levenberg-Marquardt, or build with ENABLE_GA (CMake) or CONFIG+=ga (qmake).");
+        return false;
+    }
+#endif
     if (command == "Levenberg-Marquardt")
     {
         return ExecuteLevenbergMarquardt(arguments);
@@ -207,10 +216,10 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
     return true;
 }
 
-void Conductor::ReportBoxCoxSkips(SourceSinkData& data, const std::string& group, const std::string& consequence)
+void Conductor::ReportBoxCoxSkips(SourceSinkData& dataset, const std::string& group, const std::string& consequence)
 {
     std::string message;
-    for (auto& [group_name, profile_set] : data)
+    for (auto& [group_name, profile_set] : dataset)
     {
         if (!group.empty() && group_name != group)
             continue;
@@ -235,12 +244,13 @@ bool Conductor::ResolveRandomSeed(std::map<std::string, std::string>& arguments,
     return true;
 }
 
-SourceSinkData Conductor::BoxCoxTransformedWithReport(SourceSinkData& data)
+SourceSinkData Conductor::BoxCoxTransformedWithReport(SourceSinkData& dataset)
 {
-    ReportBoxCoxSkips(data, "", "they were used untransformed");
-    return data.BoxCoxTransformed(true);
+    ReportBoxCoxSkips(dataset, "", "they were used untransformed");
+    return dataset.BoxCoxTransformed(true);
 }
 
+#ifdef SEDSAT3_ENABLE_GA
 bool Conductor::ExecuteGA(const std::map<std::string, std::string>& arguments)
 {
     ScopedProgressReporter rtw(host);
@@ -423,6 +433,8 @@ bool Conductor::ExecuteGA_NoTargets(const std::map<std::string, std::string>& ar
 
     return true;
 }
+
+#endif // SEDSAT3_ENABLE_GA
 
 bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::string>& arguments)
 {
@@ -1416,10 +1428,10 @@ bool Conductor::ExecuteCMBBayesianBatch(const std::map<std::string, std::string>
     // Create progress window with 3 charts for monitoring (with batch mode enabled)
     ScopedProgressReporter rtw(host, 3, true);
     rtw->SetTitle("Acceptance Rate", 0);
-    rtw->SetTitle("Purturbation Factor", 1);
+    rtw->SetTitle("Perturbation Factor", 1);
     rtw->SetTitle("Log posterior value", 2);
     rtw->SetYAxisTitle("Acceptance Rate", 0);
-    rtw->SetYAxisTitle("Purturbation Factor", 1);
+    rtw->SetYAxisTitle("Perturbation Factor", 1);
     rtw->SetYAxisTitle("Log posterior value", 2);
     rtw->Start();
 
@@ -1484,10 +1496,10 @@ bool Conductor::ExecuteTestCMBBayesian(const std::map<std::string, std::string>&
     // Create progress window with 3 charts
     ScopedProgressReporter rtw(host, 3);
     rtw->SetTitle("Acceptance Rate", 0);
-    rtw->SetTitle("Purturbation Factor", 1);
+    rtw->SetTitle("Perturbation Factor", 1);
     rtw->SetTitle("Log posterior value", 2);
     rtw->SetYAxisTitle("Acceptance Rate", 0);
-    rtw->SetYAxisTitle("Purturbation Factor", 1);
+    rtw->SetYAxisTitle("Perturbation Factor", 1);
     rtw->SetYAxisTitle("Log posterior value", 2);
     rtw->Start();
 
@@ -2049,6 +2061,8 @@ bool Conductor::ExecuteANOVA(const std::map<std::string, std::string>& arguments
     bool exclude_samples = (arguments.at("Use only selected samples") == "true");
     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
 
+    // The two "Use only selected" options were read and then ignored: the
+    // selected samples were always used and every element was kept
     SourceSinkData transformed_data;
 
     if (arguments.at("OM and Size Correct based on target sample") != "")
@@ -2062,11 +2076,11 @@ bool Conductor::ExecuteANOVA(const std::map<std::string, std::string>& arguments
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(true, false, false);
+        ).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(true, false, false);
+        transformed_data = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
     }
 
     if (!CheckNegativeElements(&transformed_data))
@@ -2321,10 +2335,10 @@ bool Conductor::ExecuteCMBBayesian(const std::map<std::string, std::string>& giv
     // Create progress window with 3 charts for monitoring
     ScopedProgressReporter rtw(host, 3);
     rtw->SetTitle("Acceptance Rate", 0);
-    rtw->SetTitle("Purturbation Factor", 1);
+    rtw->SetTitle("Perturbation Factor", 1);
     rtw->SetTitle("Log posterior value", 2);
     rtw->SetYAxisTitle("Acceptance Rate", 0);
-    rtw->SetYAxisTitle("Purturbation Factor", 1);
+    rtw->SetYAxisTitle("Perturbation Factor", 1);
     rtw->SetYAxisTitle("Log posterior value", 2);
     rtw->Start();
 

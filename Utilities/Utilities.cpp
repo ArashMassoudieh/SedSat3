@@ -572,7 +572,7 @@ namespace aquiutils
         return Result;
     }
 
-    std::string numbertostring(std::vector<int>& x, bool scientific)
+    std::string numbertostring(std::vector<int>& x, bool /*scientific*/)
     {
         std::string Result = "[";
         if (x.size() > 0)

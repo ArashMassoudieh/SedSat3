@@ -11,7 +11,7 @@ CMBMatrix::CMBMatrix():CMatrix(),Interface()
 
 }
 
-CMBMatrix::CMBMatrix(const CMBMatrix& mp):CMatrix(mp)
+CMBMatrix::CMBMatrix(const CMBMatrix& mp):CMatrix(mp), Interface(mp)
 {
     columnlabels = mp.columnlabels;
     rowlabels = mp.rowlabels;

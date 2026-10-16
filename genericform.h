@@ -11,7 +11,7 @@
 #include "QLineEdit"
 #include "QCheckBox"
 #include "QSpinBox"
-#include "filebrowserpushbuttom.h"
+#include "filebrowserpushbutton.h"
 
 
 class MainWindow;
@@ -19,7 +19,7 @@ class MainWindow;
 enum class delegate_type {LineEdit, ComboBox, CheckBox, SpinBox, FileBrowser, Description};
 struct parameter_property
 {
-    QString Discription;
+    QString Name;        ///< Parameter name, as in forms_structures.json
     delegate_type Type = delegate_type::LineEdit;
     QWidget *InputWidget=nullptr;
     QString DefaultValue;
@@ -46,7 +46,7 @@ struct parameter_property
         }
         if (Type==delegate_type::FileBrowser)
         {
-            return dynamic_cast<FileBrowserPushButtom*>(InputWidget)->text();
+            return dynamic_cast<FileBrowserPushButton*>(InputWidget)->text();
         }
         return "";
     }

@@ -8,7 +8,7 @@ MultipleLinearRegressionSet::MultipleLinearRegressionSet():map<string, MultipleL
 
 }
 
-MultipleLinearRegressionSet::MultipleLinearRegressionSet(const MultipleLinearRegressionSet& mp):map<string, MultipleLinearRegression>(mp),Interface()
+MultipleLinearRegressionSet::MultipleLinearRegressionSet(const MultipleLinearRegressionSet& mp):map<string, MultipleLinearRegression>(mp),Interface(mp)
 {
     Source = mp.Source; 
 }

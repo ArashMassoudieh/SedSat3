@@ -26,7 +26,7 @@ TimeSeriesSet<T>::TimeSeriesSet() {}
 
 template<typename T>
 TimeSeriesSet<T>::TimeSeriesSet(const TimeSeriesSet<T>& other)
-    : std::vector<TimeSeries<T>>(other), name(other.name), filename(other.filename), file_not_found(other.file_not_found), unif(other.unif) {}
+    : std::vector<TimeSeries<T>>(other), filename(other.filename), name(other.name), file_not_found(other.file_not_found), unif(other.unif) {}
 
 template<typename T>
 TimeSeriesSet<T>::TimeSeriesSet(const TimeSeries<T>& ts) {

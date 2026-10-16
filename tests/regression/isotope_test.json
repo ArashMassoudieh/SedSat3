@@ -188,6 +188,52 @@
         "Apply size and organic matter correction": "false",
         "Softmax transformation": "true"
       }
+    },
+    {
+      "command": "ANOVA",
+      "arguments": {
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "ANOVA",
+      "arguments": {
+        "OM and Size Correct based on target sample": "",
+        "Use only selected samples": "true"
+      }
+    },
+    {
+      "command": "CorMat",
+      "arguments": {
+        "Source/Target group": "Bank",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "CovMat",
+      "arguments": {
+        "Source/Target group": "Bank"
+      }
+    },
+    {
+      "command": "Bracketing Analysis Batch",
+      "arguments": {}
+    },
+    {
+      "command": "DFA",
+      "arguments": {
+        "Source/Target group I": "Bank",
+        "Source/Target group II": "Forest",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "EDP",
+      "arguments": {
+        "Source/Target group I": "Bank",
+        "Source/Target group II": "Forest",
+        "OM and Size Correct based on target sample": ""
+      }
     }
   ]
 }

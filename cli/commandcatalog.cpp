@@ -96,6 +96,12 @@ bool CommandCatalog::Load(const QString& explicit_directory)
         }
 
         commands = document.object();
+#ifndef SEDSAT3_ENABLE_GA
+        // The genetic-algorithm forms describe commands this build leaves out
+        for (const QString& name : commands.keys())
+            if (name.startsWith("GA"))
+                commands.remove(name);
+#endif
         resource_directory = QDir(directory).absolutePath();
         return true;
     }

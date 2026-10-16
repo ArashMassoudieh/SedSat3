@@ -8,11 +8,11 @@ ElementTableModel::ElementTableModel(SourceSinkData *_data, QObject *parent) : Q
 {
     Data = _data;
 }
-int ElementTableModel::rowCount(const QModelIndex &index) const
+int ElementTableModel::rowCount(const QModelIndex &/*index*/) const
 {
     return Data->GetElementNames().size();;
 }
-int ElementTableModel::columnCount(const QModelIndex &index) const
+int ElementTableModel::columnCount(const QModelIndex &/*index*/) const
 {
     return 5;
 }
@@ -135,10 +135,11 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
         }
         if (index.column()==4)
         {
-            if (value.toString()=="Yes" || value.toBool())
-                Data->GetElementInformation(element)->include_in_analysis = true;
-            else
-                Data->GetElementInformation(element)->include_in_analysis = false;
+            // QVariant("No").toBool() is true, so text is compared explicitly
+            const bool include = (value.typeId() == QMetaType::Bool)
+                ? value.toBool()
+                : value.toString().compare("Yes", Qt::CaseInsensitive) == 0 || value.toString() == "true" || value.toString() == "1";
+            Data->GetElementInformation(element)->include_in_analysis = include;
         }
 
     }

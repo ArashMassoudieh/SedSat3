@@ -842,7 +842,15 @@ void TimeSeries<T>::addPoint(T t, T c, std::optional<T> d) {
     const T dt_curr = (*this)[n - 1].t - (*this)[n - 2].t;
 
     if (n == 3) {
-        dt_ = dt_curr;
+        // The first two intervals must agree too (dt_prev was computed but
+        // never compared, so an uneven start still counted as structured)
+        T rel_diff = std::abs(dt_curr - dt_prev) / std::max(std::abs(dt_prev), T(1e-12));
+        if (rel_diff > 1e-6) {
+            structured_ = false;
+            dt_ = T{};
+        } else {
+            dt_ = dt_curr;
+        }
     } else {
         T rel_diff = std::abs(dt_curr - dt_) / std::max(std::abs(dt_), T(1e-12));
         if (rel_diff > 1e-6) {

@@ -30,8 +30,8 @@ using namespace arma;
 
 CMatrix_arma::CMatrix_arma(int m, int n)
 {
-	numrows = m;
-	numcols = n;
+    numrows = m;
+    numcols = n;
     arma::mat::resize(m, n);
     fill(fill::zeros);
 
@@ -39,21 +39,21 @@ CMatrix_arma::CMatrix_arma(int m, int n)
 
 CMatrix_arma::CMatrix_arma()
 {
-	numrows = 0;
-	numcols = 0;
+    numrows = 0;
+    numcols = 0;
 }
 
 CMatrix_arma::CMatrix_arma(int m):arma::mat(m,m)
 {
-	numrows = m;
-	numcols = m;
+    numrows = m;
+    numcols = m;
     fill(fill::zeros);
 }
 
 CMatrix_arma::CMatrix_arma(const CMatrix_arma &m):arma::mat(m)
 {
-	numrows = m.numrows;
-	numcols = m.numcols;
+    numrows = m.numrows;
+    numcols = m.numcols;
 
 }
 
@@ -70,11 +70,11 @@ CMatrix_arma CMatrix_arma::Diag(int n)
 
 CMatrix_arma::CMatrix_arma(const CMatrix& m)
 {
-	numrows = m.getnumrows();
-	numcols = m.getnumcols();
+    numrows = m.getnumrows();
+    numcols = m.getnumcols();
     mat::resize(numrows, numcols);
-	for (int i = 0; i < numrows; ++i)
-		for (int j = 0; j < numcols; ++j)
+    for (int i = 0; i < numrows; ++i)
+        for (int j = 0; j < numcols; ++j)
             at(i,j) = m.matr[i][j];
 
 }
@@ -89,8 +89,10 @@ CMatrix_arma::CMatrix_arma(const mat& m):arma::mat(m)
 CMatrix_arma::CMatrix_arma(const CVector_arma &v)
 {
     numrows = v.num();
-	numcols = 1;
-    arma::mat(numrows,1);
+    numcols = 1;
+    // This was "arma::mat(numrows,1);", which built and discarded a
+    // temporary, leaving this matrix empty for the unchecked writes below
+    set_size(numrows, 1);
 
     for (int i=0; i<numrows; ++i) at(i,0) = v.vect(i);
 }
@@ -108,16 +110,16 @@ double& CMatrix_arma::get(int i, int j)
 
 double& CMatrix_arma::operator()(int i, int j)
 {
-	return get(i, j);
+    return get(i, j);
 }
 
 std::vector<double*> CMatrix_arma::get(int i)
 {
-	std::vector<double*> v;
-	for (int j = 0; j < numrows; j++)
+    std::vector<double*> v;
+    for (int j = 0; j < numrows; j++)
         v[j] = &at(i, j);
 
-	return v;
+    return v;
 }
 
 int CMatrix_arma::getnumrows() const {return numrows;};
@@ -126,50 +128,50 @@ int CMatrix_arma::getnumcols() const {return numcols;};
 CMatrix_arma& CMatrix_arma::operator=(const CMatrix_arma &m)
 {
 
-	numcols = m.numcols;
-	numrows = m.numrows;
+    numcols = m.numcols;
+    numrows = m.numrows;
     mat::operator=(m);
 
-	return *this;
+    return *this;
 }
 
 CMatrix_arma& CMatrix_arma::operator+=(const CMatrix_arma &m)
 {
     mat::operator+=(m);
     setnumcolrows();
-	return *this;
+    return *this;
 }
 
 CMatrix_arma& CMatrix_arma::operator-=(const CMatrix_arma &m)
 {
     mat::operator-=(m);
     setnumcolrows();
-	return *this;
+    return *this;
 }
 
 void CMatrix_arma::Print(FILE *FIL)
 {
-	for (int i=0; i<numrows; i++)
-	{	for (int j=0; j<numcols; j++)
+    for (int i=0; i<numrows; i++)
+    {	for (int j=0; j<numcols; j++)
             fprintf(FIL, "%le ", at(i,j));
-		fprintf(FIL, "\n");
-	}
-	fclose(FIL);
+        fprintf(FIL, "\n");
+    }
+    fclose(FIL);
 
 }
 
 CMatrix_arma operator+(const CMatrix_arma &m1, const CMatrix_arma &m2)
 {
-	CMatrix_arma mt = m1;
-	mt += m2;
-	return mt;
+    CMatrix_arma mt = m1;
+    mt += m2;
+    return mt;
 }
 
 CMatrix_arma operator-(const CMatrix_arma &m1, const CMatrix_arma &m2)
 {
-	CMatrix_arma mt = m1;
-	mt -= m2;
-	return mt;
+    CMatrix_arma mt = m1;
+    mt -= m2;
+    return mt;
 }
 
 CMatrix_arma mult(const CMatrix_arma &m1, const CMatrix_arma &m2)
@@ -177,7 +179,7 @@ CMatrix_arma mult(const CMatrix_arma &m1, const CMatrix_arma &m2)
     arma::mat m = arma::mat(m1)*arma::mat(m2);
     CMatrix_arma M = m;
     M.setnumcolrows();
-	return M;
+    return M;
 }
 
 CMatrix_arma operator*(const CMatrix_arma& m1, const CMatrix_arma& m2)
@@ -205,60 +207,60 @@ CMatrix_arma operator*(double d, CMatrix_arma m1)
 
 CMatrix_arma operator+(double d, CMatrix_arma m1)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = d+m1.get(i,j);
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = d+m1.get(i,j);
+    return TrM;
 
 }
 
 CMatrix_arma operator-(double d, CMatrix_arma m1)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = d-m1.get(i,j);
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = d-m1.get(i,j);
+    return TrM;
 
 }
 
 CMatrix_arma operator+(CMatrix_arma m1, double d)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = d+m1.get(i,j);
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = d+m1.get(i,j);
+    return TrM;
 
 }
 
 CMatrix_arma operator-(CMatrix_arma m1,double d)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = m1.get(i,j)-d;
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = m1.get(i,j)-d;
+    return TrM;
 
 }
 
 CMatrix_arma operator/(CMatrix_arma m1,double d)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = m1.get(i,j)/d;
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = m1.get(i,j)/d;
+    return TrM;
 }
 
 CMatrix_arma operator/(double d, CMatrix_arma m1)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = d/m1.get(i,j);
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = d/m1.get(i,j);
+    return TrM;
 }
 
 
@@ -274,10 +276,10 @@ CMatrix_arma operator/(double d, CMatrix_arma m1)
 
 CVector_arma operator/(CVector_arma &V, CMatrix_arma &M)
 {
-	CVector_arma X(M.getnumcols());
+    CVector_arma X(M.getnumcols());
     bool status = solve(X, M, V);
     if (status == false) X = arma::vec();
-	return X;
+    return X;
 }
 
 CVector_arma operator/(const CVector_arma &V, const CMatrix_arma &M)
@@ -290,29 +292,29 @@ CVector_arma operator/(const CVector_arma &V, const CMatrix_arma &M)
 
 CMatrix_arma Log(CMatrix_arma &M1)
 {
-	CMatrix_arma TrM(M1.getnumrows(), M1.getnumcols());
-	for (int i=0; i<M1.getnumrows(); i++)
-		for (int j=0; j<M1.getnumcols(); j++)
-			TrM.get(i,j) = log(M1.get(i,j));
-	return TrM;
+    CMatrix_arma TrM(M1.getnumrows(), M1.getnumcols());
+    for (int i=0; i<M1.getnumrows(); i++)
+        for (int j=0; j<M1.getnumcols(); j++)
+            TrM.get(i,j) = log(M1.get(i,j));
+    return TrM;
 }
 
 CMatrix_arma Exp(CMatrix_arma &M1)
 {
-	CMatrix_arma TrM(M1.getnumrows(), M1.getnumcols());
-	for (int i=0; i<M1.getnumrows(); i++)
-		for (int j=0; j<M1.getnumcols(); j++)
-			TrM.get(i,j) = exp(M1.get(i,j));
-	return TrM;
+    CMatrix_arma TrM(M1.getnumrows(), M1.getnumcols());
+    for (int i=0; i<M1.getnumrows(); i++)
+        for (int j=0; j<M1.getnumcols(); j++)
+            TrM.get(i,j) = exp(M1.get(i,j));
+    return TrM;
 }
 
 CMatrix_arma Sqrt(CMatrix_arma &M1)
 {
-	CMatrix_arma TrM(M1.getnumrows(), M1.getnumcols());
-	for (int i=0; i<M1.getnumrows(); i++)
-		for (int j=0; j<M1.getnumcols(); j++)
-			TrM.get(i,j) = sqrt(M1.get(i,j));
-	return TrM;
+    CMatrix_arma TrM(M1.getnumrows(), M1.getnumcols());
+    for (int i=0; i<M1.getnumrows(); i++)
+        for (int j=0; j<M1.getnumcols(); j++)
+            TrM.get(i,j) = sqrt(M1.get(i,j));
+    return TrM;
 }
 
 
@@ -328,12 +330,12 @@ CMatrix_arma Invert(const CMatrix_arma &M1)
 
 /*double det(CMatrix_arma &A)
 {
-	CMatrix_arma D = LU_decomposition(A);
-	double prod = 1;
-	for (int i=0; i<A.getnumcols(); i++)
-		prod *= A(i,i);
+    CMatrix_arma D = LU_decomposition(A);
+    double prod = 1;
+    for (int i=0; i<A.getnumcols(); i++)
+        prod *= A(i,i);
 
-	return prod;
+    return prod;
 
 }
 */
@@ -346,8 +348,8 @@ double CMatrix_arma::det()
 
 CVector_arma diag(const CMatrix_arma &m)
 {
-	CVector_arma v(m.getnumcols());
-	for (int i=0; i<m.getnumcols(); ++i)
+    CVector_arma v(m.getnumcols());
+    for (int i=0; i<m.getnumcols(); ++i)
         v[i] = m.at(i,i);
     return v;
 }
@@ -395,11 +397,11 @@ CVector_arma operator*(const CMatrix_arma &m, const CVector_arma &v)
 
 CMatrix_arma oneoneprod(CMatrix_arma &m1, CMatrix_arma &m2)
 {
-	CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
-	for (int i=0; i<m1.getnumrows(); i++)
-		for (int j=0; j<m1.getnumcols(); j++)
-			TrM.get(i,j) = m1.get(i,j)*m2.get(i,j);
-	return TrM;
+    CMatrix_arma TrM(m1.getnumrows(), m1.getnumcols());
+    for (int i=0; i<m1.getnumrows(); i++)
+        for (int j=0; j<m1.getnumcols(); j++)
+            TrM.get(i,j) = m1.get(i,j)*m2.get(i,j);
+    return TrM;
 }
 
 void CMatrix_arma::setval(double a)
@@ -409,41 +411,45 @@ void CMatrix_arma::setval(double a)
 
 void CMatrix_arma::setvaldiag(double a)
 {
-	for (int i=0; i<getnumrows(); i++)
+    for (int i=0; i<getnumrows(); i++)
         at(i,i) = a;
 
 }
 
 void CMatrix_arma::writetofile(FILE *f)
 {
-	for (int i=0; i<numrows; i++)
-	{	for (int j=0; j<numcols; j++)
+    for (int i=0; i<numrows; i++)
+    {	for (int j=0; j<numcols; j++)
             fprintf(f, "%le, ", at(i,j));
-		fprintf(f, "\n");
-	}
+        fprintf(f, "\n");
+    }
 }
 
 void CMatrix_arma::writetofile(std::string filename)
 {
-	FILE *f = fopen(filename.c_str(),"w");
-	for (int i=0; i<numrows; i++)
-	{	for (int j=0; j<numcols; j++)
+    FILE *f = fopen(filename.c_str(),"w");
+    if (f == nullptr)
+        return;  // the file could not be opened; fprintf(nullptr) would crash
+    for (int i=0; i<numrows; i++)
+    {	for (int j=0; j<numcols; j++)
             fprintf(f, "%le, ", at(i,j));
-		fprintf(f, "\n");
-	}
-	fclose(f);
+        fprintf(f, "\n");
+    }
+    fclose(f);
 }
 
 
 void CMatrix_arma::writetofile_app(std::string filename)
 {
-	FILE *f = fopen(filename.c_str(),"a");
-	for (int i=0; i<numrows; i++)
-	{	for (int j=0; j<numcols; j++)
+    FILE *f = fopen(filename.c_str(),"a");
+    if (f == nullptr)
+        return;  // the file could not be opened; fprintf(nullptr) would crash
+    for (int i=0; i<numrows; i++)
+    {	for (int j=0; j<numcols; j++)
             fprintf(f, "%le, ", at(i,j));
-		fprintf(f, "\n");
-	}
-	fclose(f);
+        fprintf(f, "\n");
+    }
+    fclose(f);
 }
 
 CMatrix_arma Transpose(CMatrix_arma &M1)
@@ -457,35 +463,35 @@ CMatrix_arma Transpose(CMatrix_arma &M1)
 void CMatrix_arma::print(std::string s)
 {
 
-	std::ofstream Afile;
-	Afile.open(s+".txt");
+    std::ofstream Afile;
+    Afile.open(s+".txt");
 
-	for (int i = 0; i<numrows; ++i)
-	{
-		for (int j = 0; j<numcols; ++j)
-		{
-            Afile << at(i,j) << "\, ";
-		}
-		Afile << "\n";
-	}
+    for (int i = 0; i<numrows; ++i)
+    {
+        for (int j = 0; j<numcols; ++j)
+        {
+            Afile << at(i,j) << ", ";
+        }
+        Afile << "\n";
+    }
 }
 
 CVector_arma solve_ar(CMatrix_arma &M, CVector_arma &V)
 {
 
-	CVector_arma ansr;
+    CVector_arma ansr;
     solve(ansr, M,V);
     if (ansr.n_rows == 0) ansr = arma::vec();
-	return ansr;
+    return ansr;
 }
 
 CMatrix_arma inv(const CMatrix_arma &M)
 {
 
-	CMatrix_arma A;
+    CMatrix_arma A;
     bool X = inv(A, M);
-	if (X) A.setnumcolrows();
-	return A;
+    if (X) A.setnumcolrows();
+    return A;
 }
 
 CMatrix_arma& CMatrix_arma::operator=(const mat &A)
@@ -493,145 +499,144 @@ CMatrix_arma& CMatrix_arma::operator=(const mat &A)
     mat::operator=(A);
     setnumcolrows();
 
-	return *this;
+    return *this;
 }
 
 void write_to_file(std::vector<CMatrix_arma> M, std::string filename)
 {
-	std::ofstream Afile;
-	Afile.open(filename);
-	M.push_back(Average(M));
+    std::ofstream Afile;
+    Afile.open(filename);
+    M.push_back(Average(M));
     for (unsigned int k = 0; k<M.size(); k++)
-	{	for (int i = 0; i<M[k].numrows; ++i)
-		{
-			for (int j = 0; j<M[k].numcols; ++j)
-			{
-				Afile << M[k].get(i,j) << "\, ";
-				cout<< M[k].get(i,j) << "\, ";
-			}
-			Afile << "\n";
-		}
-	Afile << "\n";
-	}
+    {	for (int i = 0; i<M[k].numrows; ++i)
+        {
+            for (int j = 0; j<M[k].numcols; ++j)
+            {
+                Afile << M[k].get(i,j) << ", ";
+                cout<< M[k].get(i,j) << ", ";
+            }
+            Afile << "\n";
+        }
+    Afile << "\n";
+    }
 
 }
 
 CMatrix_arma Average(std::vector<CMatrix_arma> M)
 {
-	CMatrix_arma AVG(M[0].numrows, M[0].numcols);
-	int n = M.size();
+    CMatrix_arma AVG(M[0].numrows, M[0].numcols);
+    int n = M.size();
     for (unsigned int k = 0; k<M.size(); k++)
         for (unsigned int i = 0; i<M[k].numrows; ++i)
-			for (int j = 0; j<M[k].numcols; ++j)
-				AVG.get(i,j) += M[k].get(i,j)/n;
-	return AVG;
+            for (int j = 0; j<M[k].numcols; ++j)
+                AVG.get(i,j) += M[k].get(i,j)/n;
+    return AVG;
 }
 
 CVector_arma CMatrix_arma::diag_ratio()
 {
-	CVector_arma X(numcols);
-	CVector_arma maxs(numcols);
-	for (int i=0; i<numcols; i++)
-	{	for (int j=0; j<numrows; j++)
+    CVector_arma X(numcols);
+    CVector_arma maxs(numcols);
+    for (int i=0; i<numcols; i++)
+    {	for (int j=0; j<numrows; j++)
             if (i!=j) maxs[i] += fabs(at(i,j));
         X[i]=maxs[i]/at(i,i);
-	}
-	return X;
+    }
+    return X;
 }
 
 std::vector<std::vector<bool>> CMatrix_arma::non_posdef_elems(double tol)
 {
-	std::vector<std::vector<bool>> M;
-	M.resize(getnumcols());
+    std::vector<std::vector<bool>> M;
+    M.resize(getnumcols());
 
-	for (int i = 0; i < getnumcols(); i++)
-	{
-		M[i].resize(getnumcols());
-		for (int j = 0; j < getnumrows(); j++)
+    for (int i = 0; i < getnumcols(); i++)
+    {
+        M[i].resize(getnumcols());
+        for (int j = 0; j < getnumrows(); j++)
             if (at(i,j) / at(i,i) > tol) M[i][j] = 1;
-	}
-	return M;
+    }
+    return M;
 
 
 }
 
 CMatrix_arma CMatrix_arma::non_posdef_elems_m(double tol)
 {
-	CMatrix_arma M(getnumcols(), getnumrows());
+    CMatrix_arma M(getnumcols(), getnumrows());
 
-	for (int i = 0; i < getnumcols(); i++)
-		for (int j = 0; j < getnumrows(); j++)
+    for (int i = 0; i < getnumcols(); i++)
+        for (int j = 0; j < getnumrows(); j++)
             if (at(i,j) / at(i,i) > tol) M.get(i,j) = at(i,j);
 
-	return M;
+    return M;
 
 
 }
 
 CMatrix_arma Identity_ar(int rows)
 {
-	CMatrix_arma M(rows, rows);
-	for (int i = 0; i < rows; i++)
-		M.get(i,i) = 1;
+    CMatrix_arma M(rows, rows);
+    for (int i = 0; i < rows; i++)
+        M.get(i,i) = 1;
 
-	return M;
+    return M;
 }
 
 CMatrix_arma CMatrix_arma::Preconditioner(double tol)
 {
-	CMatrix_arma M = non_posdef_elems_m(tol)+Identity_ar(numcols);
-	for (int i = 0; i < getnumcols(); i++)
-		for (int j = 0; j < getnumrows(); j++)
-			if ((M.get(i,j) != 0) & (i != j))
-				M.get(i,j) = -M.get(i,j);
+    CMatrix_arma M = non_posdef_elems_m(tol)+Identity_ar(numcols);
+    for (int i = 0; i < getnumcols(); i++)
+        for (int j = 0; j < getnumrows(); j++)
+            if ((M.get(i,j) != 0) & (i != j))
+                M.get(i,j) = -M.get(i,j);
 
-	return M;
+    return M;
 }
-std::vector<std::string> CMatrix_arma::toString(std::string format, std::vector<std::string> columnHeaders, std::vector<std::string> rowHeaders) const
+std::vector<std::string> CMatrix_arma::toString(std::string /*format*/, std::vector<std::string> columnHeaders, std::vector<std::string> rowHeaders) const
 {
-	std::vector<std::string> r;
-	bool rowH = false, colH = false;
-	int rowOffset = 0, colOffset = 0;
-	if (columnHeaders.size() && columnHeaders.size() == numcols)
-	{
-		colH = true;
-		rowOffset = 1;
-	}
-	if (rowHeaders.size() && rowHeaders.size() == numrows)
-	{
-		rowH = true;
-		colOffset = 1;
-	}
-	r.resize(numrows + rowOffset);
+    std::vector<std::string> r;
+    bool rowH = false, colH = false;
+    int rowOffset = 0;
+    if (columnHeaders.size() && columnHeaders.size() == numcols)
+    {
+        colH = true;
+        rowOffset = 1;
+    }
+    if (rowHeaders.size() && rowHeaders.size() == numrows)
+    {
+        rowH = true;
+    }
+    r.resize(numrows + rowOffset);
 
 
-	if (colH)
-	{
-		if (rowH) r[0] += "\, ";
-		for (int j = 0; j<numcols; j++)
-		{
-			r[0] += columnHeaders[j];
-			if (j < numcols - 1) r[0] += "\, ";
-		}
+    if (colH)
+    {
+        if (rowH) r[0] += ", ";
+        for (int j = 0; j<numcols; j++)
+        {
+            r[0] += columnHeaders[j];
+            if (j < numcols - 1) r[0] += ", ";
+        }
 
-	}
-	for (int i = 0; i<numrows; i++)
-	{
-		if (rowH)
-		{
-			r[i + rowOffset] += rowHeaders[i];
-			r[i + rowOffset] += "\, ";
-		}
-		for (int j = 0; j<numcols; j++)
-		{
+    }
+    for (int i = 0; i<numrows; i++)
+    {
+        if (rowH)
+        {
+            r[i + rowOffset] += rowHeaders[i];
+            r[i + rowOffset] += ", ";
+        }
+        for (int j = 0; j<numcols; j++)
+        {
             std::ostringstream streamObj;
             streamObj << at(i,j);
             std::string strObj = streamObj.str();
             r[i + rowOffset] += strObj;
-            if (j < numcols - 1) r[i + rowOffset] += "\, ";
-		}
-	}
-	return r;
+            if (j < numcols - 1) r[i + rowOffset] += ", ";
+        }
+    }
+    return r;
 }
 
 
@@ -643,23 +648,23 @@ void CMatrix_arma::setnumcolrows()
 
 void CMatrix_arma::setrow(int i, CVector_arma V)
 {
-	for (int j = 0; j < getnumcols(); j++)
+    for (int j = 0; j < getnumcols(); j++)
         at(i, j) = V[j];
 
 }
 void CMatrix_arma::setrow(int i, CVector V)
 {
-	for (int j = 0; j < getnumcols(); j++)
+    for (int j = 0; j < getnumcols(); j++)
         at(i, j) = V[j];
 }
 void CMatrix_arma::setcol(int i,  CVector_arma V)
 {
-	for (int j = 0; j < getnumrows(); j++)
+    for (int j = 0; j < getnumrows(); j++)
         at(j, i) = V[j];
 }
 void CMatrix_arma::setcol(int i,  CVector V)
 {
-	for (int j = 0; j < getnumrows(); j++)
+    for (int j = 0; j < getnumrows(); j++)
         at(j, i) = V[j];
 }
 
@@ -684,26 +689,26 @@ CVector_arma CMatrix_arma::getrow(int i)
 
 CMatrix_arma normalize_diag( const CMatrix_arma &M1, const CMatrix_arma &M2)
 {
-	CMatrix_arma M(M1);
-	CVector_arma D = diag(M2);
-	for (int i = 0; i<M1.getnumcols(); i++)
-	{
-		for (int j=0; j<M1.getnumrows(); j++)
+    CMatrix_arma M(M1);
+    CVector_arma D = diag(M2);
+    for (int i = 0; i<M1.getnumcols(); i++)
+    {
+        for (int j=0; j<M1.getnumrows(); j++)
             M.at(i,j) = M1.at(i,j) / D[i];
-	}
-	return M;
+    }
+    return M;
 
 }
 
 CVector_arma normalize_diag( const CVector_arma &V, const CMatrix_arma &M2)
 {
-	CVector_arma M(V);
+    CVector_arma M(V);
 
-	for (int i = 0; i<V.getsize(); i++)
-	{
+    for (int i = 0; i<V.getsize(); i++)
+    {
         M[i] = V[i] / M2.at(i,i);
-	}
-	return M;
+    }
+    return M;
 }
 
 CVector_arma normalize_diag( const CVector_arma &V, const CVector_arma &D)
@@ -754,10 +759,10 @@ CVector_arma normalize_max( const CVector_arma &V, const CVector_arma &D)
 
 void CMatrix_arma::ScaleDiagonal(double x)
 {
-	for (int i = 0; i < getnumcols(); i++)
-	{
+    for (int i = 0; i < getnumcols(); i++)
+    {
         at(i, i) *= x;
-	}
+    }
 }
 
 CMatrix_arma CMatrix_arma::Identity(int rows)

@@ -32,18 +32,18 @@ QJsonObject Interface::toJsonObject() const
     return QJsonObject();
 }
 
-bool Interface::ReadFromJsonObject(const QJsonObject &jsonobject)
+bool Interface::ReadFromJsonObject(const QJsonObject &/*jsonobject*/)
 {
     return true;
 }
 
 
-bool Interface::writetofile(QFile* file)
+bool Interface::writetofile(QFile* /*file*/)
 {
     return false;
 }
 
-bool Interface::Read(const QStringList &strlist)
+bool Interface::Read(const QStringList &/*strlist*/)
 {
     return false;
 }

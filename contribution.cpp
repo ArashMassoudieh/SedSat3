@@ -10,7 +10,7 @@ Contribution::Contribution():map<string, double>(),Interface()
 
 }
 
-Contribution::Contribution(const Contribution &rhs):map<string, double>(rhs),Interface()
+Contribution::Contribution(const Contribution &rhs):map<string, double>(rhs),Interface(rhs)
 {
 
 }

@@ -8,7 +8,7 @@
 #include "QLineEdit"
 #include "QLabel"
 
-SelectSampleDelegate::SelectSampleDelegate(SourceSinkData *_Data, QObject *parent)
+SelectSampleDelegate::SelectSampleDelegate(SourceSinkData *_Data, QObject */*parent*/)
 {
     Data=_Data;
 }
@@ -88,7 +88,7 @@ void SelectSampleDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
 }
 
 void SelectSampleDelegate::updateEditorGeometry(QWidget *editor,
-    const QStyleOptionViewItem &option, const QModelIndex &index) const
+    const QStyleOptionViewItem &option, const QModelIndex &/*index*/) const
 {
     editor->setGeometry(option.rect);
 }

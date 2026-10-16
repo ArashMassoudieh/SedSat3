@@ -24,6 +24,8 @@ ResultItem::ResultItem(const ResultItem &rhs): Interface(rhs)
 }
 ResultItem& ResultItem::operator = (const ResultItem &rhs)
 {
+    if (this == &rhs)
+        return *this;
     Interface::operator=(rhs);
     name = rhs.name;
     type = rhs.type;

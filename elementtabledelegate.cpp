@@ -7,7 +7,7 @@
 #include "QLineEdit"
 #include "QLabel"
 
-ElementTableDelegate::ElementTableDelegate(SourceSinkData *_Data, QObject *parent)
+ElementTableDelegate::ElementTableDelegate(SourceSinkData *_Data, QObject */*parent*/)
 {
     Data=_Data;
 }
@@ -162,7 +162,7 @@ void ElementTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
 }
 
 void ElementTableDelegate::updateEditorGeometry(QWidget *editor,
-    const QStyleOptionViewItem &option, const QModelIndex &index) const
+    const QStyleOptionViewItem &option, const QModelIndex &/*index*/) const
 {
     editor->setGeometry(option.rect);
 }

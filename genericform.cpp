@@ -22,13 +22,13 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
             QJsonObject object = formdata->value(formdata->keys()[i]).toObject();
             formdata->value(formdata->keys()[i]).toObject();
             parameter_property parameter_prop;
-            parameter_prop.Discription = formdata->keys()[i];
+            parameter_prop.Name = formdata->keys()[i];
             parameter_prop.DefaultValue = object.value("default").toString();
             if (object.contains("type"))
             {
                 if (object["type"].toString()!="Description")
                 {
-                    QLabel *label = new QLabel(parameter_prop.Discription, this);
+                    QLabel *label = new QLabel(parameter_prop.Name, this);
                     QString typeval = object.value("type").toString();
                     if (object.value("type").toString()=="spinBox")
                     {
@@ -93,37 +93,33 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
                                 QString element = QString::fromStdString(mainwindow()->Data()->FirstOMConstituent());
                                 if (element!="")
                                     combobox->setCurrentIndex(combobox->findText(element));
-                                int i = combobox->findText(element);
-                                // qDebug() << i;
                             }
                             if (object.value("source").toString().contains("Size"))
                             {
                                 QString element = QString::fromStdString(mainwindow()->Data()->FirstSizeConstituent());
                                 if (element!="")
                                     combobox->setCurrentIndex(combobox->findText(element));
-                                int i = combobox->findText(element);
-                                // qDebug() << i;
                             }
                         }
                     }
                     if (object.value("type").toString()=="fileBrowser_Save")
                     {
                         parameter_prop.Type = delegate_type::FileBrowser;
-                        FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
-                        filebrowserpushbuttom->dialog_use = save_open::save;
-                        filebrowserpushbuttom->setText(object.value("default").toString());
-                        ui->formLayout->addRow(label,filebrowserpushbuttom);
-                        parameter_prop.InputWidget = filebrowserpushbuttom;
+                        FileBrowserPushButton *filebrowserpushbutton = new FileBrowserPushButton(this);
+                        filebrowserpushbutton->dialog_use = save_open::save;
+                        filebrowserpushbutton->setText(object.value("default").toString());
+                        ui->formLayout->addRow(label,filebrowserpushbutton);
+                        parameter_prop.InputWidget = filebrowserpushbutton;
 
                     }
                     if (object.value("type").toString()=="fileBrowser_Open")
                     {
                         parameter_prop.Type = delegate_type::FileBrowser;
-                        FileBrowserPushButtom *filebrowserpushbuttom = new FileBrowserPushButtom(this);
-                        filebrowserpushbuttom->dialog_use = save_open::open;
-                        filebrowserpushbuttom->setText(object.value("default").toString());
-                        ui->formLayout->addRow(label,filebrowserpushbuttom);
-                        parameter_prop.InputWidget = filebrowserpushbuttom;
+                        FileBrowserPushButton *filebrowserpushbutton = new FileBrowserPushButton(this);
+                        filebrowserpushbutton->dialog_use = save_open::open;
+                        filebrowserpushbutton->setText(object.value("default").toString());
+                        ui->formLayout->addRow(label,filebrowserpushbutton);
+                        parameter_prop.InputWidget = filebrowserpushbutton;
 
                     }
                     if (object.value("type").toString()=="checkBox")
@@ -150,14 +146,14 @@ GenericForm::GenericForm(QJsonObject *formdata, QWidget *parent, MainWindow *_ma
             QJsonObject object = formdata->value(formdata->keys()[i]).toObject();
             formdata->value(formdata->keys()[i]).toObject();
             parameter_property parameter_prop;
-            parameter_prop.Discription = formdata->keys()[i];
+            parameter_prop.Name = formdata->keys()[i];
             parameter_prop.DefaultValue = object.value("default").toString();
             if (object.contains("type"))
             {
 
                 QLabel *label = nullptr;
                 if (object["type"].toString()=="Description")
-                    label = new QLabel(parameter_prop.Discription, this);
+                    label = new QLabel(parameter_prop.Name, this);
                 QString typeval = object.value("type").toString();
                 if (object.value("type").toString()=="Description")
                 {
@@ -195,7 +191,7 @@ void GenericForm::onProceed()
     map<string,string> arguments;
     for (int i=0; i<Parameter_Properties.count(); i++)
     {
-        arguments[Parameter_Properties[i].Discription.toStdString()] = Parameter_Properties[i].value().toStdString();
+        arguments[Parameter_Properties[i].Name.toStdString()] = Parameter_Properties[i].value().toStdString();
     }
     mainwindow()->Execute(command.toStdString(),arguments);
 

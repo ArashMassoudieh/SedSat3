@@ -7,11 +7,11 @@ SelectSampleTableModel::SelectSampleTableModel(SourceSinkData *_data, QObject *p
 {
     Data = _data;
 }
-int SelectSampleTableModel::rowCount(const QModelIndex &index) const
+int SelectSampleTableModel::rowCount(const QModelIndex &/*index*/) const
 {
     return Data->operator[](selectedSource).size();
 }
-int SelectSampleTableModel::columnCount(const QModelIndex &index) const
+int SelectSampleTableModel::columnCount(const QModelIndex &/*index*/) const
 {
     return 3;
 }

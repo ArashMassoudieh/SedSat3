@@ -10,7 +10,6 @@
 #include "qjsondocument.h"
 #include "resultitem.h"
 #include <gsl/gsl_cdf.h>
-#include "GADistribution.h"
 #include "rangeset.h"
 #include "QJsonArray"
 #include "QJsonValue"
@@ -28,18 +27,18 @@ SourceSinkData::SourceSinkData()
     numberofisotopes_(0),
     numberofsourcesamplesets_(0),
     observations_(),
-    outputpath_(),
     parameters_(),
+    outputpath_(),
     target_group_(),
+    selected_target_sample_(),
     samplesetsorder_(),
     constituent_order_(),
-    selected_target_sample_(),
     element_order_(),
     isotope_order_(),
     size_om_order_(),
     parameter_estimation_mode_(estimation_mode::elemental_profile_and_contribution),
     omconstituent_(),
-    sizeconsituent_(),
+    sizeconstituent_(),
     regression_p_value_threshold_(0.05),
     distance_coeff_(1.0),
     tools_used_(),
@@ -57,18 +56,18 @@ SourceSinkData::SourceSinkData(const SourceSinkData& other)
     numberofisotopes_(other.numberofisotopes_),
     numberofsourcesamplesets_(other.numberofsourcesamplesets_),
     observations_(other.observations_),
-    outputpath_(other.outputpath_),
     parameters_(other.parameters_),
+    outputpath_(other.outputpath_),
     target_group_(other.target_group_),
+    selected_target_sample_(other.selected_target_sample_),
     samplesetsorder_(other.samplesetsorder_),
     constituent_order_(other.constituent_order_),
-    selected_target_sample_(other.selected_target_sample_),
     element_order_(other.element_order_),
     isotope_order_(other.isotope_order_),
     size_om_order_(other.size_om_order_),
     parameter_estimation_mode_(other.parameter_estimation_mode_),
     omconstituent_(other.omconstituent_),
-    sizeconsituent_(other.sizeconsituent_),
+    sizeconstituent_(other.sizeconstituent_),
     regression_p_value_threshold_(other.regression_p_value_threshold_),
     distance_coeff_(other.distance_coeff_),
     tools_used_(other.tools_used_),
@@ -105,7 +104,7 @@ SourceSinkData& SourceSinkData::operator=(const SourceSinkData& other)
     size_om_order_ = other.size_om_order_;
     parameter_estimation_mode_ = other.parameter_estimation_mode_;
     omconstituent_ = other.omconstituent_;
-    sizeconsituent_ = other.sizeconsituent_;
+    sizeconstituent_ = other.sizeconstituent_;
     regression_p_value_threshold_ = other.regression_p_value_threshold_;
     distance_coeff_ = other.distance_coeff_;
     tools_used_ = other.tools_used_;
@@ -127,8 +126,8 @@ SourceSinkData SourceSinkData::CreateCorrectedDataset(
     if (!omconstituent_.empty()) {
         om_size.push_back(at(target_group_).GetProfile(selected_target_sample_)->at(omconstituent_));
     }
-    if (!sizeconsituent_.empty()) {
-        om_size.push_back(at(target_group_).GetProfile(selected_target_sample_)->at(sizeconsituent_));
+    if (!sizeconstituent_.empty()) {
+        om_size.push_back(at(target_group_).GetProfile(selected_target_sample_)->at(sizeconstituent_));
     }
 
     // Copy profile sets with appropriate corrections
@@ -145,7 +144,7 @@ SourceSinkData SourceSinkData::CreateCorrectedDataset(
 
     // Copy analysis settings
     corrected.omconstituent_ = omconstituent_;
-    corrected.sizeconsituent_ = sizeconsituent_;
+    corrected.sizeconstituent_ = sizeconstituent_;
     corrected.regression_p_value_threshold_ = regression_p_value_threshold_;
 
     // Copy element information and distributions
@@ -242,9 +241,9 @@ SourceSinkData SourceSinkData::CreateCorrectedAndFilteredDataset(
                 at(target_group_).GetProfile(corrected.selected_target_sample_).at(omconstituent_)
             );
         }
-        if (!sizeconsituent_.empty()) {
+        if (!sizeconstituent_.empty()) {
             om_size.push_back(
-                at(target_group_).GetProfile(corrected.selected_target_sample_).at(sizeconsituent_)
+                at(target_group_).GetProfile(corrected.selected_target_sample_).at(sizeconstituent_)
             );
         }
     }
@@ -278,7 +277,7 @@ SourceSinkData SourceSinkData::CreateCorrectedAndFilteredDataset(
 
     // Copy settings and metadata
     corrected.omconstituent_ = omconstituent_;
-    corrected.sizeconsituent_ = sizeconsituent_;
+    corrected.sizeconstituent_ = sizeconstituent_;
     corrected.regression_p_value_threshold_ = regression_p_value_threshold_;
     corrected.options_ = options_;
 
@@ -303,7 +302,7 @@ SourceSinkData SourceSinkData::ExtractChemicalElements(bool isotopes) const
 
     // Copy settings
     extracted.omconstituent_ = omconstituent_;
-    extracted.sizeconsituent_ = sizeconsituent_;
+    extracted.sizeconstituent_ = sizeconstituent_;
     extracted.regression_p_value_threshold_ = regression_p_value_threshold_;
 
     // Populate distributions for extracted elements
@@ -2888,7 +2887,7 @@ bool SourceSinkData::PerformRegressionVsOMAndSize(
 {
     // Store OM and size constituent names for later use in corrections
     omconstituent_ = om;
-    sizeconsituent_ = particle_size;
+    sizeconstituent_ = particle_size;
     regression_p_value_threshold_ = p_value_threshold;
 
     // Compute regression models for all sample groups
@@ -3508,9 +3507,14 @@ vector<string> SourceSinkData::NegativeValueCheck()
     // Ensure element ordering is current
     PopulateConstituentOrders();
 
-    // Check each source group for negative values
-    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
+    // Check each source group for negative values. (This used to stop
+    // before the last group in alphabetical order, assuming it was the
+    // target: it skipped a source that sorts after the target, checked the
+    // target instead, and was undefined for an empty dataset.)
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)
     {
+        if (it->first == target_group_)
+            continue;
         vector<string> negative_elements = it->second.CheckForNegativeValues(element_order_);
 
         // Generate error message for each problematic element
@@ -3542,7 +3546,7 @@ double SourceSinkData::GrandMean(const string& element, bool use_log)
     double total_count = 0.0;
 
     // Accumulate weighted means from each source group
-    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != prev(end()); it++)
+    for (map<string, Elemental_Profile_Set>::iterator it = begin(); it != end(); it++)  // every group but the target (this stopped before the last group, which dropped a source sorting after the target)
     {
         // Skip target group
         if (it->first != target_group_)
@@ -3574,7 +3578,7 @@ Elemental_Profile_Set SourceSinkData::LumpAllProfileSets()
     Elemental_Profile_Set combined_sources;
 
     // Pool samples from all source groups
-    for (map<string, Elemental_Profile_Set>::const_iterator it = begin(); it != prev(end()); it++)
+    for (map<string, Elemental_Profile_Set>::const_iterator it = begin(); it != end(); it++)  // every group but the target (this stopped before the last group, which dropped a source sorting after the target)
     {
         // Skip target group
         if (it->first != target_group_)
@@ -3747,7 +3751,7 @@ SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double& perc
 
     // Copy metadata and settings
     reduced_dataset.omconstituent_ = omconstituent_;
-    reduced_dataset.sizeconsituent_ = sizeconsituent_;
+    reduced_dataset.sizeconstituent_ = sizeconstituent_;
     reduced_dataset.target_group_ = target_group_;
 
     // Recalculate distributions for reduced dataset
@@ -3787,7 +3791,7 @@ SourceSinkData SourceSinkData::ReplaceSourceAsTarget(const string& source_sample
 
     // Copy metadata and settings
     modified_dataset.omconstituent_ = omconstituent_;
-    modified_dataset.sizeconsituent_ = sizeconsituent_;
+    modified_dataset.sizeconstituent_ = sizeconstituent_;
     modified_dataset.target_group_ = target_group_;
 
     // Recalculate distributions
@@ -4134,7 +4138,7 @@ vector<string> SourceSinkData::RandomlypickSamples(const double& percentage) con
     for (size_t i = 0; i < all_samples.size(); i++)
     {
         // Generate random number in [0, 1)
-        double random_value = GADistribution::GetRndUniF(0, 1);
+        double random_value = ThreadRandomStream().Uniform();
 
         // Include sample if random value < percentage
         if (random_value < percentage)
@@ -4201,10 +4205,10 @@ Results SourceSinkData::MCMC(
 
     // Setup progress window charts
     progress_window->SetTitle("Acceptance Rate", 0);
-    progress_window->SetTitle("Purturbation Factor", 1);
+    progress_window->SetTitle("Perturbation Factor", 1);
     progress_window->SetTitle("Log posterior value", 2);
     progress_window->SetYAxisTitle("Acceptance Rate", 0);
-    progress_window->SetYAxisTitle("Purturbation Factor", 1);
+    progress_window->SetYAxisTitle("Perturbation Factor", 1);
     progress_window->SetYAxisTitle("Log posterior value", 2);
     progress_window->Start();
 
@@ -4779,7 +4783,7 @@ CMBVectorSet SourceSinkData::DFA_Projected()
     return projected_scores;
 }
 
-CMBVectorSet SourceSinkData::DFA_Projected(const string& source1, const string& source2)
+CMBVectorSet SourceSinkData::DFA_Projected(const string& /*source1*/, const string& /*source2*/)
 {
     // Get discriminant eigenvector
     CMBVector discriminant_function = DFA_eigvector();
@@ -4800,7 +4804,7 @@ CMBVectorSet SourceSinkData::DFA_Projected(const string& source1, const string& 
     return projected_scores;
 }
 
-CMBVectorSet SourceSinkData::DFA_Projected(const string& source1, SourceSinkData* original)
+CMBVectorSet SourceSinkData::DFA_Projected(const string& /*source1*/, SourceSinkData* original)
 {
     // Get discriminant eigenvector from current (reduced) dataset
     CMBVector discriminant_function = DFA_eigvector();
@@ -5154,7 +5158,7 @@ size_t SourceSinkData::ObservationsCount()
 
 Parameter* SourceSinkData::parameter(size_t i)
 {
-    if (i >= 0 && i < parameters_.size())
+    if (i < parameters_.size())
         return &parameters_[i];
     else
         return nullptr;
@@ -5162,7 +5166,7 @@ Parameter* SourceSinkData::parameter(size_t i)
 
 const Parameter* SourceSinkData::parameter(size_t i) const
 {
-    if (i >= 0 && i < parameters_.size())
+    if (i < parameters_.size())
         return &parameters_[i];
     else
         return nullptr;
@@ -5170,7 +5174,7 @@ const Parameter* SourceSinkData::parameter(size_t i) const
 
 Observation* SourceSinkData::observation(size_t i)
 {
-    if (i >= 0 && i < observations_.size())
+    if (i < observations_.size())
         return &observations_[i];
     else
         return nullptr;
@@ -5272,10 +5276,10 @@ vector<string> SourceSinkData::SizeOMOrder()
 
 // ========== OM/Size Constituent Management ==========
 
-void SourceSinkData::SetOMandSizeConstituents(const string& _omconstituent, const string& _sizeconsituent)
+void SourceSinkData::SetOMandSizeConstituents(const string& _omconstituent, const string& _sizeconstituent)
 {
     omconstituent_ = _omconstituent;
-    sizeconsituent_ = _sizeconsituent;
+    sizeconstituent_ = _sizeconstituent;
 }
 
 void SourceSinkData::SetOMandSizeConstituents(const vector<string>& _omsizeconstituents)
@@ -5287,7 +5291,7 @@ void SourceSinkData::SetOMandSizeConstituents(const vector<string>& _omsizeconst
     else if (_omsizeconstituents.size() == 2)
     {
         omconstituent_ = _omsizeconstituents[0];
-        sizeconsituent_ = _omsizeconstituents[1];
+        sizeconstituent_ = _omsizeconstituents[1];
     }
 }
 
@@ -5295,7 +5299,7 @@ vector<string> SourceSinkData::OMandSizeConstituents()
 {
     vector<string> out;
     out.push_back(omconstituent_);
-    out.push_back(sizeconsituent_);
+    out.push_back(sizeconstituent_);
     return out;
 }
 

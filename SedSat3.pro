@@ -1,243 +1,94 @@
+# Graphical build of SedSAT3.
+#
+# The analysis code shared with the command line program is listed in
+# sedsat3_core.pri; this file adds the interface, plotting and Excel import.
+#
+#   qmake SedSat3.pro && make             (CONFIG+=ga to include the GA)
+
 QT += core gui widgets printsupport charts
 
-CONFIG += c++17
+DEFINES += USE_QCHARTS
 
-# A non-void function that falls off its end is undefined behaviour; make it a
-# build error rather than a warning (USGS code review, Oct 2026)
-gcc|clang: QMAKE_CXXFLAGS += -Werror=return-type
-msvc: QMAKE_CXXFLAGS += /we4715
-DEFINES += _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT USE_QCHARTS
+include(sedsat3_core.pri)
 
-greaterThan(QT_MAJOR_VERSION, 5): DEFINES += Qt6
-
+# QXlsx is compiled with the program from the thirdparty/QXlsx submodule on
+# every platform. (Linux used to link a prebuilt libQXlsx.a, which no longer
+# matched the installed Qt and is not part of the repository.) It needs Qt's
+# private headers, which the Qt online installer provides.
+include(thirdparty/QXlsx/QXlsx/QXlsx.pri)
+# QXlsx.pri adds the gui-private module, which on Linux also links
+# libxkbcommon; QXlsx needs only the private headers (for QZipReader, whose
+# symbols are in QtGui), so the module is dropped and the headers added
+QT -= gui-private
 QT_VERSION = $$[QT_VERSION]
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtCore/$${QT_VERSION}/QtCore/private
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtGui/$${QT_VERSION}/QtGui/private
+INCLUDEPATH += \
+    $$[QT_INSTALL_HEADERS]/QtCore/$${QT_VERSION} \
+    $$[QT_INSTALL_HEADERS]/QtCore/$${QT_VERSION}/QtCore \
+    $$[QT_INSTALL_HEADERS]/QtGui/$${QT_VERSION} \
+    $$[QT_INSTALL_HEADERS]/QtGui/$${QT_VERSION}/QtGui
 
+INCLUDEPATH += \
+    thirdparty/qcustomplot6 \
+    thirdparty/QXlsx/QXlsx/header
 
 SOURCES += \
-    GeneralChartPlotter.cpp \
-    Utilities/Distribution.cpp \
-    Utilities/Matrix.cpp \
-    Utilities/Matrix_arma.cpp \
-    Utilities/Matrix_arma_sp.cpp \
-    Utilities/QuickSort.cpp \
-    Utilities/Utilities.cpp \
-    Utilities/Vector.cpp \
-    Utilities/Vector_arma.cpp \
-    optionsdialog.cpp \
-    thirdparty/qcustomplot6/qcustomplot.cpp \
-    FilePushButton.cpp \
-    ProgressWindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    guihost.cpp \
     aboutdialog.cpp \
     chart.cpp \
     chartview.cpp \
-    cmbmatrix.cpp \
-    cmbtimeseries.cpp \
-    cmbtimeseriesset.cpp \
-    cmbvector.cpp \
-    cmbvectorset.cpp \
-    cmbvectorsetset.cpp \
-    contribution.cpp \
     dialogchooseexcelsheets.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
-    filebrowserpushbuttom.cpp \
+    filebrowserpushbutton.cpp \
+    FilePushButton.cpp \
     formelementinformation.cpp \
     generalchart.cpp \
-    guihost.cpp \
+    GeneralChartPlotter.cpp \
     generalplotter.cpp \
     genericform.cpp \
     indicatesheetsdialog.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    multiplelinearregression.cpp \
-    multiplelinearregressionset.cpp \
     omsizecorrectiontablemodel.cpp \
+    optionsdialog.cpp \
     plotwindow.cpp \
-    range.cpp \
-    rangeset.cpp \
-    resultitem.cpp \
-    results.cpp \
-    resultsetitem.cpp \
+    ProgressWindow.cpp \
     resultswindow.cpp \
     resulttableviewer.cpp \
     selectsampledelegate.cpp \
     selectsamples.cpp \
     selectsampletablemodel.cpp \
-    src/GA/Binary.cpp \
-    src/GA/GADistribution.cpp \
-    src/GA/Individual.cpp \
-    src/cmbdistribution.cpp \
-    src/concentrationset.cpp \
-    src/conductor.cpp \
-    src/elemental_profile.cpp \
-    src/elemental_profile_set.cpp \
-    src/interface.cpp \
-    src/numericparsing.cpp \
-    src/observation.cpp \
-    src/parameter.cpp \
-    src/sourcesinkdata.cpp \
-    testmcmc.cpp \
-    toolboxitem.cpp
+    toolboxitem.cpp \
+    thirdparty/qcustomplot6/qcustomplot.cpp
 
 HEADERS += \
-    GeneralChartPlotter.h \
-    Utilities/Distribution.h \
-    Utilities/TimeSeries.h \
-    Utilities/TimeSeries.hpp \
-    Utilities/TimeSeriesSet.h \
-    Utilities/TimeSeriesSet.hpp \
-    Utilities/Distribution.h \
-    Utilities/Matrix.h \
-    Utilities/Matrix_arma.h \
-    Utilities/Matrix_arma_sp.h \
-    Utilities/QuickSort.h \
-    Utilities/Utilities.h \
-    Utilities/Vector.h \
-    Utilities/Vector_arma.h \
-    optionsdialog.h \
-    thirdparty/qcustomplot6/qcustomplot.h \
-    FilePushButton.h \
-    ProgressWindow.h \
+    mainwindow.h \
+    guihost.h \
     aboutdialog.h \
     chart.h \
     chartview.h \
-    cmbmatrix.h \
-    cmbtimeseries.h \
-    cmbtimeseriesset.h \
-    cmbvector.h \
-    cmbvectorset.h \
-    cmbvectorsetset.h \
-    contribution.h \
     dialogchooseexcelsheets.h \
     elementstablemodel.h \
     elementtabledelegate.h \
-    filebrowserpushbuttom.h \
+    filebrowserpushbutton.h \
+    FilePushButton.h \
     formelementinformation.h \
     generalchart.h \
-    guihost.h \
+    GeneralChartPlotter.h \
     generalplotter.h \
     genericform.h \
-    include/GA/Binary.h \
-    include/GA/GA.h \
-    include/GA/GA.hpp \
-    include/GA/GADistribution.h \
-    include/GA/Individual.h \
-    include/MCMC/MCMC.h \
-    include/MCMC/MCMC.hpp \
-    include/cmbdistribution.h \
-    include/concentrationset.h \
-    include/conductor.h \
-    include/elemental_profile.h \
-    include/elemental_profile_set.h \
-    include/interface.h \
-    include/observation.h \
-    include/parameter.h \
-    include/sourcesinkdata.h \
-    include/randomstream.h \
-    include/numericparsing.h \
     indicatesheetsdialog.h \
-    mainwindow.h \
-    multiplelinearregression.h \
-    multiplelinearregressionset.h \
     omsizecorrectiontablemodel.h \
+    optionsdialog.h \
     plotwindow.h \
-    range.h \
-    rangeset.h \
-    resultitem.h \
-    results.h \
-    resultsetitem.h \
+    ProgressWindow.h \
     resultswindow.h \
     resulttableviewer.h \
     selectsampledelegate.h \
     selectsamples.h \
     selectsampletablemodel.h \
-    testmcmc.h \
-    toolboxitem.h
-
-
-
-INCLUDEPATH += \
-    include \
-    include/GA \
-    include/MCMC \
-    Utilities \
-    thirdparty/qcustomplot6 \
-    thirdparty/QXlsx/QXlsx/header
-
-
-
-# Libraries
-unix:!macx {
-    LIBS += -larmadillo -llapack -lblas -lgsl -lpthread
-    # QXlsx (prebuilt static library)
-    INCLUDEPATH += thirdparty/QXlsx/QXlsx/header
-    LIBS += $$PWD/thirdparty/QXlsx/libQXlsx.a
-
-}
-macx {
-    # Detect Homebrew prefix (Apple Silicon vs Intel)
-    exists(/opt/homebrew/include) {
-        HOMEBREW_PREFIX = /opt/homebrew
-    } else {
-        HOMEBREW_PREFIX = /usr/local
-    }
-
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/libomp/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/armadillo/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/gsl/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/openblas/include
-
-    DEFINES += ARMA_DONT_USE_HDF5
-    DEFINES += ARMA_DONT_USE_SUPERLU
-    DEFINES += ARMA_DONT_USE_ARPACK
-
-    QMAKE_MOC_OPTIONS += -DARMA_DONT_USE_HDF5
-    QMAKE_MOC_OPTIONS += -DARMA_DONT_USE_SUPERLU
-    QMAKE_MOC_OPTIONS += -DARMA_DONT_USE_ARPACK
-
-    LIBS += -L$${HOMEBREW_PREFIX}/lib
-    LIBS += -L$${HOMEBREW_PREFIX}/opt/libomp/lib
-    LIBS += -larmadillo -lgsl -lgslcblas -llapack -lblas -lpthread
-
-    # OpenMP on Apple clang requires explicit flags
-    QMAKE_CXXFLAGS += -Xpreprocessor -fopenmp
-    QMAKE_LFLAGS   += -lomp
-    LIBS += -lomp
-
-    # QXlsx (compiled inline with project)
-    include(thirdparty/QXlsx/QXlsx/QXlsx.pri)
-
-
-    # Copy resources folder into the .app bundle after each build
-    # Lands at SedSat3.app/resources/ to match the existing applicationDirPath() + "/../../resources" code
-    COPY_RESOURCES.commands = $(COPY_DIR) \"$$PWD/resources/\" \"$$OUT_PWD/$${TARGET}.app/Contents/Resources/\"
-        COPY_RESOURCES.depends = FORCE
-        QMAKE_EXTRA_TARGETS += COPY_RESOURCES
-        POST_TARGETDEPS += COPY_RESOURCES
-
-}
-
-# OpenMP
-QMAKE_CXXFLAGS += $$QMAKE_CXXFLAGS_OPENMP
-LIBS += $$QMAKE_LIBS_OPENMP
-
-CONFIG(debug, debug|release) {
-    DEFINES += DEBUG
-}
-
-# OpenMP
-QMAKE_CXXFLAGS += $$QMAKE_CXXFLAGS_OPENMP
-QMAKE_LFLAGS   += $$QMAKE_LFLAGS_OPENMP
-
-unix:!macx {
-    LIBS += -lgomp -lpthread
-}
-macx {
-    LIBS += -lomp -lpthread
-}
+    toolboxitem.h \
+    thirdparty/qcustomplot6/qcustomplot.h
 
 FORMS += \
     ProgressWindow.ui \
@@ -252,3 +103,11 @@ FORMS += \
     resulttableviewer.ui \
     selectsamples.ui
 
+macx {
+    # Copy resources folder into the .app bundle after each build
+    # Lands at SedSat3.app/resources/ to match the existing applicationDirPath() + "/../../resources" code
+    COPY_RESOURCES.commands = $(COPY_DIR) \"$$PWD/resources/\" \"$$OUT_PWD/$${TARGET}.app/Contents/Resources/\"
+    COPY_RESOURCES.depends = FORCE
+    QMAKE_EXTRA_TARGETS += COPY_RESOURCES
+    POST_TARGETDEPS += COPY_RESOURCES
+}

@@ -24,7 +24,6 @@
 #include "formelementinformation.h"
 #include "elementstablemodel.h"
 #include "elementtabledelegate.h"
-#include "GA.h"
 #include "genericform.h"
 #include "ProgressWindow.h"
 #include "resultswindow.h"
@@ -766,7 +765,7 @@ void MainWindow::WriteMessageOnScreen(const QString &text, QColor color)
     ui->textBrowser->append(text);
 }
 
-QStandardItem* MainWindow::ToQStandardItem(const QString& key, const SourceSinkData* srcsinkdata)
+QStandardItem* MainWindow::ToQStandardItem(const QString& key, const SourceSinkData* /*srcsinkdata*/)
 {
     QStandardItem* rootItem = new QStandardItem(key);
     rootItem->setData("RootItem", Qt::UserRole);
@@ -799,7 +798,7 @@ QStandardItem* MainWindow::ToQStandardItem(const QString& key, const SourceSinkD
     return rootItem;
 }
 
-QStandardItem* MainWindow::ElementsToQStandardItem(const QString& key, const SourceSinkData* srcsinkdata)
+QStandardItem* MainWindow::ElementsToQStandardItem(const QString& key, const SourceSinkData* /*srcsinkdata*/)
 {
     QStandardItem* rootItem = new QStandardItem(key);
     rootItem->setData("RootItem", Qt::UserRole);
@@ -829,7 +828,7 @@ QStandardItem* MainWindow::ElementsToQStandardItem(const QString& key, const Sou
     return rootItem;
 }
 
-QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* srcsinkdata)
+QStandardItemModel* MainWindow::ToQStandardItemModel(const SourceSinkData* /*srcsinkdata*/)
 {
     columnViewModel = std::make_unique<QStandardItemModel>();
     columnViewModel->setColumnCount(1);

@@ -139,7 +139,7 @@ double roundDown(double a, double rounding_value) {
 
 }
 
-bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &title)
+bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &/*title*/)
 {
     source1_combo = new QComboBox();
     source2_combo = new QComboBox();
@@ -164,7 +164,7 @@ bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &tit
     return true;
 }
 
-bool GeneralChart::PlotVectorSet(CMBVectorSet *profile, const QString &title)
+bool GeneralChart::PlotVectorSet(CMBVectorSet *profile, const QString &/*title*/)
 {
     element_combo = new QComboBox();
     QLabel *element_label = new QLabel();
@@ -267,7 +267,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
 }
 
 
-bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &title)
+bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &/*title*/)
 {
     QStringList categories;
 
@@ -345,7 +345,7 @@ bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &title)
 }
 
 
-bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QString &title)
+bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QString &/*title*/)
 {
     QCategoryAxis* axisX = new QCategoryAxis();
 
@@ -504,7 +504,7 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
 
 
 }
-bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &title)
+bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset, const QString &/*title*/)
 {
     element_combo = new QComboBox();
     QLabel *element_label = new QLabel();
@@ -529,7 +529,7 @@ bool GeneralChart::PlotRegressionSet(MultipleLinearRegressionSet *regressionset,
     return true;
 }
 
-bool GeneralChart:: InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const QString &title)
+bool GeneralChart:: InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const QString &/*title*/)
 {
     element_combo = new QComboBox();
     QLabel *element_label = new QLabel();
@@ -549,7 +549,7 @@ bool GeneralChart:: InitializeMCMCSamples(CMBTimeSeriesSet *mcmcsamples, const Q
     return true;
 }
 
-bool GeneralChart::InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &title)
+bool GeneralChart::InitializeDistributions(CMBTimeSeriesSet *distributions, const QString &/*title*/)
 {
     element_combo = new QComboBox();
     QLabel *element_label = new QLabel();
@@ -607,7 +607,7 @@ void GeneralChart::onPairChanged(int pair_id)
 
 }
 
-void GeneralChart::onDFAPairChanged(int pair_id)
+void GeneralChart::onDFAPairChanged(int /*pair_id*/)
 {
     chart->removeAllSeries();
     for (int i=0; i<chart->axes().size(); i++)
@@ -643,7 +643,7 @@ void GeneralChart::onDistributionsVariableChanged(int i)
     if (samplesset->Contains(variable.toStdString()))
         PlotDistribution(&samplesset->operator[](variable.toStdString()),variable);
 }
-void GeneralChart::onIndependentChanged(int i_constituent)
+void GeneralChart::onIndependentChanged(int /*i_constituent*/)
 {
     MultipleLinearRegressionSet* mlrset = static_cast<MultipleLinearRegressionSet*>(result_item->Result());
     if (!independent_combo->currentText().isEmpty() && !element_combo->currentText().isEmpty())
@@ -1140,7 +1140,7 @@ bool GeneralChart::PlotDistribution(TimeSeries<double> *samples,const QString& v
     return true;
 }
 
-bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QString &/*title*/, const QString &x_axis_title, const QString &y_axis_title)
 {
     double x_min_val = timeseriesset->mintime();
     double x_max_val = timeseriesset->maxtime();
@@ -1182,7 +1182,7 @@ bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QStr
     return true;
 }
 
-bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &/*title*/, const QString &x_axis_title, const QString &y_axis_title)
 {
     double y_min_val = rangeset->minval();
     double y_max_val = rangeset->maxval();
@@ -1295,7 +1295,7 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &title, const 
     return true;
 }
 
-bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QString &/*title*/, const QString &x_axis_title, const QString &y_axis_title)
 {
     double x_min_val = timeseriesset->mintime();
     double x_max_val = timeseriesset->maxtime();
@@ -1361,7 +1361,7 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
 }
 
 
-bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QString &title, const QString &x_axis_title, const QString &y_axis_title)
+bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QString &/*title*/, const QString &x_axis_title, const QString &y_axis_title)
 {
     double x_min_val = timeseriesset->mintime();
     double x_max_val = timeseriesset->maxtime();

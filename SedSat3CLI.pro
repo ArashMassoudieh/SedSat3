@@ -1,12 +1,11 @@
 # Command line build of SedSAT3.
 #
 # Runs the same analyses as the graphical application by driving the same
-# Conductor, but reports through a console host instead of windows. It shares
-# the existing sources rather than a separate library: the list below is the
-# analysis half of SedSat3.pro, with every file belonging to the interface left
-# out.
+# Conductor, but reports through a console host instead of windows. The
+# analysis code it shares with the graphical program is listed in
+# sedsat3_core.pri; this file adds only the console front end.
 #
-#   qmake SedSat3CLI.pro && make
+#   qmake SedSat3CLI.pro && make          (CONFIG+=ga to include the GA)
 #   ./sedsat3-cli script.json
 #
 # QtWidgets is still linked, because Interface::ToTable() returns a
@@ -14,146 +13,31 @@
 # created, so the program runs with QCoreApplication and needs no display.
 
 QT += core gui widgets
-CONFIG += c++17 console
-
-# A non-void function that falls off its end is undefined behaviour; make it a
-# build error rather than a warning (USGS code review, Oct 2026)
-gcc|clang: QMAKE_CXXFLAGS += -Werror=return-type
-msvc: QMAKE_CXXFLAGS += /we4715
+CONFIG += console
 CONFIG -= app_bundle
 
 TARGET = sedsat3-cli
 TEMPLATE = app
 
-DEFINES += _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT Qt6
-
 # qDebug() tracing was written for the GUI, where it goes nowhere. On a console
 # it ran to tens of megabytes per MCMC run. The project's own calls are now
-# commented out; this also silences those in the Utilities submodule.
+# commented out; this also silences any that remain in Utilities.
 # qWarning() and above are unaffected.
 DEFINES += QT_NO_DEBUG_OUTPUT
 
-QT_VERSION = $$[QT_VERSION]
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtCore/$${QT_VERSION}/QtCore/private
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtGui/$${QT_VERSION}/QtGui/private
+include(sedsat3_core.pri)
 
-INCLUDEPATH += \
-    . \
-    cli \
-    include \
-    include/GA \
-    include/MCMC \
-    Utilities
+INCLUDEPATH += cli
 
 SOURCES += \
     cli/main_cli.cpp \
     cli/consolehost.cpp \
     cli/commandcatalog.cpp \
     cli/setupcommands.cpp \
-    cli/scriptrunner.cpp \
-    Utilities/Distribution.cpp \
-    Utilities/Matrix.cpp \
-    Utilities/Matrix_arma.cpp \
-    Utilities/Matrix_arma_sp.cpp \
-    Utilities/QuickSort.cpp \
-    Utilities/Vector.cpp \
-    Utilities/Vector_arma.cpp \
-    Utilities/Utilities.cpp \
-    src/GA/Binary.cpp \
-    src/GA/GADistribution.cpp \
-    src/GA/Individual.cpp \
-    src/cmbdistribution.cpp \
-    src/concentrationset.cpp \
-    src/conductor.cpp \
-    src/elemental_profile.cpp \
-    src/elemental_profile_set.cpp \
-    src/interface.cpp \
-    src/numericparsing.cpp \
-    src/observation.cpp \
-    src/parameter.cpp \
-    src/sourcesinkdata.cpp \
-    cmbmatrix.cpp \
-    cmbtimeseries.cpp \
-    cmbtimeseriesset.cpp \
-    cmbvector.cpp \
-    cmbvectorset.cpp \
-    cmbvectorsetset.cpp \
-    contribution.cpp \
-    multiplelinearregression.cpp \
-    multiplelinearregressionset.cpp \
-    range.cpp \
-    rangeset.cpp \
-    resultitem.cpp \
-    results.cpp \
-    resultsetitem.cpp \
-    testmcmc.cpp
+    cli/scriptrunner.cpp
 
 HEADERS += \
     cli/consolehost.h \
     cli/commandcatalog.h \
     cli/setupcommands.h \
-    cli/scriptrunner.h \
-    include/analysishost.h \
-    include/progressreporter.h \
-    include/conductor.h \
-    include/sourcesinkdata.h \
-    include/randomstream.h \
-    include/numericparsing.h
-
-unix:!macx {
-    LIBS += -larmadillo -llapack -lblas -lgsl -lpthread -lgomp
-}
-
-macx {
-    exists(/opt/homebrew/include) {
-        HOMEBREW_PREFIX = /opt/homebrew
-    } else {
-        HOMEBREW_PREFIX = /usr/local
-    }
-
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/libomp/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/armadillo/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/gsl/include
-    INCLUDEPATH += $${HOMEBREW_PREFIX}/opt/openblas/include
-
-    DEFINES += ARMA_DONT_USE_HDF5
-    DEFINES += ARMA_DONT_USE_SUPERLU
-    DEFINES += ARMA_DONT_USE_ARPACK
-
-    LIBS += -L$${HOMEBREW_PREFIX}/lib
-    LIBS += -L$${HOMEBREW_PREFIX}/opt/libomp/lib
-    LIBS += -larmadillo -lgsl -lgslcblas -llapack -lblas -lpthread -lomp
-
-    QMAKE_CXXFLAGS += -Xpreprocessor -fopenmp
-    QMAKE_LFLAGS   += -lomp
-}
-
-# Windows with MSVC, using the same dependency layout as SedSat3.vcxproj:
-# armadillo and vcpkg checked out next to this repository.
-win32-msvc {
-    DEPS_ROOT = $$clean_path($$PWD/..)
-
-    INCLUDEPATH += $${DEPS_ROOT}/armadillo/armadillo-header
-    INCLUDEPATH += $${DEPS_ROOT}/vcpkg/installed/x64-windows/include
-
-    DEFINES += NOMINMAX ARMA_USE_LAPACK ARMA_USE_BLAS
-
-    LIBS += -L$${DEPS_ROOT}/armadillo/lapack-blas_lib_win64
-    LIBS += -L$${DEPS_ROOT}/vcpkg/installed/x64-windows/lib
-    LIBS += -lblas_win64_MT -llapack_win64_MT -lgsl -lgslcblas
-
-    QMAKE_CXXFLAGS += /Zc:__cplusplus
-
-    # The bundled armadillo has no SuperLU, so spsolve() is unavailable. The
-    # sparse matrix class is not used by any analysis, and SedSat3.vcxproj
-    # leaves it out for the same reason.
-    SOURCES -= Utilities/Matrix_arma_sp.cpp
-}
-
-QMAKE_CXXFLAGS += $$QMAKE_CXXFLAGS_OPENMP
-QMAKE_LFLAGS   += $$QMAKE_LFLAGS_OPENMP
-
-CONFIG(debug, debug|release) {
-    DEFINES += DEBUG
-}
+    cli/scriptrunner.h

@@ -1,16 +1,16 @@
 // SedSAT3 – Sediment Source Assessment Tool, version 3
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
-#include "filebrowserpushbuttom.h"
+#include "filebrowserpushbutton.h"
 #include "qdebug.h"
 #include <QFileDialog>
 
-FileBrowserPushButtom::FileBrowserPushButtom(QWidget *parent) : QPushButton(parent)
+FileBrowserPushButton::FileBrowserPushButton(QWidget *parent) : QPushButton(parent)
 {
     connect(this,SIGNAL(clicked()),this,SLOT(onPress()));
 }
 
-void FileBrowserPushButtom::onPress()
+void FileBrowserPushButton::onPress()
 {
     QString fileName;
     if (dialog_use==save_open::save)

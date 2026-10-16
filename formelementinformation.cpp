@@ -16,7 +16,7 @@ FormElementInformation::FormElementInformation(QWidget *parent) :
     // "Include all" and "Exclude all", so a checked box read "Include all
     // elements" while every element had just been excluded.)
     ui->Include_Exclude_All_checkBox->setText(tr("Include all elements"));
-    connect(ui->Include_Exclude_All_checkBox,SIGNAL(stateChanged(int)),this,SLOT(on_Include_Exclude_Change()));
+    connect(ui->Include_Exclude_All_checkBox,SIGNAL(stateChanged(int)),this,SLOT(OnIncludeAllToggled()));
 
 }
 
@@ -58,7 +58,7 @@ void FormElementInformation::SyncIncludeAllCheckBox()
     ui->Include_Exclude_All_checkBox->setChecked(all_included);
 }
 
-void FormElementInformation::on_Include_Exclude_Change()
+void FormElementInformation::OnIncludeAllToggled()
 {
     ElementTableModel* model = static_cast<ElementTableModel*>(table()->model());
     if (model == nullptr || model->Data == nullptr)

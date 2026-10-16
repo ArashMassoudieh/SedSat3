@@ -4,13 +4,14 @@
 #include "rangeset.h"
 #include <QFile>
 
-RangeSet::RangeSet():map<string, Range>(),Interface()
+RangeSet::RangeSet():Interface(),map<string, Range>()
 {
 
 }
 
-RangeSet::RangeSet(const RangeSet &rhs):map<string, Range>(),Interface()
+RangeSet::RangeSet(const RangeSet &rhs):Interface(rhs),map<string, Range>(rhs)
 {
+    // (This used to construct an empty set instead of copying rhs)
 
 }
 RangeSet& RangeSet::operator = (const RangeSet &rhs)
@@ -54,7 +55,7 @@ bool RangeSet::writetofile(QFile* file)
     return true;
 
 }
-bool RangeSet::Read(const QStringList &strlist)
+bool RangeSet::Read(const QStringList &/*strlist*/)
 {
     return true;
 }

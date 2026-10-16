@@ -78,9 +78,10 @@ bool CMCMC<T>::SetProperty(const string &varname, const string &value)
     if (aquiutils::tolower(varname) == "number_of_samples") {MCMC_Settings.total_number_of_samples = aquiutils::atoi(value); return true;}
     if (aquiutils::tolower(varname) == "number_of_chains") {MCMC_Settings.number_of_chains = aquiutils::atoi(value); return true;}
     if (aquiutils::tolower(varname) == "number_of_burnout_samples") {MCMC_Settings.burnout_samples = aquiutils::atoi(value); return true;}
-    if (aquiutils::tolower(varname) == "initial_purturbation_factor") {MCMC_Settings.purturbation_factor = aquiutils::atof(value); return true;}
+    // The misspelled "purturbation" keys are still accepted
+    if (aquiutils::tolower(varname) == "initial_perturbation_factor" || aquiutils::tolower(varname) == "initial_purturbation_factor") {MCMC_Settings.perturbation_factor = aquiutils::atof(value); return true;}
     if (aquiutils::tolower(varname) == "record_interval") {MCMC_Settings.save_interval = aquiutils::atoi(value); return true;}
-    if (aquiutils::tolower(varname) == "initial_purturbation")
+    if (aquiutils::tolower(varname) == "initial_perturbation" || aquiutils::tolower(varname) == "initial_purturbation")
     {
         if (aquiutils::tolower(value)=="yes")
             MCMC_Settings.noinipurt = false;
@@ -148,7 +149,7 @@ bool CMCMC<T>::SetProperty(const string &varname, const string &value)
         MCMC_Settings.acceptance_rate = aquiutils::atof(value);
         return true;
     }
-    if (aquiutils::tolower(varname) == "purturbation_change_scale")
+    if (aquiutils::tolower(varname) == "perturbation_change_scale" || aquiutils::tolower(varname) == "purturbation_change_scale")
     {
         MCMC_Settings.purt_change_scale = aquiutils::atof(value);
         return true;
@@ -189,15 +190,14 @@ template<class T>
 void CMCMC<T>::model(T *Model1, vector<double> par)
 {
 
-    for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
-    {
-        Model1->SetSilent(true);
-        Model1->SetRecordResults(false);
-        Model1->SetNumThreads(1);
-        for (unsigned int i = 0; i < MCMC_Settings.number_of_parameters; i++)
-            Model1->SetParameterValue(i, par[i]);
-        Model1->ApplyParameters();
-    }
+    // (This was wrapped in a second loop over the parameters that repeated
+    // the whole assignment once per parameter)
+    Model1->SetSilent(true);
+    Model1->SetRecordResults(false);
+    Model1->SetNumThreads(1);
+    for (unsigned int i = 0; i < MCMC_Settings.number_of_parameters; i++)
+        Model1->SetParameterValue(i, par[i]);
+    Model1->ApplyParameters();
 
     Model1->Solve();
 
@@ -231,11 +231,11 @@ void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
     {
         if (parameter(j)->GetPriorDistribution()=="normal" || parameter(j)->GetPriorDistribution()=="uniform")
         {
-            pertcoeff[j] = MCMC_Settings.purturbation_factor*(-parameter(j)->GetRange(_range::low) + parameter(j)->GetRange(_range::high));
+            pertcoeff[j] = MCMC_Settings.perturbation_factor*(-parameter(j)->GetRange(_range::low) + parameter(j)->GetRange(_range::high));
         }
         if (parameter(j)->GetPriorDistribution()=="log-normal")
         {
-            pertcoeff[j] = MCMC_Settings.purturbation_factor*(-log(parameter(j)->GetRange(_range::low)) + log(parameter(j)->GetRange(_range::high)));
+            pertcoeff[j] = MCMC_Settings.perturbation_factor*(-log(parameter(j)->GetRange(_range::low)) + log(parameter(j)->GetRange(_range::high)));
         }
     }
 
@@ -299,11 +299,11 @@ void CMCMC<T>::initialize(vector<double> par)
 		{
             if (parameter(j).Get_Distribution()=="normal" || parameter(j).Get_Distribution()=="uniform")
 			{
-                pertcoeff[j] = MCMC_Settings.purturbation_factor / fabs(X[getparamno(j, 0)]);
+                pertcoeff[j] = MCMC_Settings.perturbation_factor / fabs(X[getparamno(j, 0)]);
 			}
             if (parameter(j).Get_Distribution()=="log-normal")
 			{
-                pertcoeff[j] = MCMC_Settings.purturbation_factor / fabs(sqrt(par[j])*X[getparamno(j, 0)]);
+                pertcoeff[j] = MCMC_Settings.perturbation_factor / fabs(sqrt(par[j])*X[getparamno(j, 0)]);
 			}
 
 		}
@@ -313,11 +313,11 @@ void CMCMC<T>::initialize(vector<double> par)
 		{
             if (parameter(j).Get_Distribution()=="normal" || parameter(j).Get_Distribution()=="uniform")
 			{
-                pertcoeff[j] = MCMC_Settings.purturbation_factor*(-parameter(j)->GetRange().low + -parameter(j)->GetRange().high);
+                pertcoeff[j] = MCMC_Settings.perturbation_factor*(-parameter(j)->GetRange().low + -parameter(j)->GetRange().high);
 			}
             if (parameter(j).Get_Distribution()=="log-normal")
 			{
-                pertcoeff[j] = MCMC_Settings.purturbation_factor*(-log(parameter(j)->GetRange().low) + log(parameter(j)->GetRange().high));
+                pertcoeff[j] = MCMC_Settings.perturbation_factor*(-log(parameter(j)->GetRange().low) + log(parameter(j)->GetRange().high));
 			}
 		}
 	double alpha = NAN;
@@ -356,7 +356,7 @@ template<class T>
 bool CMCMC<T>::step(int k, int chain_counter)
 {
 
-    vector<double> X = purturb(k-MCMC_Settings.number_of_chains, chain_counter);
+    vector<double> X = perturb(k-MCMC_Settings.number_of_chains, chain_counter);
     double pp =0;
     for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
     {
@@ -397,7 +397,7 @@ bool CMCMC<T>::step(int k, int chain_counter)
 }
 
 template<class T>
-vector<double> CMCMC<T>::purturb(int k, int chain_counter)
+vector<double> CMCMC<T>::perturb(int k, int chain_counter)
 {
     RandomStream& stream = chain_streams_[chain_counter];
 	vector<double> X;

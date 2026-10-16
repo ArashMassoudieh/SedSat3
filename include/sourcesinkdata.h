@@ -401,9 +401,9 @@ public:
      * @brief Sets the names of OM and particle size constituents
      *
      * @param _omconstituent Name of organic matter constituent
-     * @param _sizeconsituent Name of particle size constituent
+     * @param _sizeconstituent Name of particle size constituent
      */
-    void SetOMandSizeConstituents(const string& _omconstituent, const string& _sizeconsituent);
+    void SetOMandSizeConstituents(const string& _omconstituent, const string& _sizeconstituent);
 
     /**
      * @brief Sets the names of OM and particle size constituents from a vector
@@ -1823,7 +1823,7 @@ private:
     // Analysis Settings
     estimation_mode parameter_estimation_mode_;
     string omconstituent_;
-    string sizeconsituent_;
+    string sizeconstituent_;
     double regression_p_value_threshold_;
     double distance_coeff_;
     QString load_error_; ///< See LoadError()

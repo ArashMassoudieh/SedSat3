@@ -59,7 +59,7 @@ bool Range::writetofile(QFile* file)
     file->write(QString::fromStdString(ToString()).toUtf8());
     return true;
 }
-bool Range::Read(const QStringList &strlist)
+bool Range::Read(const QStringList &/*strlist*/)
 {
     return true;
 }

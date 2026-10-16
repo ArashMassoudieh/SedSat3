@@ -256,7 +256,6 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
     else
         regressionEquation = regression_form::linear;
     coefficients_intercept_.push_back(jsonobject["Intercept"].toDouble());
-    int i=1;
     for(QString key: jsonobject.keys() ) {
         if (key.contains("Coefficient for"))
         {   coefficients_intercept_.push_back(jsonobject[key].toDouble());

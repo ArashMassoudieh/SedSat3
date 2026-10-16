@@ -7,11 +7,11 @@ OmSizeCorrectionTableModel::OmSizeCorrectionTableModel(MultipleLinearRegressionS
 {
     MLRset = _mlrset;
 }
-int OmSizeCorrectionTableModel::rowCount(const QModelIndex &index) const
+int OmSizeCorrectionTableModel::rowCount(const QModelIndex &/*index*/) const
 {
     return MLRset->size();
 }
-int OmSizeCorrectionTableModel::columnCount(const QModelIndex &index) const
+int OmSizeCorrectionTableModel::columnCount(const QModelIndex &/*index*/) const
 {
     if (MLRset->operator[](MLRset->Key(0)).GetIndependentVariableNames().size()==2)
         return 8;

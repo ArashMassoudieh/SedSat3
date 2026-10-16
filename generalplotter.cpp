@@ -88,7 +88,7 @@ void GeneralPlotter::mouseReleaseEvent(QMouseEvent * event)
     QCustomPlot::mouseReleaseEvent(event);
 }
 
-void GeneralPlotter::axisDoubleClick(QCPAxis * axis, QCPAxis::SelectablePart part, QMouseEvent * event)
+void GeneralPlotter::axisDoubleClick(QCPAxis * /*axis*/, QCPAxis::SelectablePart /*part*/, QMouseEvent * /*event*/)
 {
     rescaleAxes(true);
     /*
@@ -251,7 +251,7 @@ bool GeneralPlotter::AddTimeSeries(const string &name, const vector<double> &x, 
     return true;
 
 }
-bool GeneralPlotter::AddTimeSeriesSet(const string &name, const vector<vector<double>> &x, const vector<vector<double>> &y)
+bool GeneralPlotter::AddTimeSeriesSet(const string &/*name*/, const vector<vector<double>> &/*x*/, const vector<vector<double>> &/*y*/)
 {
     return true;
 }

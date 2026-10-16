@@ -175,7 +175,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="dialogchooseexcelsheets.cpp" />
     <ClCompile Include="elementstablemodel.cpp" />
     <ClCompile Include="elementtabledelegate.cpp" />
-    <ClCompile Include="filebrowserpushbuttom.cpp" />
+    <ClCompile Include="filebrowserpushbutton.cpp" />
     <ClCompile Include="FilePushButton.cpp" />
     <ClCompile Include="formelementinformation.cpp" />
     <ClCompile Include="generalchart.cpp" />
@@ -255,7 +255,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <QtMoc Include="generalchart.h" />
     <QtMoc Include="formelementinformation.h" />
     <QtMoc Include="FilePushButton.h" />
-    <QtMoc Include="filebrowserpushbuttom.h" />
+    <QtMoc Include="filebrowserpushbutton.h" />
     <QtMoc Include="elementtabledelegate.h" />
     <QtMoc Include="elementstablemodel.h" />
     <QtMoc Include="dialogchooseexcelsheets.h" />

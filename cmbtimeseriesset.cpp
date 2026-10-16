@@ -11,7 +11,7 @@ CMBTimeSeriesSet::CMBTimeSeriesSet():TimeSeriesSet<double>(),Interface()
 
 }
 
-CMBTimeSeriesSet::CMBTimeSeriesSet(const CMBTimeSeriesSet& mp):TimeSeriesSet<double>(mp)
+CMBTimeSeriesSet::CMBTimeSeriesSet(const CMBTimeSeriesSet& mp):TimeSeriesSet<double>(mp), Interface(mp)
 {
      observed_value = mp.observed_value;
      labels = mp.labels;
@@ -25,6 +25,7 @@ CMBTimeSeriesSet::CMBTimeSeriesSet(int n):TimeSeriesSet<double>(n), Interface()
 CMBTimeSeriesSet& CMBTimeSeriesSet::operator=(const CMBTimeSeriesSet &mp)
 {
     TimeSeriesSet<double>::operator=(mp);
+    Interface::operator=(mp);
     observed_value = mp.observed_value;
     labels = mp.labels;
     return *this;

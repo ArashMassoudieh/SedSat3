@@ -10,7 +10,7 @@
 #include "math.h"
 #include <iostream>
 #include "NormalDist.h"
-#include "GA.h"
+// (GA.h is not needed here; the GA is optional, see ENABLE_GA / CONFIG+=ga)
 #include "Vector.h"
 #include "TimeSeriesSet.h"
 #include "observation.h"
@@ -91,7 +91,7 @@ struct _MCMC_settings
      * Typical: 0.01-0.1
      * Default: 0.05 (5% of parameter range)
      */
-    double purturbation_factor = 0.05;
+    double perturbation_factor = 0.05;
 
     /**
      * @brief Number of model parameters to estimate
@@ -498,7 +498,7 @@ public:
      * Proposal distribution: θ* ~ N(θ_current, diag(pertcoeff²))
      * Respects parameter bounds by reflecting or rejecting out-of-bounds proposals.
      */
-    vector<double> purturb(int k, int chain_counter);
+    vector<double> perturb(int k, int chain_counter);
 
     /**
      * @brief Sets the master seed for the chains' random streams

@@ -64,7 +64,7 @@
     <ClCompile Include="elementtabledelegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="filebrowserpushbuttom.cpp">
+    <ClCompile Include="filebrowserpushbutton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FilePushButton.cpp">
@@ -225,7 +225,7 @@
     <QtMoc Include="elementtabledelegate.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="filebrowserpushbuttom.h">
+    <QtMoc Include="filebrowserpushbutton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="FilePushButton.h">

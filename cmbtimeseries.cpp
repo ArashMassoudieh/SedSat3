@@ -11,7 +11,7 @@ CMBTimeSeries::CMBTimeSeries():TimeSeries<double>(),Interface()
 
 }
 
-CMBTimeSeries::CMBTimeSeries(const CMBTimeSeries& mp):TimeSeries<double>(mp)
+CMBTimeSeries::CMBTimeSeries(const CMBTimeSeries& mp):TimeSeries<double>(mp), Interface(mp)
 {
 
 }
@@ -23,7 +23,9 @@ CMBTimeSeries::CMBTimeSeries(int n):TimeSeries<double>(n), Interface()
 
 CMBTimeSeries& CMBTimeSeries::operator=(const CMBTimeSeries &mp)
 {
-    CMBTimeSeries::operator=(mp);
+    // This called itself, so any assignment recursed until the stack overflowed
+    TimeSeries<double>::operator=(mp);
+    Interface::operator=(mp);
     return *this;
 }
 QJsonObject CMBTimeSeries::toJsonObject() const
@@ -42,7 +44,7 @@ QJsonObject CMBTimeSeries::toJsonObject() const
     return out;
 
 }
-bool CMBTimeSeries::ReadFromJsonObject(const QJsonObject &jsonobject)
+bool CMBTimeSeries::ReadFromJsonObject(const QJsonObject &/*jsonobject*/)
 {
     return true;
 }

@@ -175,8 +175,8 @@ INPUT                  = ./src \
                          ./elementtabledelegate.cpp \
                          ./FilePushButton.h \
                          ./FilePushButton.cpp \
-                         ./filebrowserpushbuttom.h \
-                         ./filebrowserpushbuttom.cpp \
+                         ./filebrowserpushbutton.h \
+                         ./filebrowserpushbutton.cpp \
                          ./formelementinformation.h \
                          ./formelementinformation.cpp \
                          ./generalchart.h \

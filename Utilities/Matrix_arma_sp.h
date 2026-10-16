@@ -33,8 +33,9 @@ public:
 	CMatrix_arma_sp(const CMatrix_arma_sp&);
 	CMatrix_arma_sp(const CVector_arma&);
 	//CVector_arma operator[](int);
-	double& get(int i, int j);
-	double& operator()(int i, int j);
+	double get(int i, int j) const;
+	void set(int i, int j, double value);
+	double operator()(int i, int j) const;
 	std::vector<double*> get(int i);
 	int getnumrows() const;
 	int getnumcols() const;

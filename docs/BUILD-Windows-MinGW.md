@@ -166,18 +166,12 @@ Name: "{autoprograms}\SedSAT3"; Filename: "{app}\app\bin\SedSat3.exe"
 
 ---
 
-## Required change to CMakeLists.txt
+## Install rules in CMakeLists.txt
 
-The install and packaging rules in `CMakeLists.txt` are Linux-specific — they hardcode
-`/usr/local/sedsat3`, `/usr/share/applications`, and `/usr/share/icons`. They do not
-prevent the build in step 4 from succeeding, but `cmake --install` and `cpack` will
-misbehave on Windows. Guard them:
-
-```cmake
-if(UNIX AND NOT APPLE)
-    # ... existing install() rules, CPACK_* settings, and include(CPack) ...
-endif()
-```
+The install and packaging rules in `CMakeLists.txt` use Linux paths
+(`/usr/local/sedsat3`, `/usr/share/applications`, `/usr/share/icons`). Since
+October 2026 they are inside `if(UNIX AND NOT APPLE)`, so `cmake --install` and
+`cpack` are not used on Windows; package with the steps above instead.
 
 ## Known issues worth fixing
 

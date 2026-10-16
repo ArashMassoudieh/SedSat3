@@ -95,7 +95,9 @@ def main():
     out.append("% and regenerate, so that the manual and the software agree.")
     out.append("")
 
-    for command in sorted(schema, key=str.lower):
+    # The genetic-algorithm commands exist only in builds made with the GA
+    # option (ENABLE_GA / CONFIG+=ga), so the manual leaves them out
+    for command in sorted((c for c in schema if not c.startswith("GA")), key=str.lower):
         parameters = schema[command]
 
         out.append(r"\subsection{\texttt{%s}}" % tex(command))

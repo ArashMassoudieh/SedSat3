@@ -1,0 +1,17 @@
+# clang-tidy configuration for SedSAT3 (used by the GitLab CI clang-tidy job).
+# Third-party code under thirdparty/ is not analysed.
+Checks: >
+  -*,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  -bugprone-narrowing-conversions,
+  -bugprone-implicit-widening-of-multiplication-result,
+  cppcoreguidelines-init-variables,
+  cppcoreguidelines-pro-type-member-init,
+  clang-analyzer-*,
+  -clang-analyzer-optin.*
+WarningsAsErrors: 'cppcoreguidelines-init-variables,cppcoreguidelines-pro-type-member-init'
+HeaderFilterRegex: '^(?!.*thirdparty).*/(include|src|Utilities|cli)/.*|^(?!.*thirdparty)[^/]*\.h$'
+CheckOptions:
+  - key: cppcoreguidelines-init-variables.MathHeader
+    value: '<cmath>'

@@ -174,3 +174,27 @@ docs/manual/*.ind
 docs/manual/*.fls
 docs/manual/*.fdb_latexmk
 docs/manual/*.synctex.gz
+
+# Build directories and outputs (qmake, CMake, Qt Creator, Visual Studio)
+/build/
+/build-*/
+/build*/
+/wasm_bin/
+/bin/
+/x64/
+/Debug/
+/Release/
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.exp
+*.lib
+compile_commands.json
+.qtc_clangd/
+CMakeLists.txt.user*
+*.user
+.vs/
+
+# Regression-test output (tests/regression/run.sh default)
+/build-regression/
