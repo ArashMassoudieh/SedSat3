@@ -508,6 +508,8 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
                     logp1[minchain.counter] = logp1[maxchain.counter];
                 }
             }
+            // If the file cannot be reopened the samples are still kept in
+            // results; only the file copy is skipped
             file = fopen(filename.c_str(), "a");
             for (int jj = max(int(min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples) - 50 * MCMC_Settings.number_of_chains), k_0); jj < min(kk + MCMC_Settings.number_of_chains, MCMC_Settings.total_number_of_samples); jj++)
 			{
@@ -515,17 +517,17 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
 				{
                     //QCoreApplication::processEvents(QEventLoop::AllEvents,100*1000);
 
-					fprintf(file, "%i, ", jj);
+					if (file) fprintf(file, "%i, ", jj);
                     for (int i = 0; i < MCMC_Settings.number_of_parameters; i++)
-                        fprintf(file, "%le, ", Params[jj][i]);
+                        if (file) fprintf(file, "%le, ", Params[jj][i]);
                     if (!results->SetRow(jj, jj,Params[jj]))
                     {
                         cout<<"not enough room!";
                     }
 
-                    fprintf(file, "%le, %le, %f,", logp[jj], logp1[jj], stuckcounter[jj%MCMC_Settings.number_of_chains]);
-					for (int j = 0; j < pertcoeff.size(); j++) fprintf(file, "%le,", pertcoeff[j]);
-					fprintf(file, "\n");
+                    if (file) fprintf(file, "%le, %le, %f,", logp[jj], logp1[jj], stuckcounter[jj%MCMC_Settings.number_of_chains]);
+					for (int j = 0; j < pertcoeff.size(); j++) if (file) fprintf(file, "%le,", pertcoeff[j]);
+					if (file) fprintf(file, "\n");
 
 				}
 
@@ -533,7 +535,7 @@ bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *result
                 ////qDebug() << jj << "," << pertcoeff[0] << "," << stuckcounter.max() << "," << stuckcounter.min();
 				//if (jj<n_burnout)
 			}
-			fclose(file);
+			if (file) fclose(file);
 		}
 
         if ((kk-k_0) % (50*MCMC_Settings.number_of_chains) == 0)

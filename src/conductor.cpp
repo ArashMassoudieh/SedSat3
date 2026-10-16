@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "conductor.h"
+#include <algorithm>
 #include "randomstream.h"
 #include "analysishost.h"
 #include "progressreporter.h"
@@ -181,10 +182,21 @@ bool Conductor::CheckNegativeElements(SourceSinkData *_data)
 
     if (NegativeCheckResults.size()>0)
     {
+        // A dataset derived for the analysis (corrected or filtered) can have
+        // negatives the imported data does not, made by the organic-matter
+        // and size correction; say so rather than blaming the input
+        vector<string> imported_results;
+        if (_data != Data() && Data() != nullptr)
+            imported_results = Data()->NegativeValueCheck();
+
         QString message;
         for (unsigned int i=0; i<NegativeCheckResults.size(); i++)
         {
-            message += QString::fromStdString(NegativeCheckResults[i]+"\n");
+            message += QString::fromStdString(NegativeCheckResults[i]);
+            if (_data != Data() &&
+                std::find(imported_results.begin(), imported_results.end(), NegativeCheckResults[i]) == imported_results.end())
+                message += " (after the organic matter and size correction; the imported values are positive)";
+            message += "\n";
         }
         host->ShowWarning(message.toStdString());
         return false;

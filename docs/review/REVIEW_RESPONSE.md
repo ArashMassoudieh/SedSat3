@@ -1,0 +1,185 @@
+# SedSAT3 — Response to the USGS code review (October 2026)
+
+**Review:** Stephen Westenbroek, USGS software code review, 15 October 2026
+(`CODE_REVIEW_SUMMARY_15OCT2026.md`, `TEST_RESULTS.md` in this folder), on
+`code.usgs.gov/cphipps/SedimentSourceAssessmentTool3` at `ce7bc1d`.
+**Response:** branch `review-fixes-oct2026`, starting from `bde1341`
+(the development line, which already contains `ce7bc1d`).
+
+| Commit | Content |
+|---|---|
+| `ac1dcd8` | Review notes, test projects and regression baseline recorded before any change |
+| `41393e0` | Phase 1 — licensing, attribution and USGS metadata |
+| `ac039a2` | Phase 2 — the confirmed code defects |
+| `cdfa4ea` | Phase 3 — seeded, thread-independent random numbers |
+| `68be7ca` | Phase 4 — screening of imported values |
+| `2f8c463` | Phase 5 — tests, CI, optional GA, build cleanup, warnings |
+| Phase 6 | This document; negative-value message distinguishes values made by the correction; the MCMC's periodic write of the samples file checks that the file opened |
+
+Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
+`unit:<test>`) and `tests/regression/` (named `regression`). Both run in CI
+(`.gitlab-ci.yml`, job `test:linux`) and locally with `ctest`.
+
+## Item by item
+
+### Institutional items
+
+| Review item | Status | Commit | Test | Notes |
+|---|---|---|---|---|
+| Threshold question: is this a USGS product? | **Open — release coordinator** | `41393e0` | — | The repository now presents itself as USGS software: USGS header on every first-party file, USGS metadata, no links to personal repositories. Whether the code can be released by USGS, given its authorship, is for the release coordinator; nothing in the code decides it. |
+| 1. AGPL / commercial-license headers in `Utilities` | **Fixed** | `41393e0` | — | The `Utilities` submodule (the author's personal GitHub library, shared with OpenHydroQual) is replaced by the 23 files SedSAT3 builds, copied into the repository from its commit `5db8d14`. The OpenHydroQual / AGPL-3.0 / "purchase a commercial license" headers on `TimeSeries*.{h,hpp}` are replaced by the SedSAT3/USGS header, which every first-party file now carries. The author (A. Massoudieh) made these copies for this purpose; OpenHydroQual's own copies are unchanged. A written statement from the author may be wanted for the release file. |
+| License | **Placeholder** | `41393e0` | — | `LICENSE.md` reads `<<CC0 1.0 Universal / MIT — confirm with Cara>>`, with the USGS CC0 text ready in a comment. `code.json` and `CITATION.cff` carry the same placeholder. |
+| 2. GPL dependency chain (GSL, QCustomPlot, Qt Charts) | **Documented — decision for release authority** | `41393e0` | — | Following the reviewer's note (SWB2's approach), `THIRD_PARTY_LICENSES.md` lists every dependency, how it is used and its license, and states that a binary package linking the GPL components is distributed under GPL-compatible terms. Nothing was re-engineered. |
+| 3. Authorship / release authority | **Open — release coordinator** | `41393e0` | — | Author list is a placeholder in `CITATION.cff` and the README citation; the About dialog keeps Massoudieh, Gellis, Peterman-Phipps. |
+| Citation | **Fixed (placeholders)** | `41393e0` | — | README citation in USGS software-release form; `CITATION.cff` added. DOI and author list are placeholders. |
+| Metadata points at personal GitHub (`code.json`, README, `createdeb.sh`, submodules) | **Fixed** | `41393e0`, `2f8c463` | — | `code.json` and README rewritten with USGS GitLab placeholders; `createdeb.sh` builds and checksums only (no GitHub publishing); `Utilities` submodule removed; QXlsx submodule points at its upstream. `docs/CONTINUING-WORK.md` keeps a generic reference to a development mirror, as the reviewer allowed. |
+| Windows installer from sedsat.org is a different lineage ("CMBSource", EnviroInformatics) | **Fixed in this repository; parallel distribution for coordinator** | `41393e0` | — | README no longer links sedsat.org. Installer project (`CMB_Source.aip`): Manufacturer "EnviroInformatics" → "U.S. Geological Survey" (this changes the default install folder to `Program Files\U.S. Geological Survey\SedSat3`), URLs → USGS placeholder. The portable package (below) is built from this repository. |
+| README truncated / out of sync | **Fixed** | `41393e0` | — | Rewritten: features, manual (placeholder), portable build, build instructions and options, tests, disclaimer, license, citation. |
+| No per-file license headers; no dependency (NOTICE) inventory | **Fixed** | `41393e0` | — | Header on 149 first-party files; `THIRD_PARTY_LICENSES.md`. |
+
+### Code defects
+
+| Review item | Status | Commit | Test | Notes |
+|---|---|---|---|---|
+| B1. Distribution Fitting crashes (`std::out_of_range`) | **Fixed** | `ac039a2` | `unit:distributionFitting_degenerateSets`, `unit:distributionFitting_conductor`, `regression` (DF steps) | The root cause differs from the review's: `append(series, name)` exists in this version. `CreateFittedDistribution` did `result["Observed"] = maxC/2`; because `TimeSeries(size_t)` was not `explicit`, the number became an unnamed empty series and the later `["Observed"]` lookup threw. Also fixed in the same path: the log-normal series was dropped by a duplicate-name check and `setname(2, …)` then went out of range; empty or constant data looped forever; the K-S statistic indexed a missing series. `TimeSeries(size_t)` is now `explicit`; the analysis checks group, constituent, sample count and positivity and reports a message; `MainWindow::Execute` catches any exception from any analysis and shows it. |
+| G1/G2. "Include all elements" inverted; label flips | **Fixed** | `ac039a2`, `2f8c463` | `unit:includeAll_dataLevel`, `unit:includeAll_checkBox` | Fixed label "Include all elements"; checked = all included; the box follows per-element changes. `IncludeExcludeAllElements` has no other caller. The element table also read the text "No" as *include* (`QVariant("No").toBool()` is true); fixed. |
+| G3. Several clicks to toggle one element | **Not changed** | — | — | Usability; the delegate opens a check box editor on double-click. Left for a GUI pass. |
+| Missing `return` in `CheckNegativeElements` (both overloads) | **Already fixed** on `main` (`238dd69`) | — | `unit:negativeCheck_clean`, `unit:negativeCheck_negative` | Six other functions fell off their end (GCC `-Wreturn-type`); all fixed. `-Werror=return-type` (GCC/Clang) and `/we4715` (MSVC) are now set in every build file, so this cannot recur. |
+| Negative-value guard skipped a source group | **Fixed (found during this work)** | `2f8c463` | `unit:negativeCheck_sourceAfterTarget` | `NegativeValueCheck` (and `GrandMean`, `LumpAllProfileSets`) stopped before the last group alphabetically, assuming it was the target. With target "Mixture" the source "Pasture" was never checked and the target was. Now every group but the target. |
+| Negative-value message does not say the correction made the negative | **Improved** | Phase 6 | — (needs a project with an OM/size regression; not exercised by a test) | When the check runs on the corrected dataset, a value that is positive in the imported data is reported as "(after the organic matter and size correction; the imported values are positive)". Whether such a correction is acceptable is the domain review's question. |
+| Null dereference in `CBinary::operator[]` | **Fixed** | `ac039a2` | `unit:binary_indexing` | Throws `std::out_of_range`. The same deliberate null dereference was in `CVector::operator[]` and `CVector_arma::operator[]`, used throughout the analyses; those now throw too, so an indexing mistake gives a message (via the GUI's exception handler) instead of a crash. |
+| Writes to a closed `FILE*` in `src/GA/GA.cpp` | **Fixed** | `ac039a2` | — | `src/GA/GA.cpp` was a stale copy of the GA that no build compiled (it includes a `StringOP.h` that does not exist); removed. The GA that is compiled (`include/GA/GA.hpp`) now uses a `unique_ptr<FILE>` handle and skips writing when `fopen` fails; a `printf` with three `%le` and one argument and an unsynchronised counter in its OpenMP loop were fixed. Every other `fopen`/`fclose` in the code now checks for failure. |
+| `log()` of a non-positive value in Box-Cox | **Fixed** | `ac039a2` | `unit:boxcox_*` | Data with a zero or negative value is left untransformed (as negatives already were; zeros gave −inf) and the analysis lists the skipped constituents. λ = 0 is the log case; for \|λ\| < 0.01 the transform uses `expm1` to keep precision; elsewhere the formula is unchanged. Outlier detection used its own copy of the formula, which shifted the scores of skipped constituents by 1/σ; it now uses the shared one. `CalculateBoxCoxLogLikelihood` (unused) took the log of a sum that was always negative; corrected. |
+| Uninitialised variables | **Fixed** | `ac039a2` | CI `clang-tidy` (errors) | All 128 `cppcoreguidelines-init-variables` / `pro-type-member-init` findings. In-class initialisers for members; NaN for floating-point locals so a read-before-write is visible. Stepwise DFA could report an unassigned Wilks' λ; it now reports NaN. cppcheck `uninitvar` was not run locally (see Static analysis). |
+
+### Reproducibility and random numbers
+
+| Review item | Status | Commit | Test | Notes |
+|---|---|---|---|---|
+| MCMC not reproducible; no seed control or record | **Fixed** | `cdfa4ea` | `unit:mcmc_sameSeedSameResult`, `unit:mcmc_differentSeedDifferentResult`, `unit:random_*` | New "Random seed" field on CMB Bayesian, CMB Bayesian-Batch and Test CMB Bayesian (blank = drawn from the OS). The seed is shown in the results name ("MCMC results for 'X' (random seed N)"), stored with the project, in the CLI report, and on the first line of the samples file. Same seed and settings → byte-identical output. RNG: `std::mt19937_64` and `std::seed_seq`, with the uniform and normal values computed in `include/randomstream.h` rather than by `std::*_distribution`, whose algorithms differ between standard libraries, so a seed reproduces across GCC, Clang and MSVC. |
+| Global `rand()` inside an OpenMP region | **Fixed** | `cdfa4ea` | `unit:mcmc_independentOfThreadCount` | Each chain has its own stream, `RandomStream(seed, chain)`, for the random start and every step, so the samples are identical with 1, 3 or 8 threads. Audit of every OpenMP region: the MCMC step loop also wrote a shared cached maximum through `predicted.SetRow` from every thread (now a named critical section); the GA loop's counter is atomic. Every other `rand()`, `srand()` and clock seed (the `Utilities` helpers, the GA, `TimeSeries`' GSL generator) now draws from a per-thread stream with a fixed seed. |
+| Levenberg–Marquardt "exactly reproducible" | **Made genuinely reproducible** | `cdfa4ea` | `regression` | LM's starting point came from unseeded `rand()`: repeatable on one machine only while nothing reseeded it (the Windows MCMC did) and different between Linux and Windows. It now comes from a fixed-seed stream created for each solve. See the regression summary: for one target sample the result depends noticeably on the starting point. |
+| No convergence diagnostics in the GUI | **Not changed — handoff** | — | — | The chains exist (`MCMC.h`), but R-hat / ESS / trace plots are not computed or shown. A feature for a later release; the size of the residual spread is for the domain review. Note for reviewers: "Number of samples" and burn-in count samples across *all* chains (1000 samples with 8 chains is 125 steps per chain). |
+
+### Input validation
+
+| Review item | Status | Commit | Test | Notes |
+|---|---|---|---|---|
+| NaN / non-numeric input (Test 4b) | **Fixed** | `68be7ca` | `unit:parser_*` | One parser, `include/numericparsing.h` (`parseNumericCell` and overloads), used for Excel import, project load, the element table and the CLI. Refused: empty, NaN/Inf/Infinity in any case, overflow, text, decimal commas. A refused value stops the import with sheet/row/column/value (Excel) or group/sample/constituent (project) — the treatment empty and non-numeric cells already had; SedSAT3 has no missing-data value. The "Ignored NaN, Inf, or -Inf value" message the reviewer saw came from Qt Charts while plotting: the NaN *was* stored. Project load used to turn a missing or NaN value (Qt saves NaN as null) into 0, and drop a failing sample silently. |
+
+### Tests, CI, GA, cleanup
+
+| Review item | Status | Commit | Test | Notes |
+|---|---|---|---|---|
+| No automated tests / CI | **Fixed** | `2f8c463` | — | 42 Qt Test checks; regression on two projects (Box-Cox, outliers, K-S, distribution fitting, ANOVA, correlation/covariance, bracketing, DFA, EDP, LM batch) with relative tolerance 1e-9; `.gitlab-ci.yml` builds (CMake, CMake with GA, qmake; manual Windows job), tests, clang-tidy, cppcheck, Pages. |
+| GA advertised but not built | **Fixed** | `2f8c463` | CI `build:linux-ga` | The GA is kept but excluded by default (`CONFIG+=ga` / `-DENABLE_GA=ON`); both settings build. README and `code.json` no longer list it as a method; README says it is included but disabled, and why; the CLI and its manual leave out its commands. `MCMC.h` no longer includes `GA.h`. |
+| Dead QXlsx submodule URL | **Resolved** | `2f8c463` | fresh `git clone --recursive` | The QXlsx URL (`j2doll/QXlsx`, which now redirects to `QtExcel/QXlsx`) works and its pinned commit is fetchable; it now points at `QtExcel/QXlsx`. The failing clone was most likely the `Utilities` submodule, which is gone. A fresh recursive clone of the branch builds. |
+| Committed build artifacts | **Fixed** | `2f8c463` | — | Removed `wasm_bin/` and the stale `CMBSource.pro`; `.gitignore` covers build folders, IDE files and binaries. Linux no longer links a prebuilt `libQXlsx.a`; QXlsx is compiled from the submodule. |
+| Spelling (`purturbation`, `FileBrowserPushButtom`, "samle") | **Fixed** | `2f8c463`, `cdfa4ea` | — | Also "Discription" (shown in the GUI as a label) and `sizeconsituent_`. The old MCMC setting names are still accepted, and the `purt_coeff_N` columns of the samples file are unchanged. "Pecentage eliminated" (an argument name scripts use) is unchanged. |
+| Three build systems, no source of truth | **Improved** | `2f8c463` | CI | qmake projects share `sedsat3_core.pri`; CMake builds GUI, CLI and tests with the same source list; `SedSat3.vcxproj` kept for Visual Studio. README documents all. |
+| Repo layout mid-transition | **Not changed** | — | — | Moving the root sources under `src/` is a large mechanical change best done separately. |
+
+### Further defects found and fixed during this work
+
+| Defect | Commit | Effect |
+|---|---|---|
+| ANOVA ignored "Use only selected samples/elements" | `2f8c463` | ANOVA results change (below). |
+| `CMBTimeSeries::operator=`, `CVector_arma::operator*=` called themselves | `2f8c463` | Stack overflow if used. |
+| `CMatrix_arma(const CVector_arma&)` built a temporary, then wrote past the end of an empty matrix | `2f8c463` | Memory corruption if used. |
+| `CMatrix_arma_sp::get` returned a reference to a local | `2f8c463` | Writes to sparse matrices were lost (class unused by analyses). |
+| `RangeSet` copy constructor copied nothing; result-type copy constructors dropped their `Interface` base | `2f8c463` | Copies lost data / notes and axis labels. |
+| `TimeSeries::addPoint` did not compare the first two intervals | `2f8c463` | Uneven series could be treated as evenly spaced. |
+| `CMCMC::model` repeated its work once per parameter | `2f8c463` | Wasted time only. |
+| `gamma()` clashed with `::gamma` under Clang | `ac039a2` | Clang build failure. |
+
+## Regression comparison
+
+The scripts in `tests/regression/` were run with the code before the fixes
+(`bde1341`, stored in `tests/baseline/bde1341/`) and after
+(`tests/baseline/`). Every difference, on both projects:
+
+| Analysis | Change | Explained by |
+|---|---|---|
+| Distribution fitting (8 steps) | failed ("Series name not found: Observed") → succeeds | B1 |
+| Outlier analysis: C13 (all sources), N15 (Forest) | every z-score shifts by a constant 1/σ (e.g. −0.273 → 0.542) | Box-Cox: skipped constituents were scored from x − 1 |
+| Box-Cox, Outlier | new warnings listing the constituents Box-Cox skips | Box-Cox |
+| Levenberg–Marquardt batch | most contributions change by < 1e-5 (median 2e-6); `Isotope_test` max 0.0009; `properties` target 15 by up to 0.058 (Crop 0.544 → 0.486, Pasture 0.000 → 0.057) | LM start from a seeded stream instead of `rand()`. **For the domain review:** the LM solution for some samples depends on the starting point. |
+| ANOVA, default options | p-values change, some across 0.05 (e.g. 0.0427 → 0.0143, 1.1e-6 → 1.5e-8) | ANOVA now uses all samples when "Use only selected samples" is false, as the form says, and (Isotope_test) includes the Pasture group it used to drop |
+| ANOVA, selected samples only | changes on `Isotope_test` only | the dropped Pasture group |
+
+Unchanged on both projects: Box-Cox λ, K-S statistics, correlation and
+covariance matrices, bracketing, DFA, EDP. With the fixes, the two projects
+(the same source samples, targets named "Mixture" and "Target") give the
+same ANOVA, which they did not before.
+
+## Compiler warnings and static analysis
+
+GUI build, GCC 13.3, Qt 6.8.3, unique first-party warnings
+(`tools/count-warnings.py`):
+
+| Flags | Before | After |
+|---|---|---|
+| qmake default (`-Wall -Wextra`) | 244 | 101 |
+| `-Wall -Wextra -Wpedantic -Wshadow -Wconversion` | 618 | 449 |
+
+Fixed: every `-Wreturn-type`, `-Winfinite-recursion`, `-Wreturn-local-addr`,
+`-Wformat`, `-Wmaybe-uninitialized`, `-Wmisleading-indentation`,
+`-Wreorder`, `-Wtype-limits`, unused variable/parameter/function, invalid
+escape and copy-constructor warning. Remaining: `-Wconversion` 293,
+`-Wsign-compare` 100, `-Wshadow` 35 (mostly constructor parameters named after
+members), `-Wfloat-conversion` 20 — implicit integer/floating conversions in
+the numerical code, which should be changed one at a time with the regression
+tests rather than in bulk. MSVC `/W4` was not run (no Windows machine here);
+the CI Windows job is the place for it.
+
+**clang-tidy** (LLVM 20, `.clang-tidy`): 128 initialisation findings and the
+real defects above fixed. 25 remain, none of the error class: 7
+`clang-analyzer-security.FloatLoopCounter` (grid loops over x and λ, intended),
+4 `NonNullParamChecker` that the analyser cannot see are guarded, 2
+`NewDeleteLeaks` on Qt-parented labels (false positives), 3
+`exception-escape` from Armadillo destructors, and 9 style findings (unused
+locals, empty `catch`, `_Data` names, repeated branches).
+
+**cppcheck** was not available on the build machine (no administrator
+rights to install it). It runs in CI (`cppcheck` job, reported but not yet
+enforced); its first report should be reviewed before making it blocking.
+
+## Windows portable package
+
+`docs/PACKAGE-Windows-Portable.md` is the full procedure, with verification.
+In short, on the Windows machine (Visual Studio 2022, Qt 6 MSVC kit, the
+`..\armadillo` and `..\vcpkg` layout `SedSat3.vcxproj` expects):
+
+1. Update the clone: `git fetch`, `git checkout review-fixes-oct2026` (or
+   `main` once merged), `git submodule update --init --recursive`.
+2. Build Release x64:
+   `MSBuild.exe SedSat3.vcxproj -p:Configuration=Release -p:Platform=x64 -m`.
+   Check with `dumpbin /dependents x64\Release\SedSat3.exe` that it imports
+   `MSVCP140.dll`, not `MSVCP140D.dll`.
+3. Stage `C:\portable\SedSAT3\bin\bin\SedSat3.exe` (two `bin` levels: the
+   program finds `..\..\resources`).
+4. `windeployqt.exe --release --no-translations C:\portable\SedSAT3\bin\bin\SedSat3.exe`
+   from the same Qt kit (not `--compiler-runtime`).
+5. Copy the MSVC runtime and `vcomp140.dll` (OpenMP) app-local, and `gsl.dll`,
+   `gslcblas.dll`, `blas_win64_MT.dll`, `lapack_win64_MT.dll`.
+6. Copy `resources\tools.json`, `resources\forms_structures.json`,
+   `resources\Icons\` to `C:\portable\SedSAT3\resources\`, plus the README and
+   sample data.
+7. Verify (dependency walk, restricted-token launch), then zip to
+   `SedSAT3-<version>-windows-x64-portable.zip` and write its SHA-256.
+
+Not run here: this machine is Linux.
+
+## Placeholders still to fill
+
+| Placeholder | Where |
+|---|---|
+| `<<CC0 1.0 Universal / MIT — confirm with Cara>>` | `LICENSE.md`, `code.json`, `CITATION.cff` |
+| `<<10.5066/XXXXXXX>>` (DOI) | `CITATION.cff`, `code.json`, `README.md` |
+| `<<Massoudieh, A.; Peterman-Phipps, C.; Gellis, A.C.; … confirm full list>>` | `CITATION.cff`, `README.md` (About dialog lists the three names) |
+| `<<https://code.usgs.gov/...final group path...>>` | `README.md`, `code.json`, `CITATION.cff`, `CMB_Source.aip`, `docs/BUILD-Windows-MinGW.md`, `docs/CONTINUING-WORK.md` |
+| `<<USGS manual URL/DOI>>` | `README.md` |
+| `<<version>>`, `<<YYYY-MM-DD>>`, `<<year>>` | `code.json`, `CITATION.cff`, `README.md` |
+| `<<contact name>>`, `<<contact email>>` | `code.json` |
+| `<<confirm: no third-party icon sets are included>>` | `THIRD_PARTY_LICENSES.md` |
+| Approved-software disclaimer | `DISCLAIMER.md` has the provisional text; switch at release |
