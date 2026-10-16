@@ -1,0 +1,193 @@
+{
+  "project": "../data/Isotope_test.cmb",
+  "on_error": "continue",
+  "steps": [
+    {
+      "command": "BoxCox",
+      "arguments": {
+        "Source/Target group": "Bank"
+      }
+    },
+    {
+      "command": "Outlier",
+      "arguments": {
+        "Source/Target group": "Bank",
+        "Threshold": "3"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Bank",
+        "Distribution": "Normal"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Bank",
+        "Distribution": "Lognormal"
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Bank",
+        "Constituent": "Barium",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Bank",
+        "Constituent": "Aluminum",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "BoxCox",
+      "arguments": {
+        "Source/Target group": "Crop"
+      }
+    },
+    {
+      "command": "Outlier",
+      "arguments": {
+        "Source/Target group": "Crop",
+        "Threshold": "3"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Crop",
+        "Distribution": "Normal"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Crop",
+        "Distribution": "Lognormal"
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Crop",
+        "Constituent": "Barium",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Crop",
+        "Constituent": "Aluminum",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "BoxCox",
+      "arguments": {
+        "Source/Target group": "Forest"
+      }
+    },
+    {
+      "command": "Outlier",
+      "arguments": {
+        "Source/Target group": "Forest",
+        "Threshold": "3"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Forest",
+        "Distribution": "Normal"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Forest",
+        "Distribution": "Lognormal"
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Forest",
+        "Constituent": "Barium",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Forest",
+        "Constituent": "Aluminum",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "BoxCox",
+      "arguments": {
+        "Source/Target group": "Pasture"
+      }
+    },
+    {
+      "command": "Outlier",
+      "arguments": {
+        "Source/Target group": "Pasture",
+        "Threshold": "3"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Pasture",
+        "Distribution": "Normal"
+      }
+    },
+    {
+      "command": "KS",
+      "arguments": {
+        "Source/Target group": "Pasture",
+        "Distribution": "Lognormal"
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Pasture",
+        "Constituent": "Barium",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "DF",
+      "arguments": {
+        "Source/Target group": "Pasture",
+        "Constituent": "Aluminum",
+        "Box-cox transformation": "false",
+        "OM and Size Correct based on target sample": ""
+      }
+    },
+    {
+      "command": "Levenberg-Marquardt-Batch",
+      "arguments": {
+        "Apply size and organic matter correction": "false",
+        "Softmax transformation": "true"
+      }
+    }
+  ]
+}
