@@ -8,6 +8,7 @@
  */
 
 #include "elemental_profile.h"
+#include "numericparsing.h"
 #include <iostream>
 #include "Utilities.h"
 #include <QStringList>
@@ -709,22 +710,42 @@ double Elemental_Profile::GetValue(const string& element_name) const
   */
  bool Elemental_Profile::ReadFromJsonObject(const QJsonObject& json_object)
  {
+     QString error;
+     return ReadFromJsonObject(json_object, error);
+ }
+
+ bool Elemental_Profile::ReadFromJsonObject(const QJsonObject& json_object, QString& error)
+ {
      clear();
+
+     // Each value must be a finite number. (toDouble() turned a missing or
+     // non-numeric value, including a NaN saved as null, into 0.)
+     auto read_values = [&](const QJsonObject& values, bool skip_labels) {
+         for (const QString& key : values.keys()) {
+             if (skip_labels && (key == "XAxisLabel" || key == "YAxisLabel"))
+                 continue;
+             double value = 0;
+             QString reason;
+             if (!parseNumericJson(values[key], value, reason)) {
+                 error = QStringLiteral("constituent '%1': %2").arg(key, reason);
+                 return false;
+             }
+             (*this)[key.toStdString()] = value;
+         }
+         return true;
+     };
 
      if (json_object.contains("Include")) {
          // Full format with metadata
          SetIncludedInAnalysis(json_object["Include"].toBool());
 
-         QJsonObject contents = json_object["Element Contents"].toObject();
-         for (const QString& key : contents.keys()) {
-             (*this)[key.toStdString()] = contents[key].toDouble();
-         }
+         if (!read_values(json_object["Element Contents"].toObject(), false))
+             return false;
      }
      else {
          // Legacy format - elements directly in root
-         for (const QString& key : json_object.keys()) {
-             (*this)[key.toStdString()] = json_object[key].toDouble();
-         }
+         if (!read_values(json_object, true))
+             return false;
      }
 
      if (json_object.contains("XAxisLabel")) {
@@ -760,7 +781,11 @@ double Elemental_Profile::GetValue(const string& element_name) const
      for (const QString& line : string_list) {
          QStringList parts = line.split(":");
          if (parts.size() > 1) {
-             AppendElement(parts[0].toStdString(), parts[1].toDouble());
+             double value = 0;
+             QString reason;
+             if (!parseNumericCell(parts[1], value, reason))
+                 return false;
+             AppendElement(parts[0].toStdString(), value);
          }
      }
 

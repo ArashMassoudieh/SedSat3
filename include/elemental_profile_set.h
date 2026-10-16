@@ -394,6 +394,13 @@ public:
     bool writetofile(QFile* file) override;
     QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject& jsonobject) override;
+
+    /**
+     * @brief Reads every profile, refusing any value that is not a finite number
+     * @param error Set to "sample 'S', constituent 'X': <reason>" if a value is refused
+     * @return false if a value is refused
+     */
+    bool ReadFromJsonObject(const QJsonObject& jsonobject, QString& error);
     bool Read(const QStringList& strlist) override;
 
 private:

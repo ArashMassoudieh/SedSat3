@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "mainwindow.h"
+#include "numericparsing.h"
 #include "ui_mainwindow.h"
 
 #include "QDebug"
@@ -431,8 +432,19 @@ bool MainWindow::LoadModel(const QString& fileName)
 
     // Load data
     file.open(QIODevice::ReadOnly);
-    Data()->ReadFromFile(&file);
+    const bool loaded = Data()->ReadFromFile(&file);
     file.close();
+    if (!loaded)
+    {
+        QMessageBox::critical(
+            this,
+            tr("Load Error"),
+            tr("Could not load the project:\n%1\n\n%2")
+            .arg(fileName)
+            .arg(Data()->LoadError())
+        );
+        return false;
+    }
 
     // Load results
     QJsonObject resultsJson = jsonObject["Results"].toObject();
@@ -702,10 +714,11 @@ bool MainWindow::ReadExcel(const QString& filename)
                     return false;
                 }
 
-                bool isNumber = false;
-                double value = dataCell->readValue().toDouble(&isNumber);
-
-                if (!isNumber)
+                // Every value must be a finite number; NaN and Inf are refused
+                // like any other non-number (QVariant::toDouble accepted them)
+                double value = 0;
+                QString reason;
+                if (!parseNumericValue(dataCell->readValue(), value, reason))
                 {
                     QMessageBox::warning(
                         this,
@@ -714,11 +727,13 @@ bool MainWindow::ReadExcel(const QString& filename)
                             "Sheet: %1\n"
                             "Row: %2\n"
                             "Column: %3\n"
-                            "Value: '%4'")
+                            "Value: '%4'\n"
+                            "(%5)")
                         .arg(selectedSheets[sheetIdx])
                         .arg(row)
                         .arg(col + 2)
                         .arg(dataCell->readValue().toString())
+                        .arg(reason)
                     );
                     dataCollection.Clear();
                     return false;

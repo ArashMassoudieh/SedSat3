@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "sourcesinkdata.h"
+#include "numericparsing.h"
 #include "randomstream.h"
 #include <cmath>
 #include "iostream"
@@ -2720,6 +2721,12 @@ bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject& jso
 
 bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject& jsonobject)
 {
+    QString error;
+    return ReadElementDatafromJsonObject(jsonobject, error);
+}
+
+bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject& jsonobject, QString& error)
+{
     // Clear existing data
     clear();
     
@@ -2727,7 +2734,12 @@ bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject& jsonobject
     for (QString key : jsonobject.keys())
     {
         Elemental_Profile_Set elemental_profile_set;
-        elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject());
+        QString set_error;
+        if (!elemental_profile_set.ReadFromJsonObject(jsonobject[key].toObject(), set_error))
+        {
+            error = QStringLiteral("group '%1', %2").arg(key, set_error);
+            return false;
+        }
         operator[](key.toStdString()) = elemental_profile_set;
     }
     
@@ -2785,11 +2797,26 @@ bool SourceSinkData::ReadFromFile(QFile* fil)
     // Clear existing data
     Clear();
     
+    load_error_.clear();
+
     // Parse JSON from file
-    QJsonObject jsondoc = QJsonDocument().fromJson(fil->readAll()).object();
+    QJsonParseError parse_error;
+    QJsonDocument document = QJsonDocument::fromJson(fil->readAll(), &parse_error);
+    if (document.isNull())
+    {
+        load_error_ = QStringLiteral("The file is not valid JSON (%1).").arg(parse_error.errorString());
+        return false;
+    }
+    QJsonObject jsondoc = document.object();
     
-    // Load all components
-    ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject());
+    // Load all components. Every data value must be a finite number.
+    QString data_error;
+    if (!ReadElementDatafromJsonObject(jsondoc["Element Data"].toObject(), data_error))
+    {
+        load_error_ = QStringLiteral("Invalid data value in %1.").arg(data_error);
+        Clear();
+        return false;
+    }
     ReadElementInformationfromJsonObject(jsondoc["Element Information"].toObject());
     ReadToolsUsedFromJsonObject(jsondoc["Tools used"].toArray());
     ReadOptionsfromJsonObject(jsondoc["Options"].toObject());

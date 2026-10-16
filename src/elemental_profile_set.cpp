@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "elemental_profile_set.h"
+#include "numericparsing.h"
 #include <iostream>
 #include <gsl/gsl_statistics_double.h>
 #include <QFile>
@@ -313,6 +314,12 @@ QJsonObject Elemental_Profile_Set::toJsonObject() const
 
 bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject& jsonobject)
 {
+    QString error;
+    return ReadFromJsonObject(jsonobject, error);
+}
+
+bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject& jsonobject, QString& error)
+{
     clear();
 
     for (const QString& key : jsonobject.keys())
@@ -321,11 +328,16 @@ bool Elemental_Profile_Set::ReadFromJsonObject(const QJsonObject& jsonobject)
             continue;
         }
 
+        // A profile with a refused value stops the load; it used to be
+        // dropped without a word
         Elemental_Profile elemental_profile;
-        if (elemental_profile.ReadFromJsonObject(jsonobject[key].toObject()))
+        QString profile_error;
+        if (!elemental_profile.ReadFromJsonObject(jsonobject[key].toObject(), profile_error))
         {
-            AppendProfile(key.toStdString(), elemental_profile);
+            error = QStringLiteral("sample '%1', %2").arg(key, profile_error);
+            return false;
         }
+        AppendProfile(key.toStdString(), elemental_profile);
     }
 
     return true;

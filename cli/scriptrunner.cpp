@@ -148,7 +148,9 @@ bool ScriptRunner::LoadProject(const QString& project_path)
 
     if (!loaded)
     {
-        error = "Could not read project '" + project_path + "'. It may not be a SedSAT project file.";
+        error = "Could not read project '" + project_path + "': " +
+                (script_data.LoadError().isEmpty() ? QStringLiteral("it may not be a SedSAT project file.")
+                                                   : script_data.LoadError());
         return false;
     }
 

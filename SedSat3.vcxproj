@@ -157,6 +157,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="src\GA\GADistribution.cpp" />
     <ClCompile Include="src\GA\Individual.cpp" />
     <ClCompile Include="src\interface.cpp" />
+    <ClCompile Include="src\numericparsing.cpp" />
     <ClCompile Include="src\observation.cpp" />
     <ClCompile Include="src\parameter.cpp" />
     <ClCompile Include="src\sourcesinkdata.cpp" />
@@ -231,6 +232,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="include\parameter.h" />
     <ClInclude Include="include\sourcesinkdata.h" />
     <ClInclude Include="include\randomstream.h" />
+    <ClInclude Include="include\numericparsing.h" />
     <ClInclude Include="multiplelinearregression.h" />
     <ClInclude Include="multiplelinearregressionset.h" />
     <ClInclude Include="range.h" />

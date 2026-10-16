@@ -68,6 +68,7 @@ SOURCES += \
     src/elemental_profile.cpp \
     src/elemental_profile_set.cpp \
     src/interface.cpp \
+    src/numericparsing.cpp \
     src/observation.cpp \
     src/parameter.cpp \
     src/sourcesinkdata.cpp \
@@ -96,7 +97,8 @@ HEADERS += \
     include/progressreporter.h \
     include/conductor.h \
     include/sourcesinkdata.h \
-    include/randomstream.h
+    include/randomstream.h \
+    include/numericparsing.h
 
 unix:!macx {
     LIBS += -larmadillo -llapack -lblas -lgsl -lpthread -lgomp

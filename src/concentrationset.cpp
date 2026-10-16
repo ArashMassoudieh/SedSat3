@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "concentrationset.h"
+#include "numericparsing.h"
 #include <limits>
 #include "math.h"
 #include "Utilities.h"
@@ -474,9 +475,10 @@ double ConcentrationSet::FindOptimalBoxCoxParameter(
         return 1.0;
     }
 
-    // Check for NaN values
-    if (!(GetMinimum() == GetMinimum())) {
-        std::cerr << "Warning: NaN detected in concentration data" << std::endl;
+    // Imported data is always finite (numericparsing.h); this guards
+    // values produced by a correction
+    if (!AllFinite(*this)) {
+        std::cerr << "Warning: non-finite value in concentration data" << std::endl;
         return 1.0;
     }
 

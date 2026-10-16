@@ -74,6 +74,7 @@ SOURCES += \
     src/elemental_profile.cpp \
     src/elemental_profile_set.cpp \
     src/interface.cpp \
+    src/numericparsing.cpp \
     src/observation.cpp \
     src/parameter.cpp \
     src/sourcesinkdata.cpp \
@@ -135,6 +136,7 @@ HEADERS += \
     include/parameter.h \
     include/sourcesinkdata.h \
     include/randomstream.h \
+    include/numericparsing.h \
     indicatesheetsdialog.h \
     mainwindow.h \
     multiplelinearregression.h \

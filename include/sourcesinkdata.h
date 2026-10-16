@@ -1726,6 +1726,13 @@ public:
     bool ReadElementDatafromJsonObject(const QJsonObject& jsonobject);
 
     /**
+     * @brief As ReadElementDatafromJsonObject(), reporting a refused value
+     * @param error Set to "group 'G', sample 'S', constituent 'X': <reason>"
+     *              if a value is not a finite number
+     */
+    bool ReadElementDatafromJsonObject(const QJsonObject& jsonobject, QString& error);
+
+    /**
      * @brief Deserializes analysis options from a JSON object
      *
      * Loads configuration options and settings from JSON format.
@@ -1780,6 +1787,9 @@ public:
      * @note Clears all existing data before loading
      */
     bool ReadFromFile(QFile* fil);
+
+    /// Why the last ReadFromFile() failed, or empty if it succeeded
+    const QString& LoadError() const { return load_error_; }
 private:
     // ========== Private Data Members ==========
 
@@ -1816,6 +1826,7 @@ private:
     string sizeconsituent_;
     double regression_p_value_threshold_;
     double distance_coeff_;
+    QString load_error_; ///< See LoadError()
     double error_stdev_ = 0;
     double error_stdev_isotope_ = 0;
     double epsilon_ = 0;

@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "elementstablemodel.h"
+#include "numericparsing.h"
 
 ElementTableModel::ElementTableModel(SourceSinkData *_data, QObject *parent) : QAbstractTableModel(parent)
 {
@@ -125,7 +126,12 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
         }
         if (index.column()==3)
         {
-            Data->GetElementInformation(element)->standard_ratio = value.toDouble();
+            // Refuse an edit that is not a finite number, leaving the old value
+            double ratio = 0;
+            QString reason;
+            if (!parseNumericValue(value, ratio, reason))
+                return false;
+            Data->GetElementInformation(element)->standard_ratio = ratio;
         }
         if (index.column()==4)
         {

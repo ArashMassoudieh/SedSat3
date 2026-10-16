@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "setupcommands.h"
+#include "numericparsing.h"
 
 #include "sourcesinkdata.h"
 #include "elemental_profile.h"
@@ -312,13 +313,11 @@ bool Apply(const QString& command,
 
         if (arguments.contains("standard ratio"))
         {
-            const QJsonValue value = arguments["standard ratio"];
-            bool parsed = true;
-            const double ratio = value.isString() ? value.toString().toDouble(&parsed)
-                                                  : value.toDouble();
-            if (!parsed)
+            double ratio = 0;
+            QString reason;
+            if (!parseNumericJson(arguments["standard ratio"], ratio, reason))
             {
-                error = "'" + value.toString() + "' is not a number for the standard ratio.";
+                error = "Standard ratio of '" + element + "': " + reason + ".";
                 return false;
             }
             information->standard_ratio = ratio;

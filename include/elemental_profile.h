@@ -465,6 +465,13 @@ public:
      */
     bool ReadFromJsonObject(const QJsonObject& json) override;
 
+    /**
+     * @brief Reads the profile, refusing any value that is not a finite number
+     * @param error Set to "constituent 'X': <reason>" if a value is refused
+     * @return false if a value is refused; the profile is then incomplete
+     */
+    bool ReadFromJsonObject(const QJsonObject& json, QString& error);
+
 private:
     // =========================================================================
     // PRIVATE MEMBER VARIABLES
