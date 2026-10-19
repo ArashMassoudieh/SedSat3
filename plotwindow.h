@@ -3,7 +3,9 @@
 
 #ifndef PLOTWINDOW_H
 #define PLOTWINDOW_H
+#ifndef USE_QCHARTS
 #define USE_QCHARTS
+#endif
 
 #include <QDialog>
 #include "sourcesinkdata.h"

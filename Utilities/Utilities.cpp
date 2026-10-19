@@ -5,8 +5,10 @@
 #ifdef _WINDOWS
 #include <cctype>
 #include <algorithm>
-#include < time.h >
+#include <time.h>
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #include <windows.h> 
 #endif // _WINDOWS
 

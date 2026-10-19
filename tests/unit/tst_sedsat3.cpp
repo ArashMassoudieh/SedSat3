@@ -22,12 +22,16 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <tuple>
 
 #include "analysishost.h"
 #include "progressreporter.h"
 #include "conductor.h"
 #include "sourcesinkdata.h"
 #include "concentrationset.h"
+#include "cmbdistribution.h"
+#include "contribution.h"
+#include "resultitem.h"
 #include "numericparsing.h"
 #include "randomstream.h"
 #include "MCMC.h"
@@ -142,6 +146,13 @@ private slots:
     void mcmc_sameSeedSameResult();
     void mcmc_differentSeedDifferentResult();
     void mcmc_independentOfThreadCount();
+
+    // ---------- Follow-up to the review's supplementary documents ----------
+    void levenbergMarquardt_contributionsSumToOne();
+    void levenbergMarquardt_singleSampleSource();
+    void errorAnalysis_sameSeedSameResult();
+    void distribution_uniformCurveIsFinite();
+    void interface_copiesKeepNotes();
 };
 
 // =====================================================================
@@ -653,6 +664,109 @@ void SedSAT3Tests::mcmc_independentOfThreadCount()
     const auto one_thread = RunTestMCMC(7, 1, folder.path());
     QVERIFY(one_thread == RunTestMCMC(7, 3, folder.path()));
     QVERIFY(one_thread == RunTestMCMC(7, 8, folder.path()));
+}
+
+// =====================================================================
+// Follow-up to the review's supplementary documents
+// =====================================================================
+
+void SedSAT3Tests::levenbergMarquardt_contributionsSumToOne()
+{
+    // Reviewer test plan, Test 2: contributions are non-negative and sum to one
+    for (transformation trans : {transformation::softmax, transformation::linear})
+    {
+        SourceSinkData data;
+        BuildData(data, PositiveGroups(), "Mixture");
+        data.InitializeParametersAndObservations("M1");
+        data.SolveLevenberg_Marquardt(trans);
+        ResultItem item = data.GetContribution();
+        const Contribution* contributions = dynamic_cast<const Contribution*>(item.Result());
+        QVERIFY(contributions != nullptr);
+        QCOMPARE(int(contributions->size()), 2);
+        double sum = 0;
+        for (const auto& [source, value] : *contributions)
+        {
+            QVERIFY2(value >= -1e-12, qPrintable(QString("%1 = %2").arg(QString::fromStdString(source)).arg(value)));
+            sum += value;
+        }
+        delete item.Result();
+        QVERIFY(std::fabs(sum - 1.0) < 1e-9);
+    }
+}
+
+void SedSAT3Tests::levenbergMarquardt_singleSampleSource()
+{
+    // Reviewer test plan, Test 4d: a source group with a single sample must
+    // not crash; it either runs or refuses with a message
+    GroupData groups = PositiveGroups();
+    groups["Agriculture"] = {{"A1", {{"Al", 8.1}, {"Fe", 4.0}}}};
+    SourceSinkData data;
+    BuildData(data, groups, "Mixture");
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    std::map<std::string, std::string> arguments = {
+        {"Sample", "M1"}, {"Softmax transformation", "true"},
+        {"Apply size and organic matter correction", "false"}};
+    bool threw = false;
+    bool ran = false;
+    try { ran = conductor.Execute("Levenberg-Marquardt", arguments); }
+    catch (const std::exception&) { threw = true; }
+    QVERIFY(!threw);
+    QVERIFY(ran || !host.warnings.empty());
+}
+
+void SedSAT3Tests::errorAnalysis_sameSeedSameResult()
+{
+    std::map<std::string, std::string> arguments = {
+        {"Sample", "M1"}, {"Softmax transformation", "true"},
+        {"Apply size and organic matter correction", "false"},
+        {"Pecentage eliminated", "25"}, {"Number of realizations", "20"},
+        {"Random seed", "99"}};
+    auto run = [&](const std::map<std::string, std::string>& args) {
+        SourceSinkData data;
+        BuildData(data, PositiveGroups(), "Mixture");
+        RecordingHost host;
+        Conductor conductor(&host);
+        conductor.SetData(&data);
+        const bool ok = conductor.Execute("Error_Analysis", args);
+        Results* results = conductor.GetResults();
+        const QString name = QString::fromStdString(results->GetName());
+        const QJsonObject json = results->toJsonObject();
+        delete results;
+        return std::make_tuple(ok, name, json);
+    };
+    const auto [ok1, name1, json1] = run(arguments);
+    const auto [ok2, name2, json2] = run(arguments);
+    QVERIFY(ok1 && ok2);
+    QVERIFY(name1.contains("random seed 99"));
+    QCOMPARE(json1, json2);
+}
+
+void SedSAT3Tests::distribution_uniformCurveIsFinite()
+{
+    Distribution uniform;
+    uniform.distribution = distribution_type::uniform;
+    const TimeSeries<double> curve = uniform.EvaluateAsTimeSeries(11, 3.0);
+    QCOMPARE(int(curve.size()), 11);
+    for (size_t i = 0; i < curve.size(); i++)
+        QVERIFY(std::isfinite(curve[i].t));
+    QCOMPARE(curve[0].t, 0.0);
+    QCOMPARE(curve[10].t, 1.0);
+    QCOMPARE(int(uniform.EvaluateAsTimeSeries(1, 3.0).size()), 0);  // no division by zero
+}
+
+void SedSAT3Tests::interface_copiesKeepNotes()
+{
+    Elemental_Profile profile;
+    profile.AppendElement("Al", 1.0);
+    profile.AppendtoNotes("Al was detected as outlier");
+    profile.SetLimit(_range::high, 2.5);
+    const Elemental_Profile copied(profile);
+    QCOMPARE(copied.GetNotes(), profile.GetNotes());
+    Elemental_Profile assigned;
+    assigned = profile;
+    QCOMPARE(assigned.GetNotes(), profile.GetNotes());
 }
 
 int main(int argc, char* argv[])

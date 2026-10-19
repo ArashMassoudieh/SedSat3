@@ -799,6 +799,10 @@
  	},
  	"Error_Analysis":
  	{
+ 		"Random seed": {
+ 			"type": "lineEdit",
+ 			"default": ""
+ 		},
  		"Pecentage eliminated": {
    			"type": "spinBox",
 			"default": "20",

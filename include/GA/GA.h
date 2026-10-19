@@ -545,7 +545,7 @@ public:
      *
      * Copies all data from another GA object.
      */
-    CGA operator=(CGA &C);
+    CGA& operator=(const CGA &C);
 
     /**
      * @brief Constructor from configuration file and model

@@ -18,7 +18,8 @@
 //#include "qvariant.h"
 #include <vector>
 #include "Vector.h"
-#define ARMA_USE_SUPERLU 1
+// SuperLU is used only if the installed Armadillo was configured with it
+// (this used to force it on, which failed to link where SuperLU is absent)
 
 using namespace arma;
 

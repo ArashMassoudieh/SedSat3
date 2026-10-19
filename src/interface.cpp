@@ -8,19 +8,11 @@ Interface::Interface()
 
 }
 
-Interface::Interface(const Interface &intf)
-{
-    Options = intf.Options;
-    XAxis_Label = intf.XAxis_Label;
-    YAxis_Label = intf.YAxis_Label;
-}
-Interface& Interface::operator=(const Interface &intf)
-{
-    Options = intf.Options;
-    XAxis_Label = intf.XAxis_Label;
-    YAxis_Label = intf.YAxis_Label;
-    return *this;
-}
+// Copies carry every member. (These used to copy only the options and axis
+// labels, so a copied profile lost its notes, such as the outlier and
+// bracketing flags, and its highlight limits.)
+Interface::Interface(const Interface &intf) = default;
+Interface& Interface::operator=(const Interface &intf) = default;
 
 string Interface::ToString() const
 {

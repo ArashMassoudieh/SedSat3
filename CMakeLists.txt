@@ -148,7 +148,7 @@ function(sedsat3_configure target)
     # it a build error rather than a warning (USGS code review, Oct 2026)
     target_compile_options(${target} PRIVATE
         $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Werror=return-type>
-        $<$<CXX_COMPILER_ID:MSVC>:/we4715 /Zc:__cplusplus>
+        $<$<CXX_COMPILER_ID:MSVC>:/we4715 /Zc:__cplusplus /utf-8>
     )
     if(MSVC)
         target_compile_definitions(${target} PRIVATE NOMINMAX)
@@ -178,7 +178,6 @@ if(SEDSAT3_BUILD_GUI)
         elementstablemodel.cpp elementstablemodel.h
         elementtabledelegate.cpp elementtabledelegate.h
         filebrowserpushbutton.cpp filebrowserpushbutton.h
-        FilePushButton.cpp FilePushButton.h
         formelementinformation.cpp formelementinformation.h
         generalchart.cpp generalchart.h
         GeneralChartPlotter.cpp GeneralChartPlotter.h

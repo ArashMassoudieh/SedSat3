@@ -81,7 +81,7 @@ QTableWidget *CMBTimeSeries::ToTable()
         rowlabels<<QString::number(getTime(i));
         if (highlightoutsideoflimit)
         {
-            if (getTime(i)>highlimit || getValue(i)<lowlimit)
+            if (getValue(i)>highlimit || getValue(i)<lowlimit)
             {
                 tablewidget->item(i,0)->setForeground(QColor(Qt::red));
             }

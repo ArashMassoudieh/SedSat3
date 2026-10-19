@@ -1062,7 +1062,9 @@ CVector SourceSinkData::ObservedDataforSelectedSample_Isotope(const string &Sele
         if (SelectedTargetSample!="")
             observed_data[i] = (this->GetSampleSet(GetTargetGroup())->GetProfile(SelectedTargetSample)->GetValue(isotope_order_[i])/double(1000)+1.0)*element_information_[isotope_order_[i]].standard_ratio*GetSampleSet(GetTargetGroup())->GetProfile(SelectedTargetSample)->GetValue(corresponding_element);
         else if (selected_target_sample_!="")
-            observed_data[i] = (this->GetSampleSet(GetTargetGroup())->GetProfile(selected_target_sample_)->GetValue(isotope_order_[i])/double(1000)+1.0)*element_information_[isotope_order_[i]].standard_ratio*GetSampleSet(GetTargetGroup())->GetProfile(SelectedTargetSample)->GetValue(corresponding_element);
+            observed_data[i] = (this->GetSampleSet(GetTargetGroup())->GetProfile(selected_target_sample_)->GetValue(isotope_order_[i])/double(1000)+1.0)*element_information_[isotope_order_[i]].standard_ratio*GetSampleSet(GetTargetGroup())->GetProfile(selected_target_sample_)->GetValue(corresponding_element);
+        // (This branch read the base element from GetProfile(SelectedTargetSample),
+        // which is empty here, so it dereferenced a null pointer)
     }
     return observed_data;
 }
@@ -3333,6 +3335,14 @@ Elemental_Profile SourceSinkData::t_TestPValue(const string& source1, const stri
             mean2 = concentration_set2.CalculateMeanLog();
         }
 
+        // A t-test needs at least two samples in each group; with fewer the
+        // degrees of freedom below would wrap around (size_t)
+        if (concentration_set1.size() < 2 || concentration_set2.size() < 2)
+        {
+            p_values.AppendElement(element_names[i], NAN);
+            continue;
+        }
+
         // Compute t-statistic
         double standard_error = sqrt(pow(std1, 2) / concentration_set1.size() +
             pow(std2, 2) / concentration_set2.size());
@@ -3726,12 +3736,12 @@ void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string>& element
     }
 }
 
-SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double& percentage)
+SourceSinkData SourceSinkData::RandomlyEliminateSourceSamples(const double& percentage, RandomStream& stream)
 {
     SourceSinkData reduced_dataset;
 
     // Randomly select samples to eliminate
-    vector<string> samples_to_eliminate = RandomlypickSamples(percentage / 100.0);
+    vector<string> samples_to_eliminate = RandomlypickSamples(percentage / 100.0, stream);
 
     // Copy groups with specified samples eliminated
     for (map<string, Elemental_Profile_Set>::const_iterator it = cbegin(); it != cend(); it++)
@@ -3806,8 +3816,14 @@ CMBTimeSeriesSet SourceSinkData::BootStrap(
     const double& percentage,
     unsigned int num_iterations,
     string target_sample,
-    bool use_softmax)
+    bool use_softmax,
+    std::uint64_t seed)
 {
+    // One stream for the whole analysis, so the same seed repeats it
+    // (the elimination used a shared stream whose state depended on what
+    // ran earlier in the session)
+    RandomStream sampling_stream(seed);
+
     // Initialize result time series
     CMBTimeSeriesSet contribution_time_series(numberofsourcesamplesets_);
 
@@ -3821,7 +3837,7 @@ CMBTimeSeriesSet SourceSinkData::BootStrap(
     for (size_t iteration = 0; iteration < num_iterations; iteration++)
     {
         // Create bootstrapped dataset with randomly excluded samples
-        SourceSinkData bootstrapped_data = RandomlyEliminateSourceSamples(percentage);
+        SourceSinkData bootstrapped_data = RandomlyEliminateSourceSamples(percentage, sampling_stream);
         bootstrapped_data.InitializeParametersAndObservations(target_sample);
 
         // Update progress if progress tracker available
@@ -3852,8 +3868,14 @@ bool SourceSinkData::BootStrap(
     const double& percentage,
     unsigned int num_iterations,
     string target_sample,
-    bool use_softmax)
+    bool use_softmax,
+    std::uint64_t seed)
 {
+    // One stream for the whole analysis, so the same seed repeats it
+    // (the elimination used a shared stream whose state depended on what
+    // ran earlier in the session)
+    RandomStream sampling_stream(seed);
+
     // Initialize contribution time series
     CMBTimeSeriesSet* contributions = new CMBTimeSeriesSet(numberofsourcesamplesets_);
 
@@ -3867,7 +3889,7 @@ bool SourceSinkData::BootStrap(
     for (size_t iteration = 0; iteration < num_iterations; iteration++)
     {
         // Create bootstrapped dataset
-        SourceSinkData bootstrapped_data = RandomlyEliminateSourceSamples(percentage);
+        SourceSinkData bootstrapped_data = RandomlyEliminateSourceSamples(percentage, sampling_stream);
         bootstrapped_data.InitializeParametersAndObservations(target_sample);
 
         // Update progress
@@ -3892,7 +3914,7 @@ bool SourceSinkData::BootStrap(
 
     // ========== Result 1: Contribution Time Series ==========
     ResultItem contributions_result;
-    results->SetName("Error Analysis for target sample '" + target_sample + "'");
+    results->SetName("Error Analysis for target sample '" + target_sample + "' (random seed " + std::to_string(seed) + ")");
     contributions_result.SetName("Error Analysis");
     contributions_result.SetResult(contributions);
     contributions_result.SetType(result_type::stacked_bar_chart);
@@ -4128,7 +4150,7 @@ vector<string> SourceSinkData::AllSourceSampleNames() const
     return all_sample_names;
 }
 
-vector<string> SourceSinkData::RandomlypickSamples(const double& percentage) const
+vector<string> SourceSinkData::RandomlypickSamples(const double& percentage, RandomStream& stream) const
 {
     // Get all source sample names
     vector<string> all_samples = AllSourceSampleNames();
@@ -4138,7 +4160,7 @@ vector<string> SourceSinkData::RandomlypickSamples(const double& percentage) con
     for (size_t i = 0; i < all_samples.size(); i++)
     {
         // Generate random number in [0, 1)
-        double random_value = ThreadRandomStream().Uniform();
+        double random_value = stream.Uniform();
 
         // Include sample if random value < percentage
         if (random_value < percentage)

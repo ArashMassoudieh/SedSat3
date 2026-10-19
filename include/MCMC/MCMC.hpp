@@ -313,7 +313,7 @@ void CMCMC<T>::initialize(vector<double> par)
 		{
             if (parameter(j).Get_Distribution()=="normal" || parameter(j).Get_Distribution()=="uniform")
 			{
-                pertcoeff[j] = MCMC_Settings.perturbation_factor*(-parameter(j)->GetRange().low + -parameter(j)->GetRange().high);
+                pertcoeff[j] = MCMC_Settings.perturbation_factor*(-parameter(j)->GetRange().low + parameter(j)->GetRange().high);
 			}
             if (parameter(j).Get_Distribution()=="log-normal")
 			{

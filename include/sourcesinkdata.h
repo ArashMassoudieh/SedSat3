@@ -4,6 +4,7 @@
 #ifndef SOURCESINKDATA_H
 #define SOURCESINKDATA_H
 
+#include "randomstream.h"
 #include <elemental_profile_set.h>
 #include "vector"
 #include "parameter.h"
@@ -65,8 +66,6 @@ struct ANOVA_info
 enum class estimation_mode { only_contributions, elemental_profile_and_contribution, source_elemental_profiles_based_on_source_data };
 
 enum class negative_reporting { list, complete };
-
-class RandomStream;
 
 class SourceSinkData : public map<string, Elemental_Profile_Set>
 {
@@ -1046,7 +1045,8 @@ public:
         const double& percentage,
         unsigned int num_iterations,
         string target_sample,
-        bool use_softmax
+        bool use_softmax,
+        std::uint64_t seed = DefaultRandomSeed
     );
 
     /**
@@ -1063,6 +1063,7 @@ public:
      * @param num_iterations Number of bootstrap iterations
      * @param target_sample Name of target sample to apportion
      * @param use_softmax If true, use softmax transformation
+     * @param seed Seed of the random elimination; the same seed repeats the analysis
      *
      * @return true if analysis completed successfully
      *
@@ -1074,7 +1075,8 @@ public:
         const double& percentage,
         unsigned int num_iterations,
         string target_sample,
-        bool use_softmax
+        bool use_softmax,
+        std::uint64_t seed = DefaultRandomSeed
     );
 
     /**
@@ -2486,7 +2488,7 @@ private:
      * @note Target group samples are preserved
      * @note Element distributions are recalculated
      */
-    SourceSinkData RandomlyEliminateSourceSamples(const double& percentage);
+    SourceSinkData RandomlyEliminateSourceSamples(const double& percentage, RandomStream& stream);
 
     /**
      * @brief Retrieves names of all samples across all source groups
@@ -2512,7 +2514,7 @@ private:
      * @note Expected number of samples: N × percentage
      * @note Each sample is selected independently
      */
-    vector<string> RandomlypickSamples(const double& percentage) const;
+    vector<string> RandomlypickSamples(const double& percentage, RandomStream& stream) const;
 
     /**
      * @brief Creates a new dataset with a source sample designated as the target

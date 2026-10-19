@@ -14,7 +14,7 @@
 | `cdfa4ea` | Phase 3 — seeded, thread-independent random numbers |
 | `68be7ca` | Phase 4 — screening of imported values |
 | `2f8c463` | Phase 5 — tests, CI, optional GA, build cleanup, warnings |
-| Phase 6 | This document; negative-value message distinguishes values made by the correction; the MCMC's periodic write of the samples file checks that the file opened |
+| `538ed73` | This document; negative-value message distinguishes values made by the correction; the MCMC's periodic write of the samples file checks that the file opened |
 
 Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 `unit:<test>`) and `tests/regression/` (named `regression`). Both run in CI
@@ -71,7 +71,7 @@ Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 
 | Review item | Status | Commit | Test | Notes |
 |---|---|---|---|---|
-| No automated tests / CI | **Fixed** | `2f8c463` | — | 42 Qt Test checks; regression on two projects (Box-Cox, outliers, K-S, distribution fitting, ANOVA, correlation/covariance, bracketing, DFA, EDP, LM batch) with relative tolerance 1e-9; `.gitlab-ci.yml` builds (CMake, CMake with GA, qmake; manual Windows job), tests, clang-tidy, cppcheck, Pages. |
+| No automated tests / CI | **Fixed** | `2f8c463` | — | 47 Qt Test checks; regression on two projects (Box-Cox, outliers, K-S, distribution fitting, ANOVA, correlation/covariance, bracketing, DFA, EDP, LM batch) with relative tolerance 1e-9; `.gitlab-ci.yml` builds (CMake, CMake with GA, qmake; manual Windows job), tests, clang-tidy, cppcheck, Pages. |
 | GA advertised but not built | **Fixed** | `2f8c463` | CI `build:linux-ga` | The GA is kept but excluded by default (`CONFIG+=ga` / `-DENABLE_GA=ON`); both settings build. README and `code.json` no longer list it as a method; README says it is included but disabled, and why; the CLI and its manual leave out its commands. `MCMC.h` no longer includes `GA.h`. |
 | Dead QXlsx submodule URL | **Resolved** | `2f8c463` | fresh `git clone --recursive` | The QXlsx URL (`j2doll/QXlsx`, which now redirects to `QtExcel/QXlsx`) works and its pinned commit is fetchable; it now points at `QtExcel/QXlsx`. The failing clone was most likely the `Utilities` submodule, which is gone. A fresh recursive clone of the branch builds. |
 | Committed build artifacts | **Fixed** | `2f8c463` | — | Removed `wasm_bin/` and the stale `CMBSource.pro`; `.gitignore` covers build folders, IDE files and binaries. Linux no longer links a prebuilt `libQXlsx.a`; QXlsx is compiled from the submodule. |
@@ -91,6 +91,42 @@ Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 | `TimeSeries::addPoint` did not compare the first two intervals | `2f8c463` | Uneven series could be treated as evenly spaced. |
 | `CMCMC::model` repeated its work once per parameter | `2f8c463` | Wasted time only. |
 | `gamma()` clashed with `::gamma` under Clang | `ac039a2` | Clang build failure. |
+
+## Follow-up to the supplementary documents (October 16)
+
+Steve's second email added `CODE_REVIEW_OBSERVATIONS.md`, `linter_output.txt`,
+`REVIEWER_TEST_PLAN.md`, `RABBIT_HOLE_rand_and_threads.md`,
+`BUILDING_ON_WINDOWS_WITH_PIXI.md` and the USGS release checklist (all in this
+folder). Every concrete finding was checked against the code; the item-by-item
+answers are in the response letter,
+[`response-letter/SedSAT3_code_review_response.pdf`](response-letter/SedSAT3_code_review_response.pdf)
+(Sections 7–11). Fixed in the follow-up commit:
+
+| Defect | Where | Test |
+|---|---|---|
+| `Interface` copy constructor / assignment dropped notes and highlight limits (outlier and bracketing flags lost on copy); `CMBVector::operator=` skipped its base | `src/interface.cpp`, `cmbvector.cpp` | `unit:interface_copiesKeepNotes` |
+| Null dereference: isotope observed data read the base element from an empty sample name | `src/sourcesinkdata.cpp` (`ObservedDataforSelectedSample_Isotope`) | — |
+| t-test degrees of freedom (`size_t`) wrapped around with < 2 samples | `src/sourcesinkdata.cpp` (`t_TestPValue`) | — |
+| Uniform/Dirichlet distribution curve made of NaN points; one-point curve divided by zero | `src/cmbdistribution.cpp` | `unit:distribution_uniformCurveIsFinite` |
+| Results table compared the time, not the value, with the upper highlight limit | `cmbtimeseries.cpp` | — |
+| MCMC initialisation step size used −low − high | `include/MCMC/MCMC.hpp` | — |
+| Error Analysis drew from a shared stream (result depended on earlier runs); now its own seed field, recorded in the results name | `src/conductor.cpp`, `src/sourcesinkdata.cpp`, forms | `unit:errorAnalysis_sameSeedSameResult` |
+| `GA.hpp` not self-contained (`Q_version` guards, a macro defined nowhere); `CGA::operator=` signature | `include/GA/GA.hpp`, `GA.h` | CI `build:linux-ga` |
+| Hard-coded `#define ARMA_USE_SUPERLU` broke builds without SuperLU (Windows/conda-forge) | `Utilities/Matrix_arma*.cpp` | — |
+| MSVC C4005/C4828: unguarded `USE_QCHARTS`, `NOMINMAX`; no `/utf-8`; `#include < time.h >` | `plotwindow.h`, `Utilities/Utilities.cpp`, `CMakeLists.txt` | — |
+| Visual Studio project compiled QCustomPlot from outside the repository | `SedSat3.vcxproj` | — |
+| Unused `FilePushButton` class, empty `GA_impl` files; stale `createdmg.sh` version | removed / updated | — |
+
+Also added: tests for the reviewer test plan's Test 2 (contributions sum to one and
+are non-negative, both parameterisations) and Test 4d (single-sample source),
+`concurrency-mt-unsafe` as an error in `.clang-tidy`, and a codespell CI job
+(reported, not enforced). Regression comparison: no differences.
+
+Still open from the supplementary documents: a corrected `pixi.toml` (to be
+tested on Windows), the Visual Studio project's prebuilt QXlsx library, the GA's
+identical `apply_to_all` branches (intent to confirm), `performance-*`
+clang-tidy style items, MSVC `/W4` and the first cppcheck report, and the
+G3 single-click toggle.
 
 ## Regression comparison
 

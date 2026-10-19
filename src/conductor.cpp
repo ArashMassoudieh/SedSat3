@@ -2137,9 +2137,15 @@ bool Conductor::ExecuteANOVA(const std::map<std::string, std::string>& arguments
     return true;
 }
 
-bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& arguments)
+bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& given_arguments)
 {
-    results.SetName("Error Analysis");
+    // The random elimination of samples is seeded like the MCMC, and the
+    // seed is recorded in the results name
+    std::map<std::string, std::string> arguments = given_arguments;
+    std::uint64_t seed = 0;
+    if (!ResolveRandomSeed(arguments, seed))
+        return false;
+    results.SetName("Error Analysis (random seed " + std::to_string(seed) + ")");  // BootStrap refines it
 
     ScopedProgressReporter rtw(host, 0);
 
@@ -2180,7 +2186,8 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& a
         aquiutils::atof(arguments.at("Pecentage eliminated")),
         aquiutils::atoi(arguments.at("Number of realizations")),
         arguments.at("Sample"),
-        softmax
+        softmax,
+        seed
     );
 
     return outcome;

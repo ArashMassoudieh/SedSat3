@@ -40,6 +40,7 @@ CMBVector::CMBVector(int n):CVector(n), Interface()
 
 CMBVector& CMBVector::operator=(const CMBVector &mp)
 {
+    Interface::operator=(mp);
     labels = mp.labels;
     boolean_values = mp.boolean_values;
     highlimit = mp.highlimit;

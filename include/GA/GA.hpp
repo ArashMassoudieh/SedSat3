@@ -17,9 +17,7 @@
 #include "parameter.h"
 #include <QCoreApplication>
 
-#ifdef Q_version
-    #include "progressreporter.h"
-#endif
+#include "progressreporter.h"
 
 // Files are opened through this handle so they are always closed exactly
 // once and a failed fopen is never written to.
@@ -292,8 +290,10 @@ CGA<T>::CGA(const CGA<T> &C)
 }
 
 template<class T>
-CGA<T> CGA<T>::operator=(CGA<T> &C)
+CGA<T>& CGA<T>::operator=(const CGA<T> &C)
 {
+    if (this == &C)
+        return *this;
     GA_params = C.GA_params;
 	filenames = C.filenames;
 	Ind = C.Ind;
@@ -595,9 +595,9 @@ void CGA<T>::write_to_detailed_GA(string s)
 template<class T>
 int CGA<T>::optimize()
 {
-	#ifdef Q_version
+	#ifdef Q_GUI_SUPPORT
 	QCoreApplication::processEvents();
-	#endif // Q_version
+	#endif // Q_GUI_SUPPORT
 	string RunFileName = filenames.pathname + filenames.outputfilename;
 
 	// Truncate both output files

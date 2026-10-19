@@ -9,8 +9,9 @@ Checks: >
   cppcoreguidelines-init-variables,
   cppcoreguidelines-pro-type-member-init,
   clang-analyzer-*,
+  concurrency-mt-unsafe,
   -clang-analyzer-optin.*
-WarningsAsErrors: 'cppcoreguidelines-init-variables,cppcoreguidelines-pro-type-member-init'
+WarningsAsErrors: 'cppcoreguidelines-init-variables,cppcoreguidelines-pro-type-member-init,concurrency-mt-unsafe'
 HeaderFilterRegex: '^(?!.*thirdparty).*/(include|src|Utilities|cli)/.*|^(?!.*thirdparty)[^/]*\.h$'
 CheckOptions:
   - key: cppcoreguidelines-init-variables.MathHeader

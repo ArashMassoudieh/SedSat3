@@ -60,7 +60,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;..\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;.\thirdparty\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;USE_QCHARTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatSpecificWarningsAsErrors>4715;%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
@@ -78,7 +78,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;..\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;.\thirdparty\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;USE_QCHARTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatSpecificWarningsAsErrors>4715;%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
@@ -118,7 +118,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\qcustomplot6\qcustomplot.cpp" />
+    <ClCompile Include="thirdparty\qcustomplot6\qcustomplot.cpp" />
     <ClCompile Include=".\Utilities\Matrix.cpp" />
     <ClCompile Include=".\Utilities\Matrix_arma.cpp" />
     <ClCompile Include=".\Utilities\NormalDist.cpp" />
@@ -176,7 +176,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="elementstablemodel.cpp" />
     <ClCompile Include="elementtabledelegate.cpp" />
     <ClCompile Include="filebrowserpushbutton.cpp" />
-    <ClCompile Include="FilePushButton.cpp" />
     <ClCompile Include="formelementinformation.cpp" />
     <ClCompile Include="generalchart.cpp" />
     <ClCompile Include="genericform.cpp" />
@@ -189,7 +188,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
   <ItemGroup>
     <QtMoc Include="optionsdialog.h" />
     <QtMoc Include="GeneralChartPlotter.h" />
-    <QtMoc Include="..\qcustomplot6\qcustomplot.h" />
+    <QtMoc Include="thirdparty\qcustomplot6\qcustomplot.h" />
     <ClInclude Include="generalplotter.h" />
     <ClInclude Include="testmcmc.h" />
     <ClInclude Include="Utilities\TimeSeries.h" />
@@ -254,7 +253,6 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <QtMoc Include="genericform.h" />
     <QtMoc Include="generalchart.h" />
     <QtMoc Include="formelementinformation.h" />
-    <QtMoc Include="FilePushButton.h" />
     <QtMoc Include="filebrowserpushbutton.h" />
     <QtMoc Include="elementtabledelegate.h" />
     <QtMoc Include="elementstablemodel.h" />

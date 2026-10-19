@@ -67,9 +67,6 @@
     <ClCompile Include="filebrowserpushbutton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FilePushButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="formelementinformation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -172,7 +169,7 @@
     <ClCompile Include="src\GA\Individual.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\qcustomplot6\qcustomplot.cpp">
+    <ClCompile Include="thirdparty\qcustomplot6\qcustomplot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="aboutdialog.cpp">
@@ -228,9 +225,6 @@
     <QtMoc Include="filebrowserpushbutton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="FilePushButton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="formelementinformation.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -267,7 +261,7 @@
     <QtMoc Include="selectsampletablemodel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="..\qcustomplot6\qcustomplot.h">
+    <QtMoc Include="thirdparty\qcustomplot6\qcustomplot.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="optionsdialog.h">

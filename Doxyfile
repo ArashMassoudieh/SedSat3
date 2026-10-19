@@ -173,8 +173,6 @@ INPUT                  = ./src \
                          ./elementstablemodel.cpp \
                          ./elementtabledelegate.h \
                          ./elementtabledelegate.cpp \
-                         ./FilePushButton.h \
-                         ./FilePushButton.cpp \
                          ./filebrowserpushbutton.h \
                          ./filebrowserpushbutton.cpp \
                          ./formelementinformation.h \

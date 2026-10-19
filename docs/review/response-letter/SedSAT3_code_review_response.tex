@@ -1,0 +1,955 @@
+% SedSAT3 – Response to the USGS code review (S. Westenbroek, October 2026)
+% Build: pdflatex SedSAT3_code_review_response.tex  (run twice)
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{usgsgreen}{RGB}{0,100,60}
+\definecolor{commentbg}{RGB}{242,245,248}
+\definecolor{todo}{RGB}{190,30,30}
+
+% ---------------------------------------------------------------- macros
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\commit}[1]{\texttt{#1}}
+\newcommand{\todo}[1]{\textcolor{todo}{\textbf{[#1]}}}
+\newcounter{cmt}
+\newcounter{grp}
+\renewcommand{\thecmt}{\thegrp.\arabic{cmt}}
+\newcommand{\group}[1]{\stepcounter{grp}\setcounter{cmt}{0}\section*{\thegrp.\quad #1}\addcontentsline{toc}{section}{\thegrp.\quad #1}}
+% \reviewer{source}{comment text}
+\newenvironment{reviewer}[1]{%
+  \refstepcounter{cmt}%
+  \begin{tcolorbox}[enhanced,breakable,colback=commentbg,colframe=usgsgreen!60,
+    boxrule=0.4pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+    title={\small\textbf{Comment \thecmt}\hfill\textit{#1}},
+    coltitle=black,colbacktitle=usgsgreen!15,fonttitle=\small]}%
+  {\end{tcolorbox}}
+\newenvironment{response}{\par\noindent\textbf{Response.}\ }{\par\medskip}
+\newcommand{\status}[1]{\par\noindent\textit{Status:} #1\par}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small SedSAT3 — response to code review}
+\rhead{\small \thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\begin{document}
+\sloppy
+\setlength{\emergencystretch}{3em}
+
+% ---------------------------------------------------------------- letter
+\begin{flushleft}
+Arash Massoudieh\\
+Department of Civil and Environmental Engineering\\
+The Catholic University of America\\
+\href{mailto:massoudieh@cua.edu}{massoudieh@cua.edu}
+
+\medskip
+\today
+
+\medskip
+Stephen M.\ Westenbroek\\
+U.S. Geological Survey\\
+via Cara Peterman-Phipps, U.S. Geological Survey
+\end{flushleft}
+
+\textbf{Re: Code review of SedSAT3 (Sediment Source Assessment Tool, version 3), IPDS IP-190994}
+
+Dear Steve,
+
+Thank you for the careful and generous review of SedSAT3, and for the
+additional material you sent on October 16. Both were very useful. Your
+notes on how to read the Kiro-generated documents (as a triage guide, with
+the line numbers worth checking and the prose taken with a grain of salt)
+were exactly the right framing, and I have tried to follow it: every
+concrete finding was checked against the code, real defects were fixed, and
+findings that turned out not to apply are explained rather than worked
+around.
+
+All changes are in merge request
+\href{https://code.usgs.gov/cphipps/SedimentSourceAssessmentTool3/-/merge_requests/4}{!4}
+on code.usgs.gov (branch \code{review-fixes-oct2026}), organised as one commit
+per area so they can be reviewed separately:
+
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Commit & Content\\
+\midrule
+\commit{ac1dcd8} & Review notes, test projects, and a regression baseline recorded before any change\\
+\commit{41393e0} & Licensing, attribution and USGS metadata\\
+\commit{ac039a2} & The confirmed code defects\\
+\commit{cdfa4ea} & Seeded, thread-independent random numbers\\
+\commit{68be7ca} & Screening of every imported value\\
+\commit{2f8c463} & Unit tests, regression tests, GitLab CI, optional GA, build cleanup, warnings\\
+\commit{538ed73} & Response document (\code{docs/\allowbreak{}review/\allowbreak{}REVIEW\_\allowbreak{}RESPONSE.\allowbreak{}md})\\
+\commit{follow-up} & Follow-up to your October 16 documents: further fixes and tests (Sections 7--11)\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+In brief:
+\begin{itemize}[nosep]
+\item All non-USGS license and attribution notices are gone; the repository
+  no longer depends on or points to any personal repository; LICENSE,
+  DISCLAIMER, code.json, CITATION.cff and a third-party license inventory are
+  in place. The license itself, the DOI and the author list await the release
+  coordinator (Section~1).
+\item Every code defect in your review was confirmed and fixed, plus about a
+  dozen further defects found while doing so (Sections~2 and~6).
+\item The MCMC now takes a user-set random seed, records it, and gives
+  identical results for the same seed regardless of the number of threads
+  (Section~3).
+\item Every imported value is screened by a single parser; NaN and Inf are
+  refused at import with the cell location (Section~4).
+\item There are now 47 unit tests (including the NaN / negative / illegal
+  value tests you suggested), a regression suite on two example projects,
+  and a GitLab CI pipeline running the tests, clang-tidy and cppcheck
+  (Section~5).
+\end{itemize}
+
+Below, each of your comments is reproduced (quoted where short, summarised
+where long) and followed by my response. Comments are grouped by topic; the
+source of each is given at the right of its heading: \emph{Email 10/15} and
+\emph{Email 10/16} are your two emails to Cara, \emph{Summary} is
+\code{CODE\_\allowbreak{}REVIEW\_\allowbreak{}SUMMARY\_\allowbreak{}15OCT2026.\allowbreak{}md}, \emph{Tests} is
+\code{TEST\_\allowbreak{}RESULTS.\allowbreak{}md}, \emph{Observations} is
+\code{CODE\_\allowbreak{}REVIEW\_\allowbreak{}OBSERVATIONS.\allowbreak{}md}, and \emph{Linter} is
+\code{linter\_\allowbreak{}output.\allowbreak{}txt}. File and line references are to the code after the
+fixes (commit \commit{538ed73}).
+
+Thank you again for your time; I would be very glad to have you take another
+look once the licensing and ownership questions are settled.
+
+Sincerely,
+
+\medskip
+Arash Massoudieh
+
+\newpage
+\tableofcontents
+\newpage
+
+% ====================================================================
+\group{Ownership, licensing, attribution and citation}
+
+\begin{reviewer}{Email 10/15; Summary, threshold question}
+In its current form too much of the code and documentation references
+non-USGS resources. ``I'd encourage you to clarify the issue of ownership
+and commit to either pushing full on for USGS support (i.e.\ documentation and
+code and issues migrated to a USGS supported platform) or just continue to
+develop as is without trying to rebrand as USGS software.''
+\end{reviewer}
+\begin{response}
+\todo{Confirm wording with Cara and the release coordinator.} We intend
+SedSAT3 to be a USGS software release, as the successor of the USGS Sed\_SAT
+tool (OFR 2017-1062). The repository on code.usgs.gov is now the
+authoritative copy: code, documentation and issue tracking live there, the
+README, code.json and CITATION.cff point only to it (placeholder until the
+final group path is assigned), and no file refers to a personal repository.
+Following your suggestion, any further development on my side will be
+submitted as merge requests against the USGS repository.
+\end{response}
+\status{Repository side done (\commit{41393e0}); institutional decision with the release coordinator.}
+
+\begin{reviewer}{Email 10/15; Summary, blocker 1}
+Several files carry OpenHydroQual / GNU AGPL-3.0 headers with a ``purchase a
+commercial license, contact \ldots enviroinformatics.co'' clause, contradicting
+the Utilities submodule's own Apache-2.0 license and far from the USGS
+CC0 preference.
+\end{reviewer}
+\begin{response}
+These files (\code{TimeSeries.\allowbreak{}h/\allowbreak{}.\allowbreak{}hpp}, \code{TimeSeriesSet.\allowbreak{}h/\allowbreak{}.\allowbreak{}hpp}) were
+written by me for another project and reused here. The \code{Utilities}
+submodule has been removed and the 23 files SedSAT3 actually builds were
+brought into the repository (\code{Utilities/\allowbreak{}README.\allowbreak{}md} records where they
+came from). The AGPL / commercial headers were replaced by the same two-line
+USGS header that every first-party source file now carries:
+\begin{quote}\small\ttfamily
+// SedSAT3 – Sediment Source Assessment Tool, version 3\\
+// U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+\end{quote}
+As the author I release these copies for SedSAT3 under the repository
+license; I am happy to provide a signed statement to that effect if the
+release coordinator needs one. Third-party code (QXlsx, QCustomPlot) was not
+touched.
+\end{response}
+\status{Fixed (\commit{41393e0}).}
+
+\begin{reviewer}{Email 10/15; Summary, blocker 2}
+The repository is GPL-3.0 because it links GSL, QCustomPlot and Qt Charts,
+outside the USGS preference (CC0/MIT/Unlicense). Rather than re-engineering,
+consider the SWB2 approach (a third-party license inventory); the USGS
+package pfdf was deliberately released under GPL.
+\end{reviewer}
+\begin{response}
+I followed your SWB2 suggestion rather than replacing libraries.
+\code{THIRD\_\allowbreak{}PARTY\_\allowbreak{}LICENSES.\allowbreak{}md} lists every dependency (Qt modules, Qt
+Charts, QCustomPlot, QXlsx, GSL, Armadillo, LAPACK/BLAS, the OpenMP and MSVC
+runtimes), how SedSAT3 uses each, its license, and where it comes from, and
+notes that a binary package linking the GPL components is distributed under
+GPL-compatible terms. \code{LICENSE.\allowbreak{}md} currently holds a placeholder with
+the USGS CC0 text ready. \todo{License decision: CC0 1.0, MIT, or — following
+the pfdf precedent — GPL-3.0, which would remove the dependency question
+entirely. To be decided with Cara and the release coordinator; I plan to ask
+Jonathan King what the pfdf GPL release required.}
+\end{response}
+\status{Inventory done (\commit{41393e0}); license choice open.}
+
+\begin{reviewer}{Summary, blocker 3}
+The canonical identity, the \code{Utilities} submodule and the QXlsx fork
+live under the author's personal GitHub, which points toward non-USGS
+primary authorship. Raise with the release coordinator.
+\end{reviewer}
+\begin{response}
+The \code{Utilities} submodule is gone (see Comment 1.2) and the QXlsx
+submodule now points at its public upstream (\code{QtExcel/\allowbreak{}QXlsx}), not a
+personal fork. Authorship is recorded in \code{CITATION.\allowbreak{}cff} and the README
+citation \todo{author list and order to be confirmed: Massoudieh, A.;
+Peterman-Phipps, C.; Gellis, A.C.; \ldots}.
+\end{response}
+\status{Repository side done (\commit{41393e0}, \commit{2f8c463}); authorship for the release coordinator.}
+
+\begin{reviewer}{Email 10/15}
+The README points to GitHub for the code and the user manual, and the
+suggested citation (``Massoudieh, A., et al.\ (2023) \ldots
+https://github.com/\ldots'') ``fails on many levels (a USGS product needs to
+cite a DOI to a durable, USGS-approved digital repository; all contributors
+need to be listed).''
+\end{reviewer}
+\begin{response}
+The README was rewritten: no GitHub links; the repository is the
+code.usgs.gov project; the manual points to its USGS location
+\todo{manual URL/DOI}; the citation is in USGS software-release form with
+the full author list and the release DOI \todo{10.5066/XXXXXXX}. The same
+metadata is in \code{CITATION.\allowbreak{}cff} and \code{code.\allowbreak{}json}. The README also
+gained sections on the disclaimer, license, build instructions, build
+options, tests, and running the portable Windows build.
+\end{response}
+\status{Fixed with placeholders (\commit{41393e0}).}
+
+\begin{reviewer}{Summary, should address}
+Metadata (\code{code.\allowbreak{}json}, README, \code{createdeb.\allowbreak{}sh}, submodules) points at
+personal GitHub; the README's Windows installer link (sedsat.org) serves a
+different-lineage artifact (``CMBSource'' by ``EnviroInformatics'').
+\end{reviewer}
+\begin{response}
+\code{code.\allowbreak{}json} was rewritten for code.usgs.gov (and no longer lists the
+genetic algorithm as a method); \code{createdeb.\allowbreak{}sh} now only builds and
+checksums the Debian package, with no GitHub publishing; the README no
+longer links to sedsat.org. In the installer project the manufacturer is now
+``U.S. Geological Survey'' and its URLs point to the USGS repository. The
+Windows package reviewers receive will be the portable build made from this
+repository (Section~7).
+\end{response}
+\status{Fixed (\commit{41393e0}).}
+
+\begin{reviewer}{Summary, optional / polish}
+No per-file license headers; no shipped dependency-license (NOTICE)
+inventory. The README is truncated and reads as adapted from the predecessor
+``CMBSource'' project.
+\end{reviewer}
+\begin{response}
+Every first-party source file now carries the USGS header, and
+\code{THIRD\_\allowbreak{}PARTY\_\allowbreak{}LICENSES.\allowbreak{}md} is the dependency inventory. The README was
+rewritten from scratch (Comment 1.5).
+\end{response}
+\status{Fixed (\commit{41393e0}).}
+
+% ====================================================================
+\group{Code defects}
+
+\begin{reviewer}{Email 10/15; Summary; Tests, Test 7}
+Distribution Fitting terminates the application with an unhandled
+\code{std::\allowbreak{}out\_\allowbreak{}of\_\allowbreak{}range} (debugger-traced to \code{TimeSeriesSet::\allowbreak{}operator[]}
+from \code{ExecuteDistributionFitting}); suspected cause: a non-existent
+\code{TimeSeriesSet::\allowbreak{}append(series, name)} overload, so fit results are stored
+unnamed.
+\end{reviewer}
+\begin{response}
+Confirmed and fixed, though the root cause differs from Kiro's diagnosis: the
+\code{append(series, name)} overload exists in this version. The fault was
+in \code{ConcentrationSet::\allowbreak{}CreateFittedDistribution}, which assigned a number
+to the ``Observed'' series (\code{result["Observed"] = maxC/\allowbreak{}2}). Because
+\code{TimeSeries(size\_\allowbreak{}t)} was not \code{explicit}, the number was silently
+converted into an empty, unnamed series, and the later lookup of
+``Observed'' threw. Three further faults in the same path were fixed: the
+log-normal series was silently dropped by a duplicate-name check and
+\code{setname(2,...)} then indexed past the end; empty or constant data made
+the fitting loop infinite (zero step); and the Kolmogorov--Smirnov statistic
+indexed a series that might not exist. \code{TimeSeries(size\_\allowbreak{}t)} is now
+\code{explicit}, so this class of silent conversion cannot recur; the analysis
+checks the group, constituent, sample count and positivity and reports a
+clear message; and \code{MainWindow::\allowbreak{}Execute} now catches any exception from
+any analysis and reports it in a dialog instead of terminating.
+\end{response}
+\status{Fixed (\commit{ac039a2}). Tests: \code{distributionFitting\_\allowbreak{}degenerateSets},
+\code{distributionFitting\_\allowbreak{}conductor}; regression (all distribution-fitting steps now succeed).}
+
+\begin{reviewer}{Email 10/15; Summary; Tests, G1 and G2}
+The ``Include all elements'' checkbox has inverted logic (checking it
+excludes all tracers), and its label flips between ``Include'' and
+``Exclude'', which is what produced the inversion. ``Just ensure that the
+behavior of the checkboxes matches your intentions.''
+\end{reviewer}
+\begin{response}
+Fixed as you suggest: the label is now fixed (``Include all elements''),
+checked means every element is included, and the box follows the
+per-element settings (it clears when any element is excluded in the table).
+\code{IncludeExcludeAllElements} has no other caller. While writing the test
+I also found that the element table read the text ``No'' as \emph{include}
+(\code{QVariant("No").\allowbreak{}toBool()} is true); fixed.
+\end{response}
+\status{Fixed (\commit{ac039a2}, \commit{2f8c463}). Tests: \code{includeAll\_\allowbreak{}dataLevel}, \code{includeAll\_\allowbreak{}checkBox}.}
+
+\begin{reviewer}{Tests, G3}
+Toggling a single element appears to require several clicks.
+\end{reviewer}
+\begin{response}
+Agreed that this is friction. The table uses an editor that opens on
+double-click; making the cell a single-click toggle is a small GUI change
+that I will make in the next GUI pass.
+\end{response}
+\status{Open (usability, low).}
+
+\begin{reviewer}{Email 10/15; Summary; Tests, Test 4c}
+Missing \code{return} on the clean path of
+\code{Conductor::\allowbreak{}CheckNegativeElements} (both overloads) — undefined behaviour,
+currently masked on MSVC.
+\end{reviewer}
+\begin{response}
+This had already been fixed on \code{main} (\commit{238dd69}) after the
+reviewed snapshot. I then searched for the same defect everywhere: GCC
+\code{-Wreturn-type} found six more functions that could fall off their end,
+all now fixed. To make this impossible in future, \code{-Werror=return-type}
+(GCC/Clang) and \code{/\allowbreak{}we4715} (MSVC) are set in every build file.
+While testing this guard I found a more serious defect in it:
+\code{NegativeValueCheck} (and \code{GrandMean} and \code{LumpAllProfileSets})
+stopped before the last group in alphabetical order, assuming it was the
+target. With target ``Mixture'', the source ``Pasture'' was never checked and
+the target was checked instead. All three now skip the target by name.
+\end{response}
+\status{Fixed (\commit{ac039a2}, \commit{2f8c463}). Tests: \code{negativeCheck\_\allowbreak{}clean},
+\code{negativeCheck\_\allowbreak{}negative}, \code{negativeCheck\_\allowbreak{}sourceAfterTarget}.}
+
+\begin{reviewer}{Tests, preprocessing note and Test 4 addendum}
+The negative-value guard rejects legitimately negative isotopic tracers
+(e.g.\ $\delta^{13}$C) with no transform path, and its message is
+misleading when the negativity is produced by the organic-matter / size
+correction rather than present in the input.
+\end{reviewer}
+\begin{response}
+The message now distinguishes the two cases: when a value is negative only
+after the correction, it is reported as ``(after the organic matter and size
+correction; the imported values are positive)''. Isotopic tracers such as
+$\delta^{13}$C are meant to be given the \emph{Isotope} role (with a base
+element and standard ratio), under which they are handled through their
+ratio rather than log-transformed; the README now says so in the quick
+start. Whether an OM/size correction that produces negative concentrations
+is acceptable is a scientific question I have flagged for the domain review.
+\end{response}
+\status{Improved (\commit{538ed73}); domain question handed off.}
+
+\begin{reviewer}{Email 10/15; Summary}
+Null dereference in \code{CBinary::\allowbreak{}operator[]} (\code{src/\allowbreak{}GA/\allowbreak{}Binary.\allowbreak{}cpp}).
+\end{reviewer}
+\begin{response}
+Fixed: an out-of-range index now throws \code{std::\allowbreak{}out\_\allowbreak{}of\_\allowbreak{}range} with the
+index and size. The same deliberate null dereference was the out-of-range
+path of \code{CVector::\allowbreak{}operator[]} and \code{CVector\_\allowbreak{}arma::\allowbreak{}operator[]}, which
+are used throughout the analyses; those now throw too, so an indexing
+mistake anywhere produces a message (through the GUI's exception handler)
+rather than a silent crash.
+\end{response}
+\status{Fixed (\commit{ac039a2}, \commit{2f8c463}). Test: \code{binary\_\allowbreak{}indexing}.}
+
+\begin{reviewer}{Email 10/15; Summary}
+Writes to a closed \code{FILE*} in \code{src/\allowbreak{}GA/\allowbreak{}GA.\allowbreak{}cpp} (lines 308--309).
+\end{reviewer}
+\begin{response}
+\code{src/\allowbreak{}GA/\allowbreak{}GA.\allowbreak{}cpp} turned out to be a stale copy of the GA that no build
+compiled (it includes a \code{StringOP.\allowbreak{}h} that exists nowhere — the
+``missing header'' you noted); it was removed. The GA code that is compiled,
+\code{include/\allowbreak{}GA/\allowbreak{}GA.\allowbreak{}hpp}, now opens its files through a \code{unique\_\allowbreak{}ptr}
+handle that closes exactly once and skips writing if \code{fopen} fails; a
+\code{printf} with three \code{\%le} and one argument and an unsynchronised
+counter in its OpenMP loop were also fixed. Every other \code{fopen} in the
+code now checks for failure.
+\end{response}
+\status{Fixed (\commit{ac039a2}, \commit{538ed73}).}
+
+\begin{reviewer}{Email 10/15; Summary}
+Possible \code{log()} of a non-positive value in the Box--Cox transform
+(\code{ApplyBoxCoxTransform}).
+\end{reviewer}
+\begin{response}
+Confirmed for zero values (negative values were already skipped; zeros gave
+$-\infty$). Any constituent with a zero or negative value is now left
+untransformed, and the analysis lists the constituents it skipped.
+$\lambda = 0$ is handled as the log case; for $|\lambda| < 0.01$ the
+transform is computed as $\mathrm{expm1}(\lambda \log x)/\lambda$ so it keeps
+full precision; elsewhere the formula is unchanged, so optimal $\lambda$
+values do not move. Two related faults were fixed: outlier detection used
+its own copy of the formula, which scored skipped constituents from $x-1$
+and so shifted their z-scores by $1/\sigma$; and the (unused) Box--Cox
+log-likelihood took the log of a sum that was always negative.
+\end{response}
+\status{Fixed (\commit{ac039a2}). Tests: \code{boxcox\_\allowbreak{}positiveData},
+\code{boxcox\_\allowbreak{}zeroAndNegativeData}, \code{boxcox\_\allowbreak{}lambdaZeroAndNearZero},
+\code{boxcox\_\allowbreak{}logLikelihoodIsFinite}.}
+
+\begin{reviewer}{Email 10/15; Summary}
+Widespread uninitialised variables flagged by clang-tidy and cppcheck.
+\end{reviewer}
+\begin{response}
+All 128 findings of clang-tidy's \code{cppcoreguidelines-\allowbreak{}init-variables}
+and \code{cppcoreguidelines-\allowbreak{}pro-type-member-init} were fixed: in-class
+initialisers for members, and NaN for floating-point locals so that any
+read-before-write is visible rather than silent. One was a real defect: the
+stepwise DFA could report an unassigned Wilks' $\lambda$ when no element
+improved the fit (it now reports NaN). These two checks are errors in the CI
+clang-tidy job, so new instances fail the pipeline.
+\end{response}
+\status{Fixed (\commit{ac039a2}); enforced in CI.}
+
+% ====================================================================
+\group{Reproducibility and random numbers}
+
+\begin{reviewer}{Email 10/15, item 1; Summary; Tests, Test 1}
+The MCMC is non-reproducible: identical inputs give materially different
+outputs (Bank upper credible bound 0.47--0.67 over three runs), there is no
+seed control and no recorded seed. ``Consider adding a way to provide a
+user-defined seed to allow for testing.''
+\end{reviewer}
+\begin{response}
+Done. CMB Bayesian, CMB Bayesian-Batch and Test CMB Bayesian have a new
+\emph{Random seed} field (blank = drawn from the operating system). The seed
+used is shown in the name of the results (``MCMC results for `X' (random
+seed $N$)''), stored with the project and in the command-line report, and
+written on the first line of the samples file. The same seed and settings
+give byte-identical results. The generator is \code{std::\allowbreak{}mt19937\_\allowbreak{}64} seeded
+through \code{std::\allowbreak{}seed\_\allowbreak{}seq}; the uniform and normal values are computed
+from its raw output in \code{include/\allowbreak{}randomstream.\allowbreak{}h} rather than with
+\code{std::\allowbreak{}*\_\allowbreak{}distribution}, whose algorithms differ between standard
+libraries, so a recorded seed reproduces a run on Linux, macOS and Windows.
+\end{response}
+\status{Fixed (\commit{cdfa4ea}). Tests: \code{mcmc\_\allowbreak{}sameSeedSameResult},
+\code{mcmc\_\allowbreak{}differentSeedDifferentResult}, \code{random\_\allowbreak{}streamsAreReproducible}, \code{random\_\allowbreak{}seedParsing}.}
+
+\begin{reviewer}{Email 10/15, item 2; Summary; RABBIT\_HOLE\_rand\_and\_threads.md}
+\code{rand()}/\code{srand()} called inside an OpenMP parallel region is a data
+race that also degrades the generator's statistical properties.
+\end{reviewer}
+\begin{response}
+Kiro was right that this was a race. Each chain now has its own stream,
+\code{RandomStream(seed, chain)}, used for its random start and every step,
+so no generator is shared between threads and the result does not depend
+on scheduling: the samples are identical with 1, 3 or 8 threads. I audited
+every OpenMP region: the MCMC step loop also wrote a shared cached maximum
+from every thread (now a named critical section), and the GA loop's
+counter is now atomic. Every other \code{rand()}, \code{srand()} and
+clock-seeded generator in the code now draws from a per-thread stream with
+a fixed seed, and Error Analysis (which removes random samples) now has its
+own seed field like the MCMC. clang-tidy's \code{concurrency-mt-unsafe} check
+is now an error in CI, so \code{rand()} cannot creep back in.
+
+On the details of \code{RABBIT\_\allowbreak{}HOLE\_\allowbreak{}rand\_\allowbreak{}and\_\allowbreak{}threads.\allowbreak{}md} (your instinct
+not to bet the house was sound): the conclusion and the remedy are right,
+but the mechanism is overstated for the platforms SedSAT3 runs on. The
+\code{srand} block only ran on Windows (\code{\#ifdef WIN64}), where the
+MSVC runtime keeps \code{rand()} state per thread, and glibc's \code{rand()}
+takes a lock, so ``lost updates'' were theoretical. The real problems were
+that the order of draws depended on thread scheduling, Windows reseeded
+from the clock every iteration, MSVC's \code{RAND\_\allowbreak{}MAX} of 32767 gave
+uniforms only 15 bits of resolution, and Linux and Windows produced
+different sequences. Its suggested fix also needed two corrections, both
+made: \code{std::\allowbreak{}normal\_\allowbreak{}distribution} is not portable across standard
+libraries, and streams must be per \emph{chain}, not per thread, for results
+to be independent of the thread count.
+\end{response}
+\status{Fixed (\commit{cdfa4ea}). Test: \code{mcmc\_\allowbreak{}independentOfThreadCount}.}
+
+\begin{reviewer}{Tests, Test 1 (convergence) and your note on it}
+Increasing samples from 500 to 3000 reduced, but did not remove, the
+run-to-run spread, and the software surfaces no convergence diagnostics
+(R-hat, effective sample size, trace plots). [Your note: ``that conclusion
+is a little strong.'']
+\end{reviewer}
+\begin{response}
+Agreed on both counts. Part of the spread came from a units issue in the
+dialog: \emph{Number of samples} and the burn-in count samples across
+\emph{all} chains, so 3000 samples with 8 chains is only 375 steps per chain;
+at 40\,000 samples with 20\,000 burn-in the validation targets in our test
+project are recovered at 85--99\% to the correct source, in agreement with
+Levenberg--Marquardt. Now that runs are reproducible, sampling noise and
+non-convergence can at least be separated by re-running with the same seed
+and more samples. Exposing R-hat, effective sample size and trace plots is a
+feature I plan for a later version; whether the current defaults are
+adequate is for the domain review.
+\end{response}
+\status{Partly addressed (reproducibility); diagnostics deferred; domain question handed off.}
+
+\begin{reviewer}{Tests, LM contrast}
+The deterministic Levenberg--Marquardt method reproduces exactly, which
+shows the variation is specific to the stochastic path.
+\end{reviewer}
+\begin{response}
+On checking, LM was less deterministic than it looked: its random starting
+point came from unseeded \code{rand()}, so it repeated only while nothing
+reseeded the generator (the MCMC did, on Windows) and differed between Linux
+and Windows. It now draws its starting point from a fixed-seed stream created
+for each solve, so it is repeatable everywhere. Most results changed by
+less than $10^{-5}$, but for one target sample in the domain-review project
+they changed by up to 0.06, showing that the LM solution for that sample
+depends on its starting point. I have flagged this for the domain review.
+\end{response}
+\status{Fixed (\commit{cdfa4ea}); regression baseline updated with explanation.}
+
+% ====================================================================
+\group{Input validation}
+
+\begin{reviewer}{Email 10/15, item 3; Tests, Test 4b; Email 10/16}
+A bare ``NaN'' passes \code{QString::\allowbreak{}toDouble} and is stored raw; whether it
+then affects a result depends on whether each consumer calls
+\code{removeNaNs()} or checks \code{isfinite}, which is inconsistent.
+``Have Claude help create some unit tests that would go after the odd NaN /
+legitimately negative / otherwise illegal values.''
+\end{reviewer}
+\begin{response}
+There is now one parser, \code{include/\allowbreak{}numericparsing.\allowbreak{}h}
+(\code{parseNumericCell} and overloads for spreadsheet and project-file
+values), used by the Excel import, project loading, the element table and
+the command line. It refuses empty cells, NaN / Inf / Infinity in any case,
+overflow, text, and decimal commas or thousands separators, each with a
+specific reason. A refused value stops the import with sheet, row, column
+and value (Excel) or group, sample and constituent (project file) — the same
+treatment empty and non-numeric cells already had, since SedSAT3 has no
+missing-data value. Two findings from tracing the behaviour you observed:
+the ``Ignored NaN, Inf, or -Inf value'' message came from Qt Charts while
+plotting, so the NaN \emph{had} been stored; and project loading turned a
+missing value or a NaN (which Qt saves as \code{null}) into 0, and silently
+dropped a sample that failed to load. Both now stop the load with the
+location. The only ad-hoc data guard downstream (the Box--Cox optimiser's
+\code{min == min} test) uses a shared helper; the other \code{isfinite}
+uses guard computed quantities, not data, and \code{removeNaNs()} has no
+callers. The unit tests you suggested cover 8 valid formats and 14 illegal
+inputs, spreadsheet and JSON values, a saved-and-reloaded NaN, zero and
+negative data in Box--Cox, and negative values in the source groups.
+\end{response}
+\status{Fixed (\commit{68be7ca}). Tests: \code{parser\_\allowbreak{}acceptsNumbers}, \code{parser\_\allowbreak{}rejects},
+\code{parser\_\allowbreak{}variantAndJson}, \code{boxcox\_\allowbreak{}zeroAndNegativeData}, \code{negativeCheck\_\allowbreak{}*}.}
+
+\begin{reviewer}{Tests, Test 5}
+Project persistence round-trips correctly (data, tracer exclusions and MCMC
+results survive save and reload).
+\end{reviewer}
+\begin{response}
+Thank you for checking. Saved projects remain backward compatible: no
+serialised key was renamed, and projects with only finite values load
+exactly as before.
+\end{response}
+\status{No change needed.}
+
+% ====================================================================
+\group{Tests, CI, the genetic algorithm, and hygiene}
+
+\begin{reviewer}{Email 10/15, item 4; Summary}
+There appear to be no automated tests or CI beyond a docs workflow; add at
+least one end-to-end regression against a known result and run the
+static-analysis tasks in CI.
+\end{reviewer}
+\begin{response}
+Added. \code{tests/\allowbreak{}unit/\allowbreak{}} has 47 Qt Test checks covering every defect above.
+\code{tests/\allowbreak{}regression/\allowbreak{}} runs the deterministic analyses (Box--Cox, outliers,
+Kolmogorov--Smirnov, distribution fitting, ANOVA, correlation and covariance,
+bracketing, DFA, EDP, Levenberg--Marquardt batch) on two example projects
+and compares them with a stored baseline at a relative tolerance of
+$10^{-9}$; the output of the code before the fixes is kept alongside, so every
+change the fixes made is traceable. \code{.\allowbreak{}gitlab-ci.\allowbreak{}yml} builds with CMake
+(GUI, command line, tests), with the GA enabled, and with the qmake
+projects; runs the unit and regression tests; runs clang-tidy (initialisation
+checks as errors) and cppcheck; has a manual Windows job for a Windows
+runner; and publishes the Doxygen documentation to GitLab Pages. The
+existing GitHub documentation workflow is kept for the development mirror.
+\end{response}
+\status{Fixed (\commit{2f8c463}).}
+
+\begin{reviewer}{Email 10/15, item 5; Summary; Tests, Test 6}
+The genetic algorithm is advertised in the README and code.json but is in
+no menu and does not compile (missing \code{StringOP.\allowbreak{}h}); either wire it up
+or drop the claim. \code{MCMC.\allowbreak{}h} includes \code{GA.\allowbreak{}h}, so the GA header is
+not cleanly deletable.
+\end{reviewer}
+\begin{response}
+The GA works and is deliberately not offered: Levenberg--Marquardt solves
+the same problem more efficiently, and two deterministic methods would
+confuse users. It is now kept in the source but excluded from the default
+build (\code{CONFIG+=ga} with qmake, \code{-DENABLE\_\allowbreak{}GA=ON} with CMake); both
+settings build and CI builds both. \code{MCMC.\allowbreak{}h} no longer includes
+\code{GA.\allowbreak{}h}. The README and code.json no longer list it as a method, the
+README says it is included but disabled and why, and the command-line program
+and its manual leave out its commands. The missing \code{StringOP.\allowbreak{}h} was only
+included by the stale \code{GA.\allowbreak{}cpp} (Comment 2.7).
+\end{response}
+\status{Fixed (\commit{2f8c463}). CI job \code{build:linux-ga}.}
+
+\begin{reviewer}{Email 10/15, item 6; Summary}
+A dead submodule URL blocks fresh clones; stray build artifacts; spelling in
+identifiers (\code{purturbation}, \code{FileBrowserPushButtom}, ``samle'').
+\end{reviewer}
+\begin{response}
+The QXlsx submodule URL works (it redirects to the upstream
+\code{QtExcel/\allowbreak{}QXlsx}, and the pinned commit is fetchable); it now points at
+the upstream directly. The failing clone was most likely the
+\code{Utilities} submodule, which is gone. A fresh
+\code{git clone --recursive} of the branch builds. Removed: \code{wasm\_\allowbreak{}bin/\allowbreak{}}
+build output, the stale \code{CMBSource.\allowbreak{}pro} (which listed files that do not
+exist), a stray \code{gitignore} copy and an already-applied script; the
+Linux build no longer links a prebuilt \code{libQXlsx.\allowbreak{}a} but compiles QXlsx
+from the submodule; \code{.\allowbreak{}gitignore} covers build folders, IDE files and
+binaries. Spelling: \code{FileBrowserPushButton}, \code{perturbation} (the
+old MCMC setting names are still accepted), ``sample'', ``Description''
+(the misspelled form appeared as a label in the GUI) and
+\code{sizeconstituent}.
+\end{response}
+\status{Fixed (\commit{2f8c463}).}
+
+\begin{reviewer}{Summary, optional / polish}
+Three coexisting build systems with no documented source of truth; repo
+layout mid-transition (non-GUI core at the repository root).
+\end{reviewer}
+\begin{response}
+The qmake projects now share one file, \code{sedsat3\_\allowbreak{}core.\allowbreak{}pri}, for the
+analysis sources, libraries and options; CMake builds the GUI, the command
+line program and the tests from the same source list; the Visual Studio
+project is kept for Windows developers; the README documents all three. I
+have left the move of the root sources under \code{src/\allowbreak{}} for a separate
+change, since it is large and mechanical and would make this review harder
+to follow.
+\end{response}
+\status{Improved (\commit{2f8c463}); layout change deferred.}
+
+\begin{reviewer}{Email 10/15; Email 10/16; Linter}
+Compile with multiple compilers with warnings ``turned up to 11'' and
+systematically reduce them; the more significant warnings generally point at
+minor defects.
+\end{reviewer}
+\begin{response}
+I did this with GCC~13 (and clang-tidy from LLVM~20). Unique first-party
+warnings in the GUI build went from 244 to 101 with \code{-Wall -Wextra}, and
+from 618 to 449 with \code{-Wall -Wextra -Wpedantic -Wshadow -Wconversion}.
+As you predicted, the significant ones were real defects: two operators that
+called themselves (stack overflow), a constructor that wrote past the end of
+an empty matrix, a function returning a reference to a local, printf format
+mismatches, invalid escapes, and the missing returns. Every
+\code{-Wreturn-type}, \code{-Winfinite-recursion}, \code{-Wreturn-local-addr},
+\code{-Wformat}, \code{-Wmaybe-uninitialized}, \code{-Wmisleading-indentation},
+\code{-Wreorder}, unused-variable/parameter and copy-constructor warning is
+gone. The remainder are implicit integer/floating conversions
+(\code{-Wconversion} 293, \code{-Wsign-compare} 100, \code{-Wfloat-conversion}
+20) and \code{-Wshadow} 35 (mostly constructor parameters named after
+members); I prefer to change the numerical conversions one at a time with
+the regression tests rather than in bulk.
+The clang-tidy findings in \code{linter\_\allowbreak{}output.\allowbreak{}txt} are answered in
+Section~9.
+\end{response}
+\status{Largely fixed (\commit{2f8c463}).}
+
+% ====================================================================
+\group{Further defects found and fixed during the response}
+
+\begin{reviewer}{Found while addressing the review}
+Defects not in the review, found while fixing the items above.
+\end{reviewer}
+\begin{response}
+\begin{itemize}[nosep,leftmargin=*]
+\item ANOVA read the ``Use only selected samples/elements'' options and then
+  ignored them (it always used the selected samples and every element).
+\item \code{NegativeValueCheck}, \code{GrandMean} and \code{LumpAllProfileSets}
+  skipped the source sorting after the target (Comment 2.4); ANOVA's total sum
+  of squares left that source out.
+\item \code{CMBTimeSeries::\allowbreak{}operator=} and \code{CVector\_\allowbreak{}arma::\allowbreak{}operator*=}
+  called themselves (stack overflow on use).
+\item \code{CMatrix\_\allowbreak{}arma(const CVector\_\allowbreak{}arma\&)} built a temporary instead of
+  sizing the matrix, then wrote past its end.
+\item \code{CMatrix\_\allowbreak{}arma\_\allowbreak{}sp::\allowbreak{}get} returned a reference to a local, so writes
+  to sparse matrices were lost.
+\item \code{RangeSet}'s copy constructor copied nothing; the copy constructors
+  of several result types dropped their notes and axis labels.
+\item The MCMC's shared prediction rows were written from every thread
+  (Comment 3.2).
+\item \code{TimeSeries::\allowbreak{}addPoint} did not compare the first two intervals,
+  so an uneven series could be treated as evenly spaced.
+\item \code{gamma()} clashed with \code{::\allowbreak{}gamma} under Clang.
+\end{itemize}
+\end{response}
+\status{Fixed (\commit{ac039a2}, \commit{2f8c463}).}
+
+\begin{reviewer}{Effect on results}
+How do the fixes change the results the software produces?
+\end{reviewer}
+\begin{response}
+The regression suite was run on the code before the fixes and after; every
+difference is explained in \code{docs/\allowbreak{}review/\allowbreak{}REVIEW\_\allowbreak{}RESPONSE.\allowbreak{}md}. In short:
+distribution fitting now succeeds where it crashed; outlier z-scores of
+constituents with negative values (C13; N15 in Forest) shift by a constant
+$1/\sigma$; Box--Cox and outlier analyses list the constituents they skip;
+Levenberg--Marquardt moves by less than $10^{-5}$ for most samples and up to
+0.06 for one (Comment 3.4); and ANOVA p-values change, some across 0.05,
+because the selection options now take effect and the previously dropped
+source group is included. Box--Cox $\lambda$, Kolmogorov--Smirnov,
+correlation and covariance, bracketing, DFA and EDP are unchanged. The ANOVA
+and Levenberg--Marquardt changes have been passed to the domain reviewers.
+\end{response}
+
+% ====================================================================
+\group{Windows build and the portable package}
+
+\begin{reviewer}{Email 10/16; BUILDING\_ON\_WINDOWS\_WITH\_PIXI.md}
+The reviewed copy had no viable Windows compilation path; Kiro created one
+with pixi (conda-forge libraries driven from \code{pixi.\allowbreak{}toml}, with
+\code{pixi run lint} for the strict-warning build). ``This may or may not be
+useful.''
+\end{reviewer}
+\begin{response}
+It is useful, and since it is how you build, I want it to work out of the box
+at the re-review. Several of the pitfalls your guide works around are now gone
+from the repository: the QXlsx URL is fixed, \code{Utilities} is no longer an
+(empty) submodule, the hard-coded \code{\#define ARMA\_\allowbreak{}USE\_\allowbreak{}SUPERLU} that broke
+the win-64 link has been removed (SuperLU is now used only if the installed
+Armadillo provides it), MSVC gets \code{/\allowbreak{}utf-8} from CMake (your C4828), and
+the duplicate \code{USE\_\allowbreak{}QCHARTS} definition is guarded (your C4005). The guide
+itself needs three adjustments to match the repository: its \code{lint} task
+lists the removed \code{src/\allowbreak{}GA/\allowbreak{}GA.\allowbreak{}cpp}; its \code{.\allowbreak{}clang-tidy} would replace
+the repository's stricter one (which CI uses, with the initialisation and
+\code{rand()} checks as errors); and \code{deploy-win} uses
+\code{--compiler-runtime} and LLVM's OpenMP DLLs, whereas MSVC builds need
+\code{vcomp140.\allowbreak{}dll} (see \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}).
+\todo{Plan: commit a corrected pixi.toml (configure/build/test/lint/cppcheck/deploy
+tasks driving the existing CMake build) after testing it on Windows, so that
+`pixi run build test lint` works on your machine; this will also give the
+first MSVC /W4 and cppcheck results.} The Visual Studio project now compiles
+the vendored QCustomPlot instead of a copy outside the repository; it still
+links a prebuilt QXlsx library, which I will change to the submodule as the
+qmake and CMake builds already do. The portable, no-administrator Windows
+package (unzip and run) will be built from the merged code and sent to the
+reviewers.
+\end{response}
+\status{Build fixes done; \code{pixi.\allowbreak{}toml} pending a Windows test.}
+
+% ====================================================================
+\group{Detailed observations (CODE\_REVIEW\_OBSERVATIONS.md)}
+
+\begin{reviewer}{Observations, \S1--16}
+The full review log, ``nuggets of gold mixed with Kiro fluff''.
+\end{reviewer}
+\begin{response}
+I checked every concrete finding against the code. Most were already
+addressed by the changes above; the rest are listed here with what was
+done. A few did not hold up when checked, and I note them so the record is
+accurate, not to diminish the review: they were all worth looking at.
+\end{response}
+
+{\small
+\begin{longtable}{@{}p{0.09\linewidth}p{0.38\linewidth}p{0.46\linewidth}@{}}
+\toprule
+\S & Finding & Response\\
+\midrule
+\endhead
+1 & No command-line entry point & A command-line program, \code{sedsat3-cli}, runs any analysis from a JSON script; the regression tests use it.\\
+1, 9 & GA listed as a method; GA not built & Fixed (Comment 5.2).\\
+2 & Three build systems, no source of truth & Improved (Comment 5.4).\\
+2 & \code{CMBSource.\allowbreak{}pro} hard-codes a personal path & File removed.\\
+2 & The same kind of paths in \code{SedSat3.\allowbreak{}vcxproj} & QCustomPlot now from \code{thirdparty/\allowbreak{}}; the prebuilt QXlsx still to change (Section 7).\\
+2 & Hygiene script not run; stray \code{gitignore} & Both removed.\\
+2 & \code{CMB\_\allowbreak{}Source.\allowbreak{}aip} still tracked & Kept on purpose (the installer) and rebranded to the USGS.\\
+3a & QXlsx submodule URL dead & Fixed (Comment 5.3).\\
+3b & \code{Utilities} is a personal-namespace submodule & Brought into the repository (Comment 1.2).\\
+3b & Hard-coded \code{ARMA\_\allowbreak{}USE\_\allowbreak{}SUPERLU} breaks Windows & Fixed (Section 7).\\
+3b & No Windows build path in the repository & MinGW guide, Visual Studio project, CMake, and a manual Windows CI job; pixi to follow (Section 7).\\
+3c & qcustomplot6 version not documented & \code{THIRD\_\allowbreak{}PARTY\_\allowbreak{}LICENSES.\allowbreak{}md} (2.1.1).\\
+4, 4a & README truncated; advertises sedsat.org, GA, GitHub & Rewritten (Comments 1.5, 1.6).\\
+4 & Dependency versions unpinned & README and \code{THIRD\_\allowbreak{}PARTY\_\allowbreak{}LICENSES.\allowbreak{}md} give versions (Qt 6.2+, 6.8 tested, \ldots).\\
+4a & ``CMB''-era artifacts & Removed (only icon file names remain).\\
+5 & No automated tests or CI & Fixed (Comment 5.1).\\
+5, 9 & \code{testmcmc} is a non-functional stub & It is the model behind ``Test CMB Bayesian'', and is now the fixture of the MCMC reproducibility tests.\\
+6 & MSVC C4828 (non-UTF-8 bytes) & Four files were Latin-1; all sources are now UTF-8, and CMake passes \code{/\allowbreak{}utf-8} to MSVC.\\
+6 & MSVC C4005, C4834 & C4005: the \code{USE\_\allowbreak{}QCHARTS} and \code{NOMINMAX} redefinitions are now guarded. C4834 not reproduced (no MSVC here); will check with the first MSVC \code{/\allowbreak{}W4} run.\\
+9 & Non-GUI core at the root; mixed header layout & Deferred to a separate change (Comment 5.4).\\
+9 & \code{FileBrowserPushButtom} misspelling & Fixed.\\
+9 & Duplicate \code{FilePushButton} class & Unused; removed.\\
+9 & Overlapping chart layers (Qt Charts and QCustomPlot) & Acknowledged; to be resolved together with the GPL-dependency decision (Comment 1.3).\\
+9 & Orphan \code{drand.\allowbreak{}cpp}; empty \code{GA\_\allowbreak{}impl} files & Removed.\\
+10 & Clock-seeded \code{srand}; no seed control or record & Fixed (Comment 3.1).\\
+10 & Every thread's default stream starts from the same seed & Documented: parallel code must use its own seeded stream, as the MCMC does; no parallel code uses the default stream.\\
+11.1--11.2 & Platform-specific seeding; \code{rand()} race in OpenMP & Fixed (Comment 3.2).\\
+11.3 & GA file I/O inside an OpenMP critical section & Correct but slow; left as is because the GA is off by default.\\
+11.4 & \code{qDebug} in the MCMC loop & Removed.\\
+11 & OpenMP use not documented & The chains run in parallel and results do not depend on the thread count; noted in \code{include/\allowbreak{}randomstream.\allowbreak{}h} and the README.\\
+12 & Project declares clang-tidy/cppcheck in \code{pixi.\allowbreak{}toml} & There was no \code{pixi.\allowbreak{}toml} in the repository; this was your local environment. Both tools now run in CI.\\
+12a.1 & Null dereference in \code{CBinary::\allowbreak{}operator[]} & Fixed (Comment 2.6).\\
+12a.2 & Writes to a closed \code{FILE*} & Fixed (Comment 2.7).\\
+12a.3 & Missing return in both \code{CheckNegativeElements} overloads & Fixed; in the reviewed snapshot only the map overload lacked a return, and its result was not used, so the guard itself worked (Comment 2.4).\\
+12a.4 & \code{log()} of a non-positive value in \code{ApplyBoxCoxTransform} & Fixed; the always-negative \code{log} argument was in \code{CalculateBoxCoxLogLikelihood} (Comment 2.8).\\
+12b & \code{Interface} limits uninitialised; copy operations incomplete & Fixed: members initialised, and the copy constructor and assignment now copy every member, so copies keep their notes (outlier and bracketing flags) and highlight limits.\\
+12b & Uninitialised members of \code{Observation}, \code{Parameter}, \code{element\_\allowbreak{}information} & Fixed (Comment 2.9).\\
+12b, 12d & Performance and implicit-widening notes & See Section 9.\\
+12d & Missing \code{StringOP.\allowbreak{}h}; GA headers use incomplete types & Fixed; GA.hpp now includes what it uses, and the GA builds in CI.\\
+12d & \code{MCMC.\allowbreak{}h} includes \code{GA.\allowbreak{}h} & Fixed.\\
+13 & GPL-3.0 outbound license; GPL dependencies & Comment 1.3.\\
+13 & GSL used for a single \code{gsl\_\allowbreak{}multifit\_\allowbreak{}wlinear} call & GSL is used more widely (CDFs, statistics, matrices in about ten files), so replacing it is not a one-call change; another reason to prefer the inventory approach.\\
+13, 13a & No per-file headers; AGPL headers in \code{Utilities} & Fixed (Comments 1.2, 1.7).\\
+14, 14a & Metadata and installer point outside the USGS & Fixed (Comment 1.6); the parallel sedsat.org distribution is for the release coordinator.\\
+14 & \code{createdmg.\allowbreak{}sh} version stale & Updated to 1.1.7.\\
+16 & Spelling; add codespell to CI & Spelling fixed (Comment 5.3); codespell will be added to CI.\\
+8.4 & Distribution Fitting crash caused by a missing overload & Fixed; the cause was an implicit conversion (Comment 2.1).\\
+8.6 & ``Include all elements'' inverted & Fixed (Comment 2.2).\\
+\bottomrule
+\end{longtable}
+}
+
+\begin{reviewer}{Found while checking the observations}
+Further defects found while verifying the findings above.
+\end{reviewer}
+\begin{response}
+\begin{itemize}[nosep,leftmargin=*]
+\item \code{ObservedDataforSelectedSample\_\allowbreak{}Isotope} read the base element from
+  an empty sample name in one branch, dereferencing a null pointer.
+\item The two-sample t-test computed its degrees of freedom as an unsigned
+  value that wrapped around with fewer than two samples in a group; it now
+  reports NaN.
+\item The distribution curve for uniform and Dirichlet priors consisted of
+  NaN points, and a one-point curve divided by zero.
+\item The results table compared the \emph{time} rather than the value with
+  the upper highlight limit.
+\item An MCMC initialisation routine computed a step from $-\mathrm{low} - \mathrm{high}$
+  instead of $\mathrm{high} - \mathrm{low}$.
+\item \code{CGA::\allowbreak{}operator=} took a non-const reference and returned by value.
+\end{itemize}
+All are fixed. Unit tests were added for the uniform curve and for copies
+keeping their notes.
+\end{response}
+
+% ====================================================================
+\group{clang-tidy findings (linter\_output.txt)}
+
+\begin{reviewer}{Linter}
+\code{pixi run lint} output: clang-tidy over 13 translation units with
+\code{bugprone-*}, \code{clang-analyzer-*}, \code{concurrency-*},
+\code{cppcoreguidelines-\allowbreak{}init-variables}, \code{-pro-type-member-init},
+\code{performance-*} and \code{modernize-*} checks (101 first-party
+diagnostics, 8 of them errors).
+\end{reviewer}
+\begin{response}
+Every error and every finding that indicated a defect is fixed or no longer
+applies:
+\end{response}
+
+{\small
+\begin{longtable}{@{}p{0.42\linewidth}p{0.08\linewidth}p{0.44\linewidth}@{}}
+\toprule
+Check & Count & Status\\
+\midrule
+\endhead
+\code{cppcoreguidelines-\allowbreak{}init-variables} & 35 & Fixed (Comment 2.9); one in the old \code{GA.\allowbreak{}cpp} was a false positive.\\
+\code{cppcoreguidelines-\allowbreak{}pro-type-member-init} & 13 & Fixed with in-class initialisers.\\
+\code{clang-diagnostic-error}: \code{StringOP.\allowbreak{}h} not found & 1 & File removed (Comment 2.7).\\
+\code{clang-diagnostic-error}: incomplete types in \code{GA.\allowbreak{}hpp} & 7 & Fixed: \code{GA.\allowbreak{}hpp} includes \code{progressreporter.\allowbreak{}h} itself, and its \code{Q\_\allowbreak{}version} guards (a macro defined nowhere) are now \code{Q\_\allowbreak{}GUI\_\allowbreak{}SUPPORT}.\\
+\code{clang-analyzer-cplusplus.\allowbreak{}NewDeleteLeaks} (progress windows) & 5 & Fixed: progress windows are owned by a scoped object.\\
+\code{concurrency-mt-unsafe} (\code{rand}) & 2 & Fixed (Comment 3.2); now an error in CI.\\
+\code{clang-analyzer-deadcode.\allowbreak{}DeadStores} (ANOVA options) & 2 & Fixed: the options were ignored (Section 6).\\
+\code{UndefinedBinaryOperator}, \code{CallAndMessage} & 4 & Fixed (initialisation, uniform curve).\\
+\code{UndefReturn}, \code{modernize-use-nullptr} (\code{CBinary}) & 2 & Fixed (Comment 2.6).\\
+\code{bugprone-unhandled-self-assignment} & 1 & Fixed (\code{CGA::\allowbreak{}operator=}).\\
+\code{bugprone-branch-clone} (GA parameter mapping) & 1 & \todo{Identical branches; confirm intent and simplify} (GA only).\\
+\code{bugprone-integer-division} & 1 & Intended (the result is bounded below by 1).\\
+\code{bugprone-float-loop-counter}, \code{FloatLoopCounter} & 6 & Grid loops over $x$ and $\lambda$; a zero step is now impossible (Comment 2.1). Kept.\\
+\code{bugprone-throwing-static-initialization} & 1 & False positive (\code{atan(1.0)}).\\
+\code{bugprone-\allowbreak{}implicit-\allowbreak{}widening-\allowbreak{}of-\allowbreak{}multiplication-\allowbreak{}result} & 4 & Counts are small integers; to be cast explicitly.\\
+\code{performance-\allowbreak{}unnecessary-value-param}, \code{performance-for-range-copy} & 15 & Style; to be cleared, then the \code{performance-*} checks enabled in CI.\\
+\bottomrule
+\end{longtable}
+}
+
+% ====================================================================
+\group{Reviewer GUI test plan (REVIEWER\_TEST\_PLAN.md)}
+
+\begin{reviewer}{REVIEWER\_TEST\_PLAN.md and TEST\_RESULTS.md}
+Tests 1--7 and the GUI observations G1--G3.
+\end{reviewer}
+
+{\small
+\begin{longtable}{@{}p{0.2\linewidth}p{0.74\linewidth}@{}}
+\toprule
+Test & Status and automated test\\
+\midrule
+\endhead
+1. MCMC reproducibility & Fixed; \code{mcmc\_\allowbreak{}sameSeedSameResult}, \code{mcmc\_\allowbreak{}differentSeedDifferentResult}. Convergence diagnostics deferred (Comment 3.3).\\
+1b. LM determinism & Made genuinely repeatable (Comment 3.4); regression suite.\\
+2. Sum to one, non-negative & Now tested for both parameterisations: \code{levenbergMarquardt\_\allowbreak{}contributionsSumToOne}. The Bayesian contributions satisfy it by construction (the last is one minus the others).\\
+3. LM vs Bayesian & Not run by the review; left to the domain review.\\
+4a. Required column removed & Import refuses a missing cell with its location (existing behaviour); \todo{run and record}.\\
+4b. NaN / non-numeric cell & Fixed (Comment 4.1); parser tests.\\
+4c. Negative values & Fixed (Comment 2.4); \code{negativeCheck\_\allowbreak{}*}.\\
+4c addendum & Message improved (Comment 2.5).\\
+4d. Single-sample source & Now tested: \code{levenbergMarquardt\_\allowbreak{}singleSampleSource}, \code{distributionFitting\_\allowbreak{}conductor}.\\
+5. Round trip & Passed in your test; unchanged.\\
+6. GA advertised & Fixed (Comment 5.2).\\
+7. RNG thread safety & Fixed; \code{mcmc\_\allowbreak{}independentOfThreadCount}.\\
+Test 7 (results). Distribution Fitting crash & Fixed (Comment 2.1).\\
+G1--G3 & G1, G2 fixed; G3 open (Comments 2.2, 2.3).\\
+\bottomrule
+\end{longtable}
+}
+
+The test plan's notes that ``SedSAT3 has no CLI'' and that it is launched with
+\code{pixi run run-app} are now out of date; Tests 1 and 7 can be scripted with
+\code{sedsat3-cli}.
+
+% ====================================================================
+\group{USGS software release checklist}
+
+\begin{reviewer}{software-release-checklist.pdf}
+The USGS checklist for open-source and scientific-information-product
+releases.
+\end{reviewer}
+\begin{response}
+The repository items are in place; the remaining items are decisions or
+process steps for the release coordinator, Cara and me:
+\end{response}
+
+{\small
+\begin{longtable}{@{}p{0.36\linewidth}p{0.2\linewidth}p{0.38\linewidth}@{}}
+\toprule
+Item & Status & Remaining\\
+\midrule
+\endhead
+README.md, DISCLAIMER.md (provisional) & Done & Placeholders: repository URL, manual, citation details.\\
+LICENSE.md & Placeholder & License choice (Comment 1.3).\\
+code.json & Done, placeholders & Version, contact, DOI, URLs; \code{name} to match the GitLab project; \code{downloadURL} to point at \code{main}; \todo{ask whether the AI tag applies to AI-assisted development}.\\
+Project in a USGS group (not a personal namespace) & Not done & Release coordinator: move from \code{cphipps/\allowbreak{}}.\\
+Default branch is what is released & In progress & Merge request !4 into \code{main}.\\
+Administrative security review of every commit & Process & Security reviewer; the history includes old binaries and the AGPL-era files; decide whether to publish or rewrite it.\\
+IPDS record; reviews logged & Process & Cara: log this review, this response and the re-review.\\
+DOI reserved & Process & Release coordinator.\\
+Release-candidate branch named for the version & Not done & After the version is chosen (semantic version, no ``v'').\\
+Domain review & Open & LM start sensitivity, MCMC convergence, OM/size correction producing negatives, isotopic tracers, ANOVA changes.\\
+Final changes on the release branch (approved disclaimer, tagged URLs) & Not done & At release.\\
+\bottomrule
+\end{longtable}
+}
+
+\end{document}

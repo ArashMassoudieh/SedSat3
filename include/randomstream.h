@@ -142,7 +142,10 @@ inline bool ParseRandomSeed(const std::string& text, std::uint64_t& seed)
  * One per thread, so parallel code never shares a generator. Every thread's
  * stream starts from the same fixed seed (DefaultRandomSeed), so a run is
  * repeatable; code whose result must not depend on what ran before it (the
- * Levenberg-Marquardt starting point) uses its own RandomStream instead.
+ * Levenberg-Marquardt starting point, Error Analysis) uses its own
+ * RandomStream instead. Because every thread's stream starts from the same
+ * seed, parallel code must not draw from it: give each chain or task its own
+ * RandomStream(seed, index), as the MCMC does.
  */
 constexpr std::uint64_t DefaultRandomSeed = 20261016;
 

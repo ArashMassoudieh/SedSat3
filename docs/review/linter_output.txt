@@ -1,0 +1,1156 @@
+-- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
+-- Could NOT find WrapVulkanHeaders (missing: Vulkan_INCLUDE_DIR) 
+-- Configuring done (0.6s)
+-- Generating done (0.5s)
+-- Build files have been written to: E:/git_repos/SedimentSourceAssessmentTool3/build
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:656:16: error: member access into incomplete type 'ProgressWindow' [clang-diagnostic-error]
+  656 |             rtw->SetYRange(0,Ind[j].actual_fitness*1.1);
+      |                ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.h:16:7: note: forward declaration of 'ProgressWindow'
+   16 | class ProgressWindow;
+      |       ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:657:16: error: member access into incomplete type 'ProgressWindow' [clang-diagnostic-error]
+  657 |             rtw->SetXRange(0,GA_params.nGen);
+      |                ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.h:16:7: note: forward declaration of 'ProgressWindow'
+   16 | class ProgressWindow;
+      |       ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:659:12: error: member access into incomplete type 'ProgressWindow' [clang-diagnostic-error]
+  659 |         rtw->SetProgress(double(current_generation)/double(GA_params.nGen));
+      |            ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.h:16:7: note: forward declaration of 'ProgressWindow'
+   16 | class ProgressWindow;
+      |       ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:660:12: error: member access into incomplete type 'ProgressWindow' [clang-diagnostic-error]
+  660 |         rtw->AppendPoint(current_generation+1,Ind[j].actual_fitness);
+      |            ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.h:16:7: note: forward declaration of 'ProgressWindow'
+   16 | class ProgressWindow;
+      |       ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:662:9: error: incomplete type 'QCoreApplication' named in nested name specifier [clang-diagnostic-error]
+  662 |         QCoreApplication::processEvents();
+      |         ^~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\.pixi\envs\default\Library\include\qt6\QtCore/qobject.h:385:18: note: forward declaration of 'QCoreApplication'
+  385 |     friend class QCoreApplication;
+      |                  ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:754:6: error: member access into incomplete type 'ProgressWindow' [clang-diagnostic-error]
+  754 |                 rtw->SetProgress(1.0);
+      |                    ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.h:16:7: note: forward declaration of 'ProgressWindow'
+   16 | class ProgressWindow;
+      |       ^
+E:\git_repos\SedimentSourceAssessmentTool3\include\GA\GA.hpp:755:3: error: incomplete type 'QCoreApplication' named in nested name specifier [clang-diagnostic-error]
+  755 |                 QCoreApplication::processEvents();
+      |                 ^~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\.pixi\envs\default\Library\include\qt6\QtCore/qobject.h:385:18: note: forward declaration of 'QCoreApplication'
+  385 |     friend class QCoreApplication;
+      |                  ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:135:14: warning: use nullptr [modernize-use-nullptr]
+  135 |     int *p = 0;
+      |              ^
+      |              nullptr
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:139:9: warning: Returning null reference [clang-analyzer-core.uninitialized.UndefReturn]
+  139 |         return *p;
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:194:16: note: Assuming 'i' is < field 'nDigits'
+  194 |         for (int i=0; i<B1.nDigits; i++)
+      |                       ^~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:194:2: note: Loop condition is true.  Entering loop body
+  194 |         for (int i=0; i<B1.nDigits; i++)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:196:7: note: Assuming 'i' is < 'p1'
+  196 |                 if (i < p1)
+      |                     ^~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:196:3: note: Taking true branch
+  196 |                 if (i < p1)
+      |                 ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:198:12: note: Calling 'CBinary::operator[]'
+  198 |                         B1[i] = BT1[i];
+      |                                 ^~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:135:5: note: 'p' initialized to a null pointer value
+  135 |     int *p = 0;
+      |     ^~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:136:9: note: Assuming the condition is false
+  136 |     if (i<Digit.size())
+      |         ^~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:136:5: note: Taking false branch
+  136 |     if (i<Digit.size())
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Binary.cpp:139:9: note: Returning null reference
+  139 |         return *p;
+      |         ^      ~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:4:10: error: 'StringOP.h' file not found [clang-diagnostic-error]
+    4 | #include "StringOP.h"
+      |          ^~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:11:1: warning: constructor does not initialize these fields: sumfitness, numberOfThreads [cppcoreguidelines-pro-type-member-init]
+   11 | template<class T>
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:24:1: warning: constructor does not initialize these fields: sumfitness, numberOfThreads [cppcoreguidelines-pro-type-member-init]
+   24 | template<class T>
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:37:1: warning: constructor does not initialize these fields: sumfitness, numberOfThreads [cppcoreguidelines-pro-type-member-init]
+   37 | template<class T>
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:56:1: warning: constructor does not initialize these fields: sumfitness, numberOfThreads [cppcoreguidelines-pro-type-member-init]
+   56 | template<class T>
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:57:20: warning: the parameter 'filename' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+   57 | CGA<T>::CGA(string filename, const T &model)
+      |                    ^
+      |             const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:168:1: warning: constructor does not initialize these fields: sumfitness, numberOfThreads [cppcoreguidelines-pro-type-member-init]
+  168 | template<class T>
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:186:16: warning: operator=() does not handle self-assignment properly [bugprone-unhandled-self-assignment]
+  186 | CGA<T> CGA<T>::operator=(CGA<T> &C)
+      |                ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:255:10: warning: variable 't0' is not initialized [cppcoreguidelines-init-variables]
+  255 |         clock_t t0,t1;
+      |                 ^ 
+      |                    = 0
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:255:13: warning: variable 't1' is not initialized [cppcoreguidelines-init-variables]
+  255 |         clock_t t0,t1;
+      |                    ^ 
+      |                       = 0
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:287:10: warning: variable 'FileOut' is not initialized [cppcoreguidelines-init-variables]
+  287 |                         FILE *FileOut;
+      |                               ^      
+      |                                       = nullptr
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:383:42: warning: the parameter 's' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+  383 | void CGA<T>::write_to_detailed_GA(string s)
+      |                                          ^
+      |                                   const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:385:8: warning: variable 'FileOut' is not initialized [cppcoreguidelines-init-variables]
+  385 |         FILE *FileOut;
+      |               ^      
+      |                       = nullptr
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:398:8: warning: variable 'FileOut' is not initialized [cppcoreguidelines-init-variables]
+  398 |         FILE *FileOut;
+      |               ^      
+      |                       = nullptr
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:399:8: warning: variable 'FileOut1' is not initialized [cppcoreguidelines-init-variables]
+  399 |         FILE *FileOut1;
+      |               ^       
+      |                        = nullptr
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:598:37: warning: the parameter 'filename' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+  598 | double CGA<T>::getfromoutput(string filename)
+      |                                     ^
+      |                              const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:643:3: warning: if with identical then and else branches [bugprone-branch-clone]
+  643 |                 if (apply_to_all[j]) l += 1; else l += 1;
+      |                 ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:643:32: note: else branch starts here
+  643 |                 if (apply_to_all[j]) l += 1; else l += 1;
+      |                                              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:688:9: warning: variable 'a' is not initialized [cppcoreguidelines-init-variables]
+    5 |         double a = avgfitness();
+      |                ^               
+      |                                 = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:794:38: warning: the parameter 'filename' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+  794 | void CGA<T>::getinifromoutput(string filename)
+      |                                      ^
+      |                               const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GA.cpp:820:35: warning: the parameter 'filename' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+  820 | void CGA<T>::getinitialpop(string filename)
+      |                                   ^
+      |                            const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GADistribution.cpp:13:1: warning: constructor does not initialize these fields: n [cppcoreguidelines-pro-type-member-init]
+   13 | GADistribution::GADistribution()
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\GADistribution.cpp:75:23: warning: function is not thread safe [concurrency-mt-unsafe]
+   75 |     double a = double(rand());
+      |                       ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Individual.cpp:17:1: warning: constructor does not initialize these fields: fitness, actual_fitness, actual_fitness2, parent1, parent2, xsite, rank [cppcoreguidelines-pro-type-member-init]
+   17 | CIndividual::CIndividual()
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Individual.cpp:36:1: warning: constructor does not initialize these fields: fitness, actual_fitness, actual_fitness2, parent1, parent2, xsite, rank [cppcoreguidelines-pro-type-member-init]
+   36 | CIndividual::CIndividual(int n)
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Individual.cpp:59:1: warning: constructor does not initialize these fields: parent1, parent2, xsite, rank [cppcoreguidelines-pro-type-member-init]
+   59 | CIndividual::CIndividual(const CIndividual &C)
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Individual.cpp:128:16: warning: function is not thread safe [concurrency-mt-unsafe]
+  128 |         return double(rand())/double(RAND_MAX)*(xmax-xmin) + xmin;
+      |                       ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\GA\Individual.cpp:150:51: warning: result of integer division used in a floating point context; possible loss of precision [bugprone-integer-division]
+  150 |         int nn = max(1,static_cast<int>(GetRndUnif(0,1)*(I1.nParams/4)));
+      |                                                          ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:4:22: warning: initialization of 'pi' with static storage duration may throw an exception that cannot be caught [bugprone-throwing-static-initialization]
+    4 | double Distribution::pi = 4 * atan(1.0);
+      |                      ^
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\ucrt\corecrt_math.h:506:35: note: possibly throwing function declared here
+  506 |     _Check_return_ double __cdecl atan(_In_ double _X);
+      |                                   ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:19:14: warning: The left operand of '<' is a garbage value [clang-analyzer-core.UndefinedBinaryOperatorResult]
+   19 |         if (x<0 || x>1)
+      |              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:54:5: note: 'x' declared without an initial value
+   54 |     double x;
+      |     ^~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:55:19: note: Assuming 'i' is < 'numberofpoints'
+   55 |     for (int i=0; i<numberofpoints; i++)
+      |                   ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:55:5: note: Loop condition is true.  Entering loop body
+   55 |     for (int i=0; i<numberofpoints; i++)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:57:13: note: Assuming field 'distribution' is not equal to normal
+   57 |         if (distribution == distribution_type::normal)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:57:9: note: Taking false branch
+   57 |         if (distribution == distribution_type::normal)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:61:18: note: Assuming field 'distribution' is not equal to lognormal
+   61 |         else if (distribution == distribution_type::lognormal)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:61:14: note: Taking false branch
+   61 |         else if (distribution == distribution_type::lognormal)
+      |              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:65:27: note: Passing value via 1st parameter 'x'
+   65 |         out.append(x,Eval(x));
+      |                           ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:65:22: note: Calling 'Distribution::Eval'
+   65 |         out.append(x,Eval(x));
+      |                      ^~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:14:9: note: Field 'distribution' is not equal to normal
+   14 |     if (distribution==distribution_type::normal)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:14:5: note: Taking false branch
+   14 |     if (distribution==distribution_type::normal)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:16:9: note: Field 'distribution' is not equal to lognormal
+   16 |     if (distribution==distribution_type::lognormal)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:16:5: note: Taking false branch
+   16 |     if (distribution==distribution_type::lognormal)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:18:9: note: Assuming field 'distribution' is equal to uniform
+   18 |     if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:18:50: note: Left side of '||' is true
+   18 |     if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+      |                                                  ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:19:14: note: The left operand of '<' is a garbage value
+   19 |         if (x<0 || x>1)
+      |             ~^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:24:65: warning: the const qualified parameter 'parameters' of type 'const vector<double>' is copied for each invocation; consider making it a reference [performance-unnecessary-value-param]
+   24 | double Distribution::Eval(const double &x, const vector<double> parameters, distribution_type distribution)
+      |                                                                 ^
+      |                                                                &
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:32:14: warning: The left operand of '<' is a garbage value [clang-analyzer-core.UndefinedBinaryOperatorResult]
+   32 |         if (x<0 || x>1)
+      |              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:73:5: note: 'x' declared without an initial value
+   73 |     double x;
+      |     ^~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:74:19: note: Assuming 'i' is < 'numberofpoints'
+   74 |     for (int i=0; i<numberofpoints; i++)
+      |                   ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:74:5: note: Loop condition is true.  Entering loop body
+   74 |     for (int i=0; i<numberofpoints; i++)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:76:13: note: Assuming 'dist_type' is not equal to normal
+   76 |         if (dist_type == distribution_type::normal)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:76:9: note: Taking false branch
+   76 |         if (dist_type == distribution_type::normal)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:80:18: note: Assuming 'dist_type' is not equal to lognormal
+   80 |         else if (dist_type == distribution_type::lognormal)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:80:14: note: Taking false branch
+   80 |         else if (dist_type == distribution_type::lognormal)
+      |              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:84:27: note: Passing value via 1st parameter 'x'
+   84 |         out.append(x,Eval(x,parameters,dist_type));
+      |                           ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:84:22: note: Calling 'Distribution::Eval'
+   84 |         out.append(x,Eval(x,parameters,dist_type));
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:27:9: note: 'distribution' is not equal to normal
+   27 |     if (distribution==distribution_type::normal)
+      |         ^~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:27:5: note: Taking false branch
+   27 |     if (distribution==distribution_type::normal)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:29:9: note: 'distribution' is not equal to lognormal
+   29 |     if (distribution==distribution_type::lognormal)
+      |         ^~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:29:5: note: Taking false branch
+   29 |     if (distribution==distribution_type::lognormal)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:31:9: note: Assuming 'distribution' is equal to uniform
+   31 |     if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:31:50: note: Left side of '||' is true
+   31 |     if (distribution==distribution_type::uniform || distribution==distribution_type::dirichlet)
+      |                                                  ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:32:14: note: The left operand of '<' is a garbage value
+   32 |         if (x<0 || x>1)
+      |             ~^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:54:12: warning: variable 'x' is not initialized [cppcoreguidelines-init-variables]
+    2 |     double x;
+      |            ^
+      |              = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:65:9: warning: 1st function call argument is an uninitialized value [clang-analyzer-core.CallAndMessage]
+   65 |         out.append(x,Eval(x));
+      |         ^          ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:54:5: note: 'x' declared without an initial value
+   54 |     double x;
+      |     ^~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:55:19: note: Assuming 'i' is < 'numberofpoints'
+   55 |     for (int i=0; i<numberofpoints; i++)
+      |                   ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:55:5: note: Loop condition is true.  Entering loop body
+   55 |     for (int i=0; i<numberofpoints; i++)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:57:13: note: Assuming field 'distribution' is not equal to normal
+   57 |         if (distribution == distribution_type::normal)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:57:9: note: Taking false branch
+   57 |         if (distribution == distribution_type::normal)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:61:18: note: Assuming field 'distribution' is not equal to lognormal
+   61 |         else if (distribution == distribution_type::lognormal)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:61:14: note: Taking false branch
+   61 |         else if (distribution == distribution_type::lognormal)
+      |              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:65:9: note: 1st function call argument is an uninitialized value
+   65 |         out.append(x,Eval(x));
+      |         ^          ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:70:120: warning: the const qualified parameter 'parameters' of type 'const vector<double>' is copied for each invocation; consider making it a reference [performance-unnecessary-value-param]
+   70 | TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type)
+      |                                                                                                                        ^
+      |                                                                                                                       &
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:73:12: warning: variable 'x' is not initialized [cppcoreguidelines-init-variables]
+   73 |     double x;
+      |            ^
+      |              = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:84:9: warning: 1st function call argument is an uninitialized value [clang-analyzer-core.CallAndMessage]
+   84 |         out.append(x,Eval(x,parameters,dist_type));
+      |         ^          ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:73:5: note: 'x' declared without an initial value
+   73 |     double x;
+      |     ^~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:74:19: note: Assuming 'i' is < 'numberofpoints'
+   74 |     for (int i=0; i<numberofpoints; i++)
+      |                   ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:74:5: note: Loop condition is true.  Entering loop body
+   74 |     for (int i=0; i<numberofpoints; i++)
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:76:13: note: Assuming 'dist_type' is not equal to normal
+   76 |         if (dist_type == distribution_type::normal)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:76:9: note: Taking false branch
+   76 |         if (dist_type == distribution_type::normal)
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:80:18: note: Assuming 'dist_type' is not equal to lognormal
+   80 |         else if (dist_type == distribution_type::lognormal)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:80:14: note: Taking false branch
+   80 |         else if (dist_type == distribution_type::lognormal)
+      |              ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\cmbdistribution.cpp:84:9: note: 1st function call argument is an uninitialized value
+   84 |         out.append(x,Eval(x,parameters,dist_type));
+      |         ^          ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:300:5: warning: Variable 'x' with floating point type 'double' should not be used as a loop counter [clang-analyzer-security.FloatLoopCounter]
+  300 |     for (double x = x_min; x <= x_max; x += step_size) {
+      |     ^                      ~           ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:300:5: note: Variable 'x' with floating point type 'double' should not be used as a loop counter
+  300 |     for (double x = x_min; x <= x_max; x += step_size) {
+      |     ^                      ~           ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:300:40: warning: loop induction expression should not have floating-point type [bugprone-float-loop-counter]
+  300 |     for (double x = x_min; x <= x_max; x += step_size) {
+      |                            ~           ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:345:5: warning: Variable 'x' with floating point type 'double' should not be used as a loop counter [clang-analyzer-security.FloatLoopCounter]
+  345 |     for (double x = x_min; x <= x_max; x += step_size) {
+      |     ^                      ~           ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:345:5: note: Variable 'x' with floating point type 'double' should not be used as a loop counter
+  345 |     for (double x = x_min; x <= x_max; x += step_size) {
+      |     ^                      ~           ~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:345:40: warning: loop induction expression should not have floating-point type [bugprone-float-loop-counter]
+  345 |     for (double x = x_min; x <= x_max; x += step_size) {
+      |                            ~           ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:455:5: warning: Variable 'lambda' with floating point type 'double' should not be used as a loop counter [clang-analyzer-security.FloatLoopCounter]
+  455 |     for (double lambda = min_lambda; lambda <= max_lambda; lambda += lambda_step) {
+      |     ^                                ~~~~~~                ~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:455:5: note: Variable 'lambda' with floating point type 'double' should not be used as a loop counter
+  455 |     for (double lambda = min_lambda; lambda <= max_lambda; lambda += lambda_step) {
+      |     ^                                ~~~~~~                ~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\concentrationset.cpp:455:60: warning: loop induction expression should not have floating-point type [bugprone-float-loop-counter]
+  455 |     for (double lambda = min_lambda; lambda <= max_lambda; lambda += lambda_step) {
+      |                                      ~~~~~~                ^~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:18:67: warning: the parameter 'arguments' of type 'map<string, string>' (aka 'map<basic_string<char, char_traits<char>, allocator<char>>, basic_string<char, char_traits<char>, allocator<char>>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+   18 | bool Conductor::Execute(const string &command, map<string,string> arguments)
+      |                                                                   ^
+      |                                                const             &
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:221:10: warning: variable 'organic_size_correction' is not initialized [cppcoreguidelines-init-variables]
+  221 |     bool organic_size_correction;
+      |          ^                      
+      |                                  = false
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:227:13: warning: Potential leak of memory pointed to by 'rtw' [clang-analyzer-cplusplus.NewDeleteLeaks]
+  227 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:21:5: note: Taking false branch
+   21 |     if (!CheckNegativeElements(Data()))
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:9: note: Assuming the condition is true
+   24 |     if (command == "GA")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:5: note: Taking true branch
+   24 |     if (command == "GA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:26:9: note: Calling 'Conductor::ExecuteGA'
+   26 |         ExecuteGA(arguments);
+      |         ^~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:219:27: note: Memory is allocated
+  219 |     ProgressWindow* rtw = new ProgressWindow(mainwindow);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:222:9: note: Assuming the condition is true
+  222 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:222:5: note: Taking true branch
+  222 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:225:13: note: Assuming the condition is true
+  225 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:225:13: note: Left side of '&&' is true
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:225:13: note: Assuming the condition is true
+  225 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:225:9: note: Taking true branch
+  225 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:227:13: note: Potential leak of memory pointed to by 'rtw'
+  227 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:313:10: warning: variable 'organic_size_correction' is not initialized [cppcoreguidelines-init-variables]
+  313 |     bool organic_size_correction;
+      |          ^                      
+      |                                  = false
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:404:10: warning: variable 'organic_size_correction' is not initialized [cppcoreguidelines-init-variables]
+  404 |     bool organic_size_correction;
+      |          ^                      
+      |                                  = false
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:410:13: warning: Potential leak of memory pointed to by 'rtw' [clang-analyzer-cplusplus.NewDeleteLeaks]
+  410 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:21:5: note: Taking false branch
+   21 |     if (!CheckNegativeElements(Data()))
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:9: note: Assuming the condition is false
+   24 |     if (command == "GA")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:5: note: Taking false branch
+   24 |     if (command == "GA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:9: note: Assuming the condition is false
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:5: note: Taking false branch
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:9: note: Assuming the condition is false
+   32 |     if (command == "GA (disregarding targets)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:5: note: Taking false branch
+   32 |     if (command == "GA (disregarding targets)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:9: note: Assuming the condition is true
+   36 |     if (command == "Levenberg-Marquardt")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:5: note: Taking true branch
+   36 |     if (command == "Levenberg-Marquardt")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:38:9: note: Calling 'Conductor::ExecuteLevenbergMarquardt'
+   38 |         ExecuteLevenbergMarquardt(arguments); 
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:402:27: note: Memory is allocated
+  402 |     ProgressWindow* rtw = new ProgressWindow(mainwindow);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:405:9: note: Assuming the condition is true
+  405 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:405:5: note: Taking true branch
+  405 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:408:13: note: Assuming the condition is true
+  408 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:408:13: note: Left side of '&&' is true
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:408:13: note: Assuming the condition is true
+  408 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:408:9: note: Taking true branch
+  408 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:410:13: note: Potential leak of memory pointed to by 'rtw'
+  410 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:467:10: warning: variable 'organic_size_correction' is not initialized [cppcoreguidelines-init-variables]
+  467 |     bool organic_size_correction;
+      |          ^                      
+      |                                  = false
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:473:13: warning: Potential leak of memory pointed to by 'rtw' [clang-analyzer-cplusplus.NewDeleteLeaks]
+  473 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:21:5: note: Taking false branch
+   21 |     if (!CheckNegativeElements(Data()))
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:9: note: Assuming the condition is false
+   24 |     if (command == "GA")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:5: note: Taking false branch
+   24 |     if (command == "GA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:9: note: Assuming the condition is false
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:5: note: Taking false branch
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:9: note: Assuming the condition is false
+   32 |     if (command == "GA (disregarding targets)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:5: note: Taking false branch
+   32 |     if (command == "GA (disregarding targets)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:9: note: Assuming the condition is false
+   36 |     if (command == "Levenberg-Marquardt")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:5: note: Taking false branch
+   36 |     if (command == "Levenberg-Marquardt")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:40:9: note: Assuming the condition is true
+   40 |     if (command == "Levenberg-Marquardt-Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:40:5: note: Taking true branch
+   40 |     if (command == "Levenberg-Marquardt-Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:42:3: note: Calling 'Conductor::ExecuteLevenbergMarquardtBatch'
+   42 |                 ExecuteLevenbergMarquardtBatch(arguments);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:465:27: note: Memory is allocated
+  465 |     ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:468:9: note: Assuming the condition is true
+  468 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:468:5: note: Taking true branch
+  468 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:471:13: note: Assuming the condition is true
+  471 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:471:13: note: Left side of '&&' is true
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:471:13: note: Assuming the condition is true
+  471 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:471:9: note: Taking true branch
+  471 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:473:13: note: Potential leak of memory pointed to by 'rtw'
+  473 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:486:23: warning: variable 'contributions' is not initialized [cppcoreguidelines-init-variables]
+  486 |     CMBTimeSeriesSet* contributions;
+      |                       ^            
+      |                                     = nullptr
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:1317:23: warning: variable 'dist' is not initialized [cppcoreguidelines-init-variables]
+ 1317 |     distribution_type dist;
+      |                       ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:1350:23: warning: variable 'dist' is not initialized [cppcoreguidelines-init-variables]
+ 1350 |     distribution_type dist;
+      |                       ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:1972:10: warning: Value stored to 'exclude_samples' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+ 1972 |     bool exclude_samples = (arguments.at("Use only selected samples") == "true");
+      |          ^~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:1972:10: note: Value stored to 'exclude_samples' during its initialization is never read
+ 1972 |     bool exclude_samples = (arguments.at("Use only selected samples") == "true");
+      |          ^~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:1973:10: warning: Value stored to 'exclude_elements' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+ 1973 |     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
+      |          ^~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:1973:10: note: Value stored to 'exclude_elements' during its initialization is never read
+ 1973 |     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
+      |          ^~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2043:10: warning: variable 'organic_size_correction' is not initialized [cppcoreguidelines-init-variables]
+ 2043 |     bool organic_size_correction;
+      |          ^                      
+      |                                  = false
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2049:13: warning: Potential leak of memory pointed to by 'rtw' [clang-analyzer-cplusplus.NewDeleteLeaks]
+ 2049 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:21:5: note: Taking false branch
+   21 |     if (!CheckNegativeElements(Data()))
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:9: note: Assuming the condition is false
+   24 |     if (command == "GA")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:5: note: Taking false branch
+   24 |     if (command == "GA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:9: note: Assuming the condition is false
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:5: note: Taking false branch
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:9: note: Assuming the condition is false
+   32 |     if (command == "GA (disregarding targets)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:5: note: Taking false branch
+   32 |     if (command == "GA (disregarding targets)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:9: note: Assuming the condition is false
+   36 |     if (command == "Levenberg-Marquardt")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:5: note: Taking false branch
+   36 |     if (command == "Levenberg-Marquardt")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:40:9: note: Assuming the condition is false
+   40 |     if (command == "Levenberg-Marquardt-Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:40:5: note: Taking false branch
+   40 |     if (command == "Levenberg-Marquardt-Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:45:9: note: Assuming the condition is false
+   45 |     if (command == "OM-Size Correct")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:45:5: note: Taking false branch
+   45 |     if (command == "OM-Size Correct")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:49:9: note: Assuming the condition is false
+   49 |     if (command == "MLR")
+      |         ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:49:5: note: Taking false branch
+   49 |     if (command == "MLR")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:53:9: note: Assuming the condition is false
+   53 |     if (command == "CovMat")
+      |         ^~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:53:5: note: Taking false branch
+   53 |     if (command == "CovMat")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:58:9: note: Assuming the condition is false
+   58 |     if (command == "CorMat")
+      |         ^~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:58:5: note: Taking false branch
+   58 |     if (command == "CorMat")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:62:9: note: Assuming the condition is false
+   62 |     if (command == "DFA")
+      |         ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:62:5: note: Taking false branch
+   62 |     if (command == "DFA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:67:9: note: Assuming the condition is false
+   67 |     if (command == "DFAOnevsRest")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:67:5: note: Taking false branch
+   67 |     if (command == "DFAOnevsRest")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:72:9: note: Assuming the condition is false
+   72 |     if (command == "DFAM")
+      |         ^~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:72:5: note: Taking false branch
+   72 |     if (command == "DFAM")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:77:9: note: Assuming the condition is false
+   77 |     if (command == "SDFA")
+      |         ^~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:77:5: note: Taking false branch
+   77 |     if (command == "SDFA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:83:9: note: Assuming the condition is false
+   83 |     if (command == "SDFAM")
+      |         ^~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:83:5: note: Taking false branch
+   83 |     if (command == "SDFAM")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:88:9: note: Assuming the condition is false
+   88 |     if (command == "SDFAOnevsRest")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:88:5: note: Taking false branch
+   88 |     if (command == "SDFAOnevsRest")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:94:9: note: Assuming the condition is false
+   94 |     if (command == "KS")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:94:5: note: Taking false branch
+   94 |     if (command == "KS")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:98:9: note: Assuming the condition is false
+   98 |     if (command == "KS-individual")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:98:5: note: Taking false branch
+   98 |     if (command == "KS-individual")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:102:9: note: Assuming the condition is false
+  102 |     if (command == "CMB Bayesian")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:102:5: note: Taking false branch
+  102 |     if (command == "CMB Bayesian")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:106:9: note: Assuming the condition is false
+  106 |     if (command == "CMB Bayesian-Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:106:5: note: Taking false branch
+  106 |     if (command == "CMB Bayesian-Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:110:9: note: Assuming the condition is false
+  110 |     if (command == "Test CMB Bayesian")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:110:5: note: Taking false branch
+  110 |     if (command == "Test CMB Bayesian")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:117:9: note: Assuming the condition is false
+  117 |     if (command == "DF")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:117:5: note: Taking false branch
+  117 |     if (command == "DF")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:123:9: note: Assuming the condition is false
+  123 |     if (command == "Bracketing Analysis")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:123:5: note: Taking false branch
+  123 |     if (command == "Bracketing Analysis")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:128:9: note: Assuming the condition is false
+  128 |     if (command == "Bracketing Analysis Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:128:5: note: Taking false branch
+  128 |     if (command == "Bracketing Analysis Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:133:9: note: Assuming the condition is false
+  133 |     if (command == "BoxCox")
+      |         ^~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:133:5: note: Taking false branch
+  133 |     if (command == "BoxCox")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:138:9: note: Assuming the condition is false
+  138 |     if (command == "Outlier")
+      |         ^~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:138:5: note: Taking false branch
+  138 |     if (command == "Outlier")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:143:9: note: Assuming the condition is false
+  143 |     if (command == "EDP")
+      |         ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:143:5: note: Taking false branch
+  143 |     if (command == "EDP")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:148:9: note: Assuming the condition is false
+  148 |     if (command == "EDPM")
+      |         ^~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:148:5: note: Taking false branch
+  148 |     if (command == "EDPM")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:152:9: note: Assuming the condition is false
+  152 |     if (command == "ANOVA")
+      |         ^~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:152:5: note: Taking false branch
+  152 |     if (command == "ANOVA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:157:9: note: Assuming the condition is true
+  157 |     if (command == "Error_Analysis")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:157:5: note: Taking true branch
+  157 |     if (command == "Error_Analysis")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:159:16: note: Calling 'Conductor::ExecuteErrorAnalysis'
+  159 |         return ExecuteErrorAnalysis(arguments);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2041:27: note: Memory is allocated
+ 2041 |     ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2044:9: note: Assuming the condition is true
+ 2044 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2044:5: note: Taking true branch
+ 2044 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2047:13: note: Assuming the condition is true
+ 2047 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2047:13: note: Left side of '&&' is true
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2047:13: note: Assuming the condition is true
+ 2047 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2047:9: note: Taking true branch
+ 2047 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2049:13: note: Potential leak of memory pointed to by 'rtw'
+ 2049 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2092:10: warning: variable 'organic_size_correction' is not initialized [cppcoreguidelines-init-variables]
+ 2092 |     bool organic_size_correction;
+      |          ^                      
+      |                                  = false
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2098:13: warning: Potential leak of memory pointed to by 'rtw' [clang-analyzer-cplusplus.NewDeleteLeaks]
+ 2098 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:21:5: note: Taking false branch
+   21 |     if (!CheckNegativeElements(Data()))
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:9: note: Assuming the condition is false
+   24 |     if (command == "GA")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:24:5: note: Taking false branch
+   24 |     if (command == "GA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:9: note: Assuming the condition is false
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:28:5: note: Taking false branch
+   28 |     if (command == "GA (fixed elemental contribution)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:9: note: Assuming the condition is false
+   32 |     if (command == "GA (disregarding targets)")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:32:5: note: Taking false branch
+   32 |     if (command == "GA (disregarding targets)")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:9: note: Assuming the condition is false
+   36 |     if (command == "Levenberg-Marquardt")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:36:5: note: Taking false branch
+   36 |     if (command == "Levenberg-Marquardt")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:40:9: note: Assuming the condition is false
+   40 |     if (command == "Levenberg-Marquardt-Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:40:5: note: Taking false branch
+   40 |     if (command == "Levenberg-Marquardt-Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:45:9: note: Assuming the condition is false
+   45 |     if (command == "OM-Size Correct")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:45:5: note: Taking false branch
+   45 |     if (command == "OM-Size Correct")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:49:9: note: Assuming the condition is false
+   49 |     if (command == "MLR")
+      |         ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:49:5: note: Taking false branch
+   49 |     if (command == "MLR")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:53:9: note: Assuming the condition is false
+   53 |     if (command == "CovMat")
+      |         ^~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:53:5: note: Taking false branch
+   53 |     if (command == "CovMat")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:58:9: note: Assuming the condition is false
+   58 |     if (command == "CorMat")
+      |         ^~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:58:5: note: Taking false branch
+   58 |     if (command == "CorMat")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:62:9: note: Assuming the condition is false
+   62 |     if (command == "DFA")
+      |         ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:62:5: note: Taking false branch
+   62 |     if (command == "DFA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:67:9: note: Assuming the condition is false
+   67 |     if (command == "DFAOnevsRest")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:67:5: note: Taking false branch
+   67 |     if (command == "DFAOnevsRest")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:72:9: note: Assuming the condition is false
+   72 |     if (command == "DFAM")
+      |         ^~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:72:5: note: Taking false branch
+   72 |     if (command == "DFAM")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:77:9: note: Assuming the condition is false
+   77 |     if (command == "SDFA")
+      |         ^~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:77:5: note: Taking false branch
+   77 |     if (command == "SDFA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:83:9: note: Assuming the condition is false
+   83 |     if (command == "SDFAM")
+      |         ^~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:83:5: note: Taking false branch
+   83 |     if (command == "SDFAM")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:88:9: note: Assuming the condition is false
+   88 |     if (command == "SDFAOnevsRest")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:88:5: note: Taking false branch
+   88 |     if (command == "SDFAOnevsRest")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:94:9: note: Assuming the condition is false
+   94 |     if (command == "KS")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:94:5: note: Taking false branch
+   94 |     if (command == "KS")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:98:9: note: Assuming the condition is false
+   98 |     if (command == "KS-individual")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:98:5: note: Taking false branch
+   98 |     if (command == "KS-individual")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:102:9: note: Assuming the condition is false
+  102 |     if (command == "CMB Bayesian")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:102:5: note: Taking false branch
+  102 |     if (command == "CMB Bayesian")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:106:9: note: Assuming the condition is false
+  106 |     if (command == "CMB Bayesian-Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:106:5: note: Taking false branch
+  106 |     if (command == "CMB Bayesian-Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:110:9: note: Assuming the condition is false
+  110 |     if (command == "Test CMB Bayesian")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:110:5: note: Taking false branch
+  110 |     if (command == "Test CMB Bayesian")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:117:9: note: Assuming the condition is false
+  117 |     if (command == "DF")
+      |         ^~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:117:5: note: Taking false branch
+  117 |     if (command == "DF")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:123:9: note: Assuming the condition is false
+  123 |     if (command == "Bracketing Analysis")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:123:5: note: Taking false branch
+  123 |     if (command == "Bracketing Analysis")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:128:9: note: Assuming the condition is false
+  128 |     if (command == "Bracketing Analysis Batch")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:128:5: note: Taking false branch
+  128 |     if (command == "Bracketing Analysis Batch")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:133:9: note: Assuming the condition is false
+  133 |     if (command == "BoxCox")
+      |         ^~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:133:5: note: Taking false branch
+  133 |     if (command == "BoxCox")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:138:9: note: Assuming the condition is false
+  138 |     if (command == "Outlier")
+      |         ^~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:138:5: note: Taking false branch
+  138 |     if (command == "Outlier")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:143:9: note: Assuming the condition is false
+  143 |     if (command == "EDP")
+      |         ^~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:143:5: note: Taking false branch
+  143 |     if (command == "EDP")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:148:9: note: Assuming the condition is false
+  148 |     if (command == "EDPM")
+      |         ^~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:148:5: note: Taking false branch
+  148 |     if (command == "EDPM")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:152:9: note: Assuming the condition is false
+  152 |     if (command == "ANOVA")
+      |         ^~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:152:5: note: Taking false branch
+  152 |     if (command == "ANOVA")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:157:9: note: Assuming the condition is false
+  157 |     if (command == "Error_Analysis")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:157:5: note: Taking false branch
+  157 |     if (command == "Error_Analysis")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:162:9: note: Assuming the condition is true
+  162 |     if (command == "Source_Verify")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:162:5: note: Taking true branch
+  162 |     if (command == "Source_Verify")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:164:16: note: Calling 'Conductor::ExecuteSourceVerify'
+  164 |         return ExecuteSourceVerify(arguments);
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2090:27: note: Memory is allocated
+ 2090 |     ProgressWindow* rtw = new ProgressWindow(mainwindow, 0);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2093:9: note: Assuming the condition is true
+ 2093 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2093:5: note: Taking true branch
+ 2093 |     if (arguments.at("Apply size and organic matter correction") == "true")
+      |     ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2096:13: note: Assuming the condition is true
+ 2096 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2096:13: note: Left side of '&&' is true
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2096:13: note: Assuming the condition is true
+ 2096 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2096:9: note: Taking true branch
+ 2096 |         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
+      |         ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\conductor.cpp:2098:13: note: Potential leak of memory pointed to by 'rtw'
+ 2098 |             QMessageBox::warning(mainwindow, "SedSAT3", "Perform Organic Matter and Size Correction first!\n", QMessageBox::Ok);
+      |             ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\elemental_profile_set.cpp:142:20: warning: the parameter 'samples_to_eliminate' of type 'vector<string>' (aka 'vector<basic_string<char, char_traits<char>, allocator<char>>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+  142 |     vector<string> samples_to_eliminate,
+      |                    ^
+      |     const         &
+E:\git_repos\SedimentSourceAssessmentTool3\src\interface.cpp:3:1: warning: constructor does not initialize these fields: lowlimit, highlimit [cppcoreguidelines-pro-type-member-init]
+    3 | Interface::Interface()
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\interface.cpp:8:1: warning: constructor does not initialize these fields: lowlimit, highlimit [cppcoreguidelines-pro-type-member-init]
+    8 | Interface::Interface(const Interface &intf)
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:17:1: warning: constructor does not initialize these fields: error_stdev_, error_stdev_isotope_, epsilon_ [cppcoreguidelines-pro-type-member-init]
+   17 | SourceSinkData::SourceSinkData()
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:46:1: warning: constructor does not initialize these fields: error_stdev_, error_stdev_isotope_, epsilon_ [cppcoreguidelines-pro-type-member-init]
+   46 | SourceSinkData::SourceSinkData(const SourceSinkData& other)
+      | ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1010:16: warning: unused local variable 'corresponding_element' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') [bugprone-unused-local-non-trivial-variable]
+ 1010 |     {   string corresponding_element = element_information_[isotope_order_[i]].base_element;
+      |                ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1557:20: warning: variable 'mean_delta' is not initialized [cppcoreguidelines-init-variables]
+   11 |             double mean_delta;
+      |                    ^         
+      |                               = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1558:20: warning: variable 'mean_base_concentration' is not initialized [cppcoreguidelines-init-variables]
+ 1558 |             double mean_base_concentration;
+      |                    ^                      
+      |                                            = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1726:42: warning: performing an implicit widening conversion to type 'const size_t' (aka 'const unsigned long long') of a multiplication performed in type 'int' [bugprone-implicit-widening-of-multiplication-result]
+ 1726 |     const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+      |                                          ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1726:42: note: make conversion explicit to silence this warning
+   12 |     const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                          static_cast<const size_t>(                       )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1726:42: note: perform multiplication in a wider type
+ 1726 |     const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+      |                                          ^~~~~~~~~~~~~~~~~~~~~
+      |                                          static_cast<long long>( )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1788:42: warning: performing an implicit widening conversion to type 'const size_t' (aka 'const unsigned long long') of a multiplication performed in type 'int' [bugprone-implicit-widening-of-multiplication-result]
+ 1788 |     const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+      |                                          ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1788:42: note: make conversion explicit to silence this warning
+ 1788 |     const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                          static_cast<const size_t>(                       )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1788:42: note: perform multiplication in a wider type
+ 1788 |     const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+      |                                          ^~~~~~~~~~~~~~~~~~~~~
+      |                                          static_cast<long long>( )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1789:42: warning: performing an implicit widening conversion to type 'const size_t' (aka 'const unsigned long long') of a multiplication performed in type 'int' [bugprone-implicit-widening-of-multiplication-result]
+ 1789 |     const size_t num_isotope_mu_params = numberofisotopes_ * numberofsourcesamplesets_;
+      |                                          ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1789:42: note: make conversion explicit to silence this warning
+ 1789 |     const size_t num_isotope_mu_params = numberofisotopes_ * numberofsourcesamplesets_;
+      |                                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                          static_cast<const size_t>(                   )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:1789:42: note: perform multiplication in a wider type
+ 1789 |     const size_t num_isotope_mu_params = numberofisotopes_ * numberofsourcesamplesets_;
+      |                                          ^~~~~~~~~~~~~~~~~
+      |                                          static_cast<long long>( )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:2632:18: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+ 2632 |     for (QString key : jsonobject.keys())
+      |                  ^
+      |          const  &
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:2652:18: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+ 2652 |     for (QString key : jsonobject.keys())
+      |                  ^
+      |          const  &
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:2665:18: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+ 2665 |     for (QString key : jsonobject.keys())
+      |                  ^
+      |          const  &
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3217:16: warning: variable 'std1' is not initialized [cppcoreguidelines-init-variables]
+ 3217 |         double std1, std2, mean1, mean2;
+      |                ^   
+      |                     = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3217:22: warning: variable 'std2' is not initialized [cppcoreguidelines-init-variables]
+ 3217 |         double std1, std2, mean1, mean2;
+      |                      ^   
+      |                           = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3217:28: warning: variable 'mean1' is not initialized [cppcoreguidelines-init-variables]
+ 3217 |         double std1, std2, mean1, mean2;
+      |                            ^    
+      |                                  = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3217:35: warning: variable 'mean2' is not initialized [cppcoreguidelines-init-variables]
+ 3217 |         double std1, std2, mean1, mean2;
+      |                                   ^    
+      |                                         = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3269:16: warning: variable 'std1' is not initialized [cppcoreguidelines-init-variables]
+ 3269 |         double std1, std2, mean1, mean2;
+      |                ^   
+      |                     = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3269:22: warning: variable 'std2' is not initialized [cppcoreguidelines-init-variables]
+ 3269 |         double std1, std2, mean1, mean2;
+      |                      ^   
+      |                           = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3269:28: warning: variable 'mean1' is not initialized [cppcoreguidelines-init-variables]
+ 3269 |         double std1, std2, mean1, mean2;
+      |                            ^    
+      |                                  = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3269:35: warning: variable 'mean2' is not initialized [cppcoreguidelines-init-variables]
+ 3269 |         double std1, std2, mean1, mean2;
+      |                                   ^    
+      |                                         = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3702:12: warning: the parameter 'target_sample' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+ 3702 |     string target_sample,
+      |            ^
+      |     const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:3748:12: warning: the parameter 'target_sample' of type 'string' (aka 'basic_string<char, char_traits<char>, allocator<char>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+ 3748 |     string target_sample,
+      |            ^
+      |     const &
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4315:25: warning: the parameter 'arguments' of type 'map<string, string>' (aka 'map<basic_string<char, char_traits<char>, allocator<char>>, basic_string<char, char_traits<char>, allocator<char>>>') is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+ 4315 |     map<string, string> arguments,
+      |                         ^
+      |     const              &
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4325:32: warning: performing an implicit widening conversion to type 'const size_t' (aka 'const unsigned long long') of a multiplication performed in type 'int' [bugprone-implicit-widening-of-multiplication-result]
+ 4325 |     const size_t num_columns = numberofsourcesamplesets_ * 4;
+      |                                ^
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4325:32: note: make conversion explicit to silence this warning
+ 4325 |     const size_t num_columns = numberofsourcesamplesets_ * 4;
+      |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                static_cast<const size_t>(   )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4325:32: note: perform multiplication in a wider type
+ 4325 |     const size_t num_columns = numberofsourcesamplesets_ * 4;
+      |                                ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                static_cast<long long>(  )
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4581:12: warning: variable 'degrees_of_freedom' is not initialized [cppcoreguidelines-init-variables]
+ 4581 |     double degrees_of_freedom;
+      |            ^                 
+      |                               = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4795:16: warning: variable 'best_wilks_lambda' is not initialized [cppcoreguidelines-init-variables]
+ 4795 |         double best_wilks_lambda;
+      |                ^                
+      |                                  = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4796:16: warning: variable 'best_f_test_p_value' is not initialized [cppcoreguidelines-init-variables]
+ 4796 |         double best_f_test_p_value;
+      |                ^                  
+      |                                    = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4863:16: warning: variable 'best_wilks_lambda' is not initialized [cppcoreguidelines-init-variables]
+ 4863 |         double best_wilks_lambda;
+      |                ^                
+      |                                  = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4864:16: warning: variable 'best_f_test_p_value' is not initialized [cppcoreguidelines-init-variables]
+ 4864 |         double best_f_test_p_value;
+      |                ^                  
+      |                                    = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4928:16: warning: variable 'best_wilks_lambda' is not initialized [cppcoreguidelines-init-variables]
+ 4928 |         double best_wilks_lambda;
+      |                ^                
+      |                                  = NAN
+E:\git_repos\SedimentSourceAssessmentTool3\src\sourcesinkdata.cpp:4929:16: warning: variable 'best_f_test_p_value' is not initialized [cppcoreguidelines-init-variables]
+ 4929 |         double best_f_test_p_value;
+      |                ^                  
+      |                                    = NAN

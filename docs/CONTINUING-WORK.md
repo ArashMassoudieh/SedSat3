@@ -393,10 +393,9 @@ reviewer as one pattern rather than five tickets.
   colon problem, and both check that the file opened. Her existing output is
   also recoverable from the NTFS streams as described in 6.1. She does not have
   to wait for a new build to continue the review.
-- She was also told the README's manual link is stale and would be fixed; it
-  still points at a PDF last updated July 2025. The README also still sends
-  people to GitHub releases and sedsat.org rather than the GitLab package
-  registry, which Cara asked about on 11 September.
+- She was also told the README's manual link is stale and would be fixed.
+  Since October 2026 the README no longer links GitHub or sedsat.org; the
+  manual link is a placeholder for its USGS location.
 - **Cara Peterman-Phipps** — the merge request for `add-gitlab-pages-docs`,
   which gives GitLab its own rendered Doxygen under Deploy → Pages.
 - The `v1.1.6` tag still points at a tree from before most of the source

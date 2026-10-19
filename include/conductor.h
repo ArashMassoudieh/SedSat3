@@ -690,7 +690,7 @@ private:
      *                  - "Number of realizations": Number of bootstrap iterations
      * @return true if execution completed successfully, false if OM/Size correction unavailable or negative elements found
      */
-    bool ExecuteErrorAnalysis(const std::map<std::string, std::string>& arguments);
+    bool ExecuteErrorAnalysis(const std::map<std::string, std::string>& given_arguments);
 
     /**
      * @brief Executes source verification analysis

@@ -134,6 +134,17 @@ cppcheck:
     paths:
       - cppcheck.xml
 
+codespell:
+  stage: analysis
+  needs: []
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq --no-install-recommends codespell
+  script:
+    - codespell --skip "./thirdparty,./tests/data,./tests/baseline,./docs/review,./docs/manual/*.pdf,*.cmb,*.xlsx" --ignore-words-list "mor,ans,nd,te,ue,ot,fo,ba,sie,iff"
+  # Reported, not yet enforced
+  allow_failure: true
+
 # ---------------------------------------------------------------------------
 # Documentation (GitLab Pages)
 # ---------------------------------------------------------------------------

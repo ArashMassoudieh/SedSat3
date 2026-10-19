@@ -42,7 +42,6 @@ SOURCES += \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
     filebrowserpushbutton.cpp \
-    FilePushButton.cpp \
     formelementinformation.cpp \
     generalchart.cpp \
     GeneralChartPlotter.cpp \
@@ -71,7 +70,6 @@ HEADERS += \
     elementstablemodel.h \
     elementtabledelegate.h \
     filebrowserpushbutton.h \
-    FilePushButton.h \
     formelementinformation.h \
     generalchart.h \
     GeneralChartPlotter.h \

@@ -57,6 +57,8 @@ TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const 
 {
     TimeSeries<double> out;
     double x = NAN;
+    if (numberofpoints < 2)
+        return out;  // the grid below divides by numberofpoints - 1
     for (int i=0; i<numberofpoints; i++)
     {
         if (distribution == distribution_type::normal)
@@ -67,6 +69,11 @@ TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const 
         {
             x = exp(parameters[0] - stdcoeff*parameters[1] + i*2*stdcoeff*parameters[1]/(numberofpoints-1));
         }
+        else
+        {
+            // Uniform and Dirichlet are on [0, 1]; x used to stay NaN here
+            x = double(i)/double(numberofpoints-1);
+        }
         out.append(x,Eval(x));
     }
     return out;
@@ -76,6 +83,8 @@ TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const 
 {
     TimeSeries<double> out;
     double x = NAN;
+    if (numberofpoints < 2)
+        return out;  // the grid below divides by numberofpoints - 1
     for (int i=0; i<numberofpoints; i++)
     {
         if (dist_type == distribution_type::normal)
@@ -85,6 +94,11 @@ TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const 
         else if (dist_type == distribution_type::lognormal)
         {
             x = exp(parameters[0] - stdcoeff*parameters[1] + i*2*stdcoeff*parameters[1]/(numberofpoints-1));
+        }
+        else
+        {
+            // Uniform and Dirichlet are on [0, 1]; x used to stay NaN here
+            x = double(i)/double(numberofpoints-1);
         }
         out.append(x,Eval(x,parameters,dist_type));
     }

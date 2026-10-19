@@ -24,7 +24,9 @@ Repository: <<https://code.usgs.gov/...final group path...>>
 - **Source apportionment**:
   - deterministic: Levenberg–Marquardt maximum-likelihood fit
   - Bayesian: Markov chain Monte Carlo (MCMC) sampling, with a user-set
-    random seed that is written to the output so any run can be repeated
+    random seed that is written to the output so any run can be repeated.
+    The chains run in parallel (OpenMP); each has its own random stream, so
+    the results do not depend on the number of threads.
 - **Results** as tables and plots, including credible intervals, posterior
   distributions and predicted concentrations.
 
