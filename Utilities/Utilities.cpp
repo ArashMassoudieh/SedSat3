@@ -44,7 +44,6 @@ namespace aquiutils
 
     int corresponding_parenthesis(std::string S, int i)
     {
-        std::string s = S;
         if (S.at(i) == '(')
         {
             int paranthesis_level = 1;
@@ -89,7 +88,7 @@ namespace aquiutils
         return out;
     }
 
-    bool parantheses_balance(std::string S)
+    bool parantheses_balance(const std::string& S)
     {
         if (count(S, "(") == count(S, ")"))
             return true;
@@ -123,7 +122,7 @@ namespace aquiutils
         s = S;
     }
 
-    void replace(std::string& s, unsigned int i, std::string p)
+    void replace(std::string& s, unsigned int i, const std::string& p)
     {
         std::string S;
         for (unsigned int j = 0; j < s.size(); j++)
@@ -141,7 +140,7 @@ namespace aquiutils
     }
 
 
-    bool remove(std::string& s, std::string s1)
+    bool remove(std::string& s, const std::string& s1)
     {
         bool found = false;
         for (unsigned int j = 0; j < s.size() - s1.size() + 1; j++)
@@ -153,7 +152,7 @@ namespace aquiutils
         return found;
     }
 
-    void insert(std::string& s, unsigned int pos, std::string s1)
+    void insert(std::string& s, unsigned int pos, const std::string& s1)
     {
         std::string S;
 
@@ -168,7 +167,7 @@ namespace aquiutils
     }
 
 
-    bool replace(std::string& s, std::string s1, std::string s2)
+    bool replace(std::string& s, const std::string& s1, const std::string& s2)
     {
 
         bool found = false;
@@ -195,7 +194,7 @@ namespace aquiutils
 
 
 
-    void replace(std::string& s, unsigned int i, unsigned int j, std::string p)
+    void replace(std::string& s, unsigned int i, unsigned int j, const std::string& p)
     {
         std::string S;
         for (unsigned int k = 0; k < s.size(); k++)
@@ -371,7 +370,7 @@ namespace aquiutils
 
     }
 
-    std::vector<std::vector<std::string>> getline_op(std::ifstream& file, std::vector<char> del1)
+    std::vector<std::vector<std::string>> getline_op(std::ifstream& file, const std::vector<char>& del1)
     {
         std::string line;
         std::vector<std::vector<std::string>> s;
@@ -410,7 +409,7 @@ namespace aquiutils
     }
 
 
-    std::vector<std::string> split_curly_semicolon(std::string s)
+    std::vector<std::string> split_curly_semicolon(const std::string& s)
     {
         std::vector<char> del2; del2.push_back('{'); del2.push_back('}'); del2.push_back(';');
         return split(s, del2);
@@ -466,14 +465,14 @@ namespace aquiutils
         return SS;
     }
 
-    void writeline(std::ofstream& f, std::vector<std::string> s, std::string del)
+    void writeline(std::ofstream& f, std::vector<std::string> s, const std::string& del)
     {
         for (unsigned int i = 0; i < s.size() - 1; i++)
             f << s[i] << del;
         f << s[s.size() - 1] << std::endl;
     }
 
-    void writeline(std::ofstream& f, std::vector<std::vector<std::string>> s, std::string del, std::string del2)
+    void writeline(std::ofstream& f, std::vector<std::vector<std::string>> s, const std::string& del, const std::string& del2)
     {
         for (unsigned int i = 0; i < s.size() - 1; i++)
         {
@@ -483,12 +482,12 @@ namespace aquiutils
         }
         f << s[s.size() - 1][s[s.size() - 1].size() - 1] << std::endl;
     }
-    void writestring(std::ofstream& f, std::string s)
+    void writestring(std::ofstream& f, const std::string& s)
     {
         f << s;
     }
 
-    void writestring(std::string filename, std::string s)
+    void writestring(const std::string& filename, const std::string& s)
     {
         std::ofstream file(filename);
         file << s + "\n";
@@ -669,7 +668,7 @@ namespace aquiutils
 
     }
 
-    double avg(double x, double y, std::string type)
+    double avg(double x, double y, const std::string& type)
     {
         if (type == "arithmetic")
             return 0.5 * (x + y);

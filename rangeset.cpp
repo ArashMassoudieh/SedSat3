@@ -31,7 +31,7 @@ QJsonObject RangeSet::toJsonObject() const
 }
 bool RangeSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
-    for (QString key: jsonobject.keys())
+    for (const QString& key: jsonobject.keys())
     {
         Range range;
         range.ReadFromJsonObject(jsonobject[key].toObject());

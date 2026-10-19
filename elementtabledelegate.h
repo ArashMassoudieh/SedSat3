@@ -16,7 +16,7 @@ class ElementTableDelegate : public QStyledItemDelegate
 
 public:
 
-    ElementTableDelegate(SourceSinkData *_Data, QObject *parent);
+    ElementTableDelegate(SourceSinkData *data, QObject *parent);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const override;
@@ -30,6 +30,10 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
         const QModelIndex &index) const override;
+
+    /// Toggles the "Include in analysis" column with a single click
+    bool editorEvent(QEvent *event, QAbstractItemModel *model,
+                     const QStyleOptionViewItem &option, const QModelIndex &index) override;
 
 
 public slots:

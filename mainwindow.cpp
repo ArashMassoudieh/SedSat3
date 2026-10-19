@@ -3,6 +3,7 @@
 
 #include "mainwindow.h"
 #include "numericparsing.h"
+#include "excelimport.h"
 #include "ui_mainwindow.h"
 
 #include "QDebug"
@@ -622,137 +623,14 @@ bool MainWindow::ReadExcel(const QString& filename)
 
     // qDebug() << "Sink Sheet is:" << sinkSheet;
 
-    // Validate element names are consistent across all sheets
-    QList<QStringList> elementNamesBySheet;
-
-    for (int sheetIdx = 0; sheetIdx < selectedSheets.count(); ++sheetIdx)
+    // Read the sheets; the checks and their messages are in excelimport.cpp
+    ExcelImportError importError;
+    if (!ImportExcelSheets(xlsxR, selectedSheets, dataCollection, importError))
     {
-        xlsxR.selectSheet(selectedSheets[sheetIdx]);
-        QStringList elementNames;
-
-        // Read element names from row 1, starting at column 2
-        int col = 2;
-        while (true)
-        {
-            auto cell = xlsxR.cellAt(1, col);  // Returns shared_ptr
-            if (!cell)
-                break;
-
-            QString elemName = cell->readValue().toString().trimmed();
-            if (elemName.isEmpty())
-                break;
-
-            elementNames.append(elemName);
-            // qDebug() << elemName;
-            col++;
-        }
-
-        // Verify element names match across sheets
-        if (sheetIdx > 0 && elementNames != elementNamesBySheet.last())
-        {
-            QMessageBox::warning(
-                this,
-                tr("Element Mismatch"),
-                tr("Element names and their order must be identical in all sheets.\n\n"
-                    "Mismatch found between:\n  '%1'\n  '%2'")
-                .arg(selectedSheets[sheetIdx - 1])
-                .arg(selectedSheets[sheetIdx])
-            );
-
-            WriteMessageOnScreen(
-                QString("Element mismatch between sheets '%1' and '%2'")
-                .arg(selectedSheets[sheetIdx - 1])
-                .arg(selectedSheets[sheetIdx]),
-                Qt::red
-            );
-            return false;
-        }
-
-        elementNamesBySheet.append(elementNames);
+        QMessageBox::warning(this, importError.title, importError.message);
+        WriteMessageOnScreen(importError.message, Qt::red);
+        return false;
     }
-
-    // Read sample data from each sheet
-    for (int sheetIdx = 0; sheetIdx < selectedSheets.count(); ++sheetIdx)
-    {
-        xlsxR.selectSheet(selectedSheets[sheetIdx]);
-
-        Elemental_Profile_Set* profileSet = dataCollection.AppendSampleSet(
-            selectedSheets[sheetIdx].toStdString()
-        );
-
-        // Read samples starting from row 2
-        int row = 2;
-        while (true)
-        {
-            auto sampleCell = xlsxR.cellAt(row, 1);
-            if (!sampleCell || sampleCell->readValue().toString().isEmpty())
-                break;
-
-            QString sampleName = sampleCell->readValue().toString();
-            Elemental_Profile elementalProfile;
-
-            // Read element values for this sample
-            for (int col = 0; col < elementNamesBySheet[0].count(); ++col)
-            {
-                auto dataCell = xlsxR.cellAt(row, col + 2);
-
-                if (!dataCell)
-                {
-                    QMessageBox::warning(
-                        this,
-                        tr("Empty Cell"),
-                        tr("Empty cell found in:\n"
-                            "Sheet: %1\n"
-                            "Row: %2\n"
-                            "Column: %3")
-                        .arg(selectedSheets[sheetIdx])
-                        .arg(row)
-                        .arg(col + 2)
-                    );
-                    dataCollection.Clear();
-                    return false;
-                }
-
-                // Every value must be a finite number; NaN and Inf are refused
-                // like any other non-number (QVariant::toDouble accepted them)
-                double value = 0;
-                QString reason;
-                if (!parseNumericValue(dataCell->readValue(), value, reason))
-                {
-                    QMessageBox::warning(
-                        this,
-                        tr("Invalid Data"),
-                        tr("Non-numerical value found:\n"
-                            "Sheet: %1\n"
-                            "Row: %2\n"
-                            "Column: %3\n"
-                            "Value: '%4'\n"
-                            "(%5)")
-                        .arg(selectedSheets[sheetIdx])
-                        .arg(row)
-                        .arg(col + 2)
-                        .arg(dataCell->readValue().toString())
-                        .arg(reason)
-                    );
-                    dataCollection.Clear();
-                    return false;
-                }
-
-                elementalProfile.AppendElement(
-                    elementNamesBySheet[0][col].toStdString(),
-                    value
-                );
-            }
-
-            profileSet->AppendProfile(sampleName.toStdString(), elementalProfile);
-            row++;
-        }
-    }
-
-    // Finalize data collection
-    dataCollection.PopulateElementInformation();
-    dataCollection.PopulateElementDistributions();
-    dataCollection.AssignAllDistributions();
 
     // qDebug() << "Reading element information done!";
 
@@ -1271,7 +1149,7 @@ void MainWindow::on_old_result_requested(const QModelIndex& index)
     resultsWindow->show();
 }
 
-bool MainWindow::Execute(const std::string& command, std::map<std::string, std::string> arguments)
+bool MainWindow::Execute(const std::string& command, const std::map<std::string, std::string>& arguments)
 {
     conductor->SetData(&dataCollection);
 

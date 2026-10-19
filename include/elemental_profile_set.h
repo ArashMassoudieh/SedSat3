@@ -165,7 +165,7 @@ public:
      * @brief Create subset excluding specified samples
      */
     Elemental_Profile_Set EliminateSamples(
-        vector<string> samples_to_eliminate,
+        const vector<string>& samples_to_eliminate,
         map<string, element_information>* elementinfo
     ) const;
 

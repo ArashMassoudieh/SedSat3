@@ -15,8 +15,8 @@ public:
     MultipleLinearRegression();
     MultipleLinearRegression(const MultipleLinearRegression& mp);
     MultipleLinearRegression& operator=(const MultipleLinearRegression &mp);
-    double Regress(const vector<vector<double>> &independent, const vector<double> dependent, const vector<string> &indep_vars_names);
-    double SSE_reduced_model(const vector<vector<double>> &independent, const vector<double> dependent, int eliminated_var);
+    double Regress(const vector<vector<double>> &independent, const vector<double>& dependent, const vector<string> &indep_vars_names);
+    double SSE_reduced_model(const vector<vector<double>> &independent, const vector<double>& dependent, int eliminated_var);
     QJsonObject toJsonObject() const override;
     string ToString() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
@@ -36,7 +36,7 @@ public:
     double MeanIndependentVar(int i);
     double GeoMeanIndependentVar(int i);
     string DependentVariableName() {return dependent_variable_name;}
-    void SetDependentVariableName(const string name) {dependent_variable_name = name;}
+    void SetDependentVariableName(const string& name) {dependent_variable_name = name;}
     vector<double> P_Value() {return p_value;}
     void SetEffective(int i, bool eff) {make_effective[i] = eff;}
     bool Effective(int i) const {return make_effective[i];}

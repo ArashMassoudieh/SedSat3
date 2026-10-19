@@ -1,3 +1,7 @@
+> **October 2026:** for the current Windows work (pixi build, MSVC `/W4`,
+> cppcheck, the response letter) start with [HANDOFF-Windows.md](HANDOFF-Windows.md).
+> The packaging steps below still apply; build from the current branch first.
+
 # HANDOFF: Build a portable, no-admin Windows package for SedSAT3
 
 ## Who this is for

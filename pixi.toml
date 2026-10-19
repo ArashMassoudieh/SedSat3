@@ -1,0 +1,78 @@
+# SedSAT3 – Sediment Source Assessment Tool, version 3
+# U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+#
+# pixi environment for building, testing and analysing SedSAT3 with the
+# libraries from conda-forge. Based on the reviewer's working setup
+# (docs/review/BUILDING_ON_WINDOWS_WITH_PIXI.md), updated for the current
+# repository.
+#
+# Windows: run from a "Developer PowerShell for VS 2022", so MSVC (cl.exe,
+# link.exe) is on PATH; pixi supplies the libraries, CMake and Ninja.
+#
+#   pixi run build        configure and compile (build\bin\SedSat3.exe, sedsat3-cli.exe)
+#   pixi run test         unit and regression tests (ctest)
+#   pixi run lint         clang-tidy with the repository's .clang-tidy
+#   pixi run cppcheck     cppcheck (report in cppcheck.txt)
+#   pixi run warnings     MSVC /W4 build into build-w4\, log in msvc-w4.log
+#   pixi run deploy-win   copy the Qt and numerical DLLs next to the executable
+#   pixi run run-app      start the program inside the environment
+
+[workspace]
+name = "sedsat3"
+version = "1.1.7"
+description = "Build, test and analysis environment for SedSAT3 (Qt6, Armadillo, GSL, OpenMP)"
+channels = ["conda-forge"]
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
+
+[dependencies]
+cmake = ">=3.16"
+ninja = "*"
+qt6-main = "*"      # Qt6 Core, Gui, Widgets, PrintSupport, Test
+qt6-charts = "*"    # Qt6 Charts (USE_QCHARTS)
+armadillo = "*"
+libblas = "*"       # BLAS, required by Armadillo
+liblapack = "*"     # LAPACK, required by Armadillo
+openblas = "*"      # the BLAS/LAPACK implementation
+gsl = "*"
+python = ">=3.9"    # the regression test's comparison script
+clang-tools = "*"   # clang-tidy
+cppcheck = "*"
+
+# On Windows the compiler is MSVC from Visual Studio. On Linux and macOS the
+# compilers can come from conda-forge too:
+[target.linux-64.dependencies]
+cxx-compiler = "*"
+[target.osx-64.dependencies]
+cxx-compiler = "*"
+[target.osx-arm64.dependencies]
+cxx-compiler = "*"
+
+[tasks]
+configure = "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release"
+build = { cmd = "cmake --build build --parallel", depends-on = ["configure"] }
+test = { cmd = "ctest --test-dir build --output-on-failure", depends-on = ["build"] }
+clean = "cmake -E rm -rf build build-w4"
+
+# clang-tidy over every first-party source in the compilation database, with
+# the repository's .clang-tidy (the uninitialised-variable and rand() checks
+# are errors, as in CI)
+lint = { cmd = "clang-tidy -p build --quiet src/sourcesinkdata.cpp src/conductor.cpp src/elemental_profile.cpp src/elemental_profile_set.cpp src/concentrationset.cpp src/cmbdistribution.cpp src/parameter.cpp src/observation.cpp src/interface.cpp src/numericparsing.cpp src/GA/GADistribution.cpp src/GA/Binary.cpp excelimport.cpp mainwindow.cpp genericform.cpp formelementinformation.cpp elementstablemodel.cpp elementtabledelegate.cpp cli/scriptrunner.cpp cli/setupcommands.cpp cli/commandcatalog.cpp tests/unit/tst_sedsat3.cpp", depends-on = ["configure"] }
+
+# cppcheck, scoped as in CI. The conda-forge win-64 package looks for its
+# std.cfg under the build server's path; staging the cfg files next to the
+# executable makes it find them (the reviewer's workaround).
+_cppcheck-stage-cfg = { cmd = "cmake -E copy_directory .pixi/envs/default/share/Cppcheck/cfg .pixi/envs/default/Library/bin/cfg" }
+cppcheck = { cmd = "cppcheck --std=c++17 --language=c++ --enable=warning,performance,portability --inline-suppr --suppress=missingIncludeSystem --suppress=unknownMacro -I include -I include/MCMC -I include/GA -I Utilities -I cli -i thirdparty -i build -i build-w4 -i tests/baseline --output-file=cppcheck.txt src include Utilities cli excelimport.cpp mainwindow.cpp", depends-on = ["_cppcheck-stage-cfg"] }
+
+# MSVC with warning level 4 in a separate build tree (CMake's default MSVC flags
+# are restated because CMAKE_CXX_FLAGS replaces them)
+_configure-w4 = "cmake -S . -B build-w4 -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DCMAKE_CXX_FLAGS=\"/DWIN32 /D_WINDOWS /EHsc /W4\""
+warnings = { cmd = "cmake --build build-w4 --parallel > msvc-w4.log", depends-on = ["_configure-w4"] }
+
+run-app = "build/bin/SedSat3.exe"
+
+# Windows: Qt DLLs and plugins (windeployqt), then the numerical libraries,
+# next to the executable. Check the result against the import table
+# (dumpbin /dependents) before packaging; see docs/PACKAGE-Windows-Portable.md.
+_deploy-win-qt = "windeployqt6 --qtpaths .pixi/envs/default/Library/bin/qtpaths6.exe --release --no-translations build/bin/SedSat3.exe"
+deploy-win = { cmd = "cmake -E copy_if_different .pixi/envs/default/Library/bin/openblas.dll .pixi/envs/default/Library/bin/libblas.dll .pixi/envs/default/Library/bin/libcblas.dll .pixi/envs/default/Library/bin/liblapack.dll .pixi/envs/default/Library/bin/gsl-28.dll .pixi/envs/default/Library/bin/libwinpthread-1.dll build/bin/", depends-on = ["_deploy-win-qt"] }

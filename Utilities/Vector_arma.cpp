@@ -30,7 +30,7 @@ CVector_arma::CVector_arma(int n):arma::vec(n,fill::zeros)
 
 }
 
-CVector_arma::CVector_arma(const std::vector<double> a, int /*n*/)
+CVector_arma::CVector_arma(const std::vector<double>& a, int /*n*/)
 {
     arma::vec::operator=(a);
 }
@@ -501,7 +501,7 @@ void CVector_arma::writetofile(std::ofstream &f)
 
 }
 
-void CVector_arma::writetofile(std::string filename)
+void CVector_arma::writetofile(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"w");
     if (f == nullptr)
@@ -510,7 +510,7 @@ void CVector_arma::writetofile(std::string filename)
     fclose(f);
 }
 
-void CVector_arma::writetofile_app(std::string filename)
+void CVector_arma::writetofile_app(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"a");
     if (f == nullptr)
@@ -616,7 +616,7 @@ CVector_arma operator*(CVector_arma &v, const double &d)
 
 }
 
-void CVector_arma::print(std::string s)
+void CVector_arma::print(const std::string& s)
 {
     std::ofstream Afile;
     Afile.open(s);

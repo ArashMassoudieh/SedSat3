@@ -22,7 +22,7 @@ private:
 public:
 	CVector_arma();
 	CVector_arma(int);
-	CVector_arma(const std::vector<double>, int);
+	CVector_arma(const std::vector<double>&, int);
 	CVector_arma(const std::vector<double> &v);
     CVector_arma(const vec &v);
 	CVector_arma(CVector &v);
@@ -68,9 +68,9 @@ public:
 	CVector_arma abs();
 	CVector_arma H();
 	void writetofile(FILE *f);
-	void writetofile(std::string filename);
+	void writetofile(const std::string& filename);
 	void writetofile(std::ofstream &f);
-	void writetofile_app(std::string filename);
+	void writetofile_app(const std::string& filename);
 	CVector_arma Exp();
 	std::vector<int> Int();
 	CMatrix_arma diagmat();
@@ -78,7 +78,7 @@ public:
 	CVector_arma append(double d);
 	CVector_arma sort();
 	std::vector<int> lookup(double val);
-	void print(std::string s);
+	void print(const std::string& s);
 	CVector_arma sub(int i, int j);
 	bool is_finite();
 	std::vector<int> get_nan_elements();

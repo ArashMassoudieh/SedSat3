@@ -865,9 +865,10 @@ double CGA<T>::getfromoutput(string filename)
 template<class T>
 int CGA<T>::getparamno(int i, int ts)
 {
-	int l = 0;
-	for (int j = 0; j<i; j++)
-		if (apply_to_all[j]) l++; else l += 1;
+	// apply_to_all is false for every parameter in SedSAT3 (a single model);
+	// it is left from a multi-series design where a parameter could apply to
+	// all series at once. Each parameter therefore takes one slot.
+	int l = i;
 
 	if (apply_to_all[i])
 		return l;
@@ -878,16 +879,18 @@ int CGA<T>::getparamno(int i, int ts)
 template<class T>
 int CGA<T>::get_time_series(int i)
 {
+	// One slot per parameter (see getparamno)
 	int l = 0;
 	for (int j = 0; j<GA_params.nParam; j++)
 	{
-		if (apply_to_all[j]) l += 1; else l += 1;
+		l += 1;
 		if (l >= i)
 		{
-			if (apply_to_all[j]) l -= 1; else l--;
+			l--;
 			return i - l;
 		}
 	}
+	return 0;
 }
 
 

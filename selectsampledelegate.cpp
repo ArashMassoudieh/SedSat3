@@ -8,9 +8,10 @@
 #include "QLineEdit"
 #include "QLabel"
 
-SelectSampleDelegate::SelectSampleDelegate(SourceSinkData *_Data, QObject */*parent*/)
+SelectSampleDelegate::SelectSampleDelegate(SourceSinkData *data, QObject *parent)
+    : QStyledItemDelegate(parent)
 {
-    Data=_Data;
+    Data=data;
 }
 
 void SelectSampleDelegate::SetMode(mode _mode)

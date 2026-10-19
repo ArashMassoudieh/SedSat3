@@ -198,3 +198,9 @@ CMakeLists.txt.user*
 
 # Regression-test output (tests/regression/run.sh default)
 /build-regression/
+
+# pixi environments and outputs
+.pixi/
+build-w4/
+msvc-w4.log
+cppcheck.txt

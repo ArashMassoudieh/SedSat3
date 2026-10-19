@@ -175,6 +175,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="dialogchooseexcelsheets.cpp" />
     <ClCompile Include="elementstablemodel.cpp" />
     <ClCompile Include="elementtabledelegate.cpp" />
+    <ClCompile Include="excelimport.cpp" />
     <ClCompile Include="filebrowserpushbutton.cpp" />
     <ClCompile Include="formelementinformation.cpp" />
     <ClCompile Include="generalchart.cpp" />
@@ -231,6 +232,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="include\parameter.h" />
     <ClInclude Include="include\sourcesinkdata.h" />
     <ClInclude Include="include\randomstream.h" />
+    <ClInclude Include="excelimport.h" />
     <ClInclude Include="include\numericparsing.h" />
     <ClInclude Include="multiplelinearregression.h" />
     <ClInclude Include="multiplelinearregressionset.h" />

@@ -3,13 +3,30 @@
 
 #include "elementtabledelegate.h"
 #include "QCheckBox"
+#include <QEvent>
 #include "QComboBox"
 #include "QLineEdit"
 #include "QLabel"
 
-ElementTableDelegate::ElementTableDelegate(SourceSinkData *_Data, QObject */*parent*/)
+ElementTableDelegate::ElementTableDelegate(SourceSinkData *data, QObject *parent)
+    : QStyledItemDelegate(parent)
 {
-    Data=_Data;
+    Data=data;
+}
+
+bool ElementTableDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
+                                       const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    // One click toggles "Include in analysis". It used to open a check box
+    // editor that needed another click, and that started ticked even for
+    // excluded elements (it read "No" as true).
+    if (index.column() == 4 && event->type() == QEvent::MouseButtonRelease)
+    {
+        const bool included = (index.data(Qt::DisplayRole).toString() == "Yes");
+        model->setData(index, !included, Qt::EditRole);
+        return true;
+    }
+    return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
 QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
@@ -71,11 +88,7 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
         return editor;
     }
     if (index.column()==4)
-    {
-        QCheckBox *editor = new QCheckBox(parent);
-        editor->setChecked(index.data(Qt::DisplayRole).toBool());
-        return editor;
-    }
+        return nullptr;  // toggled with one click in editorEvent()
 
     return nullptr;
 

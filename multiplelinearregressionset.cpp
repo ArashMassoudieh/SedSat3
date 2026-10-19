@@ -31,7 +31,7 @@ QJsonObject MultipleLinearRegressionSet::toJsonObject() const
 bool MultipleLinearRegressionSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
     clear();
-    for(QString key: jsonobject.keys() ) {
+    for(const QString& key: jsonobject.keys() ) {
         MultipleLinearRegression MLR;
         MLR.ReadFromJsonObject(jsonobject[key].toObject());
         operator[](key.toStdString()) = MLR;
@@ -39,7 +39,7 @@ bool MultipleLinearRegressionSet::ReadFromJsonObject(const QJsonObject &jsonobje
     return true;
 }
 
-bool MultipleLinearRegressionSet::Append(QString key, const MultipleLinearRegression &MLR)
+bool MultipleLinearRegressionSet::Append(const QString& key, const MultipleLinearRegression &MLR)
 {
     if (count(key.toStdString())==0)
     {   operator[](key.toStdString()) = MLR;
@@ -102,7 +102,6 @@ QTableWidget *MultipleLinearRegressionSet::ToTable()
 
 string MultipleLinearRegressionSet::Key(int i)
 {
-    string out;
     int counter = 0;
     for (map<string,MultipleLinearRegression>::iterator it = begin(); it!= end(); it++)
     {

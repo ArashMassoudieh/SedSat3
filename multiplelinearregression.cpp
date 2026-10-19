@@ -50,7 +50,7 @@ MultipleLinearRegression& MultipleLinearRegression::operator=(const MultipleLine
     return *this;
 }
 
-double MultipleLinearRegression::SSE_reduced_model(const vector<vector<double>> &independent, const vector<double> dependent, int eliminated_var)
+double MultipleLinearRegression::SSE_reduced_model(const vector<vector<double>> &independent, const vector<double>& dependent, int eliminated_var)
 {
     if (independent.size()==0) return false;
     if (independent[0].size()!=dependent.size()) return false;
@@ -114,7 +114,7 @@ double MultipleLinearRegression::SSE_reduced_model(const vector<vector<double>> 
 
 }
 
-double MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double> dependent, const vector<string> &indep_var_names)
+double MultipleLinearRegression::Regress(const vector<vector<double>> &independent, const vector<double>& dependent, const vector<string> &indep_var_names)
 {
     if (independent.size()==0) return false;
     if (independent[0].size()!=dependent.size()) return false;
@@ -256,7 +256,7 @@ bool MultipleLinearRegression::ReadFromJsonObject(const QJsonObject &jsonobject)
     else
         regressionEquation = regression_form::linear;
     coefficients_intercept_.push_back(jsonobject["Intercept"].toDouble());
-    for(QString key: jsonobject.keys() ) {
+    for(const QString& key: jsonobject.keys() ) {
         if (key.contains("Coefficient for"))
         {   coefficients_intercept_.push_back(jsonobject[key].toDouble());
             independent_variables_names.push_back(key.split(";")[2].toStdString());

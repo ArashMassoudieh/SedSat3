@@ -1073,7 +1073,7 @@ CVector SourceSinkData::ObservedDataforSelectedSample_Isotope_delta(const string
 {
     CVector observed_data(isotope_order_.size());
     for (unsigned int i=0; i<isotope_order_.size(); i++)
-    {   string corresponding_element = element_information_[isotope_order_[i]].base_element;
+    {
         if (SelectedTargetSample!="")
             observed_data[i] = this->GetSampleSet(GetTargetGroup())->GetProfile(SelectedTargetSample)->GetValue(isotope_order_[i]);
         else if (selected_target_sample_!="")
@@ -1800,7 +1800,7 @@ Parameter* SourceSinkData::GetElementDistributionSigmaParameter(
     // [next block]: Element σ parameters ← We're here
 
     const size_t num_contribution_params = size() - 1;
-    const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
+    const size_t num_element_mu_params = static_cast<size_t>(numberofconstituents_) * numberofsourcesamplesets_;
     const size_t element_sigma_base_index = num_contribution_params + num_element_mu_params;
 
     // Calculate index for this element's σ in this source
@@ -1862,8 +1862,8 @@ bool SourceSinkData::SetParameterValue(size_t index, double value)
 
     // Calculate parameter block boundaries
     const size_t num_contribution_params = estimating_contributions ? (numberofsourcesamplesets_ - 1) : 0;
-    const size_t num_element_mu_params = numberofconstituents_ * numberofsourcesamplesets_;
-    const size_t num_isotope_mu_params = numberofisotopes_ * numberofsourcesamplesets_;
+    const size_t num_element_mu_params = static_cast<size_t>(numberofconstituents_) * numberofsourcesamplesets_;
+    const size_t num_isotope_mu_params = static_cast<size_t>(numberofisotopes_) * numberofsourcesamplesets_;
     const size_t num_element_sigma_params = num_element_mu_params;
     const size_t num_isotope_sigma_params = num_isotope_mu_params;
 
@@ -2706,7 +2706,7 @@ bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject& jso
     element_information_.clear();
     
     // Deserialize metadata for each element
-    for (QString key : jsonobject.keys())
+    for (const QString& key : jsonobject.keys())
     {
         element_information elem_info;
         elem_info.Role = Role(jsonobject[key].toObject()["Role"].toString());
@@ -2732,7 +2732,7 @@ bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject& jsonobject
     clear();
     
     // Deserialize each sample group
-    for (QString key : jsonobject.keys())
+    for (const QString& key : jsonobject.keys())
     {
         Elemental_Profile_Set elemental_profile_set;
         QString set_error;
@@ -2750,7 +2750,7 @@ bool SourceSinkData::ReadElementDatafromJsonObject(const QJsonObject& jsonobject
 bool SourceSinkData::ReadOptionsfromJsonObject(const QJsonObject& jsonobject)
 {
     // Deserialize each option
-    for (QString key : jsonobject.keys())
+    for (const QString& key : jsonobject.keys())
     {
         options_[key] = jsonobject[key].toDouble();
     }
@@ -3815,7 +3815,7 @@ SourceSinkData SourceSinkData::ReplaceSourceAsTarget(const string& source_sample
 CMBTimeSeriesSet SourceSinkData::BootStrap(
     const double& percentage,
     unsigned int num_iterations,
-    string target_sample,
+    const string& target_sample,
     bool use_softmax,
     std::uint64_t seed)
 {
@@ -3867,7 +3867,7 @@ bool SourceSinkData::BootStrap(
     Results* results,
     const double& percentage,
     unsigned int num_iterations,
-    string target_sample,
+    const string& target_sample,
     bool use_softmax,
     std::uint64_t seed)
 {
@@ -4473,7 +4473,7 @@ static QString SafeFileName(const QString& name)
 }
 
 CMBMatrix SourceSinkData::MCMC_Batch(
-    map<string, string> arguments,
+    const map<string, string>& arguments,
     CMCMC<SourceSinkData>* mcmc,
     ProgressReporter* progress_window,
     const string& working_folder,
@@ -4491,7 +4491,7 @@ CMBMatrix SourceSinkData::MCMC_Batch(
 
     // Initialize contribution matrix: 4 columns per source (low, high, median, mean)
     const size_t num_target_samples = at(target_group_).size();
-    const size_t num_columns = numberofsourcesamplesets_ * 4;
+    const size_t num_columns = static_cast<size_t>(numberofsourcesamplesets_) * 4;
     CMBMatrix contribution_statistics(num_columns, num_target_samples);
 
     // Set column labels

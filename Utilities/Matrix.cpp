@@ -92,7 +92,7 @@ CMatrix CMatrix::Diag(int n)
     return M;
 }
 
-CMatrix::CMatrix(std::string filename)
+CMatrix::CMatrix(const std::string& filename)
 {
 
     std::ifstream file(filename);
@@ -685,7 +685,7 @@ CVector diag(const CMatrix &m)
     return v;
 }
 
-CMatrix operator*(CVector v, CMatrix m)
+CMatrix operator*(const CVector& v, const CMatrix& m)
 {
     auto tempMap = CMatrix(v);
     CMatrix a = tempMap*m;
@@ -727,7 +727,7 @@ void CMatrix::writetofile(FILE *f)
     }
 }
 
-void CMatrix::writetofile(std::string filename)
+void CMatrix::writetofile(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"w");
     if (f == nullptr)
@@ -763,7 +763,7 @@ double CMatrix::max()
 }
 
 
-void CMatrix::writetofile_app(std::string filename)
+void CMatrix::writetofile_app(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"a");
     if (f == nullptr)
@@ -785,7 +785,7 @@ CMatrix Transpose(CMatrix &M1)	//Works only when M1.getnumcols()=M1.getnumrows()
     return TrM;
 }
 
-void CMatrix::print(std::string s)
+void CMatrix::print(const std::string& s)
 {
 
     std::ofstream Afile;
@@ -821,15 +821,9 @@ CVector solve_ar(CMatrix &M, CVector &V)
     };
 
     mat C;
-    try {
-        C = solve(A,B);
-        throw 0;
-    }
-
-    catch(int rtt)
-    {
-
-    }
+    // (This was wrapped in a try block that threw 0 itself and caught only
+    // that, so it did nothing)
+    C = solve(A,B);
     for (int i = 0;i<V.getsize(); ++i)
         ansr[i] = C(i,0);
 
@@ -852,15 +846,9 @@ CVector solve_ar(const CMatrix &M, const CVector &V)
     };
 
     mat C;
-    try {
-        C = solve(A,B);
-        throw 0;
-    }
-
-    catch(int rtt)
-    {
-
-    }
+    // (This was wrapped in a try block that threw 0 itself and caught only
+    // that, so it did nothing)
+    C = solve(A,B);
     for (int i = 0;i<V.getsize(); ++i)
         ansr[i] = C(i,0);
 
@@ -930,7 +918,7 @@ CMatrix& CMatrix::operator=(mat &A)
 }
 #endif
 
-void write_to_file(std::vector<CMatrix> M, std::string filename)
+void write_to_file(std::vector<CMatrix> M, const std::string& filename)
 {
     std::ofstream Afile;
     Afile.open(filename);
@@ -1155,7 +1143,7 @@ CMatrix CMatrix::Preconditioner(double tol)
 
     return M;
 }
-std::vector<std::string> CMatrix::toString(std::string /*format*/, std::vector<std::string> columnHeaders, std::vector<std::string> rowHeaders) const
+std::vector<std::string> CMatrix::toString(const std::string& /*format*/, std::vector<std::string> columnHeaders, std::vector<std::string> rowHeaders) const
 {
     std::vector<std::string> r;
     bool rowH = false, colH = false;

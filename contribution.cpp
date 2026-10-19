@@ -63,7 +63,7 @@ QJsonObject Contribution::toJsonObject() const
 bool Contribution::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
     clear();
-    for (QString key: jsonobject.keys())
+    for (const QString& key: jsonobject.keys())
     {
         operator[](key.toStdString()) = jsonobject[key].toDouble();
     }

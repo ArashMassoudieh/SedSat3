@@ -33,7 +33,7 @@ CVector::CVector(int n)
 }
 
 
-CVector::CVector(const std::vector<double> a, int n)
+CVector::CVector(const std::vector<double>& a, int n)
 {
     num = n;
     vec = a;
@@ -591,7 +591,7 @@ void CVector::writetofile(std::ofstream &f)
 
 }
 
-void CVector::writetofile(std::string filename)
+void CVector::writetofile(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"w");
     if (f == nullptr)
@@ -600,7 +600,7 @@ void CVector::writetofile(std::string filename)
     fclose(f);
 }
 
-void CVector::writetofile_app(std::string filename)
+void CVector::writetofile_app(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"a");
     if (f == nullptr)
@@ -646,7 +646,7 @@ CVector CVector::sort()
     return *this;
 }
 
-CVector combinesort(const CVector V1, const CVector V2)
+CVector combinesort(const CVector& V1, const CVector& V2)
 {
     CVector V3 = V1;
     CVector V = V3.append(V2);
@@ -654,7 +654,7 @@ CVector combinesort(const CVector V1, const CVector V2)
 
 }
 
-CVector combinesort_s(const CVector V1, const CVector V2)
+CVector combinesort_s(const CVector& V1, const CVector& V2)
 {
     int n1=0;
     int n2=0;
@@ -697,7 +697,7 @@ int lookup(std::vector<int> v, int val)
 
 }
 
-int lookup(std::vector<std::string> v, std::string val)
+int lookup(std::vector<std::string> v, const std::string& val)
 {
     int res = -1;
     for (unsigned int i=0; i<v.size(); i++)
@@ -750,7 +750,7 @@ std::vector<double> H(std::vector<double> x)
     return X;
 }
 
-void CVector::print(std::string s)
+void CVector::print(const std::string& s)
 {
     std::ofstream Afile;
     Afile.open(s);

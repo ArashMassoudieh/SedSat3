@@ -16,7 +16,7 @@ public:
     string ToString() const override;
     QJsonObject toJsonObject() const override;
     bool ReadFromJsonObject(const QJsonObject &jsonobject) override;
-    bool Append(QString key, const MultipleLinearRegression &MLR);
+    bool Append(const QString& key, const MultipleLinearRegression &MLR);
     void SetSource(const string& source) { Source = source; }
     QTableWidget *ToTable() override;
     string Key(int i);

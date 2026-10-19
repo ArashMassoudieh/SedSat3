@@ -155,8 +155,8 @@ GUI build, GCC 13.3, Qt 6.8.3, unique first-party warnings
 
 | Flags | Before | After |
 |---|---|---|
-| qmake default (`-Wall -Wextra`) | 244 | 101 |
-| `-Wall -Wextra -Wpedantic -Wshadow -Wconversion` | 618 | 449 |
+| qmake default (`-Wall -Wextra`) | 244 | 100 |
+| `-Wall -Wextra -Wpedantic -Wshadow -Wconversion` | 618 | 448 |
 
 Fixed: every `-Wreturn-type`, `-Winfinite-recursion`, `-Wreturn-local-addr`,
 `-Wformat`, `-Wmaybe-uninitialized`, `-Wmisleading-indentation`,

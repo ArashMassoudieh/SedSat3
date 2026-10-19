@@ -25,7 +25,7 @@ public:
     std::vector<double> vec;
 	CVector();
 	CVector(int);
-	CVector(const std::vector<double>, int);
+	CVector(const std::vector<double>&, int);
 	CVector(const std::vector<double> &v);
 	CVector(const std::vector<int> &v);
 	CVector(const std::string &filename);
@@ -80,9 +80,9 @@ public:
 	CVector abs();
 	CVector H();
 	void writetofile(FILE *f);
-	void writetofile(std::string filename);
+	void writetofile(const std::string& filename);
 	void writetofile(std::ofstream &f);
-	void writetofile_app(std::string filename);
+	void writetofile_app(const std::string& filename);
     CVector Exp() const;
 	std::vector<int> Int();
 	CMatrix diagmat();
@@ -90,7 +90,7 @@ public:
 	CVector append(double d);
 	CVector sort();
 	std::vector<int> lookup(double val);
-	void print(std::string s);
+	void print(const std::string& s);
 	CVector sub(int i, int j);
 	bool is_finite();
     std::string toString();
@@ -123,7 +123,7 @@ CVector combinesort(const CVector& V1, const CVector &V2);
 CVector combinesort_s(const CVector& V1, const CVector &V2);
 int lookup(std::vector<int> v, int val);
 int lookup(std::vector<double> v, double val);
-int lookup(std::vector<std::string> v, std::string val);
+int lookup(std::vector<std::string> v, const std::string& val);
 double avg(CVector &);
 double stdev(CVector &V);
 CVector NormalizetoGaussian(CVector &V);

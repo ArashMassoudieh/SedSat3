@@ -29,11 +29,29 @@ include(../../sedsat3_core.pri)
 # The element table and its "Include all elements" check box
 SOURCES += \
     $$SEDSAT3_ROOT/elementstablemodel.cpp \
+    $$SEDSAT3_ROOT/elementtabledelegate.cpp \
     $$SEDSAT3_ROOT/formelementinformation.cpp
 HEADERS += \
     $$SEDSAT3_ROOT/elementstablemodel.h \
+    $$SEDSAT3_ROOT/elementtabledelegate.h \
     $$SEDSAT3_ROOT/formelementinformation.h
 FORMS += \
     $$SEDSAT3_ROOT/formelementinformation.ui
+
+# The Excel import is tested where Qt's private headers are available (QXlsx
+# needs them): with the Qt online installer, and in CI
+exists($$[QT_INSTALL_HEADERS]/QtGui/$$[QT_VERSION]/QtGui/private/qzipreader_p.h)|exists($$[QT_INSTALL_HEADERS]/QtCore/$$[QT_VERSION]/QtCore/private/qzipreader_p.h) {
+    include($$SEDSAT3_ROOT/thirdparty/QXlsx/QXlsx/QXlsx.pri)
+    QT -= gui-private
+    INCLUDEPATH += \
+        $$[QT_INSTALL_HEADERS]/QtCore/$$[QT_VERSION] \
+        $$[QT_INSTALL_HEADERS]/QtCore/$$[QT_VERSION]/QtCore \
+        $$[QT_INSTALL_HEADERS]/QtGui/$$[QT_VERSION] \
+        $$[QT_INSTALL_HEADERS]/QtGui/$$[QT_VERSION]/QtGui \
+        $$SEDSAT3_ROOT/thirdparty/QXlsx/QXlsx/header
+    SOURCES += $$SEDSAT3_ROOT/excelimport.cpp
+    HEADERS += $$SEDSAT3_ROOT/excelimport.h
+    DEFINES += SEDSAT3_TEST_EXCEL
+}
 
 SOURCES += tst_sedsat3.cpp

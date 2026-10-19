@@ -16,10 +16,13 @@ else
 fi
 mkdir -p "$out"
 export SEDSAT3_RESOURCES="${SEDSAT3_RESOURCES:-$root/resources}"
+# The Python interpreter: "python3" on Linux and macOS; CMake passes the one it
+# found (on Windows it is "python")
+python="${PYTHON:-python3}"
 status=0
 for script in "$here"/*.json; do
     name="$(basename "$script" .json)"
-    python3 - "$script" "$here" "$out" "$name" <<'PY'
+    "$python" - "$script" "$here" "$out" "$name" <<'PY'
 import json, os, sys
 script, script_dir, out, name = sys.argv[1:]
 d = json.load(open(script))
@@ -31,7 +34,7 @@ PY
     "$cli" "$out/${name}_script.json" --quiet > "$out/${name}.log" 2>&1 || true
     rm -f "$out/${name}_script.json"
     # Drop machine-specific paths and times, which compare.py ignores anyway
-    python3 - "$out/${name}_report.json" <<'PY'
+    "$python" - "$out/${name}_report.json" <<'PY'
 import json, sys
 path = sys.argv[1]
 report = json.load(open(path))
@@ -43,7 +46,7 @@ json.dump(report, open(path, "w"), indent=1, sort_keys=True)
 PY
     if [[ "${UPDATE_BASELINE:-0}" != 1 ]]; then
         echo "== $name"
-        python3 "$here/compare.py" "$root/tests/baseline/${name}_report.json" \
+        "$python" "$here/compare.py" "$root/tests/baseline/${name}_report.json" \
             "$out/${name}_report.json" || status=1
     fi
 done

@@ -19,11 +19,13 @@
 \definecolor{usgsgreen}{RGB}{0,100,60}
 \definecolor{commentbg}{RGB}{242,245,248}
 \definecolor{todo}{RGB}{190,30,30}
+\definecolor{mine}{RGB}{20,70,170}
 
 % ---------------------------------------------------------------- macros
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\commit}[1]{\texttt{#1}}
-\newcommand{\todo}[1]{\textcolor{todo}{\textbf{[#1]}}}
+\newcommand{\todo}[1]{\textcolor{todo}{\textbf{[#1]}}}   % for Cara / Allen / the release coordinator
+\newcommand{\mine}[1]{\textcolor{mine}{\textbf{[Arash: #1]}}}   % programming items for the author
 \newcounter{cmt}
 \newcounter{grp}
 \renewcommand{\thecmt}{\thegrp.\arabic{cmt}}
@@ -50,6 +52,14 @@
 \setlength{\emergencystretch}{3em}
 
 % ---------------------------------------------------------------- letter
+\begin{tcolorbox}[colback=todo!4,colframe=todo!70,boxrule=0.6pt]
+\textbf{Draft for Cara Peterman-Phipps and Allen Gellis.} Items in
+\textcolor{todo}{\textbf{red}} need your input or the release coordinator's;
+items in \textcolor{mine}{\textbf{blue}} are programming tasks Arash is
+completing. All marked items and this note will be removed before the letter
+goes to Steve.
+\end{tcolorbox}
+
 \begin{flushleft}
 Arash Massoudieh\\
 Department of Civil and Environmental Engineering\\
@@ -115,7 +125,7 @@ In brief:
   (Section~3).
 \item Every imported value is screened by a single parser; NaN and Inf are
   refused at import with the cell location (Section~4).
-\item There are now 47 unit tests (including the NaN / negative / illegal
+\item There are now 49 unit tests (including the NaN / negative / illegal
   value tests you suggested), a regression suite on two example projects,
   and a GitLab CI pipeline running the tests, clang-tidy and cppcheck
   (Section~5).
@@ -319,11 +329,12 @@ I also found that the element table read the text ``No'' as \emph{include}
 Toggling a single element appears to require several clicks.
 \end{reviewer}
 \begin{response}
-Agreed that this is friction. The table uses an editor that opens on
-double-click; making the cell a single-click toggle is a small GUI change
-that I will make in the next GUI pass.
+Fixed: one click on the ``Include in analysis'' cell now toggles it. The
+cause of the extra clicks was a bug: the cell opened a check-box editor that
+started ticked even for excluded elements (it read the text ``No'' as true),
+so the first click often changed nothing.
 \end{response}
-\status{Open (usability, low).}
+\status{Fixed. Test: \code{includeColumn\_\allowbreak{}singleClickToggles}.}
 
 \begin{reviewer}{Email 10/15; Summary; Tests, Test 4c}
 Missing \code{return} on the clean path of
@@ -545,7 +556,10 @@ dropped a sample that failed to load. Both now stop the load with the
 location. The only ad-hoc data guard downstream (the Box--Cox optimiser's
 \code{min == min} test) uses a shared helper; the other \code{isfinite}
 uses guard computed quantities, not data, and \code{removeNaNs()} has no
-callers. The unit tests you suggested cover 8 valid formats and 14 illegal
+callers. The import is now a separate, dialog-free function
+(\code{excelimport.cpp}), so it is tested on real workbooks; it also refuses
+an empty header cell, a row without a sample name and a repeated sample name,
+each of which used to drop data silently. The unit tests you suggested cover 8 valid formats and 14 illegal
 inputs, spreadsheet and JSON values, a saved-and-reloaded NaN, zero and
 negative data in Box--Cox, and negative values in the source groups.
 \end{response}
@@ -572,7 +586,7 @@ least one end-to-end regression against a known result and run the
 static-analysis tasks in CI.
 \end{reviewer}
 \begin{response}
-Added. \code{tests/\allowbreak{}unit/\allowbreak{}} has 47 Qt Test checks covering every defect above.
+Added. \code{tests/\allowbreak{}unit/\allowbreak{}} has 49 Qt Test checks covering every defect above.
 \code{tests/\allowbreak{}regression/\allowbreak{}} runs the deterministic analyses (Box--Cox, outliers,
 Kolmogorov--Smirnov, distribution fitting, ANOVA, correlation and covariance,
 bracketing, DFA, EDP, Levenberg--Marquardt batch) on two example projects
@@ -649,8 +663,8 @@ minor defects.
 \end{reviewer}
 \begin{response}
 I did this with GCC~13 (and clang-tidy from LLVM~20). Unique first-party
-warnings in the GUI build went from 244 to 101 with \code{-Wall -Wextra}, and
-from 618 to 449 with \code{-Wall -Wextra -Wpedantic -Wshadow -Wconversion}.
+warnings in the GUI build went from 244 to 100 with \code{-Wall -Wextra}, and
+from 618 to 448 with \code{-Wall -Wextra -Wpedantic -Wshadow -Wconversion}.
 As you predicted, the significant ones were real defects: two operators that
 called themselves (stack overflow), a constructor that wrote past the end of
 an empty matrix, a function returning a reference to a local, printf format
@@ -738,10 +752,13 @@ the repository's stricter one (which CI uses, with the initialisation and
 \code{rand()} checks as errors); and \code{deploy-win} uses
 \code{--compiler-runtime} and LLVM's OpenMP DLLs, whereas MSVC builds need
 \code{vcomp140.\allowbreak{}dll} (see \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}).
-\todo{Plan: commit a corrected pixi.toml (configure/build/test/lint/cppcheck/deploy
-tasks driving the existing CMake build) after testing it on Windows, so that
-`pixi run build test lint` works on your machine; this will also give the
-first MSVC /W4 and cppcheck results.} The Visual Studio project now compiles
+A corrected \code{pixi.toml} is now in the repository. It drives the
+existing CMake build and has tasks \code{build}, \code{test} (unit and
+regression tests), \code{lint} (with the repository's \code{.clang-tidy}),
+\code{cppcheck} (with your \code{std.cfg} workaround), \code{warnings} (an
+MSVC \code{/W4} build), \code{deploy-win} and \code{run-app}.
+\mine{Run on Windows: pixi run build, test, lint, cppcheck and warnings; then
+replace this note with the results, including the MSVC /W4 and cppcheck counts} The Visual Studio project now compiles
 the vendored QCustomPlot instead of a copy outside the repository; it still
 links a prebuilt QXlsx library, which I will change to the submodule as the
 qmake and CMake builds already do. The portable, no-administrator Windows
@@ -779,7 +796,7 @@ accurate, not to diminish the review: they were all worth looking at.
 3a & QXlsx submodule URL dead & Fixed (Comment 5.3).\\
 3b & \code{Utilities} is a personal-namespace submodule & Brought into the repository (Comment 1.2).\\
 3b & Hard-coded \code{ARMA\_\allowbreak{}USE\_\allowbreak{}SUPERLU} breaks Windows & Fixed (Section 7).\\
-3b & No Windows build path in the repository & MinGW guide, Visual Studio project, CMake, and a manual Windows CI job; pixi to follow (Section 7).\\
+3b & No Windows build path in the repository & MinGW guide, Visual Studio project, CMake, a manual Windows CI job, and \code{pixi.toml} (Section 7).\\
 3c & qcustomplot6 version not documented & \code{THIRD\_\allowbreak{}PARTY\_\allowbreak{}LICENSES.\allowbreak{}md} (2.1.1).\\
 4, 4a & README truncated; advertises sedsat.org, GA, GitHub & Rewritten (Comments 1.5, 1.6).\\
 4 & Dependency versions unpinned & README and \code{THIRD\_\allowbreak{}PARTY\_\allowbreak{}LICENSES.\allowbreak{}md} give versions (Qt 6.2+, 6.8 tested, \ldots).\\
@@ -814,7 +831,7 @@ accurate, not to diminish the review: they were all worth looking at.
 13, 13a & No per-file headers; AGPL headers in \code{Utilities} & Fixed (Comments 1.2, 1.7).\\
 14, 14a & Metadata and installer point outside the USGS & Fixed (Comment 1.6); the parallel sedsat.org distribution is for the release coordinator.\\
 14 & \code{createdmg.\allowbreak{}sh} version stale & Updated to 1.1.7.\\
-16 & Spelling; add codespell to CI & Spelling fixed (Comment 5.3); codespell will be added to CI.\\
+16 & Spelling; add codespell to CI & Spelling fixed (Comment 5.3); codespell now runs in CI (reported, not yet enforced).\\
 8.4 & Distribution Fitting crash caused by a missing overload & Fixed; the cause was an implicit conversion (Comment 2.1).\\
 8.6 & ``Include all elements'' inverted & Fixed (Comment 2.2).\\
 \bottomrule
@@ -838,9 +855,12 @@ Further defects found while verifying the findings above.
 \item An MCMC initialisation routine computed a step from $-\mathrm{low} - \mathrm{high}$
   instead of $\mathrm{high} - \mathrm{low}$.
 \item \code{CGA::\allowbreak{}operator=} took a non-const reference and returned by value.
+\item The Excel import silently dropped data after an empty header cell or a
+  row without a sample name, and dropped repeated sample names (found while
+  testing your Test 4a).
 \end{itemize}
-All are fixed. Unit tests were added for the uniform curve and for copies
-keeping their notes.
+All are fixed. Unit tests were added for the uniform curve, for copies
+keeping their notes, and for the Excel import.
 \end{response}
 
 % ====================================================================
@@ -874,15 +894,21 @@ Check & Count & Status\\
 \code{UndefinedBinaryOperator}, \code{CallAndMessage} & 4 & Fixed (initialisation, uniform curve).\\
 \code{UndefReturn}, \code{modernize-use-nullptr} (\code{CBinary}) & 2 & Fixed (Comment 2.6).\\
 \code{bugprone-unhandled-self-assignment} & 1 & Fixed (\code{CGA::\allowbreak{}operator=}).\\
-\code{bugprone-branch-clone} (GA parameter mapping) & 1 & \todo{Identical branches; confirm intent and simplify} (GA only).\\
+\code{bugprone-branch-clone} (GA parameter mapping) & 1 & Fixed: \code{apply\_\allowbreak{}to\_\allowbreak{}all} is false for every parameter in SedSAT3 (a single model), a remnant of a multi-series design; the identical branches were collapsed.\\
 \code{bugprone-integer-division} & 1 & Intended (the result is bounded below by 1).\\
 \code{bugprone-float-loop-counter}, \code{FloatLoopCounter} & 6 & Grid loops over $x$ and $\lambda$; a zero step is now impossible (Comment 2.1). Kept.\\
 \code{bugprone-throwing-static-initialization} & 1 & False positive (\code{atan(1.0)}).\\
-\code{bugprone-\allowbreak{}implicit-\allowbreak{}widening-\allowbreak{}of-\allowbreak{}multiplication-\allowbreak{}result} & 4 & Counts are small integers; to be cast explicitly.\\
-\code{performance-\allowbreak{}unnecessary-value-param}, \code{performance-for-range-copy} & 15 & Style; to be cleared, then the \code{performance-*} checks enabled in CI.\\
+\code{bugprone-\allowbreak{}implicit-\allowbreak{}widening-\allowbreak{}of-\allowbreak{}multiplication-\allowbreak{}result} & 4 & Fixed with explicit casts (11 across the whole code).\\
+\code{performance-\allowbreak{}unnecessary-value-param}, \code{performance-for-range-copy} & 15 & Fixed across the whole code (83 parameters now passed by \code{const\&}, 11 loops no longer copy); both checks are now enabled in CI.\\
 \bottomrule
 \end{longtable}
 }
+
+Run over all first-party code with the repository's configuration (your
+check set, plus the performance checks), clang-tidy now reports 13 findings:
+7 grid loops over a floating-point counter (intended), 3 destructors that
+call Armadillo's \code{clear()}, 2 false positives on Qt-parented labels, and
+one readable \code{if}/\code{else} chain.
 
 % ====================================================================
 \group{Reviewer GUI test plan (REVIEWER\_TEST\_PLAN.md)}
@@ -901,8 +927,8 @@ Test & Status and automated test\\
 1b. LM determinism & Made genuinely repeatable (Comment 3.4); regression suite.\\
 2. Sum to one, non-negative & Now tested for both parameterisations: \code{levenbergMarquardt\_\allowbreak{}contributionsSumToOne}. The Bayesian contributions satisfy it by construction (the last is one minus the others).\\
 3. LM vs Bayesian & Not run by the review; left to the domain review.\\
-4a. Required column removed & Import refuses a missing cell with its location (existing behaviour); \todo{run and record}.\\
-4b. NaN / non-numeric cell & Fixed (Comment 4.1); parser tests.\\
+4a. Required column removed & Now tested (\code{excelImport}): a column removed from one sheet is refused, naming the two sheets; removed from every sheet, the workbook imports without it. Testing this found three ways an import silently dropped data — an empty header cell (every column after it), a row without a sample name (every sample below it), and a repeated sample name (the second sample) — all now refused with their location.\\
+4b. NaN / non-numeric cell & Fixed (Comment 4.1); parser tests and \code{excelImport}.\\
 4c. Negative values & Fixed (Comment 2.4); \code{negativeCheck\_\allowbreak{}*}.\\
 4c addendum & Message improved (Comment 2.5).\\
 4d. Single-sample source & Now tested: \code{levenbergMarquardt\_\allowbreak{}singleSampleSource}, \code{distributionFitting\_\allowbreak{}conductor}.\\
@@ -910,7 +936,7 @@ Test & Status and automated test\\
 6. GA advertised & Fixed (Comment 5.2).\\
 7. RNG thread safety & Fixed; \code{mcmc\_\allowbreak{}independentOfThreadCount}.\\
 Test 7 (results). Distribution Fitting crash & Fixed (Comment 2.1).\\
-G1--G3 & G1, G2 fixed; G3 open (Comments 2.2, 2.3).\\
+G1--G3 & Fixed (Comments 2.2, 2.3).\\
 \bottomrule
 \end{longtable}
 }

@@ -990,7 +990,7 @@ public:
      *       "1:MCMC samples" is written to "1_MCMC samples.txt"
      */
     CMBMatrix MCMC_Batch(
-        map<string, string> arguments,
+        const map<string, string>& arguments,
         CMCMC<SourceSinkData>* mcmc,
         ProgressReporter* progress_window,
         const string& working_folder,
@@ -1044,7 +1044,7 @@ public:
     CMBTimeSeriesSet BootStrap(
         const double& percentage,
         unsigned int num_iterations,
-        string target_sample,
+        const string& target_sample,
         bool use_softmax,
         std::uint64_t seed = DefaultRandomSeed
     );
@@ -1074,7 +1074,7 @@ public:
         Results* results,
         const double& percentage,
         unsigned int num_iterations,
-        string target_sample,
+        const string& target_sample,
         bool use_softmax,
         std::uint64_t seed = DefaultRandomSeed
     );

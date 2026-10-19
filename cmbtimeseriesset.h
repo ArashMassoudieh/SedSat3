@@ -140,7 +140,7 @@ public:
      * @param variable_name Name of the series
      * @return Observed value, or 0 if series not found
      */
-    double ObservedValue(string variable_name)
+    double ObservedValue(const string& variable_name)
     {
         for (int i = 0; i < size(); i++)
         {

@@ -30,7 +30,7 @@ QJsonObject CMBVectorSet::toJsonObject() const
 }
 bool CMBVectorSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
-    for(QString key: jsonobject.keys() ) {
+    for(const QString& key: jsonobject.keys() ) {
         CMBVector column;
         column.ReadFromJsonObject(jsonobject[key].toObject());
         operator[](key.toStdString()) = column;
@@ -110,7 +110,7 @@ bool CMBVectorSet::writetofile(QFile* file)
     return true;
 }
 
-string CMBVectorSet::Label(string column,int j) const
+string CMBVectorSet::Label(const string& column,int j) const
 {
     if (count(column)!=0)
         return (at(column).Label(j));
@@ -124,7 +124,7 @@ double CMBVectorSet::valueAt(const string &columnlabel, int j ) const
     else
         return 0;
 }
-CMBVector &CMBVectorSet::GetColumn(const string columnlabel)
+CMBVector &CMBVectorSet::GetColumn(const string& columnlabel)
 {
     return at(columnlabel);
 }

@@ -26,7 +26,7 @@ double Distribution::Eval(const double &x) const
     return out;
 }
 
-double Distribution::Eval(const double &x, const vector<double> parameters, distribution_type distribution)
+double Distribution::Eval(const double &x, const vector<double>& parameters, distribution_type distribution)
 {
     double out = 0;
     if (distribution==distribution_type::normal)
@@ -79,7 +79,7 @@ TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const 
     return out;
 }
 
-TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double> parameters, distribution_type &dist_type)
+TimeSeries<double> Distribution::EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff, const vector<double>& parameters, distribution_type &dist_type)
 {
     TimeSeries<double> out;
     double x = NAN;

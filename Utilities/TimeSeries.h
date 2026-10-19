@@ -659,7 +659,7 @@ template<typename T>
 T sum_interpolate(const std::vector<TimeSeries<T>>& series_list, T time);
 
 template<typename T>
-T Covariance(TimeSeries<T> BTC_p, TimeSeries<T> BTC_d);
+T Covariance(const TimeSeries<T>& BTC_p, const TimeSeries<T>& BTC_d);
 
 template <typename T>
 T covariance_mapped(const TimeSeries<T>& ts1, const TimeSeries<T>& ts2, int start_item = 0, bool sample = false);

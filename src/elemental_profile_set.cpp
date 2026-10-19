@@ -143,7 +143,7 @@ Elemental_Profile_Set Elemental_Profile_Set::CopyIncludedInAnalysis(
 }
 
 Elemental_Profile_Set Elemental_Profile_Set::EliminateSamples(
-    vector<string> samples_to_eliminate,
+    const vector<string>& samples_to_eliminate,
     map<string, element_information>* elementinfo) const
 {
     Elemental_Profile_Set out;

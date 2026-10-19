@@ -38,7 +38,14 @@
 #include "testmcmc.h"
 #include "Binary.h"
 #include "elementstablemodel.h"
+#include "elementtabledelegate.h"
+#include <QMouseEvent>
+#include <QStyleOptionViewItem>
 #include "formelementinformation.h"
+#ifdef SEDSAT3_TEST_EXCEL
+#include "excelimport.h"
+#include "xlsxdocument.h"
+#endif
 
 namespace {
 
@@ -135,6 +142,7 @@ private slots:
     // ---------- "Include all elements" (review item 2.2 / G1) ----------
     void includeAll_dataLevel();
     void includeAll_checkBox();
+    void includeColumn_singleClickToggles();
 
     // ---------- Distribution fitting (review item 2.1 / B1) ----------
     void distributionFitting_degenerateSets();
@@ -153,6 +161,9 @@ private slots:
     void errorAnalysis_sameSeedSameResult();
     void distribution_uniformCurveIsFinite();
     void interface_copiesKeepNotes();
+
+    // ---------- Excel import (reviewer test plan, Tests 4a and 4b) ----------
+    void excelImport();
 };
 
 // =====================================================================
@@ -455,6 +466,28 @@ void SedSAT3Tests::includeAll_checkBox()
     for (const auto& element : *data.GetElementInformation())
         included += element.second.include_in_analysis ? 1 : 0;
     QCOMPARE(included, int(data.GetElementInformation()->size()) - 1);
+}
+
+void SedSAT3Tests::includeColumn_singleClickToggles()
+{
+    // Test results G3: one click on "Include in analysis" toggles it
+    SourceSinkData data;
+    BuildData(data, PositiveGroups(), "Mixture");
+    ElementTableModel model(&data);
+    ElementTableDelegate delegate(&data, nullptr);
+    const QModelIndex cell = model.index(0, 4);
+    const std::string element = data.GetElementNames()[0];
+    QVERIFY(data.GetElementInformation(element)->include_in_analysis);
+
+    QMouseEvent click(QEvent::MouseButtonRelease, QPointF(5, 5), QPointF(5, 5),
+                      Qt::LeftButton, Qt::NoButton, Qt::NoModifier);
+    QStyleOptionViewItem option;
+    QVERIFY(delegate.editorEvent(&click, &model, option, cell));
+    QVERIFY(!data.GetElementInformation(element)->include_in_analysis);
+    QCOMPARE(model.data(cell).toString(), QStringLiteral("No"));
+    QVERIFY(delegate.editorEvent(&click, &model, option, cell));
+    QVERIFY(data.GetElementInformation(element)->include_in_analysis);
+    QVERIFY(delegate.createEditor(nullptr, option, cell) == nullptr);  // no editor to click through
 }
 
 // =====================================================================
@@ -767,6 +800,136 @@ void SedSAT3Tests::interface_copiesKeepNotes()
     Elemental_Profile assigned;
     assigned = profile;
     QCOMPARE(assigned.GetNotes(), profile.GetNotes());
+}
+
+// =====================================================================
+// Excel import
+// =====================================================================
+
+#ifdef SEDSAT3_TEST_EXCEL
+namespace {
+
+using Sheet = std::vector<std::vector<QVariant>>;  // rows, starting with the header
+
+/// Writes the sheets to a workbook, reloads it, imports them, and returns
+/// the error title ("" on success)
+QString ImportWorkbook(const std::vector<std::pair<QString, Sheet>>& sheets, SourceSinkData& data,
+                       QString* message = nullptr)
+{
+    QTemporaryDir folder;
+    const QString path = folder.path() + "/test.xlsx";
+    {
+        QXlsx::Document writer;
+        for (size_t k = 0; k < sheets.size(); k++)
+        {
+            writer.addSheet(sheets[k].first);
+            writer.selectSheet(sheets[k].first);
+            for (size_t r = 0; r < sheets[k].second.size(); r++)
+                for (size_t c = 0; c < sheets[k].second[r].size(); c++)
+                    if (sheets[k].second[r][c].isValid())
+                        writer.write(int(r) + 1, int(c) + 1, sheets[k].second[r][c]);
+        }
+        writer.saveAs(path);
+    }
+    QXlsx::Document reader(path);
+    reader.load();
+    QStringList names;
+    for (const auto& sheet : sheets)
+        names << sheet.first;
+    ExcelImportError error;
+    const bool ok = ImportExcelSheets(reader, names, data, error);
+    if (message)
+        *message = error.message;
+    return ok ? QString() : error.title;
+}
+
+Sheet GoodSheet(const QString& prefix)
+{
+    return {{"sample", "Al", "Fe", "TOC"},
+            {prefix + "1", 8.1, 4.0, 1.2},
+            {prefix + "2", 7.6, 4.4, 1.5},
+            {prefix + "3", 8.9, 3.7, 1.1}};
+}
+
+} // namespace
+#endif
+
+void SedSAT3Tests::excelImport()
+{
+#ifndef SEDSAT3_TEST_EXCEL
+    QSKIP("QXlsx is not built in this configuration (Qt private headers not found)");
+#else
+    // A well-formed workbook imports every value
+    {
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", GoodSheet("B")}, {"Mixture", GoodSheet("M")}}, data), QString());
+        QCOMPARE(int(data.size()), 2);
+        QCOMPARE(int(data.GetSampleSet("Bank")->size()), 3);
+        QCOMPARE(data.GetSampleSet("Bank")->GetProfile("B2")->GetValue("Fe"), 4.4);
+    }
+
+    // Test 4a: a column removed from one sheet only is refused by name
+    {
+        Sheet missing = GoodSheet("M");
+        for (auto& row : missing)
+            row.erase(row.begin() + 3);  // drop TOC
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", GoodSheet("B")}, {"Mixture", missing}}, data), QString("Element Mismatch"));
+        QVERIFY(data.empty());
+    }
+
+    // Test 4a: the same column removed from every sheet imports without it
+    {
+        Sheet a = GoodSheet("B"), b = GoodSheet("M");
+        for (auto* sheet : {&a, &b})
+            for (auto& row : *sheet)
+                row.erase(row.begin() + 3);
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", a}, {"Mixture", b}}, data), QString());
+        QVERIFY(data.GetSampleSet("Bank")->GetProfile("B1")->count("TOC") == 0);
+    }
+
+    // A gap in the header used to drop the columns after it silently
+    {
+        Sheet gap = GoodSheet("B");
+        gap[0][2] = QVariant();  // no name for the Fe column
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", gap}}, data), QString("Missing Column Name"));
+    }
+
+    // A row without a sample name used to drop the samples below it silently
+    {
+        Sheet gap = GoodSheet("B");
+        gap.insert(gap.begin() + 2, std::vector<QVariant>{QVariant(), QVariant(), QVariant(), QVariant()});
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", gap}}, data), QString("Missing Sample Name"));
+    }
+
+    // A repeated sample name used to drop the second sample silently
+    {
+        Sheet duplicate = GoodSheet("B");
+        duplicate[3][0] = "B1";
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", duplicate}}, data), QString("Duplicate Sample"));
+    }
+
+    // Test 4b: empty, NaN and text cells are refused with their location
+    {
+        Sheet empty = GoodSheet("B");
+        empty[2][2] = QVariant();
+        SourceSinkData data;
+        QString message;
+        QCOMPARE(ImportWorkbook({{"Bank", empty}}, data, &message), QString("Empty Cell"));
+        QVERIFY(message.contains("Row: 3") && message.contains("Column: 3"));
+    }
+    for (const char* bad : {"NaN", "inf", "31NaN50", "1,5"})
+    {
+        Sheet invalid = GoodSheet("B");
+        invalid[1][1] = QString(bad);
+        SourceSinkData data;
+        QCOMPARE(ImportWorkbook({{"Bank", invalid}}, data), QString("Invalid Data"));
+    }
+#endif
 }
 
 int main(int argc, char* argv[])

@@ -144,6 +144,7 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
 
     }
     QString result = "Done";
+    emit dataChanged(index, index);  // so the view shows the change at once
     emit editCompleted(result);
     return true; 
 }

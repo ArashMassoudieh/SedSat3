@@ -4,6 +4,7 @@
 #include "Distribution.h"
 #include "randomstream.h"
 #include <cmath>
+#include <utility>
 #include "gsl/gsl_cdf.h"
 #include "Utilities.h"
 #ifdef _interface
@@ -42,7 +43,7 @@ CDistribution::~CDistribution(void)
 CDistribution::CDistribution(string _name)
 {
 	pi = 4 * atan(1.0);
-	name = _name;
+	name = std::move(_name);
     if (name == "normal") {DistributionType=distribution__type::normal;}
     if (name == "lognormal") {DistributionType=distribution__type::lognormal;}
     if (name == "levy") {DistributionType=distribution__type::levy;}
@@ -54,7 +55,7 @@ CDistribution::CDistribution(string _name)
 
 }
 
-int CDistribution::NumberOfCoreParameters(string _name)
+int CDistribution::NumberOfCoreParameters(const string& _name)
 {
     if (_name == "normal") {return 2;}
     if (_name == "lognormal") {return 2;}
@@ -77,22 +78,22 @@ double CDistribution::evaluate(double x)
     for (unsigned int i=0; i<n; i++)
     {
         if (name == "normal")
-            out+= params[i*m] / (sqrt(2*pi)*params[i*m+2])*exp(-pow(x - params[i*m+1], 2) / (2 * params[i*m+2] * params[i*m+2]));
+            out+= params[size_t(i)*m] / (sqrt(2*pi)*params[size_t(i)*m+2])*exp(-pow(x - params[size_t(i)*m+1], 2) / (2 * params[size_t(i)*m+2] * params[size_t(i)*m+2]));
         if (name == "lognormal")
         {
             if (x <= 0)
                 out = 0; 
             else
-                out += params[i * m] / (sqrt(2 * pi) * params[i * m + 2] * x) * exp(-pow(log(x) - params[i * m + 1], 2) / (2 * params[i * m + 2] * params[i * m + 2]));
+                out += params[size_t(i) * m] / (sqrt(2 * pi) * params[size_t(i) * m + 2] * x) * exp(-pow(log(x) - params[size_t(i) * m + 1], 2) / (2 * params[size_t(i) * m + 2] * params[size_t(i) * m + 2]));
         }
         if (name == "levy")
-            out += params[i*m]*sqrt(params[i*m+1] / (2 * pi))*exp(-params[i*m+1] / (2 * x)) / pow(x, 1.5);
+            out += params[size_t(i)*m]*sqrt(params[size_t(i)*m+1] / (2 * pi))*exp(-params[size_t(i)*m+1] / (2 * x)) / pow(x, 1.5);
         if (name == "exp")
-            out +=  params[i*m] / params[i*m+1] * exp(x / params[i*m+1]);
+            out +=  params[size_t(i)*m] / params[size_t(i)*m+1] * exp(x / params[size_t(i)*m+1]);
         if (name == "invgaussian")
-            out +=  params[i*m]*sqrt(params[i*m+2] / (2 * pi*pow(x, 3)))*exp(-params[i*m+2] * pow(x - params[i*m+1], 2) / (2 * params[i*m+1] * params[i*m+1] * x));
+            out +=  params[size_t(i)*m]*sqrt(params[size_t(i)*m+2] / (2 * pi*pow(x, 3)))*exp(-params[size_t(i)*m+2] * pow(x - params[size_t(i)*m+1], 2) / (2 * params[size_t(i)*m+1] * params[size_t(i)*m+1] * x));
         if (name == "gamma")
-            out+= params[i*m]*Gammapdf(x,params[i*m+1],params[i*m+2]);
+            out+= params[size_t(i)*m]*Gammapdf(x,params[size_t(i)*m+1],params[size_t(i)*m+2]);
 
     }
     return out;
@@ -337,7 +338,7 @@ bool CDistribution::HasCommand(const string &cmd)
         return false;
 }
 #endif // interface
-bool CDistribution::WriteToFile(const map<string,string> Arguments)
+bool CDistribution::WriteToFile(const map<string,string>& Arguments)
 {
 
     int nbins = 100;
@@ -504,7 +505,7 @@ double CDistribution::CumulativeValue(double x)
         for (int i = 0; i < n; i++)
         {
             double _erf = erf((log(x) - params[m * i + 1]) / (sqrt(2.0)*params[m * i + 2]));
-            out += params[m * i] * 0.5*(1.0 + _erf);
+            out += params[size_t(m) * i] * 0.5*(1.0 + _erf);
 
         }
     }

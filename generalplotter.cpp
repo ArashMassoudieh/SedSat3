@@ -194,7 +194,7 @@ void GeneralPlotter::ZoomExtends()
     replot();
 }
 
-bool GeneralPlotter::AddScatters(const vector<string> names, const vector<vector<double>> &x,const vector<vector<double>> &y)
+bool GeneralPlotter::AddScatters(const vector<string>& names, const vector<vector<double>> &x,const vector<vector<double>> &y)
 {
     if (names.size()!=x.size())
         return false;
@@ -207,7 +207,7 @@ bool GeneralPlotter::AddScatters(const vector<string> names, const vector<vector
     replot();
     return true;
 }
-bool GeneralPlotter::AddScatters(const vector<string> names, const vector<string> &x,const vector<vector<double>> &y)
+bool GeneralPlotter::AddScatters(const vector<string>& names, const vector<string> &x,const vector<vector<double>> &y)
 {
     if (names.size()!=y.size())
         return false;

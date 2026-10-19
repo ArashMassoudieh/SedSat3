@@ -19,7 +19,7 @@ Conductor::Conductor(AnalysisHost* host)
 {
 }
 
-bool Conductor::Execute(const string &command, map<string,string> arguments)
+bool Conductor::Execute(const string &command, const map<string,string>& arguments)
 {
     results.clear();
     if (!CheckNegativeElements(Data()))

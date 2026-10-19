@@ -171,7 +171,7 @@ public:
      * // pdf ≈ 0.0584 (height of N(0,1) at 1.96σ)
      * @endcode
      */
-    static double Eval(const double &x, const vector<double> parameters, distribution_type distribution);
+    static double Eval(const double &x, const vector<double>& parameters, distribution_type distribution);
 
     /**
      * @brief Evaluate natural logarithm of probability density
@@ -253,7 +253,7 @@ public:
      * @see EvaluateAsTimeSeries(int, const double&)
      */
     static TimeSeries<double> EvaluateAsTimeSeries(int numberofpoints, const double &stdcoeff,
-                                                   const vector<double> parameters,
+                                                   const vector<double>& parameters,
                                                    distribution_type &dist_type);
 
     /**

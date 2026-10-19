@@ -41,6 +41,7 @@ SOURCES += \
     dialogchooseexcelsheets.cpp \
     elementstablemodel.cpp \
     elementtabledelegate.cpp \
+    excelimport.cpp \
     filebrowserpushbutton.cpp \
     formelementinformation.cpp \
     generalchart.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     dialogchooseexcelsheets.h \
     elementstablemodel.h \
     elementtabledelegate.h \
+    excelimport.h \
     filebrowserpushbutton.h \
     formelementinformation.h \
     generalchart.h \

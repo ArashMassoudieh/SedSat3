@@ -82,7 +82,7 @@ public:
      * @param arguments Map of parameter names to values
      * @return true if execution successful, false otherwise
      */
-    bool Execute(const std::string& command, std::map<std::string, std::string> arguments);
+    bool Execute(const std::string& command, const std::map<std::string, std::string>& arguments);
 
 private:
     // UI Setup methods

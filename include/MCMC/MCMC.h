@@ -488,7 +488,7 @@ public:
      *
      * @see ProgressReporter
      */
-    bool step(int k, int nsamps, string filename, CMBTimeSeriesSet *results = nullptr, ProgressReporter* _rtw = 0);
+    bool step(int k, int nsamps, const string& filename, CMBTimeSeriesSet *results = nullptr, ProgressReporter* _rtw = 0);
 
     /**
      * @brief Generate proposed parameter values by perturbing current state
@@ -723,7 +723,7 @@ public:
      *
      * Allows resuming long MCMC runs without starting over.
      */
-    int readfromfile(string filename);
+    int readfromfile(const string& filename);
 
     /**
      * @brief Evaluate model for given parameters and return predictions

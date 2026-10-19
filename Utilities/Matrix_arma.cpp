@@ -198,7 +198,7 @@ CVector_arma mult(const CMatrix_arma &m1, const CVector_arma &v1)
     return out;
 }
 
-CMatrix_arma operator*(double d, CMatrix_arma m1)
+CMatrix_arma operator*(double d, const CMatrix_arma& m1)
 {
     arma::mat TrM = d*arma::mat(m1);
     CMatrix_arma out = TrM;
@@ -426,7 +426,7 @@ void CMatrix_arma::writetofile(FILE *f)
     }
 }
 
-void CMatrix_arma::writetofile(std::string filename)
+void CMatrix_arma::writetofile(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"w");
     if (f == nullptr)
@@ -440,7 +440,7 @@ void CMatrix_arma::writetofile(std::string filename)
 }
 
 
-void CMatrix_arma::writetofile_app(std::string filename)
+void CMatrix_arma::writetofile_app(const std::string& filename)
 {
     FILE *f = fopen(filename.c_str(),"a");
     if (f == nullptr)
@@ -461,7 +461,7 @@ CMatrix_arma Transpose(CMatrix_arma &M1)
     return out;
 }
 
-void CMatrix_arma::print(std::string s)
+void CMatrix_arma::print(const std::string& s)
 {
 
     std::ofstream Afile;
@@ -503,7 +503,7 @@ CMatrix_arma& CMatrix_arma::operator=(const mat &A)
     return *this;
 }
 
-void write_to_file(std::vector<CMatrix_arma> M, std::string filename)
+void write_to_file(std::vector<CMatrix_arma> M, const std::string& filename)
 {
     std::ofstream Afile;
     Afile.open(filename);
@@ -594,7 +594,7 @@ CMatrix_arma CMatrix_arma::Preconditioner(double tol)
 
     return M;
 }
-std::vector<std::string> CMatrix_arma::toString(std::string /*format*/, std::vector<std::string> columnHeaders, std::vector<std::string> rowHeaders) const
+std::vector<std::string> CMatrix_arma::toString(const std::string& /*format*/, std::vector<std::string> columnHeaders, std::vector<std::string> rowHeaders) const
 {
     std::vector<std::string> r;
     bool rowH = false, colH = false;

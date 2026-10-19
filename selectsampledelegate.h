@@ -18,7 +18,7 @@ class SelectSampleDelegate: public QStyledItemDelegate
 {
 public:
 
-    SelectSampleDelegate(SourceSinkData *_Data, QObject *parent);
+    SelectSampleDelegate(SourceSinkData *data, QObject *parent);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const override;

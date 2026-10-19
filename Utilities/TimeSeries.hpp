@@ -647,7 +647,7 @@ T TimeSeries<T>::interpol(const T& x) const {
 }
 
 template<class T>
-T Covariance(TimeSeries<T> BTC_p, TimeSeries<T> BTC_d)
+T Covariance(const TimeSeries<T>& BTC_p, const TimeSeries<T>& BTC_d)
 {
     if (BTC_p.size() != BTC_d.size() || BTC_p.size()==0) {
         throw std::invalid_argument("Vectors must be non-empty and of the same size.");

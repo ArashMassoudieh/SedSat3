@@ -414,7 +414,7 @@ vector<double> CMCMC<T>::perturb(int k, int chain_counter)
 }
 
 template<class T>
-bool CMCMC<T>::step(int k, int nsamps, string filename, CMBTimeSeriesSet *results, ProgressReporter *rtw)
+bool CMCMC<T>::step(int k, int nsamps, const string& filename, CMBTimeSeriesSet *results, ProgressReporter *rtw)
 {
 	FILE *file = nullptr;
     if (!MCMC_Settings.continue_mcmc)
@@ -628,7 +628,7 @@ CVector CMCMC<T>::sensitivity_ln(double d, vector<double> par)
 }
 
 template<class T>
-int CMCMC<T>::readfromfile(string filename)
+int CMCMC<T>::readfromfile(const string& filename)
 {
     ifstream file(filename);
 	vector<string> s;

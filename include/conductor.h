@@ -71,7 +71,7 @@ public:
      * @note Clears previous results at the start of each execution
      * @note Validates data for negative element concentrations before proceeding
      */
-    bool Execute(const std::string& command, std::map<std::string, std::string> arguments);
+    bool Execute(const std::string& command, const std::map<std::string, std::string>& arguments);
 
     /**
      * @brief Returns pointer to the current SourceSinkData

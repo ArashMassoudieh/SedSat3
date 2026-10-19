@@ -30,7 +30,7 @@ QJsonObject CMBVectorSetSet::toJsonObject() const
 }
 bool CMBVectorSetSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
-    for(QString key: jsonobject.keys() ) {
+    for(const QString& key: jsonobject.keys() ) {
         CMBVectorSet column;
         column.ReadFromJsonObject(jsonobject[key].toObject());
         operator[](key.toStdString()) = column;

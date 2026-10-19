@@ -78,7 +78,7 @@ public:
      * @param j Index within the column
      * @return Label string, or empty string if column not found
      */
-    string Label(string column, int j) const;
+    string Label(const string& column, int j) const;
 
     /**
      * @brief Gets value at specified position in a column
@@ -93,7 +93,7 @@ public:
      * @param columnlabel Name of the vector column
      * @return Reference to the CMBVector
      */
-    CMBVector& GetColumn(const string columnlabel);
+    CMBVector& GetColumn(const string& columnlabel);
 
     /**
      * @brief Adds or replaces a vector in the set

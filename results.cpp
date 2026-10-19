@@ -43,7 +43,7 @@ QJsonObject Results::toJsonObject()
 
 bool Results::ReadFromJson(const QJsonObject &jsonobject)
 {
-    for (QString key : jsonobject.keys()) {
+    for (const QString& key : jsonobject.keys()) {
 
         if (key.contains("Contributions"))
         {

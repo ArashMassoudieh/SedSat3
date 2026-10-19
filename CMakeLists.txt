@@ -177,6 +177,7 @@ if(SEDSAT3_BUILD_GUI)
         dialogchooseexcelsheets.cpp dialogchooseexcelsheets.h
         elementstablemodel.cpp elementstablemodel.h
         elementtabledelegate.cpp elementtabledelegate.h
+        excelimport.cpp excelimport.h
         filebrowserpushbutton.cpp filebrowserpushbutton.h
         formelementinformation.cpp formelementinformation.h
         generalchart.cpp generalchart.h
@@ -228,6 +229,7 @@ if(BUILD_TESTING)
     set(SEDSAT3_TEST_SOURCES
         tests/unit/tst_sedsat3.cpp
         elementstablemodel.cpp elementstablemodel.h
+        elementtabledelegate.cpp elementtabledelegate.h
         formelementinformation.cpp formelementinformation.h formelementinformation.ui
     )
     if(NOT ENABLE_GA)
@@ -239,6 +241,12 @@ if(BUILD_TESTING)
     target_include_directories(sedsat3-unittests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/GA)
     target_compile_definitions(sedsat3-unittests PRIVATE QT_NO_DEBUG_OUTPUT)
     target_link_libraries(sedsat3-unittests PRIVATE Qt6::Test)
+    if(SEDSAT3_BUILD_GUI)
+        # The Excel import needs QXlsx, which is built with the GUI
+        target_sources(sedsat3-unittests PRIVATE excelimport.cpp excelimport.h)
+        target_link_libraries(sedsat3-unittests PRIVATE QXlsx)
+        target_compile_definitions(sedsat3-unittests PRIVATE SEDSAT3_TEST_EXCEL)
+    endif()
     add_test(NAME unit COMMAND sedsat3-unittests)
     set_tests_properties(unit PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
 
@@ -249,6 +257,7 @@ if(BUILD_TESTING)
         add_test(NAME regression
                  COMMAND ${BASH_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/regression/run.sh
                          $<TARGET_FILE:sedsat3-cli> ${CMAKE_BINARY_DIR}/regression)
+        set_tests_properties(regression PROPERTIES ENVIRONMENT "PYTHON=${Python3_EXECUTABLE}")
     endif()
 endif()
 

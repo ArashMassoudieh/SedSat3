@@ -29,7 +29,7 @@ public:
     CDistribution();
     CDistribution(string name);
 	~CDistribution(void);
-    static int NumberOfCoreParameters(string _name);
+    static int NumberOfCoreParameters(const string& _name);
     bool CreateDistribution(const map<string,string> &Arguments);
 	vector<double> params;
 	string name;
@@ -56,7 +56,7 @@ public:
 	double inverseCDF(double u, bool flux_weight=false);
 	double map_normal_to(double z);
     bool readfromfile(const string &filename);
-    bool WriteToFile(const map<string,string> Arguments);
+    bool WriteToFile(const map<string,string>& Arguments);
     vector<double> SetRangeBasedOnMeanStd(const double &stdcoeff=3);
     TimeSeries<double> ToTimeSeries(int nbins=100, const double& stdcoeff = 3);
     static double unitrandom();

@@ -176,7 +176,7 @@ CVector_arma mult(CMatrix_arma_sp &m1, CVector_arma &v1)
 	return vt;
 }
 
-CMatrix_arma_sp operator*(double d, CMatrix_arma_sp m1)
+CMatrix_arma_sp operator*(double d, const CMatrix_arma_sp& m1)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	TrM.matr = d*m1.matr;
@@ -184,7 +184,7 @@ CMatrix_arma_sp operator*(double d, CMatrix_arma_sp m1)
 
 }
 
-CMatrix_arma_sp operator+(double d, CMatrix_arma_sp m1)
+CMatrix_arma_sp operator+(double d, const CMatrix_arma_sp& m1)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	for (int i=0; i<m1.getnumrows(); i++)
@@ -194,7 +194,7 @@ CMatrix_arma_sp operator+(double d, CMatrix_arma_sp m1)
 
 }
 
-CMatrix_arma_sp operator-(double d, CMatrix_arma_sp m1)
+CMatrix_arma_sp operator-(double d, const CMatrix_arma_sp& m1)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	for (int i=0; i<m1.getnumrows(); i++)
@@ -204,7 +204,7 @@ CMatrix_arma_sp operator-(double d, CMatrix_arma_sp m1)
 
 }
 
-CMatrix_arma_sp operator+(CMatrix_arma_sp m1, double d)
+CMatrix_arma_sp operator+(const CMatrix_arma_sp& m1, double d)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	for (int i=0; i<m1.getnumrows(); i++)
@@ -214,7 +214,7 @@ CMatrix_arma_sp operator+(CMatrix_arma_sp m1, double d)
 
 }
 
-CMatrix_arma_sp operator-(CMatrix_arma_sp m1,double d)
+CMatrix_arma_sp operator-(const CMatrix_arma_sp& m1,double d)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	for (int i=0; i<m1.getnumrows(); i++)
@@ -224,7 +224,7 @@ CMatrix_arma_sp operator-(CMatrix_arma_sp m1,double d)
 
 }
 
-CMatrix_arma_sp operator/(CMatrix_arma_sp m1,double d)
+CMatrix_arma_sp operator/(const CMatrix_arma_sp& m1,double d)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	for (int i=0; i<m1.getnumrows(); i++)
@@ -233,7 +233,7 @@ CMatrix_arma_sp operator/(CMatrix_arma_sp m1,double d)
 	return TrM;
 }
 
-CMatrix_arma_sp operator/(double d, CMatrix_arma_sp m1)
+CMatrix_arma_sp operator/(double d, const CMatrix_arma_sp& m1)
 {
 	CMatrix_arma_sp TrM(m1.getnumrows(), m1.getnumcols());
 	for (int i=0; i<m1.getnumrows(); i++)
@@ -290,7 +290,7 @@ CMatrix_arma_sp Sqrt(CMatrix_arma_sp &M1)
 
 
 
-CMatrix_arma_sp Invert(CMatrix_arma_sp M1)
+CMatrix_arma_sp Invert(const CMatrix_arma_sp& M1)
 {
 	CMatrix_arma_sp InvM(M1.getnumcols(), M1.getnumcols());
 	//InvM.matr = inv(M1.matr);
@@ -317,7 +317,7 @@ double CMatrix_arma_sp::det()
 }
 
 
-CVector_arma diag(CMatrix_arma_sp m)
+CVector_arma diag(const CMatrix_arma_sp& m)
 {
 	CVector_arma v(m.getnumcols());
 	for (int i=0; i<m.getnumcols(); ++i)
@@ -325,7 +325,7 @@ CVector_arma diag(CMatrix_arma_sp m)
 	return v;
 }
 
-CMatrix_arma_sp operator*(CVector_arma v, CMatrix_arma_sp m)
+CMatrix_arma_sp operator*(const CVector_arma& v, CMatrix_arma_sp m)
 {
     CMatrix_arma_sp V = CMatrix_arma_sp(v);
     CMatrix_arma_sp a = V*m;
@@ -367,7 +367,7 @@ void CMatrix_arma_sp::writetofile(FILE *f)
 	}
 }
 
-void CMatrix_arma_sp::writetofile(string filename)
+void CMatrix_arma_sp::writetofile(const string& filename)
 {
 	ofstream f(filename);
 	for (int i=0; i<numrows; i++)
@@ -386,7 +386,7 @@ void CMatrix_arma_sp::writetofile(string filename)
 
 //MM
 //void CMatrix_arma_sp::writetofile(string filename)
-void CMatrix_arma_sp::writetofile_app(string filename)
+void CMatrix_arma_sp::writetofile_app(const string& filename)
 {
 	FILE *f = fopen(filename.c_str(),"a");
 	if (f == nullptr)
@@ -406,7 +406,7 @@ CMatrix_arma_sp Transpose(CMatrix_arma_sp &M1)	//Works only when M1.getnumcols()
 	return TrM;
 }
 
-void CMatrix_arma_sp::print(string s)
+void CMatrix_arma_sp::print(const string& s)
 {
 	
 	ofstream Afile;
@@ -453,7 +453,7 @@ CMatrix_arma_sp& CMatrix_arma_sp::operator=(mat &A)
 	return *this;	
 }
 
-void write_to_file(vector<CMatrix_arma_sp> M, string filename)
+void write_to_file(vector<CMatrix_arma_sp> M, const string& filename)
 {
 	ofstream Afile;
 	Afile.open(filename);
@@ -544,7 +544,7 @@ CMatrix_arma_sp CMatrix_arma_sp::Preconditioner(double tol)
 
 	return M;
 }
-vector<string> CMatrix_arma_sp::toString(string /*format*/, vector<string> columnHeaders, vector<string> rowHeaders)
+vector<string> CMatrix_arma_sp::toString(const string& /*format*/, vector<string> columnHeaders, vector<string> rowHeaders)
 {
 	vector<string> r;
 	bool rowH = false, colH = false;

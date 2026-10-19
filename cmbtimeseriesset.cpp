@@ -76,7 +76,7 @@ bool CMBTimeSeriesSet::ReadFromJsonObject(const QJsonObject &jsonobject)
 {
     clear();
     observed_value.clear();
-    for (QString key: jsonobject.keys())
+    for (const QString& key: jsonobject.keys())
     {
         if (key=="Observed Values")
         {

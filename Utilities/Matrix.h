@@ -42,7 +42,7 @@ public:
     static CMatrix Diag(int n);
     void Resize(int numrows, int numcolumns);
 	CMatrix();
-	CMatrix(std::string filename);
+	CMatrix(const std::string& filename);
 	CMatrix(const CMatrix&);
 #ifdef _arma
     CMatrix(CMatrix_arma_sp&);
@@ -76,23 +76,23 @@ public:
     CMatrix Cholesky_factor();
     double det();
     void Print(FILE *FIL);
-    void print(std::string s);
+    void print(const std::string& s);
     void setval(double a);
     void setvaldiag(double a);
     void writetofile(FILE *f);
-    void writetofile(std::string filename);
+    void writetofile(const std::string& filename);
     double min();
     double max();
     CMatrix abs() const;
 
-    void writetofile_app(std::string filename);
-	friend void write_to_file(std::vector<CMatrix> M, std::string filename);
+    void writetofile_app(const std::string& filename);
+	friend void write_to_file(std::vector<CMatrix> M, const std::string& filename);
 	friend CMatrix Average(std::vector<CMatrix> M);
     CVector diag_ratio();
     std::vector<std::vector<bool> > non_posdef_elems(double tol = 1);
     CMatrix non_posdef_elems_m(double tol = 1);
     CMatrix Preconditioner(double tol = 1);
-    std::vector<std::string> toString(std::string format = "", std::vector<std::string> columnHeaders = std::vector<std::string>(), std::vector<std::string> rowHeaders = std::vector<std::string>()) const;
+    std::vector<std::string> toString(const std::string& format = "", std::vector<std::string> columnHeaders = std::vector<std::string>(), std::vector<std::string> rowHeaders = std::vector<std::string>()) const;
 	std::vector<std::string> toHtml(std::string format = "", std::vector<std::string> columnHeaders = std::vector<std::string>(), std::vector<std::string> rowHeaders = std::vector<std::string>());
     void setnumcolrows();
 	void ScaleDiagonal(double x);
@@ -122,7 +122,7 @@ CMatrix operator/(double d, CMatrix m1);
 CMatrix operator-(const CMatrix&, const CMatrix&);
 CMatrix operator*(CMatrix, CMatrix);
 CVector operator*(CMatrix, CVector);
-CMatrix operator*(CVector, CMatrix);
+CMatrix operator*(const CVector&, const CMatrix&);
 CMatrix operator*(double, CMatrix);
 CVector operator/(CVector&, CMatrix&);
 CVector operator/(const CVector &V, const CMatrix &M);

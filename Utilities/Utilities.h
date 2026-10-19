@@ -44,17 +44,17 @@ namespace aquiutils
     int lookup(const std::vector<std::vector<int> > &s, const std::vector<int> &s1);
     int corresponding_parenthesis(std::string S, int i);
     int count(const std::string &s, const std::string &s1);
-    bool parantheses_balance(std::string S);
+    bool parantheses_balance(const std::string& S);
     bool contains(const std::string &s, const std::string &s1);
     std::string left(const std::string &s, int i);
     std::string right(const std::string &s, int i);
     void remove(std::string &s,unsigned int i);
-    void replace(std::string &s,unsigned int i,std::string p);
+    void replace(std::string &s,unsigned int i,const std::string& p);
     void remove(std::string &s,unsigned int pos, unsigned int len);
-    bool remove(std::string &s, std::string s1);
-    void insert(std::string &s, unsigned int pos, std::string s1);
-    bool replace(std::string &s,std::string s1, std::string s2);
-    void replace(std::string &s,unsigned int i, unsigned int j, std::string p);
+    bool remove(std::string &s, const std::string& s1);
+    void insert(std::string &s, unsigned int pos, const std::string& s1);
+    bool replace(std::string &s,const std::string& s1, const std::string& s2);
+    void replace(std::string &s,unsigned int i, unsigned int j, const std::string& p);
     bool isnumber(char S);
     bool isnumber(std::string S);
     bool isintegernumber(std::string S);
@@ -70,18 +70,18 @@ namespace aquiutils
     std::vector<std::string> getline(std::ifstream& file, char del1);
     std::vector<std::vector<std::string>> getline_op(std::ifstream& file,char del1);
     std::vector<std::string> split(const std::string &s, const std::vector<char> &del);
-    std::vector<std::vector<std::string>> getline_op(std::ifstream& file,std::vector<char> del1);
+    std::vector<std::vector<std::string>> getline_op(std::ifstream& file,const std::vector<char>& del1);
     std::vector<std::vector<std::string>> getline_op_eqplus(std::ifstream& file);
-    std::vector<std::string> split_curly_semicolon(std::string s);
+    std::vector<std::string> split_curly_semicolon(const std::string& s);
     std::vector<int> look_up(std::string s, char del);  //Returns a vector with indices of "del"
     std::vector<int> ATOI(std::vector<std::string> ii);
     std::vector<double> ATOF(std::vector<std::string> ii);
     std::string tolower(const std::string &S);
     std::vector<std::string> tolower(const std::vector<std::string> &S);
-    void writeline(std::ofstream& f, std::vector<std::string> s, std::string del=",");
-    void writeline(std::ofstream& f, std::vector<std::vector<std::string>> s, std::string del=",", std::string del2="&");
-    void writestring(std::ofstream& f, std::string s);
-    void writestring(std::string filename, std::string s);
+    void writeline(std::ofstream& f, std::vector<std::string> s, const std::string& del=",");
+    void writeline(std::ofstream& f, std::vector<std::vector<std::string>> s, const std::string& del=",", const std::string& del2="&");
+    void writestring(std::ofstream& f, const std::string& s);
+    void writestring(const std::string& filename, const std::string& s);
     void writenumber(std::ofstream& f, double s);
     void writeendl(std::ofstream& f);
     double Heavyside(double x);
@@ -106,7 +106,7 @@ namespace aquiutils
     int Max(std::vector<int>);
     std::string remove_backslash_r(const std::string &ss);
     std::string GetOnlyFileName(const std::string &fullfilename);
-    double avg(double x, double y, std::string type="arithmetic");
+    double avg(double x, double y, const std::string& type="arithmetic");
     template<class T>
     T randompick(const std::vector<T> &vec)
     {
