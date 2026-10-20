@@ -14,7 +14,7 @@
 #   -DBUILD_TESTING=OFF      skip the unit tests
 
 cmake_minimum_required(VERSION 3.16)
-project(SedSat3 VERSION 1.1.7 LANGUAGES CXX)
+project(SedSat3 VERSION 1.1.8 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -303,7 +303,7 @@ install(FILES ${CMAKE_SOURCE_DIR}/resources/icons/sedsat3.png
 # Packaging metadata
 # ----------------------------
 set(CPACK_PACKAGE_NAME "sedsat3")
-set(CPACK_PACKAGE_VERSION "1.1.7")
+set(CPACK_PACKAGE_VERSION "1.1.8")
 set(CPACK_PACKAGE_CONTACT "Arash Massoudieh <massoudieh@cua.edu>")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Arash Massoudieh") # required
 set(CPACK_DEBIAN_PACKAGE_SECTION "science")

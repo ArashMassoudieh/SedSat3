@@ -11,7 +11,7 @@ set -e  # stop on first error
 
 PROJECT_NAME="sedsat3"
 BUILD_DIR="build"
-VERSION="1.1.7"
+VERSION="1.1.8"
 SKIP_BUILD=false
 
 while [[ $# -gt 0 ]]; do

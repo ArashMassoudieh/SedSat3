@@ -53,8 +53,8 @@
 #endif
 
 
-#define version "1.1.7"
-#define date_compiled "10/06/2026"
+#define version "1.1.8"
+#define date_compiled "10/19/2026"
 
 using namespace QXlsx;
 

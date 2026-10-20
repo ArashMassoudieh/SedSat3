@@ -19,7 +19,7 @@
 
 [workspace]
 name = "sedsat3"
-version = "1.1.7"
+version = "1.1.8"
 description = "Build, test and analysis environment for SedSAT3 (Qt6, Armadillo, GSL, OpenMP)"
 channels = ["conda-forge"]
 platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
@@ -30,8 +30,13 @@ ninja = "*"
 qt6-main = "*"      # Qt6 Core, Gui, Widgets, PrintSupport, Test
 qt6-charts = "*"    # Qt6 Charts (USE_QCHARTS)
 armadillo = "*"
-libblas = "*"       # BLAS, required by Armadillo
-liblapack = "*"     # LAPACK, required by Armadillo
+# BLAS and LAPACK, required by Armadillo, and CBLAS, used by GSL. The *openblas
+# builds are requested explicitly: on win-64 the solver otherwise picks the MKL
+# builds, which forward every call to mkl_rt and would add about 540 MB of MKL
+# DLLs to the portable package.
+libblas = { version = "*", build = "*openblas" }
+libcblas = { version = "*", build = "*openblas" }
+liblapack = { version = "*", build = "*openblas" }
 openblas = "*"      # the BLAS/LAPACK implementation
 gsl = "*"
 python = ">=3.9"    # the regression test's comparison script

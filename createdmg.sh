@@ -24,7 +24,7 @@ set -u   # error on unset variables
 # Configuration
 # ----------------------------
 PROJECT_NAME="SedSat3"
-VERSION="1.1.7"
+VERSION="1.1.8"
 BUILD_DIR="bin/Release"
 QT_BIN="/Users/arash/Qt/6.10.1/macos/bin"
 APP_BUNDLE="${BUILD_DIR}/${PROJECT_NAME}.app"
