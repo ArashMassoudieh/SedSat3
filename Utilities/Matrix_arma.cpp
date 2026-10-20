@@ -116,9 +116,12 @@ double& CMatrix_arma::operator()(int i, int j)
 
 std::vector<double*> CMatrix_arma::get(int i)
 {
+    // Row i has numcols entries. This used to index an empty vector, and loop
+    // over numrows.
     std::vector<double*> v;
-    for (int j = 0; j < numrows; j++)
-        v[j] = &at(i, j);
+    v.reserve(numcols);
+    for (int j = 0; j < numcols; j++)
+        v.push_back(&at(i, j));
 
     return v;
 }

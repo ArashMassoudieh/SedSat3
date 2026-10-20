@@ -148,6 +148,15 @@ covariance matrices, bracketing, DFA, EDP. With the fixes, the two projects
 (the same source samples, targets named "Mixture" and "Target") give the
 same ANOVA, which they did not before.
 
+**On Windows** (MSVC, conda-forge OpenBLAS; `pixi run test`), every analysis
+matches the Linux baseline within the 1e-9 tolerance except the
+Levenberg–Marquardt batch: 30 values on `isotope_test` and 37 on
+`properties` differ, by at most 7e-8 (median relative 8e-9; the largest
+relative difference, 3.6e-5, is on a contribution of 4e-5). This is round-off
+in an iterative fit, so the baseline was not regenerated on Windows. The
+regression test needs `bash`; on Windows, configure with
+`-DBASH_EXECUTABLE="C:/Program Files/Git/bin/bash.exe"`.
+
 ## Compiler warnings and static analysis
 
 GUI build, GCC 13.3, Qt 6.8.3, unique first-party warnings
@@ -165,8 +174,30 @@ escape and copy-constructor warning. Remaining: `-Wconversion` 293,
 `-Wsign-compare` 100, `-Wshadow` 35 (mostly constructor parameters named after
 members), `-Wfloat-conversion` 20 — implicit integer/floating conversions in
 the numerical code, which should be changed one at a time with the regression
-tests rather than in bulk. MSVC `/W4` was not run (no Windows machine here);
-the CI Windows job is the place for it.
+tests rather than in bulk.
+
+**MSVC `/W4`** (`pixi run warnings`; Windows 11, Visual Studio 2022, MSVC
+v143), unique first-party warnings:
+
+| Warning | Before | After |
+|---|---|---|
+| C4834 discarded `[[nodiscard]]` (unchecked `QFile::open`) | 5 | 0 |
+| C4267 `size_t` narrowing | 202 | 202 |
+| C4018 signed/unsigned comparison | 28 | 28 |
+| C4244 conversion, possible loss of data | 18 | 18 |
+| C4458 declaration hides class member | 13 | 13 |
+| C4996 deprecated function | 12 | 12 |
+| C4456 declaration hides previous local | 7 | 7 |
+| C5043 | 1 | 1 |
+| **Total** | **286** | **281** |
+
+The five C4834 were unchecked `QFile::open` calls: project load, `loadJson`
+and `saveJson` in `mainwindow.cpp`, and the result exports in
+`resultswindow.cpp` and `resulttableviewer.cpp`. The default (non-`/W4`) build
+also had a C4805 (`int == true`) in `src/GA/Binary.cpp`, fixed without
+changing behaviour. The default build is now warning-free. The remaining
+conversions are the MSVC counterpart of the GCC `-Wconversion` and
+`-Wsign-compare` findings and will be handled the same way.
 
 **clang-tidy** (LLVM 20, `.clang-tidy`): 128 initialisation findings and the
 real defects above fixed. 25 remain, none of the error class: 7
@@ -176,9 +207,30 @@ real defects above fixed. 25 remain, none of the error class: 7
 `exception-escape` from Armadillo destructors, and 9 style findings (unused
 locals, empty `catch`, `_Data` names, repeated branches).
 
-**cppcheck** was not available on the build machine (no administrator
-rights to install it). It runs in CI (`cppcheck` job, reported but not yet
-enforced); its first report should be reviewed before making it blocking.
+On Windows (clang-tidy from conda-forge, `pixi run lint`): no errors, 10
+warnings: 3 float loop counters, each reported by two checks; 2 static
+initialisers that could throw (`script_data` in `cli/scriptrunner.cpp`, `pi`
+in `src/cmbdistribution.cpp`); and the 2 `NewDeleteLeaks` false positives.
+
+**cppcheck** (`pixi run cppcheck`, on Windows): 158 findings, 150 after the
+fixes. Real defects fixed:
+
+- `CMatrix_arma::get(int)` wrote into an empty `std::vector` (out of bounds)
+  and looped over `numrows` instead of a row's `numcols`. It has no callers.
+- `TimeSeries` interpolation divided by `p2.t - p1.t` before testing it for
+  zero.
+- `SourceSinkData::MCMC` left `mcmc->Model` pointing at a local
+  `SourceSinkData` after returning. Nothing read it afterwards; it is now
+  reset to `nullptr`.
+- `CGA::Model` was not initialised by the constructors.
+
+Three `zerodiv` reports in `Utilities/TimeSeries.hpp` are on divisions already
+guarded by a comparison with `T{}`, and carry inline suppressions. Remaining:
+60 `postfixOperator`, 46 `passedByValue`, 15 `returnByReference`, 14
+`useInitializationList`, 11 `operatorEqVarError`, 3 `c_str()` performance
+findings, and 1 `invalidFunctionArg` (`log(0)` if every value is equal, in
+`ConcentrationSet`'s Box-Cox log-likelihood, which has no callers). cppcheck
+also runs in CI (`cppcheck` job, reported but not yet enforced).
 
 ## Windows portable package
 

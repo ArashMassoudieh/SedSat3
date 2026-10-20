@@ -145,8 +145,7 @@ void ResultsWindow::on_result_export_clicked()
         fileName+=".txt";
     QFile file(fileName);
 
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    if (!file.isOpen())
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     
     results->operator[](sender()->objectName().toStdString()).Result()->writetofile(&file);

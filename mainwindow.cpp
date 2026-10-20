@@ -431,7 +431,17 @@ bool MainWindow::LoadModel(const QString& fileName)
     conductor->SetWorkingFolder(fileInfo.absolutePath());
 
     // Load data
-    file.open(QIODevice::ReadOnly);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::critical(
+            this,
+            tr("Load Error"),
+            tr("Could not open the project:\n%1\n\n%2")
+            .arg(fileName)
+            .arg(file.errorString())
+        );
+        return false;
+    }
     const bool loaded = Data()->ReadFromFile(&file);
     file.close();
     if (!loaded)
@@ -845,13 +855,15 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
 
 QJsonDocument MainWindow::loadJson(const QString &fileName) {
     QFile jsonFile(fileName);
-    jsonFile.open(QFile::ReadOnly);
+    if (!jsonFile.open(QFile::ReadOnly))
+        return QJsonDocument();
     return QJsonDocument().fromJson(jsonFile.readAll());
 }
 
 void MainWindow::saveJson(const QJsonDocument &document, const QString &fileName) {
     QFile jsonFile(fileName);
-    jsonFile.open(QFile::WriteOnly);
+    if (!jsonFile.open(QFile::WriteOnly))
+        return;
     jsonFile.write(document.toJson());
 }
 

@@ -757,15 +757,42 @@ existing CMake build and has tasks \code{build}, \code{test} (unit and
 regression tests), \code{lint} (with the repository's \code{.clang-tidy}),
 \code{cppcheck} (with your \code{std.cfg} workaround), \code{warnings} (an
 MSVC \code{/W4} build), \code{deploy-win} and \code{run-app}.
-\mine{Run on Windows: pixi run build, test, lint, cppcheck and warnings; then
-replace this note with the results, including the MSVC /W4 and cppcheck counts} The Visual Studio project now compiles
+I have run every task on Windows~11 (Visual Studio 2022, MSVC v143, pixi
+0.81, conda-forge Qt~6 and OpenBLAS), and none needed a change to
+\code{pixi.\allowbreak{}toml}. \code{build} produces the GUI, the command-line
+program and the unit tests. In \code{test}, all 49 unit tests pass. The
+regression suite matches the Linux baseline for every analysis except the
+Levenberg--Marquardt batch, whose contributions differ by at most
+$7\times10^{-8}$ (median relative difference $8\times10^{-9}$), above the
+suite's $10^{-9}$ tolerance. That is round-off between MSVC with OpenBLAS and
+GCC in an iterative fit, so I have reported it rather than regenerating the
+baseline on Windows. (A default Windows \code{PATH} has no \code{bash}, so the
+regression test is registered only when \code{-DBASH\_\allowbreak{}EXECUTABLE}
+points at Git's bash.) \code{lint} reports no errors and 10 warnings: three
+floating-point grid loops, each reported by two checks; two static
+initialisers that could throw; and two leaks on Qt-parented labels, which are
+false positives. The MSVC \code{/W4} build had 286 unique first-party
+warnings. The five real defects among them (C4834, an unchecked
+\code{QFile::\allowbreak{}open} in five places) are fixed, as is a C4805 in the
+default build. 281 remain: C4267 202, C4018 28 and C4244 18 (integer and
+floating-point conversions, to be changed with the regression tests as on
+Linux), C4458 13 and C4456 7 (shadowed names), C4996 12 (deprecated
+functions) and C5043 1. \code{cppcheck} reported 158 findings. The real ones
+are fixed: an out-of-bounds write in \code{CMatrix\_\allowbreak{}arma::\allowbreak{}get(int)}, a
+division made before its zero check in \code{TimeSeries}, a sampler left
+pointing at a local variable in \code{SourceSinkData::\allowbreak{}MCMC}, and an
+uninitialised \code{CGA::\allowbreak{}Model}. Three divisions that are already
+guarded are suppressed as false positives. The 150 that remain are style and
+performance findings (postfix increments 60, pass-by-value 46, and so on),
+plus one possible \code{log(0)} in a function that has no callers.
+The Visual Studio project now compiles
 the vendored QCustomPlot instead of a copy outside the repository; it still
 links a prebuilt QXlsx library, which I will change to the submodule as the
 qmake and CMake builds already do. The portable, no-administrator Windows
 package (unzip and run) will be built from the merged code and sent to the
 reviewers.
 \end{response}
-\status{Build fixes done; \code{pixi.\allowbreak{}toml} pending a Windows test.}
+\status{Build fixes done; \code{pixi.\allowbreak{}toml} tested on Windows; MSVC \code{/W4} and cppcheck defects fixed.}
 
 % ====================================================================
 \group{Detailed observations (CODE\_REVIEW\_OBSERVATIONS.md)}

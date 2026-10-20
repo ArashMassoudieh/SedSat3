@@ -4452,6 +4452,10 @@ Results SourceSinkData::MCMC(
     // Set progress to 100%
     progress_window->SetProgress(1.0);
 
+    // corrected_data is about to go out of scope; do not leave the sampler
+    // pointing at it.
+    mcmc->Model = nullptr;
+
     return results;
 }
 

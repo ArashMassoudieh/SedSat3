@@ -40,8 +40,7 @@ void ResultTableViewer::on_ExportToCSV()
         fileName+=".csv";
     QFile file(fileName);
 
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    if (!file.isOpen())
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
 
     QString string;

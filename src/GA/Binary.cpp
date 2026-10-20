@@ -80,7 +80,7 @@ double CBinary::decode(double minrange)
 	double sum=0;
 	for (int i=nDigits-1; i>=0; i--)
 	{
-		if (Digit[i] == true)
+		if (Digit[i] == 1)
 			sum += pow(2.0,nDigits-i-1);
 	}
 

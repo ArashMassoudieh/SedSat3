@@ -513,7 +513,7 @@ public:
      *
      * Reference to model that provides fitness evaluation.
      */
-    T *Model;
+    T *Model = nullptr;
 
     /**
      * @brief Default constructor

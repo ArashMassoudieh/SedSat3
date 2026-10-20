@@ -1613,8 +1613,7 @@ TimeSeries<T> TimeSeries<T>::make_uniform(T increment, bool assignD) const {
         const DataPoint<T>& p2 = nansRemoved[i + 1];
 
         if (p1.t <= current_t && current_t <= p2.t) {
-            T ratio = (current_t - p1.t) / (p2.t - p1.t);
-            if (p2.t == p1.t) ratio = 0.5; 
+            T ratio = (p2.t == p1.t) ? T(0.5) : (current_t - p1.t) / (p2.t - p1.t);
             T c_interp = p1.c + ratio * (p2.c - p1.c);
             std::optional<T> d_interp = std::nullopt;
 
@@ -1840,6 +1839,7 @@ T TimeSeries<T>::wiggle_corr(int n_back) const {
     for (int i = 0; i < n_back; ++i)
         var += std::pow((*this)[n - 1 - i].c - C_m, 2);
 
+    // cppcheck-suppress zerodiv ; guarded by the comparison with T{}
     return (var == T{}) ? T{} : sum / var;
 }
 
@@ -1898,6 +1898,7 @@ T TimeSeries<T>::AutoCor1(int k) const {
         sum_sq += diff_i * diff_i;
     }
 
+    // cppcheck-suppress zerodiv ; guarded by the comparison with T{}
     return (sum_sq == T{}) ? T{} : sum_product / sum_sq;
 }
 
@@ -1919,6 +1920,7 @@ T TimeSeries<T>::AutoCorrelation(const T& distance) const {
         }
     }
 
+    // cppcheck-suppress zerodiv ; guarded by the comparison with T{}
     return (sum_sq == T{}) ? T{} : sum_product / sum_sq;
 }
 
