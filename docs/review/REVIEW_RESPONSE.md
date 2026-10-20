@@ -256,7 +256,35 @@ In short, on the Windows machine (Visual Studio 2022, Qt 6 MSVC kit, the
 7. Verify (dependency walk, restricted-token launch), then zip to
    `SedSAT3-<version>-windows-x64-portable.zip` and write its SHA-256.
 
-Not run here: this machine is Linux.
+**Done on Windows, version 1.1.8**: `SedSAT3-1.1.8-windows-x64-portable.zip`,
+42 MB, SHA-256
+`a934d3c97a5e8735111bd180f251bbcce3ea46c3983ca0501b9aa0be2fa2c060`. It was
+built from the pixi build (`pixi run build`), not the vcxproj, so steps 2–5
+differ:
+
+- Qt was deployed with the environment's `windeployqt6 --qtpaths
+  .pixi/envs/default/Library/bin/qtpaths6.exe --release --no-translations
+  --no-compiler-runtime`, run on both `SedSat3.exe` and `sedsat3-cli.exe`.
+- The numerical libraries the programs import are `openblas.dll`,
+  `gsl-28.dll` and `libcblas.dll` (for GSL). `libblas.dll`, `liblapack.dll`
+  and `libwinpthread-1.dll` from `deploy-win` are not needed.
+- conda-forge's Qt needs 18 more DLLs that `windeployqt` does not copy (ICU,
+  zlib, zstd, brotli, freetype, libpng, pcre2, double-conversion, OpenSSL's
+  libcrypto for the TLS plugin, and the image-format libraries). They were
+  found by walking the import tables against the package and `System32` only,
+  repeating until nothing was missing (three rounds).
+- `pixi.toml` now requests the OpenBLAS builds of `libblas`, `libcblas` and
+  `liblapack`. On win-64 the MKL builds were chosen, and their `libcblas`
+  forwards every call to `mkl_rt`, which would have added about 540 MB of MKL
+  DLLs.
+
+Verified: the dependency walk is complete. Under a restricted token, the GUI
+opened with no UAC prompt from `%LOCALAPPDATA%`, from a path with spaces and
+from a `subst` drive, with all 118 modules loaded from the package or
+`System32`. The CLI ran the bundled example, including the Bayesian batch,
+from the path with spaces. The example sets `"Random seed": "1234"`, so the
+README lists exact expected results; two runs gave identical credible
+intervals. 1.1.7 was the package built before the code-review fixes.
 
 ## Placeholders still to fill
 

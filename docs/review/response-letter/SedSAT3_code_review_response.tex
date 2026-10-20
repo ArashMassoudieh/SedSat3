@@ -758,8 +758,12 @@ regression tests), \code{lint} (with the repository's \code{.clang-tidy}),
 \code{cppcheck} (with your \code{std.cfg} workaround), \code{warnings} (an
 MSVC \code{/W4} build), \code{deploy-win} and \code{run-app}.
 I have run every task on Windows~11 (Visual Studio 2022, MSVC v143, pixi
-0.81, conda-forge Qt~6 and OpenBLAS), and none needed a change to
-\code{pixi.\allowbreak{}toml}. \code{build} produces the GUI, the command-line
+0.81, conda-forge Qt~6 and OpenBLAS). Only one change to
+\code{pixi.\allowbreak{}toml} was needed: on win-64 the solver chose the MKL builds of
+\code{libblas}, \code{libcblas} and \code{liblapack}, whose \code{libcblas}
+forwards every call to MKL, which GSL would then load. The file now asks for
+their OpenBLAS builds, which leaves the results unchanged and keeps about
+540\,MB of MKL out of the portable package. \code{build} produces the GUI, the command-line
 program and the unit tests. In \code{test}, all 49 unit tests pass. The
 regression suite matches the Linux baseline for every analysis except the
 Levenberg--Marquardt batch, whose contributions differ by at most
@@ -788,11 +792,23 @@ plus one possible \code{log(0)} in a function that has no callers.
 The Visual Studio project now compiles
 the vendored QCustomPlot instead of a copy outside the repository; it still
 links a prebuilt QXlsx library, which I will change to the submodule as the
-qmake and CMake builds already do. The portable, no-administrator Windows
-package (unzip and run) will be built from the merged code and sent to the
-reviewers.
+qmake and CMake builds already do.
+
+The portable, no-administrator Windows package,
+\code{SedSAT3-1.1.8-windows-x64-portable.\allowbreak{}zip} (42\,MB), is built from this
+pixi build, following \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}. It
+contains the GUI, the command-line program and its manual, and the virtual
+mixture example. Every DLL the two programs need is in the package, with
+nothing resolving from outside it or \code{System32}. I checked it under a
+restricted (non-administrator) token: the GUI opened with no elevation prompt
+from a folder in the user profile, from a path containing spaces and from
+another drive letter, and the command-line program ran the full example,
+including the Bayesian batch. The example script fixes the random seed, so
+the README can list the exact results a reviewer should get, and a second run
+reproduced them exactly. (Version 1.1.7 was a package built before these
+fixes, so this one is numbered 1.1.8.)
 \end{response}
-\status{Build fixes done; \code{pixi.\allowbreak{}toml} tested on Windows; MSVC \code{/W4} and cppcheck defects fixed.}
+\status{Build fixes done; \code{pixi.\allowbreak{}toml} tested on Windows; MSVC \code{/W4} and cppcheck defects fixed; portable package 1.1.8 built and tested.}
 
 % ====================================================================
 \group{Detailed observations (CODE\_REVIEW\_OBSERVATIONS.md)}
@@ -857,7 +873,7 @@ accurate, not to diminish the review: they were all worth looking at.
 13 & GSL used for a single \code{gsl\_\allowbreak{}multifit\_\allowbreak{}wlinear} call & GSL is used more widely (CDFs, statistics, matrices in about ten files), so replacing it is not a one-call change; another reason to prefer the inventory approach.\\
 13, 13a & No per-file headers; AGPL headers in \code{Utilities} & Fixed (Comments 1.2, 1.7).\\
 14, 14a & Metadata and installer point outside the USGS & Fixed (Comment 1.6); the parallel sedsat.org distribution is for the release coordinator.\\
-14 & \code{createdmg.\allowbreak{}sh} version stale & Updated to 1.1.7.\\
+14 & \code{createdmg.\allowbreak{}sh} version stale & Updated; every build file now says 1.1.8.\\
 16 & Spelling; add codespell to CI & Spelling fixed (Comment 5.3); codespell now runs in CI (reported, not yet enforced).\\
 8.4 & Distribution Fitting crash caused by a missing overload & Fixed; the cause was an implicit conversion (Comment 2.1).\\
 8.6 & ``Include all elements'' inverted & Fixed (Comment 2.2).\\
