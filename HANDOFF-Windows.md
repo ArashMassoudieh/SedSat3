@@ -77,6 +77,11 @@ Run the GUI once (`pixi run run-app`) and check four things:
 - an Excel import works (`examples/SampleData.xlsx`);
 - the "Include in analysis" column toggles with one click;
 - Distribution Fitting no longer crashes.
+- the Tools menu shows the workflow order and the four groups under Other
+  Statistical Tools (domain review);
+- a few charts look as in the regenerated manual figures: step 4's scatter
+  (colours kept across pairs), a p-value plot (axis shown), the MCMC samples
+  (whole sample numbers).
 
 ## 3. Record the results (the blue item)
 
