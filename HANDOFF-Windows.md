@@ -1,168 +1,161 @@
-# HANDOFF: finish the code-review work on the Windows machine
+# HANDOFF: Windows round 2, after the domain review
 
-Written 2026-10-19 on the Linux machine. For Arash and Claude Code on the
-Windows development machine (Visual Studio 2022, Qt).
+Written 2026-10-22 on the Linux machine. For Arash and Claude Code on the
+Windows development machine (Visual Studio 2022, pixi). The first round
+(pixi results, MSVC `/W4`, cppcheck, the 1.1.8 portable package) is done;
+its handoff is in git history (`git show 324f9db:HANDOFF-Windows.md`).
 
 ## Where things stand
 
-- All review work is on the branch **`review-fixes-oct2026`**, the source of
-  GitLab merge request **!4**
-  (<https://code.usgs.gov/cphipps/SedimentSourceAssessmentTool3/-/merge_requests/4>).
-  GitHub `main` is at the same commit. Cara has not merged yet.
-- Everything that can be done on Linux is done and verified there: all review
-  defects and the follow-up findings fixed, 49 unit tests passing, the
-  regression suite unchanged, and clang-tidy down to 13 known findings.
-  `docs/review/REVIEW_RESPONSE.md` records each item.
-- The response letter to Steve is
-  `docs/review/response-letter/SedSAT3_code_review_response.tex` (also `.pdf`
-  and `.docx`). Its marked items are:
-  - **red**: decisions for Cara, Allen or the release coordinator (license,
-    ownership wording, author list, manual URL, DOI, AI tag). Not yours to fix
-    in code.
-  - **blue**: exactly one, in Section 7, and it is the subject of this
-    handoff: run the pixi build on Windows and record the results.
+- Branch **`review-fixes-oct2026`**, the source of GitLab merge request **!4**.
+  GitHub `main` is at the same commit.
+- Since the 1.1.8 package was built, the branch has the fixes for Lillian
+  Gorman Sanisaca's domain review (`docs/review/response-domain-review/`):
+  - crashes fixed: isotope with an excluded base element, discriminant
+    power (multi-way), correlation matrix with the correction, OM/size
+    regression on a small group;
+  - D50 and TOC are never tested or selected as tracers;
+  - δ¹³C can use TOC (the organic matter constituent) as its base element;
+  - Error Analysis histogram uses all realizations;
+  - the Tools menu is in workflow order, grouped;
+  - chart fixes: palette, axis titles and ranges, p-value axes, legends;
+  - step 4 shows discriminant scores and eigenvectors;
+  - Bayesian defaults 100,000 / 20,000;
+  - tool descriptions cite the manual.
+- Verified on Linux: 52 unit tests, the regression suite, and the charts
+  rendered offscreen. **None of it has been compiled with MSVC or clicked
+  through in the GUI.**
+- The version stays **1.1.8**. The new package replaces the earlier 1.1.8
+  zip, with a new SHA-256.
 
-Nothing Windows-specific has been run yet. MSVC, `/W4`, cppcheck, the pixi
-environment and the Visual Studio project have **not** been tested since the
-changes. Expect some fixing.
-
-## 1. Get the code
+## 1. Update and build
 
 ```powershell
-cd <your SedSat3 clone>
 git fetch origin
-git checkout review-fixes-oct2026      # or: git pull origin main
+git checkout review-fixes-oct2026
 git pull
-git submodule sync
 git submodule update --init --recursive
+pixi run build
+pixi run test
 ```
 
-- **`Utilities` is no longer a submodule** (its files are now in the
-  repository). If git complains about a leftover `Utilities` submodule, run
-  `git submodule deinit -f Utilities`, then check that `Utilities\*.cpp` exist.
-- **QXlsx now points at `https://github.com/QtExcel/QXlsx.git`**, with the same
-  pinned commit as before.
+Expect the regression suite to match as before. The only known difference is
+the Levenberg-Marquardt batch, up to about 7e-8 (round-off). The
+`properties.cmb` baseline changed on this branch (D50/TOC left the
+ANOVA/EDP/bracketing results), so compare against the committed baseline;
+**do not** regenerate it on Windows.
 
-## 2. Build, test and analyse with pixi
+If MSVC rejects something new, the likely places are `generalchart.cpp`
+(`std::size` on a `QColor` array, `QMap`, `QLegendMarker`) and
+`src/conductor.cpp` (`std::set`). Fix, rerun `pixi run test`, and commit.
 
-Install pixi if it isn't there (<https://pixi.sh>). Then, from a
-**Developer PowerShell for VS 2022** at the repository root:
+`pixi run warnings` and `pixi run cppcheck` are optional this round. If you
+run them, add the counts to Section 7 of the code review letter and to
+`REVIEW_RESPONSE.md` as before.
 
-```powershell
-pixi run build       # CMake + Ninja -> build\bin\SedSat3.exe, sedsat3-cli.exe, sedsat3-unittests.exe
-pixi run test        # ctest: unit tests and the regression suite
-pixi run lint        # clang-tidy, repository .clang-tidy (some checks are errors)
-pixi run cppcheck    # writes cppcheck.txt
-pixi run warnings    # MSVC /W4 build in build-w4\, log in msvc-w4.log
-```
+## 2. Check the GUI by hand
 
-`pixi.toml` is based on Steve's working file
-(`docs/review/BUILDING_ON_WINDOWS_WITH_PIXI.md`), corrected for the current
-repository. It has never been run. Likely problems and what to do about them:
+`pixi run run-app`, import `examples/SampleData.xlsx` (target sheet:
+Mixture), then:
 
-| Symptom | Likely cause and fix |
+1. **Constituent Properties:**
+   - Set D50 to *Particle Size* and TOC to *Organic Carbon*.
+   - Set N15 to *Isotope* with base N and ratio 0.003676, and C13 to
+     *Isotope* with base TOC and ratio 0.011180.
+   - The Include column toggles with one click, and "Include all elements"
+     updates the table at once.
+2. **Tools menu:** Deterministic, Bayesian, then Other Statistical Tools
+   with four groups (Data exploration, Element selection, Discriminant
+   function analysis, Uncertainty and verification).
+3. **Step 2, Power, TOC and D50,** then Other Statistical Tools → Data
+   exploration → Correct based on size and organic matter for CTAIL1: click
+   the graph button (this used to crash).
+4. **Step 4 with the correction for CTAIL1:**
+   - six panels;
+   - the scatter (panel 5) keeps each group's colour when you change the
+     pair, and starts on two different groups;
+   - the p-value plot shows its y axis;
+   - the x axis reads "Constituents, in the order added".
+5. **Step 5, Fingerprinting, for CTAIL1, with and without the correction:**
+   both run, and the isotope panel shows a modeled C13 (not empty).
+6. **Elements' discriminant power (Multi-way), Error Analysis, Source
+   Verification, Distribution Fitting:** each runs.
+7. **Exclude N in Constituent Properties, run Fingerprinting:** a message
+   about N15's base element, not a crash. Include N again.
+8. **Bayesian step 5 with the defaults:**
+   - the progress window closes at the end;
+   - the MCMC samples plot shows whole sample numbers.
+
+Note anything that looks wrong. Charts are rendered by Qt, so fonts may
+differ from Linux, but the content should match the manual's figures.
+
+## 3. Retake the screenshots
+
+These manual figures still show the old program. Take them from this build,
+with the example data set up as in step 2.1, and save them under the same
+names in `docs/manual/SedSat_User's_Manual/Figures/`:
+
+| File | What |
 |---|---|
-| `pixi install` fails resolving `python` / `qt6-main` | Loosen the version pins in `pixi.toml`. |
-| CMake cannot find `Qt6Test` | `qt6-main` should include it; if not, configure with `-DBUILD_TESTING=OFF` to get going, then find the package that provides it. |
-| Link errors `wrapper_dgssv` etc. (SuperLU) | Should be gone: the forced `#define ARMA_USE_SUPERLU` was removed. If they persist, conda's Armadillo config enables SuperLU. Then add `ARMA_DONT_USE_SUPERLU` to `target_compile_definitions` for MSVC in `CMakeLists.txt`, or leave `Utilities/Matrix_arma_sp.cpp` out of `SEDSAT3_CORE_SOURCES` on `WIN32` (nothing in the analyses uses it). |
-| C4005 / C4828 warnings | Were addressed (`USE_QCHARTS` / `NOMINMAX` guards, `/utf-8`). Report any that remain. |
-| `regression` test fails immediately | It runs `tests/regression/run.sh` with bash. CMake may have found `C:\Windows\System32\bash.exe` (WSL) rather than Git's bash. Point it at Git's: `cmake -S . -B build -DBASH_EXECUTABLE="C:/Program Files/Git/bin/bash.exe"`. The Python interpreter is passed in `PYTHON` automatically. |
-| `regression` reports differences | They should be within 1e-9 relative. If values differ slightly more because of MSVC or OpenBLAS round-off, report the size; **do not** regenerate the baseline on Windows. |
-| cppcheck aborts looking for `std.cfg` | The `_cppcheck-stage-cfg` task copies the cfg files (Steve's workaround). Check the source path `.pixi/envs/default/share/Cppcheck/cfg` exists. |
-| `lint` errors on `cppcoreguidelines-init-variables`, `pro-type-member-init` or `concurrency-mt-unsafe` | These are errors on purpose. Fix the code, the way the other 128 were fixed. |
-| `warnings` fails to configure | The `/W4` task restates CMake's default MSVC flags. If CMake rejects the quoting, run the two commands by hand from the `pixi.toml` task. |
+| `SelectSourceTargetGroups.png` | the target-sheet dialog after File → Import Data from Excel |
+| `Constituent_Viz.png` | the main window with an element selected under Data (try C13: linear axis) |
+| `MCMC_progress.png` | the progress window during Bayesian step 5 |
+| `MCMC_folders.png` | Explorer: the per-target folders after the Bayesian batch |
+| `MCMC_files.png` | Explorer: the seven files in one of them |
+| `95p_CI_table.png` | an excerpt of `3_Source Contribution Credible Intervals.txt` |
+| `95p_CI_predicted.png` | an excerpt of `5_Predicted Samples Credible Intervals.txt` |
 
-Run the GUI once (`pixi run run-app`) and check four things:
-- the main window opens;
-- an Excel import works (`examples/SampleData.xlsx`);
-- the "Include in analysis" column toggles with one click;
-- Distribution Fitting no longer crashes.
-- the Tools menu shows the workflow order and the four groups under Other
-  Statistical Tools (domain review);
-- a few charts look as in the regenerated manual figures: step 4's scatter
-  (colours kept across pairs), a p-value plot (axis shown), the MCMC samples
-  (whole sample numbers).
+For the two folder screenshots, run the Bayesian batch with fewer samples
+(for example 5,000) to keep it quick. Save the project first: the folders go
+next to the project file.
 
-## 3. Record the results (the blue item)
+Rebuilding the manual PDF needs LaTeX (MiKTeX worked for the letter): in
+`docs/manual/SedSat_User's_Manual`, run `pdflatex main`, `bibtex main`, then
+`pdflatex main` twice, and copy `main.pdf` to `SedSAT3_User_Manual.pdf`. If
+that is inconvenient, commit the images and rebuild the PDF on Linux.
 
-Count the unique MSVC `/W4` warnings in first-party code:
+## 4. Rebuild the portable package (still 1.1.8)
 
-```powershell
-Select-String -Path msvc-w4.log -Pattern ': warning C\d+' |
-  Where-Object { $_.Line -notmatch 'thirdparty|\\Qt\\|Windows Kits|MSVC\\' } |
-  ForEach-Object { ($_.Line -split ': warning ')[1].Substring(0,5) } |
-  Group-Object | Sort-Object Count -Descending | Format-Table Count,Name
-```
+Same procedure as last time: `docs/PACKAGE-Windows-Portable.md`, as adapted
+for the pixi build in `REVIEW_RESPONSE.md` ("Windows portable package"), with
+the 18 extra conda-forge DLLs. One change:
 
-For **real defects** (C4715, C4700, C4172, C4717, C4834, C4146, C4244/C4267 that
-affect an index or count), fix them and rerun `pixi run test`. Leave the
-conversion warnings for later, as on Linux (`-Wconversion`, 293 there).
+- **Sample data:** put `examples\SampleData.xlsx` in `sample-data\`, and do
+  **not** include `virtual-mixture.xlsx`. Lilly's review found that its
+  column names (`Calcium_µg/g`, `Nickelgg`, ...) differ from the example's.
 
-Go through `cppcheck.txt` the same way: fix real findings, and note false
-positives with `// cppcheck-suppress <id>` only where they are clearly wrong.
+Then the dependency walk, the restricted-token launch check, zip to
+`SedSAT3-1.1.8-windows-x64-portable.zip`, and the SHA-256. Update the SHA-256
+and size in `REVIEW_RESPONSE.md` ("Done on Windows, version 1.1.8") and in
+Section 7 of the code review letter. Regenerate the letter's `.docx`:
+`pixi run python docs/review/response-letter/tex2docx.py docs/review/response-letter/SedSAT3_code_review_response.tex docs/review/response-letter/SedSAT3_code_review_response.docx`.
 
-Then update the letter:
-1. In `docs/review/response-letter/SedSAT3_code_review_response.tex`, replace
-   the `\mine{Run on Windows: ...}` note in Section 7 with the outcome: that
-   pixi build/test/lint/cppcheck/warnings run, the MSVC `/W4` count by warning
-   number, and the cppcheck count and what was fixed.
-2. Add the same to `docs/review/REVIEW_RESPONSE.md` under "Compiler warnings
-   and static analysis".
-3. Rebuild the Word version (needs only Python):
-   `pixi run python docs/review/response-letter/tex2docx.py docs/review/response-letter/SedSAT3_code_review_response.tex docs/review/response-letter/SedSAT3_code_review_response.docx`.
-   The PDF needs LaTeX; if it isn't on Windows, leave the PDF for the Linux
-   machine.
+Then upload the new zip to the GitLab package registry in place of the
+earlier 1.1.8.
 
-## 4. The Visual Studio project (optional, only if you keep using it)
-
-`SedSat3.vcxproj` still links a prebuilt QXlsx from `C:\Projects\QXlsx\bin\Qt6`
-and includes `C:\Projects\QXlsxfromSassan\...`. Every other build compiles
-QXlsx from `thirdparty/QXlsx`. Choose one of:
-
-- **(a) Build from pixi/CMake from now on, and stop maintaining the vcxproj.**
-  Recommended: one build path, and the same one CI and Steve use.
-- **(b) Fix the vcxproj:** add the `thirdparty\QXlsx\QXlsx\source\*.cpp` files
-  (and moc for its headers), add `thirdparty\QXlsx\QXlsx\header` and the Qt
-  private header folders to the include path, remove the `C:\Projects\...`
-  paths and `QXlsxQt6*.lib`, then build Release x64.
-
-The vcxproj has already been updated for the other changes: the new and
-removed files, `excelimport.cpp`, `numericparsing.cpp`, the vendored
-QCustomPlot, and `/we4715`. It may still need small fixes; only an MSVC build
-will show.
-
-## 5. Portable Windows package for the reviewers
-
-Follow `docs/PACKAGE-Windows-Portable.md`, using the build from step 2 (or the
-vcxproj build):
-- `pixi run deploy-win` stages the Qt and numerical DLLs. Its DLL names are
-  Steve's (`gsl-28.dll`, `openblas.dll`, ...). Check them against
-  `.pixi\envs\default\Library\bin`.
-- An MSVC build with OpenMP needs **`vcomp140.dll`**, which `deploy-win` does
-  not copy. Take it from the VS redistributable folder (procedure, section 5).
-- Run `dumpbin /dependents` on the exe, the restricted-token launch check, and
-  the zip/SHA-256 steps as described.
-
-The package name is `SedSAT3-1.1.8-windows-x64-portable.zip`, unless Cara sets
-a different version.
-
-## 6. Commit, push, then the email
+## 5. Commit and push
 
 ```powershell
 git add -A
-git commit -m "Windows build: pixi results, MSVC /W4 and cppcheck fixes"
+git commit -m "Windows round 2: MSVC build of the domain review fixes, screenshots, 1.1.8 package rebuilt"
 git push origin review-fixes-oct2026:main      # GitHub
 git push usgs review-fixes-oct2026             # GitLab, updates merge request !4
 ```
 
 GitLab needs a personal access token with `write_repository` scope as the
-password (the account has 2FA).
+password.
 
-After that:
-- Regenerate the `.docx` (step 3).
-- Replace the attachment on the Gmail draft to Cara (cc Allen), "SedSAT3:
-  response letter to Steve's code review — items for you", then send it.
-- The red items in the letter are theirs to fill in.
+## 6. The emails (drafts in Gmail, not sent)
+
+- **To Lilly** (cc Cara, Allen), "SedSAT3: response to your domain review, and
+  the revised user's manual". Attach
+  `docs/review/response-domain-review/SedSAT3_domain_review_response.docx`
+  and `docs/manual/SedSat_User's_Manual/SedSAT3_User_Manual.pdf`. If you
+  retook the screenshots, attach the rebuilt PDF. If the new package is
+  uploaded, mention it.
+- **To Allen** (cc Cara), asking for the Sed_SAT 1.0 code. Probably not
+  needed: it is public at `https://code.usgs.gov/water/sed_sat`
+  (DOI 10.5066/F76Q1VBX). Delete the draft or reword it.
 
 ## Do not
 
@@ -171,3 +164,4 @@ After that:
 - Edit `thirdparty/`.
 - Rename serialized keys in the forms or project files; old projects and
   scripts must keep loading.
+- Raise the version: it stays 1.1.8.
