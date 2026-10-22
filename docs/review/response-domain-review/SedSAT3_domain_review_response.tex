@@ -91,7 +91,7 @@ red highlighting and axis titles, progress windows that stayed open, a chart
 crash on negative values, and distribution fitting. I reproduced every one of
 your crashes against the current code with the example data, and fixed those
 that remained. The changes made for your review are in four commits on the
-same branch: \commit{619f0a6}, \commit{d0acec7}, \commit{839772d} and the
+same branch: \commit{d7d8b92}, \commit{8708c20}, \commit{ae2e4d5} and the
 manual commits.
 
 \textbf{What has changed, in brief.}
@@ -173,7 +173,7 @@ analysis (Settings > Constituent Properties), or exclude the isotope.'' The
 manual says so where isotopes are set up (Section~2.1) and in Section~3.6.
 Unit test \code{fingerprinting\_isotopeBaseElementExcluded}.
 \end{response}
-\status{Fixed (\commit{619f0a6}).}
+\status{Fixed (\commit{d7d8b92}).}
 
 \begin{reviewer}{Review notes}
 Other Statistical Tools → Distribution Fitting.
@@ -197,7 +197,7 @@ source groups, as the two-way tool does, but its form has no group fields, so
 it failed on every setting. Fixed. Unit test
 \code{multiwayDiscriminantPower\_runs}.
 \end{response}
-\status{Fixed (\commit{619f0a6}).}
+\status{Fixed (\commit{d7d8b92}).}
 
 \begin{reviewer}{Review notes}
 Other Statistical Tools → Error Analysis; Other Statistical Tools → Source
@@ -209,7 +209,7 @@ they failed in your session for the reason given above (Calcium and N
 excluded). They now stop with the same message instead. While checking Error
 Analysis I also found that its frequency-distribution panel plotted only the
 first realization, a narrow spike. It now uses all realizations
-(\commit{d0acec7}).
+(\commit{8708c20}).
 \end{response}
 \status{Fixed.}
 
@@ -229,7 +229,7 @@ regression stopped the program (inside the GSL library) when a group had no
 more samples than regression coefficients. Such a group now gets a regression
 that corrects nothing.
 \end{response}
-\status{Fixed (\commit{619f0a6}).}
+\status{Fixed (\commit{d7d8b92}).}
 
 % =====================================================================
 \group{README}
@@ -381,7 +381,7 @@ changes:
           plotted as base-10 logarithms, which the axis title says.
 \end{itemize}
 \end{response}
-\status{Fixed (\commit{619f0a6}, \commit{d0acec7}).}
+\status{Fixed (\commit{d7d8b92}, \commit{8708c20}).}
 
 \begin{reviewer}{Review notes}
 Suggest adding User Manual section numbers to each step in the Description
@@ -390,7 +390,7 @@ field.
 \begin{response}
 Done. Each tool's description now ends with ``(User's manual, Section~N.)''.
 \end{response}
-\status{Done (\commit{839772d}).}
+\status{Done (\commit{ae2e4d5}).}
 
 % =====================================================================
 \group{Documentation}
@@ -467,7 +467,7 @@ program.}
 Version. Publication date. ``Missing'' (at the table of contents).
 \end{reviewer}
 \begin{response}
-The title page now gives the software version, 1.1.7, and the date as a
+The title page now gives the software version, 1.1.8, and the date as a
 placeholder until publication. The manual now also has a list of figures
 after the table of contents. \todo{Cara: confirm the version number and set
 the publication date.} I was not sure what ``missing'' at the table of
@@ -558,7 +558,7 @@ table. Removing Lead was tricky: typing No gave a checked box that became Yes.
 The manual now describes what happens: after import, the constituent properties
 table opens, and samples are chosen separately in Settings → Include/Exclude
 Samples. The ``Include all elements'' box now updates the table at once
-(\commit{619f0a6}). The \textit{Include in analysis} column is now a single
+(\commit{d7d8b92}). The \textit{Include in analysis} column is now a single
 click on the box, with no editor to type into. That was fixed in the code
 review work.
 \end{response}
@@ -605,7 +605,7 @@ does not allow for negative values.
 Correct. The data plot always used a logarithmic axis. It now uses a linear
 axis for a constituent with zero or negative values, and the manual says so.
 \end{response}
-\status{Fixed (\commit{619f0a6}).}
+\status{Fixed (\commit{d7d8b92}).}
 
 \begin{reviewer}{Choosing samples to be discarded}
 This did not automatically appear for me; I had to go to Settings and select
@@ -687,7 +687,7 @@ Done in the program and the manual.
           program's names.
 \end{itemize}
 \end{response}
-\status{Done (\commit{619f0a6}).}
+\status{Done (\commit{d7d8b92}).}
 
 \begin{reviewer}{Organic matter and particle size correction}
 Program closed when the plot box was clicked. Are the corrected values plotted
@@ -828,7 +828,7 @@ relevant results they should appear in step~4.
           eigenvectors of the selected constituents (panels 5 and 6).
 \end{itemize}
 \end{response}
-\status{Done (\commit{619f0a6}).}
+\status{Done (\commit{d7d8b92}).}
 
 \begin{reviewer}{Multi-way discriminant function analysis, Fig.~2.10}
 Figure needs updating, ellipses not present. What is the meaning of WB? Why do
@@ -849,7 +849,7 @@ USGS guidance. I see 2 WB\_Bank and no Pasture.
 \todo{Cara: if USGS has its own colour guidance for figures, please point me to
 it; I followed the Okabe--Ito palette.}
 \end{response}
-\status{Fixed (\commit{619f0a6}).}
+\status{Fixed (\commit{d7d8b92}).}
 
 \begin{reviewer}{Multi-way discriminant function analysis, Fig.~2.11}
 A confusion matrix would be a clearer output than this table. The goal is to
@@ -913,7 +913,7 @@ samples appear random, no convergence.
           guidance is now consistent (20\%).
 \end{itemize}
 \end{response}
-\status{Done (\commit{619f0a6}).}
+\status{Done (\commit{d7d8b92}).}
 
 \begin{reviewer}{Bayesian Chemical Mass Balance Analysis}
 The dashed lines from my run are far from the middle of the distribution, and in
@@ -974,7 +974,7 @@ analysis and should not be removed, possibly TOC as well.
           used for fingerprinting.
     \item The red text was the copy problem described above.
     \item D50 and TOC are no longer analysed by ANOVA, or by any tool that
-          tests or selects tracers (\commit{619f0a6}).
+          tests or selects tracers (\commit{d7d8b92}).
 \end{itemize}
 \end{response}
 \status{Fixed and documented.}
@@ -990,7 +990,7 @@ D50 and TOC are never tested or selected, and the \textit{Modify} option no
 longer changes them. Your scenario (losing the size data) can no longer
 happen.
 \end{response}
-\status{Fixed (\commit{619f0a6}).}
+\status{Fixed (\commit{d7d8b92}).}
 
 \begin{reviewer}{Two-way DFA}
 This is not on the list as ``Two-Way''; I assume this is one vs.\ one? x-axis
@@ -1077,7 +1077,7 @@ constituent, or tracer, not sample.
     \item The axis reads ``Constituent''.
 \end{itemize}
 \end{response}
-\status{Fixed (\commit{619f0a6}, \commit{839772d}).}
+\status{Fixed (\commit{d7d8b92}, \commit{ae2e4d5}).}
 
 \begin{reviewer}{Optimal Box-Cox parameters}
 X axis label should be changed. A zero line for the y-axis would make this plot

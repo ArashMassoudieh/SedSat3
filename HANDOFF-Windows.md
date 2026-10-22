@@ -143,7 +143,7 @@ vcxproj build):
 - Run `dumpbin /dependents` on the exe, the restricted-token launch check, and
   the zip/SHA-256 steps as described.
 
-The package name is `SedSAT3-1.1.7-windows-x64-portable.zip`, unless Cara sets
+The package name is `SedSAT3-1.1.8-windows-x64-portable.zip`, unless Cara sets
 a different version.
 
 ## 6. Commit, push, then the email

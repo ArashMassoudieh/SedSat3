@@ -136,14 +136,14 @@ reproduced against this branch with the example data; the response is
 
 | Finding | Commit | Test |
 |---|---|---|
-| Fingerprinting, batch, Bayesian, Error Analysis and Source Verification crashed when an isotope's base element was excluded; now a message | `619f0a6` | `unit:fingerprinting_isotopeBaseElementExcluded` |
-| Elements' discriminant power (multi-way) read group arguments its form lacks | `619f0a6` | `unit:multiwayDiscriminantPower_runs` |
-| Correlation matrix with the correction and "Use only selected elements" filtered out TOC before correcting | `619f0a6` | `unit:correlationMatrix_correctedWithSelectedElements` |
-| OM/size regression aborted (GSL) for a group with no more samples than coefficients | `619f0a6` | same test |
-| D50/TOC tested and selected as tracers by ANOVA, DFA, discriminant power, auto-select and bracketing; "Modify the included elements" excluded them | `619f0a6` | `regression` (baseline updated, below) |
-| Error Analysis histogram used only the first realization | `d0acec7` | — |
-| Log-normal K-S test on non-positive data drew nothing; now refused | `839772d` | — |
-| Charts: palette, axis titles and ranges, log axes below 1e-12, legends, DFA pair start; tools menu order and groups; Bayesian defaults 100,000/20,000; step 4 shows scores and eigenvectors | `619f0a6`, `d0acec7` | charts rendered offscreen and inspected |
+| Fingerprinting, batch, Bayesian, Error Analysis and Source Verification crashed when an isotope's base element was excluded; now a message | `d7d8b92` | `unit:fingerprinting_isotopeBaseElementExcluded` |
+| Elements' discriminant power (multi-way) read group arguments its form lacks | `d7d8b92` | `unit:multiwayDiscriminantPower_runs` |
+| Correlation matrix with the correction and "Use only selected elements" filtered out TOC before correcting | `d7d8b92` | `unit:correlationMatrix_correctedWithSelectedElements` |
+| OM/size regression aborted (GSL) for a group with no more samples than coefficients | `d7d8b92` | same test |
+| D50/TOC tested and selected as tracers by ANOVA, DFA, discriminant power, auto-select and bracketing; "Modify the included elements" excluded them | `d7d8b92` | `regression` (baseline updated, below) |
+| Error Analysis histogram used only the first realization | `8708c20` | — |
+| Log-normal K-S test on non-positive data drew nothing; now refused | `ae2e4d5` | — |
+| Charts: palette, axis titles and ranges, log axes below 1e-12, legends, DFA pair start; tools menu order and groups; Bayesian defaults 100,000/20,000; step 4 shows scores and eigenvectors | `d7d8b92`, `8708c20` | charts rendered offscreen and inspected |
 
 **Baseline change** (`properties.cmb` only; `Isotope_test.cmb` gives D50 and
 TOC the element role and is unchanged): D50 and TOC leave the ANOVA (steps
