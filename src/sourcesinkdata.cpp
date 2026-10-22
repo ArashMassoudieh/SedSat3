@@ -2963,6 +2963,26 @@ bool SourceSinkData::PerformRegressionVsOMAndSize(
         it->second.SetRegressionModels(om, particle_size, form, p_value_threshold);
     }
 
+    // Isotopes are not corrected by default, even when the regression is
+    // significant: their delta values depend on the relative proportions of
+    // organic matter, so a correction would bias them (as in Sed_SAT 1.0).
+    // The user can still choose to correct them in Settings > Organic
+    // Matter and Size Correction.
+    for (auto& [group_name, profile_set] : *this)
+    {
+        MultipleLinearRegressionSet* models = profile_set.GetRegressionModels();
+        if (models == nullptr)
+            continue;
+        for (const auto& [name, info] : element_information_)
+        {
+            if (info.Role != element_information::role::isotope || models->count(name) == 0)
+                continue;
+            MultipleLinearRegression& model = models->at(name);
+            for (size_t term = 0; term < model.GetIndependentVariableNames().size(); term++)
+                model.SetEffective(int(term), false);
+        }
+    }
+
     return true;
 }
 

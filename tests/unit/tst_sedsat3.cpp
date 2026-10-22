@@ -165,6 +165,7 @@ private slots:
     // Domain review (L. Gorman Sanisaca, October 2026)
     void fingerprinting_isotopeBaseElementExcluded();
     void fingerprinting_organicCarbonAsIsotopeBase();
+    void omSizeCorrection_isotopesNotCorrectedByDefault();
     void multiwayDiscriminantPower_runs();
     void correlationMatrix_correctedWithSelectedElements();
 
@@ -909,6 +910,27 @@ void SedSAT3Tests::fingerprinting_organicCarbonAsIsotopeBase()
             found = true;
         }
         QVERIFY(found);
+    }
+}
+
+void SedSAT3Tests::omSizeCorrection_isotopesNotCorrectedByDefault()
+{
+    // After the regressions, isotopes are not set to be corrected, whatever
+    // their p-values; elements keep the p-value rule
+    SourceSinkData data;
+    BuildIsotopeAndOMData(data);
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    QVERIFY(conductor.Execute("MLR", {{"Equation", "Linear"}, {"Organic Matter constituent", "TOC"},
+                                      {"Particle Size constituent", ""}, {"P-value threshold", "1.0"},
+                                      {"Use only selected samples", "false"}}));
+    for (const char* group : {"Agriculture", "Forest"})
+    {
+        MultipleLinearRegressionSet* models = data.GetSampleSet(group)->GetRegressionModels();
+        QVERIFY(models != nullptr && models->count("d13C") == 1 && models->count("Al") == 1);
+        QVERIFY(!models->at("d13C").Effective(0));
+        QVERIFY(models->at("Al").Effective(0));   // a threshold of 1 accepts any p-value
     }
 }
 
