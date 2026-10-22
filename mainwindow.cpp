@@ -533,7 +533,7 @@ void MainWindow::on_import_excel()
         QMessageBox::information(
             this,
             tr("Element Selection"),
-            tr("To exclude elements from analysis, double-click on an element and uncheck the box."),
+            tr("Set each constituent's type in this table. To exclude a constituent from the analysis, click its box in the 'Include in analysis' column.\n\nTo include or exclude samples, use Settings > Include/Exclude Samples."),
             QMessageBox::Ok
         );
 
@@ -824,10 +824,21 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
             }
 
             plotter->AddNonUniformScatter(extracted_data,i,8,Element_Name_Selected.toStdString());
+            // A log axis cannot show zero or negative values (e.g. delta 13C),
+            // which used to leave such a constituent's plot empty
+            bool all_positive = true;
+            for (const auto& [group, values] : extracted_data)
+                for (double value : values)
+                    if (!(value > 0))
+                        all_positive = false;
 #ifdef USE_QCHARTS
-			plotter->SetYAxisScaleType(ChartAxisScale::Logarithmic);
+            plotter->SetYAxisScaleType(all_positive ? ChartAxisScale::Logarithmic : ChartAxisScale::Normal);
 #else
-            plotter->SetYAxisScaleType(AxisScale::log);
+            plotter->SetYAxisScaleType(all_positive ? AxisScale::log : AxisScale::normal);
+#endif // USE_QCHARTS
+#ifdef USE_QCHARTS
+            plotter->SetXAxisLabel("Group");
+            plotter->SetYAxisLabel(Element_Name_Selected.toStdString());
 #endif // USE_QCHARTS
 
         }
@@ -843,6 +854,8 @@ void MainWindow::on_tree_selectionChanged(const QItemSelection &changed)
         plotter->AddScatters(extracted_data.sample_names,extracted_data.element_names, extracted_data.values);
 #ifdef USE_QCHARTS
         plotter->SetYAxisScaleType(ChartAxisScale::Logarithmic);
+        plotter->SetXAxisLabel("Constituent");
+        plotter->SetYAxisLabel("Value (log scale; zero and negative values not shown)");
 #else
         plotter->SetYAxisScaleType(AxisScale::log);
 #endif // USE_QCHARTS
@@ -867,26 +880,36 @@ void MainWindow::saveJson(const QJsonDocument &document, const QString &fileName
     jsonFile.write(document.toJson());
 }
 
+// A JSON object does not keep the order of its keys (QJsonObject sorts them),
+// so tools.json fixes the order with a prefix such as "03|"; the prefix is
+// not shown
+static QString ToolDisplayName(const QString& key)
+{
+    const int bar = key.indexOf('|');
+    return bar < 0 ? key : key.mid(bar + 1);
+}
+
 QStandardItem* MainWindow::ToQStandardItem(const QString& key, const QJsonObject& json)
 {
-    QStandardItem* standardItem = new QStandardItem(key);
+    QStandardItem* standardItem = new QStandardItem(ToolDisplayName(key));
 
     QStringList keys = json.keys();
     for (const QString& jsonKey : keys)
     {
+        const QString name = ToolDisplayName(jsonKey);
         if (json[jsonKey].isObject())
         {
             // Recursively create items for nested objects
             standardItem->appendRow(ToQStandardItem(jsonKey, json[jsonKey].toObject()));
-            standardItem->setToolTip(jsonKey);
+            standardItem->setToolTip(name);
         }
         else
         {
             // Create leaf items for values
-            QStandardItem* subItem = new ToolBoxItem(Data(), jsonKey);
+            QStandardItem* subItem = new ToolBoxItem(Data(), name);
             subItem->setData(json.value(jsonKey).toString(), Qt::UserRole);
             subItem->setData(json.value(jsonKey).toString(), Qt::UserRole + 1);
-            subItem->setToolTip(jsonKey);
+            subItem->setToolTip(name);
             standardItem->appendRow(subItem);
         }
     }

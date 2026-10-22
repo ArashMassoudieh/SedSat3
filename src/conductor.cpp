@@ -3,6 +3,7 @@
 
 #include "conductor.h"
 #include <algorithm>
+#include <set>
 #include "randomstream.h"
 #include "analysishost.h"
 #include "progressreporter.h"
@@ -24,6 +25,28 @@ bool Conductor::Execute(const string &command, const map<string,string>& argumen
     results.clear();
     if (!CheckNegativeElements(Data()))
         return false;
+
+    // Fingerprinting needs each included isotope's base element to turn the
+    // delta value into a concentration; without it the analysis used to crash
+    static const std::set<string> fingerprinting_commands = {
+        "Levenberg-Marquardt", "Levenberg-Marquardt-Batch",
+        "GA", "GA (fixed elemental contribution)", "GA (disregarding targets)",
+        "CMB Bayesian", "CMB Bayesian-Batch", "Test CMB Bayesian",
+        "Error_Analysis", "Source_Verify"};
+    if (fingerprinting_commands.count(command) > 0)
+    {
+        const vector<string> problems = Data()->IsotopesWithUnusableBaseElement();
+        if (!problems.empty())
+        {
+            string message;
+            for (const string& problem : problems)
+                message += problem + "\n";
+            message += "\nInclude the base element in the analysis (Settings > Constituent Properties), "
+                       "or exclude the isotope.";
+            host->ShowWarning(message);
+            return false;
+        }
+    }
 
 #ifdef SEDSAT3_ENABLE_GA
     if (command == "GA")
@@ -712,12 +735,10 @@ bool Conductor::ExecuteCorrelationMatrix(const std::map<std::string, std::string
     bool exclude_samples = (arguments.at("Use only selected samples") == "true");
     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
 
-    SourceSinkData transformed_data = Data()->CreateCorrectedAndFilteredDataset(
-        exclude_samples,
-        exclude_elements,
-        false
-    );
-
+    // Correct first, then filter: filtering drops the organic matter and size
+    // constituents the correction needs (with "Use only selected elements"
+    // the correction used to fail)
+    SourceSinkData transformed_data;
     if (arguments.at("OM and Size Correct based on target sample") != "")
     {
         if (Data()->OMandSizeConstituents()[0] == "" && Data()->OMandSizeConstituents()[1] == "")
@@ -725,10 +746,18 @@ bool Conductor::ExecuteCorrelationMatrix(const std::map<std::string, std::string
             host->ShowWarning("Perform Organic Matter and Size Correction first!\n");
             return false;
         }
-        transformed_data = transformed_data.CreateCorrectedDataset(
+        transformed_data = Data()->CreateCorrectedDataset(
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
+        ).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
+    }
+    else
+    {
+        transformed_data = Data()->CreateCorrectedAndFilteredDataset(
+            exclude_samples,
+            exclude_elements,
+            false
         );
     }
 
@@ -778,7 +807,7 @@ bool Conductor::ExecuteDFA(const std::map<std::string, std::string>& arguments)
         );
     }
 
-    transformed_data = transformed_data.CreateCorrectedAndFilteredDataset(
+    transformed_data = transformed_data.CreateTracerDataset(
         exclude_samples,
         exclude_elements,
         false
@@ -875,7 +904,7 @@ bool Conductor::ExecuteDFAOnevsRest(const std::map<std::string, std::string>& ar
         );
     }
 
-    transformed_data = transformed_data.CreateCorrectedAndFilteredDataset(
+    transformed_data = transformed_data.CreateTracerDataset(
         exclude_samples,
         exclude_elements,
         false
@@ -971,7 +1000,7 @@ bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
         );
     }
 
-    transformed_data = transformed_data.CreateCorrectedAndFilteredDataset(
+    transformed_data = transformed_data.CreateTracerDataset(
         exclude_samples,
         exclude_elements,
         false
@@ -1028,7 +1057,7 @@ bool Conductor::ExecuteDFAM(const std::map<std::string, std::string>& arguments)
 
     // Eigen vectors result (multiple vectors for multiway)
     ResultItem dfa_eigen_vectors;
-    dfa_eigen_vectors.SetName("Eigen vector");
+    dfa_eigen_vectors.SetName("Eigen vectors");
     dfa_eigen_vectors.SetType(result_type::vectorset);
     dfa_eigen_vectors.SetShowTable(true);
     dfa_eigen_vectors.SetShowGraph(true);
@@ -1072,11 +1101,11 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
+        ).CreateTracerDataset(exclude_samples, exclude_elements, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(
+        transformed_data = Data()->CreateTracerDataset(
             exclude_samples,
             exclude_elements,
             false
@@ -1166,11 +1195,11 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
+        ).CreateTracerDataset(exclude_samples, exclude_elements, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(
+        transformed_data = Data()->CreateTracerDataset(
             exclude_samples,
             exclude_elements,
             false
@@ -1200,6 +1229,7 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
     ResultItem sdfa_p_values;
     sdfa_p_values.SetName("Chi-squared P-Values");
     sdfa_p_values.SetType(result_type::vector);
+    sdfa_p_values.setXAxisTitle("Constituents, in the order added");
     sdfa_p_values.SetShowTable(true);
     sdfa_p_values.SetAbsoluteValue(true);
     sdfa_p_values.SetYAxisMode(yaxis_mode::log);
@@ -1211,6 +1241,7 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
     ResultItem sdfa_selected;
     sdfa_selected.SetName("Elements to be Selected");
     sdfa_selected.SetType(result_type::vector);
+    sdfa_selected.setXAxisTitle("Constituents, in the order added");
     sdfa_selected.SetShowTable(true);
     sdfa_selected.SetAbsoluteValue(true);
     sdfa_selected.SetYAxisMode(yaxis_mode::log);
@@ -1237,6 +1268,7 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
     ResultItem sdfa_wilks_lambda;
     sdfa_wilks_lambda.SetName("Wilks' Lambda");
     sdfa_wilks_lambda.SetType(result_type::vector);
+    sdfa_wilks_lambda.setXAxisTitle("Constituents, in the order added");
     sdfa_wilks_lambda.SetShowTable(true);
     sdfa_wilks_lambda.SetAbsoluteValue(true);
     sdfa_wilks_lambda.SetYAxisMode(yaxis_mode::log);
@@ -1249,12 +1281,44 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
     ResultItem sdfa_f_test_p_value;
     sdfa_f_test_p_value.SetName("F-test P-Value");
     sdfa_f_test_p_value.SetType(result_type::vector);
+    sdfa_f_test_p_value.setXAxisTitle("Constituents, in the order added");
     sdfa_f_test_p_value.SetShowTable(true);
     sdfa_f_test_p_value.SetAbsoluteValue(true);
     sdfa_f_test_p_value.SetYAxisMode(yaxis_mode::log);
     sdfa_f_test_p_value.SetYLimit(_range::high, 1);
     sdfa_f_test_p_value.SetResult(f_test_p_value);
     results.Append(sdfa_f_test_p_value);
+
+    // Discriminant scores and eigenvectors for the selected constituents (the
+    // multi-way DFA of Other Statistical Tools, run on this step's selection)
+    if (selected.size() >= 2)
+    {
+        SourceSinkData selected_data = transformed_data;
+        selected_data.IncludeExcludeElementsBasedOn(selected);
+        selected_data = selected_data.CreateTracerDataset(false, true, false);
+        DFA_result selected_dfa = selected_data.DiscriminantFunctionAnalysis();
+        if (selected_dfa.eigen_vectors.size() > 0)
+        {
+            ResultItem dfa_projected;
+            dfa_projected.SetName("Multiway Projected Elemental Profiles (selected constituents)");
+            dfa_projected.SetType(result_type::dfa_vectorsetset);
+            dfa_projected.SetShowTable(true);
+            dfa_projected.SetShowGraph(true);
+            dfa_projected.SetYAxisMode(yaxis_mode::normal);
+            dfa_projected.SetResult(new CMBVectorSetSet(selected_dfa.multi_projected));
+            results.Append(dfa_projected);
+
+            ResultItem dfa_eigen_vectors;
+            dfa_eigen_vectors.SetName("Eigen vectors (selected constituents)");
+            dfa_eigen_vectors.SetType(result_type::vectorset);
+            dfa_eigen_vectors.SetShowTable(true);
+            dfa_eigen_vectors.SetShowGraph(true);
+            dfa_eigen_vectors.SetYAxisMode(yaxis_mode::normal);
+            dfa_eigen_vectors.setYAxisTitle("Weight");
+            dfa_eigen_vectors.SetResult(new CMBVectorSet(selected_dfa.eigen_vectors));
+            results.Append(dfa_eigen_vectors);
+        }
+    }
 
     return true;
 }
@@ -1282,11 +1346,11 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
+        ).CreateTracerDataset(exclude_samples, exclude_elements, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(
+        transformed_data = Data()->CreateTracerDataset(
             exclude_samples,
             exclude_elements,
             false
@@ -1734,7 +1798,7 @@ bool Conductor::ExecuteBracketingAnalysis(const std::map<std::string, std::strin
     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
     bool correct_based_on_size_and_organic_matter = (arguments.at("Correct based on size and organic matter") == "true");
 
-    SourceSinkData transformed_data = Data()->CreateCorrectedAndFilteredDataset(
+    SourceSinkData transformed_data = Data()->CreateTracerDataset(
         exclude_samples,
         exclude_elements,
         correct_based_on_size_and_organic_matter,
@@ -1882,11 +1946,11 @@ bool Conductor::ExecuteEDP(const std::map<std::string, std::string>& arguments)
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(exclude_samples, false, false);
+        ).CreateTracerDataset(exclude_samples, false, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false, false);
+        transformed_data = Data()->CreateTracerDataset(exclude_samples, false, false);
     }
 
     if (!CheckNegativeElements(&transformed_data))
@@ -1990,11 +2054,11 @@ bool Conductor::ExecuteEDPM(const std::map<std::string, std::string>& arguments)
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(exclude_samples, false, false);
+        ).CreateTracerDataset(exclude_samples, false, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, false, false);
+        transformed_data = Data()->CreateTracerDataset(exclude_samples, false, false);
     }
 
     if (!CheckNegativeElements(&transformed_data))
@@ -2005,9 +2069,9 @@ bool Conductor::ExecuteEDPM(const std::map<std::string, std::string>& arguments)
         transformed_data = BoxCoxTransformedWithReport(transformed_data);
     }
 
-    results.SetName("Multi-way element discriminant power between '" +
-        arguments.at("Source/Target group I") + "' and '" +
-        arguments.at("Source/Target group II") + "'");
+    // The multi-way form has no group arguments (it used to read two that do
+    // not exist, which closed the program)
+    results.SetName("Multi-way element discriminant power");
 
     // Multi-way discriminant difference to standard deviation ratio
     ResultItem edp_result_std;
@@ -2088,11 +2152,11 @@ bool Conductor::ExecuteANOVA(const std::map<std::string, std::string>& arguments
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
+        ).CreateTracerDataset(exclude_samples, exclude_elements, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(exclude_samples, exclude_elements, false);
+        transformed_data = Data()->CreateTracerDataset(exclude_samples, exclude_elements, false);
     }
 
     if (!CheckNegativeElements(&transformed_data))
@@ -2275,11 +2339,11 @@ bool Conductor::ExecuteAutoSelect(const std::map<std::string, std::string>& argu
             arguments.at("OM and Size Correct based on target sample"),
             true,
             Data()->GetElementInformation()
-        ).CreateCorrectedAndFilteredDataset(true, false, false);
+        ).CreateTracerDataset(true, false, false);
     }
     else
     {
-        transformed_data = Data()->CreateCorrectedAndFilteredDataset(true, false, false);
+        transformed_data = Data()->CreateTracerDataset(true, false, false);
     }
 
     if (!CheckNegativeElements(&transformed_data))

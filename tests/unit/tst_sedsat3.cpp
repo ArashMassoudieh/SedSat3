@@ -162,6 +162,11 @@ private slots:
     void distribution_uniformCurveIsFinite();
     void interface_copiesKeepNotes();
 
+    // Domain review (L. Gorman Sanisaca, October 2026)
+    void fingerprinting_isotopeBaseElementExcluded();
+    void multiwayDiscriminantPower_runs();
+    void correlationMatrix_correctedWithSelectedElements();
+
     // ---------- Excel import (reviewer test plan, Tests 4a and 4b) ----------
     void excelImport();
 };
@@ -800,6 +805,111 @@ void SedSAT3Tests::interface_copiesKeepNotes()
     Elemental_Profile assigned;
     assigned = profile;
     QCOMPARE(assigned.GetNotes(), profile.GetNotes());
+}
+
+// =====================================================================
+// Domain review (L. Gorman Sanisaca, October 2026)
+// =====================================================================
+
+namespace {
+
+/// Two sources and a target with an isotope (d13C, base element Fe) and an
+/// organic matter constituent (TOC)
+void BuildIsotopeAndOMData(SourceSinkData& data)
+{
+    const GroupData groups = {
+        {"Agriculture", {{"A1", {{"Al", 8.1}, {"Fe", 4.0}, {"d13C", -25.1}, {"TOC", 1.2}}},
+                         {"A2", {{"Al", 7.6}, {"Fe", 4.4}, {"d13C", -25.6}, {"TOC", 1.6}}},
+                         {"A3", {{"Al", 8.9}, {"Fe", 3.7}, {"d13C", -24.8}, {"TOC", 1.1}}},
+                         {"A4", {{"Al", 8.4}, {"Fe", 4.1}, {"d13C", -25.3}, {"TOC", 1.4}}}}},
+        {"Forest", {{"F1", {{"Al", 5.2}, {"Fe", 2.9}, {"d13C", -27.0}, {"TOC", 3.1}}},
+                    {"F2", {{"Al", 5.9}, {"Fe", 3.1}, {"d13C", -27.4}, {"TOC", 2.7}}},
+                    {"F3", {{"Al", 4.8}, {"Fe", 2.6}, {"d13C", -26.8}, {"TOC", 3.5}}},
+                    {"F4", {{"Al", 5.5}, {"Fe", 3.3}, {"d13C", -27.2}, {"TOC", 2.9}}}}},
+        {"Mixture", {{"M1", {{"Al", 6.8}, {"Fe", 3.5}, {"d13C", -26.0}, {"TOC", 2.0}}}}},
+    };
+    BuildData(data, groups, "Mixture");
+    element_information* isotope = data.GetElementInformation("d13C");
+    isotope->Role = element_information::role::isotope;
+    isotope->base_element = "Fe";
+    isotope->standard_ratio = 0.011;
+    data.GetElementInformation("TOC")->Role = element_information::role::organic_carbon;
+    data.PopulateConstituentOrders();
+}
+
+} // namespace
+
+void SedSAT3Tests::fingerprinting_isotopeBaseElementExcluded()
+{
+    // Excluding an isotope's base element (as the element selection steps
+    // can) used to crash fingerprinting; it is now refused with a message
+    const std::vector<std::pair<std::string, std::map<std::string, std::string>>> commands = {
+        {"Levenberg-Marquardt", {{"Sample", "M1"}, {"Softmax transformation", "true"},
+                                 {"Apply size and organic matter correction", "false"}}},
+        {"Levenberg-Marquardt-Batch", {{"Softmax transformation", "true"},
+                                       {"Apply size and organic matter correction", "false"}}},
+        {"Error_Analysis", {{"Sample", "M1"}, {"Softmax transformation", "true"},
+                            {"Apply size and organic matter correction", "false"},
+                            {"Pecentage eliminated", "25"}, {"Number of realizations", "5"},
+                            {"Random seed", "1"}}},
+        {"Source_Verify", {{"Source Group", "Forest"}, {"Softmax transformation", "true"},
+                           {"Apply size and organic matter correction", "false"}}},
+    };
+    for (const auto& [command, arguments] : commands)
+    {
+        SourceSinkData data;
+        BuildIsotopeAndOMData(data);
+        data.GetElementInformation("Fe")->include_in_analysis = false;
+        RecordingHost host;
+        Conductor conductor(&host);
+        conductor.SetData(&data);
+        QVERIFY2(!conductor.Execute(command, arguments), command.c_str());
+        QVERIFY2(host.Warned("base element 'Fe' of isotope 'd13C'"), command.c_str());
+    }
+
+    // With the base element included, Levenberg-Marquardt runs
+    SourceSinkData data;
+    BuildIsotopeAndOMData(data);
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    QVERIFY(conductor.Execute("Levenberg-Marquardt", commands[0].second));
+}
+
+void SedSAT3Tests::multiwayDiscriminantPower_runs()
+{
+    // The multi-way tool read two group arguments its form does not have,
+    // which closed the program
+    SourceSinkData data;
+    BuildData(data, PositiveGroups(), "Mixture");
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    const std::map<std::string, std::string> arguments = {
+        {"Box-cox transformation", "false"}, {"Include target samples", "false"},
+        {"OM and Size Correct based on target sample", ""}, {"P-value threshold", "0.05"},
+        {"Use only selected samples", "false"}};
+    QVERIFY(conductor.Execute("EDPM", arguments));
+    QVERIFY(ResultsJson(conductor).size() >= 3);
+}
+
+void SedSAT3Tests::correlationMatrix_correctedWithSelectedElements()
+{
+    // With "Use only selected elements", the correlation matrix filtered out
+    // the organic matter constituent before the correction that needs it
+    SourceSinkData data;
+    BuildIsotopeAndOMData(data);
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    QVERIFY(conductor.Execute("MLR", {{"Equation", "Linear"}, {"Organic Matter constituent", "TOC"},
+                                      {"Particle Size constituent", ""}, {"P-value threshold", "0.05"},
+                                      {"Use only selected samples", "false"}}));
+    data.GetElementInformation("TOC")->include_in_analysis = false;
+    QVERIFY(conductor.Execute("CorMat", {{"Source/Target group", "Forest"},
+                                         {"OM and Size Correct based on target sample", "M1"},
+                                         {"Threshold", "0.75"}, {"Use only selected elements", "true"},
+                                         {"Use only selected samples", "true"}}));
 }
 
 // =====================================================================

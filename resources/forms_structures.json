@@ -405,7 +405,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+   			"default": "This tool performs forward stepwise discriminant function analysis among all source groups (multi-way). Starting from the constituent that best separates the groups, it adds one constituent at a time and reports the chi-squared p-value, Wilks' lambda and F-test p-value after each addition. The constituents up to the minimum p-value are the ones selected. <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included." 
 		},
 		"Modify the included elements based on the results": {
 				"type": "checkBox",
@@ -492,13 +492,13 @@
 		},
 		"Number of samples": {
 			"type": "spinBox",
-			"default": "1000",
+			"default": "100000",
 			"maximum": "200000",
 			"minimum": "1000"
 		},
 		"Samples to be discarded (burnout)": {
 			"type": "spinBox",
-			"default": "100",
+			"default": "20000",
 			"maximum": "50000",
 			"minimum": "100"
 		},
@@ -534,13 +534,13 @@
 		},
 		"Number of samples": {
 			"type": "spinBox",
-			"default": "1000",
+			"default": "100000",
 			"maximum": "200000",
 			"minimum": "1000"
 		},
 		"Samples to be discarded (burnout)": {
 			"type": "spinBox",
-			"default": "100",
+			"default": "20000",
 			"maximum": "50000",
 			"minimum": "100"
 		},
@@ -577,13 +577,13 @@
 		},
 		"Number of samples": {
 			"type": "spinBox",
-			"default": "1000",
+			"default": "100000",
 			"maximum": "200000",
 			"minimum": "1000"
 		},
 		"Samples to be discarded (burnout)": {
 			"type": "spinBox",
-			"default": "100",
+			"default": "20000",
 			"maximum": "20000",
 			"minimum": "100"
 		},
@@ -794,7 +794,7 @@
 		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs analysis of variance. The resulting p-value indicates the power of a certain element in discriminating between all source groups."
+   			"default": "This tool performs analysis of variance. The resulting p-value indicates the power of a certain element in discriminating between all source groups. <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included."
 		}
  	},
  	"Error_Analysis":
@@ -865,7 +865,7 @@
 		},
     		"Description": {
     			"type": "Description",
-    			"default": "The <b>Auto-select</b> tool selects a minimum number of elements with discriminatory power to differenciate between all source pair combinations. It performs a <i>t-test</i> between each pair of source groups and select the elements with the lowest p-values from each pair. The number of elements choosen from each pair is indicated in the box labeled 'Number of elements from each pair'" 
+    			"default": "The <b>Auto-select</b> tool selects a minimum number of elements with discriminatory power to differenciate between all source pair combinations. It performs a <i>t-test</i> between each pair of source groups and select the elements with the lowest p-values from each pair. The number of elements choosen from each pair is indicated in the box labeled 'Number of elements from each pair' <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included." 
     		},
     		"Modify the included elements based on the results": {
 				"type": "checkBox",

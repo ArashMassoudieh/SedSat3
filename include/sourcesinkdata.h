@@ -240,6 +240,22 @@ public:
     ) const;
 
     /**
+     * @brief As CreateCorrectedAndFilteredDataset, keeping only the tracers
+     *
+     * Elements and isotopes only: particle size, organic matter and excluded
+     * constituents are dropped whatever @p exclude_elements says. Used by the
+     * tools that test or select tracers (ANOVA, DFA, discriminant power,
+     * auto-select, bracketing), where D50 or TOC must not be tested,
+     * selected or removed as if they were tracers.
+     */
+    SourceSinkData CreateTracerDataset(
+        bool exclude_samples,
+        bool exclude_elements,
+        bool omnsizecorrect,
+        const string& target = ""
+    ) const;
+
+    /**
      * @brief Extract only chemical elements (and optionally isotopes)
      *
      * Creates a new SourceSinkData containing only elements with role
@@ -1594,6 +1610,17 @@ public:
      * @note Only includes isotopes where include_in_analysis = true
      */
     vector<string> IsotopesToBeUsedInCMB();
+
+    /**
+     * @brief Lists the isotopes included in the analysis whose base element cannot be used
+     *
+     * Fingerprinting converts an isotope's delta value to a concentration with
+     * the concentration of its base element, so the base element must exist,
+     * be an element, and be included in the analysis.
+     *
+     * @return One message per isotope that fails; empty when all can be used
+     */
+    vector<string> IsotopesWithUnusableBaseElement() const;
 
     /**
      * @brief Populates all element ordering vectors used throughout CMB analysis

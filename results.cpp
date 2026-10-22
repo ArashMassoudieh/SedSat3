@@ -291,6 +291,21 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(ftestpvalue);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Eigen vectors"))
+        {
+            // One eigenvector per source group (multi-way DFA)
+            CMBVectorSet* eigenvectors = new CMBVectorSet();
+            eigenvectors->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(true);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(true);
+            res_item.SetType(result_type::vectorset);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(eigenvectors);
+            operator[](key.toStdString()) = res_item;
+        }
         else if (key.contains("Eigen vector"))
         {
             CMBVector* eigenvector = new CMBVector();

@@ -131,12 +131,74 @@ bool GeneralChart::Plot(ResultItem* res)
     return false; 
 }
 
+// Rounds down to a multiple of rounding_value. It used to round to the
+// nearest multiple, so an axis could start above the smallest value and cut
+// points off the plot.
 double roundDown(double a, double rounding_value) {
-    if (a >= 0)
-        return round(a/rounding_value)*rounding_value;
-    else
-        return -round(-a/rounding_value+1)*rounding_value;
+    return std::floor(a/rounding_value)*rounding_value;
+}
 
+// Colour-blind-safe palette (Okabe and Ito), blue first; yellow last, as it
+// shows least on white
+static const QColor series_palette[] = {
+    QColor(0, 114, 178), QColor(230, 159, 0), QColor(0, 158, 115), QColor(213, 94, 0),
+    QColor(204, 121, 167), QColor(86, 180, 233), QColor(0, 0, 0), QColor(240, 228, 66)};
+
+// The same series name keeps the same colour in this window (e.g. a source
+// group across the DFA pairs)
+QColor GeneralChart::SeriesColor(const QString& name)
+{
+    auto it = series_colors.find(name);
+    if (it == series_colors.end())
+        it = series_colors.insert(name, series_palette[series_colors.size() % std::size(series_palette)]);
+    return it.value();
+}
+
+// Axis titles for plots with one category per constituent. The default x
+// title of a result is "Sample" and the default y title "Value"; neither
+// describes these plots.
+QString GeneralChart::ConstituentAxisTitle() const
+{
+    const QString title = QString::fromStdString(result_item->XAxisTitle());
+    return (title.isEmpty() || title == "Sample") ? QString("Constituent") : title;
+}
+
+QString GeneralChart::ValueAxisTitle(const QString& fallback) const
+{
+    const QString title = QString::fromStdString(result_item->YAxisTitle());
+    if (!title.isEmpty() && title != "Value")
+        return title;
+    return fallback.isEmpty() ? QString::fromStdString(result_item->Name()) : fallback;
+}
+
+// Sets a log axis to whole decades around [low, high], starting one decade
+// below the smallest value so its bar or point is drawn (at the bottom of the
+// axis it had no height). Qt Charts draws no axis at all over a very wide
+// range (p-values reach 1e-40), so beyond ten decades the labels go every
+// n-th decade.
+static void SetLogRange(QLogValueAxis* axis, double low, double high)
+{
+    if (!(low > 0) || !(high > 0) || !std::isfinite(low) || !std::isfinite(high))
+        return;
+    int low_exponent = int(std::ceil(std::log10(low))) - 1;
+    int high_exponent = int(std::floor(std::log10(high))) + 1;
+    const int step = std::max(1, int(std::ceil((high_exponent - low_exponent) / 10.0)));
+    low_exponent = int(std::floor(double(low_exponent) / step)) * step;
+    high_exponent = int(std::ceil(double(high_exponent) / step)) * step;
+    axis->setBase(std::pow(10.0, step));
+    axis->setRange(std::pow(10.0, low_exponent), std::pow(10.0, high_exponent));
+    axis->setMinorTickCount(step == 1 ? 8 : 0);
+}
+
+// Widens [low, high] by a fraction of its span so points at the extremes are
+// drawn inside the plot, not on its edge
+static void PadRange(double& low, double& high, double fraction = 0.05)
+{
+    double span = high - low;
+    if (!(span > 0))
+        span = std::max(std::fabs(high), 1.0);
+    low -= span * fraction;
+    high += span * fraction;
 }
 
 bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &/*title*/)
@@ -160,6 +222,16 @@ bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &/*t
     ui->horizontalLayout->addWidget(source1_combo);
     ui->horizontalLayout->addWidget(source2_label);
     ui->horizontalLayout->addWidget(source2_combo);
+    // Fix each group's colour for every pair, and start on two different
+    // groups (both used to start on the first, plotting it against itself)
+    for (int i = 0; i < source1_combo->count(); i++)
+        SeriesColor(source1_combo->itemText(i));
+    if (source2_combo->count() > 1)
+    {
+        source2_combo->blockSignals(true);
+        source2_combo->setCurrentIndex(1);
+        source2_combo->blockSignals(false);
+    }
     onDFAPairChanged(source1_combo->currentIndex());
     return true;
 }
@@ -196,8 +268,7 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         categories << QString::fromStdString(element_names[i]);
 
     axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
+    axisX->setTitleText(ConstituentAxisTitle());
     QLogValueAxis* axisYLog = nullptr;
     QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
@@ -206,29 +277,48 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
         profile_min = profile->abs().min();
     else
         profile_min = profile->min();
+    // Qt's log axis treats values below about 1e-12 as zero and then draws
+    // no axis; such values (p-values reach 1e-40) are shown as log10 on a
+    // linear axis instead
+    const bool plot_log10 = _log && profile_min > 0 && profile_min < 1e-12;
+    if (plot_log10)
+        _log = false;
     if (profile_min>0 && _log)
     {
         axisYLog = new QLogValueAxis();
         if (result_item->AbsValue())
-            axisYLog->setRange(pow(10, roundDown(log(profile->abs().min())/log(10.0))), pow(10, int(log(profile->abs().max()) / log(10.0))+1));
+            SetLogRange(axisYLog, profile->abs().min(), profile->abs().max());
         else
-            axisYLog->setRange(pow(10, roundDown(log(profile->min())/log(10.0))), pow(10, int(log(profile->max()) / log(10.0))+1));
+            SetLogRange(axisYLog, profile->min(), profile->max());
         axisYLog->setLabelFormat("%g");
-        axisYLog->setMinorTickCount(5);
-        axisYLog->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
+        axisYLog->setTitleText(ValueAxisTitle());
         chart->addAxis(axisYLog, Qt::AlignLeft);
         _log = true;
     }
     else
     {
         axisYNormal = new QValueAxis();
-        if (result_item->AbsValue())
+        if (plot_log10)
+        {
+            const double low = std::log10(profile_min);
+            const double high = std::log10(result_item->AbsValue() ? profile->abs().max() : profile->max());
+            axisYNormal->setRange(std::floor(low) - 1, std::ceil(high));
+        }
+        else if (result_item->AbsValue())
             axisYNormal->setRange(roundDown(profile->abs().min()*10.0)/10, roundDown((profile->abs().max()+0.1)*10.0)/10);
         else
             axisYNormal->setRange(roundDown(profile->min()*10.0)/10, roundDown((profile->max()+0.1)*10.0)/10);
-        axisYNormal->setLabelFormat("%f");
+        axisYNormal->setLabelFormat("%g");
         axisYNormal->setMinorTickCount(5);
-        axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
+        // A grid line through zero, so positive and negative bars (e.g. the
+        // Box-Cox parameters) read against it
+        if (axisYNormal->min() < 0 && axisYNormal->max() > 0)
+        {
+            axisYNormal->setTickType(QValueAxis::TicksDynamic);
+            axisYNormal->setTickAnchor(0);
+            axisYNormal->setTickInterval(std::pow(10.0, std::floor(std::log10(axisYNormal->max() - axisYNormal->min())))/2.0);
+        }
+        axisYNormal->setTitleText(plot_log10 ? "log10(" + ValueAxisTitle() + ")" : ValueAxisTitle());
         chart->addAxis(axisYNormal, Qt::AlignLeft);
         _log = false;
     }
@@ -255,10 +345,8 @@ bool GeneralChart::PlotVector(CMBVector *profile, const QString &title)
 
     for (int i=0; i<profile->num; i++)
     {
-        if (result_item->AbsValue())
-            barset->append(fabs(profile->at(i)));
-        else
-            barset->append(profile->at(i));
+        const double value = result_item->AbsValue() ? fabs(profile->at(i)) : profile->at(i);
+        barset->append(plot_log10 ? std::log10(value) : value);
         counter++;
     }
     series->append(barset);
@@ -293,9 +381,8 @@ bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &/*title*/)
     if (matrix_min>0 && _log)
     {
         axisYLog = new QLogValueAxis();
-        axisYLog->setRange(pow(10, roundDown(log(matrix_min)/log(10.0))), pow(10, int(log(matrix->max()) / log(10.0))+1));
+        SetLogRange(axisYLog, matrix_min, matrix->max());
         axisYLog->setLabelFormat("%g");
-        axisYLog->setMinorTickCount(5);
         chart->addAxis(axisYLog, Qt::AlignLeft);
         _log = true;
     }
@@ -325,6 +412,7 @@ bool GeneralChart::PlotMatrix(CMBMatrix *matrix, const QString &/*title*/)
 
         double counter = 0.5;
         QBarSet *barset = new QBarSet(QString::fromStdString(matrix->RowLabel(i)));
+        barset->setColor(SeriesColor(barset->label()));
         QPen pen;
         pen.setWidth(2);
         barset->setPen(pen);
@@ -355,27 +443,30 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
         axisX->append(QString::fromStdString(element_names[i]),double(i+1));
 
 
+    axisX->setTitleText(ConstituentAxisTitle());
+
     QLogValueAxis* axisYLog = nullptr;
     QValueAxis* axisYNormal = nullptr;
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     if (profile_sets->GetMinimum()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
-        axisYLog->setRange(pow(10, roundDown(log(profile_sets->GetMinimum())/log(10.0))), pow(10, int(log(profile_sets->GetMaximum()) / log(10.0))+1));
+        SetLogRange(axisYLog, profile_sets->GetMinimum(), profile_sets->GetMaximum());
         axisYLog->setLabelFormat("%g");
-        axisYLog->setMinorTickCount(5);
+        axisYLog->setTitleText(ValueAxisTitle("Value"));
         chart->addAxis(axisYLog, Qt::AlignLeft);
         _log = true;
     }
     else
     {
         axisYNormal = new QValueAxis();
-        if (result_item->YLimit(_range::high)==0)
-            axisYNormal->setRange(roundDown(profile_sets->GetMinimum()), roundDown(profile_sets->GetMaximum()+1));
-        else
-            axisYNormal->setRange(roundDown(profile_sets->GetMinimum()), result_item->YLimit(_range::high));
+        double low = profile_sets->GetMinimum();
+        double high = result_item->YLimit(_range::high)==0 ? profile_sets->GetMaximum() : result_item->YLimit(_range::high);
+        PadRange(low, high);
+        axisYNormal->setRange(low, high);
         axisYNormal->setLabelFormat("%g");
         axisYNormal->setMinorTickCount(5);
+        axisYNormal->setTitleText(ValueAxisTitle("Value"));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
         // A linear axis was built, so the series must attach to it. PlotVector
         // already does this; without it, data whose minimum is not positive
@@ -391,6 +482,7 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
         QScatterSeries* series = new QScatterSeries();
         chart->addSeries(series);
         series->setName(QString::fromStdString(it->first));
+        series->setColor(SeriesColor(series->name()));
         series->attachAxis(axisX);
         if (_log)
             series->attachAxis(axisYLog);
@@ -421,7 +513,8 @@ bool GeneralChart::PlotContribution(Contribution* contributions, const QString &
 
     chart->addSeries(series);
     for(auto slice : series->slices())
-    {   slice->setLabel(QString("%1%").arg(100*slice->percentage(), 0, 'f', 1));
+    {   slice->setColor(SeriesColor(slice->label()));
+        slice->setLabel(QString("%1%").arg(100*slice->percentage(), 0, 'f', 1));
         slice->setLabelVisible();
 
     }
@@ -451,28 +544,27 @@ bool GeneralChart::PlotPredictedConcentration(Elemental_Profile* profile_set, co
 
     QLogValueAxis* axisYLog = nullptr;
     QValueAxis* axisYNormal = nullptr;
-    axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
+    axisX->setTitleText(ConstituentAxisTitle());
     bool _log = (result_item->YAxisMode()==yaxis_mode::log?true:false);
     if (profile_set->GetMinimum()>0 && _log)
     {
         axisYLog = new QLogValueAxis();
-        axisYLog->setRange(pow(10, roundDown(log(profile_set->GetMinimum())/log(10.0))), pow(10, int(log(profile_set->GetMaximum()) / log(10.0))+1));
+        SetLogRange(axisYLog, profile_set->GetMinimum(), profile_set->GetMaximum());
         axisYLog->setLabelFormat("%g");
-        axisYLog->setMinorTickCount(5);
-        axisYLog->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
+        axisYLog->setTitleText(ValueAxisTitle("Value"));
         chart->addAxis(axisYLog, Qt::AlignLeft);
         _log = true;
     }
     else
     {
         axisYNormal = new QValueAxis();
-        if (result_item->YLimit(_range::high)==0)
-			axisYNormal->setRange(roundDown(profile_set->GetMinimum()), roundDown(profile_set->GetMaximum()+1));
-        else
-            axisYNormal->setRange(roundDown(profile_set->GetMinimum()), result_item->YLimit(_range::low));
-        axisYNormal->setLabelFormat("%f");
+        double low = profile_set->GetMinimum();
+        double high = result_item->YLimit(_range::high)==0 ? profile_set->GetMaximum() : result_item->YLimit(_range::high);
+        PadRange(low, high);
+        axisYNormal->setRange(low, high);
+        axisYNormal->setLabelFormat("%g");
         axisYNormal->setMinorTickCount(5);
-        axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
+        axisYNormal->setTitleText(ValueAxisTitle("Value"));
         chart->addAxis(axisYNormal, Qt::AlignLeft);
         // A linear axis was built, so the series must attach to it. PlotVector
         // already does this; without it, data whose minimum is not positive
@@ -626,7 +718,7 @@ void GeneralChart::onDFAPairChanged(int /*pair_id*/)
     // qDebug()<<source1_combo->currentText();
     // qDebug()<<source2_combo->currentText();
     if (source1_combo->currentText()!="" && source2_combo->currentText()!="")
-        PlotScatter(&vectorset->at(source1_combo->currentText().toStdString()),&vectorset->at(source2_combo->currentText().toStdString()), "WB_" + source1_combo->currentText(), "WB_" + source2_combo->currentText() );
+        PlotScatter(&vectorset->at(source1_combo->currentText().toStdString()),&vectorset->at(source2_combo->currentText().toStdString()), "Discriminant score, " + source1_combo->currentText() + " vs. the rest", "Discriminant score, " + source2_combo->currentText() + " vs. the rest");
 }
 
 void GeneralChart::onMCMCVariableChanged(int i)
@@ -733,7 +825,10 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
         }
     }
 
-    axisX->setRange(CVector(mlr->IndependentData(independent_var.toStdString())).min(), CVector(mlr->IndependentData(independent_var.toStdString())).max());
+    double x_low = CVector(mlr->IndependentData(independent_var.toStdString())).min();
+    double x_high = CVector(mlr->IndependentData(independent_var.toStdString())).max();
+    PadRange(x_low, x_high);
+    axisX->setRange(x_low, x_high);
     axisX->setTitleText(independent_var);
 
     //axisYNormal->setLabelFormat("%f");
@@ -781,7 +876,10 @@ bool GeneralChart::PlotRegression(MultipleLinearRegression *mlr,const QString& i
     lineseries->attachAxis(axisX);
     lineseries->attachAxis(axisYNormal);
     lineseries->setName("Regression");
-    axisYNormal->setRange(std::min(std::min(CVector(mlr->DependentData()).min(),y_min_val),y_max_val),std::max(std::max(CVector(mlr->DependentData()).max(),y_max_val),y_min_val));
+    double y_low = std::min(std::min(CVector(mlr->DependentData()).min(),y_min_val),y_max_val);
+    double y_high = std::max(std::max(CVector(mlr->DependentData()).max(),y_max_val),y_min_val);
+    PadRange(y_low, y_high);
+    axisYNormal->setRange(y_low, y_high);
 
     return true;
 }
@@ -822,7 +920,8 @@ bool GeneralChart::PlotScatter(CMBMatrix *matrix)
 
         QPen pen = series->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(SeriesColor(rowcategories[i]));
+        series->setColor(SeriesColor(rowcategories[i]));
         series->setPen(pen);
 
         series->setName(rowcategories[i]);
@@ -871,7 +970,8 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset)
         counter++;
         QPen pen = series->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(SeriesColor(QString::fromStdString(vec->first)));
+        series->setColor(SeriesColor(QString::fromStdString(vec->first)));
         series->setPen(pen);
 
         series->setName(QString::fromStdString(vec->first));
@@ -931,7 +1031,7 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset1, CMBVectorSet *vectorset
         double std2 = vals[1].stddev();
         double Cov = Covariance(vals[0],vals[1]);
 
-        QColor color = QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256));
+        QColor color = SeriesColor(QString::fromStdString(vec->first));
         counter++;
 
 
@@ -1034,10 +1134,10 @@ bool GeneralChart::PlotMCMCSamples(TimeSeries<double> *samples,const QString& va
 
     axisX->setRange(x_min_val, x_max_val);
     axisX->setTitleText("Sample number");
+    axisX->setLabelFormat("%.0f");   // sample numbers are whole numbers
 
-    //axisYNormal->setLabelFormat("%f");
-    //axisYNormal->setMinorTickCount(5);
     axisYNormal->setTitleText(variable);
+    PadRange(y_min_val, y_max_val);
     axisYNormal->setRange(y_min_val, y_max_val);
 
 
@@ -1096,10 +1196,12 @@ bool GeneralChart::PlotDistribution(TimeSeries<double> *samples,const QString& v
     double y_max_val = samples->maxC();
 
 
+    // The x axis is the value of the variable and the y axis its posterior
+    // density (both used to be labelled as if this were the samples plot)
     axisX->setRange(x_min_val, x_max_val);
-    axisX->setTitleText("Sample number");
-    axisYNormal->setTitleText(variable);
-    axisYNormal->setRange(y_min_val, y_max_val);
+    axisX->setTitleText(variable);
+    axisYNormal->setTitleText("Probability density");
+    axisYNormal->setRange(0, y_max_val * 1.05);
 
     QLineSeries *series = new QLineSeries();
     QAreaSeries *areaseries = new QAreaSeries(series);
@@ -1124,6 +1226,13 @@ bool GeneralChart::PlotDistribution(TimeSeries<double> *samples,const QString& v
     chart->addSeries(areaseries);
     areaseries->attachAxis(axisX);
     areaseries->attachAxis(axisYNormal);
+    // One legend entry: the shaded posterior, named after the variable (the
+    // outline and the unnamed area used to show as two boxes)
+    areaseries->setName(variable);
+    areaseries->setColor(QColor(0, 114, 178, 140));
+    areaseries->setBorderColor(QColor(0, 114, 178));
+    for (QLegendMarker* marker : chart->legend()->markers(series))
+        marker->setVisible(false);
 
     if (result_item->Type() == result_type::distribution_with_observed)
     {
@@ -1131,8 +1240,19 @@ bool GeneralChart::PlotDistribution(TimeSeries<double> *samples,const QString& v
         QPen observed_pen(QBrush(Qt::DashLine),3,Qt::PenStyle::DashLine);
         observed_pen.setColor(Qt::black);
         observed_series->setPen(observed_pen);
-        observed_series->append(static_cast<CMBTimeSeriesSet*>(result_item->Result())->ObservedValue(variable.toStdString()),0);
-        observed_series->append(static_cast<CMBTimeSeriesSet*>(result_item->Result())->ObservedValue(variable.toStdString()),y_max_val);
+        observed_series->setName("Measured in target sample");
+        const double observed = static_cast<CMBTimeSeriesSet*>(result_item->Result())->ObservedValue(variable.toStdString());
+        observed_series->append(observed,0);
+        observed_series->append(observed,y_max_val);
+        // Keep the observed value on the plot when it lies outside the
+        // posterior (it used to fall off the axis)
+        if (observed < x_min_val || observed > x_max_val)
+        {
+            double low = std::min(x_min_val, observed);
+            double high = std::max(x_max_val, observed);
+            PadRange(low, high);
+            axisX->setRange(low, high);
+        }
         chart->addSeries(observed_series);
         observed_series->attachAxis(axisX);
         observed_series->attachAxis(axisYNormal);
@@ -1173,7 +1293,7 @@ bool GeneralChart::PlotTimeSeriesSet(CMBTimeSeriesSet *timeseriesset, const QStr
         }
         QPen pen = lineseries->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(SeriesColor(QString::fromStdString(timeseriesset->getSeriesName(i))));
         lineseries->setPen(pen);
         lineseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
@@ -1262,7 +1382,8 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &/*title*/, co
         QPen pen = scatterseries->pen();
         pen.setWidth(2);
 
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(QColor(Qt::black));
+        scatterseries->setColor(QColor(Qt::black));
         scatterseries->setPen(pen);
         scatterseries->setName(QString::fromStdString("Observed value"));
     }
@@ -1333,7 +1454,8 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
         QPen pen = scatterseries->pen();
         pen.setWidth(2);
 
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(QColor(Qt::black));
+        scatterseries->setColor(QColor(Qt::black));
         scatterseries->setPen(pen);
         scatterseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
@@ -1351,7 +1473,7 @@ bool GeneralChart::PlotTimeSeriesSet_M(CMBTimeSeriesSet *timeseriesset, const QS
         }
         QPen pen = lineseries->pen();
         pen.setWidth(2);
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(SeriesColor(QString::fromStdString(timeseriesset->getSeriesName(i))));
         lineseries->setPen(pen);
         lineseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
@@ -1399,7 +1521,8 @@ bool GeneralChart::PlotTimeSeriesSet_A(CMBTimeSeriesSet *timeseriesset, const QS
         QPen pen = scatterseries->pen();
         pen.setWidth(2);
 
-        pen.setBrush(QColor(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)));
+        pen.setBrush(SeriesColor(QString::fromStdString(timeseriesset->getSeriesName(i))));
+        scatterseries->setColor(SeriesColor(QString::fromStdString(timeseriesset->getSeriesName(i))));
         scatterseries->setPen(pen);
         scatterseries->setName(QString::fromStdString(timeseriesset->getSeriesName(i)));
 
@@ -1415,6 +1538,7 @@ bool GeneralChart::PlotTimeSeriesSet_Stacked(CMBTimeSeriesSet *timeseriesset, co
     QVector<QBarSet*> sets(timeseriesset->size());
     for (int i=0; i<timeseriesset->size(); i++)
     {   sets[i]  = new QBarSet(QString::fromStdString(timeseriesset->getSeriesName(i)));
+        sets[i]->setColor(SeriesColor(sets[i]->label()));
         for (int j=0; j<timeseriesset->at(i).size(); j++)
             *sets[i] << timeseriesset->at(i).getValue(j);
 

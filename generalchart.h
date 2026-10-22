@@ -15,6 +15,8 @@
 #include <elemental_profile_set.h>
 #include <multiplelinearregressionset.h>
 #include <QComboBox>
+#include <QMap>
+#include <QColor>
 #include "rangeset.h"
 #include <chart.h>
 #include <chartview.h>
@@ -65,6 +67,10 @@ private:
     QComboBox *independent_combo{};
     bool PlotRegression(MultipleLinearRegression *timeseriesset,const QString& independent_var);
     ResultItem* result_item=nullptr;
+    QMap<QString, QColor> series_colors;
+    QColor SeriesColor(const QString& name);
+    QString ConstituentAxisTitle() const;
+    QString ValueAxisTitle(const QString& fallback = QString()) const;
 private slots:
     void onIndependentChanged(int i_independent);
     void onElementChanged(int i_constituent);

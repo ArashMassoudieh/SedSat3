@@ -66,5 +66,9 @@ void FormElementInformation::OnIncludeAllToggled()
 
     const bool include_all = (ui->Include_Exclude_All_checkBox->checkState() == Qt::CheckState::Checked);
     model->Data->IncludeExcludeAllElements(include_all);
+    // Tell the view the "Include in analysis" column changed, so it shows the
+    // new values at once rather than when the table is next clicked
+    if (model->rowCount() > 0)
+        emit model->dataChanged(model->index(0, 4), model->index(model->rowCount() - 1, 4));
     table()->viewport()->update();
 }

@@ -193,6 +193,22 @@ SourceSinkData SourceSinkData::CreateCorrectedDataset(
     return corrected;
 }
 
+SourceSinkData SourceSinkData::CreateTracerDataset(
+    bool exclude_samples,
+    bool exclude_elements,
+    bool omnsizecorrect,
+    const string& target) const
+{
+    SourceSinkData tracers = *this;
+    for (auto& [name, info] : tracers.element_information_)
+    {
+        const bool is_tracer = info.Role == element_information::role::element ||
+                               info.Role == element_information::role::isotope;
+        info.include_in_analysis = is_tracer && (!exclude_elements || info.include_in_analysis);
+    }
+    return tracers.CreateCorrectedAndFilteredDataset(exclude_samples, true, omnsizecorrect, target);
+}
+
 int SourceSinkData::CountElements(bool exclude_elements) const
 {
     if (!exclude_elements) {
@@ -2182,6 +2198,28 @@ vector<string> SourceSinkData::IsotopesToBeUsedInCMB()
 
     return isotope_order_;
 }
+vector<string> SourceSinkData::IsotopesWithUnusableBaseElement() const
+{
+    vector<string> problems;
+    for (const auto& [isotope_name, isotope_info] : element_information_)
+    {
+        if (isotope_info.Role != element_information::role::isotope || !isotope_info.include_in_analysis)
+            continue;
+
+        const string& base = isotope_info.base_element;
+        const auto base_info = element_information_.find(base);
+        if (base.empty())
+            problems.push_back("Isotope '" + isotope_name + "' has no base element.");
+        else if (base_info == element_information_.end())
+            problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is not in the data.");
+        else if (base_info->second.Role != element_information::role::element)
+            problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is not marked as an element.");
+        else if (!base_info->second.include_in_analysis)
+            problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is excluded from the analysis.");
+    }
+    return problems;
+}
+
 void SourceSinkData::PopulateConstituentOrders()
 {
     // Reset all counters and ordering vectors
@@ -3188,12 +3226,12 @@ CMBMatrix SourceSinkData::BracketTest(
         SourceSinkData corrected_data;
         if (correct_based_on_om_n_size)
         {
-            corrected_data = CreateCorrectedAndFilteredDataset(
+            corrected_data = CreateTracerDataset(
                 exclude_samples, exclude_elements, true, sample->first);
         }
         else
         {
-            corrected_data = CreateCorrectedAndFilteredDataset(
+            corrected_data = CreateTracerDataset(
                 exclude_samples, exclude_elements, false);
         }
 
@@ -3718,12 +3756,16 @@ ANOVA_info SourceSinkData::ANOVA(const string& element, bool use_log)
 }
 void SourceSinkData::IncludeExcludeElementsBasedOn(const vector<string>& elements)
 {
-    // First, exclude all elements
+    // First, exclude all elements and isotopes. The organic matter and particle
+    // size constituents are not tracers and are left as they are: excluding
+    // them stopped the size and organic matter correction of later steps.
     for (map<string, element_information>::iterator element = element_information_.begin();
         element != element_information_.end();
         element++)
     {
-        element->second.include_in_analysis = false;
+        if (element->second.Role == element_information::role::element ||
+            element->second.Role == element_information::role::isotope)
+            element->second.include_in_analysis = false;
     }
 
     // Then, include only specified elements
@@ -3978,6 +4020,8 @@ bool SourceSinkData::BootStrap(
     intervals_result.SetShowTable(true);
     intervals_result.SetType(result_type::rangeset);
     intervals_result.SetResult(credible_intervals);
+    intervals_result.setXAxisTitle("Source");
+    intervals_result.setYAxisTitle("Contribution");
     intervals_result.SetYAxisMode(yaxis_mode::normal);
     intervals_result.SetYLimit(_range::high, 1.0);
     intervals_result.SetYLimit(_range::low, 0);
@@ -4316,6 +4360,8 @@ Results SourceSinkData::MCMC(
     contribution_intervals_result.SetShowTable(true);
     contribution_intervals_result.SetType(result_type::rangeset);
     contribution_intervals_result.SetResult(contribution_credible_intervals);
+    contribution_intervals_result.setXAxisTitle("Source");
+    contribution_intervals_result.setYAxisTitle("Contribution");
     contribution_intervals_result.SetYAxisMode(yaxis_mode::log);
     contribution_intervals_result.SetYLimit(_range::high, 1.0);
     results.Append(contribution_intervals_result);
@@ -4390,6 +4436,8 @@ Results SourceSinkData::MCMC(
     predicted_element_intervals_result.SetShowTable(true);
     predicted_element_intervals_result.SetType(result_type::rangeset_with_observed);
     predicted_element_intervals_result.SetResult(predicted_element_intervals);
+    predicted_element_intervals_result.setXAxisTitle("Constituent");
+    predicted_element_intervals_result.setYAxisTitle("Concentration");
     predicted_element_intervals_result.SetYAxisMode(yaxis_mode::log);
     results.Append(predicted_element_intervals_result);
 
@@ -4446,6 +4494,8 @@ Results SourceSinkData::MCMC(
     predicted_isotope_intervals_result.SetShowTable(true);
     predicted_isotope_intervals_result.SetType(result_type::rangeset_with_observed);
     predicted_isotope_intervals_result.SetResult(predicted_isotope_intervals);
+    predicted_isotope_intervals_result.setXAxisTitle("Isotope");
+    predicted_isotope_intervals_result.setYAxisTitle("Delta value (per mil)");
     predicted_isotope_intervals_result.SetYAxisMode(yaxis_mode::normal);
     results.Append(predicted_isotope_intervals_result);
 

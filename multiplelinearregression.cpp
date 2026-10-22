@@ -122,6 +122,30 @@ double MultipleLinearRegression::Regress(const vector<vector<double>> &independe
     int number_of_data_points = dependent.size();
     int number_of_variables = independent.size();
 
+    // The fit needs more samples than coefficients; with fewer, GSL stopped
+    // the program (e.g. a group of one or two samples). Such a group gets a
+    // model that corrects nothing: the mean as intercept, no slopes, and no
+    // significant variable.
+    if (number_of_data_points <= number_of_variables + 1)
+    {
+        independent_data = independent;
+        dependent_data = dependent;
+        double mean = 0;
+        for (double value : dependent)
+            mean += (regressionEquation == regression_form::linear) ? value : log(value);
+        if (number_of_data_points > 0)
+            mean /= number_of_data_points;
+        coefficients_intercept_.assign(number_of_variables + 1, 0.0);
+        coefficients_intercept_[0] = mean;
+        correlation_matrix_ = CMBMatrix(number_of_variables + 1);
+        chisq = 0;
+        R2 = NAN;
+        R2_adj = NAN;
+        p_value.assign(number_of_variables, 1.0);
+        make_effective.assign(number_of_variables, false);
+        return chisq;
+    }
+
     gsl_matrix *X = nullptr, *cov = nullptr;
     gsl_vector *y = nullptr, *w = nullptr, *c = nullptr;
 
