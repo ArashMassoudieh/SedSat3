@@ -435,12 +435,23 @@ It would be helpful to include a table of method changes (or new methods) from
 SedSat v1.0 to SedSat v3.0.
 \end{reviewer}
 \begin{response}
-Added Table~1.1, ``Methods in SedSAT3'' (Section~1.2), listing every method and
-where it is described. Its last column, comparing each method with Sed\_SAT
-1.0, is left for you and Allen, who know Sed\_SAT 1.0 best.
-\todo{Allen, Lilly: fill in the comparison column.}
+Added Table~1.1, ``Methods in SedSAT3'' (Section~1.2). For each method it
+gives SedSAT3's approach, where the manual describes it, and how it compares
+with Sed\_SAT~1.0: the same, changed, new, or not in SedSAT3. I wrote the
+comparison from the Sed\_SAT~1.0 source code (the software release,
+doi:10.5066/F76Q1VBX) and its report. Please check it, since you know
+Sed\_SAT~1.0 best.
+
+The comparison shows four things Sed\_SAT~1.0 did that SedSAT3 does not:
+\begin{itemize}
+    \item imputing values below detection;
+    \item a tolerance in the bracket test;
+    \item the confusion matrix and DFA weighting factors;
+    \item keeping stable isotopes out of the organic matter correction.
+\end{itemize}
+I would welcome your view on which of these SedSAT3 should have.
 \end{response}
-\status{Table added; comparison to be filled in.}
+\status{Done; for your review.}
 
 \begin{reviewer}{Review notes}
 Figures are often too small to see without zooming in. Several naming
@@ -1140,7 +1151,7 @@ Item & Who & Note \\
 Repository path, DOI, version, publication date & \todo{Cara} & README, citation and manual title page hold placeholders. \\
 sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as a pointer; check the form against USGS guidelines if it stays. Code-signing of the Windows package. \\
 USGS colour guidance & \todo{Cara} & The charts use the Okabe--Ito colour-blind-safe palette. \\
-Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Last column of Table~1.1 in the manual. \\
+Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Review the last column of Table~1.1, and say which Sed\_SAT~1.0 features SedSAT3 should have. \\
 Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
 Screenshots to retake & \mine{Arash} & Seven figures of the main window, the progress window and files. \\
 virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\

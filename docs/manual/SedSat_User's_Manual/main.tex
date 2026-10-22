@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 % Notes to the authors, removed before release
 \newcommand{\authornote}[1]{\textcolor{red}{[#1]}}
 
@@ -69,31 +70,43 @@ Keep the \texttt{resources} folder next to the program; SedSAT3 reads its tool a
 \paragraph{Command line program.} SedSAT3 also includes a command line program, \texttt{sedsat3-cli}, which runs the same analyses from a script file. It has its own manual.
 
 \section{Methods in SedSAT3}\label{sec:methods-table}
-SedSAT3 replaces Sed\_SAT \citep{gormansanisaca2017determining}. Table~\ref{tab:methods} lists its methods and where this manual describes them. \authornote{Allen, Lilly: please fill in the last column, how each compares with Sed\_SAT 1.0 (same, changed, or new).}
+SedSAT3 replaces Sed\_SAT \citep{gormansanisaca2017determining}, which was written in R with a Microsoft Access interface. Table~\ref{tab:methods} lists the methods of SedSAT3, where this manual describes them, and how each compares with Sed\_SAT~1.0. The comparison is based on the Sed\_SAT~1.0 source code (U.S. Geological Survey software release, \url{https://doi.org/10.5066/F76Q1VBX}) and its report.
 
-\begin{table}[ht]
-\centering
-\small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.4cm}>{\raggedright\arraybackslash}p{2.2cm}}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{6.1cm}}
+\caption{Methods in SedSAT3 compared with Sed\_SAT~1.0.}\label{tab:methods}\\
 \toprule
-Step or tool & SedSAT3 method & Section & Compared with Sed\_SAT 1.0 \\
+Step or tool & SedSAT3 & Sed\_SAT 1.0 \\
 \midrule
-Outlier test & Box--Cox transformation, then standardized deviation per group & \ref{sec:outlier} & \\
-Organic matter and particle size correction & Linear or power-law multiple regression on organic matter and particle size, per element and source group & \ref{sec:sizeandorganiccorrection} & \\
-Bracket test & Target value outside the range of every source sample, for every target sample at once & \ref{sec:bracketing} & \\
-Tracer selection & Forward stepwise discriminant function analysis: multi-way, one vs.\ one, one vs.\ the rest & \ref{sec:multiway-dfa}, \ref{sec:dfa-tools} & \\
-Other tracer screening & Analysis of variance, auto-select (pairwise t-tests), discriminant power, correlation matrix & \ref{sec:tools-selection}, \ref{sec:tools-exploration} & \\
-Distributions & Distribution fitting, Kolmogorov--Smirnov tests, optimal Box--Cox parameters & \ref{sec:tools-exploration} & \\
-Isotopes & $\delta$ values in the mass balance, through the base element & \ref{sec:stable-isotopes} & \\
-Deterministic fingerprinting & Levenberg--Marquardt maximum likelihood, single target sample or batch & \ref{sec:lmmle}, \ref{sec:fingerprinting-batch} & \\
-Bayesian fingerprinting & Bayesian chemical mass balance by MCMC, with credible intervals and posterior predictive checks; single target sample or batch & \ref{sec:bayesian_cmb} & \\
-Uncertainty and checks & Error analysis (bootstrap of source samples), source verification & \ref{sec:tools-uncertainty} & \\
-Command line & \texttt{sedsat3-cli} runs the analyses from a script & \ref{sec:installing} & \\
+\endfirsthead
+\toprule
+Step or tool & SedSAT3 & Sed\_SAT 1.0 \\
+\midrule
+\endhead
+Values below detection & None: every value must be a number; values below detection are replaced by the user before import (Chapter~\ref{chap:raw-data}). & \textit{Not in SedSAT3.} Non-detects in the source data were imputed for each source group by log-ratio expectation maximization or data augmentation (R package zCompositions), from the reporting limits. \\
+\addlinespace
+Outlier test (Sec.~\ref{sec:outlier}) & Box--Cox transformation chosen with the Kolmogorov--Smirnov statistic; a value is flagged when it is more than N standard deviations from the group mean (N = 3); flagged samples stay included until the user excludes them. & \textit{Changed.} Same rule (mean $\pm$ N standard deviations, N = 3), but on a transformation chosen with the Shapiro--Wilk test from Tukey's ladder of powers; flagged samples were excluded by default and the user could include them again. \\
+\addlinespace
+Organic matter and particle size correction (Sec.~\ref{sec:sizeandorganiccorrection}) & One linear or power-law multiple regression on organic matter and particle size, per element and source group; terms applied when significant (p-value) or chosen by the user; the correction is for each target sample. & \textit{Changed.} One variable at a time and in sequence: particle size first, then organic content on the size-corrected data. Linear regression on transformed variables (Tukey's ladder), accepted on the slope p-value, $R^2$ and the normality of the residuals, with a bias-correction factor. The correction was relative to the mean of the target samples selected for the run. Stable isotopes were not corrected for organic content. \\
+\addlinespace
+Bracket test (Sec.~\ref{sec:bracketing}) & A target value fails when it is above every source sample or below every one; every target sample at once. & \textit{Changed.} The range of all source samples was widened by a tolerance (default 10\%) before the test. \\
+\addlinespace
+Tracer selection (Sec.~\ref{sec:multiway-dfa}, \ref{sec:dfa-tools}) & Forward stepwise discriminant function analysis: multi-way, one vs.\ one, one vs.\ the rest; the constituents up to the smallest $\chi^2$ p-value are selected. & \textit{Similar.} Forward stepwise discriminant function analysis among all groups, adding tracers by Wilks' $\Lambda$ with an entry significance level (default 0.01; R package klaR). It also reported a leave-one-out confusion matrix, and computed tracer weighting factors from each tracer's classification rate. \\
+\addlinespace
+Other tracer screening (Sec.~\ref{sec:tools-selection}, \ref{sec:tools-exploration}) & Analysis of variance, auto-select (pairwise t-tests), discriminant power, correlation matrix. & \textit{New in SedSAT3.} Sed\_SAT~1.0 tested the assumptions of the DFA instead: multivariate normality (Shapiro--Wilk, Mardia, Royston, Henze--Zirkler) and equal dispersion, choosing raw or Box--Cox transformed data for the DFA. \\
+\addlinespace
+Distributions (Sec.~\ref{sec:tools-exploration}) & Distribution fitting, Kolmogorov--Smirnov tests, optimal Box--Cox parameters. & \textit{New in SedSAT3.} Sed\_SAT~1.0 used the Shapiro--Wilk test to choose transformations. \\
+\addlinespace
+Isotopes (Sec.~\ref{sec:stable-isotopes}) & $\delta$ values enter the mass balance through the base element's content. & \textit{Changed.} $\delta$ values were mixed as ordinary tracers; marking a tracer as an isotope only kept it out of the imputation and the organic content correction. \\
+\addlinespace
+Deterministic fingerprinting (Sec.~\ref{sec:lmmle}, \ref{sec:fingerprinting-batch}) & Maximum likelihood with log-normal errors (Levenberg--Marquardt), one target sample or a batch. & \textit{Changed.} Minimized the sum of squared relative errors between the target and the mixture of source means, optionally weighted by the DFA weighting factors (Nelder--Mead optimization), for each target sample. \\
+\addlinespace
+Bayesian fingerprinting (Sec.~\ref{sec:bayesian_cmb}) & Bayesian chemical mass balance by MCMC, with credible intervals and posterior predictive checks; one target sample or a batch. & \textit{New in SedSAT3.} \\
+\addlinespace
+Uncertainty and checks (Sec.~\ref{sec:tools-uncertainty}) & Error analysis (realizations with a percentage of the source samples removed at random); source verification (each source sample fingerprinted as a target). & \textit{Changed.} The Monte Carlo analysis removed one randomly chosen sample from each source group per iteration (default 1,000 iterations). Source samples were also fingerprinted as targets, as in source verification. \\
+\addlinespace
+Program & Stand-alone program for Windows, Linux and macOS; command line program \texttt{sedsat3-cli} for scripts (Sec.~\ref{sec:installing}). & \textit{Changed.} R scripts run from a Microsoft Access interface on Windows. \\
 \bottomrule
-\end{tabularx}
-\caption{Methods in SedSAT3.}
-\label{tab:methods}
-\end{table}
+\end{longtable}
 
 \section{How to read this manual}
 Chapter~\ref{chap:raw-data} describes how to prepare and import the data. Chapters~\ref{chap:deterministic} and~\ref{chap:bayesian} follow the menus \textbf{Tools}$\rightarrow$\textbf{Deterministic Sediment Fingerprinting} and \textbf{Tools}$\rightarrow$\textbf{Bayesian Sediment Fingerprinting}, whose numbered steps are the usual order of a sediment fingerprinting study. Chapter~\ref{chap:other-tools} describes the tools under \textbf{Tools}$\rightarrow$\textbf{Other Statistical Tools}, in the order and groups in which the program lists them, and Chapter~\ref{sec:basic_concepts} gives the mathematical basis of the methods. Menu paths are written \textbf{Menu}$\rightarrow$\textbf{Item}, using the names shown by the program.
