@@ -143,6 +143,7 @@ reproduced against this branch with the example data; the response is
 | D50/TOC tested and selected as tracers by ANOVA, DFA, discriminant power, auto-select and bracketing; "Modify the included elements" excluded them | `d7d8b92` | `regression` (baseline updated, below) |
 | Error Analysis histogram used only the first realization | `8708c20` | — |
 | Log-normal K-S test on non-positive data drew nothing; now refused | `ae2e4d5` | — |
+| delta 13C could not use TOC (the organic matter constituent, the only carbon measured) as its base element; now allowed, TOC used only as the base | `cdf856c` | `unit:fingerprinting_organicCarbonAsIsotopeBase` |
 | Charts: palette, axis titles and ranges, log axes below 1e-12, legends, DFA pair start; tools menu order and groups; Bayesian defaults 100,000/20,000; step 4 shows scores and eigenvectors | `d7d8b92`, `8708c20` | charts rendered offscreen and inspected |
 
 **Baseline change** (`properties.cmb` only; `Isotope_test.cmb` gives D50 and

@@ -38,7 +38,7 @@ Substituting Eq.~\eqref{eq:isotope_content} into Eq.~\eqref{eq:isotope_mass_bala
 \end{equation}
 where $\delta\upsilon_{i,j}$ is the $\delta$ value of isotope $j$ in source $i$.
 
-The set of equations obtained from isotopes can be appended to Eq.~\eqref{eq:mass_balance_matrix}. Note that to include an isotope in the analysis, the base element of that isotope must also be measured and included in the analysis.
+The set of equations obtained from isotopes can be appended to Eq.~\eqref{eq:mass_balance_matrix}. Note that to include an isotope in the analysis, the base element of that isotope must also be measured. The base element can be a tracer included in the analysis or, for $\delta^{13}$C, the organic carbon content (TOC), which is then used only through Eq.~\eqref{eq:delta_mixture}: the mixture's base content is $\sum_i x_i y_{i,j}$, with $y_{i,j}$ the mean base content of source $i$.
 
 $\delta$ values are commonly negative (for example $\delta^{13}$C of organic matter) and can be both positive and negative within one dataset (for example $\delta^{15}$N). SedSAT3 handles this as follows. The isotope content computed by Eq.~\eqref{eq:isotope_content} is positive for any $\delta$ above $-1000$, so the mass balance (Eqs.~\ref{eq:isotope_mass_balance} and~\ref{eq:delta_mixture}) is valid for negative and mixed-sign $\delta$ values. In the likelihood, the residuals of isotopes are differences of $\delta$ values on a linear scale, while those of elements are differences of logarithms (Section~\ref{sec:mle}). $\delta$ values are therefore never log-transformed. Operations that need positive values are not applied to them: the Box--Cox transformation leaves them untransformed ($\lambda = 1$), and a log-normal distribution cannot be fitted to them.
 

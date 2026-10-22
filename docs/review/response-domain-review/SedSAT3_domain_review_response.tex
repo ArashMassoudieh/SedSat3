@@ -588,14 +588,17 @@ SampleData should be provided.
 \begin{response}
 The manual now says to set the type first, and links to the stable isotope
 section. It also says that the base element must be included in the analysis.
-The N15 values are given. For C13, I need to check the example's base element
-before stating it: the test project uses Calcium with 0.011113, but the base
-element for $\delta^{13}$C should be the carbon content.
-\mine{settle the base element and standard ratio for C13 in the example (TOC
-cannot be both the organic matter constituent and a base element), and state
-them in Section~2.1.}
+Both are now given in Section~2.1: N for N15 (ratio 0.003676) and TOC for C13
+(ratio 0.011180, VPDB). TOC is the only carbon content measured, but it is also
+the organic matter constituent, and the program did not accept that as a base
+element. It now does. TOC is not used as a tracer. Fingerprinting uses it only
+to weight each source's $\delta^{13}$C by its organic carbon content, with or
+without the size and organic matter correction (\commit{cdf856c}). The
+test project had used Calcium, which was not chemically meaningful. The
+standard ratio cancels in the mixture's $\delta$ value, so its exact value does
+not change the results.
 \end{response}
-\status{Done except the C13 values.}
+\status{Done.}
 
 \begin{reviewer}{Importing the data}
 I don't see any values for C13; I assume the data is negative and the scale
@@ -1139,7 +1142,6 @@ sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as 
 USGS colour guidance & \todo{Cara} & The charts use the Okabe--Ito colour-blind-safe palette. \\
 Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Last column of Table~1.1 in the manual. \\
 Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
-C13 base element and ratio in the example & \mine{Arash} & State them in Section~2.1. \\
 Screenshots to retake & \mine{Arash} & Seven figures of the main window, the progress window and files. \\
 virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\
 Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
