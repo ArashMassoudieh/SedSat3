@@ -316,7 +316,8 @@ public:
      * @return New filtered profile
      */
     Elemental_Profile CreateAnalysisProfile(
-        const map<string, element_information>* elementinfo = nullptr) const;
+        const map<string, element_information>* elementinfo = nullptr,
+        bool keep_isotope_bases = false) const;
 
     /**
      * @brief Extract chemical elements only (exclude isotopes, metadata)

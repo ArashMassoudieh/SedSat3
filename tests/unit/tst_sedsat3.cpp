@@ -164,6 +164,7 @@ private slots:
 
     // Domain review (L. Gorman Sanisaca, October 2026)
     void fingerprinting_isotopeBaseElementExcluded();
+    void fingerprinting_organicCarbonAsIsotopeBase();
     void multiwayDiscriminantPower_runs();
     void correlationMatrix_correctedWithSelectedElements();
 
@@ -874,6 +875,41 @@ void SedSAT3Tests::fingerprinting_isotopeBaseElementExcluded()
     Conductor conductor(&host);
     conductor.SetData(&data);
     QVERIFY(conductor.Execute("Levenberg-Marquardt", commands[0].second));
+}
+
+void SedSAT3Tests::fingerprinting_organicCarbonAsIsotopeBase()
+{
+    // delta 13C with the organic matter constituent (TOC) as its base element,
+    // with and without the size and organic matter correction: TOC is not a
+    // tracer, but its content weights the delta values of the sources
+    for (const char* correct : {"false", "true"})
+    {
+        SourceSinkData data;
+        BuildIsotopeAndOMData(data);
+        data.GetElementInformation("d13C")->base_element = "TOC";
+        RecordingHost host;
+        Conductor conductor(&host);
+        conductor.SetData(&data);
+        QVERIFY(conductor.Execute("MLR", {{"Equation", "Power"}, {"Organic Matter constituent", "TOC"},
+                                          {"Particle Size constituent", ""}, {"P-value threshold", "0.05"},
+                                          {"Use only selected samples", "false"}}));
+        QVERIFY2(conductor.Execute("Levenberg-Marquardt", {{"Sample", "M1"}, {"Softmax transformation", "true"},
+                                                           {"Apply size and organic matter correction", correct}}),
+                 correct);
+        const QJsonObject results = ResultsJson(conductor);
+        bool found = false;
+        for (const QString& key : results.keys())
+        {
+            if (!key.contains("Isotopes"))
+                continue;
+            const QJsonValue modeled = results[key].toObject()["Modeled"].toObject()["Element Contents"].toObject()["d13C"];
+            QVERIFY2(modeled.isDouble() && std::isfinite(modeled.toDouble()), qPrintable(key));
+            // A mixture of -25.3 and -27.1 (the source means) lies between them
+            QVERIFY(modeled.toDouble() < -24.0 && modeled.toDouble() > -28.0);
+            found = true;
+        }
+        QVERIFY(found);
+    }
 }
 
 void SedSAT3Tests::multiwayDiscriminantPower_runs()

@@ -1623,6 +1623,15 @@ public:
     vector<string> IsotopesWithUnusableBaseElement() const;
 
     /**
+     * @brief Mean content of an isotope's base element in one source group
+     *
+     * From the estimated distribution when the base element is a tracer, and
+     * from the distribution fitted to the source samples when it is not (the
+     * organic matter constituent, e.g. TOC for delta 13C).
+     */
+    double IsotopeBaseMean(Elemental_Profile_Set* source_group, const string& base_element, parameter_mode param_mode);
+
+    /**
      * @brief Populates all element ordering vectors used throughout CMB analysis
      *
      * Scans the element information map and organizes elements into separate

@@ -8,6 +8,7 @@
  */
 
 #include "elemental_profile.h"
+#include <set>
 #include "numericparsing.h"
 #include <iostream>
 #include "Utilities.h"
@@ -147,7 +148,8 @@ Elemental_Profile & Elemental_Profile::operator=(const Elemental_Profile & other
  * @endcode
  */
 Elemental_Profile Elemental_Profile::CreateAnalysisProfile(
-    const map<string, element_information>* element_info) const
+    const map<string, element_information>* element_info,
+    bool keep_isotope_bases) const
 {
     // If no metadata provided, return complete copy
     if (element_info == nullptr) {
@@ -159,6 +161,17 @@ Elemental_Profile Elemental_Profile::CreateAnalysisProfile(
 
     // Copy analysis inclusion flag
     filtered_profile.included_in_analysis_ = this->included_in_analysis_;
+
+    // With keep_isotope_bases (the datasets fingerprinting uses), the base
+    // elements of included isotopes are kept even when they are not tracers:
+    // an isotope's delta value is turned into a concentration with its base
+    // element's (e.g. delta 13C with TOC, the organic matter constituent).
+    // The tools that test or select tracers leave them out.
+    std::set<string> isotope_bases;
+    if (keep_isotope_bases)
+        for (const auto& [name, info] : *element_info)
+            if (info.Role == element_information::role::isotope && info.include_in_analysis && !info.base_element.empty())
+                isotope_bases.insert(info.base_element);
 
     // Iterate through all elements in current profile
     for (const auto& element_entry : *this) {
@@ -175,10 +188,11 @@ Elemental_Profile Elemental_Profile::CreateAnalysisProfile(
         const element_information& info = info_iter->second;
 
         // Apply inclusion criteria
-        bool should_include = info.include_in_analysis &&
+        bool should_include = (info.include_in_analysis &&
             info.Role != element_information::role::do_not_include &&
             info.Role != element_information::role::particle_size &&
-            info.Role != element_information::role::organic_carbon;
+            info.Role != element_information::role::organic_carbon) ||
+            isotope_bases.count(element_name) > 0;
 
         if (should_include) {
             // Add element to filtered profile
@@ -913,9 +927,13 @@ double Elemental_Profile::GetValue(const string& element_name) const
      for (const auto& [element_name, concentration] : *this) {
          const element_information& info = element_info->at(element_name);
 
-         // Skip organic carbon and particle size indicators
+         // Organic carbon and particle size are not corrected. They are kept,
+         // unchanged, so that a later filter can keep the organic matter
+         // constituent when it is an isotope's base element (TOC for delta
+         // 13C); they used to be dropped here.
          if (info.Role == element_information::role::organic_carbon ||
              info.Role == element_information::role::particle_size) {
+             corrected_profile[element_name] = concentration;
              continue;
          }
 

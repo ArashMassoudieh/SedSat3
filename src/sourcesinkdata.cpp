@@ -2,6 +2,7 @@
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
 #include "sourcesinkdata.h"
+#include <set>
 #include "numericparsing.h"
 #include "randomstream.h"
 #include <cmath>
@@ -150,13 +151,20 @@ SourceSinkData SourceSinkData::CreateCorrectedDataset(
     // Copy element information and distributions
     if (elementinfo)
     {
-        // Filter to only include elements marked for analysis
+        // Filter to only include elements marked for analysis, and the base
+        // elements of the included isotopes (which may be the organic matter
+        // constituent, e.g. TOC for delta 13C)
+        std::set<string> isotope_bases;
+        for (const auto& [element_name, elem_info] : element_information_)
+            if (elem_info.Role == element_information::role::isotope && elem_info.include_in_analysis)
+                isotope_bases.insert(elem_info.base_element);
         for (const auto& [element_name, elem_info] : element_information_)
         {
-            if (elem_info.include_in_analysis &&
-                elem_info.Role != element_information::role::do_not_include &&
-                elem_info.Role != element_information::role::organic_carbon &&
-                elem_info.Role != element_information::role::particle_size)
+            if ((elem_info.include_in_analysis &&
+                 elem_info.Role != element_information::role::do_not_include &&
+                 elem_info.Role != element_information::role::organic_carbon &&
+                 elem_info.Role != element_information::role::particle_size) ||
+                isotope_bases.count(element_name) > 0)
             {
                 corrected.element_information_[element_name] = element_information_[element_name];
                 corrected.element_distributions_[element_name] = element_distributions_[element_name];
@@ -1521,14 +1529,18 @@ CVector SourceSinkData::PredictTarget_Isotope(parameter_mode param_mode)
 
 CVector SourceSinkData::PredictTarget_Isotope_delta(parameter_mode param_mode)
 {
-    CMatrix SourceMeanMat = BuildSourceMeanMatrix(param_mode);
     CMatrix SourceMeanMat_Iso = BuildSourceMeanMatrix_Isotopes(param_mode);
-    CVector C_elements = SourceMeanMat*GetContributionVector();
     CVector C = SourceMeanMat_Iso*GetContributionVector();
+    const CVector contributions = GetContributionVector();
     for (unsigned int i=0; i<numberofisotopes_; i++)
     {
+        // The mixture's base element content, from the same source means as
+        // the isotope's (the base element need not be a tracer itself)
         string corresponding_element = element_information_[isotope_order_[i]].base_element;
-        double predicted_corresponding_element_concentration = C_elements[lookup(element_order_,corresponding_element)];
+        double predicted_corresponding_element_concentration = 0;
+        for (size_t source_idx = 0; source_idx < numberofsourcesamplesets_; source_idx++)
+            predicted_corresponding_element_concentration += contributions[source_idx] *
+                IsotopeBaseMean(GetSampleSet(samplesetsorder_[source_idx]), corresponding_element, param_mode);
         double ratio = C[i]/predicted_corresponding_element_concentration;
         double standard_ratio = element_information_[isotope_order_[i]].standard_ratio;
         C[i] = (ratio/standard_ratio-1.0)*1000.0;
@@ -1620,6 +1632,20 @@ CMatrix SourceSinkData::BuildSourceMeanMatrix(parameter_mode param_mode)
     return source_means;
 }
 
+double SourceSinkData::IsotopeBaseMean(Elemental_Profile_Set* source_group, const string& base_element, parameter_mode param_mode)
+{
+    // A base element that is a tracer has an estimated distribution, which the
+    // Bayesian analysis updates. One that is not (the organic matter
+    // constituent, e.g. TOC for delta 13C) is taken as known from the source
+    // samples: its distribution fitted to the data.
+    const bool is_tracer = lookup(element_order_, base_element) != -1;
+    Distribution* distribution = is_tracer ? source_group->GetEstimatedDistribution(base_element)
+                                           : source_group->GetFittedDistribution(base_element);
+    if (distribution == nullptr)
+        return NAN;
+    return (param_mode == parameter_mode::based_on_fitted_distribution) ? distribution->Mean() : distribution->DataMean();
+}
+
 CMatrix SourceSinkData::BuildSourceMeanMatrix_Isotopes(parameter_mode param_mode)
 {
     const size_t num_isotopes = isotope_order_.size();
@@ -1644,21 +1670,18 @@ CMatrix SourceSinkData::BuildSourceMeanMatrix_Isotopes(parameter_mode param_mode
 
             // Get distributions for isotope and its base element
             Distribution* isotope_dist = source_group->GetEstimatedDistribution(isotope_name);
-            Distribution* base_element_dist = source_group->GetEstimatedDistribution(base_element);
 
             // Retrieve mean values based on parameter mode
             double mean_delta = NAN;
-            double mean_base_concentration = NAN;
+            const double mean_base_concentration = IsotopeBaseMean(source_group, base_element, param_mode);
 
             if (param_mode == parameter_mode::based_on_fitted_distribution) {
                 // Use parametric means from fitted distributions
                 mean_delta = isotope_dist->Mean();
-                mean_base_concentration = base_element_dist->Mean();
             }
             else {
                 // Use empirical means from actual data
                 mean_delta = isotope_dist->DataMean();
-                mean_base_concentration = base_element_dist->DataMean();
             }
 
             // Convert delta notation to absolute concentration
@@ -2212,8 +2235,12 @@ vector<string> SourceSinkData::IsotopesWithUnusableBaseElement() const
             problems.push_back("Isotope '" + isotope_name + "' has no base element.");
         else if (base_info == element_information_.end())
             problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is not in the data.");
+        // The base element is an element included in the analysis, or the
+        // organic matter constituent (the carbon content for delta 13C)
+        else if (base_info->second.Role == element_information::role::organic_carbon)
+            continue;
         else if (base_info->second.Role != element_information::role::element)
-            problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is not marked as an element.");
+            problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is not marked as an element or as organic carbon.");
         else if (!base_info->second.include_in_analysis)
             problems.push_back("The base element '" + base + "' of isotope '" + isotope_name + "' is excluded from the analysis.");
     }

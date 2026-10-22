@@ -192,31 +192,14 @@ Elemental_Profile* Elemental_Profile_Set::AppendProfile(
         return nullptr;
     }
 
-    // Add the profile (filtered by elementinfo if provided)
-    operator[](name) = profile.CreateAnalysisProfile(elementinfo);
+    // Add the profile (filtered by elementinfo if provided, keeping the base
+    // elements of the included isotopes, which fingerprinting needs)
+    operator[](name) = profile.CreateAnalysisProfile(elementinfo, true);
 
-    // Update element distributions
-    for (const auto& [element_name, concentration] : profile)
+    // Update element distributions: one value per constituent kept above
+    for (const auto& [element_name, concentration] : operator[](name))
     {
-        // No filtering - add all elements
-        if (elementinfo == nullptr)
-        {
-            element_distributions_[element_name].AppendValue(concentration);
-        }
-        // With filtering - only add elements that meet criteria
-        else if (elementinfo->count(element_name) != 0)
-        {
-            const auto& elem_info = elementinfo->at(element_name);
-
-            // Include if: marked for analysis AND not excluded roles
-            if (elem_info.include_in_analysis &&
-                elem_info.Role != element_information::role::do_not_include &&
-                elem_info.Role != element_information::role::particle_size &&
-                elem_info.Role != element_information::role::organic_carbon)
-            {
-                element_distributions_[element_name].AppendValue(concentration);
-            }
-        }
+        element_distributions_[element_name].AppendValue(concentration);
     }
 
     return &operator[](name);
