@@ -1475,11 +1475,24 @@ bool Conductor::ExecuteKolmogorovSmirnovIndividual(const std::map<std::string, s
         dist = distribution_type::lognormal;
     }
 
-    CMBTimeSeriesSet* ks_output = new CMBTimeSeriesSet(
-        Data()->at(arguments.at("Source/Target group"))
-        .GetElementDistribution(arguments.at("Constituent"))
-        ->CreateCDFComparison(dist)
-    );
+    // A log-normal CDF needs positive values; with zero or negative ones
+    // (e.g. delta 13C) the observed curve could not be drawn
+    ConcentrationSet* distribution = Data()->at(arguments.at("Source/Target group"))
+        .GetElementDistribution(arguments.at("Constituent"));
+    if (distribution == nullptr)
+    {
+        host->ShowWarning("'" + arguments.at("Constituent") + "' was not found in group '" +
+                          arguments.at("Source/Target group") + "'.");
+        return false;
+    }
+    if (dist == distribution_type::lognormal && distribution->GetMinimum() <= 0)
+    {
+        host->ShowWarning("'" + arguments.at("Constituent") + "' in group '" + arguments.at("Source/Target group") +
+                          "' has zero or negative values, so it cannot be compared with a log-normal distribution.");
+        return false;
+    }
+
+    CMBTimeSeriesSet* ks_output = new CMBTimeSeriesSet(distribution->CreateCDFComparison(dist));
 
     ks_item.SetResult(ks_output);
     ks_item.SetShowTable(false);

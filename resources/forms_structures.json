@@ -175,7 +175,7 @@
     		"Description": 
     		{
     			"type": "Description",
-    			"default": "This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples."
+    			"default": "This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples. (User's manual, Section 3.6.)"
     		} 
 	},
 	"Levenberg-Marquardt-Batch": {
@@ -191,7 +191,7 @@
     		"Description": 
     		{
     			"type": "Description",
-    			"default": "This tool performs sediment fingerprinting using the <b>Levenberg-Marquardt</b> optimization algorithm on all target samples. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples.This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples."
+    			"default": "This tool performs sediment fingerprinting using the <b>Levenberg-Marquardt</b> optimization algorithm on all target samples. The mean and standard deviations describing the true distribution of the elemental profiles of each element for each source are estimated by direct calculation based on the samples.This tool uses the Levenberg-Marquardt optimization algorithm to perform sediment fingerprinting by minimizing the RMSE between the modeled and observed elemental profiles of the target sample. The mean and standard deviations representing the true distribution of elemental profiles for each element and source are directly calculated from the samples. (User's manual, Section 3.7.)"
     		} 
 	},
 	"OM-Size Correct" : 
@@ -211,7 +211,7 @@
     		"Description": 
     		{
     			"type": "Description",
-    			"default": "This tool shows the corrected elemental profiles of source groups after adjusting based on size and organic matter. The correction is done based on the size and organic matter associated with the selected target. The regressions as a result of the last organic and size correction will be used to perform the adjustment." 
+    			"default": "This tool shows the corrected elemental profiles of source groups after adjusting based on size and organic matter. The correction is done based on the size and organic matter associated with the selected target. The regressions as a result of the last organic and size correction will be used to perform the adjustment. (User's manual, Section 3.2.)" 
     		}
 	},
         "MLR": {
@@ -238,7 +238,7 @@
     		"Description": 
     		{
     			"type": "Description",
-    			"default": "This tool performs the regression analysis for organic and size correction on all source groups." 
+    			"default": "This tool performs the regression analysis for organic and size correction on all source groups. (User's manual, Section 3.2.)" 
     		}
 	},
 	"CovMat": {
@@ -275,7 +275,7 @@
 		},
 	    	"Description": {
 	    		"type": "Description",
-   			"default": "This tool generates the element correlation matrix for the chosen source group. To perform the correlation analysis on the corrected elemental profiles based on size and organic matter, select the target sample based on which the correction to be performed." 
+   			"default": "This tool generates the element correlation matrix for the chosen source group. To perform the correlation analysis on the corrected elemental profiles based on size and organic matter, select the target sample based on which the correction to be performed. (User's manual, Section 5.1.3.)" 
 		}
 	},
 	"DFA": {
@@ -305,7 +305,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs Discriminant Function Analysis between the two source groups indicated. It provides the p-value, and the scatter matrix of projected elemental profiles based on the principle eigen vector of the discriminant hyper-plane." 
+   			"default": "This tool performs Discriminant Function Analysis between the two source groups indicated. It provides the p-value, and the scatter matrix of projected elemental profiles based on the principle eigen vector of the discriminant hyper-plane. (User's manual, Section 5.3.1.)" 
 		}
 	},
 	"DFAM": {
@@ -327,7 +327,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation. (User's manual, Section 5.3.2.)" 
 		}
 	},
 	"DFAOnevsRest": {
@@ -353,7 +353,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation. (User's manual, Section 5.3.3.)" 
 		}
 	},
 	"SDFA": {
@@ -383,7 +383,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation. (User's manual, Section 5.3.1.)" 
 		}
 	},
 	"SDFAM": {
@@ -405,7 +405,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs forward stepwise discriminant function analysis among all source groups (multi-way). Starting from the constituent that best separates the groups, it adds one constituent at a time and reports the chi-squared p-value, Wilks' lambda and F-test p-value after each addition. The constituents up to the minimum p-value are the ones selected. <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included." 
+   			"default": "This tool performs forward stepwise discriminant function analysis among all source groups (multi-way). Starting from the constituent that best separates the groups, it adds one constituent at a time and reports the chi-squared p-value, Wilks' lambda and F-test p-value after each addition. The constituents up to the minimum p-value are the ones selected. <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included. (User's manual, Section 3.5.)" 
 		},
 		"Modify the included elements based on the results": {
 				"type": "checkBox",
@@ -435,7 +435,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation." 
+   			"default": "This tool performs step-wise Discriminant Function Analysis between the two source groups indicated. It provides the S-value as a result of including various number of elements into the analysis, starting from the element that produces the maximum seperation. (User's manual, Section 5.3.3.)" 
 		}
 	},
 	"KS-individual": 
@@ -455,7 +455,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of a given element is to normal or log-normal distribution for the specified source group."
+   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of a given element is to normal or log-normal distribution for the specified source group. (User's manual, Section 5.1.5.)"
 		}
 	},
 	"KS": 
@@ -471,7 +471,7 @@
     		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of all elements are to normal or log-normal distribution for the specified source group."
+   			"default": "This tool provides visualization of Kolomogrov-Smirnov normality test for the indicated source group. It can be used to evaluate how close the elemental content of all elements are to normal or log-normal distribution for the specified source group. (User's manual, Section 5.1.6.)"
 		}
 	},
 	"CMB Bayesian":
@@ -517,7 +517,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly."
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly. (User's manual, Section 4.1.)"
 		}
 	},
 	"CMB Bayesian-Batch":
@@ -559,7 +559,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly."
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly. (User's manual, Section 4.2.)"
 		}
 
 	},
@@ -616,7 +616,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool shows fitted normal and log-normal distributions to the elemental content of the specified element in the specified source group."
+   			"default": "This tool shows fitted normal and log-normal distributions to the elemental content of the specified element in the specified source group. (User's manual, Section 5.1.4.)"
 		}
 	},
 	"Bracketing Analysis":
@@ -639,7 +639,7 @@
     		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool shows whether the elemental content of the elements in the specified target sample is outside of the range of the elemental contents in all source groups."
+   			"default": "This tool shows whether the elemental content of the elements in the specified target sample is outside of the range of the elemental contents in all source groups. (User's manual, Section 3.3.)"
 		}
     	},
     	"BoxCox":
@@ -658,7 +658,7 @@
 		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool calculates the optimal lambda value in the Box-Cox transformation for the elements in the specified source group to achieve normality."
+   			"default": "This tool calculates the optimal lambda value in the Box-Cox transformation for the elements in the specified source group to achieve normality. (User's manual, Section 5.1.7.)"
 		}
     	},
         "Bracketing Analysis Batch":
@@ -677,7 +677,7 @@
 				},
                 "Description": {
 	    		"type": "Description",
-   			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples."
+   			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples. (User's manual, Section 3.3.)"
 		}
         },
     	"Outlier":
@@ -700,7 +700,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool conducts outlier analysis on the elemental profiles for the specified source group. The analysis begins by applying a Box-Cox transformation to each elemental content, followed by calculating the standardized value using the formula (x - mean) / std. Any absolute values exceeding the user-defined threshold are highlighted." 
+   			"default": "This tool conducts outlier analysis on the elemental profiles for the specified source group. The analysis begins by applying a Box-Cox transformation to each elemental content, followed by calculating the standardized value using the formula (x - mean) / std. Any absolute values exceeding the user-defined threshold are highlighted. (User's manual, Section 3.1.)" 
 		}
     	},
     	"EDP": 
@@ -731,7 +731,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool calculates the measures of discriminant power of elements between the two specified source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value."
+   			"default": "This tool calculates the measures of discriminant power of elements between the two specified source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value. (User's manual, Section 5.2.3.)"
 		}
 
  	},
@@ -759,7 +759,7 @@
     		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool calculates the measures of discriminant power of elements between all pairs of source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value."
+   			"default": "This tool calculates the measures of discriminant power of elements between all pairs of source groups. The measures include within and between group difference ratio, discriminant fraction, and the T-test p-value. (User's manual, Section 5.2.4.)"
 		}
  	},
  	"ANOVA": 
@@ -794,7 +794,7 @@
 		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs analysis of variance. The resulting p-value indicates the power of a certain element in discriminating between all source groups. <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included."
+   			"default": "This tool performs analysis of variance. The resulting p-value indicates the power of a certain element in discriminating between all source groups. <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included. (User's manual, Section 5.2.1.)"
 		}
  	},
  	"Error_Analysis":
@@ -830,7 +830,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect of elmination of the indicated percentage of source samples on the fingerprinting results."
+   			"default": "This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect of elmination of the indicated percentage of source samples on the fingerprinting results. (User's manual, Section 5.4.1.)"
 		}
  	},
  	"Source_Verify": {
@@ -849,7 +849,7 @@
     		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool evaluates weather the finger-printing algorithm is capable of correctly infer the source samples based on their elemental profiles. The analysis is done by treating individial source samples from the specified source group as target samples and the use the Levenberg-Marquardt optimization to infer the contribution of sources into it."
+   			"default": "This tool evaluates weather the finger-printing algorithm is capable of correctly infer the source samples based on their elemental profiles. The analysis is done by treating individial source samples from the specified source group as target samples and the use the Levenberg-Marquardt optimization to infer the contribution of sources into it. (User's manual, Section 5.4.2.)"
 		}
  	},
  	"AutoSelect": {
@@ -865,7 +865,7 @@
 		},
     		"Description": {
     			"type": "Description",
-    			"default": "The <b>Auto-select</b> tool selects a minimum number of elements with discriminatory power to differenciate between all source pair combinations. It performs a <i>t-test</i> between each pair of source groups and select the elements with the lowest p-values from each pair. The number of elements choosen from each pair is indicated in the box labeled 'Number of elements from each pair' <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included." 
+    			"default": "The <b>Auto-select</b> tool selects a minimum number of elements with discriminatory power to differenciate between all source pair combinations. It performs a <i>t-test</i> between each pair of source groups and select the elements with the lowest p-values from each pair. The number of elements choosen from each pair is indicated in the box labeled 'Number of elements from each pair' <b>Note:</b> if 'Modify the included elements based on the results' is checked, the constituents that are not selected are excluded in Settings &gt; Constituent Properties, and stay excluded for every later step until you include them again there. An isotope can only be used for fingerprinting if its base element stays included. (User's manual, Section 5.2.2.)" 
     		},
     		"Modify the included elements based on the results": {
 				"type": "checkBox",
