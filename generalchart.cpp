@@ -489,7 +489,9 @@ bool GeneralChart::PlotProfileSet(Elemental_Profile_Set *profile_sets, const QSt
         else
             series->attachAxis(axisYNormal);
         series->setMarkerShape(QScatterSeries::MarkerShapeCircle);
-        series->setMarkerSize(15.0);
+        // Each later series is drawn smaller, on top, so a point that matches
+        // an earlier one (observed on modeled) does not hide it
+        series->setMarkerSize(std::max(7.0, 16.0 - 5.0 * double(chart->series().size() - 1)));
         double counter=0.5;
         for (map<string, double>::iterator datapoint = it->second.begin(); datapoint != it->second.end(); datapoint++)
         {
@@ -951,9 +953,10 @@ bool GeneralChart::PlotScatter(CMBVectorSet *vectorset)
 
 
     axisX->setRange(x_min_val,x_max_val);
-    axisX->setTitleText(QString::fromStdString(result_item->XAxisTitle()));
+    const QString x_title = QString::fromStdString(result_item->XAxisTitle());
+    axisX->setTitleText((x_title.isEmpty() || x_title == "Sample") ? QString("Group") : x_title);
     axisYNormal->setRange(y_min_val-(y_max_val-y_min_val)*0.05,y_max_val+(y_max_val-y_min_val)*0.05);
-    axisYNormal->setTitleText(QString::fromStdString(result_item->YAxisTitle()));
+    axisYNormal->setTitleText(ValueAxisTitle("Discriminant score"));
 
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisYNormal, Qt::AlignLeft);
@@ -1563,10 +1566,12 @@ bool GeneralChart::PlotTimeSeriesSet_Stacked(CMBTimeSeriesSet *timeseriesset, co
     chart->addAxis(axisY, Qt::AlignLeft);
     series->attachAxis(axisY);
 
-    QString xAxisTitle = x_axis_title;
-    QString yAxisTitle = y_axis_title;
-    if (x_axis_title.isEmpty()) xAxisTitle = "Value";
-    if (y_axis_title.isEmpty()) yAxisTitle = "Sample";
+    // The titles were worked out but never set (and the defaults swapped)
+    axisX->setTitleText(x_axis_title.isEmpty() ? QString("Sample") : x_axis_title);
+    axisY->setTitleText(y_axis_title.isEmpty() ? QString("Contribution") : y_axis_title);
+    if (result_item->YLimit(_range::high) > result_item->YLimit(_range::low))
+        axisY->setRange(result_item->YLimit(_range::low), result_item->YLimit(_range::high));
+    axisX->setLabelsAngle(-90);
 
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);

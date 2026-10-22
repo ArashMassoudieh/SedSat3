@@ -729,6 +729,7 @@ bool Conductor::ExecuteCorrelationMatrix(const std::map<std::string, std::string
     correlation_matrix_item.setTableTitle("Correlation Matrix for source group '" +
         arguments.at("Source/Target group") + "'");
     correlation_matrix_item.SetType(result_type::matrix);
+    correlation_matrix_item.SetShowAsString(false);  // a full matrix as text is unreadable; use the table
     correlation_matrix_item.SetShowGraph(false);
 
     double threshold = QString::fromStdString(arguments.at("Threshold")).toDouble();
@@ -1138,6 +1139,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
     ResultItem sdfa_p_values;
     sdfa_p_values.SetName("Chi-squared P-Values");
     sdfa_p_values.SetType(result_type::vector);
+    sdfa_p_values.setXAxisTitle("Constituents, in the order added");
     sdfa_p_values.SetShowTable(true);
     sdfa_p_values.SetAbsoluteValue(true);
     sdfa_p_values.SetYAxisMode(yaxis_mode::log);
@@ -1150,6 +1152,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
     ResultItem sdfa_wilks_lambda;
     sdfa_wilks_lambda.SetName("Wilks' Lambda");
     sdfa_wilks_lambda.SetType(result_type::vector);
+    sdfa_wilks_lambda.setXAxisTitle("Constituents, in the order added");
     sdfa_wilks_lambda.SetShowTable(true);
     sdfa_wilks_lambda.SetAbsoluteValue(true);
     sdfa_wilks_lambda.SetYAxisMode(yaxis_mode::log);
@@ -1162,6 +1165,7 @@ bool Conductor::ExecuteSDFA(const std::map<std::string, std::string>& arguments)
     ResultItem sdfa_f_test_p_value;
     sdfa_f_test_p_value.SetName("F-test P-Value");
     sdfa_f_test_p_value.SetType(result_type::vector);
+    sdfa_f_test_p_value.setXAxisTitle("Constituents, in the order added");
     sdfa_f_test_p_value.SetShowTable(true);
     sdfa_f_test_p_value.SetAbsoluteValue(true);
     sdfa_f_test_p_value.SetYAxisMode(yaxis_mode::log);
@@ -1382,6 +1386,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
     ResultItem sdfa_p_values;
     sdfa_p_values.SetName("Chi-squared P-Values");
     sdfa_p_values.SetType(result_type::vector);
+    sdfa_p_values.setXAxisTitle("Constituents, in the order added");
     sdfa_p_values.SetShowTable(true);
     sdfa_p_values.SetAbsoluteValue(true);
     sdfa_p_values.SetYAxisMode(yaxis_mode::log);
@@ -1394,6 +1399,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
     ResultItem sdfa_wilks_lambda;
     sdfa_wilks_lambda.SetName("Wilks' Lambda");
     sdfa_wilks_lambda.SetType(result_type::vector);
+    sdfa_wilks_lambda.setXAxisTitle("Constituents, in the order added");
     sdfa_wilks_lambda.SetShowTable(true);
     sdfa_wilks_lambda.SetAbsoluteValue(true);
     sdfa_wilks_lambda.SetYAxisMode(yaxis_mode::log);
@@ -1406,6 +1412,7 @@ bool Conductor::ExecuteSDFAOnevsRest(const std::map<std::string, std::string>& a
     ResultItem sdfa_f_test_p_value;
     sdfa_f_test_p_value.SetName("F-test P-Value");
     sdfa_f_test_p_value.SetType(result_type::vector);
+    sdfa_f_test_p_value.setXAxisTitle("Constituents, in the order added");
     sdfa_f_test_p_value.SetShowTable(true);
     sdfa_f_test_p_value.SetAbsoluteValue(true);
     sdfa_f_test_p_value.SetYAxisMode(yaxis_mode::log);

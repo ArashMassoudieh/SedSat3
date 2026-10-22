@@ -1773,7 +1773,7 @@ void SourceSinkData::SetContributionSoftmax(const CVector& softmax_params)
 
     // Validate: resulting contributions should be valid
     CVector resulting_contributions = GetContributionVector();
-    if (resulting_contributions.min() < 0.0) {
+    if (resulting_contributions.min() < -1e-12) {  // not round-off (about -2e-16)
         std::cerr << "Warning: Invalid contributions after softmax transformation" << std::endl;
         std::cerr << "  Min contribution: " << resulting_contributions.min() << std::endl;
         std::cerr << "  This should not happen with softmax - check for numerical issues" << std::endl;
@@ -3982,7 +3982,9 @@ bool SourceSinkData::BootStrap(
 
     // ========== Result 2: Posterior Distributions ==========
     CMBTimeSeriesSet* distributions = new CMBTimeSeriesSet();
-    *distributions = contributions->distribution(100, 0, 0);
+    // All realizations (the end index 0 used to mean the first one only, so
+    // the plotted distribution was a spike at the first realization)
+    *distributions = contributions->distribution(100, 0, -1);
 
     ResultItem distributions_result;
     distributions_result.SetName("Posterior Distributions");
