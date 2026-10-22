@@ -107,6 +107,12 @@ def inline(s, fmt=None):
                 runs += inline(s[j + 2:k2], {**fmt, "color": RED if color == "todo" else BLUE if color == "mine" else None})
                 i = k2 + 1
                 continue
+            if name == "url":
+                j = matching_brace(s, k)
+                flush()
+                runs.append((s[k + 1:j], dict(fmt)))
+                i = j + 1
+                continue
             if name == "href":
                 j = matching_brace(s, k)
                 url = s[k + 1:j]
@@ -390,7 +396,7 @@ NUMBERING = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 FOOTER = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:ftr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:pPr><w:pStyle w:val="Footer"/></w:pPr>
-<w:r><w:t xml:space="preserve">SedSAT3 — response to code review — page </w:t></w:r>
+<w:r><w:t xml:space="preserve">@TITLE@ — page </w:t></w:r>
 <w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>1</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>
 </w:p></w:ftr>"""
 
@@ -419,18 +425,21 @@ DOC_RELS = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </Relationships>"""
 
 
-def core_xml():
+def core_xml(title):
     now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     return ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
             '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
             'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
-            '<dc:title>SedSAT3 — response to code review</dc:title><dc:creator>Arash Massoudieh</dc:creator>'
+            f'<dc:title>{escape(title)}</dc:title><dc:creator>Arash Massoudieh</dc:creator>'
             f'<dcterms:created xsi:type="dcterms:W3CDTF">{now}</dcterms:created></cp:coreProperties>')
 
 
 def main(tex_path, docx_path):
     tex = open(tex_path, encoding="utf-8").read()
+    # The footer and document title come from the LaTeX \lhead
+    m = re.search(r"\\lhead\{\\small\s*([^}]*)\}", tex)
+    title = m.group(1).strip() if m else "SedSAT3"
     body = tex[tex.index("\\begin{document}") + len("\\begin{document}"):tex.index("\\end{document}")]
     body = re.sub(r"(?m)^%.*$", "", body)
     body = re.sub(r"\\sloppy|\\setlength\{[^}]*\}\{[^}]*\}", "", body)
@@ -449,8 +458,8 @@ def main(tex_path, docx_path):
         z.writestr("word/document.xml", document)
         z.writestr("word/styles.xml", STYLES)
         z.writestr("word/numbering.xml", NUMBERING)
-        z.writestr("word/footer1.xml", FOOTER)
-        z.writestr("docProps/core.xml", core_xml())
+        z.writestr("word/footer1.xml", FOOTER.replace("@TITLE@", escape(title)))
+        z.writestr("docProps/core.xml", core_xml(title))
     print(f"{docx_path}: {len(blocks)} blocks")
 
 

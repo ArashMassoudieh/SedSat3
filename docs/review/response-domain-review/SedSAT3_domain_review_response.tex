@@ -1,0 +1,1150 @@
+% SedSAT3 – Response to the domain review (L. Gorman Sanisaca, October 2026)
+% Build: pdflatex SedSAT3_domain_review_response.tex  (run twice)
+% Word copy: python3 ../response-letter/tex2docx.py SedSAT3_domain_review_response.tex SedSAT3_domain_review_response.docx
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{usgsgreen}{RGB}{0,100,60}
+\definecolor{commentbg}{RGB}{242,245,248}
+\definecolor{todo}{RGB}{190,30,30}
+\definecolor{mine}{RGB}{20,70,170}
+
+% ---------------------------------------------------------------- macros
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\commit}[1]{\texttt{#1}}
+\newcommand{\todo}[1]{\textcolor{todo}{\textbf{[#1]}}}   % for Cara / Allen
+\newcommand{\mine}[1]{\textcolor{mine}{\textbf{[Arash: #1]}}}   % for the author
+\newcounter{cmt}
+\newcounter{grp}
+\renewcommand{\thecmt}{\thegrp.\arabic{cmt}}
+\newcommand{\group}[1]{\stepcounter{grp}\setcounter{cmt}{0}\section*{\thegrp.\quad #1}\addcontentsline{toc}{section}{\thegrp.\quad #1}}
+\newenvironment{reviewer}[1]{%
+  \refstepcounter{cmt}%
+  \begin{tcolorbox}[enhanced,breakable,colback=commentbg,colframe=usgsgreen!60,
+    boxrule=0.4pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+    title={\small\textbf{Comment \thecmt}\hfill\textit{#1}},
+    coltitle=black,colbacktitle=usgsgreen!15,fonttitle=\small]}%
+  {\end{tcolorbox}}
+\newenvironment{response}{\par\noindent\textbf{Response.}\ }{\par\medskip}
+\newcommand{\status}[1]{\par\noindent\textit{Status:} #1\par}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small SedSAT3 — response to the domain review}
+\rhead{\small \thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\begin{document}
+\sloppy
+\setlength{\emergencystretch}{3em}
+
+\begin{tcolorbox}[colback=todo!4,colframe=todo!70,boxrule=0.6pt]
+\textbf{Draft.} Items in \textcolor{todo}{\textbf{red}} need a decision from
+Cara Peterman-Phipps or Allen Gellis; items in \textcolor{mine}{\textbf{blue}}
+are tasks for Arash. All marked items and this note will be removed before the
+response is final.
+\end{tcolorbox}
+
+\begin{flushleft}
+Arash Massoudieh\\
+Department of Civil and Environmental Engineering\\
+The Catholic University of America\\
+\href{mailto:massoudieh@cua.edu}{massoudieh@cua.edu}
+
+\medskip
+\today
+
+\medskip
+Lillian Gorman Sanisaca\\
+U.S. Geological Survey
+\end{flushleft}
+
+\textbf{Re: Domain review of SedSAT3 (Sediment Source Assessment Tool, version 3)}
+
+Dear Lilly,
+
+Thank you for your careful domain review of SedSAT3: the review notes and the
+125 comments in the user's manual. You tested every tool, built test cases for
+the bracket test, the column layout and the column names, and recorded each
+crash with the settings that caused it. That made every problem reproducible.
+This letter answers each of your notes and comments in turn.
+
+\textbf{The version you tested.} Your copy was the Windows package of release
+1.1.6, built in December 2025. Since then, the code review by Steve Westenbroek
+(October 2026) led to a large set of fixes on the branch
+\code{review-fixes-oct2026} (merge request !4 on code.usgs.gov). Several of the
+problems you found were already fixed there: copies of results that lost their
+red highlighting and axis titles, progress windows that stayed open, a chart
+crash on negative values, and distribution fitting. I reproduced every one of
+your crashes against the current code with the example data, and fixed those
+that remained. The changes made for your review are in four commits on the
+same branch: \commit{619f0a6}, \commit{d0acec7}, \commit{839772d} and the
+manual commits.
+
+\textbf{What has changed, in brief.}
+\begin{itemize}
+    \item \textbf{All seven crashes are fixed} (Section~1). Most were caused by
+          one problem: after step~4 with \textit{Modify the included elements},
+          the base elements of the isotopes (Calcium and N) were excluded while
+          the isotopes stayed. The fingerprinting tools now stop with a message
+          that names the isotope and its base element. Element selection no
+          longer excludes the particle size and organic matter constituents.
+    \item \textbf{D50 and TOC are no longer treated as tracers.} The tools that
+          test or select tracers never include particle size or organic matter
+          constituents.
+    \item \textbf{The Tools menu} follows the workflow order, and Other
+          Statistical Tools is grouped: Data exploration, Element selection,
+          Discriminant function analysis, Uncertainty and verification.
+    \item \textbf{Charts}: a colour-blind-safe palette with the same colour for
+          a group in every plot of a window; axis titles that name what is
+          plotted; axis ranges that include every point; p-value plots that
+          always show their axis; observed values in black.
+    \item \textbf{Step~4} also shows the discriminant scores and eigenvectors of
+          the constituents it selects.
+    \item \textbf{Bayesian defaults}: 100,000 samples and 20,000 burn-in.
+    \item \textbf{The user's manual} has been revised for every comment
+          (Sections~5 to~9). Its figures were regenerated from the example data
+          by the current program, at full page width. Each tool's description in
+          the program ends with the manual section that documents it.
+\end{itemize}
+
+The revised manual is attached as a PDF (\code{SedSAT3\_User\_Manual.pdf}); its
+LaTeX source is in \code{docs/manual/SedSat\_User's\_Manual} in the repository.
+Section numbers below refer to it. A few items need a decision from Cara and
+Allen; they are listed in Section~10.
+
+With thanks,
+
+Arash Massoudieh
+
+\newpage
+\tableofcontents
+\newpage
+
+% =====================================================================
+\group{Critical errors (program closed)}
+
+For each crash I recreated your dataset and settings (the example data with
+Aluminum in column 2, the renamed columns, CTAIL1/Aluminum set to 10000, Lead
+excluded, the size and organic matter correction for CTAIL1) and ran the tool
+with the current code.
+
+\begin{reviewer}{Review notes}
+Tools → Other Statistical Tools → Correct based on size and organic matter,
+graph clicked.
+\end{reviewer}
+\begin{response}
+Already fixed before your review, in commit \commit{acfc109}. With the linear
+correction, some corrected values (Manganese, Cobalt) are negative. The chart
+then fell back to a linear axis but attached the points to a logarithmic axis
+that it had never created. The chart now uses the axis it creates. The program
+also reports the negative corrected values (Comment~7.4).
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Review notes}
+Deterministic Sediment Fingerprinting → 5-Fingerprinting and 6-Fingerprinting
+(batch).
+\end{reviewer}
+\begin{response}
+Reproduced with the current code. As you found, the cause was that the base
+elements of the isotopes (Calcium for C13 and N for N15) had been excluded,
+here by step~4 with \textit{Modify the included elements}. Fingerprinting
+needs the base element's concentration to turn a $\delta$ value into an
+isotope concentration, and it read a distribution that did not exist.
+Fingerprinting, its batch version, the Bayesian tools, Error Analysis and
+Source Verification now check every included isotope first. When a base
+element is excluded, they stop with a message: ``The base element `N' of
+isotope `N15' is excluded from the analysis. Include the base element in the
+analysis (Settings > Constituent Properties), or exclude the isotope.'' The
+manual says so where isotopes are set up (Section~2.1) and in Section~3.6.
+Unit test \code{fingerprinting\_isotopeBaseElementExcluded}.
+\end{response}
+\status{Fixed (\commit{619f0a6}).}
+
+\begin{reviewer}{Review notes}
+Other Statistical Tools → Distribution Fitting.
+\end{reviewer}
+\begin{response}
+Already fixed in the code review work (commit \commit{ac039a2}). An internal
+series was created under the wrong name, and the lookup of ``Observed'' then
+failed. Your four settings (Box--Cox on and off; C13, Be and Ba; selected
+samples on and off; the correction for CTAIL1) all run now. For C13 without
+Box--Cox, the tool stops with a message, because a log-normal distribution
+cannot be fitted to negative values.
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Review notes}
+Other Statistical Tools → Elements' Discriminant Power (Multi-way).
+\end{reviewer}
+\begin{response}
+Reproduced with the current code. The multi-way tool built its title from two
+source groups, as the two-way tool does, but its form has no group fields, so
+it failed on every setting. Fixed. Unit test
+\code{multiwayDiscriminantPower\_runs}.
+\end{response}
+\status{Fixed (\commit{619f0a6}).}
+
+\begin{reviewer}{Review notes}
+Other Statistical Tools → Error Analysis; Other Statistical Tools → Source
+Verification.
+\end{reviewer}
+\begin{response}
+Both run with the current code when the isotopes' base elements are included;
+they failed in your session for the reason given above (Calcium and N
+excluded). They now stop with the same message instead. While checking Error
+Analysis I also found that its frequency-distribution panel plotted only the
+first realization, a narrow spike. It now uses all realizations
+(\commit{d0acec7}).
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Comment in the manual, Elements' correlation matrix}
+Attempted to run with OM and Size correction based on CTAIL1, all checkboxes
+clicked: program closed. Works with no corrections.
+\end{reviewer}
+\begin{response}
+Reproduced with the current code. With \textit{Use only selected elements},
+the tool dropped the excluded constituents, including TOC and D50, before
+applying the correction that needs them. It now corrects first and filters
+afterwards, as the other tools do. Unit test
+\code{correlationMatrix\_correctedWithSelectedElements}.
+
+The test for this fix also exposed another crash: the organic matter and size
+regression stopped the program (inside the GSL library) when a group had no
+more samples than regression coefficients. Such a group now gets a regression
+that corrects nothing.
+\end{response}
+\status{Fixed (\commit{619f0a6}).}
+
+% =====================================================================
+\group{README}
+
+\begin{reviewer}{Review notes}
+Neither the readme nor the documentation have up-to-date instructions on how to
+install and run the program. Instructions are only available in the readme
+within the zip file. Both the front page readme on code.usgs.gov and the
+documentation should have basic setup instructions.
+\end{reviewer}
+\begin{response}
+The README on the review branch, which becomes the front page when merge
+request !4 is merged, has a section ``Running the portable Windows build'' and
+build instructions for every platform. The manual has a new chapter, ``Getting
+started'' (Section~1.1), with the same installation steps.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Review notes}
+Opening paragraph ends in ``\ldots'' — is it incomplete? Monte Carlo should be
+spelled out, and (MCMC) put after the full name.
+\end{reviewer}
+\begin{response}
+The README was rewritten during the code review. Its opening paragraph is
+complete, and it spells out ``Markov chain Monte Carlo (MCMC)'' at first use.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Review notes}
+Links to GitHub will need to be updated to code.usgs.gov. Citation needs a DOI,
+not the GitHub URL \url{https://sedsat.org/}.
+\end{reviewer}
+\begin{response}
+The README no longer links to GitHub or sedsat.org. Its repository link and
+citation hold placeholders for the final code.usgs.gov address and the
+software release DOI, which are set at release.
+\todo{Cara: the final repository path and the DOI.}
+\end{response}
+\status{Placeholders in place; values pending the release.}
+
+\begin{reviewer}{Review notes}
+I do not know the regulations around storing software on a non-government
+public website, or around online forms that collect name, email and company.
+Please verify that this meets software release and online form guidelines.
+Is \url{https://sedsat.org/} just for the Windows download? Its MacOS and Linux
+links: do they bypass the Readme instructions? The website gave a warning that
+the download may not be safe.
+\end{reviewer}
+\begin{response}
+These questions are about sedsat.org, a site I set up before the USGS release.
+The USGS release will be distributed from code.usgs.gov, and the README and the
+manual no longer refer to sedsat.org.
+\todo{Cara, Allen: decide whether sedsat.org is retired, or kept only as a
+pointer to the USGS release, and check its download form against USGS
+guidelines if it stays.} The browser warning is likely because the Windows
+executable is not code-signed; packages from code.usgs.gov have the same
+issue unless they are signed. \todo{Cara: ask the release coordinator whether
+the Windows package should be signed.}
+\end{response}
+\status{Decision for Cara and Allen.}
+
+% =====================================================================
+\group{Sample data}
+
+\begin{reviewer}{Review notes}
+I found three example data files. The two called SampleData.xlsx were
+identical; virtual-mixture.xlsx (in the package registry) differs: Calcium is
+``Calcium\_µg/g'', and Nickel, Potassium, Uranium and Vanadium have ``gg''
+appended.
+\end{reviewer}
+\begin{response}
+The example dataset for the manual and the release is \code{examples/SampleData.xlsx}
+in the repository. The manual now names it and no longer links to sedsat.org
+(Section~1.1). \code{virtual-mixture.xlsx} was a test file with synthetic target
+samples. Its odd column names come from an old test of unusual characters in
+names, and it should not be shipped as an example.
+\mine{remove \code{virtual-mixture.xlsx} from the Windows package and include
+\code{examples/SampleData.xlsx} instead.}
+\end{response}
+\status{Manual done; package to update.}
+
+% =====================================================================
+\group{The program}
+
+\begin{reviewer}{Review notes}
+Many steps have the checkboxes ``Use only selected elements'' and ``Use only
+selected samples'', but nothing stops the user from selecting yes in one part of
+the analysis and no in another. Are the user's selections saved somewhere?
+\end{reviewer}
+\begin{response}
+These options are intentionally per tool: an exploratory tool can look at all
+constituents while fingerprinting uses only the selected ones. The manual now
+explains this in a new section, ``Settings shared by many tools''
+(Section~1.3.2). It says that each tool applies the options to its own run only,
+that results compare only when run with the same options, and that the
+selections are saved in the project file. Two changes make the selections
+safer. Particle size and organic matter constituents can no longer be selected
+or excluded as tracers by any tool. The fingerprinting tools refuse an isotope
+whose base element is excluded.
+\end{response}
+\status{Documented; partly changed.}
+
+\begin{reviewer}{Review notes}
+After an error in DFA with linear corrections, I went back to step 2 and chose
+power transforms, but at the bracket test step only 6 tracers appeared.
+Warnings should be given in the program and the documentation that returning to
+a previous step can result in mixups.
+\end{reviewer}
+\begin{response}
+The six tracers were those selected by step~4: \textit{Modify the included
+elements} had excluded the others, and that exclusion applies to every later
+tool, including earlier steps run again. The warning is now in the tool
+descriptions of step~4, ANOVA and auto-select, and in a note in Section~1.3.2
+of the manual.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Review notes}
+In many cases, once a step has completed, there is a progress window at 100\%.
+Could it close automatically when the results window is closed? (Also: the
+progress window appears behind the results window; users may think the program
+failed.)
+\end{reviewer}
+\begin{response}
+Already fixed in the code review work. Progress windows now close as soon as
+the analysis ends, so none is left behind the results.
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Review notes}
+Several plots have points at the axis limits; expand the axes. Check axis labels
+and tick marks on all plots.
+\end{reviewer}
+\begin{response}
+I went through every chart type, rendering each with the example data. The
+changes:
+\begin{itemize}
+    \item The axes now extend beyond the data: the lower limit was rounded to
+          the nearest value instead of down, which cut off the smallest points
+          and bars.
+    \item The axis titles name what is plotted: ``Constituent'',
+          ``Constituents, in the order added'', ``Discriminant score'',
+          ``Probability density'', and the name of the quantity rather than
+          ``Value''. Several plots had none.
+    \item MCMC sample numbers are whole numbers.
+    \item The Box--Cox plot has a grid line through zero.
+    \item The p-value plots always show their axis. Qt's logarithmic axis
+          disappears for values below about $10^{-12}$, so such values are now
+          plotted as base-10 logarithms, which the axis title says.
+\end{itemize}
+\end{response}
+\status{Fixed (\commit{619f0a6}, \commit{d0acec7}).}
+
+\begin{reviewer}{Review notes}
+Suggest adding User Manual section numbers to each step in the Description
+field.
+\end{reviewer}
+\begin{response}
+Done. Each tool's description now ends with ``(User's manual, Section~N.)''.
+\end{response}
+\status{Done (\commit{839772d}).}
+
+% =====================================================================
+\group{Documentation}
+
+\begin{reviewer}{Review notes}
+The documentation provided as a Word document does not match the
+documentation linked from sedsat.org.
+\end{reviewer}
+\begin{response}
+The Word document is the current manual; the sedsat.org copy is the earlier
+version and will not be the published one. The manual source is now in the
+repository, so there is one version.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Review notes}
+``Panels'' are mentioned frequently. For novice users, explain what is meant by
+panels; tell them to scroll down to see additional results.
+\end{reviewer}
+\begin{response}
+A new section, ``The result window'' (Section~1.3.1), explains the panels, the
+graph, table and export buttons, and scrolling for further panels.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Review notes}
+More user guidance is needed in results interpretation, even if just references
+to other work. A novice in statistics will have difficulty using this tool.
+\end{reviewer}
+\begin{response}
+Added a section ``Interpreting the results'' (Section~4.3), with references to
+your Sed\_SAT report and to the review by Collins and others (2017).
+Interpretation is also added where the results are described: the
+posterior predictive plots and what a measured value outside them means;
+convergence of the MCMC samples; the DFA scatter plots; the error analysis
+distributions; and source verification read as a classification check.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Review notes}
+It would be helpful to include a table of method changes (or new methods) from
+SedSat v1.0 to SedSat v3.0.
+\end{reviewer}
+\begin{response}
+Added Table~1.1, ``Methods in SedSAT3'' (Section~1.2), listing every method and
+where it is described. Its last column, comparing each method with Sed\_SAT
+1.0, is left for you and Allen, who know Sed\_SAT 1.0 best.
+\todo{Allen, Lilly: fill in the comparison column.}
+\end{response}
+\status{Table added; comparison to be filled in.}
+
+\begin{reviewer}{Review notes}
+Figures are often too small to see without zooming in. Several naming
+differences between the manual and the program.
+\end{reviewer}
+\begin{response}
+Figures are now full page width (half width in side-by-side pairs). Most were
+regenerated from the example data with the current program, often as the chart
+or table alone rather than the whole screen. Every menu path and tool name in
+the manual now matches the program exactly; the program's names were also
+harmonized (``Multi-way'' throughout). A few screenshots of the main window
+and of files still show the earlier version.
+\mine{retake \code{SelectSourceTargetGroups.png}, \code{Constituent\_Viz.png},
+\code{MCMC\_progress.png}, \code{MCMC\_folders.png}, \code{MCMC\_files.png},
+\code{95p\_CI\_table.png} and \code{95p\_CI\_predicted.png} with the current
+program.}
+\end{response}
+\status{Done, except the screenshots listed.}
+
+% =====================================================================
+\group{Comments in the user's manual: getting started and data}
+
+\begin{reviewer}{Title page}
+Version. Publication date. ``Missing'' (at the table of contents).
+\end{reviewer}
+\begin{response}
+The title page now gives the software version, 1.1.7, and the date as a
+placeholder until publication. The manual now also has a list of figures
+after the table of contents. \todo{Cara: confirm the version number and set
+the publication date.} I was not sure what ``missing'' at the table of
+contents referred to: the list of figures, or a table of contents absent from
+the Word copy (the PDF has one). Please tell me if it is something else.
+\end{response}
+\status{Done; version and date pending.}
+
+\begin{reviewer}{Raw data preparation}
+What about missing values or zeros? Are those allowed? How are negatives
+managed? What if data is both positive and negative in a given element?
+\end{reviewer}
+\begin{response}
+A new paragraph, ``Missing, zero and negative values'' (Chapter~2), explains:
+\begin{itemize}
+    \item Every cell must hold a finite number; an empty cell, text, NaN or Inf
+          stops the import with the sheet, row and column. Values below
+          detection must be replaced before import.
+    \item Elements are modeled on a log scale, so an element with a zero or
+          negative value cannot be used for fingerprinting; the program says
+          which.
+    \item Isotope $\delta$ values may be negative or of mixed sign: they are
+          used on a linear scale and never log-transformed (Section~6.1.1,
+          extended for this).
+    \item The Box--Cox transformation leaves non-positive constituents
+          untransformed and lists them.
+\end{itemize}
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Raw data preparation}
+Tested by placing Aluminum in column 2 (passed); by changing Calcium to
+Calcium\_µg/g and Arsenic to ``Arsenic space'' (passed). All edits conformed to
+``each sheet must contain exactly the same elements''.
+\end{reviewer}
+\begin{response}
+Thank you for these tests. The import also refuses a sheet whose header has a
+gap, a duplicate sample name, and a blank row followed by more samples, each
+with a message.
+\end{response}
+
+\begin{reviewer}{Raw data preparation}
+\url{https://sedsat.org/wp-content/Data/SampleData.xlsx}: should this link be
+updated to a code.usgs.gov address? What about virtual-mixture.xlsx?
+\end{reviewer}
+\begin{response}
+The link is replaced by the example file's place in the repository and the
+Windows package. On virtual-mixture.xlsx, see Section~3.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Importing the data}
+Minimum number of samples per source group? Is there a minimum or maximum
+number of source groups?
+\end{reviewer}
+\begin{response}
+New paragraph ``Number of samples and source groups'' (Chapter~2):
+\begin{itemize}
+    \item At least two source groups, and at least two samples per group.
+    \item The organic matter and size regression needs more samples in a group
+          than coefficients.
+    \item Discriminant function analysis needs more samples than constituents
+          plus groups.
+    \item The mass balance can separate at most one more source than the
+          number of tracers.
+\end{itemize}
+There is no maximum number of groups other than this last limit.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Importing the data, Fig.~1.1}
+My dialog box has blue circles and it's difficult to see what is selected and
+what is not.
+\end{reviewer}
+\begin{response}
+These are the Windows style's radio buttons; the selected one has a filled
+centre. I agree that it is faint.
+\mine{show the chosen target sheet in bold in that dialog.}
+\end{response}
+\status{To do.}
+
+\begin{reviewer}{Importing the data}
+The dialog box has an option to exclude elements, not samples. If ``exclude
+all'' is clicked, the table does not update until the user clicks within the
+table. Removing Lead was tricky: typing No gave a checked box that became Yes.
+\end{reviewer}
+\begin{response}
+The manual now describes what happens: after import, the constituent properties
+table opens, and samples are chosen separately in Settings → Include/Exclude
+Samples. The ``Include all elements'' box now updates the table at once
+(\commit{619f0a6}). The \textit{Include in analysis} column is now a single
+click on the box, with no editor to type into. That was fixed in the code
+review work.
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Importing the data}
+It would be easier to read if the constituents appeared in the same order as in
+the xlsx file.
+\end{reviewer}
+\begin{response}
+Agreed. The program stores the constituents in a structure sorted by name, so
+the alphabetical order appears in every table and result. Keeping the file's
+order touches the project file format and every result. I would rather make
+that change separately, with its own tests, than in this review. The manual now
+states that constituents are listed alphabetically.
+\mine{keep the Excel column order (project format and results); planned
+separately.}
+\end{response}
+\status{Documented; change planned.}
+
+\begin{reviewer}{Importing the data}
+These columns can only be edited if the constituent type has been designated as
+Isotope first; I suggest making this note in the manual. Please add a link to
+further explanation in Mathematical Basis. Both N15 and C13 ratios for the
+SampleData should be provided.
+\end{reviewer}
+\begin{response}
+The manual now says to set the type first, and links to the stable isotope
+section. It also says that the base element must be included in the analysis.
+The N15 values are given. For C13, I need to check the example's base element
+before stating it: the test project uses Calcium with 0.011113, but the base
+element for $\delta^{13}$C should be the carbon content.
+\mine{settle the base element and standard ratio for C13 in the example (TOC
+cannot be both the organic matter constituent and a base element), and state
+them in Section~2.1.}
+\end{response}
+\status{Done except the C13 values.}
+
+\begin{reviewer}{Importing the data}
+I don't see any values for C13; I assume the data is negative and the scale
+does not allow for negative values.
+\end{reviewer}
+\begin{response}
+Correct. The data plot always used a logarithmic axis. It now uses a linear
+axis for a constituent with zero or negative values, and the manual says so.
+\end{response}
+\status{Fixed (\commit{619f0a6}).}
+
+\begin{reviewer}{Choosing samples to be discarded}
+This did not automatically appear for me; I had to go to Settings and select
+Include/Exclude Samples. Source groups appear in a drop-down menu, not tabs. I
+do not see red highlight; worth noting that outliers are not automatically
+removed. This statement should be moved up to where include/exclude is first
+mentioned.
+\end{reviewer}
+\begin{response}
+The section now matches the program:
+\begin{itemize}
+    \item the dialog is opened from Settings;
+    \item groups are chosen from a drop-down list;
+    \item a sample is excluded by clicking its Include cell, explained where
+          the dialog is first described;
+    \item flagged samples are not removed automatically.
+\end{itemize}
+On the red highlight: before the code review fixes, the notes that mark an
+outlier were lost when the data were copied, so nothing could be red. With the
+current code, a sample is red only when one of its values is beyond the
+threshold. With the example data and a threshold of 3, no sample is, as the
+regenerated figure shows; the manual now says so.
+\end{response}
+\status{Done.}
+
+% =====================================================================
+\group{Comments in the user's manual: deterministic fingerprinting}
+
+\begin{reviewer}{Outlier analysis}
+Box--Cox requires positive data: how is C13 handled? It has $\lambda=1$ for all
+source groups. What if an element has both positive and negative values, as can
+occur with N15?
+\end{reviewer}
+\begin{response}
+A constituent with any zero or negative value is not transformed, and its
+$\lambda$ is shown as 1, which is why C13 shows 1. The program lists the
+constituents it left untransformed. For an element with mixed signs, such as
+N15, the same applies to every group in which a non-positive value occurs.
+This is now in Sections~3.1 and~6.1.1.
+\end{response}
+\status{Documented.}
+
+\begin{reviewer}{Outlier analysis}
+The execution window is confusing: it looks like you are running the outlier
+test only on a single source group, but that is not the case. What is the
+purpose of the source group drop-down?
+\end{reviewer}
+\begin{response}
+There are two outlier tests:
+\begin{itemize}
+    \item The one run when you open Include/Exclude Samples covers every group.
+    \item The tool in step~1 reports the deviations of the one group chosen in
+          its form.
+\end{itemize}
+The section now explains both.
+\end{response}
+\status{Documented.}
+
+\begin{reviewer}{Tools}
+I'm finding the organization of the Tools window difficult to navigate. A user
+new to fingerprinting will find this difficult. Consider ordering tools by
+typical execution order rather than alphabetically. (Also: the order of the
+descriptions should match the program; group the DFA tools; a Pre-Analysis
+Tools subheader would be worthwhile.)
+\end{reviewer}
+\begin{response}
+Done in the program and the manual.
+\begin{itemize}
+    \item The menu was alphabetical because the program's settings file format
+          does not keep order. The menu now keeps the order written in the
+          file.
+    \item Other Statistical Tools is grouped in workflow order: Data
+          exploration (outliers, corrected profiles, correlation, distribution
+          fitting, K--S tests, Box--Cox); Element selection (ANOVA, auto-select,
+          discriminant power); Discriminant function analysis (all six DFA
+          tools together); Uncertainty and verification.
+    \item A duplicate entry was removed.
+    \item Chapter~5 of the manual follows the same groups and order, with the
+          program's names.
+\end{itemize}
+\end{response}
+\status{Done (\commit{619f0a6}).}
+
+\begin{reviewer}{Organic matter and particle size correction}
+Program closed when the plot box was clicked. Are the corrected values plotted
+anywhere? Some additional detail is needed: is size-corrected data used for the
+organic correction, or raw data for both? How do you select the regression
+option? What is ``Correct based on size and organic matter'' used for? Does
+this need to be done for each source group? Is there a way to visualize raw vs
+corrected data?
+\end{reviewer}
+\begin{response}
+The crash is fixed (Section~1). The manual now explains, in Section~3.2:
+\begin{itemize}
+    \item When both are used, organic matter and particle size are the two
+          variables of one multiple regression, fitted to the raw data; the
+          correction applies both terms together, not one after the other.
+    \item The regression form is chosen in the \textit{Equation} list
+          (Linear or Power).
+    \item One run of step~2 fits every source group.
+    \item The regression plot shows the measured values.
+    \item ``Correct based on size and organic matter'' fits nothing: it shows
+          the corrected profiles for a chosen target sample, as a table or a
+          chart. These can be compared with the raw values under Data, or
+          exported.
+\end{itemize}
+\end{response}
+\status{Documented; crash fixed.}
+
+\begin{reviewer}{Organic matter and particle size correction}
+Recommend expanding the axis so that points are clearly visible. Nothing is
+highlighted in red for me (Figs.~2.4, 2.5). ``2a-Corrected results'' is not an
+option; unable to check this section.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The regression plot's axes now extend beyond the data.
+    \item The red p-values were lost by the same copy problem as the outlier
+          flags; they show with the current code, as the regenerated figures
+          show.
+    \item The menu path is corrected: Other Statistical Tools → Data
+          exploration → Correct based on size and organic matter.
+\end{itemize}
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Discriminant function analysis, step 4}
+When selecting Box--Cox, Modify included elements, OM and Size for CTAIL1, I got
+an error. This appears to be due to over-corrections: size and organic
+corrections moved source values from positive to negative, which is an invalid
+result. Only able to run DFA with power transform selected, or with no
+corrections.
+\end{reviewer}
+\begin{response}
+Your diagnosis is right. The error now names the element and group, and says
+that the imported values are positive and the negative values come from the
+correction. A note in Section~3.2 explains over-correction by the linear form
+and recommends the power form, or not correcting the elements named.
+\end{response}
+\status{Message and documentation improved.}
+
+\begin{reviewer}{Bracketing analysis}
+To test, I raised CTAIL1/Aluminum to 10000; the test correctly failed. ``Value
+higher'' — or lower? It would be nice to have a notes column for elements that
+failed the bracket test. I do not understand the note about re-running the
+bracket test for a new target sample. This does not look like bracket test
+results (Fig.~2.7).
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The text now reads ``higher than in all the source samples, or lower
+          than in all of them''.
+    \item The note is rewritten. The bracket test covers every target sample at
+          once, but the constituent selection is one list for the project, so
+          when you move to another target sample you adjust the list using
+          that sample's column. For the batch tools, exclude every element that
+          fails for any sample.
+    \item The bracketing figure (now Fig.~3.7) was the wrong image; it is
+          replaced by the bracket results table.
+    \item A notes column is a good idea. Meanwhile, the manual suggests
+          exporting the bracket table as the record. \mine{add a notes column
+          to the constituent properties table.}
+\end{itemize}
+\end{response}
+\status{Documented; notes column to do.}
+
+\begin{reviewer}{Multi-way discriminant function analysis}
+The benefits of multi-way DFA \ldots\ However, it is very sensitive to
+multicollinearity and typically overfits if the number of variables $\gg$ the
+number of samples. Given the structure of the typical sediment fingerprinting
+input data, I think forward stepwise DFA would offer a better solution. Is data
+tested/transformed for multivariate normality?
+\end{reviewer}
+\begin{response}
+I agree, and step~4 is forward stepwise DFA. It adds one constituent at a time,
+each the one that most improves the separation, and selects those up to the
+smallest $\chi^2$ p-value. The tool's description said ``between the two
+source groups'', which was wrong. It now describes forward stepwise selection
+among all groups.
+
+The manual now has a paragraph ``Stepwise selection'' (Section~3.4) giving
+your reasons: correlated tracers, overfitting, and conditioning. On normality:
+SedSAT3 does not test multivariate normality. Its Box--Cox option transforms
+each constituent towards normality before the DFA, and the K--S tools check
+constituents individually. Section~3.4 now says this.
+\end{response}
+\status{Documented.}
+
+\begin{reviewer}{Multi-way discriminant function analysis}
+Please explain the ``Modify the included elements based on the results'' option.
+Is DFA run based on the size and organic corrections from only one target
+sample? Each target sample has unique corrections and bracket results; each
+could have unique DFA results.
+\end{reviewer}
+\begin{response}
+Both are now explained in Section~3.5. With the correction, the DFA uses the
+target sample chosen in the form, so the selection can differ between target
+samples; for another target sample, run step~4 again with that sample.
+\end{response}
+\status{Documented.}
+
+\begin{reviewer}{Multi-way discriminant function analysis}
+Why is the x axis labeled ``Sample''? I did not understand the constituent order
+until I looked at Wilks' lambda; perhaps put Wilks' lambda first. No y-axis label
+on my DFA plots. My table gives p-values by element, not by source. Results in
+Figs.~2.9--2.11 are found under Other Statistical Tools; if these are the most
+relevant results they should appear in step~4.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The x axis now reads ``Constituents, in the order added'', and every
+          plot has a y-axis title.
+    \item The manual explains that all panels list the constituents in the
+          order added. I kept the panel order, because the $\chi^2$ p-value is
+          the selection criterion; Wilks' $\Lambda$ always decreases.
+    \item You are right that the p-value table is per constituent. The
+          per-group tables (Fig.~3.10) come from Discriminant function analysis
+          (Multi-way), and the manual now says so.
+    \item As you suggested, step~4 now also shows the discriminant scores and
+          eigenvectors of the selected constituents (panels 5 and 6).
+\end{itemize}
+\end{response}
+\status{Done (\commit{619f0a6}).}
+
+\begin{reviewer}{Multi-way discriminant function analysis, Fig.~2.10}
+Figure needs updating, ellipses not present. What is the meaning of WB? Why do
+the colors change with each pairing? Please verify color-blind accessibility per
+USGS guidance. I see 2 WB\_Bank and no Pasture.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The colours were random, chosen again for each plot. All charts now
+          use the Okabe--Ito colour-blind-safe palette, and in the DFA plot
+          each group keeps its colour for every pair.
+    \item ``WB\_'' was an internal prefix. The axes now read ``Discriminant
+          score, Bank vs.\ the rest''.
+    \item The window opened with the first group on both axes; it now starts
+          with two different groups.
+    \item Fig.~3.11 is regenerated, with the ellipses.
+\end{itemize}
+\todo{Cara: if USGS has its own colour guidance for figures, please point me to
+it; I followed the Okabe--Ito palette.}
+\end{response}
+\status{Fixed (\commit{619f0a6}).}
+
+\begin{reviewer}{Multi-way discriminant function analysis, Fig.~2.11}
+A confusion matrix would be a clearer output than this table. The goal is to
+determine how well the tracers chosen can correctly assign sources, right?
+\end{reviewer}
+\begin{response}
+Yes. Source Verification does this: it treats each source sample as a target
+and shows which groups it is attributed to. The manual now presents it in that
+light (Section~5.4.2). A summary confusion matrix from the DFA is a good
+addition. \mine{add a confusion matrix (DFA classification of the source
+samples) to step~4.}
+\end{response}
+\status{Documented; addition planned.}
+
+\begin{reviewer}{Fingerprinting}
+Are the elements chosen by DFA the only ones used for fingerprinting, or are all
+elements used? Is any weighting applied based on DFA results? Attempted to run:
+program closed. Please add to the documentation that once the DFA step is run,
+the constituent table will be modified.
+\end{reviewer}
+\begin{response}
+Fingerprinting uses exactly the constituents marked as included, with equal
+weight; the DFA weights are not used. Sections~3.5 and~3.6 now say so, with the
+note about the table being modified. The crash is fixed (Section~1).
+\end{response}
+\status{Documented; crash fixed.}
+
+\begin{reviewer}{Fingerprinting (Batch)}
+If all samples receive the same corrections, which target sample should be used?
+Specifically, what is used for $e_{i,t}$? Corrections are run for all target
+samples, but DFA and Bayesian steps require selection of a target sample.
+\end{reviewer}
+\begin{response}
+The batch tools correct for each target sample separately: $e_{i,t}$ is the
+organic matter content and particle size of the target sample being analyzed.
+What is shared is the constituent and sample selection, and that was made in
+the earlier steps with one target sample. The note in Section~3.7 (repeated
+for the Bayesian batch) now explains this. It suggests checking the selection
+with target samples from both ends of the organic matter and size range.
+\end{response}
+\status{Documented.}
+
+% =====================================================================
+\group{Comments in the user's manual: Bayesian fingerprinting}
+
+\begin{reviewer}{Bayesian Chemical Mass Balance Analysis}
+8 chains is the default; is that generally recommended? 100,000 and 20,000
+should be the defaults. The x-axis is labeled sample number, but the tick marks
+are decimals. Using the current defaults the plot looks nothing like this:
+samples appear random, no convergence.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The defaults are now 100,000 samples and 20,000 burn-in, so the
+          default run converges. In the example, the chains settle by about
+          15,000 to 20,000 samples (regenerated Fig.~4.2).
+    \item The ticks are whole numbers.
+    \item The manual explains the number of chains (one per processor core;
+          more chains help judge convergence) and how to recognize convergence,
+          and that too few samples look like scattered noise. The burn-in
+          guidance is now consistent (20\%).
+\end{itemize}
+\end{response}
+\status{Done (\commit{619f0a6}).}
+
+\begin{reviewer}{Bayesian Chemical Mass Balance Analysis}
+The dashed lines from my run are far from the middle of the distribution, and in
+one element not on the graph at all. Please give guidance on interpretation.
+Add a figure for the fifth panel.
+\end{reviewer}
+\begin{response}
+A measured value outside the plotted range is now always shown, the axis
+extending to it. Section~4.1 now explains what a measured value in the tail
+means:
+\begin{itemize}
+    \item a non-conservative tracer;
+    \item a missing source;
+    \item an unsuitable correction;
+    \item a tracer that (nearly) failed the bracket test.
+\end{itemize}
+It also says what to do. Fig.~4.6 shows the fifth panel.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Bayesian Chemical Mass Balance Analysis (Batch)}
+Add that the folders will be placed in the directory in which the project was
+saved. I see 7 empty txt files; unable to verify content.
+\end{reviewer}
+\begin{response}
+The manual now says where the folders go. They go to the working folder: the
+folder of the project last opened or saved, or of the Excel file before the
+project is saved. It advises saving the project first. With the current code
+the seven files have content; I ran a batch on the example data and checked
+each. The file names in the manual now match the program (\code{1\_MCMC
+samples.txt}, \ldots).
+\end{response}
+\status{Fixed; screenshots of the folder to retake (Section~5).}
+
+% =====================================================================
+\group{Comments in the user's manual: other statistical tools}
+
+\begin{reviewer}{Elements' correlation matrix}
+Figure needs updating, current format below.
+\end{reviewer}
+\begin{response}
+Regenerated. The result window no longer prints the whole matrix as text;
+the table button shows it, with correlations beyond the threshold in red.
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{Analysis of Variance}
+This assumes no corrections are made. Once OM and Size are corrected, Cobalt is
+not listed as having low discriminating power; a discussion of this effect is
+warranted. Red text not present in my table. D50 should not be part of this
+analysis and should not be removed, possibly TOC as well.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item I confirmed your observation: with the power correction for CTAIL1,
+          Cobalt's p-value falls from 0.12 to about $10^{-9}$. A note now
+          cautions against removing tracers without evaluating them on the data
+          used for fingerprinting.
+    \item The red text was the copy problem described above.
+    \item D50 and TOC are no longer analysed by ANOVA, or by any tool that
+          tests or selects tracers (\commit{619f0a6}).
+\end{itemize}
+\end{response}
+\status{Fixed and documented.}
+
+\begin{reviewer}{Auto-select elements}
+Colors repeated in graph: Bank and Crop identical to Forest and Pasture. D50
+should not be part of this analysis; if the user checked Modify the included
+elements, they would lose their size data.
+\end{reviewer}
+\begin{response}
+The palette now has eight distinct colours, and each pair keeps its colour.
+D50 and TOC are never tested or selected, and the \textit{Modify} option no
+longer changes them. Your scenario (losing the size data) can no longer
+happen.
+\end{response}
+\status{Fixed (\commit{619f0a6}).}
+
+\begin{reviewer}{Two-way DFA}
+This is not on the list as ``Two-Way''; I assume this is one vs.\ one? x-axis
+label is ``Sample''; same on other plots. F-test p value plot has no y axis label
+or tick marks. Even when I uncheck ``Use only selected elements'' I only see 8
+elements: running step 4 permanently altered my elements; there should be a note
+in the manual and the program. It would be good to group these with the stepwise
+DFA.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The sections now use the program's names: one vs.\ one, multi-way,
+          and one vs.\ the rest. They are grouped with the stepwise versions,
+          in the program and the manual (Section~5.3).
+    \item The axis labels and the missing y axis are fixed (Section~4 of this
+          letter).
+    \item The note about step~4 is in the program and the manual.
+    \item Unchecking ``Use only selected elements'' did not show the other
+          elements because step~4 had already excluded them.
+\end{itemize}
+\end{response}
+\status{Done.}
+
+\begin{reviewer}{One vs.\ the rest DFA}
+The weight vector: can this be explained more? Is it meant to be in the results?
+\end{reviewer}
+\begin{response}
+Yes: the \textit{Eigen vector} panel shows it. Sections~3.4 and~5.3.3 now
+explain that each sample's discriminant score is the weighted sum of its
+constituent values, and how to read the weights.
+\end{response}
+\status{Documented.}
+
+\begin{reviewer}{Distribution fitting}
+This step did not run (all settings). Key shows observed and normal as the same
+color; make the observed points black or another unused color.
+\end{reviewer}
+\begin{response}
+The crash is fixed (Section~1). The samples are now black points, distinct from
+both fitted curves.
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Elements' Discriminant Power (Multi-way)}
+In program ``multiple-way''. Program closed when running this step. Can
+additional info be given as to why ``include target samples'' is an option?
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The program now says ``Multi-way'', as the manual does.
+    \item The crash is fixed (Section~1).
+    \item The manual now explains the target option. It adds the target
+          samples as another group, which shows the constituents that make the
+          targets unlike a source. A constituent that separates the targets
+          from every source is a warning, similar to a failed bracket test.
+\end{itemize}
+\end{response}
+\status{Fixed and documented.}
+
+\begin{reviewer}{Error Analysis}
+Program closed (all settings). Why is there a black box and a green box in the
+key?
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The crash is fixed (Section~1).
+    \item The two keys were the outline and the shaded area of the same
+          distribution. The chart now has one key, named after the variable.
+    \item The distribution panel now uses all realizations.
+\end{itemize}
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Kolmogorov--Smirnov tests}
+These colors are hard to distinguish. When running lognormal for C13, observed
+does not appear; I assume because of negatives? X axis label should be element,
+constituent, or tracer, not sample.
+\end{reviewer}
+\begin{response}
+\begin{itemize}
+    \item The colours come from the new palette.
+    \item A log-normal comparison of a constituent with non-positive values now
+          stops with a message instead of drawing nothing.
+    \item The axis reads ``Constituent''.
+\end{itemize}
+\end{response}
+\status{Fixed (\commit{619f0a6}, \commit{839772d}).}
+
+\begin{reviewer}{Optimal Box-Cox parameters}
+X axis label should be changed. A zero line for the y-axis would make this plot
+easier to read.
+\end{reviewer}
+\begin{response}
+Both done.
+\end{response}
+\status{Fixed.}
+
+\begin{reviewer}{Source Verification}
+Program closed (all options for Bank). Which OM/size correction will be used,
+for which target sample?
+\end{reviewer}
+\begin{response}
+The crash is fixed (Section~1). With the correction, each source sample being
+tested is treated as the target, so the sources are corrected to that sample's
+own organic matter content and particle size. The manual now says so.
+\end{response}
+\status{Fixed and documented.}
+
+\begin{reviewer}{Genetic Algorithm estimation}
+I do not see this option. I do not see any blue (modeled) in the modeled vs
+observed plot.
+\end{reviewer}
+\begin{response}
+The genetic algorithm is not part of this release: Levenberg--Marquardt solves
+the same problem more efficiently, and the GA is only in an optional build. The
+section now says so at its start. On the hidden modeled points: in all
+modeled-vs-observed plots, the later series is now drawn smaller, so the
+modeled value shows as a ring around the observed one where they agree.
+\todo{Allen, Cara: keep the GA section (marked as not in this release), or
+remove it from the manual?}
+\end{response}
+\status{Documented; plot fixed.}
+
+\begin{reviewer}{Mathematical Basis}
+Stable isotopes: how are negatives treated/resolved? N15 can span positive and
+negative space. Some kind of ending or summary would be good; a header for
+References is necessary.
+\end{reviewer}
+\begin{response}
+Section~6.1.1 now explains how $\delta$ values of either sign are handled in
+the mass balance and the likelihood. The chapter ends with a summary, and the
+bibliography is titled ``References''.
+\end{response}
+\status{Done.}
+
+% =====================================================================
+\group{Items still open}
+
+\begin{longtable}{@{}p{0.28\linewidth}p{0.18\linewidth}p{0.48\linewidth}@{}}
+\toprule
+Item & Who & Note \\
+\midrule
+\endhead
+Repository path, DOI, version, publication date & \todo{Cara} & README, citation and manual title page hold placeholders. \\
+sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as a pointer; check the form against USGS guidelines if it stays. Code-signing of the Windows package. \\
+USGS colour guidance & \todo{Cara} & The charts use the Okabe--Ito colour-blind-safe palette. \\
+Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Last column of Table~1.1 in the manual. \\
+Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
+C13 base element and ratio in the example & \mine{Arash} & State them in Section~2.1. \\
+Screenshots to retake & \mine{Arash} & Seven figures of the main window, the progress window and files. \\
+virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\
+Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
+Notes column; confusion matrix; target sheet dialog & \mine{Arash} & Enhancements suggested in the review. \\
+\bottomrule
+\end{longtable}
+
+\end{document}
