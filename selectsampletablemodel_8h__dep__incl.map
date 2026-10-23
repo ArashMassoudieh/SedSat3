@@ -1,0 +1,16 @@
+<map id="selectsampletablemodel.h" name="selectsampletablemodel.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="305,5,499,31"/>
+<area shape="rect" id="Node000002" href="$selectsampledelegate_8h.html" title=" " alt="" coords="186,79,365,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="371,40,297,81,295,76,368,35"/>
+<area shape="rect" id="Node000006" href="$selectsamples_8cpp.html" title=" " alt="" coords="331,225,473,251"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="405,45,405,225,399,225,399,45"/>
+<area shape="rect" id="Node000007" href="$selectsampletablemodel_8cpp.html" title=" " alt="" coords="439,79,650,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="438,34,523,76,520,81,436,39"/>
+<area shape="rect" id="Node000003" href="$selectsampledelegate_8cpp.html" title=" " alt="" coords="5,152,199,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="236,112,131,154,129,149,234,107"/>
+<area shape="rect" id="Node000004" href="$selectsamples_8h.html" title=" " alt="" coords="223,152,351,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="282,117,288,151,283,152,277,118"/>
+<area shape="rect" id="Node000005" href="$mainwindow_8cpp.html" title=" " alt="" coords="175,225,306,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="274,190,250,227,246,224,270,187"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="319,182,385,223,382,227,316,187"/>
+</map>
