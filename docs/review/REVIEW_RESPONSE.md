@@ -50,7 +50,7 @@ Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 | Null dereference in `CBinary::operator[]` | **Fixed** | `ac039a2` | `unit:binary_indexing` | Throws `std::out_of_range`. The same deliberate null dereference was in `CVector::operator[]` and `CVector_arma::operator[]`, used throughout the analyses; those now throw too, so an indexing mistake gives a message (via the GUI's exception handler) instead of a crash. |
 | Writes to a closed `FILE*` in `src/GA/GA.cpp` | **Fixed** | `ac039a2` | — | `src/GA/GA.cpp` was a stale copy of the GA that no build compiled (it includes a `StringOP.h` that does not exist); removed. The GA that is compiled (`include/GA/GA.hpp`) now uses a `unique_ptr<FILE>` handle and skips writing when `fopen` fails; a `printf` with three `%le` and one argument and an unsynchronised counter in its OpenMP loop were fixed. Every other `fopen`/`fclose` in the code now checks for failure. |
 | `log()` of a non-positive value in Box-Cox | **Fixed** | `ac039a2` | `unit:boxcox_*` | Data with a zero or negative value is left untransformed (as negatives already were; zeros gave −inf) and the analysis lists the skipped constituents. λ = 0 is the log case; for \|λ\| < 0.01 the transform uses `expm1` to keep precision; elsewhere the formula is unchanged. Outlier detection used its own copy of the formula, which shifted the scores of skipped constituents by 1/σ; it now uses the shared one. `CalculateBoxCoxLogLikelihood` (unused) took the log of a sum that was always negative; corrected. |
-| Uninitialised variables | **Fixed** | `ac039a2` | CI `clang-tidy` (errors) | All 128 `cppcoreguidelines-init-variables` / `pro-type-member-init` findings. In-class initialisers for members; NaN for floating-point locals so a read-before-write is visible. Stepwise DFA could report an unassigned Wilks' λ; it now reports NaN. cppcheck `uninitvar` was not run locally (see Static analysis). |
+| Uninitialized variables | **Fixed** | `ac039a2` | CI `clang-tidy` (errors) | All 128 `cppcoreguidelines-init-variables` / `pro-type-member-init` findings. In-class initializers for members; NaN for floating-point locals so a read-before-write is visible. Stepwise DFA could report an unassigned Wilks' λ; it now reports NaN. cppcheck `uninitvar` was not run locally (see Static analysis). |
 
 ### Reproducibility and random numbers
 
@@ -109,7 +109,7 @@ answers are in the response letter,
 | t-test degrees of freedom (`size_t`) wrapped around with < 2 samples | `src/sourcesinkdata.cpp` (`t_TestPValue`) | — |
 | Uniform/Dirichlet distribution curve made of NaN points; one-point curve divided by zero | `src/cmbdistribution.cpp` | `unit:distribution_uniformCurveIsFinite` |
 | Results table compared the time, not the value, with the upper highlight limit | `cmbtimeseries.cpp` | — |
-| MCMC initialisation step size used −low − high | `include/MCMC/MCMC.hpp` | — |
+| MCMC initialization step size used −low − high | `include/MCMC/MCMC.hpp` | — |
 | Error Analysis drew from a shared stream (result depended on earlier runs); now its own seed field, recorded in the results name | `src/conductor.cpp`, `src/sourcesinkdata.cpp`, forms | `unit:errorAnalysis_sameSeedSameResult` |
 | `GA.hpp` not self-contained (`Q_version` guards, a macro defined nowhere); `CGA::operator=` signature | `include/GA/GA.hpp`, `GA.h` | CI `build:linux-ga` |
 | Hard-coded `#define ARMA_USE_SUPERLU` broke builds without SuperLU (Windows/conda-forge) | `Utilities/Matrix_arma*.cpp` | — |
@@ -118,7 +118,7 @@ answers are in the response letter,
 | Unused `FilePushButton` class, empty `GA_impl` files; stale `createdmg.sh` version | removed / updated | — |
 
 Also added: tests for the reviewer test plan's Test 2 (contributions sum to one and
-are non-negative, both parameterisations) and Test 4d (single-sample source),
+are non-negative, both parameterizations) and Test 4d (single-sample source),
 `concurrency-mt-unsafe` as an error in `.clang-tidy`, and a codespell CI job
 (reported, not enforced). Regression comparison: no differences.
 
@@ -224,21 +224,21 @@ The five C4834 were unchecked `QFile::open` calls: project load, `loadJson`
 and `saveJson` in `mainwindow.cpp`, and the result exports in
 `resultswindow.cpp` and `resulttableviewer.cpp`. The default (non-`/W4`) build
 also had a C4805 (`int == true`) in `src/GA/Binary.cpp`, fixed without
-changing behaviour. The default build is now warning-free. The remaining
+changing behavior. The default build is now warning-free. The remaining
 conversions are the MSVC counterpart of the GCC `-Wconversion` and
 `-Wsign-compare` findings and will be handled the same way.
 
-**clang-tidy** (LLVM 20, `.clang-tidy`): 128 initialisation findings and the
+**clang-tidy** (LLVM 20, `.clang-tidy`): 128 initialization findings and the
 real defects above fixed. 25 remain, none of the error class: 7
 `clang-analyzer-security.FloatLoopCounter` (grid loops over x and λ, intended),
-4 `NonNullParamChecker` that the analyser cannot see are guarded, 2
+4 `NonNullParamChecker` that the analyzer cannot see are guarded, 2
 `NewDeleteLeaks` on Qt-parented labels (false positives), 3
 `exception-escape` from Armadillo destructors, and 9 style findings (unused
 locals, empty `catch`, `_Data` names, repeated branches).
 
 On Windows (clang-tidy from conda-forge, `pixi run lint`): no errors, 10
 warnings: 3 float loop counters, each reported by two checks; 2 static
-initialisers that could throw (`script_data` in `cli/scriptrunner.cpp`, `pi`
+initializers that could throw (`script_data` in `cli/scriptrunner.cpp`, `pi`
 in `src/cmbdistribution.cpp`); and the 2 `NewDeleteLeaks` false positives.
 
 **cppcheck** (`pixi run cppcheck`, on Windows): 158 findings, 150 after the
@@ -251,7 +251,7 @@ fixes. Real defects fixed:
 - `SourceSinkData::MCMC` left `mcmc->Model` pointing at a local
   `SourceSinkData` after returning. Nothing read it afterwards; it is now
   reset to `nullptr`.
-- `CGA::Model` was not initialised by the constructors.
+- `CGA::Model` was not initialized by the constructors.
 
 Three `zerodiv` reports in `Utilities/TimeSeries.hpp` are on divisions already
 guarded by a comparison with `T{}`, and carry inline suppressions. Remaining:

@@ -67,6 +67,7 @@ struct element_information
     double standard_ratio = 0;  ///< Standard isotopic ratio for normalization
     string base_element;        ///< Parent element for isotopes
     bool include_in_analysis = true;  ///< Whether to include in statistical analyses
+    string notes;               ///< Free-text notes, e.g. why it was excluded
 };
 
 /**

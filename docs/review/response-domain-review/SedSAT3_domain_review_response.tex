@@ -108,7 +108,7 @@ manual commits.
     \item \textbf{The Tools menu} follows the workflow order, and Other
           Statistical Tools is grouped: Data exploration, Element selection,
           Discriminant function analysis, Uncertainty and verification.
-    \item \textbf{Charts}: a colour-blind-safe palette with the same colour for
+    \item \textbf{Charts}: a color-blind-safe palette with the same color for
           a group in every plot of a window; axis titles that name what is
           plotted; axis ranges that include every point; p-value plots that
           always show their axis; observed values in black.
@@ -558,7 +558,7 @@ what is not.
 \end{reviewer}
 \begin{response}
 These are the Windows style's radio buttons; the selected one has a filled
-centre, which is faint. The dialog now shows the target sheet's name in bold,
+center, which is faint. The dialog now shows the target sheet's name in bold,
 marked ``(target)'', and names it at the top. It also refuses \textbf{Ok}
 when no sheet is marked as the target, which used to be possible.
 \end{response}
@@ -783,12 +783,13 @@ results (Fig.~2.7).
           fails for any sample.
     \item The bracketing figure (now Fig.~3.7) was the wrong image; it is
           replaced by the bracket results table.
-    \item A notes column is a good idea. Meanwhile, the manual suggests
-          exporting the bracket table as the record. \mine{add a notes column
-          to the constituent properties table.}
+    \item Thank you for the suggestion: the constituent properties table now
+          has a sixth, free-text \textit{Notes} column. Double-click a cell
+          to record, for example, why a constituent was excluded; the notes
+          are saved with the project (Section~2.1 of the manual).
 \end{itemize}
 \end{response}
-\status{Documented; notes column to do.}
+\status{Done.}
 
 \begin{reviewer}{Multi-way discriminant function analysis}
 The benefits of multi-way DFA \ldots\ However, it is very sensitive to
@@ -855,16 +856,16 @@ USGS guidance. I see 2 WB\_Bank and no Pasture.
 \end{reviewer}
 \begin{response}
 \begin{itemize}
-    \item The colours were random, chosen again for each plot. All charts now
-          use the Okabe--Ito colour-blind-safe palette, and in the DFA plot
-          each group keeps its colour for every pair.
+    \item The colors were random, chosen again for each plot. All charts now
+          use the Okabe--Ito color-blind-safe palette, and in the DFA plot
+          each group keeps its color for every pair.
     \item ``WB\_'' was an internal prefix. The axes now read ``Discriminant
           score, Bank vs.\ the rest''.
     \item The window opened with the first group on both axes; it now starts
           with two different groups.
     \item Fig.~3.11 is regenerated, with the ellipses.
 \end{itemize}
-\todo{Cara: if USGS has its own colour guidance for figures, please point me to
+\todo{Cara: if USGS has its own color guidance for figures, please point me to
 it; I followed the Okabe--Ito palette.}
 \end{response}
 \status{Fixed (\commit{d7d8b92}).}
@@ -1013,7 +1014,7 @@ analysis and should not be removed, possibly TOC as well.
           cautions against removing tracers without evaluating them on the data
           used for fingerprinting.
     \item The red text was the copy problem described above.
-    \item D50 and TOC are no longer analysed by ANOVA, or by any tool that
+    \item D50 and TOC are no longer analyzed by ANOVA, or by any tool that
           tests or selects tracers (\commit{d7d8b92}).
 \end{itemize}
 \end{response}
@@ -1025,7 +1026,7 @@ should not be part of this analysis; if the user checked Modify the included
 elements, they would lose their size data.
 \end{reviewer}
 \begin{response}
-The palette now has eight distinct colours, and each pair keeps its colour.
+The palette now has eight distinct colors, and each pair keeps its color.
 D50 and TOC are never tested or selected, and the \textit{Modify} option no
 longer changes them. Your scenario (losing the size data) can no longer
 happen.
@@ -1111,7 +1112,7 @@ constituent, or tracer, not sample.
 \end{reviewer}
 \begin{response}
 \begin{itemize}
-    \item The colours come from the new palette.
+    \item The colors come from the new palette.
     \item A log-normal comparison of a constituent with non-positive values now
           stops with a message instead of drawing nothing.
     \item The axis reads ``Constituent''.
@@ -1176,13 +1177,12 @@ Item & Who & Note \\
 \endhead
 Repository path, DOI, version, publication date & \todo{Cara} & README, citation and manual title page hold placeholders. \\
 sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as a pointer; check the form against USGS guidelines if it stays. Code-signing of the Windows package. \\
-USGS colour guidance & \todo{Cara} & The charts use the Okabe--Ito colour-blind-safe palette. \\
+USGS color guidance & \todo{Cara} & The charts use the Okabe--Ito color-blind-safe palette. \\
 Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Review the last column of Table~1.1, and say which Sed\_SAT~1.0 features SedSAT3 should have. \\
 Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
 Screenshots to retake & \mine{Arash} & Seven figures of the main window, the progress window and files. \\
 virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\
 Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
-Notes column & \mine{Arash} & Enhancement suggested in the review. \\
 \bottomrule
 \end{longtable}
 

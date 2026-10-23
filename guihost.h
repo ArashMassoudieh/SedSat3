@@ -17,7 +17,7 @@ class ProgressWindow;
  *
  * Warnings are shown as message boxes and progress is drawn in
  * ProgressWindow dialogs, both parented to the MainWindow. This is the
- * behaviour the application had before the Conductor was separated from the
+ * behavior the application had before the Conductor was separated from the
  * interface it runs in.
  *
  * @see ConsoleHost for the command line counterpart

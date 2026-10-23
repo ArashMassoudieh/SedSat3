@@ -12,7 +12,7 @@ class SourceSinkData;
 
 /**
  * @namespace SetupCommands
- * @brief Commands that configure a dataset rather than analyse it
+ * @brief Commands that configure a dataset rather than analyze it
  *
  * A project file records which elements and samples take part in an analysis,
  * what role each constituent plays and which group is the target. In the

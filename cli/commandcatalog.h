@@ -63,7 +63,7 @@ public:
      * @brief Reports anything wrong with a step
      *
      * Checks that the command exists and that every argument given is one the
-     * command accepts. An unrecognised name is reported with the closest
+     * command accepts. An unrecognized name is reported with the closest
      * accepted name, since a mistyped argument would otherwise be silently
      * ignored and the command would run with the default in its place.
      *

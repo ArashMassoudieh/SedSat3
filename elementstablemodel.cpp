@@ -14,7 +14,7 @@ int ElementTableModel::rowCount(const QModelIndex &/*index*/) const
 }
 int ElementTableModel::columnCount(const QModelIndex &/*index*/) const
 {
-    return 5;
+    return 6;
 }
 QVariant ElementTableModel::data(const QModelIndex &index, int role) const
 {
@@ -59,6 +59,8 @@ QVariant ElementTableModel::data(const QModelIndex &index, int role) const
                 return "No";
         }
     }
+    if ((role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::ToolTipRole) && index.column()==5)
+        return QString::fromStdString(Data->GetElementInformation(Data->GetElementNames()[index.row()])->notes);
     if (role == Qt::ItemIsEnabled)
     {
         if (index.column()==2 || index.column()==3)
@@ -95,6 +97,10 @@ QVariant ElementTableModel::headerData(int section, Qt::Orientation orientation,
             if (section==4)
             {
                 return "Include in analysis";
+            }
+            if (section==5)
+            {
+                return "Notes";
             }
         }
     }
@@ -140,6 +146,10 @@ bool ElementTableModel::setData(const QModelIndex & index, const QVariant & valu
                 ? value.toBool()
                 : value.toString().compare("Yes", Qt::CaseInsensitive) == 0 || value.toString() == "true" || value.toString() == "1";
             Data->GetElementInformation(element)->include_in_analysis = include;
+        }
+        if (index.column()==5)
+        {
+            Data->GetElementInformation(element)->notes = value.toString().toStdString();
         }
 
     }

@@ -188,7 +188,7 @@ private:
     /**
         * @brief Gets the file path for saving, prompting user if needed
         * @param promptUser If true, always show save dialog; if false, use existing ProjectFileName
-        * @return File path for saving, or empty string if cancelled
+        * @return File path for saving, or empty string if canceled
         */
     QString getSaveFilePath(bool promptUser);
 

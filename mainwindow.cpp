@@ -234,7 +234,7 @@ QString MainWindow::getSaveFilePath(bool promptUser)
         QFileDialog::DontUseNativeDialog
     );
 
-    // User cancelled
+    // User canceled
     if (fileName.isEmpty())
     {
         return QString();
@@ -345,7 +345,7 @@ void MainWindow::onSaveProject()
 
     if (filePath.isEmpty())
     {
-        return; // User cancelled
+        return; // User canceled
     }
 
     if (saveProjectToFile(filePath))
@@ -360,7 +360,7 @@ void MainWindow::onSaveProjectAs()
 
     if (filePath.isEmpty())
     {
-        return; // User cancelled
+        return; // User canceled
     }
 
     if (saveProjectToFile(filePath))
@@ -520,7 +520,7 @@ void MainWindow::on_import_excel()
 
     if (fileName.isEmpty())
     {
-        return; // User cancelled
+        return; // User canceled
     }
 
     QFileInfo fileInfo(fileName);
@@ -607,7 +607,7 @@ bool MainWindow::ReadExcel(const QString& filename)
 
     if (!sheetsToInclude)
     {
-        return false; // User cancelled
+        return false; // User canceled
     }
 
     // Filter selected sheets

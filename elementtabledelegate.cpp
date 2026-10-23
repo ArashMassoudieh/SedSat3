@@ -89,6 +89,8 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
     }
     if (index.column()==4)
         return nullptr;  // toggled with one click in editorEvent()
+    if (index.column()==5)
+        return QStyledItemDelegate::createEditor(parent, option, index);  // free-text notes
 
     return nullptr;
 
@@ -96,6 +98,11 @@ QWidget *ElementTableDelegate::createEditor(QWidget *parent, const QStyleOptionV
 
 void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
+    if (index.column()==5)
+    {
+        QStyledItemDelegate::setEditorData(editor, index);
+        return;
+    }
     QVariant var = index.data(Qt::DisplayRole);
     if (index.column()==0)
     {
@@ -141,7 +148,11 @@ void ElementTableDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 void ElementTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                   const QModelIndex &index) const
 {
-    if (index.column() == 0) QStyledItemDelegate::setModelData(editor, model, index);
+    if (index.column() == 0 || index.column() == 5)
+    {
+        QStyledItemDelegate::setModelData(editor, model, index);
+        return;
+    }
     QString element = model->data(index.sibling(index.row(), 0)).toString();
 
     if (index.column() == 1)

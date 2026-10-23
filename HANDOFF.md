@@ -124,7 +124,7 @@ redistributable and the package must be built from a Release configuration.
 
 ### 5. Make settings portable (check, then decide)
 
-If the app uses `QSettings` with default behaviour, it writes to `HKEY_CURRENT_USER`.
+If the app uses `QSettings` with default behavior, it writes to `HKEY_CURRENT_USER`.
 That does **not** require admin, so it is not a blocker. But it leaves traces on the
 reviewer's machine and it means two extracted copies share state.
 
@@ -157,7 +157,7 @@ Options, in order of preference:
 
 ### 7. Test under a restricted token — do not skip this
 
-Testing on an admin account proves nothing. The whole point is behaviour without
+Testing on an admin account proves nothing. The whole point is behavior without
 elevation.
 
 ```
@@ -193,7 +193,7 @@ Inside the ZIP, a short `README-PORTABLE.txt`:
   can cause SmartScreen warnings or block execution. If that happens, right-click
   the ZIP → Properties → Unblock **before** extracting. Or in PowerShell:
   `Get-ChildItem -Recurse <folder> | Unblock-File`
-- The executable is unsigned. If the organisation's application-control policy
+- The executable is unsigned. If the organization's application-control policy
   blocks unsigned binaries from user-writable folders, this is a policy matter
   and needs local IT, not a different package
 - Which version and which toolchain produced the binary

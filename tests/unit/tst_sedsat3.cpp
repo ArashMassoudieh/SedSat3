@@ -146,6 +146,7 @@ private slots:
     void includeAll_dataLevel();
     void includeAll_checkBox();
     void includeColumn_singleClickToggles();
+    void notesColumn_editedAndSaved();
 
     // ---------- Distribution fitting (review item 2.1 / B1) ----------
     void distributionFitting_degenerateSets();
@@ -481,6 +482,37 @@ void SedSAT3Tests::includeAll_checkBox()
     for (const auto& element : *data.GetElementInformation())
         included += element.second.include_in_analysis ? 1 : 0;
     QCOMPARE(included, int(data.GetElementInformation()->size()) - 1);
+}
+
+void SedSAT3Tests::notesColumn_editedAndSaved()
+{
+    // Domain review: a free-text notes column in Constituent Properties
+    SourceSinkData data;
+    BuildData(data, PositiveGroups(), "Mixture");
+    ElementTableModel model(&data);
+    QCOMPARE(model.columnCount(), 6);
+    QCOMPARE(model.headerData(5, Qt::Horizontal, Qt::DisplayRole).toString(), QStringLiteral("Notes"));
+    QVERIFY(model.flags(model.index(0, 5)) & Qt::ItemIsEditable);
+
+    const std::string element = data.GetElementNames()[0];
+    const QString note = QStringLiteral("Excluded: below detection in most sources");
+    QVERIFY(model.setData(model.index(0, 5), note, Qt::EditRole));
+    QCOMPARE(QString::fromStdString(data.GetElementInformation(element)->notes), note);
+    QCOMPARE(model.data(model.index(0, 5)).toString(), note);
+
+    // Saved with the project, and older projects without notes still load
+    QJsonObject json = data.ElementInformationToJsonObject();
+    QCOMPARE(json[QString::fromStdString(element)].toObject()["Notes"].toString(), note);
+    SourceSinkData reloaded;
+    QVERIFY(reloaded.ReadElementInformationfromJsonObject(json));
+    QCOMPARE(QString::fromStdString(reloaded.GetElementInformation(element)->notes), note);
+
+    QJsonObject old_entry = json[QString::fromStdString(element)].toObject();
+    old_entry.remove("Notes");
+    json[QString::fromStdString(element)] = old_entry;
+    QVERIFY(reloaded.ReadElementInformationfromJsonObject(json));
+    QVERIFY(reloaded.GetElementInformation(element)->notes.empty());
+    QVERIFY(reloaded.GetElementInformation(element)->include_in_analysis);
 }
 
 void SedSAT3Tests::includeColumn_singleClickToggles()

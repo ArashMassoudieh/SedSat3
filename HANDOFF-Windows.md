@@ -102,7 +102,7 @@ Mixture), then:
 4. **Step 4 with the correction for CTAIL1:**
    - seven panels, the last the confusion matrix (table button; rows the
      true groups, last column "% correct");
-   - the scatter (panel 5) keeps each group's colour when you change the
+   - the scatter (panel 5) keeps each group's color when you change the
      pair, and starts on two different groups;
    - the p-value plot shows its y axis;
    - the x axis reads "Constituents, in the order added".

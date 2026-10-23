@@ -877,7 +877,7 @@ bool SourceSinkData::InitializeParametersAndObservations(
                         p.SetPriorDistribution(distribution_type::normal);
 
                         // A dataset that has not had its distributions built
-                        // has no fitted parameters to centre the range on.
+                        // has no fitted parameters to center the range on.
                         // Reading them anyway is an out-of-range access on an
                         // empty vector, so report the omission instead.
                         Distribution* estimated = profile_set.GetEstimatedDistribution(element_name);
@@ -2793,6 +2793,7 @@ bool SourceSinkData::ReadElementInformationfromJsonObject(const QJsonObject& jso
         elem_info.standard_ratio = jsonobject[key].toObject()["Standard Ratio"].toDouble();
         elem_info.base_element = jsonobject[key].toObject()["Base Element"].toString().toStdString();
         elem_info.include_in_analysis = jsonobject[key].toObject()["Include"].toBool();
+        elem_info.notes = jsonobject[key].toObject()["Notes"].toString().toStdString();  // absent in older projects
         
         element_information_[key.toStdString()] = elem_info;
     }
@@ -2918,6 +2919,7 @@ QJsonObject SourceSinkData::ElementInformationToJsonObject() const
         elem_info_json_obj["Standard Ratio"] = it->second.standard_ratio;
         elem_info_json_obj["Base Element"] = QString::fromStdString(it->second.base_element);
         elem_info_json_obj["Include"] = it->second.include_in_analysis;
+        elem_info_json_obj["Notes"] = QString::fromStdString(it->second.notes);
 
         json_object[QString::fromStdString(it->first)] = elem_info_json_obj;
     }
@@ -4871,8 +4873,8 @@ CMBMatrix SourceSinkData::DFAConfusionMatrix()
                     continue;
                 }
                 means[h] = arma::mean(values, 0);
-                arma::mat centred = values.each_row() - means[h];
-                scatter += centred.t() * centred;
+                arma::mat centered = values.each_row() - means[h];
+                scatter += centered.t() * centered;
                 degrees_of_freedom += double(values.n_rows) - 1.0;
             }
             if (degrees_of_freedom <= 0)

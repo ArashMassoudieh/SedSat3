@@ -5,6 +5,7 @@
 #include "ui_formelementinformation.h"
 #include "elementstablemodel.h"
 #include <QSignalBlocker>
+#include <QHeaderView>
 
 FormElementInformation::FormElementInformation(QWidget *parent) :
     QWidget(parent),
@@ -33,6 +34,7 @@ QTableView *FormElementInformation::table()
 void FormElementInformation::setModel(ElementTableModel *model)
 {
     ui->tableView->setModel(model);
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);  // room for the notes
     connect(model, &ElementTableModel::editCompleted, this, &FormElementInformation::SyncIncludeAllCheckBox);
     SyncIncludeAllCheckBox();
 }

@@ -138,13 +138,13 @@ double roundDown(double a, double rounding_value) {
     return std::floor(a/rounding_value)*rounding_value;
 }
 
-// Colour-blind-safe palette (Okabe and Ito), blue first; yellow last, as it
+// Color-blind-safe palette (Okabe and Ito), blue first; yellow last, as it
 // shows least on white
 static const QColor series_palette[] = {
     QColor(0, 114, 178), QColor(230, 159, 0), QColor(0, 158, 115), QColor(213, 94, 0),
     QColor(204, 121, 167), QColor(86, 180, 233), QColor(0, 0, 0), QColor(240, 228, 66)};
 
-// The same series name keeps the same colour in this window (e.g. a source
+// The same series name keeps the same color in this window (e.g. a source
 // group across the DFA pairs)
 QColor GeneralChart::SeriesColor(const QString& name)
 {
@@ -222,7 +222,7 @@ bool GeneralChart::PlotVectorSetSet(CMBVectorSetSet *profile, const QString &/*t
     ui->horizontalLayout->addWidget(source1_combo);
     ui->horizontalLayout->addWidget(source2_label);
     ui->horizontalLayout->addWidget(source2_combo);
-    // Fix each group's colour for every pair, and start on two different
+    // Fix each group's color for every pair, and start on two different
     // groups (both used to start on the first, plotting it against itself)
     for (int i = 0; i < source1_combo->count(); i++)
         SeriesColor(source1_combo->itemText(i));
@@ -1200,7 +1200,7 @@ bool GeneralChart::PlotDistribution(TimeSeries<double> *samples,const QString& v
 
 
     // The x axis is the value of the variable and the y axis its posterior
-    // density (both used to be labelled as if this were the samples plot)
+    // density (both used to be labeled as if this were the samples plot)
     axisX->setRange(x_min_val, x_max_val);
     axisX->setTitleText(variable);
     axisYNormal->setTitleText("Probability density");

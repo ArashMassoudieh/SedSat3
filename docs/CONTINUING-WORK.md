@@ -327,7 +327,7 @@ by 1.2 on every successful step, so it adds nothing. The guard is weakest
 exactly when it is needed.
 
 **Fix:** test `rcond` rather than `det`, and give the additive damping a floor
-so it actually regularises. This changes numerical behaviour, so it wants
+so it actually regularises. This changes numerical behavior, so it wants
 checking against the example projects before it lands.
 
 ### 6.4 Old-format projects silently deselect every constituent
@@ -372,7 +372,7 @@ checking.**
 - an isotope's base element distribution — `nullptr` dereferenced
 - `lookup()` returning `-1`, with `CVector::operator[]` doing
   `double *p = 0; return *p;` for any out-of-range index
-- an uninitialised axis pointer in four plot routines
+- an uninitialized axis pointer in four plot routines
 - `fitted->parameters[0]` on an empty vector, at four sites
 - `fopen` returning `nullptr`, passed to `fclose`
 

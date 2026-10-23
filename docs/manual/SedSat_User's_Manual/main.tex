@@ -161,7 +161,7 @@ Once the Excel file is imported, a dialog box will appear asking you to identify
 
 After you identify the target sample sheet, SedSAT3 imports the data and opens the constituent properties table in the middle of the window (Fig.~\ref{fig:element_properties}). Samples are included or excluded separately, in \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} (Section~\ref{sec:choosing-samples}). Each window panel and individual columns can be resized by hovering your mouse between column headers; a double arrow will appear that lets you resize them for better viewing.
 
-The middle window panel contains five columns. The constituents are listed in the first column. In the second column (Constituent Type), you can double-click on each entry to open a drop-down menu with the following options:
+The middle window panel contains six columns. The constituents are listed in the first column. In the second column (Constituent Type), you can double-click on each entry to open a drop-down menu with the following options:
 
 \begin{itemize}
     \item Element
@@ -172,6 +172,8 @@ The middle window panel contains five columns. The constituents are listed in th
 \end{itemize}
 
 To exclude a constituent from the analysis, click its box in the fifth column, \textit{Include in analysis}, so that it reads \textit{No}; click again to include it. The \textit{Include all elements} box above the table includes or excludes every constituent at once.
+
+The sixth column, \textit{Notes}, is free text: double-click a cell to type a note, for example why a constituent was excluded. Notes are saved with the project and are not used in any analysis.
 
 For isotopes, you must choose the base element and the standard isotope ratio. These are needed for converting $\delta$ values to the content of the isotope (Section~\ref{sec:stable-isotopes}). The \textit{Base Element} and \textit{Standard isotope ratio} cells can only be edited after the constituent's type has been set to \textit{Isotope}: set the type first. The base element must be measured in every sample. It is either an element included in the analysis, or the organic matter constituent; if an element used as a base is excluded, the fingerprinting tools stop with a message. In the example data:
 \begin{itemize}
@@ -791,7 +793,7 @@ The contents of each file are as follows:
 \section{Interpreting the results}\label{sec:interpretation}
 Sediment fingerprinting results should be judged by several lines of evidence rather than by one number. \citet{gormansanisaca2017determining} describe the steps of a study with the earlier Sed\_SAT tool, and \citet{collins2017sediment} review the method and the decisions it involves. With SedSAT3:
 \begin{itemize}
-    \item \textbf{Check the fit.} Compare the modeled and measured target sample (Section~\ref{sec:lmmle}, third panel; Section~\ref{sec:bayesian_cmb}, fourth and fifth panels). Tracers that the model cannot reproduce point to non-conservative behaviour, a missing source, or an unsuitable correction.
+    \item \textbf{Check the fit.} Compare the modeled and measured target sample (Section~\ref{sec:lmmle}, third panel; Section~\ref{sec:bayesian_cmb}, fourth and fifth panels). Tracers that the model cannot reproduce point to non-conservative behavior, a missing source, or an unsuitable correction.
     \item \textbf{Check the tracers.} The selected tracers should pass the bracket test for the target sample and separate the source groups (step~4, Section~\ref{sec:multiway-dfa}). The confusion matrix of step~4 and source verification (Section~\ref{sec:tools-uncertainty}) show how well they classify the source samples.
     \item \textbf{Check the sensitivity.} Error analysis (Section~\ref{sec:tools-uncertainty}) shows how much the contributions depend on the particular source samples. Repeating the fingerprinting with a slightly different tracer selection, or with and without the organic matter and size correction, shows how much they depend on those choices.
     \item \textbf{Report the uncertainty.} The Bayesian credible intervals (Section~\ref{sec:bayesian_cmb}) combine the measurement and source variability. Contributions whose intervals are wide, or which change with the tracer selection, should be reported with that caution.

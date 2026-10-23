@@ -90,7 +90,7 @@ around.
 
 All changes are in merge request
 \href{https://code.usgs.gov/cphipps/SedimentSourceAssessmentTool3/-/merge_requests/4}{!4}
-on code.usgs.gov (branch \code{review-fixes-oct2026}), organised as one commit
+on code.usgs.gov (branch \code{review-fixes-oct2026}), organized as one commit
 per area so they can be reviewed separately:
 
 \begin{center}
@@ -131,7 +131,7 @@ In brief:
   (Section~5).
 \end{itemize}
 
-Below, each of your comments is reproduced (quoted where short, summarised
+Below, each of your comments is reproduced (quoted where short, summarized
 where long) and followed by my response. Comments are grouped by topic; the
 source of each is given at the right of its heading: \emph{Email 10/15} and
 \emph{Email 10/16} are your two emails to Cara, \emph{Summary} is
@@ -338,7 +338,7 @@ so the first click often changed nothing.
 
 \begin{reviewer}{Email 10/15; Summary; Tests, Test 4c}
 Missing \code{return} on the clean path of
-\code{Conductor::\allowbreak{}CheckNegativeElements} (both overloads) — undefined behaviour,
+\code{Conductor::\allowbreak{}CheckNegativeElements} (both overloads) — undefined behavior,
 currently masked on MSVC.
 \end{reviewer}
 \begin{response}
@@ -423,12 +423,12 @@ log-likelihood took the log of a sum that was always negative.
 \code{boxcox\_\allowbreak{}logLikelihoodIsFinite}.}
 
 \begin{reviewer}{Email 10/15; Summary}
-Widespread uninitialised variables flagged by clang-tidy and cppcheck.
+Widespread uninitialized variables flagged by clang-tidy and cppcheck.
 \end{reviewer}
 \begin{response}
 All 128 findings of clang-tidy's \code{cppcoreguidelines-\allowbreak{}init-variables}
 and \code{cppcoreguidelines-\allowbreak{}pro-type-member-init} were fixed: in-class
-initialisers for members, and NaN for floating-point locals so that any
+initializers for members, and NaN for floating-point locals so that any
 read-before-write is visible rather than silent. One was a real defect: the
 stepwise DFA could report an unassigned Wilks' $\lambda$ when no element
 improved the fit (it now reports NaN). These two checks are errors in the CI
@@ -548,12 +548,12 @@ overflow, text, and decimal commas or thousands separators, each with a
 specific reason. A refused value stops the import with sheet, row, column
 and value (Excel) or group, sample and constituent (project file) — the same
 treatment empty and non-numeric cells already had, since SedSAT3 has no
-missing-data value. Two findings from tracing the behaviour you observed:
+missing-data value. Two findings from tracing the behavior you observed:
 the ``Ignored NaN, Inf, or -Inf value'' message came from Qt Charts while
 plotting, so the NaN \emph{had} been stored; and project loading turned a
 missing value or a NaN (which Qt saves as \code{null}) into 0, and silently
 dropped a sample that failed to load. Both now stop the load with the
-location. The only ad-hoc data guard downstream (the Box--Cox optimiser's
+location. The only ad-hoc data guard downstream (the Box--Cox optimizer's
 \code{min == min} test) uses a shared helper; the other \code{isfinite}
 uses guard computed quantities, not data, and \code{removeNaNs()} has no
 callers. The import is now a separate, dialog-free function
@@ -594,7 +594,7 @@ and compares them with a stored baseline at a relative tolerance of
 $10^{-9}$; the output of the code before the fixes is kept alongside, so every
 change the fixes made is traceable. \code{.\allowbreak{}gitlab-ci.\allowbreak{}yml} builds with CMake
 (GUI, command line, tests), with the GA enabled, and with the qmake
-projects; runs the unit and regression tests; runs clang-tidy (initialisation
+projects; runs the unit and regression tests; runs clang-tidy (initialization
 checks as errors) and cppcheck; has a manual Windows job for a Windows
 runner; and publishes the Doxygen documentation to GitLab Pages. The
 existing GitHub documentation workflow is kept for the development mirror.
@@ -748,7 +748,7 @@ Armadillo provides it), MSVC gets \code{/\allowbreak{}utf-8} from CMake (your C4
 the duplicate \code{USE\_\allowbreak{}QCHARTS} definition is guarded (your C4005). The guide
 itself needs three adjustments to match the repository: its \code{lint} task
 lists the removed \code{src/\allowbreak{}GA/\allowbreak{}GA.\allowbreak{}cpp}; its \code{.\allowbreak{}clang-tidy} would replace
-the repository's stricter one (which CI uses, with the initialisation and
+the repository's stricter one (which CI uses, with the initialization and
 \code{rand()} checks as errors); and \code{deploy-win} uses
 \code{--compiler-runtime} and LLVM's OpenMP DLLs, whereas MSVC builds need
 \code{vcomp140.\allowbreak{}dll} (see \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}).
@@ -774,7 +774,7 @@ baseline on Windows. (A default Windows \code{PATH} has no \code{bash}, so the
 regression test is registered only when \code{-DBASH\_\allowbreak{}EXECUTABLE}
 points at Git's bash.) \code{lint} reports no errors and 10 warnings: three
 floating-point grid loops, each reported by two checks; two static
-initialisers that could throw; and two leaks on Qt-parented labels, which are
+initializers that could throw; and two leaks on Qt-parented labels, which are
 false positives. The MSVC \code{/W4} build had 286 unique first-party
 warnings. The five real defects among them (C4834, an unchecked
 \code{QFile::\allowbreak{}open} in five places) are fixed, as is a C4805 in the
@@ -785,7 +785,7 @@ functions) and C5043 1. \code{cppcheck} reported 158 findings. The real ones
 are fixed: an out-of-bounds write in \code{CMatrix\_\allowbreak{}arma::\allowbreak{}get(int)}, a
 division made before its zero check in \code{TimeSeries}, a sampler left
 pointing at a local variable in \code{SourceSinkData::\allowbreak{}MCMC}, and an
-uninitialised \code{CGA::\allowbreak{}Model}. Three divisions that are already
+uninitialized \code{CGA::\allowbreak{}Model}. Three divisions that are already
 guarded are suppressed as false positives. The 150 that remain are style and
 performance findings (postfix increments 60, pass-by-value 46, and so on),
 plus one possible \code{log(0)} in a function that has no callers.
@@ -864,8 +864,8 @@ accurate, not to diminish the review: they were all worth looking at.
 12a.2 & Writes to a closed \code{FILE*} & Fixed (Comment 2.7).\\
 12a.3 & Missing return in both \code{CheckNegativeElements} overloads & Fixed; in the reviewed snapshot only the map overload lacked a return, and its result was not used, so the guard itself worked (Comment 2.4).\\
 12a.4 & \code{log()} of a non-positive value in \code{ApplyBoxCoxTransform} & Fixed; the always-negative \code{log} argument was in \code{CalculateBoxCoxLogLikelihood} (Comment 2.8).\\
-12b & \code{Interface} limits uninitialised; copy operations incomplete & Fixed: members initialised, and the copy constructor and assignment now copy every member, so copies keep their notes (outlier and bracketing flags) and highlight limits.\\
-12b & Uninitialised members of \code{Observation}, \code{Parameter}, \code{element\_\allowbreak{}information} & Fixed (Comment 2.9).\\
+12b & \code{Interface} limits uninitialized; copy operations incomplete & Fixed: members initialized, and the copy constructor and assignment now copy every member, so copies keep their notes (outlier and bracketing flags) and highlight limits.\\
+12b & Uninitialized members of \code{Observation}, \code{Parameter}, \code{element\_\allowbreak{}information} & Fixed (Comment 2.9).\\
 12b, 12d & Performance and implicit-widening notes & See Section 9.\\
 12d & Missing \code{StringOP.\allowbreak{}h}; GA headers use incomplete types & Fixed; GA.hpp now includes what it uses, and the GA builds in CI.\\
 12d & \code{MCMC.\allowbreak{}h} includes \code{GA.\allowbreak{}h} & Fixed.\\
@@ -895,7 +895,7 @@ Further defects found while verifying the findings above.
   NaN points, and a one-point curve divided by zero.
 \item The results table compared the \emph{time} rather than the value with
   the upper highlight limit.
-\item An MCMC initialisation routine computed a step from $-\mathrm{low} - \mathrm{high}$
+\item An MCMC initialization routine computed a step from $-\mathrm{low} - \mathrm{high}$
   instead of $\mathrm{high} - \mathrm{low}$.
 \item \code{CGA::\allowbreak{}operator=} took a non-const reference and returned by value.
 \item The Excel import silently dropped data after an empty header cell or a
@@ -928,13 +928,13 @@ Check & Count & Status\\
 \midrule
 \endhead
 \code{cppcoreguidelines-\allowbreak{}init-variables} & 35 & Fixed (Comment 2.9); one in the old \code{GA.\allowbreak{}cpp} was a false positive.\\
-\code{cppcoreguidelines-\allowbreak{}pro-type-member-init} & 13 & Fixed with in-class initialisers.\\
+\code{cppcoreguidelines-\allowbreak{}pro-type-member-init} & 13 & Fixed with in-class initializers.\\
 \code{clang-diagnostic-error}: \code{StringOP.\allowbreak{}h} not found & 1 & File removed (Comment 2.7).\\
 \code{clang-diagnostic-error}: incomplete types in \code{GA.\allowbreak{}hpp} & 7 & Fixed: \code{GA.\allowbreak{}hpp} includes \code{progressreporter.\allowbreak{}h} itself, and its \code{Q\_\allowbreak{}version} guards (a macro defined nowhere) are now \code{Q\_\allowbreak{}GUI\_\allowbreak{}SUPPORT}.\\
 \code{clang-analyzer-cplusplus.\allowbreak{}NewDeleteLeaks} (progress windows) & 5 & Fixed: progress windows are owned by a scoped object.\\
 \code{concurrency-mt-unsafe} (\code{rand}) & 2 & Fixed (Comment 3.2); now an error in CI.\\
 \code{clang-analyzer-deadcode.\allowbreak{}DeadStores} (ANOVA options) & 2 & Fixed: the options were ignored (Section 6).\\
-\code{UndefinedBinaryOperator}, \code{CallAndMessage} & 4 & Fixed (initialisation, uniform curve).\\
+\code{UndefinedBinaryOperator}, \code{CallAndMessage} & 4 & Fixed (initialization, uniform curve).\\
 \code{UndefReturn}, \code{modernize-use-nullptr} (\code{CBinary}) & 2 & Fixed (Comment 2.6).\\
 \code{bugprone-unhandled-self-assignment} & 1 & Fixed (\code{CGA::\allowbreak{}operator=}).\\
 \code{bugprone-branch-clone} (GA parameter mapping) & 1 & Fixed: \code{apply\_\allowbreak{}to\_\allowbreak{}all} is false for every parameter in SedSAT3 (a single model), a remnant of a multi-series design; the identical branches were collapsed.\\
@@ -968,7 +968,7 @@ Test & Status and automated test\\
 \endhead
 1. MCMC reproducibility & Fixed; \code{mcmc\_\allowbreak{}sameSeedSameResult}, \code{mcmc\_\allowbreak{}differentSeedDifferentResult}. Convergence diagnostics deferred (Comment 3.3).\\
 1b. LM determinism & Made genuinely repeatable (Comment 3.4); regression suite.\\
-2. Sum to one, non-negative & Now tested for both parameterisations: \code{levenbergMarquardt\_\allowbreak{}contributionsSumToOne}. The Bayesian contributions satisfy it by construction (the last is one minus the others).\\
+2. Sum to one, non-negative & Now tested for both parameterizations: \code{levenbergMarquardt\_\allowbreak{}contributionsSumToOne}. The Bayesian contributions satisfy it by construction (the last is one minus the others).\\
 3. LM vs Bayesian & Not run by the review; left to the domain review.\\
 4a. Required column removed & Now tested (\code{excelImport}): a column removed from one sheet is refused, naming the two sheets; removed from every sheet, the workbook imports without it. Testing this found three ways an import silently dropped data — an empty header cell (every column after it), a row without a sample name (every sample below it), and a repeated sample name (the second sample) — all now refused with their location.\\
 4b. NaN / non-numeric cell & Fixed (Comment 4.1); parser tests and \code{excelImport}.\\
