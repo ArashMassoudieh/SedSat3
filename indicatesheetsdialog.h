@@ -6,6 +6,7 @@
 
 #include <QDialog>
 #include <QRadioButton>
+#include <QLabel>
 
 
 
@@ -27,6 +28,10 @@ private:
     QList<QRadioButton*> radio_buttons_sinks;
     QList<QRadioButton*> radio_buttons_sources;
     QStringList group_names;
+    QList<QLabel*> sheet_labels;
+    QLabel* summary_label = nullptr;
+    /// Shows the target sheet's name in bold, and names it above the list
+    void UpdateTargetHighlight();
 private slots:
     void reject();
     void accept();

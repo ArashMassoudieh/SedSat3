@@ -8,12 +8,20 @@
 #include "QRadioButton"
 #include "QDebug"
 #include "mainwindow.h"
+#include <QMessageBox>
+#include <QVBoxLayout>
 
 IndicateSheetsDialog::IndicateSheetsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::IndicateSheetsDialog)
 {
     ui->setupUi(this);
+    // Which sheet is the target was hard to see from the radio buttons alone
+    // (domain review): it is named here and shown in bold in the list
+    summary_label = new QLabel(this);
+    summary_label->setWordWrap(true);
+    if (auto* layout = qobject_cast<QVBoxLayout*>(this->layout()))
+        layout->insertWidget(0, summary_label);
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
@@ -30,6 +38,7 @@ void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
         QLabel *label = new QLabel(ui->scrollAreaWidgetContents);
         label->setText(sheets[i]);
         group_names<<sheets[i];
+        sheet_labels.append(label);
         ui->formLayout->setWidget(i, QFormLayout::LabelRole, label);
 
         QGroupBox *groupBox = new QGroupBox(ui->scrollAreaWidgetContents);
@@ -55,6 +64,24 @@ void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
         ui->formLayout->setWidget(i, QFormLayout::FieldRole, groupBox);
 
     }
+    UpdateTargetHighlight();
+}
+
+void IndicateSheetsDialog::UpdateTargetHighlight()
+{
+    QString target;
+    for (int i = 0; i < sheet_labels.count(); i++)
+    {
+        const bool is_target = radio_buttons_sinks[i]->isChecked();
+        sheet_labels[i]->setText(is_target ? group_names[i] + "  (target)" : group_names[i]);
+        sheet_labels[i]->setStyleSheet(is_target ? "font-weight: bold; color: #0072B2;" : "");
+        if (is_target)
+            target = group_names[i];
+    }
+    if (summary_label != nullptr)
+        summary_label->setText(target.isEmpty()
+            ? tr("Choose the sheet that holds the target samples: select <b>Target</b> on its row. Every other sheet is a source group.")
+            : tr("Target samples: <b>%1</b>. Every other sheet is a source group.").arg(target.toHtmlEscaped()));
 }
 
 void IndicateSheetsDialog::reject()
@@ -63,6 +90,15 @@ void IndicateSheetsDialog::reject()
 }
 void IndicateSheetsDialog::accept()
 {
+    bool target_chosen = false;
+    for (QRadioButton* button : radio_buttons_sinks)
+        target_chosen = target_chosen || button->isChecked();
+    if (!target_chosen)
+    {
+        // Without a target sheet the import used to go ahead with none
+        QMessageBox::warning(this, tr("Target sheet"), tr("Select the sheet that holds the target samples."));
+        return;
+    }
     for (int i=0; i<radio_buttons_sinks.count(); i++)
     {
         if (radio_buttons_sinks[i]->isChecked())
@@ -87,4 +123,5 @@ void IndicateSheetsDialog::on_radio_button_changed()
 
         }
     }
+    UpdateTargetHighlight();
 }
