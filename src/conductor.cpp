@@ -1625,6 +1625,8 @@ bool Conductor::ExecuteTestCMBBayesian(const std::map<std::string, std::string>&
     mcmc_for_testing->SetProperty("number_of_samples", arguments.at("Number of samples"));
     mcmc_for_testing->SetProperty("number_of_chains", arguments.at("Number of chains"));
     mcmc_for_testing->SetProperty("number_of_burnout_samples", arguments.at("Samples to be discarded (burnout)"));
+    if (arguments.count("Correlated proposal") > 0)
+        mcmc_for_testing->SetProperty("covariance_proposal", arguments.at("Correlated proposal"));
 
     mcmc_for_testing->SetRandomSeed(seed);
     mcmc_for_testing->initialize(samples, true);

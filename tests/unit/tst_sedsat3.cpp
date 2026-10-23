@@ -171,6 +171,7 @@ private slots:
     void omSizeCorrection_isotopesNotCorrectedByDefault();
     void dfaConfusionMatrix();
     void mcmcDiagnostics();
+    void mcmc_correlatedProposalReproducible();
     void mcmc_resultsHaveConvergenceDiagnostics();
     void excludedTargetSample();
     void multiwayDiscriminantPower_runs();
@@ -634,22 +635,23 @@ void SedSAT3Tests::random_seedParsing()
 namespace {
 
 /// Runs the test MCMC (the "Test CMB Bayesian" model) and returns its samples
-std::vector<std::vector<double>> RunTestMCMC(std::uint64_t seed, int threads, const QString& folder)
+std::vector<std::vector<double>> RunTestMCMC(std::uint64_t seed, int threads, const QString& folder,
+                                             int samples_count = 800, int burnin = 100)
 {
     CMCMC<TestMCMC> mcmc;
     TestMCMC model;
     mcmc.Model = &model;
     model.InitializeParametersObservations({0.1, 1.0}, {1.0, 10.0});
-    mcmc.SetProperty("number_of_samples", "800");
+    mcmc.SetProperty("number_of_samples", std::to_string(samples_count));
     mcmc.SetProperty("number_of_chains", "8");
-    mcmc.SetProperty("number_of_burnout_samples", "100");
+    mcmc.SetProperty("number_of_burnout_samples", std::to_string(burnin));
     mcmc.SetProperty("number_of_threads", std::to_string(threads));
     mcmc.SetRandomSeed(seed);
 
     CMBTimeSeriesSet samples;
     mcmc.initialize(&samples, true);
     NullProgressReporter progress;
-    mcmc.step(8, 800, (folder + "/samples.txt").toStdString(), &samples, &progress);
+    mcmc.step(8, samples_count, (folder + "/samples.txt").toStdString(), &samples, &progress);
 
     std::vector<std::vector<double>> values;
     for (size_t series = 0; series < samples.size(); series++)
@@ -1015,6 +1017,18 @@ void SedSAT3Tests::mcmcDiagnostics()
     }
     // Too few chains or draws: not available
     QVERIFY(std::isnan(mcmcdiagnostics::Diagnose({{1.0, 2.0, 3.0, 4.0}}).rhat));
+}
+
+void SedSAT3Tests::mcmc_correlatedProposalReproducible()
+{
+    // Long enough for the covariance-adapted proposal to take over (it is
+    // refreshed every 1,000 samples after the burn-in): the samples are
+    // still identical for a seed, whatever the number of threads
+    QTemporaryDir folder;
+    const auto one = RunTestMCMC(31, 1, folder.path(), 6000, 1000);
+    const auto three = RunTestMCMC(31, 3, folder.path(), 6000, 1000);
+    QCOMPARE(one, three);
+    QCOMPARE(RunTestMCMC(31, 2, folder.path(), 6000, 1000), one);
 }
 
 void SedSAT3Tests::mcmc_resultsHaveConvergenceDiagnostics()

@@ -938,16 +938,20 @@ samples appear random, no convergence.
           and others, 2021), shown in red when beyond the recommended values
           (1.01 and 400). They are also written as files by the batch.
 \end{itemize}
-These diagnostics show that your observation goes further than the defaults.
-For the example, even with the new defaults, $\hat{R}$ of the contributions is
-1.01 to 1.11 and the effective sample sizes are about 50 to 140, short of the
-recommended values. A run four times longer did not improve them. The sampler
-mixes slowly for these data. The manual now says how to read the diagnostics
-and what to do when they cannot be met (Section~4.1.1). Improving the sampler
-is a separate piece of work. \mine{improve the sampler's mixing, for example by
-fixing the proposal scale after the burn-in.}
+These diagnostics showed that your observation went further than the
+defaults. With independent steps for each parameter, the sampler mixed so
+slowly that, for the example, the contributions had $\hat{R}$ up to 1.11 and
+50 to 140 effective samples, and a run four times longer did not improve them.
+
+The sampler now uses a correlated proposal by default (adaptive Metropolis,
+ported from OpenHydroQual). It learns the correlations between the parameters
+from the samples after the burn-in and steps along them. For the example it
+gives several times the effective sample size. With 400,000 samples and
+\textit{Dissolve Chains} unchecked, every parameter meets both criteria
+($\hat{R} \le 1.017$, at least 428 effective samples). The manual gives the
+comparison (Section~4.1.1, Table~4.1) and the advice for final results.
 \end{response}
-\status{Defaults and diagnostics done; sampler mixing to improve.}
+\status{Done.}
 
 \begin{reviewer}{Bayesian Chemical Mass Balance Analysis}
 The dashed lines from my run are far from the middle of the distribution, and in
@@ -1177,7 +1181,6 @@ Screenshots to retake & \mine{Arash} & Seven figures of the main window, the pro
 virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\
 Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
 Notes column; target sheet dialog & \mine{Arash} & Enhancements suggested in the review. \\
-MCMC mixing & \mine{Arash} & The diagnostics show slow mixing for the example; improve the sampler. \\
 \bottomrule
 \end{longtable}
 

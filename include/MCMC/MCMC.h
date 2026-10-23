@@ -228,6 +228,26 @@ struct _MCMC_settings
      * Default: false
      */
     bool dissolve_chains = false;
+
+    /**
+     * @brief Covariance-adapted (correlated) proposal, ON by default
+     *
+     * The diagonal proposal perturbs each parameter independently by
+     * pertcoeff[i]. Where the posterior is correlated (source contributions
+     * trade off against each other and against the source means), it cannot
+     * step along the ridge: the step must suit the narrowest direction, and
+     * the chains mix slowly. With covariance_proposal the sampler estimates
+     * the covariance of the samples after the burn-in, in log space for
+     * log-normal parameters, and proposes correlated steps from it (adaptive
+     * Metropolis, Haario, Saksman and Tamminen, 2001), scaled by
+     * covariance_scale / sqrt(d) (Roberts and Rosenthal, 2001) times the
+     * acceptance-rate adaptation. Ported from OpenHydroQual.
+     */
+    bool covariance_proposal = true;
+    unsigned int covariance_update_interval = 1000;  ///< samples between refreshes
+    unsigned int covariance_min_samples = 500;       ///< samples needed before the first
+    double covariance_scale = 2.38;                  ///< divided by sqrt(number of parameters)
+    double covariance_ridge = 1e-8;                  ///< relative ridge added to the diagonal
 };
 
 /**
@@ -499,6 +519,18 @@ public:
      * Respects parameter bounds by reflecting or rejecting out-of-bounds proposals.
      */
     vector<double> perturb(int k, int chain_counter);
+
+    /**
+     * @brief Re-estimates the proposal covariance from samples burn-in..upto
+     *
+     * Stores its Cholesky factor in proposal_chol_; keeps the previous factor
+     * when there are too few samples or the matrix is not positive definite.
+     */
+    void UpdateProposalCovariance(int upto);
+
+    /// Cholesky factor of the proposal covariance; empty until the first update
+    vector<vector<double>> proposal_chol_;
+    unsigned int last_covariance_update_ = 0;
 
     /**
      * @brief Sets the master seed for the chains' random streams

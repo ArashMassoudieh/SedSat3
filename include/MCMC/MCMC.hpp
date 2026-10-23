@@ -154,6 +154,13 @@ bool CMCMC<T>::SetProperty(const string &varname, const string &value)
         MCMC_Settings.purt_change_scale = aquiutils::atof(value);
         return true;
     }
+    if (aquiutils::tolower(varname) == "covariance_proposal")
+    {
+        // An empty value keeps the default (on)
+        if (!value.empty())
+            MCMC_Settings.covariance_proposal = (aquiutils::tolower(value) == "true" || aquiutils::tolower(value) == "yes");
+        return true;
+    }
     if (aquiutils::tolower(varname) == "dissolve_chains")
     {
         if (aquiutils::tolower(value)=="true")
@@ -207,6 +214,10 @@ template<class T>
 void CMCMC<T>::initialize(CMBTimeSeriesSet *results, bool random)
 {
     parameters = &Model->Parameters();
+    // A new run starts with the diagonal proposal (the sampler is reused
+    // from one target sample to the next by the batch)
+    proposal_chol_.clear();
+    last_covariance_update_ = 0;
     Params.resize(MCMC_Settings.total_number_of_samples);
     logp.resize(MCMC_Settings.total_number_of_samples);
     logp1.resize(MCMC_Settings.total_number_of_samples);
@@ -397,11 +408,123 @@ bool CMCMC<T>::step(int k, int chain_counter)
 }
 
 template<class T>
+void CMCMC<T>::UpdateProposalCovariance(int upto)
+{
+    // Empirical covariance of the samples after the burn-in, in the space the
+    // proposal works in: log for log-normal parameters, linear otherwise
+    const int d = int(MCMC_Settings.number_of_parameters);
+    const int start = std::max<int>(int(MCMC_Settings.burnout_samples), int(MCMC_Settings.number_of_chains));
+    upto = std::min<int>(upto, int(Params.size()));
+    if (d == 0 || upto - start < int(MCMC_Settings.covariance_min_samples))
+        return;
+
+    vector<char> logged(d);
+    for (int i = 0; i < d; i++)
+        logged[i] = (parameter(i)->GetPriorDistribution() == "log-normal");
+
+    auto value = [&](int k, int i) { return logged[i] ? log(Params[k][i]) : Params[k][i]; };
+    auto usable = [&](int k) {
+        if (int(Params[k].size()) != d)
+            return false;
+        for (int i = 0; i < d; i++)
+            if (logged[i] && !(Params[k][i] > 0))
+                return false;
+        return true;
+    };
+
+    vector<double> mean(d, 0.0);
+    int n = 0;
+    for (int k = start; k < upto; k++)
+    {
+        if (!usable(k))
+            continue;
+        for (int i = 0; i < d; i++)
+            mean[i] += value(k, i);
+        n++;
+    }
+    if (n < int(MCMC_Settings.covariance_min_samples) || n < 2)
+        return;
+    for (int i = 0; i < d; i++)
+        mean[i] /= n;
+
+    vector<vector<double>> C(d, vector<double>(d, 0.0));
+    vector<double> z(d);
+    for (int k = start; k < upto; k++)
+    {
+        if (!usable(k))
+            continue;
+        for (int i = 0; i < d; i++)
+            z[i] = value(k, i) - mean[i];
+        for (int i = 0; i < d; i++)
+            for (int j = 0; j <= i; j++)
+                C[i][j] += z[i] * z[j];
+    }
+    double trace = 0;
+    for (int i = 0; i < d; i++)
+        for (int j = 0; j <= i; j++)
+        {
+            C[i][j] /= (n - 1);
+            C[j][i] = C[i][j];
+            if (i == j)
+                trace += C[i][i];
+        }
+
+    // A small ridge, then the Cholesky factor; the update is abandoned rather
+    // than proposing from a matrix that is not positive definite
+    const double ridge = MCMC_Settings.covariance_ridge * std::max(trace / d, 1e-300);
+    for (int i = 0; i < d; i++)
+        C[i][i] += ridge;
+    vector<vector<double>> L(d, vector<double>(d, 0.0));
+    for (int i = 0; i < d; i++)
+        for (int j = 0; j <= i; j++)
+        {
+            double sum = C[i][j];
+            for (int m = 0; m < j; m++)
+                sum -= L[i][m] * L[j][m];
+            if (i == j)
+            {
+                if (!(sum > 0))
+                    return;
+                L[i][j] = sqrt(sum);
+            }
+            else
+                L[i][j] = sum / L[j][j];
+        }
+    proposal_chol_ = L;
+    last_covariance_update_ = upto;
+}
+
+template<class T>
 vector<double> CMCMC<T>::perturb(int k, int chain_counter)
 {
     RandomStream& stream = chain_streams_[chain_counter];
 	vector<double> X;
     X.resize(MCMC_Settings.number_of_parameters);
+    const int d = int(MCMC_Settings.number_of_parameters);
+    if (MCMC_Settings.covariance_proposal && int(proposal_chol_.size()) == d)
+    {
+        // Correlated step: s L z, z ~ N(0, I), in log space for log-normal
+        // parameters. s = covariance_scale / sqrt(d), times pertcoeff[0]
+        // relative to its starting value, so the acceptance-rate adaptation
+        // still sets the overall step size.
+        vector<double> z(d);
+        for (int i = 0; i < d; i++)
+            z[i] = stream.StandardNormal();
+        const double adapt = (MCMC_Settings.ini_purt_fact > 0) ? pertcoeff[0] / MCMC_Settings.ini_purt_fact : 1.0;
+        const double scale = MCMC_Settings.covariance_scale / sqrt(double(d)) * adapt;
+        for (int i = 0; i < d; i++)
+        {
+            double step = 0.0;
+            for (int j = 0; j <= i; j++)
+                step += proposal_chol_[i][j] * z[j];
+            step *= scale;
+            if (parameter(i)->GetPriorDistribution() == "log-normal")
+                X[i] = Params[k][i] * exp(step);
+            else
+                X[i] = Params[k][i] + step;
+        }
+        return X;
+    }
     for (int i=0; i<MCMC_Settings.number_of_parameters; i++)
 	{
         if (parameter(i)->GetPriorDistribution() == "log-normal")
@@ -537,6 +660,13 @@ bool CMCMC<T>::step(int k, int nsamps, const string& filename, CMBTimeSeriesSet 
 			}
 			if (file) fclose(file);
 		}
+
+        // Refresh the correlated proposal from the samples so far (outside the
+        // parallel loop, so the chains read a fixed factor)
+        if (MCMC_Settings.covariance_proposal &&
+            kk > MCMC_Settings.burnout_samples &&
+            kk - last_covariance_update_ >= MCMC_Settings.covariance_update_interval)
+            UpdateProposalCovariance(int(kk));
 
         if ((kk-k_0) % (50*MCMC_Settings.number_of_chains) == 0)
 		{

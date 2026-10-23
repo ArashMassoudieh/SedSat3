@@ -476,6 +476,10 @@
 	},
 	"CMB Bayesian":
 	{
+		"Correlated proposal": {
+			"type": "checkBox",
+			"default": "true"
+		},
 		"Random seed": {
 			"type": "lineEdit",
 			"default": ""
@@ -517,11 +521,15 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly. (User's manual, Section 4.1.)"
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for the specified target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly. 'Correlated proposal' (on by default) proposes steps along the correlations between the parameters, learned from the samples after the burn-in; for the example data it gives several times the effective sample size. Check the convergence diagnostics at the end of the results, and for final results uncheck 'Dissolve Chains'. (User's manual, Section 4.1.)"
 		}
 	},
 	"CMB Bayesian-Batch":
 	{
+		"Correlated proposal": {
+			"type": "checkBox",
+			"default": "true"
+		},
 		"Random seed": {
 			"type": "lineEdit",
 			"default": ""
@@ -559,12 +567,16 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly. (User's manual, Section 4.2.)"
+   			"default": "This tool performs Bayesian fingerprinting using Markov-Chain Monte Carlo algorithm for all target sample. Leave the random seed blank to have one chosen; the seed used is shown in the name of the results and written to the samples file, and entering it again repeats the run exactly. 'Correlated proposal' (on by default) proposes steps along the correlations between the parameters, learned from the samples after the burn-in; for the example data it gives several times the effective sample size. Check the convergence diagnostics at the end of the results, and for final results uncheck 'Dissolve Chains'. (User's manual, Section 4.2.)"
 		}
 
 	},
 	"Test CMB Bayesian":
 	{
+		"Correlated proposal": {
+			"type": "checkBox",
+			"default": "true"
+		},
 		"Random seed": {
 			"type": "lineEdit",
 			"default": ""

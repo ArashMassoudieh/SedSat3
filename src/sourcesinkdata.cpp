@@ -4351,6 +4351,8 @@ Results SourceSinkData::MCMC(
     mcmc->SetProperty("number_of_chains", arguments["Number of chains"]);
     mcmc->SetProperty("number_of_burnout_samples", arguments["Samples to be discarded (burnout)"]);
     mcmc->SetProperty("dissolve_chains", arguments["Dissolve Chains"]);
+    // Blank (an older script or project) keeps the default: on
+    mcmc->SetProperty("covariance_proposal", arguments["Correlated proposal"]);
 
     // Initialize MCMC sampler
     CMBTimeSeriesSet* mcmc_samples = new CMBTimeSeriesSet();

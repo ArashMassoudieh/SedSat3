@@ -599,6 +599,7 @@ The settings in the central form are:
 \begin{itemize}
     \item \textbf{Apply size and organic matter correction:} whether to perform the analysis on the elemental profiles corrected for particle size and organic matter content. Note that the size and organic matter correction step (Section~\ref{sec:sizeandorganiccorrection}) must have been performed beforehand for this option to take effect.
     \item \textbf{Dissolve Chains:} when checked, MCMC chains with significantly lower posterior probability are discarded during sampling and replaced by chains with higher posterior probability. This improves the convergence speed of the algorithm.
+    \item \textbf{Correlated proposal:} when checked (the default), the sampler learns the correlations between the parameters from its own samples after the burn-in, and proposes steps along them (adaptive Metropolis; \citealp{haario2001adaptive}). The source contributions are strongly correlated with each other and with the source compositions, and steps that move one parameter at a time mix slowly along those correlations. Uncheck it to use independent steps for each parameter, as in earlier versions.
     \item \textbf{Number of chains:} the number of MCMC chains run in parallel (default 8). The chains run on separate processor cores, so up to the number of cores more chains cost little extra time. More chains explore the posterior from more starting points, which makes it easier to judge convergence. The default suits a typical desktop computer.
     \item \textbf{Number of samples:} the total number of MCMC samples to generate (default 100{,}000). Typically, 100{,}000 samples or more are required for convergence.
     \item \textbf{Random seed:} leave blank to have one chosen. The seed used is shown in the name of the results and written on the first line of the samples file; entering it again repeats the run exactly.
@@ -696,14 +697,34 @@ The last two panels measure whether the chains have converged and how much infor
     \item \textbf{Effective sample size} (ESS) is the number of independent samples that the correlated MCMC samples are worth. Successive MCMC samples are strongly correlated, so the effective sample size is usually much smaller than the number of samples. At least 400 is recommended for reliable credible intervals \citep{vehtari2021rank}.
 \end{itemize}
 
-If $\hat{R}$ is above 1.01 or the effective sample size below 400 for the source contributions, increase the number of samples (and the burn-in in proportion) and run the analysis again. More chains also help, up to the number of processor cores. The diagnostics are computed from the chains as recorded; with \textit{Dissolve Chains} checked, chains with a low posterior are replaced by copies of better ones, which makes the chains less independent and can make $\hat{R}$ look better than it is. For a final run, check the diagnostics with \textit{Dissolve Chains} unchecked as well.
+If $\hat{R}$ is above 1.01 or the effective sample size below 400 for the source contributions, increase the number of samples (and the burn-in in proportion) and run the analysis again. More chains also help, up to the number of processor cores. The diagnostics are computed from the chains as recorded. With \textit{Dissolve Chains} checked, chains with a low posterior are replaced by copies of better ones, which makes the chains less independent: it speeds up the early part of a run, but it can hide or worsen poor mixing (Table~\ref{tab:mcmc-convergence}). For final results, uncheck it.
 
-In the example (target sample CTAIL1, the seven constituents selected in step~4, default settings), split $\hat{R}$ of the source contributions is between 1.01 and 1.11 and their effective sample sizes between about 50 and 140, short of the recommended values; a run four times longer did not improve them. This shows that the sampler mixes slowly for these data, and that the credible intervals of such a run carry more Monte Carlo error than their width suggests. When the diagnostics cannot be brought within the recommended range, report the Bayesian results with that caution, and compare them with the deterministic fingerprinting and the error analysis.
+For the example (target sample CTAIL1, the seven constituents selected in step~4, 8 chains), Table~\ref{tab:mcmc-convergence} shows the effect of the correlated proposal and of the number of samples. With independent steps, the sampler mixes so slowly that a run four times longer does not help. With the correlated proposal (the default) the effective sample sizes are several times larger, and 400{,}000 samples with \textit{Dissolve Chains} unchecked meet both criteria for every parameter. With the default 100{,}000 samples, $\hat{R}$ of the contributions is still slightly above 1.01, and the credible intervals carry correspondingly more Monte Carlo error. For final results, use enough samples for the diagnostics to meet the criteria, with \textit{Dissolve Chains} unchecked. When they cannot be met, report the Bayesian results with that caution, and compare them with the deterministic fingerprinting and the error analysis.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lllcccc}
+\toprule
+Proposal & Samples & Dissolve & \multicolumn{2}{c}{Contributions} & \multicolumn{2}{c}{All 62 parameters} \\
+ & & chains & max $\hat{R}$ & min ESS & max $\hat{R}$ & min ESS \\
+\midrule
+Independent & 100{,}000 & yes & 1.11 & 47 & 1.65 & 13 \\
+Independent & 400{,}000 & yes & 1.31 & 21 & 1.67 & 14 \\
+Correlated & 100{,}000 & yes & 1.04 & 317 & 1.16 & 34 \\
+Correlated & 100{,}000 & no & 1.04 & 235 & 1.07 & 154 \\
+Correlated & 400{,}000 & yes & 1.02 & 949 & 1.10 & 55 \\
+Correlated & 400{,}000 & no & 1.01 & 949 & 1.02 & 428 \\
+\bottomrule
+\end{tabular}
+\caption{Convergence diagnostics for target sample CTAIL1 of the example data (8 chains, burn-in 20\% of the samples): the largest split $\hat{R}$ and the smallest effective sample size, for the four source contributions and for all sampled parameters.}
+\label{tab:mcmc-convergence}
+\end{table}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.55\textwidth]{Figures/MCMC_Rhat_table.png}
-    \caption{Split $\hat{R}$ of the first sampled parameters, for target sample CTAIL1 of the example data with the default settings; values above 1.01 are shown in red.}
+    \caption{Split $\hat{R}$ of the first sampled parameters, for target sample CTAIL1 of the example data with the default settings (100{,}000 samples); values above 1.01 are shown in red.}
     \label{fig:MCMC-Rhat}
 \end{figure}
 \FloatBarrier
