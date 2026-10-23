@@ -92,6 +92,7 @@ HEADERS += \
     $$SEDSAT3_ROOT/include/parameter.h \
     $$SEDSAT3_ROOT/include/progressreporter.h \
     $$SEDSAT3_ROOT/include/randomstream.h \
+    $$SEDSAT3_ROOT/include/mcmcdiagnostics.h \
     $$SEDSAT3_ROOT/include/sourcesinkdata.h \
     $$SEDSAT3_ROOT/cmbmatrix.h \
     $$SEDSAT3_ROOT/cmbtimeseries.h \

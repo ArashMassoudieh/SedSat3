@@ -100,7 +100,7 @@ Isotopes (Sec.~\ref{sec:stable-isotopes}) & $\delta$ values enter the mass balan
 \addlinespace
 Deterministic fingerprinting (Sec.~\ref{sec:lmmle}, \ref{sec:fingerprinting-batch}) & Maximum likelihood with log-normal errors (Levenberg--Marquardt), one target sample or a batch. & \textit{Changed.} Minimized the sum of squared relative errors between the target and the mixture of source means, optionally weighted by the DFA weighting factors (Nelder--Mead optimization), for each target sample. \\
 \addlinespace
-Bayesian fingerprinting (Sec.~\ref{sec:bayesian_cmb}) & Bayesian chemical mass balance by MCMC, with credible intervals and posterior predictive checks; one target sample or a batch. & \textit{New in SedSAT3.} \\
+Bayesian fingerprinting (Sec.~\ref{sec:bayesian_cmb}) & Bayesian chemical mass balance by MCMC, with credible intervals, posterior predictive checks and convergence diagnostics (split $\hat{R}$, effective sample size); one target sample or a batch. & \textit{New in SedSAT3.} \\
 \addlinespace
 Uncertainty and checks (Sec.~\ref{sec:tools-uncertainty}) & Error analysis (realizations with a percentage of the source samples removed at random); source verification (each source sample fingerprinted as a target). & \textit{Changed.} The Monte Carlo analysis removed one randomly chosen sample from each source group per iteration (default 1,000 iterations). Source samples were also fingerprinted as targets, as in source verification. \\
 \addlinespace
@@ -220,7 +220,7 @@ Each time the dialog is opened, SedSAT3 runs the outlier test on every source gr
 To exclude a sample at any time, return to this dialog through \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} in the top menu, then click the \textbf{Include} cell next to the sample name so that it reads \texttt{No}. Excluded samples remain in the project file but are skipped by all analyses that respect the include/exclude flag. To re-include a sample later, set the value back to \texttt{Yes}.
 
 \begin{tcolorbox}[colback=yellow!10,colframe=yellow!50!black,title=Note]
-Do not deselect target samples at this stage. Target samples are listed under the target group in the drop-down list, but the include/exclude flag for target samples is used only by certain batch tools. For deterministic and Bayesian fingerprinting, the target sample is selected explicitly when each analysis is run.
+Target samples are listed under the target group in the drop-down list. Their include/exclude flag is used only by the batch tools (6-Fingerprinting (Batch) and the Bayesian batch), which skip the target samples marked \texttt{No}. The other tools run on the target sample you choose in their form, whatever its flag.
 \end{tcolorbox}
 \chapter{Deterministic Fingerprinting Tools}\label{chap:deterministic}
 This chapter outlines the complete sequence of steps and tools required to perform maximum-likelihood (deterministic) sediment fingerprinting. The process consists of the following steps, in order: outlier analysis (Section~\ref{sec:outlier}), organic matter and particle size correction (Section~\ref{sec:sizeandorganiccorrection}), and bracketing analysis (Section~\ref{sec:bracketing}). Section~\ref{sec:dfa-theory} introduces the theoretical basis of discriminant function analysis (DFA), which is then applied in Section~\ref{sec:multiway-dfa} to perform multi-way stepwise DFA across all source groups --- the standard tracer-selection step in the workflow. The chapter concludes with the fingerprinting procedure itself, available as a single-sample tool (Section~\ref{sec:lmmle}) and a batch tool (Section~\ref{sec:fingerprinting-batch}).
@@ -621,7 +621,7 @@ The progress window (Fig.~\ref{fig:MCMC-progress}) provides diagnostic informati
 
 The top panel shows the average acceptance rate (the fraction of proposed samples that are accepted). The middle panel shows the perturbation factor, which is automatically adjusted to maintain an acceptance rate of approximately 15\%. The bottom panel shows the maximum value of the posterior numerator (Eq.~\eqref{eq:Bayesian-Prop}). Initially, this value is low because the samples are far from the maximum-likelihood region; as the algorithm proceeds, the value rises and eventually stabilizes. A reasonable burn-in length can be chosen as the number of samples it takes for this curve to stabilize.
 
-Once MCMC sampling is complete, a result window appears containing five panels.
+Once MCMC sampling is complete, a result window appears containing up to nine panels: the samples, the posterior distributions, the contribution credible intervals, two panels on the predicted constituents, two on the predicted isotopes (when isotopes are included), and two convergence diagnostics.
 
 The first panel contains the MCMC samples for every estimated parameter: source contributions, the $\mu$ and $\sigma$ parameters of the log-normal distributions assumed for the elemental content of each source group, and the error standard deviations. Click the graph button~\includegraphics[width=0.5cm]{Figures/Graph.png} to visualize the samples (Fig.~\ref{fig:MCMC-samples}), and use the drop-down menu at the top of the graph to switch between parameters. Inspect these plots to assess convergence: after convergence, the samples fluctuate around a stable level with no trend, and the burn-in should end after the initial trend. For example, in Fig.~\ref{fig:MCMC-samples} the Bank and Crop contribution samples settle after approximately 15{,}000 to 20{,}000 samples, so the default burn-in of 20{,}000 is adequate. If the samples still drift at the end of the run, increase the number of samples (and the burn-in) and run again; with too few samples, the plot looks like scattered noise with no stable level.
 
@@ -688,6 +688,26 @@ The fifth panel contains the 95\% credible intervals for the predicted elemental
 
 Panels six and seven contain analogous information to panels four and five, but for isotope ratios, when isotopes are included in the analysis.
 
+\subsection{Convergence diagnostics}\label{sec:mcmc-convergence}
+The last two panels measure whether the chains have converged and how much information the samples carry. Both are computed for every sampled parameter (the source contributions, the parameters of the source distributions and the error standard deviations) from the samples after the burn-in. Click the table button~\includegraphics[width=0.5cm]{Figures/table.png} to view them (Fig.~\ref{fig:MCMC-Rhat}); values outside the recommended range are shown in red.
+
+\begin{itemize}
+    \item \textbf{Split $\hat{R}$} (the Gelman--Rubin potential scale reduction factor, in its split-chain form) compares the variation between chains with the variation within them. Each chain is split in half, so a chain that is still drifting also shows up. When all chains sample the same distribution, $\hat{R}$ is close to 1. A value above 1.01 means the chains have not converged to the same distribution, and the posterior distributions and credible intervals should not yet be trusted \citep{vehtari2021rank}.
+    \item \textbf{Effective sample size} (ESS) is the number of independent samples that the correlated MCMC samples are worth. Successive MCMC samples are strongly correlated, so the effective sample size is usually much smaller than the number of samples. At least 400 is recommended for reliable credible intervals \citep{vehtari2021rank}.
+\end{itemize}
+
+If $\hat{R}$ is above 1.01 or the effective sample size below 400 for the source contributions, increase the number of samples (and the burn-in in proportion) and run the analysis again. More chains also help, up to the number of processor cores. The diagnostics are computed from the chains as recorded; with \textit{Dissolve Chains} checked, chains with a low posterior are replaced by copies of better ones, which makes the chains less independent and can make $\hat{R}$ look better than it is. For a final run, check the diagnostics with \textit{Dissolve Chains} unchecked as well.
+
+In the example (target sample CTAIL1, the seven constituents selected in step~4, default settings), split $\hat{R}$ of the source contributions is between 1.01 and 1.11 and their effective sample sizes between about 50 and 140, short of the recommended values; a run four times longer did not improve them. This shows that the sampler mixes slowly for these data, and that the credible intervals of such a run carry more Monte Carlo error than their width suggests. When the diagnostics cannot be brought within the recommended range, report the Bayesian results with that caution, and compare them with the deterministic fingerprinting and the error analysis.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.55\textwidth]{Figures/MCMC_Rhat_table.png}
+    \caption{Split $\hat{R}$ of the first sampled parameters, for target sample CTAIL1 of the example data with the default settings; values above 1.01 are shown in red.}
+    \label{fig:MCMC-Rhat}
+\end{figure}
+\FloatBarrier
+
 \section{Bayesian Chemical Mass Balance Analysis (Batch)}\label{sec:bayesian-batch}
 The batch version of the Bayesian Chemical Mass Balance tool runs Bayesian fingerprinting on all target samples in a single pass, avoiding the need to select and save each sample manually. Instead of displaying results as interactive tables and graphs, the analysis writes the outputs to text files that can be plotted in any spreadsheet or graphing application. The settings are identical to those described for the single-sample Bayesian Chemical Mass Balance Analysis (Section~\ref{sec:bayesian_cmb}). As in the deterministic batch (Section~\ref{sec:fingerprinting-batch}), one constituent and sample selection is used for every target sample, while the organic matter and size correction, when applied, is computed for each target sample from its own organic matter content and particle size; the note in that section applies here too.
 
@@ -697,7 +717,7 @@ To run the batch analysis, select \textbf{Tools}$\rightarrow$\textbf{Bayesian Se
 A large number of samples (at least 100{,}000, the default) is required for the chains to converge, and about 20\% of the total should be designated as burn-in (the default is 20{,}000). The analysis can take a substantial amount of time depending on the number of target samples, the number of source groups, the number of MCMC samples per chain, and your hardware. For long batches, consider running the analysis overnight or on a dedicated workstation.
 \end{tcolorbox}
 
-When the analysis is complete, a folder named after each target sample is created in the working folder (Fig.~\ref{fig:MCMC-folders}). The working folder is the folder of the project file last opened or saved, or, before the project is first saved, the folder of the Excel file imported; save the project first so that the results are written next to it. Each folder contains seven text files (Fig.~\ref{fig:MCMC-files}), and the MCMC samples file named in the form.
+When the analysis is complete, a folder named after each target sample is created in the working folder (Fig.~\ref{fig:MCMC-folders}). The working folder is the folder of the project file last opened or saved, or, before the project is first saved, the folder of the Excel file imported; save the project first so that the results are written next to it. Each folder contains nine text files (Fig.~\ref{fig:MCMC-files}), and the MCMC samples file named in the form. Only the target samples marked \texttt{Yes} in \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} are analyzed.
 
 \begin{figure}[ht]
     \centering
@@ -710,7 +730,7 @@ When the analysis is complete, a folder named after each target sample is create
 \begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{Figures/MCMC_files.png}
-    \caption{The seven text files written for each target sample by the batch Bayesian chemical mass balance analysis.}
+    \caption{The text files written for each target sample by the batch Bayesian chemical mass balance analysis.}
     \label{fig:MCMC-files}
 \end{figure}
 \FloatBarrier
@@ -744,6 +764,7 @@ The contents of each file are as follows:
 
     \item \textbf{6\_Posterior Predicted Isotopes.txt} --- contains the posterior predictive distributions of the target sample isotope ratios, presented as frequency distributions. Columns come in pairs (value, frequency). This file is empty if no isotopes are included in the analysis.
     \item \textbf{7\_Predicted Samples Credible Intervals for Isotopes.txt} --- contains the 95\% credible intervals of the predicted target sample isotope ratios, derived from the isotope predictions in file 6.
+    \item \textbf{8\_Convergence\_ split R-hat.txt} and \textbf{9\_Convergence\_ effective sample size.txt} --- contain the convergence diagnostics of every parameter (Section~\ref{sec:mcmc-convergence}). Check them for every target sample.
 \end{itemize}
 
 \section{Interpreting the results}\label{sec:interpretation}

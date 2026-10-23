@@ -110,6 +110,7 @@ set(SEDSAT3_CORE_HEADERS
     include/parameter.h
     include/progressreporter.h
     include/randomstream.h
+    include/mcmcdiagnostics.h
     include/sourcesinkdata.h
 )
 

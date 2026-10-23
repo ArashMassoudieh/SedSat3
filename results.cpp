@@ -291,6 +291,21 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(ftestpvalue);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Convergence:"))
+        {
+            // MCMC split R-hat or effective sample size, one value per parameter
+            CMBVector* values = new CMBVector();
+            values->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(false);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetType(result_type::vector);
+            res_item.SetName(key.toStdString());
+            res_item.SetYAxisMode(yaxis_mode::normal);
+            res_item.SetResult(values);
+            operator[](key.toStdString()) = res_item;
+        }
         else if (key.contains("Confusion matrix"))
         {
             CMBMatrix* confusion = new CMBMatrix();

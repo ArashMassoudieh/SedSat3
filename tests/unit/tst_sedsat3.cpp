@@ -15,6 +15,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QTemporaryDir>
+#include <QDir>
 
 #include <cmath>
 #include <limits>
@@ -42,6 +43,8 @@
 #include <QMouseEvent>
 #include <QStyleOptionViewItem>
 #include "formelementinformation.h"
+#include "mcmcdiagnostics.h"
+#include "randomstream.h"
 #ifdef SEDSAT3_TEST_EXCEL
 #include "excelimport.h"
 #include "xlsxdocument.h"
@@ -167,6 +170,9 @@ private slots:
     void fingerprinting_organicCarbonAsIsotopeBase();
     void omSizeCorrection_isotopesNotCorrectedByDefault();
     void dfaConfusionMatrix();
+    void mcmcDiagnostics();
+    void mcmc_resultsHaveConvergenceDiagnostics();
+    void excludedTargetSample();
     void multiwayDiscriminantPower_runs();
     void correlationMatrix_correctedWithSelectedElements();
 
@@ -962,6 +968,100 @@ void SedSAT3Tests::dfaConfusionMatrix()
         QCOMPARE(confusion.matr[0][1], 1.0);
         QCOMPARE(confusion.matr[0][2], 80.0);
     }
+}
+
+void SedSAT3Tests::mcmcDiagnostics()
+{
+    RandomStream stream(12345, 0);
+    const int chains = 4, draws = 4000;
+
+    // Independent draws: R-hat close to 1, effective sample size close to the
+    // number of draws
+    {
+        std::vector<std::vector<double>> x(chains);
+        for (auto& chain : x)
+            for (int i = 0; i < draws; i++)
+                chain.push_back(stream.Normal(0, 1));
+        const auto d = mcmcdiagnostics::Diagnose(x);
+        QVERIFY2(std::fabs(d.rhat - 1.0) < 0.01, qPrintable(QString::number(d.rhat)));
+        QVERIFY2(d.effective_sample_size > 0.8 * chains * draws && d.effective_sample_size < 1.2 * chains * draws,
+                 qPrintable(QString::number(d.effective_sample_size)));
+    }
+    // Chains around different levels: R-hat well above 1
+    {
+        std::vector<std::vector<double>> x(chains);
+        for (int c = 0; c < chains; c++)
+            for (int i = 0; i < draws; i++)
+                x[c].push_back(double(c) + stream.Normal(0, 1));
+        QVERIFY(mcmcdiagnostics::Diagnose(x).rhat > 1.2);
+    }
+    // AR(1) draws with phi = 0.9: ESS about N (1 - phi) / (1 + phi)
+    {
+        const double phi = 0.9;
+        std::vector<std::vector<double>> x(chains);
+        for (auto& chain : x)
+        {
+            double v = 0;
+            for (int i = 0; i < 20 * draws; i++)
+            {
+                v = phi * v + stream.Normal(0, 1);
+                chain.push_back(v);
+            }
+        }
+        const double expected = chains * 20.0 * draws * (1 - phi) / (1 + phi);
+        const double ess = mcmcdiagnostics::Diagnose(x).effective_sample_size;
+        QVERIFY2(ess > 0.8 * expected && ess < 1.25 * expected,
+                 qPrintable(QString("%1 vs %2").arg(ess).arg(expected)));
+    }
+    // Too few chains or draws: not available
+    QVERIFY(std::isnan(mcmcdiagnostics::Diagnose({{1.0, 2.0, 3.0, 4.0}}).rhat));
+}
+
+void SedSAT3Tests::mcmc_resultsHaveConvergenceDiagnostics()
+{
+    SourceSinkData data;
+    BuildData(data, PositiveGroups(), "Mixture");
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    QTemporaryDir folder;
+    conductor.SetWorkingFolder(folder.path());
+    QVERIFY(conductor.Execute("CMB Bayesian", {{"Apply size and organic matter correction", "false"},
+        {"Dissolve Chains", "false"}, {"Number of chains", "4"}, {"Number of samples", "4000"},
+        {"Random seed", "11"}, {"Sample", "M1"}, {"Samples File Name", "samples.txt"},
+        {"Samples to be discarded (burnout)", "1000"}}));
+    const QJsonObject results = ResultsJson(conductor);
+    bool rhat = false, ess = false;
+    for (const QString& key : results.keys())
+    {
+        rhat = rhat || key.contains("Convergence: split R-hat");
+        ess = ess || key.contains("Convergence: effective sample size");
+    }
+    QVERIFY(rhat && ess);
+}
+
+void SedSAT3Tests::excludedTargetSample()
+{
+    // An excluded target sample used to vanish from the corrected dataset, so
+    // an analysis run on it, or a Bayesian batch, crashed. Single-sample tools
+    // still run on it; the batch tools skip it.
+    GroupData groups = PositiveGroups();
+    groups["Mixture"]["M2"] = {{"Al", 6.1}, {"Fe", 3.3}};
+    SourceSinkData data;
+    BuildData(data, groups, "Mixture");
+    data.GetSampleSet("Mixture")->GetProfile("M2")->SetIncludedInAnalysis(false);
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    QVERIFY(conductor.Execute("Levenberg-Marquardt", {{"Sample", "M2"}, {"Softmax transformation", "true"},
+                                                      {"Apply size and organic matter correction", "false"}}));
+    QTemporaryDir folder;
+    conductor.SetWorkingFolder(folder.path());
+    QVERIFY(conductor.Execute("CMB Bayesian-Batch", {{"Apply size and organic matter correction", "false"},
+        {"Dissolve Chains", "false"}, {"Number of chains", "2"}, {"Number of samples", "1000"},
+        {"Random seed", "5"}, {"Samples File Name", "samples.txt"}, {"Samples to be discarded (burnout)", "200"}}));
+    QVERIFY(QDir(folder.path() + "/M1").exists());
+    QVERIFY(!QDir(folder.path() + "/M2").exists());
 }
 
 void SedSAT3Tests::multiwayDiscriminantPower_runs()

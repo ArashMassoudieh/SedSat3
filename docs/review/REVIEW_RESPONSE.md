@@ -146,6 +146,8 @@ reproduced against this branch with the example data; the response is
 | delta 13C could not use TOC (the organic matter constituent, the only carbon measured) as its base element; now allowed, TOC used only as the base | `67cc62f` | `unit:fingerprinting_organicCarbonAsIsotopeBase` |
 | Isotopes were corrected for organic matter and size whenever the regression was significant; now not corrected by default, as in Sed_SAT 1.0 (the user can select them) | `5309e57` | `unit:omSizeCorrection_isotopesNotCorrectedByDefault` |
 | No confusion matrix for the selected tracers (domain review; Sed_SAT 1.0 had one); step 4 now reports the leave-one-out LDA confusion matrix, checked against an independent numpy calculation | see the commit "Add a leave-one-out confusion matrix to step 4" | `unit:dfaConfusionMatrix` |
+| No MCMC convergence diagnostics; the Bayesian results now give split R-hat and effective sample size per parameter (Vehtari et al. 2021). For the example they show slow mixing (contributions: R-hat 1.01-1.11, ESS 50-140 at the defaults; not better at 4x the samples) | see the commit "Add MCMC convergence diagnostics" | `unit:mcmcDiagnostics`, `unit:mcmc_resultsHaveConvergenceDiagnostics` |
+| An excluded target sample crashed the Bayesian batch and single-sample tools run on it; the batch tools now skip excluded targets | same commit | `unit:excludedTargetSample` |
 | Charts: palette, axis titles and ranges, log axes below 1e-12, legends, DFA pair start; tools menu order and groups; Bayesian defaults 100,000/20,000; step 4 shows scores and eigenvectors | `d7d8b92`, `8708c20` | charts rendered offscreen and inspected |
 
 **Baseline change** (`properties.cmb` only; `Isotope_test.cmb` gives D50 and

@@ -4,6 +4,7 @@
 #include "sourcesinkdata.h"
 #include <set>
 #include <armadillo>
+#include "mcmcdiagnostics.h"
 #include "numericparsing.h"
 #include "randomstream.h"
 #include <cmath>
@@ -137,6 +138,19 @@ SourceSinkData SourceSinkData::CreateCorrectedDataset(
     {
         // Apply OM/size corrections to source groups, but not to target group
         bool apply_corrections = (group_name != target_group_) && omnsizecorrect;
+        if (group_name == target_group_)
+        {
+            // Every target sample is kept: the analysis is run on a target
+            // sample named by the user, excluded or not (dropping excluded
+            // target samples here left the analysis without its target)
+            Elemental_Profile_Set targets;
+            for (const auto& [sample_name, profile] : profile_set)
+                if (!sample_name.empty())
+                    targets.AppendProfile(sample_name, profile, elementinfo);
+            targets.SetRegressionModels(profile_set.GetRegressionModels());
+            corrected[group_name] = targets;
+            continue;
+        }
         corrected[group_name] = profile_set.CopyIncludedInAnalysis(
             apply_corrections,
             om_size,
@@ -4176,8 +4190,9 @@ CMBTimeSeriesSet SourceSinkData::LM_Batch(
         sample != at(target_group_).end();
         sample++)
     {
-        // Skip samples with empty names
-        if (sample->first != "")
+        // Skip samples with empty names, and the target samples excluded in
+        // Settings > Include/Exclude Samples
+        if (sample->first != "" && sample->second.IsIncludedInAnalysis())
         {
             // Apply corrections if requested
             SourceSinkData corrected_dataset = CreateCorrectedDataset(
@@ -4549,6 +4564,56 @@ Results SourceSinkData::MCMC(
     predicted_isotope_intervals_result.SetYAxisMode(yaxis_mode::normal);
     results.Append(predicted_isotope_intervals_result);
 
+    // ========== Convergence diagnostics ==========
+    // Split R-hat and effective sample size of every sampled quantity, from
+    // the draws after burn-in. Draw k belongs to chain k mod (number of
+    // chains). Appended last, so the panel and file numbers above stay the
+    // same.
+    CMBVector* rhat_values = new CMBVector(int(mcmc_samples->size()));
+    CMBVector* ess_values = new CMBVector(int(mcmc_samples->size()));
+    for (int i = 0; i < int(mcmc_samples->size()); i++)
+    {
+        std::vector<std::vector<double>> chains(std::max(num_chains, 1));
+        const TimeSeries<double>& series = mcmc_samples->at(i);
+        for (int k = std::max(burnin_samples, 0); k < int(series.size()); k++)
+            chains[k % std::max(num_chains, 1)].push_back(series.getValue(k));
+        const mcmcdiagnostics::Diagnostics d = mcmcdiagnostics::Diagnose(chains);
+        rhat_values->SetLabel(i, mcmc_samples->getSeriesName(i));
+        ess_values->SetLabel(i, mcmc_samples->getSeriesName(i));
+        (*rhat_values)[i] = d.rhat;
+        (*ess_values)[i] = d.effective_sample_size;
+    }
+    // Values beyond the usual thresholds are shown in red: R-hat above 1.01,
+    // fewer than 400 effective samples (Vehtari and others, 2021)
+    rhat_values->SetLimit(_range::low, 0.0);
+    rhat_values->SetLimit(_range::high, 1.01);
+    ess_values->SetLimit(_range::low, 400.0);
+    ess_values->SetLimit(_range::high, std::numeric_limits<double>::max());
+
+    ResultItem rhat_result;
+    rhat_result.SetName("Convergence: split R-hat");
+    rhat_result.SetType(result_type::vector);
+    rhat_result.SetShowAsString(false);
+    rhat_result.SetShowTable(true);
+    rhat_result.SetShowGraph(false);   // one bar per parameter is unreadable; the table is the useful view
+    rhat_result.SetYAxisMode(yaxis_mode::normal);
+    rhat_result.SetResult(rhat_values);
+    rhat_result.setXAxisTitle("Parameter");
+    rhat_result.setYAxisTitle("Split R-hat");
+    results.Append(rhat_result);
+
+    ResultItem ess_result;
+    ess_result.SetName("Convergence: effective sample size");
+    ess_result.SetType(result_type::vector);
+    ess_result.SetShowAsString(false);
+    ess_result.SetShowTable(true);
+    ess_result.SetShowGraph(false);
+    ess_result.SetYAxisMode(yaxis_mode::normal);
+    ess_result.SetResult(ess_values);
+    ess_result.setXAxisTitle("Parameter");
+    ess_result.setYAxisTitle("Effective sample size");
+    results.Append(ess_result);
+
     // Set progress to 100%
     progress_window->SetProgress(1.0);
 
@@ -4590,11 +4655,20 @@ CMBMatrix SourceSinkData::MCMC_Batch(
     if (progress_window == nullptr)
         progress_window = &discarded_progress;
 
+    // The target samples marked for inclusion (Settings > Include/Exclude
+    // Samples); the batch tools skip the others
+    vector<string> included_targets;
+    for (const auto& [sample_name, profile] : at(target_group_))
+        if (!sample_name.empty() && profile.IsIncludedInAnalysis())
+            included_targets.push_back(sample_name);
+    if (included_targets.empty())
+        return CMBMatrix();
+
     // Initialize with first target sample
-    InitializeParametersAndObservations(at(target_group_).begin()->first);
+    InitializeParametersAndObservations(included_targets.front());
 
     // Initialize contribution matrix: 4 columns per source (low, high, median, mean)
-    const size_t num_target_samples = at(target_group_).size();
+    const size_t num_target_samples = included_targets.size();
     const size_t num_columns = static_cast<size_t>(numberofsourcesamplesets_) * 4;
     CMBMatrix contribution_statistics(num_columns, num_target_samples);
 
@@ -4610,12 +4684,8 @@ CMBMatrix SourceSinkData::MCMC_Batch(
 
     // Process each target sample
     size_t sample_counter = 0;
-    for (map<string, Elemental_Profile>::iterator sample = at(target_group_).begin();
-        sample != at(target_group_).end();
-        sample++)
+    for (const string& sample_name : included_targets)
     {
-        const string& sample_name = sample->first;
-
         // Create output directory for this sample
         QDir sample_dir(QString::fromStdString(working_folder) + "/" +
             SafeFileName(QString::fromStdString(sample_name)));
