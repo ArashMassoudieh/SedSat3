@@ -19,10 +19,28 @@ its handoff is in git history (`git show 324f9db:HANDOFF-Windows.md`).
   - Error Analysis histogram uses all realizations;
   - the Tools menu is in workflow order, grouped;
   - chart fixes: palette, axis titles and ranges, p-value axes, legends;
-  - step 4 shows discriminant scores and eigenvectors;
-  - Bayesian defaults 100,000 / 20,000;
+  - step 4 shows discriminant scores and eigenvectors, and a leave-one-out
+    confusion matrix (seven panels);
+  - isotopes are not corrected for organic matter and size by default;
   - tool descriptions cite the manual.
-- Verified on Linux: 52 unit tests, the regression suite, and the charts
+- Bayesian fingerprinting (MCMC), changed after the domain review:
+  - **convergence diagnostics**: the results end with two table panels,
+    split R-hat and effective sample size per parameter, red when beyond
+    1.01 / 400 (`include/mcmcdiagnostics.h`, GSL FFT); the batch writes them
+    as `8_` and `9_` files;
+  - **correlated proposal** (adaptive Metropolis, ported from
+    OpenHydroQual's MCMC), **on by default**, with a "Correlated proposal"
+    checkbox on the Bayesian forms (`include/MCMC/MCMC.h/.hpp`,
+    `UpdateProposalCovariance`, `perturb`);
+  - **Dissolve Chains off by default**;
+  - defaults 100,000 samples / 20,000 burn-in;
+  - the Bayesian batch skips target samples excluded in Include/Exclude
+    Samples (it used to crash on them).
+  For the example (CTAIL1, the 7 tracers of step 4, 8 chains), the manual's
+  Table 4.1 compares the settings. At 400,000 samples, correlated, without
+  dissolving, every parameter has R-hat ≤ 1.017 and ESS ≥ 428. At the default
+  100,000 the contributions' R-hat is about 1.03–1.04, which is expected.
+- Verified on Linux: 58 unit tests, the regression suite, and the charts
   rendered offscreen. **None of it has been compiled with MSVC or clicked
   through in the GUI.**
 - The version stays **1.1.8**. The new package replaces the earlier 1.1.8
@@ -45,9 +63,20 @@ the Levenberg-Marquardt batch, up to about 7e-8 (round-off). The
 ANOVA/EDP/bracketing results), so compare against the committed baseline;
 **do not** regenerate it on Windows.
 
-If MSVC rejects something new, the likely places are `generalchart.cpp`
-(`std::size` on a `QColor` array, `QMap`, `QLegendMarker`) and
-`src/conductor.cpp` (`std::set`). Fix, rerun `pixi run test`, and commit.
+If MSVC rejects something new, the likely places are:
+- `generalchart.cpp`: `std::size` on a `QColor` array, `QMap`, `QLegendMarker`;
+- `src/conductor.cpp`: `std::set`;
+- `src/sourcesinkdata.cpp`: `#include <armadillo>`, `arma::pinv` in the
+  confusion matrix, `std::round`;
+- `include/mcmcdiagnostics.h`: `gsl/gsl_fft_complex.h`;
+- `include/MCMC/MCMC.hpp`: `std::max<int>` and the new members.
+
+Fix, rerun `pixi run test`, and commit.
+
+Two unit tests are new for the sampler and take a few seconds each:
+`mcmc_correlatedProposalReproducible` (same seed, 1, 2 and 3 threads: same
+samples) and `mcmcDiagnostics`. If the first fails on MSVC, the correlated
+proposal is not reproducible there. Report it: do not loosen the test.
 
 `pixi run warnings` and `pixi run cppcheck` are optional this round. If you
 run them, add the counts to Section 7 of the code review letter and to
@@ -71,7 +100,8 @@ Mixture), then:
    exploration → Correct based on size and organic matter for CTAIL1: click
    the graph button (this used to crash).
 4. **Step 4 with the correction for CTAIL1:**
-   - six panels;
+   - seven panels, the last the confusion matrix (table button; rows the
+     true groups, last column "% correct");
    - the scatter (panel 5) keeps each group's colour when you change the
      pair, and starts on two different groups;
    - the p-value plot shows its y axis;
@@ -82,9 +112,22 @@ Mixture), then:
    Verification, Distribution Fitting:** each runs.
 7. **Exclude N in Constituent Properties, run Fingerprinting:** a message
    about N15's base element, not a crash. Include N again.
-8. **Bayesian step 5 with the defaults:**
+8. **Bayesian step 5 for CTAIL1 with the defaults:**
+   - the form shows "Correlated proposal" checked and "Dissolve Chains"
+     unchecked;
    - the progress window closes at the end;
-   - the MCMC samples plot shows whole sample numbers.
+   - the MCMC samples plot shows whole sample numbers;
+   - the last two panels are "Convergence: split R-hat" and "Convergence:
+     effective sample size" (table button only), with values beyond 1.01 /
+     400 in red. Most R-hat values are a little above 1.01 at 100,000
+     samples; compare with the manual's Table 4.1;
+   - running it again with the same random seed (shown in the results name)
+     gives the same numbers.
+9. **Bayesian batch:** exclude two target samples in Include/Exclude
+   Samples (set them to No), run step 6 with 5,000 samples:
+   - no folder for the excluded samples;
+   - each folder has nine files, `8_Convergence_ split R-hat.txt` and
+     `9_Convergence_ effective sample size.txt` included.
 
 Note anything that looks wrong. Charts are rendered by Qt, so fonts may
 differ from Linux, but the content should match the manual's figures.
@@ -101,7 +144,7 @@ names in `docs/manual/SedSat_User's_Manual/Figures/`:
 | `Constituent_Viz.png` | the main window with an element selected under Data (try C13: linear axis) |
 | `MCMC_progress.png` | the progress window during Bayesian step 5 |
 | `MCMC_folders.png` | Explorer: the per-target folders after the Bayesian batch |
-| `MCMC_files.png` | Explorer: the seven files in one of them |
+| `MCMC_files.png` | Explorer: the nine files (and the samples file) in one of them |
 | `95p_CI_table.png` | an excerpt of `3_Source Contribution Credible Intervals.txt` |
 | `95p_CI_predicted.png` | an excerpt of `5_Predicted Samples Credible Intervals.txt` |
 
