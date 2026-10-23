@@ -8,6 +8,7 @@
 #include "numericparsing.h"
 #include "randomstream.h"
 #include <cmath>
+#include <limits>
 #include "iostream"
 #include "NormalDist.h"
 #include "qjsondocument.h"
@@ -3196,69 +3197,51 @@ Elemental_Profile_Set SourceSinkData::TheRest(const string& excluded_source)
 }
 
 
-CMBVector SourceSinkData::BracketTest(const string& target_sample, bool correct_based_on_om_n_size)
+CMBVector SourceSinkData::BracketTest(const string& target_sample, bool correct_based_on_om_n_size, double tolerance)
 {
     vector<string> element_names = GetElementNames();
     const size_t num_elements = element_names.size();
 
-    // Initialize result vectors
     CMBVector bracket_test_results(num_elements);
-    CVector exceeds_max(num_elements);  // Flags for concentrations above source maximum
-    CVector below_min(num_elements);    // Flags for concentrations below source minimum
-
-    exceeds_max.SetAllValues(1.0);  // Assume all exceed until proven otherwise
-    below_min.SetAllValues(1.0);    // Assume all below until proven otherwise
 
     // Create corrected dataset for testing
     SourceSinkData corrected_data = CreateCorrectedAndFilteredDataset(
         false, false, correct_based_on_om_n_size, target_sample);
 
-    // Check each source group's concentration ranges
-    for (map<string, Elemental_Profile_Set>::iterator it = corrected_data.begin();
-        it != corrected_data.end();
-        it++)
-    {
-        // Skip target group
-        if (it->first != target_group_)
-        {
-            // Check each element
-            for (size_t i = 0; i < num_elements; i++)
-            {
-                bracket_test_results.SetLabel(i, element_names[i]);
-
-                double target_concentration = corrected_data.at(target_group_)
-                    .GetProfile(target_sample)->at(element_names[i]);
-                double source_maximum = it->second.GetElementDistribution(element_names[i])
-                    ->GetMaximum();
-                double source_minimum = it->second.GetElementDistribution(element_names[i])
-                    ->GetMinimum();
-
-                // Check if target is within this source's range
-                if (target_concentration <= source_maximum)
-                {
-                    exceeds_max[i] = 0;  // Target does not exceed max
-                }
-                if (target_concentration >= source_minimum)
-                {
-                    below_min[i] = 0;    // Target is not below min
-                }
-            }
-        }
-    }
-
-    // Compile results and annotate failures
     for (size_t i = 0; i < num_elements; i++)
     {
-        // Fail if either above all maxima or below all minima
-        bracket_test_results[i] = max(exceeds_max[i], below_min[i]);
+        bracket_test_results.SetLabel(i, element_names[i]);
+
+        // The range of all source samples together
+        double source_minimum = std::numeric_limits<double>::infinity();
+        double source_maximum = -std::numeric_limits<double>::infinity();
+        for (map<string, Elemental_Profile_Set>::iterator it = corrected_data.begin();
+            it != corrected_data.end();
+            it++)
+        {
+            if (it->first == target_group_)
+                continue;
+            source_maximum = max(source_maximum, it->second.GetElementDistribution(element_names[i])->GetMaximum());
+            source_minimum = min(source_minimum, it->second.GetElementDistribution(element_names[i])->GetMinimum());
+        }
+
+        // The tolerance widens both ends by a fraction of that range
+        const double margin = tolerance * (source_maximum - source_minimum);
+        const double target_concentration = corrected_data.at(target_group_)
+            .GetProfile(target_sample)->at(element_names[i]);
+        const bool exceeds_max = target_concentration > source_maximum + margin;
+        const bool below_min = target_concentration < source_minimum - margin;
+
+        // Fail if above all maxima or below all minima
+        bracket_test_results[i] = (exceeds_max || below_min) ? 1.0 : 0.0;
 
         // Annotate failures in target sample notes
-        if (exceeds_max[i] > 0.5)
+        if (exceeds_max)
         {
             at(target_group_).GetProfile(target_sample)->AppendtoNotes(
                 element_names[i] + " value is higher than the maximum of the sources");
         }
-        else if (below_min[i] > 0.5)
+        else if (below_min)
         {
             at(target_group_).GetProfile(target_sample)->AppendtoNotes(
                 element_names[i] + " value is lower than the minimum of the sources");
@@ -3272,7 +3255,8 @@ CMBVector SourceSinkData::BracketTest(const string& target_sample, bool correct_
 CMBMatrix SourceSinkData::BracketTest(
     bool correct_based_on_om_n_size,
     bool exclude_elements,
-    bool exclude_samples)
+    bool exclude_samples,
+    double tolerance)
 {
     // Initialize result matrix
     // Note: Matrix is constructed as (num_rows, num_cols) but accessed as [row][col]
@@ -3301,7 +3285,7 @@ CMBMatrix SourceSinkData::BracketTest(
 
         // Perform bracket test for this sample
         vector<string> element_names = corrected_data.GetElementNames();
-        CMBVector bracket_vector = corrected_data.BracketTest(sample->first, false);
+        CMBVector bracket_vector = corrected_data.BracketTest(sample->first, false, tolerance);
 
         // Store results in matrix
         for (size_t element_index = 0; element_index < element_names.size(); element_index++)

@@ -649,9 +649,13 @@
     			"type": "comboBox",
     			"source": "TargetSamplesList"
     		},
+		"Tolerance (%)": {
+			"type": "lineEdit",
+			"default": "0"
+		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool shows whether the elemental content of the elements in the specified target sample is outside of the range of the elemental contents in all source groups. (User's manual, Section 3.3.)"
+   			"default": "This tool shows whether the elemental content of the elements in the specified target sample is outside of the range of the elemental contents in all source groups. 'Tolerance (%)' lowers the minimum and raises the maximum of all source samples by that percentage of their range before the test (default 0, no widening). (User's manual, Section 3.3.)"
 		}
     	},
     	"BoxCox":
@@ -687,9 +691,13 @@
 					"type": "checkBox",
 					"default": "false"
 				},
+				"Tolerance (%)": {
+					"type": "lineEdit",
+					"default": "0"
+				},
                 "Description": {
 	    		"type": "Description",
-   			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples. (User's manual, Section 3.3.)"
+   			"default": "This tool shows whether the elemental content of the elements in target samples is outside of the range of the elemental contents in all source groups for all target samples. 'Tolerance (%)' lowers the minimum and raises the maximum of all source samples by that percentage of their range before the test (default 0, no widening). (User's manual, Section 3.3.)"
 		}
         },
     	"Outlier":

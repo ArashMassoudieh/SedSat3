@@ -458,9 +458,14 @@ We decided as follows:
           non-detect depends on the laboratory and the method, so it is the
           analyst's choice; the user replaces these values before import, as
           the manual explains (Chapter~2).
-    \item \textbf{Bracket test tolerance:} planned for the next release, as an
-          option that widens the source range by a percentage, with a default
-          of 0 so that results do not change unless it is chosen.
+    \item \textbf{Bracket test tolerance:} added. A new option,
+          \textit{Tolerance (\%)}, lowers the minimum and raises the maximum of
+          all source samples by that percentage of their range before the test
+          (Section~3.3). The default is 0, the strict test, so results do not
+          change unless it is chosen. Sed\_SAT~1.0 widened the minimum and
+          maximum by a percentage of their own values instead; a margin based
+          on the range works the same for $\delta$ values, which can be
+          negative or near zero.
     \item \textbf{DFA weighting factors:} not added. The Bayesian model already
           estimates an error standard deviation for each constituent, which
           weights the constituents by how well the mixing model reproduces
@@ -1195,7 +1200,6 @@ sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as 
 USGS color guidance & \todo{Cara} & The charts use the Okabe--Ito color-blind-safe palette. \\
 Sed\_SAT 1.0 comparison & \todo{Allen} & Review the last column of Table~1.1. \\
 Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
-Bracket test tolerance & Next release & An option to widen the source range, default 0. \\
 \bottomrule
 \end{longtable}
 

@@ -177,10 +177,59 @@ private slots:
     void excludedTargetSample();
     void multiwayDiscriminantPower_runs();
     void correlationMatrix_correctedWithSelectedElements();
+    void bracketTest_tolerance();
 
     // ---------- Excel import (reviewer test plan, Tests 4a and 4b) ----------
     void excelImport();
 };
+
+// =====================================================================
+// Bracket test tolerance (domain review: Sed_SAT 1.0 had one)
+// =====================================================================
+
+void SedSAT3Tests::bracketTest_tolerance()
+{
+    // Sources: Al 4.8-8.9 (range 4.1), Fe 2.6-4.4 (range 1.8). The target
+    // is 0.6 above the Al maximum (14.6% of the range) and 0.2 below the Fe
+    // minimum (11.1%).
+    GroupData groups = PositiveGroups();
+    groups["Mixture"]["M1"] = {{"Al", 9.5}, {"Fe", 2.4}};
+    SourceSinkData data;
+    BuildData(data, groups, "Mixture");
+
+    const CMBVector none = data.BracketTest(std::string("M1"), false);
+    QCOMPARE(none.valueAt(0), 1.0);
+    QCOMPARE(none.valueAt(1), 1.0);
+    const CMBVector ten = data.BracketTest(std::string("M1"), false, 0.10);
+    QCOMPARE(ten.valueAt(0), 1.0);
+    QCOMPARE(ten.valueAt(1), 1.0);
+    const CMBVector twelve = data.BracketTest(std::string("M1"), false, 0.12);
+    QCOMPARE(twelve.valueAt(0), 1.0);   // Al still outside
+    QCOMPARE(twelve.valueAt(1), 0.0);   // Fe inside
+    const CMBVector fifteen = data.BracketTest(std::string("M1"), false, 0.15);
+    QCOMPARE(fifteen.valueAt(0), 0.0);
+    QCOMPARE(fifteen.valueAt(1), 0.0);
+
+    const CMBMatrix batch = data.BracketTest(false, false, false, 0.15);
+    QCOMPARE(batch[0][0], 0.0);
+    QCOMPARE(batch[1][0], 0.0);
+
+    // Through the tool: blank is 0, a negative or non-numeric value is refused
+    RecordingHost host;
+    Conductor conductor(&host);
+    conductor.SetData(&data);
+    std::map<std::string, std::string> args = {{"Use only selected elements", "false"}, {"Use only selected samples", "false"},
+                                               {"Correct based on size and organic matter", "false"}, {"Sample", "M1"}};
+    QVERIFY(conductor.Execute("Bracketing Analysis", args));
+    args["Tolerance (%)"] = "15";
+    QVERIFY(conductor.Execute("Bracketing Analysis", args));
+    QVERIFY(conductor.Execute("Bracketing Analysis Batch", args));
+    args["Tolerance (%)"] = "-5";
+    QVERIFY(!conductor.Execute("Bracketing Analysis", args));
+    QVERIFY(host.Warned("tolerance"));
+    args["Tolerance (%)"] = "ten";
+    QVERIFY(!conductor.Execute("Bracketing Analysis Batch", args));
+}
 
 // =====================================================================
 // Numeric parser

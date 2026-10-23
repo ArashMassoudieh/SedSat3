@@ -12,6 +12,7 @@
 #include "resultitem.h"
 #include "testmcmc.h"
 #include "rangeset.h"
+#include "numericparsing.h"
 
 
 Conductor::Conductor(AnalysisHost* host)
@@ -1818,6 +1819,25 @@ bool Conductor::ExecuteDistributionFitting(const std::map<std::string, std::stri
     return true;
 }
 
+// Reads the bracket test's "Tolerance (%)" as a fraction; blank or absent is 0
+static bool ReadBracketTolerance(const std::map<std::string, std::string>& arguments,
+                                 AnalysisHost* host, double& tolerance)
+{
+    tolerance = 0;
+    auto it = arguments.find("Tolerance (%)");
+    if (it == arguments.end() || QString::fromStdString(it->second).trimmed().isEmpty())
+        return true;
+    double percent = 0;
+    QString reason;
+    if (!parseNumericValue(QString::fromStdString(it->second), percent, reason) || percent < 0)
+    {
+        host->ShowWarning("The tolerance must be a number of percent, 0 or more.\n");
+        return false;
+    }
+    tolerance = percent / 100.0;
+    return true;
+}
+
 bool Conductor::ExecuteBracketingAnalysis(const std::map<std::string, std::string>& arguments)
 {
     results.SetName("Bracketing analysis for sample '" + arguments.at("Sample") + "'");
@@ -1831,6 +1851,9 @@ bool Conductor::ExecuteBracketingAnalysis(const std::map<std::string, std::strin
     bool exclude_samples = (arguments.at("Use only selected samples") == "true");
     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
     bool correct_based_on_size_and_organic_matter = (arguments.at("Correct based on size and organic matter") == "true");
+    double tolerance = 0;
+    if (!ReadBracketTolerance(arguments, host, tolerance))
+        return false;
 
     SourceSinkData transformed_data = Data()->CreateTracerDataset(
         exclude_samples,
@@ -1843,7 +1866,7 @@ bool Conductor::ExecuteBracketingAnalysis(const std::map<std::string, std::strin
         return false;
 
     CMBVector* bracketing_result = new CMBVector(
-        transformed_data.BracketTest(arguments.at("Sample"), false)
+        transformed_data.BracketTest(arguments.at("Sample"), false, tolerance)
     );
 
     bracketing_result->SetBooleanValue(true);
@@ -1867,6 +1890,9 @@ bool Conductor::ExecuteBracketingAnalysisBatch(const std::map<std::string, std::
     bool exclude_samples = (arguments.at("Use only selected samples") == "true");
     bool exclude_elements = (arguments.at("Use only selected elements") == "true");
     bool correct_based_on_size_and_organic_matter = (arguments.at("Correct based on size and organic matter") == "true");
+    double tolerance = 0;
+    if (!ReadBracketTolerance(arguments, host, tolerance))
+        return false;
 
     if (!CheckNegativeElements(data))
         return false;
@@ -1884,7 +1910,8 @@ bool Conductor::ExecuteBracketingAnalysisBatch(const std::map<std::string, std::
         Data()->BracketTest(
             correct_based_on_size_and_organic_matter,
             exclude_elements,
-            exclude_samples
+            exclude_samples,
+            tolerance
         )
     );
 

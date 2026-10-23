@@ -1,0 +1,26 @@
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Bank'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Bank'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Crop'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Crop'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Forest'
+	N15 in group 'Forest'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Forest'
+	N15 in group 'Forest'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Pasture'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Pasture'
+

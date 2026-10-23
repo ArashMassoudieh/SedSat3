@@ -479,8 +479,12 @@ public:
      * - Pass (0): Target concentration within [min_sources, max_sources]
      * - Fail (1): Target concentration outside source ranges
      *
+     * With a tolerance t, both ends of the range of all source samples move
+     * out by t times that range: [min - t(max-min), max + t(max-min)].
+     *
      * @param target_sample Name of the target sample to test
      * @param correct_based_on_om_n_size If true, apply OM/size corrections before testing
+     * @param tolerance Fraction of the source range added at each end (0 = none)
      *
      * @return CMBVector of pass/fail flags (0 = pass, 1 = fail) for each element
      *
@@ -488,7 +492,7 @@ public:
      * @note Failed elements are documented in target sample notes
      * @note Test assumes conservative mixing (no gains/losses)
      */
-    CMBVector BracketTest(const string& target_sample, bool correct_based_on_om_n_size);
+    CMBVector BracketTest(const string& target_sample, bool correct_based_on_om_n_size, double tolerance = 0);
 
     /**
      * @brief Performs bracket test on all target samples
@@ -505,13 +509,14 @@ public:
      * @param correct_based_on_om_n_size If true, apply OM/size corrections before testing
      * @param exclude_elements If true, filter out elements marked for exclusion
      * @param exclude_samples If true, filter out samples marked for exclusion
+     * @param tolerance Fraction of the source range added at each end (0 = none)
      *
      * @return CMBMatrix of bracket test results for all target samples
      *
      * @note Each target sample is tested independently
      * @note Matrix dimensions: (num_elements × num_target_samples)
      */
-    CMBMatrix BracketTest(bool correct_based_on_om_n_size, bool exclude_elements, bool exclude_samples);
+    CMBMatrix BracketTest(bool correct_based_on_om_n_size, bool exclude_elements, bool exclude_samples, double tolerance = 0);
 
     // ========== Statistical Analysis - Discriminant Function Analysis ==========
 

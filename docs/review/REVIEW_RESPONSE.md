@@ -155,6 +155,8 @@ reproduced against this branch with the example data; the response is
 | The MCMC progress window redrew its charts after every step (a default run with the window took over 10 minutes; now 54 s) and plotted undefined acceptance rates; it now updates at most about 1000 times a run. Sampling unchanged | see the commit "Retake the remaining screenshots" | progress window rendered offscreen; `unit:mcmc_*` |
 | Raw-data plot: a log axis over less than a decade had one label and the top point on the edge; now whole decades (and a margin on linear axes) | same commit | main window rendered offscreen |
 | Batch file names "8_Convergence_ split R-hat.txt"; now "8_Convergence - split R-hat.txt" | same commit | batch run of the example data |
+| Bracket test tolerance (Sed_SAT 1.0 had one): "Tolerance (%)" widens the range of all source samples at each end by that percentage of the range (Sed_SAT 1.0 used a percentage of the values, which fails for delta values near zero); default 0, so results are unchanged. Regression baseline: only the new argument's name in the list of defaulted arguments | see the commit "Bracket test tolerance" | `unit:bracketTest_tolerance`, `regression` |
+| Constituent order kept alphabetical (the project stores constituents by name; one order for every result); below-detection imputation and DFA weights not added; reasons in the response | `aaefe06` | — |
 | Screenshots retaken (main window, progress window); the batch folder, file and credible-interval pictures replaced by text from a real batch run of the example data; the Windows package ships `examples/SampleData.xlsx` instead of `virtual-mixture.xlsx` | same commit | — |
 
 **Baseline change** (`properties.cmb` only; `Isotope_test.cmb` gives D50 and

@@ -1,0 +1,88 @@
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Bank'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Bank'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Crop'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Crop'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Forest'
+	N15 in group 'Forest'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Forest'
+	N15 in group 'Forest'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their lambda is shown as 1:
+	C13 in group 'Pasture'
+
+  warning: The Box-Cox transformation needs positive values, so these constituents with zero or negative values were not transformed; their scores are computed from the untransformed values:
+	C13 in group 'Pasture'
+
+
+warning: solve(): system is singular (rcond: 5.57777e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.5783e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.57874e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.5791e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.57941e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.57966e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.57987e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58005e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.5802e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58032e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58042e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58051e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58058e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58064e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58069e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58073e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58076e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58079e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58081e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58083e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58085e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58086e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58087e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58088e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58089e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.5809e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.5809e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58091e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58091e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58092e-20); attempting approx solution
+
+warning: solve(): system is singular (rcond: 5.58092e-20); attempting approx solution
