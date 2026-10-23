@@ -150,6 +150,12 @@ reproduced against this branch with the example data; the response is
 | An excluded target sample crashed the Bayesian batch and single-sample tools run on it; the batch tools now skip excluded targets | same commit | `unit:excludedTargetSample` |
 | The diagonal MCMC proposal mixed slowly (example: contributions R-hat up to 1.11, ESS 50-140, no better at 4x the samples); a covariance-adapted proposal (adaptive Metropolis, ported from OpenHydroQual) is now the default. Example at 400,000 samples without dissolved chains: all 62 parameters R-hat <= 1.017, ESS >= 428 | see the commit "Correlated (covariance-adapted) MCMC proposal" | `unit:mcmc_correlatedProposalReproducible` |
 | Charts: palette, axis titles and ranges, log axes below 1e-12, legends, DFA pair start; tools menu order and groups; Bayesian defaults 100,000/20,000; step 4 shows scores and eigenvectors | `d7d8b92`, `8708c20` | charts rendered offscreen and inspected |
+| The sheet dialog did not show clearly which sheet was the target, and accepted none | `2eae1ae` | dialog rendered offscreen |
+| A free-text Notes column in Constituent Properties (suggested in the review), saved in the project as "Notes" per constituent; older projects load unchanged | `22fa6f1` | `unit:notesColumn_editedAndSaved` |
+| The MCMC progress window redrew its charts after every step (a default run with the window took over 10 minutes; now 54 s) and plotted undefined acceptance rates; it now updates at most about 1000 times a run. Sampling unchanged | see the commit "Retake the remaining screenshots" | progress window rendered offscreen; `unit:mcmc_*` |
+| Raw-data plot: a log axis over less than a decade had one label and the top point on the edge; now whole decades (and a margin on linear axes) | same commit | main window rendered offscreen |
+| Batch file names "8_Convergence_ split R-hat.txt"; now "8_Convergence - split R-hat.txt" | same commit | batch run of the example data |
+| Screenshots retaken (main window, progress window); the batch folder, file and credible-interval pictures replaced by text from a real batch run of the example data; the Windows package ships `examples/SampleData.xlsx` instead of `virtual-mixture.xlsx` | same commit | — |
 
 **Baseline change** (`properties.cmb` only; `Isotope_test.cmb` gives D50 and
 TOC the element role and is unchanged): D50 and TOC leave the ANOVA (steps

@@ -622,7 +622,7 @@ The progress window (Fig.~\ref{fig:MCMC-progress}) provides diagnostic informati
 \end{figure}
 \FloatBarrier
 
-The top panel shows the average acceptance rate (the fraction of proposed samples that are accepted). The middle panel shows the perturbation factor, which is automatically adjusted to maintain an acceptance rate of approximately 15\%. The bottom panel shows the maximum value of the posterior numerator (Eq.~\eqref{eq:Bayesian-Prop}). Initially, this value is low because the samples are far from the maximum-likelihood region; as the algorithm proceeds, the value rises and eventually stabilizes. A reasonable burn-in length can be chosen as the number of samples it takes for this curve to stabilize.
+The top panel shows the average acceptance rate (the fraction of proposed samples that are accepted). The middle panel shows the perturbation factor (the proposal step size relative to its initial value), which is automatically adjusted to maintain an acceptance rate of approximately 15\%. With the correlated proposal (the default), the step size changes after the burn-in (20{,}000 samples in Fig.~\ref{fig:MCMC-progress}), when the proposal starts to follow the correlations between the parameters. The bottom panel shows the logarithm of the posterior numerator (Eq.~\eqref{eq:Bayesian-Prop}), averaged over the last 100 samples. Initially, this value is low because the samples are far from the maximum-likelihood region; as the algorithm proceeds, the value rises and eventually stabilizes. A reasonable burn-in length can be chosen as the number of samples it takes for this curve to stabilize.
 
 Once MCMC sampling is complete, a result window appears containing up to nine panels: the samples, the posterior distributions, the contribution credible intervals, two panels on the predicted constituents, two on the predicted isotopes (when isotopes are included), and two convergence diagnostics.
 
@@ -740,20 +740,41 @@ To run the batch analysis, select \textbf{Tools}$\rightarrow$\textbf{Bayesian Se
 A large number of samples (at least 100{,}000, the default) is required for the chains to converge, and about 20\% of the total should be designated as burn-in (the default is 20{,}000). The analysis can take a substantial amount of time depending on the number of target samples, the number of source groups, the number of MCMC samples per chain, and your hardware. For long batches, consider running the analysis overnight or on a dedicated workstation.
 \end{tcolorbox}
 
-When the analysis is complete, a folder named after each target sample is created in the working folder (Fig.~\ref{fig:MCMC-folders}). The working folder is the folder of the project file last opened or saved, or, before the project is first saved, the folder of the Excel file imported; save the project first so that the results are written next to it. Each folder contains nine text files (Fig.~\ref{fig:MCMC-files}), and the MCMC samples file named in the form. Only the target samples marked \texttt{Yes} in \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} are analyzed.
+When the analysis is complete, a folder named after each target sample is created in the working folder (Fig.~\ref{fig:MCMC-folders}). The working folder is the folder of the project file last opened or saved, or, before the project is first saved, the folder of the Excel file imported; save the project first so that the results are written next to it. Each folder contains nine text files (Fig.~\ref{fig:MCMC-files}), and the MCMC samples file named in the form. The two sample files are large: with the default settings, about 270~MB for each target sample in the example data, so make sure there is enough disk space for a large batch. Only the target samples marked \texttt{Yes} in \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} are analyzed.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{Figures/MCMC_folders.png}
-    \caption{Folders created after running the batch Bayesian chemical mass balance analysis. One folder per target sample is created in the folder where the project was saved.}
+        \begin{minipage}{0.92\textwidth}
+\small
+\begin{verbatim}
+CTAIL1  CTAIL2  CTAIL3  CTAIL4  CTAIL5  CTAIL6
+CTAIL7  CTAIL8  CTAIL9  CTAIL10  CTAIL11  CTAIL12
+CTAIL13  CTAIL14  CTAIL15  CTAIL16  CTAIL17
+\end{verbatim}
+    \end{minipage}
+    \caption{Folders created by the batch Bayesian chemical mass balance analysis of the example data, one for each target sample, in the folder where the project was saved.}
     \label{fig:MCMC-folders}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\textwidth]{Figures/MCMC_files.png}
-    \caption{The text files written for each target sample by the batch Bayesian chemical mass balance analysis.}
+        \begin{minipage}{0.92\textwidth}
+\small
+\begin{verbatim}
+1_MCMC samples.txt                                         96.6 MB
+2_Posterior Distributions.txt                             113.5 kB
+3_Source Contribution Credible Intervals.txt             156 bytes
+4_Posterior Predicted Constituents.txt                     11.3 kB
+5_Predicted Samples Credible Intervals.txt               150 bytes
+6_Posterior Predicted Isotopes.txt                          1.7 kB
+7_Predicted Samples Credible Intervals for Isotopes.txt   24 bytes
+8_Convergence - split R-hat.txt                             1.6 kB
+9_Convergence - effective sample size.txt                   1.6 kB
+MCMC_Output.txt                                           170.9 MB
+\end{verbatim}
+    \end{minipage}
+    \caption{The files written for target sample CTAIL1 by the batch Bayesian chemical mass balance analysis with the default settings, with their sizes. \texttt{MCMC\_Output.txt} is the samples file named in the form.}
     \label{fig:MCMC-files}
 \end{figure}
 \FloatBarrier
@@ -767,8 +788,16 @@ The contents of each file are as follows:
 
     \begin{figure}[ht]
         \centering
-        \includegraphics[width=\textwidth]{Figures/95p_CI_table.png}
-        \caption{Excerpt from the 95\% credible interval file for model parameters.}
+            \begin{minipage}{0.92\textwidth}
+\small
+\begin{verbatim}
+Bank_contribution:[0.101733,0.211941]
+Crop_contribution:[0.428008,0.592842]
+Forest_contribution:[0.153271,0.23406]
+Pasture_contribution:[0.036608,0.246469]
+\end{verbatim}
+    \end{minipage}
+        \caption{The 95\% credible intervals of the source contributions for target sample CTAIL1 (\texttt{3\_Source Contribution Credible Intervals.txt}).}
         \label{fig:posterior-95-table}
     \end{figure}
     \FloatBarrier
@@ -779,15 +808,25 @@ The contents of each file are as follows:
 
     \begin{figure}[ht]
         \centering
-        \includegraphics[width=\textwidth]{Figures/95p_CI_predicted.png}
-        \caption{Excerpt from the 95\% credible interval file for predicted target sample elemental content.}
+            \begin{minipage}{0.92\textwidth}
+\small
+\begin{verbatim}
+210PbXs:[1.05371,1.20068]
+Calcium:[11122.9,13035.6]
+Cs137:[0.313266,0.361052]
+Iron:[11319.5,12662.4]
+N:[0.32774,0.364495]
+Potassium:[830.868,944.254]
+\end{verbatim}
+    \end{minipage}
+        \caption{The 95\% credible intervals of the predicted constituents of target sample CTAIL1 (\texttt{5\_Predicted Samples Credible Intervals.txt}).}
         \label{fig:posterior-95-predicted-table}
     \end{figure}
     \FloatBarrier
 
     \item \textbf{6\_Posterior Predicted Isotopes.txt} --- contains the posterior predictive distributions of the target sample isotope ratios, presented as frequency distributions. Columns come in pairs (value, frequency). This file is empty if no isotopes are included in the analysis.
     \item \textbf{7\_Predicted Samples Credible Intervals for Isotopes.txt} --- contains the 95\% credible intervals of the predicted target sample isotope ratios, derived from the isotope predictions in file 6.
-    \item \textbf{8\_Convergence\_ split R-hat.txt} and \textbf{9\_Convergence\_ effective sample size.txt} --- contain the convergence diagnostics of every parameter (Section~\ref{sec:mcmc-convergence}). Check them for every target sample.
+    \item \textbf{8\_Convergence - split R-hat.txt} and \textbf{9\_Convergence - effective sample size.txt} --- contain the convergence diagnostics of every parameter (Section~\ref{sec:mcmc-convergence}). Check them for every target sample.
 \end{itemize}
 
 \section{Interpreting the results}\label{sec:interpretation}

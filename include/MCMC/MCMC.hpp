@@ -583,6 +583,10 @@ bool CMCMC<T>::step(int k, int nsamps, const string& filename, CMBTimeSeriesSet 
     MCMC_Settings.ini_purt_fact = pertcoeff[0];
 	int k_0 = k;
     // qDebug()<<6;
+    // The progress charts get at most about 1000 points: redrawing them
+    // after every step made long runs slow
+    const unsigned int report_interval = max(1u, (unsigned int)(nsamps / MCMC_Settings.number_of_chains / 1000));
+    unsigned int step_count = 0;
     for (unsigned int kk=k; kk<k+nsamps+MCMC_Settings.number_of_chains; kk+=MCMC_Settings.number_of_chains)
 	{
         QCoreApplication::processEvents(QEventLoop::AllEvents,10*1000);
@@ -681,14 +685,16 @@ bool CMCMC<T>::step(int k, int nsamps, const string& filename, CMBTimeSeriesSet 
 		}
 
 
-		if (rtw)
+		if (rtw && step_count++ % report_interval == 0)
 		{
             double average_log_p = CVector::Extract(logp,kk-100,kk).mean();
             double progress = double(kk) / double(nsamps)*0.98;
             rtw->SetProgress(progress);
-            rtw->AppendPoint(kk,double(accepted_count) / double(total_count),0);
+            if (total_count > 0)  // the count was just reset
+                rtw->AppendPoint(kk,double(accepted_count) / double(total_count),0);
             rtw->AppendPoint(kk,double(pertcoeff[0] / MCMC_Settings.ini_purt_fact),1);
-            rtw->AppendPoint(kk,double(average_log_p),2);
+            if (std::isfinite(average_log_p))
+                rtw->AppendPoint(kk,double(average_log_p),2);
             QCoreApplication::processEvents();
 		}
 	}

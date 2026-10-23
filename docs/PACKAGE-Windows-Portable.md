@@ -101,6 +101,7 @@ C:\portable\SedSAT3\
 │   ├── forms_structures.json
 │   └── Icons\
 └── sample-data\
+    └── SampleData.xlsx
 ```
 
 **The two `bin` levels are mandatory.** The application resolves its configuration and
@@ -196,8 +197,13 @@ Copy-Item resources\Icons\* C:\portable\SedSAT3\resources\Icons\
 
 ### Sample data hygiene
 
+The package ships `examples\SampleData.xlsx` from the repository, the dataset the user
+manual uses, and nothing else. Do **not** include `virtual-mixture.xlsx`: it was a test
+file with synthetic target samples, and its column names (`Calcium_µg/g`, `Nickelgg`, ...)
+differ from the example's, as the domain review found.
+
 Step 8 of the original handover asked for a small example dataset with expected results.
-Whatever dataset you pick, **audit the spreadsheet before shipping it.** Every one of
+Whatever dataset you ship, **audit the spreadsheet before shipping it.** Every one of
 these was present in the 1.1.6 sample data and each would have wasted a reviewer's time:
 
 | Defect | Effect on import |
@@ -407,7 +413,7 @@ Copy-Item "$omp\vcomp140.dll" $bin -Force
 # resources, sample data, readme
 Copy-Item 'resources\tools.json','resources\forms_structures.json' "$stage\resources\" -Force
 Copy-Item 'resources\Icons\*' "$stage\resources\Icons\" -Force
-# Copy-Item <your sample data> "$stage\sample-data\" -Force
+Copy-Item 'examples\SampleData.xlsx' "$stage\sample-data\" -Force
 # Copy-Item <your README-PORTABLE.txt> "$stage\" -Force
 
 # strip anything that must not ship

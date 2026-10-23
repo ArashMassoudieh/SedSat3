@@ -306,10 +306,11 @@ in the repository. The manual now names it and no longer links to sedsat.org
 (Section~1.1). \code{virtual-mixture.xlsx} was a test file with synthetic target
 samples. Its odd column names come from an old test of unusual characters in
 names, and it should not be shipped as an example.
-\mine{remove \code{virtual-mixture.xlsx} from the Windows package and include
-\code{examples/SampleData.xlsx} instead.}
+The Windows package now ships \code{examples/SampleData.xlsx} only; the
+packaging instructions say so, and \code{virtual-mixture.xlsx} is no longer
+included.
 \end{response}
-\status{Manual done; package to update.}
+\status{Done.}
 
 % =====================================================================
 \group{The program}
@@ -465,14 +466,12 @@ Figures are now full page width (half width in side-by-side pairs). Most were
 regenerated from the example data with the current program, often as the chart
 or table alone rather than the whole screen. Every menu path and tool name in
 the manual now matches the program exactly; the program's names were also
-harmonized (``Multi-way'' throughout). A few screenshots of the main window
-and of files still show the earlier version.
-\mine{retake \code{SelectSourceTargetGroups.png}, \code{Constituent\_Viz.png},
-\code{MCMC\_progress.png}, \code{MCMC\_folders.png}, \code{MCMC\_files.png},
-\code{95p\_CI\_table.png} and \code{95p\_CI\_predicted.png} with the current
-program.}
+harmonized (``Multi-way'' throughout). The screenshots of the main window, the
+sheet dialog and the progress window were also retaken with the current
+program, and the pictures of the batch output folders and files are replaced
+by excerpts of a real batch run of the example data, as text.
 \end{response}
-\status{Done, except the screenshots listed.}
+\status{Done.}
 
 % =====================================================================
 \group{Comments in the user's manual: getting started and data}
@@ -1180,8 +1179,6 @@ sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as 
 USGS color guidance & \todo{Cara} & The charts use the Okabe--Ito color-blind-safe palette. \\
 Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Review the last column of Table~1.1, and say which Sed\_SAT~1.0 features SedSAT3 should have. \\
 Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
-Screenshots to retake & \mine{Arash} & Seven figures of the main window, the progress window and files. \\
-virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\
 Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
 \bottomrule
 \end{longtable}

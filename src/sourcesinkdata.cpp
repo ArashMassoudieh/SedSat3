@@ -4635,6 +4635,7 @@ Results SourceSinkData::MCMC(
 static QString SafeFileName(const QString& name)
 {
     QString safe = name;
+    safe.replace(QStringLiteral(": "), QStringLiteral(" - "));  // "Convergence: split R-hat"
     for (QChar& c : safe)
     {
         if (c.unicode() < 32 || QStringLiteral("\\/:*?\"<>|").contains(c))

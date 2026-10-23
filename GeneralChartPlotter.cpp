@@ -1,6 +1,7 @@
 // SedSAT3 – Sediment Source Assessment Tool, version 3
 // U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
 
+#include <cmath>
 #include "GeneralChartPlotter.h"
 #include "Utilities.h"
 #include <QRandomGenerator>
@@ -597,26 +598,8 @@ void GeneralChartPlotter::SetZoomMode(bool mode)
 
 void GeneralChartPlotter::ZoomExtents()
 {
-    if (xAxisNumeric) {
-        xAxisNumeric->setRange(xRange[0], xRange[1]);
-    }
-    if (yAxisNumeric) {
-        yAxisNumeric->setRange(yRange[0], yRange[1]);
-    }
-    else if (yAxisLogarithmic) {
-        double minRange = yRange[0];
-        double maxRange = yRange[1];
-
-        // Ensure valid range for log scale
-        if (minRange <= 0 || minRange >= 1e12) {
-            minRange = 0.001;
-        }
-        if (maxRange <= minRange || maxRange <= -1e12) {
-            maxRange = minRange * 1000;
-        }
-
-        yAxisLogarithmic->setRange(minRange, maxRange);
-    }
+    // The same ranges as when the data were plotted
+    UpdateAxisRanges();
 }
 
 void GeneralChartPlotter::SetRange(const std::vector<double>& range, ChartAxis whichAxis)
@@ -695,7 +678,9 @@ void GeneralChartPlotter::UpdateAxisRanges()
     }
 
     if (yAxisNumeric && yRange[0] < yRange[1]) {
-        yAxisNumeric->setRange(yRange[0], yRange[1]);
+        // A margin so the points at the extremes are not drawn on the edge
+        const double margin = 0.05 * (yRange[1] - yRange[0]);
+        yAxisNumeric->setRange(yRange[0] - margin, yRange[1] + margin);
     }
     else if (yAxisLogarithmic) {
         double minRange = yRange[0];
@@ -709,7 +694,15 @@ void GeneralChartPlotter::UpdateAxisRanges()
             maxRange = minRange * 1000;
         }
 
-        yAxisLogarithmic->setRange(minRange, maxRange);
+        // Whole decades, so the axis always has labels at both ends: values
+        // within one decade (such as 10 to 40) used to get a single label,
+        // and the largest value sat on the top edge
+        double lowExponent = std::floor(std::log10(minRange));
+        double highExponent = std::ceil(std::log10(maxRange));
+        if (highExponent <= lowExponent)
+            highExponent = lowExponent + 1;
+        yAxisLogarithmic->setRange(std::pow(10.0, lowExponent), std::pow(10.0, highExponent));
+        yAxisLogarithmic->setMinorTickCount(8);
     }
 }
 
