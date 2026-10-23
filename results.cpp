@@ -291,6 +291,19 @@ bool Results::ReadFromJson(const QJsonObject &jsonobject)
             res_item.SetResult(ftestpvalue);
             operator[](key.toStdString()) = res_item;
         }
+        else if (key.contains("Confusion matrix"))
+        {
+            CMBMatrix* confusion = new CMBMatrix();
+            confusion->ReadFromJsonObject(jsonobject[key].toObject());
+            ResultItem res_item;
+            res_item.SetShowAsString(false);
+            res_item.SetShowTable(true);
+            res_item.SetShowGraph(false);
+            res_item.SetType(result_type::matrix);
+            res_item.SetName(key.toStdString());
+            res_item.SetResult(confusion);
+            operator[](key.toStdString()) = res_item;
+        }
         else if (key.contains("Eigen vectors"))
         {
             // One eigenvector per source group (multi-way DFA)

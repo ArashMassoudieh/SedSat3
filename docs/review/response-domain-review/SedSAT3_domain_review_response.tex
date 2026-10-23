@@ -442,14 +442,15 @@ comparison from the Sed\_SAT~1.0 source code (the software release,
 doi:10.5066/F76Q1VBX) and its report. Please check it, since you know
 Sed\_SAT~1.0 best.
 
-The comparison showed that Sed\_SAT~1.0 kept stable isotopes out of the
-organic matter correction, to avoid biasing them. SedSAT3 now does the same by
-default (the user can still choose to correct them). It also shows three
-things Sed\_SAT~1.0 did that SedSAT3 does not:
+The comparison prompted two changes. SedSAT3 no longer corrects stable
+isotopes for organic matter and size by default, as in Sed\_SAT~1.0, which
+avoided biasing them (the user can still choose to correct them). Step~4 has a
+confusion matrix (Comment~7.12). Sed\_SAT~1.0 also did three things that
+SedSAT3 does not:
 \begin{itemize}
     \item imputing values below detection;
     \item a tolerance in the bracket test;
-    \item the confusion matrix and DFA weighting factors.
+    \item using tracer weighting factors from the DFA in the mixing model.
 \end{itemize}
 I would welcome your view on which of these SedSAT3 should have.
 \end{response}
@@ -872,13 +873,18 @@ A confusion matrix would be a clearer output than this table. The goal is to
 determine how well the tracers chosen can correctly assign sources, right?
 \end{reviewer}
 \begin{response}
-Yes. Source Verification does this: it treats each source sample as a target
-and shows which groups it is attributed to. The manual now presents it in that
-light (Section~5.4.2). A summary confusion matrix from the DFA is a good
-addition. \mine{add a confusion matrix (DFA classification of the source
-samples) to step~4.}
+Yes, and step~4 now has one: a seventh panel with the leave-one-out confusion
+matrix of the source samples for the selected constituents. It uses linear
+discriminant classification with equal priors, as in Sed\_SAT~1.0. Each row is
+a true source group, each column the group assigned, and the last column the
+percentage classified correctly. I checked it against an independent
+calculation. In the example, most misclassifications are between Crop and
+Pasture. The manual describes it and how to read it (Section~3.5).
+
+Source Verification answers the same question with the fingerprinting itself,
+and the manual now relates the two.
 \end{response}
-\status{Documented; addition planned.}
+\status{Done.}
 
 \begin{reviewer}{Fingerprinting}
 Are the elements chosen by DFA the only ones used for fingerprinting, or are all
@@ -1158,7 +1164,7 @@ Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this rel
 Screenshots to retake & \mine{Arash} & Seven figures of the main window, the progress window and files. \\
 virtual-mixture.xlsx & \mine{Arash} & Replace it with SampleData.xlsx in the Windows package. \\
 Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
-Notes column; confusion matrix; target sheet dialog & \mine{Arash} & Enhancements suggested in the review. \\
+Notes column; target sheet dialog & \mine{Arash} & Enhancements suggested in the review. \\
 \bottomrule
 \end{longtable}
 

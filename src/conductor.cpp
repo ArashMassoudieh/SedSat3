@@ -1322,6 +1322,18 @@ bool Conductor::ExecuteSDFAM(const std::map<std::string, std::string>& arguments
             dfa_eigen_vectors.SetResult(new CMBVectorSet(selected_dfa.eigen_vectors));
             results.Append(dfa_eigen_vectors);
         }
+
+        // How well the selected constituents classify the source samples:
+        // leave-one-out linear discriminant classification (as Sed_SAT 1.0)
+        ResultItem confusion;
+        confusion.SetName("Confusion matrix (selected constituents, leave-one-out)");
+        confusion.SetType(result_type::matrix);
+        confusion.SetShowAsString(false);
+        confusion.SetShowTable(true);
+        confusion.SetShowGraph(false);
+        confusion.setTableTitle("Confusion matrix: rows are the true source groups, columns the groups assigned");
+        confusion.SetResult(new CMBMatrix(selected_data.DFAConfusionMatrix()));
+        results.Append(confusion);
     }
 
     return true;

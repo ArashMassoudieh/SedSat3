@@ -90,7 +90,7 @@ Organic matter and particle size correction (Sec.~\ref{sec:sizeandorganiccorrect
 \addlinespace
 Bracket test (Sec.~\ref{sec:bracketing}) & A target value fails when it is above every source sample or below every one; every target sample at once. & \textit{Changed.} The range of all source samples was widened by a tolerance (default 10\%) before the test. \\
 \addlinespace
-Tracer selection (Sec.~\ref{sec:multiway-dfa}, \ref{sec:dfa-tools}) & Forward stepwise discriminant function analysis: multi-way, one vs.\ one, one vs.\ the rest; the constituents up to the smallest $\chi^2$ p-value are selected. & \textit{Similar.} Forward stepwise discriminant function analysis among all groups, adding tracers by Wilks' $\Lambda$ with an entry significance level (default 0.01; R package klaR). It also reported a leave-one-out confusion matrix, and computed tracer weighting factors from each tracer's classification rate. \\
+Tracer selection (Sec.~\ref{sec:multiway-dfa}, \ref{sec:dfa-tools}) & Forward stepwise discriminant function analysis: multi-way, one vs.\ one, one vs.\ the rest; the constituents up to the smallest $\chi^2$ p-value are selected; leave-one-out confusion matrix of the source samples. & \textit{Similar.} Forward stepwise discriminant function analysis among all groups, adding tracers by Wilks' $\Lambda$ with an entry significance level (default 0.01; R package klaR), with the same leave-one-out confusion matrix. It also computed tracer weighting factors from each tracer's classification rate, which SedSAT3 does not use. \\
 \addlinespace
 Other tracer screening (Sec.~\ref{sec:tools-selection}, \ref{sec:tools-exploration}) & Analysis of variance, auto-select (pairwise t-tests), discriminant power, correlation matrix. & \textit{New in SedSAT3.} Sed\_SAT~1.0 tested the assumptions of the DFA instead: multivariate normality (Shapiro--Wilk, Mardia, Royston, Henze--Zirkler) and equal dispersion, choosing raw or Box--Cox transformed data for the DFA. \\
 \addlinespace
@@ -426,7 +426,7 @@ To run it, choose \textbf{Tools}$\rightarrow$\textbf{Deterministic Sediment Fing
 \end{itemize}
 Click \textbf{Ok}.
 
-The result window contains six panels:
+The result window contains seven panels:
 \begin{enumerate}
     \item \textit{Chi-squared P-Values}: the $\chi^2$ p-value after each constituent is added, in the order added (Fig.~\ref{fig:Chi2-DFA-multiway}). The first constituent is the one that best separates the groups on its own; each later one is the constituent that most improves the separation of those already in. A smaller p-value means a stronger separation.
     \item \textit{Elements to be Selected}: the constituents up to the smallest p-value, which are the ones selected.
@@ -434,6 +434,7 @@ The result window contains six panels:
     \item \textit{F-test P-Value} after each addition.
     \item \textit{Multiway Projected Elemental Profiles (selected constituents)}: the discriminant scores of the source samples, computed with the selected constituents (Fig.~\ref{fig:Multiway-DFA-scatter-plots}).
     \item \textit{Eigen vectors (selected constituents)}: the weights of the selected constituents in each source group's discriminant function (Fig.~\ref{fig:Multiway-eigenvectors}).
+    \item \textit{Confusion matrix (selected constituents, leave-one-out)}: how well the selected constituents classify the source samples (Fig.~\ref{fig:confusion-matrix}).
 \end{enumerate}
 All four of the first panels list the constituents in the same order, the order in which they were added. The p-values are given per constituent added; to see the statistics per source group, run \textbf{Discriminant function analysis (Multi-way)} on the selected constituents (Section~\ref{sec:dfa-tools}).
 
@@ -497,6 +498,20 @@ Finally, the sixth panel contains the eigenvectors obtained by maximizing the se
     \includegraphics[width=\textwidth]{Figures/Multiway-DFA-eigenvectors.png}
     \caption{Estimated eigenvectors based on maximizing the separation of samples in each source group from all other samples.}
     \label{fig:Multiway-eigenvectors}
+\end{figure}
+\FloatBarrier
+
+The seventh panel is the confusion matrix. Each source sample is classified into the source group it most resembles in the selected constituents, and the table counts the results. Each row is a true source group and each column the group assigned, and the last column gives the percentage of the group's samples classified correctly. Click the table button~\includegraphics[width=0.5cm]{Figures/table.png} to view it (Fig.~\ref{fig:confusion-matrix}).
+
+The classification is linear discriminant analysis with equal prior probabilities and leave-one-out cross-validation, as in Sed\_SAT \citep{gormansanisaca2017determining}. Each sample in turn is left out. The group means and the pooled within-group covariance matrix are computed from the remaining samples, and the sample is assigned to the group whose mean is nearest in Mahalanobis distance. Because the sample being classified does not contribute to the statistics, the percentages are an honest measure of how well the constituents would classify a new sample.
+
+A perfect set of tracers gives counts only on the diagonal. Off-diagonal counts show which groups the tracers confuse. In the example (Fig.~\ref{fig:confusion-matrix}), most misclassifications are between Crop and Pasture, so their individual contributions will be less certain than their combined one; if they cannot be separated, consider combining them into one source. The confusion matrix measures separation by the discriminant function, not by the mixing model; Source Verification (Section~\ref{sec:tools-uncertainty}) checks the same question with the fingerprinting itself, and the two need not agree exactly.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/DFA_confusion_matrix.png}
+    \caption{Leave-one-out confusion matrix of the source samples of the example data, with the seven constituents selected in step~4: rows are the true source groups, columns the groups assigned.}
+    \label{fig:confusion-matrix}
 \end{figure}
 \FloatBarrier
 
@@ -735,7 +750,7 @@ The contents of each file are as follows:
 Sediment fingerprinting results should be judged by several lines of evidence rather than by one number. \citet{gormansanisaca2017determining} describe the steps of a study with the earlier Sed\_SAT tool, and \citet{collins2017sediment} review the method and the decisions it involves. With SedSAT3:
 \begin{itemize}
     \item \textbf{Check the fit.} Compare the modeled and measured target sample (Section~\ref{sec:lmmle}, third panel; Section~\ref{sec:bayesian_cmb}, fourth and fifth panels). Tracers that the model cannot reproduce point to non-conservative behaviour, a missing source, or an unsuitable correction.
-    \item \textbf{Check the tracers.} The selected tracers should pass the bracket test for the target sample and separate the source groups (step~4, Section~\ref{sec:multiway-dfa}). Source verification (Section~\ref{sec:tools-uncertainty}) shows how well they classify the source samples.
+    \item \textbf{Check the tracers.} The selected tracers should pass the bracket test for the target sample and separate the source groups (step~4, Section~\ref{sec:multiway-dfa}). The confusion matrix of step~4 and source verification (Section~\ref{sec:tools-uncertainty}) show how well they classify the source samples.
     \item \textbf{Check the sensitivity.} Error analysis (Section~\ref{sec:tools-uncertainty}) shows how much the contributions depend on the particular source samples. Repeating the fingerprinting with a slightly different tracer selection, or with and without the organic matter and size correction, shows how much they depend on those choices.
     \item \textbf{Report the uncertainty.} The Bayesian credible intervals (Section~\ref{sec:bayesian_cmb}) combine the measurement and source variability. Contributions whose intervals are wide, or which change with the tracer selection, should be reported with that caution.
 \end{itemize}
@@ -1110,7 +1125,7 @@ The source verification tool assesses how well individual source samples align w
 
 To perform source verification, select \textbf{Tools}$\rightarrow$\textbf{Other Statistical Tools}$\rightarrow$\textbf{Uncertainty and verification}$\rightarrow$\textbf{Source Verification} from the tools window. In the central form, choose the source group on which to perform the analysis and whether to apply the size and organic matter correction. With the correction, the sources are corrected, for each source sample tested, to that sample's own organic matter content and particle size, as they would be for a target sample. Click \textbf{Ok}.
 
-Source verification is a check of how well the selected tracers classify the source samples, similar to a confusion matrix: a sample attributed mostly to its own group is classified correctly, and one attributed mostly to another group is not. Running it for each source group shows which groups the tracers confuse.
+Source verification checks how well the selected tracers classify the source samples, as the confusion matrix of step~4 does (Section~\ref{sec:multiway-dfa}), but with the fingerprinting itself rather than the discriminant function: a sample attributed mostly to its own group is classified correctly, and one attributed mostly to another group is not. Running it for each source group shows which groups the tracers confuse.
 
 \begin{tcolorbox}[colback=yellow!10,colframe=yellow!50!black,title=Note]
 Only the elements and samples marked for inclusion in \textbf{Settings}$\rightarrow$\textbf{Constituent Properties} and \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} are considered in the analysis.

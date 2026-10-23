@@ -166,6 +166,7 @@ private slots:
     void fingerprinting_isotopeBaseElementExcluded();
     void fingerprinting_organicCarbonAsIsotopeBase();
     void omSizeCorrection_isotopesNotCorrectedByDefault();
+    void dfaConfusionMatrix();
     void multiwayDiscriminantPower_runs();
     void correlationMatrix_correctedWithSelectedElements();
 
@@ -931,6 +932,35 @@ void SedSAT3Tests::omSizeCorrection_isotopesNotCorrectedByDefault()
         QVERIFY(models != nullptr && models->count("d13C") == 1 && models->count("Al") == 1);
         QVERIFY(!models->at("d13C").Effective(0));
         QVERIFY(models->at("Al").Effective(0));   // a threshold of 1 accepts any p-value
+    }
+}
+
+void SedSAT3Tests::dfaConfusionMatrix()
+{
+    // Two well-separated groups: every sample classified correctly
+    {
+        SourceSinkData data;
+        BuildData(data, PositiveGroups(), "Mixture");
+        const CMBMatrix confusion = data.DFAConfusionMatrix();
+        QCOMPARE(confusion.getnumrows(), 2);
+        QCOMPARE(confusion.getnumcols(), 3);
+        QCOMPARE(confusion.matr[0][0], 4.0);   // Agriculture
+        QCOMPARE(confusion.matr[1][1], 4.0);   // Forest
+        QCOMPARE(confusion.matr[0][1] + confusion.matr[1][0], 0.0);
+        QCOMPARE(confusion.matr[0][2], 100.0);
+        QCOMPARE(confusion.matr[1][2], 100.0);
+    }
+    // A sample that lies with the other group is misclassified, and every
+    // row still counts all of its group's samples
+    {
+        GroupData groups = PositiveGroups();
+        groups["Agriculture"]["A5"] = {{"Al", 5.3}, {"Fe", 3.0}};
+        SourceSinkData data;
+        BuildData(data, groups, "Mixture");
+        const CMBMatrix confusion = data.DFAConfusionMatrix();
+        QCOMPARE(confusion.matr[0][0] + confusion.matr[0][1], 5.0);
+        QCOMPARE(confusion.matr[0][1], 1.0);
+        QCOMPARE(confusion.matr[0][2], 80.0);
     }
 }
 

@@ -1623,6 +1623,17 @@ public:
     vector<string> IsotopesWithUnusableBaseElement() const;
 
     /**
+     * @brief Leave-one-out confusion matrix of the source samples
+     *
+     * Linear discriminant classification with equal priors: each source
+     * sample, left out in turn, is assigned to the group whose mean (computed
+     * without it) is nearest in Mahalanobis distance with the pooled
+     * within-group covariance. Rows are the true groups, columns the groups
+     * assigned, and the last column the percentage classified correctly.
+     */
+    CMBMatrix DFAConfusionMatrix();
+
+    /**
      * @brief Mean content of an isotope's base element in one source group
      *
      * From the estimated distribution when the base element is a tracer, and
@@ -2580,6 +2591,7 @@ private:
      * @note Target group excluded
      * @note Weighted by degrees of freedom (n_i - 1)
      */
+
     CMatrix WithinGroupCovarianceMatrix();
 
     /**

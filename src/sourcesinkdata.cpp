@@ -3,6 +3,7 @@
 
 #include "sourcesinkdata.h"
 #include <set>
+#include <armadillo>
 #include "numericparsing.h"
 #include "randomstream.h"
 #include <cmath>
@@ -4737,6 +4738,101 @@ string SourceSinkData::FirstSizeConstituent()
 
     // No particle size constituent found
     return "";
+}
+
+CMBMatrix SourceSinkData::DFAConfusionMatrix()
+{
+    // Leave-one-out classification of the source samples by linear
+    // discriminant analysis with equal priors, as in Sed_SAT 1.0 (MASS::lda
+    // with CV = TRUE): each sample in turn is left out, the group means and
+    // the pooled within-group covariance are computed from the other samples,
+    // and the sample is assigned to the group whose mean is nearest in
+    // Mahalanobis distance.
+    const vector<string> constituents = GetElementNames();
+    vector<string> groups;
+    vector<arma::mat> data;   // per group: samples x constituents
+    for (auto& [group_name, profile_set] : *this)
+    {
+        if (group_name == target_group_ || profile_set.size() == 0)
+            continue;
+        arma::mat values(profile_set.size(), constituents.size());
+        size_t row = 0;
+        for (const auto& [sample_name, profile] : profile_set)
+        {
+            for (size_t j = 0; j < constituents.size(); j++)
+                values(row, j) = profile.GetValue(constituents[j]);
+            row++;
+        }
+        groups.push_back(group_name);
+        data.push_back(values);
+    }
+
+    const size_t num_groups = groups.size();
+    CMBMatrix confusion(int(num_groups) + 1, int(num_groups));   // (columns, rows)
+    for (size_t g = 0; g < num_groups; g++)
+    {
+        confusion.SetRowLabel(int(g), groups[g]);
+        confusion.SetColumnLabel(int(g), groups[g]);
+    }
+    confusion.SetColumnLabel(int(num_groups), "% correct");
+    if (num_groups < 2 || constituents.empty())
+        return confusion;
+
+    for (size_t g = 0; g < num_groups; g++)
+    {
+        size_t correct = 0;
+        for (arma::uword i = 0; i < data[g].n_rows; i++)
+        {
+            // Means and pooled covariance without sample i of group g
+            vector<arma::rowvec> means(num_groups);
+            arma::mat scatter(constituents.size(), constituents.size(), arma::fill::zeros);
+            double degrees_of_freedom = 0;
+            for (size_t h = 0; h < num_groups; h++)
+            {
+                arma::mat values = data[h];
+                if (h == g)
+                    values.shed_row(i);
+                if (values.n_rows == 0)
+                {
+                    means[h] = arma::rowvec(constituents.size());
+                    means[h].fill(arma::datum::nan);
+                    continue;
+                }
+                means[h] = arma::mean(values, 0);
+                arma::mat centred = values.each_row() - means[h];
+                scatter += centred.t() * centred;
+                degrees_of_freedom += double(values.n_rows) - 1.0;
+            }
+            if (degrees_of_freedom <= 0)
+                continue;
+            // A pseudo-inverse keeps the classification defined when the
+            // covariance is singular (more constituents than samples)
+            const arma::mat inverse = arma::pinv(scatter / degrees_of_freedom);
+
+            const arma::rowvec x = data[g].row(i);
+            size_t best = 0;
+            double best_distance = arma::datum::inf;
+            for (size_t h = 0; h < num_groups; h++)
+            {
+                if (!means[h].is_finite())
+                    continue;
+                const arma::rowvec d = x - means[h];
+                const double distance = arma::as_scalar(d * inverse * d.t());
+                if (distance < best_distance)
+                {
+                    best_distance = distance;
+                    best = h;
+                }
+            }
+            confusion.matr[g][best] += 1;
+            if (best == g)
+                correct++;
+        }
+        // Percentage to one decimal place
+        confusion.matr[g][num_groups] = data[g].n_rows > 0 ?
+            std::round(1000.0 * double(correct) / double(data[g].n_rows)) / 10.0 : 0.0;
+    }
+    return confusion;
 }
 
 CMatrix SourceSinkData::WithinGroupCovarianceMatrix()
