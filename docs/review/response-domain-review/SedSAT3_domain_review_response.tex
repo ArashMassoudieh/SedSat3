@@ -440,8 +440,7 @@ Added Table~1.1, ``Methods in SedSAT3'' (Section~1.2). For each method it
 gives SedSAT3's approach, where the manual describes it, and how it compares
 with Sed\_SAT~1.0: the same, changed, new, or not in SedSAT3. I wrote the
 comparison from the Sed\_SAT~1.0 source code (the software release,
-doi:10.5066/F76Q1VBX) and its report. Please check it, since you know
-Sed\_SAT~1.0 best.
+doi:10.5066/F76Q1VBX) and its report.
 
 The comparison prompted two changes. SedSAT3 no longer corrects stable
 isotopes for organic matter and size by default, as in Sed\_SAT~1.0, which
@@ -453,9 +452,23 @@ SedSAT3 does not:
     \item a tolerance in the bracket test;
     \item using tracer weighting factors from the DFA in the mixing model.
 \end{itemize}
-I would welcome your view on which of these SedSAT3 should have.
+We decided as follows:
+\begin{itemize}
+    \item \textbf{Values below detection:} not added. The substitution for a
+          non-detect depends on the laboratory and the method, so it is the
+          analyst's choice; the user replaces these values before import, as
+          the manual explains (Chapter~2).
+    \item \textbf{Bracket test tolerance:} planned for the next release, as an
+          option that widens the source range by a percentage, with a default
+          of 0 so that results do not change unless it is chosen.
+    \item \textbf{DFA weighting factors:} not added. The Bayesian model already
+          estimates an error standard deviation for each constituent, which
+          weights the constituents by how well the mixing model reproduces
+          them. Weights from the DFA would favor the tracers that separate the
+          sources best, not those that behave conservatively.
+\end{itemize}
 \end{response}
-\status{Done; for your review.}
+\status{Done.}
 
 \begin{reviewer}{Review notes}
 Figures are often too small to see without zooming in. Several naming
@@ -482,10 +495,9 @@ Version. Publication date. ``Missing'' (at the table of contents).
 \begin{response}
 The title page now gives the software version, 1.1.8, and the date as a
 placeholder until publication. The manual now also has a list of figures
-after the table of contents. \todo{Cara: confirm the version number and set
-the publication date.} I was not sure what ``missing'' at the table of
-contents referred to: the list of figures, or a table of contents absent from
-the Word copy (the PDF has one). Please tell me if it is something else.
+after the table of contents, which covers the ``missing'' item; the PDF has a
+full table of contents. \todo{Cara: confirm the version number and set
+the publication date.}
 \end{response}
 \status{Done; version and date pending.}
 
@@ -583,15 +595,19 @@ It would be easier to read if the constituents appeared in the same order as in
 the xlsx file.
 \end{reviewer}
 \begin{response}
-Agreed. The program stores the constituents in a structure sorted by name, so
-the alphabetical order appears in every table and result. Keeping the file's
-order touches the project file format and every result. I would rather make
-that change separately, with its own tests, than in this review. The manual now
-states that constituents are listed alphabetically.
-\mine{keep the Excel column order (project format and results); planned
-separately.}
+We considered this and decided to keep the alphabetical order. The project file
+stores the constituents by name, with no column order, so a saved project and
+every result use one order that does not depend on how a spreadsheet was
+arranged: two datasets with the same constituents give their results in the
+same order, which makes runs, projects and the command-line tool's output
+directly comparable. With 24 constituents in the example data, an alphabetical list is also
+the quickest to search. Where the order carries meaning, the tools use their
+own: the stepwise DFA lists the constituents in the order they entered. Every
+result table can be exported to CSV and reordered in a spreadsheet if another
+order is wanted. The manual now states that constituents are listed
+alphabetically, and why.
 \end{response}
-\status{Documented; change planned.}
+\status{Closed: alphabetical order kept.}
 
 \begin{reviewer}{Importing the data}
 These columns can only be edited if the constituent type has been designated as
@@ -1177,9 +1193,9 @@ Item & Who & Note \\
 Repository path, DOI, version, publication date & \todo{Cara} & README, citation and manual title page hold placeholders. \\
 sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as a pointer; check the form against USGS guidelines if it stays. Code-signing of the Windows package. \\
 USGS color guidance & \todo{Cara} & The charts use the Okabe--Ito color-blind-safe palette. \\
-Sed\_SAT 1.0 comparison & \todo{Allen, Lilly} & Review the last column of Table~1.1, and say which Sed\_SAT~1.0 features SedSAT3 should have. \\
+Sed\_SAT 1.0 comparison & \todo{Allen} & Review the last column of Table~1.1. \\
 Genetic algorithm section & \todo{Allen, Cara} & Keep (marked as not in this release) or remove. \\
-Constituent order & \mine{Arash} & Keep the Excel column order; planned separately. \\
+Bracket test tolerance & Next release & An option to widen the source range, default 0. \\
 \bottomrule
 \end{longtable}
 
