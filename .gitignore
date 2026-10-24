@@ -204,3 +204,5 @@ CMakeLists.txt.user*
 build-w4/
 msvc-w4.log
 cppcheck.txt
+# Advanced Installer staging (installer/stage.ps1)
+installer/payload/
