@@ -125,7 +125,7 @@ In brief:
   (Section~3).
 \item Every imported value is screened by a single parser; NaN and Inf are
   refused at import with the cell location (Section~4).
-\item There are now 49 unit tests (including the NaN / negative / illegal
+\item There are now 61 unit tests (including the NaN / negative / illegal
   value tests you suggested), a regression suite on two example projects,
   and a GitLab CI pipeline running the tests, clang-tidy and cppcheck
   (Section~5).
@@ -764,7 +764,8 @@ I have run every task on Windows~11 (Visual Studio 2022, MSVC v143, pixi
 forwards every call to MKL, which GSL would then load. The file now asks for
 their OpenBLAS builds, which leaves the results unchanged and keeps about
 540\,MB of MKL out of the portable package. \code{build} produces the GUI, the command-line
-program and the unit tests. In \code{test}, all 49 unit tests pass. The
+program and the unit tests. In \code{test}, all unit tests pass (61 on the
+current code, which MSVC also compiles without warnings). The
 regression suite matches the Linux baseline for every analysis except the
 Levenberg--Marquardt batch, whose contributions differ by at most
 $7\times10^{-8}$ (median relative difference $8\times10^{-9}$), above the
@@ -789,26 +790,34 @@ uninitialized \code{CGA::\allowbreak{}Model}. Three divisions that are already
 guarded are suppressed as false positives. The 150 that remain are style and
 performance findings (postfix increments 60, pass-by-value 46, and so on),
 plus one possible \code{log(0)} in a function that has no callers.
-The Visual Studio project now compiles
-the vendored QCustomPlot instead of a copy outside the repository; it still
-links a prebuilt QXlsx library, which I will change to the submodule as the
-qmake and CMake builds already do.
+The Visual Studio project now compiles QCustomPlot and QXlsx from
+\code{thirdparty/} as the qmake and CMake builds do, and refers to no path
+outside the repository.
 
 The portable, no-administrator Windows package,
-\code{SedSAT3-1.1.8-windows-x64-portable.\allowbreak{}zip} (42\,MB), is built from this
-pixi build, following \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}. It
-contains the GUI, the command-line program and its manual, and the virtual
-mixture example. Every DLL the two programs need is in the package, with
-nothing resolving from outside it or \code{System32}. I checked it under a
-restricted (non-administrator) token: the GUI opened with no elevation prompt
-from a folder in the user profile, from a path containing spaces and from
-another drive letter, and the command-line program ran the full example,
-including the Bayesian batch. The example script fixes the random seed, so
-the README can list the exact results a reviewer should get, and a second run
-reproduced them exactly. (Version 1.1.7 was a package built before these
-fixes, so this one is numbered 1.1.8.)
+\code{SedSAT3-1.1.8-windows-x64-portable.\allowbreak{}zip}, is built from this pixi
+build, following \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}. It contains
+the GUI, the command-line program, the user's manual and the command-line
+manual, and the example data set \code{SampleData.\allowbreak{}xlsx}. Every DLL the two
+programs need is in the package, with nothing resolving from outside it or
+\code{System32}. Each build is checked under a restricted
+(non-administrator) token: the GUI opens with no elevation prompt from a
+folder in the user profile, from a path containing spaces and from another
+drive letter, and the command-line program runs a full example, including a
+Bayesian batch. The example script fixes the random seed, so the README lists
+the exact results a reviewer should get, and a second run reproduces them
+exactly. The package sent to the reviewers is built from the merged code.
+
+The installer (\code{CMB\_\allowbreak{}Source.\allowbreak{}aip}, Advanced Installer) is
+updated in the same way. It now installs the command-line program next to
+the GUI, Qt~6 with its plugins (styles, image formats, icons) from a staged
+\code{windeployqt} folder (\code{installer/\allowbreak{}stage.\allowbreak{}ps1}), and no
+longer the QXlsx and Qt~5 DLLs of earlier releases; version 1.1.8 has a new
+product code, so it replaces an earlier installation. The installer still
+installs the Visual C++ runtime as a prerequisite, which needs administrator
+rights; the portable package is the route for users without them.
 \end{response}
-\status{Build fixes done; \code{pixi.\allowbreak{}toml} tested on Windows; MSVC \code{/W4} and cppcheck defects fixed; portable package 1.1.8 built and tested.}
+\status{Build fixes done; \code{pixi.\allowbreak{}toml} tested on Windows; MSVC \code{/W4} and cppcheck defects fixed; portable package and installer 1.1.8 built and tested.}
 
 % ====================================================================
 \group{Detailed observations (CODE\_REVIEW\_OBSERVATIONS.md)}
@@ -833,7 +842,7 @@ accurate, not to diminish the review: they were all worth looking at.
 1, 9 & GA listed as a method; GA not built & Fixed (Comment 5.2).\\
 2 & Three build systems, no source of truth & Improved (Comment 5.4).\\
 2 & \code{CMBSource.\allowbreak{}pro} hard-codes a personal path & File removed.\\
-2 & The same kind of paths in \code{SedSat3.\allowbreak{}vcxproj} & QCustomPlot now from \code{thirdparty/\allowbreak{}}; the prebuilt QXlsx still to change (Section 7).\\
+2 & The same kind of paths in \code{SedSat3.\allowbreak{}vcxproj} & QCustomPlot and QXlsx now from \code{thirdparty/\allowbreak{}}; no path outside the repository (Section 7).\\
 2 & Hygiene script not run; stray \code{gitignore} & Both removed.\\
 2 & \code{CMB\_\allowbreak{}Source.\allowbreak{}aip} still tracked & Kept on purpose (the installer) and rebranded to the USGS.\\
 3a & QXlsx submodule URL dead & Fixed (Comment 5.3).\\

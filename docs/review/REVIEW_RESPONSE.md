@@ -91,6 +91,9 @@ Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 | `TimeSeries::addPoint` did not compare the first two intervals | `2f8c463` | Uneven series could be treated as evenly spaced. |
 | `CMCMC::model` repeated its work once per parameter | `2f8c463` | Wasted time only. |
 | `gamma()` clashed with `::gamma` under Clang | `ac039a2` | Clang build failure. |
+| Excel import cleared the target group the sheet dialog had just set (introduced on this branch, `0569582`) | `88e698e` | After an Excel import every analysis that looks up the target failed (bracket tests: `invalid map<K, T> key`; stepwise multi-way DFA: index out of range). Projects opened from `.cmb` were not affected, so the CLI and regression tests did not see it. Found in the Windows GUI check. |
+| Results window: the buttons of results whose name contains a colon ("Convergence: split R-hat") looked up a missing key, inserted an empty result and crashed | `512457c` | Crash on the convergence tables' table button. |
+| Credible-interval charts on a log axis started at a fixed 1e-8 | `512457c` | Axis now starts at the decade below the smallest value shown. |
 
 ## Follow-up to the supplementary documents (October 16)
 
@@ -123,7 +126,8 @@ are non-negative, both parameterizations) and Test 4d (single-sample source),
 (reported, not enforced). Regression comparison: no differences.
 
 Still open from the supplementary documents: a corrected `pixi.toml` (to be
-tested on Windows), the Visual Studio project's prebuilt QXlsx library, the GA's
+tested on Windows; since done, see "Compiler warnings and static analysis"),
+the Visual Studio project's prebuilt QXlsx library (since fixed: `88e698e`), the GA's
 identical `apply_to_all` branches (intent to confirm), `performance-*`
 clang-tidy style items, MSVC `/W4` and the first cppcheck report, and the
 G3 single-click toggle.
@@ -293,11 +297,12 @@ In short, on the Windows machine (Visual Studio 2022, Qt 6 MSVC kit, the
 7. Verify (dependency walk, restricted-token launch), then zip to
    `SedSAT3-<version>-windows-x64-portable.zip` and write its SHA-256.
 
-**Done on Windows, version 1.1.8**: `SedSAT3-1.1.8-windows-x64-portable.zip`,
-42 MB, SHA-256
-`a934d3c97a5e8735111bd180f251bbcce3ea46c3983ca0501b9aa0be2fa2c060`. It was
-built from the pixi build (`pixi run build`), not the vcxproj, so steps 2–5
-differ:
+**Done on Windows, version 1.1.8**: `SedSAT3-1.1.8-windows-x64-portable.zip`.
+The first 1.1.8 build (October 19, SHA-256 `a934d3c9…`) predates the domain
+review fixes, and so does a second (October 22); the package for the
+reviewers is rebuilt from the merged code, with `examples/SampleData.xlsx` as
+its example data, and its SHA-256 is published with it. It is built from the
+pixi build (`pixi run build`), not the vcxproj, so steps 2–5 differ:
 
 - Qt was deployed with the environment's `windeployqt6 --qtpaths
   .pixi/envs/default/Library/bin/qtpaths6.exe --release --no-translations
@@ -322,6 +327,19 @@ from a `subst` drive, with all 118 modules loaded from the package or
 from the path with spaces. The example sets `"Random seed": "1234"`, so the
 README lists exact expected results; two runs gave identical credible
 intervals. 1.1.7 was the package built before the code-review fixes.
+
+**Installer** (`CMB_Source.aip`, Advanced Installer 15.1), version 1.1.8:
+built from the Visual Studio build. `installer/stage.ps1` builds the CLI with
+the same toolchain (Qt 6.7.2 MSVC, `SedSat3CLI.pro`), copies both programs to
+`installer/payload/bin/bin`, runs Qt's `windeployqt` there and adds the
+numerical DLLs; every file under `bin\bin` in the installer comes from that
+folder. QXlsx.dll (now compiled in) and the Qt 5 `libEGL`/`libGLESv2` are
+gone; the styles, image-format, icon, TLS and network plugins are added; the
+product code is new, so 1.1.8 replaces an earlier installation. Checked: the
+`.msi` extracts to the 35 files under `bin\bin` and the resources, and from
+the extracted files the GUI opens with every module from the install folder or
+`System32`, and the CLI runs bracketing, stepwise DFA and a Bayesian run on
+the example project.
 
 ## Placeholders still to fill
 
