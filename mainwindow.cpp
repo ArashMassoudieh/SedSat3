@@ -1186,7 +1186,7 @@ void MainWindow::on_old_result_requested(const QModelIndex& index)
 
     for (auto it = resultSet->begin(); it != resultSet->end(); ++it)
     {
-        resultsWindow->AppendResult(it->second);
+        resultsWindow->AppendResult(it->second, it->first);
     }
 
     resultsWindow->show();
@@ -1243,7 +1243,7 @@ bool MainWindow::Execute(const std::string& command, const std::map<std::string,
     // Populate results window
     for (auto it = resultsForStorage->begin(); it != resultsForStorage->end(); ++it)
     {
-        resultsWindow->AppendResult(it->second);
+        resultsWindow->AppendResult(it->second, it->first);
     }
 
     resultsWindow->show();

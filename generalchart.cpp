@@ -5,6 +5,7 @@
 #include "ui_generalchart.h"
 #include "resultitem.h"
 #include <cmath>
+#include <limits>
 #include <string>
 
 
@@ -1322,7 +1323,28 @@ bool GeneralChart::PlotRangeSet(RangeSet *rangeset, const QString &/*title*/, co
 
     if (result_item->YAxisMode()==yaxis_mode::log)
     {
-        y_min_val = max(y_min_val,1e-8);
+        // A log axis cannot reach 0, and an unset lower limit reads as 0.
+        // Unless a positive lower limit was set, start the axis at the
+        // decade below the smallest positive value shown (interval ends,
+        // medians, observed values) instead of a fixed 1e-8, which left most
+        // of the axis empty.
+        if (!(result_item->FixedYLimit() && result_item->YLimit(_range::low) > 0))
+        {
+            const bool with_observed = (result_item->Type() == result_type::rangeset_with_observed);
+            double smallest = std::numeric_limits<double>::infinity();
+            for (map<string, Range>::iterator it = rangeset->begin(); it!=rangeset->end(); it++)
+            {
+                const double candidates[] = { it->second.Get(_range::low), it->second.Get(_range::high),
+                                              it->second.Median(),
+                                              with_observed ? it->second.GetValue() : 0.0 };
+                for (double value : candidates)
+                    if (value > 0 && std::isfinite(value))
+                        smallest = min(smallest, value);
+            }
+            y_min_val = std::isfinite(smallest) ? std::pow(10.0, std::floor(std::log10(smallest))) : 1e-8;
+        }
+        if (!(y_max_val > y_min_val))
+            y_max_val = y_min_val * 10.0;
     }
     QString xAxisTitle = x_axis_title;
     QString yAxisTitle = y_axis_title;

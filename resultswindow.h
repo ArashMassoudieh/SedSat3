@@ -21,14 +21,19 @@ class ResultsWindow : public QDialog
 public:
     explicit ResultsWindow(QWidget *parent = nullptr);
     void AppendText(const string &text);
-    void AppendResult(const ResultItem &resultitem);
+    /// Adds a result's text and buttons. @p key is its key in the Results
+    /// map; the buttons find the result by it.
+    void AppendResult(const ResultItem &resultitem, const std::string &key);
     ~ResultsWindow();
     void SetResults(Results* res) { results = res;  }
 
 private:
     Ui::ResultsWindow *ui;
-    Results* results = nullptr; 
+    Results* results = nullptr;
     int result_item_counter = 0;
+    /// The result a button belongs to, or nullptr if it is not in the map
+    /// or holds no data
+    ResultItem* ResultForButton(QObject* button);
 
 public slots:
     void on_result_graph_clicked();
