@@ -52,7 +52,11 @@ def math_to_text(m):
 def plain(t):
     """Replace LaTeX character macros by Unicode."""
     t = t.replace("\\allowbreak{}", "").replace("\\allowbreak", "")
-    t = t.replace("\\textbackslash{}", "\\")
+    # A literal backslash becomes a placeholder until the macros below are
+    # replaced, so that "\textbackslash SedSat3" is not read as "\S". The
+    # form without braces is for \code{...}, whose argument may not contain
+    # braces; the space after the control word is not part of the text.
+    t = t.replace("\\textbackslash{}", "\x01").replace("\\textbackslash ", "\x01").replace("\\textbackslash", "\x01")
     for a, b in [("\\_", "_"), ("\\#", "#"), ("\\%", "%"), ("\\&", "&"), ("\\{", "{"), ("\\}", "}"),
                  ("\\ldots", "…"), ("\\S", "§"), ("\\today", datetime.date.today().strftime("%B %d, %Y").replace(" 0", " ")),
                  ("\\quad", " "), ("\\hfill", " "), ("\\ ", " "), ("\\\\", "\x00")]:
@@ -60,7 +64,7 @@ def plain(t):
     t = t.replace("---", "—").replace("--", "–").replace("``", "“").replace("''", "”")
     t = re.sub(r"(?<![\w])`", "‘", t).replace("'", "’")
     t = t.replace("~", "\u00a0")
-    t = re.sub(r"\s+", " ", t).replace("\x00", "\n")
+    t = re.sub(r"\s+", " ", t).replace("\x00", "\n").replace("\x01", "\\")
     return t
 
 # ---------------------------------------------------------------- inline

@@ -299,9 +299,16 @@ In short, on the Windows machine (Visual Studio 2022, Qt 6 MSVC kit, the
 
 **Done on Windows, version 1.1.8**: `SedSAT3-1.1.8-windows-x64-portable.zip`.
 The first 1.1.8 build (October 19, SHA-256 `a934d3c9…`) predates the domain
-review fixes, and so does a second (October 22); the package for the
-reviewers is rebuilt from the merged code, with `examples/SampleData.xlsx` as
-its example data, and its SHA-256 is published with it. It is built from the
+review fixes, and so does a second (October 22). The package for the
+reviewers was rebuilt on October 24 from `74d54a6`, with
+`examples/SampleData.xlsx` and `examples/SampleData.cmb` as its example data:
+44.4 MB, SHA-256
+`0cd424f93650ed42d7888ba8863f803b9af9ab31ceee38ee407ab9afce6056b3`, posted
+on merge request !4
+(<https://code.usgs.gov/-/project/20102/uploads/a9642eb7c4f46c966d73c3225341d418/SedSAT3-1.1.8-windows-x64-portable.zip>).
+Its example script runs Levenberg–Marquardt for the 17 targets and a default
+Bayesian batch for CTAIL1 (seed 1234), and its README lists the exact results.
+It is built from the
 pixi build (`pixi run build`), not the vcxproj, so steps 2–5 differ:
 
 - Qt was deployed with the environment's `windeployqt6 --qtpaths
