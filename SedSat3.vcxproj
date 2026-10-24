@@ -32,12 +32,12 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>6.7</QtInstall>
-    <QtModules>core;gui;widgets;printsupport;charts</QtModules>
+    <QtModules>core;core-private;gui;gui-private;widgets;printsupport;charts</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>6.7</QtInstall>
-    <QtModules>core;gui;widgets;printsupport;charts</QtModules>
+    <QtModules>core;core-private;gui;gui-private;widgets;printsupport;charts</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -60,36 +60,34 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;.\thirdparty\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;.\thirdparty\qcustomplot6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;USE_QCHARTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatSpecificWarningsAsErrors>4715;%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Projects\QXlsx\bin\Qt6;..\armadillo\lapack-blas_lib_win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;QXlsxQt6d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\armadillo\lapack-blas_lib_win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "..\QXlsx\bin\*.dll" $(SolutionDir)$(Platform)\$(Configuration)\
-copy "..\armadillo\lapack-blas_lib_win64" $(SolutionDir)$(Platform)\$(Configuration)\
+      <Command>copy "..\armadillo\lapack-blas_lib_win64" $(SolutionDir)$(Platform)\$(Configuration)\
 copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configuration)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;.\thirdparty\qcustomplot6;C:\Projects\QXlsxfromSassan\QXlsx\QXlsx\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\thirdparty\QXlsx\QXlsx\header;..\armadillo\armadillo-header;..\vcpkg\installed\x64-windows\include;.\include\MCMC;.\include\GA;.\include;.\Utilities;.;.\thirdparty\qcustomplot6;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>Q_GUI_SUPPORT;Q_JSON_SUPPORT;NOMINMAX;_arma;ARMA_USE_LAPACK;ARMA_USE_BLAS;Qt6;USE_QCHARTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatSpecificWarningsAsErrors>4715;%(TreatSpecificWarningsAsErrors)</TreatSpecificWarningsAsErrors>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\armadillo\lapack-blas_lib_win64;C:\Projects\QXlsx\bin\Qt6;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;QXlsxQt6.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\armadillo\lapack-blas_lib_win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>blas_win64_MT.lib;lapack_win64_MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "..\QXlsx\bin\*.dll" $(SolutionDir)$(Platform)\$(Configuration)\
-copy "..\armadillo\lapack-blas_lib_win64" $(SolutionDir)$(Platform)\$(Configuration)\
+      <Command>copy "..\armadillo\lapack-blas_lib_win64" $(SolutionDir)$(Platform)\$(Configuration)\
 copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configuration)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -273,6 +271,42 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <QtUic Include="resultswindow.ui" />
     <QtUic Include="resulttableviewer.ui" />
     <QtUic Include="selectsamples.ui" />
+  </ItemGroup>
+  <ItemGroup Label="QXlsx">
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxabstractooxmlfile.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxabstractsheet.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcell.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcellformula.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcelllocation.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcellrange.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcellreference.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxchart.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxchartsheet.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcolor.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxconditionalformatting.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxcontenttypes.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdatavalidation.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdatetype.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdocpropsapp.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdocpropscore.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdocument.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdrawing.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxdrawinganchor.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxformat.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxmediafile.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxnumformatparser.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxrelationships.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxrichstring.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxsharedstrings.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxsimpleooxmlfile.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxstyles.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxtheme.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxutility.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxworkbook.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxworksheet.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxzipreader.cpp" />
+    <ClCompile Include="thirdparty\QXlsx\QXlsx\source\xlsxzipwriter.cpp" />
+    <QtMoc Include="thirdparty\QXlsx\QXlsx\header\xlsxdocument.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

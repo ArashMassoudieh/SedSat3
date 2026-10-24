@@ -627,11 +627,14 @@ bool MainWindow::ReadExcel(const QString& filename)
     }
 
     // Let user indicate which sheet is the sink
+    sinkSheet = -1;
     auto indicateSheetDlg = std::make_unique<IndicateSheetsDialog>(this);
     indicateSheetDlg->Populate_Table(selectedSheets);
-    indicateSheetDlg->exec();
-
-    // qDebug() << "Sink Sheet is:" << sinkSheet;
+    if (indicateSheetDlg->exec() != QDialog::Accepted
+        || sinkSheet < 0 || sinkSheet >= selectedSheets.count())
+    {
+        return false; // User canceled
+    }
 
     // Read the sheets; the checks and their messages are in excelimport.cpp
     ExcelImportError importError;
@@ -641,6 +644,11 @@ bool MainWindow::ReadExcel(const QString& filename)
         WriteMessageOnScreen(importError.message, Qt::red);
         return false;
     }
+
+    // ImportExcelSheets starts by clearing the data, which also clears the
+    // target group the sheet dialog set, so set it again here. Without it
+    // every analysis that looks up the target group failed after an import.
+    dataCollection.SetTargetGroup(selectedSheets[sinkSheet].toStdString());
 
     // qDebug() << "Reading element information done!";
 

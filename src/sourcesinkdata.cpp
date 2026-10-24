@@ -4858,7 +4858,10 @@ CMBMatrix SourceSinkData::DFAConfusionMatrix()
                     continue;
                 }
                 means[h] = arma::mean(values, 0);
-                arma::mat centered = values.each_row() - means[h];
+                // In-place form: Armadillo 4 (used by SedSat3.vcxproj) has no
+                // binary each_row() - rowvec
+                arma::mat centered = values;
+                centered.each_row() -= means[h];
                 scatter += centered.t() * centered;
                 degrees_of_freedom += double(values.n_rows) - 1.0;
             }
