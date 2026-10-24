@@ -59,7 +59,7 @@ def plain(t):
     t = t.replace("\\textbackslash{}", "\x01").replace("\\textbackslash ", "\x01").replace("\\textbackslash", "\x01")
     for a, b in [("\\_", "_"), ("\\#", "#"), ("\\%", "%"), ("\\&", "&"), ("\\{", "{"), ("\\}", "}"),
                  ("\\ldots", "…"), ("\\S", "§"), ("\\today", datetime.date.today().strftime("%B %d, %Y").replace(" 0", " ")),
-                 ("\\quad", " "), ("\\hfill", " "), ("\\ ", " "), ("\\\\", "\x00")]:
+                 ("\\quad", " "), ("\\hfill", " "), ("\\ ", " "), ("\\,", " "), ("\\\\", "\x00")]:
         t = t.replace(a, b)
     t = t.replace("---", "—").replace("--", "–").replace("``", "“").replace("''", "”")
     t = re.sub(r"(?<![\w])`", "‘", t).replace("'", "’")

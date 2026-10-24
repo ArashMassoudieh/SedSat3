@@ -614,8 +614,9 @@ confuse users. It is now kept in the source but excluded from the default
 build (\code{CONFIG+=ga} with qmake, \code{-DENABLE\_\allowbreak{}GA=ON} with CMake); both
 settings build and CI builds both. \code{MCMC.\allowbreak{}h} no longer includes
 \code{GA.\allowbreak{}h}. The README and code.json no longer list it as a method, the
-README says it is included but disabled and why, and the command-line program
-and its manual leave out its commands. The missing \code{StringOP.\allowbreak{}h} was only
+README says it is included but disabled and why, the user's manual no longer
+describes it, and the command-line program and its manual leave out its
+commands. The missing \code{StringOP.\allowbreak{}h} was only
 included by the stale \code{GA.\allowbreak{}cpp} (Comment 2.7).
 \end{response}
 \status{Fixed (\commit{2f8c463}). CI job \code{build:linux-ga}.}
@@ -798,7 +799,9 @@ The portable, no-administrator Windows package,
 \code{SedSAT3-1.1.8-windows-x64-portable.\allowbreak{}zip}, is built from this pixi
 build, following \code{docs/\allowbreak{}PACKAGE-Windows-Portable.\allowbreak{}md}. It contains
 the GUI, the command-line program, the user's manual and the command-line
-manual, and the example data set \code{SampleData.\allowbreak{}xlsx}. Every DLL the two
+manual, and the example data set \code{SampleData.\allowbreak{}xlsx} (with the same
+data saved as a project, \code{SampleData.\allowbreak{}cmb}, for the command-line
+example). Every DLL the two
 programs need is in the package, with nothing resolving from outside it or
 \code{System32}. Each build is checked under a restricted
 (non-administrator) token: the GUI opens with no elevation prompt from a
@@ -806,7 +809,10 @@ folder in the user profile, from a path containing spaces and from another
 drive letter, and the command-line program runs a full example, including a
 Bayesian batch. The example script fixes the random seed, so the README lists
 the exact results a reviewer should get, and a second run reproduces them
-exactly. The package sent to the reviewers is built from the merged code.
+exactly. The package for the reviewers, built on October 24 from
+\commit{74d54a6}, is posted on merge request !4 (44\,MB):\\
+\url{https://code.usgs.gov/-/project/20102/uploads/a9642eb7c4f46c966d73c3225341d418/SedSAT3-1.1.8-windows-x64-portable.zip}\\
+SHA-256: \code{0cd424f93650ed42d7888ba8863f803b9af9ab31ceee38ee407ab9afce6056b3}
 
 The installer (\code{CMB\_\allowbreak{}Source.\allowbreak{}aip}, Advanced Installer) is
 updated in the same way. It now installs the command-line program next to
