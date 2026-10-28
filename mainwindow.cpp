@@ -36,6 +36,7 @@
 #include "toolboxitem.h"
 #include "resulttableviewer.h"
 #include "optionsdialog.h"
+#include <QInputDialog>
 #include <QStandardPaths>
 //#include "MCMC.h"
 
@@ -54,7 +55,7 @@
 
 
 #define version "1.1.8"
-#define date_compiled "10/22/2026"
+#define date_compiled "10/27/2026"
 
 using namespace QXlsx;
 
@@ -454,6 +455,30 @@ bool MainWindow::LoadModel(const QString& fileName)
             .arg(Data()->LoadError())
         );
         return false;
+    }
+
+    // Projects saved after an Excel import by builds before 10/24/2026 have
+    // no target group (the import cleared it), and every tool that uses the
+    // target samples failed on them. Ask for it instead.
+    if (Data()->count(Data()->GetTargetGroup()) == 0 && !Data()->empty())
+    {
+        QStringList groupNames;
+        for (const std::string& groupName : Data()->GetGroupNames())
+            groupNames << QString::fromStdString(groupName);
+        bool ok = false;
+        const QString target = QInputDialog::getItem(
+            this,
+            tr("Target group"),
+            tr("This project does not say which group holds the target samples.\n"
+               "Select it (save the project afterwards to keep it):"),
+            groupNames, 0, false, &ok);
+        if (ok && !target.isEmpty())
+            Data()->SetTargetGroup(target.toStdString());
+        else
+            QMessageBox::warning(
+                this,
+                tr("Target group"),
+                tr("No target group is set, so the tools that use the target samples will not run."));
     }
 
     // Load results
@@ -1081,13 +1106,26 @@ void MainWindow::on_constituent_properties_triggered()
 
 void MainWindow::onIncludeExcludeSample()
 {
-    double outlierThreshold = Data()->GetOptions()->operator[]("Outlier deviation threshold");
+    if (Data()->count(Data()->GetTargetGroup()) == 0)
+    {
+        // The bracket test below needs the target samples; without them it
+        // threw an uncaught exception and the program closed
+        QMessageBox::warning(
+            this,
+            tr("SedSat3"),
+            tr("This project has no target group. Reopen it and select the group that holds the target samples."),
+            QMessageBox::Ok);
+        return;
+    }
 
     // Prompt for options if using default threshold
-    if (outlierThreshold == 3)
+    if (Data()->GetOptions()->value("Outlier deviation threshold") == 3)
     {
         on_Options_triggered();
     }
+
+    // Read the threshold after the dialog, so a value entered there is used
+    double outlierThreshold = Data()->GetOptions()->value("Outlier deviation threshold");
 
     // Perform outlier analysis
     Data()->OutlierAnalysisForAll(-outlierThreshold, outlierThreshold);
