@@ -1,0 +1,82 @@
+<!--
+  SedSAT3 - Sediment Source Assessment Tool, version 3
+  U.S. Geological Survey. See LICENSE.md and DISCLAIMER.md in the repository root.
+
+  WiX Toolset 5 source for the SedSat3 Windows installer. Build it with
+  installer\build-msi.ps1, which passes:
+    Version  the product version, e.g. 1.1.8
+    stage    (bind path) the portable package folder, the one that holds
+             bin\bin\SedSat3.exe, resources, docs and sample-data
+    License  the license and disclaimer as RTF, for the license page
+
+  The installer installs the same files as the portable zip. They carry the
+  Visual C++ and OpenMP runtimes next to the programs, so the installer
+  needs no prerequisite.
+
+  The UpgradeCode is the one the Advanced Installer project (CMB_Source.aip)
+  used, so this installer replaces a SedSat3 installed by it, including one
+  of the same version.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+  <Package Name="SedSat3"
+           Manufacturer="U.S. Geological Survey"
+           Version="$(var.Version)"
+           UpgradeCode="{6B15EFD6-8946-4959-88E1-D4CAA3B8CB3E}"
+           Scope="perMachine"
+           Compressed="yes">
+
+    <SummaryInformation Description="SedSat3 $(var.Version) - Sediment Source Assessment Tool" />
+
+    <MajorUpgrade AllowSameVersionUpgrades="yes"
+                  DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <Icon Id="SedSat3.ico" SourceFile="!(bindpath.stage)\resources\Icons\CMBSource_Icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="SedSat3.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/ArashMassoudieh/SedSat3" />
+
+    <!-- Installation folder page, with the license and disclaimer first -->
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.License)" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="USGSFOLDER" Name="U.S. Geological Survey">
+        <Directory Id="INSTALLFOLDER" Name="SedSat3">
+          <Directory Id="BINFOLDER" Name="bin">
+            <Directory Id="APPFOLDER" Name="bin" />
+          </Directory>
+        </Directory>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="SHORTCUTFOLDER" Name="SedSat3" />
+    </StandardDirectory>
+
+    <Feature Id="Main" Title="SedSat3" Level="1">
+      <!-- Every file of the portable package, in the same layout. The
+           programs find resources\ two levels above bin\bin. -->
+      <Files Directory="INSTALLFOLDER" Include="!(bindpath.stage)\**" />
+
+      <Component Id="StartMenuShortcuts" Directory="SHORTCUTFOLDER">
+        <Shortcut Id="SedSat3Shortcut"
+                  Name="SedSat3"
+                  Description="Sediment Source Assessment Tool"
+                  Target="[APPFOLDER]SedSat3.exe"
+                  WorkingDirectory="APPFOLDER"
+                  Icon="SedSat3.ico" />
+        <Shortcut Id="ManualShortcut"
+                  Name="SedSat3 User's Manual"
+                  Target="[INSTALLFOLDER]docs\SedSAT3_User_Manual.pdf" />
+        <Shortcut Id="CliManualShortcut"
+                  Name="SedSat3 Command Line Manual"
+                  Target="[INSTALLFOLDER]docs\sedsat3-cli-manual.pdf" />
+        <RemoveFolder Id="RemoveShortcutFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\U.S. Geological Survey\SedSat3"
+                       Name="StartMenuShortcuts" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </Feature>
+  </Package>
+</Wix>

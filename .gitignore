@@ -206,3 +206,5 @@ msvc-w4.log
 cppcheck.txt
 # Advanced Installer staging (installer/stage.ps1)
 installer/payload/
+# WiX build output (installer/build-msi.ps1)
+installer/out/
