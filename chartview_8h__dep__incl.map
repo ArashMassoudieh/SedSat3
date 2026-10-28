@@ -1,0 +1,11 @@
+<map id="chartview.h" name="chartview.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="82,5,179,31"/>
+<area shape="rect" id="Node000002" href="$chartview_8cpp.html" title=" " alt="" coords="5,79,117,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,43,74,80,71,77,108,39"/>
+<area shape="rect" id="Node000003" href="$generalchart_8h.html" title=" " alt="" coords="142,79,258,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="153,39,191,77,187,80,150,43"/>
+<area shape="rect" id="Node000004" href="$generalchart_8cpp.html" title=" " alt="" coords="53,152,184,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="178,115,134,154,130,150,175,111"/>
+<area shape="rect" id="Node000005" href="$resultswindow_8cpp.html" title=" " alt="" coords="209,152,351,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="225,111,269,150,265,154,221,115"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="indicatesheetsdialog.h" name="indicatesheetsdialog.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="75,5,245,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,80,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,33,75,74,72,69,140,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="104,79,216,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="163,31,163,65,157,65,157,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="240,79,307,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="180,28,245,69,242,74,177,33"/>
+</map>
