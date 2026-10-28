@@ -1210,7 +1210,7 @@ The third panel contains the 95\% intervals of the source contributions across r
 \FloatBarrier
 
 \subsection{Source Verification}\label{sec:tool-sourceverify}
-The source verification tool assesses how well individual source samples align with their overall source group. It treats each source sample within a group as a target sample and performs fingerprinting using the Levenberg--Marquardt algorithm. If a source sample's elemental profile closely matches that of its source group, the analysis should identify that group as the dominant contributor.
+The source verification tool assesses how well individual source samples align with their overall source group. It treats each source sample within a group as a target sample and performs fingerprinting using the Levenberg--Marquardt algorithm. If a source sample's elemental profile closely matches that of its source group, the analysis should identify that group as the dominant contributor. Each sample is left out of its own group while it is tested, so the group is described by its other samples (leave-one-out); the group therefore needs at least three included samples.
 
 To perform source verification, select \textbf{Tools}$\rightarrow$\textbf{Other Statistical Tools}$\rightarrow$\textbf{Uncertainty and verification}$\rightarrow$\textbf{Source Verification} from the tools window. In the central form, choose the source group on which to perform the analysis and whether to apply the size and organic matter correction. With the correction, the sources are corrected, for each source sample tested, to that sample's own organic matter content and particle size, as they would be for a target sample. Click \textbf{Ok}.
 

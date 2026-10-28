@@ -4097,14 +4097,21 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
         validation_results.setname(source_idx, samplesetsorder_[source_idx]);
     }
 
-    // Perform leave-one-out validation for each sample in the source group
+    // Perform leave-one-out validation for each sample in the source group.
+    // The samples excluded in Settings > Include/Exclude Samples are neither
+    // tested nor used in the source statistics.
     size_t valid_sample_count = 0;
     for (map<string, Elemental_Profile>::iterator sample = at(source_group).begin();
         sample != at(source_group).end();
         sample++)
     {
-        // Create dataset with this sample as target
+        if (sample->first.empty() || !sample->second.IsIncludedInAnalysis())
+            continue;
+
+        // Create dataset with this sample as target, and leave it out of its
+        // source group (CreateCorrectedDataset drops the excluded samples)
         SourceSinkData test_dataset = ReplaceSourceAsTarget(sample->first);
+        test_dataset[source_group].GetProfile(sample->first)->SetIncludedInAnalysis(false);
 
         // Apply corrections if requested
         SourceSinkData corrected_dataset = test_dataset.CreateCorrectedDataset(
@@ -4116,8 +4123,10 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
 
         if (negative_elements.size() == 0)
         {
-            // No negative values - proceed with CMB solution
-            test_dataset.InitializeParametersAndObservations(sample->first);
+            // No negative values - proceed with CMB solution on the corrected
+            // data (solving the uncorrected copy ignored the correction and
+            // the exclusions)
+            corrected_dataset.InitializeParametersAndObservations(sample->first);
 
             // Update progress
             if (rtw_)
@@ -4128,15 +4137,15 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
             // Solve CMB model
             if (use_softmax)
             {
-                test_dataset.SolveLevenberg_Marquardt(transformation::softmax);
+                corrected_dataset.SolveLevenberg_Marquardt(transformation::softmax);
             }
             else
             {
-                test_dataset.SolveLevenberg_Marquardt(transformation::linear);
+                corrected_dataset.SolveLevenberg_Marquardt(transformation::linear);
             }
 
             // Record contributions and label with sample name
-            validation_results.append(valid_sample_count, test_dataset.GetContributionVector().vec);
+            validation_results.append(valid_sample_count, corrected_dataset.GetContributionVector().vec);
             validation_results.SetLabel(valid_sample_count, sample->first);
             valid_sample_count++;
         }

@@ -1115,6 +1115,9 @@ public:
      *
      * @return CMBTimeSeriesSet containing contribution estimates for each sample
      *
+     * @note Each tested sample is left out of its source group's statistics
+     * @note Samples excluded in Include/Exclude Samples are not tested and
+     *       not used
      * @note Samples with negative values after correction are skipped
      * @note Progress updates sent to rtw_ if available
      */

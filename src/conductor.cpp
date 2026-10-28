@@ -2339,6 +2339,18 @@ bool Conductor::ExecuteSourceVerify(const std::map<std::string, std::string>& ar
         organic_size_correction = false;
     }
 
+    // Each tested sample is left out of its group, so the group needs at least
+    // two other included samples to estimate its statistics from
+    int included_samples = 0;
+    for (const auto& [sample_name, profile] : *Data()->GetSampleSet(arguments.at("Source Group")))
+        if (!sample_name.empty() && profile.IsIncludedInAnalysis())
+            included_samples++;
+    if (included_samples < 3)
+    {
+        host->ShowWarning("Source verification needs at least 3 included samples in '" + arguments.at("Source Group") + "'.\n");
+        return false;
+    }
+
     rtw->Start();
 
     SourceSinkData corrected_data = *Data();
