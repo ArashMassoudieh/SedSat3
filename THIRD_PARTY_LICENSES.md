@@ -20,13 +20,12 @@ from the build files (`SedSat3.pro`, `SedSat3CLI.pro`, `CMakeLists.txt`,
 
 ## Notes for the release coordinator
 
-- The GPL-3.0 components (Qt Charts, QCustomPlot, GSL) do not change the
-  license of SedSAT3's own source code, but a **binary package** that links
-  them is distributed under terms compatible with the GPL-3.0. Whether that is
-  acceptable for a USGS release, or whether those components should be
-  replaced, is the release authority's decision (USGS code review, Oct 2026,
-  "GPL dependency chain").
+- Because SedSAT3 links GPL-3.0 components (Qt Charts, QCustomPlot, GSL),
+  SedSAT3 itself is released under the GPL-3.0 (see [LICENSE.md](LICENSE.md)),
+  as the USGS package pfdf was. This settles the "GPL dependency chain"
+  raised in the USGS code review (October 2026). Use of the GPL-3.0 is subject
+  to approval by the DOI Office of the Solicitor.
 - Qt's LGPL-3.0 modules are dynamically linked, so users can replace the Qt
   DLLs, as the LGPL requires.
 - The icons in `resources/Icons/` and `resources/icons/` were made for the
-  project. <<confirm: no third-party icon sets are included>>
+  project; no third-party icon set is included.

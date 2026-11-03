@@ -94,6 +94,7 @@ Installer payload — is the authority on what the package needs.** See section 
 ```
 C:\portable\SedSAT3\
 ├── README-PORTABLE.txt
+├── LICENSE.md  DISCLAIMER.md  THIRD_PARTY_LICENSES.md
 ├── bin\bin\                  <- the executable and every DLL
 │   ├── platforms\ styles\ imageformats\ iconengines\ tls\ ...
 ├── resources\
@@ -414,6 +415,8 @@ Copy-Item "$omp\vcomp140.dll" $bin -Force
 Copy-Item 'resources\tools.json','resources\forms_structures.json' "$stage\resources\" -Force
 Copy-Item 'resources\Icons\*' "$stage\resources\Icons\" -Force
 Copy-Item 'examples\SampleData.xlsx' "$stage\sample-data\" -Force
+# The license must travel with a GPL-3.0 binary package
+Copy-Item 'LICENSE.md','DISCLAIMER.md','THIRD_PARTY_LICENSES.md' "$stage\" -Force
 # Copy-Item <your README-PORTABLE.txt> "$stage\" -Force
 
 # strip anything that must not ship

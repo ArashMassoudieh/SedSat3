@@ -5,7 +5,7 @@ and apportionment using chemical and isotopic tracers. It provides a graphical
 user interface and a command line program with tools for preprocessing, tracer
 selection, source apportionment and diagnostics.
 
-Repository: <<https://code.usgs.gov/...final group path...>>
+Repository: https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3
 
 ---
 
@@ -39,7 +39,9 @@ and offering two deterministic methods would confuse users (see
 
 ## User manual
 
-The SedSAT3 user's manual is available at <<USGS manual URL/DOI>>.
+The SedSAT3 user's manual is part of this software release, in
+[`docs/manual/SedSat_User's_Manual/SedSAT3_User_Manual.pdf`](docs/manual/SedSat_User's_Manual/SedSAT3_User_Manual.pdf),
+and is included in the portable Windows package.
 
 The command line program has its own manual in
 [`docs/manual/sedsat3-cli-manual.pdf`](docs/manual/sedsat3-cli-manual.pdf).
@@ -78,7 +80,7 @@ SedSAT3 builds on Windows, macOS and Linux.
 ### Get the source
 
 ```bash
-git clone --recurse-submodules <<https://code.usgs.gov/...final group path...>>.git SedSAT3
+git clone --recurse-submodules https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3.git SedSAT3
 cd SedSAT3
 ```
 
@@ -154,16 +156,37 @@ This software is preliminary or provisional and is subject to revision. See
 
 ## License
 
-See [LICENSE.md](LICENSE.md). Third-party components and their licenses are
+SedSAT3 is released under the GNU General Public License, version 3; see
+[LICENSE.md](LICENSE.md). Third-party components and their licenses are
 listed in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
+---
+
+## Use of artificial intelligence
+
+AI-assisted coding tools (Claude Code, with the Claude Opus 5 and Claude
+Opus 5.5 models; Anthropic) were used from September to November 2026 to:
+
+- fix the issues raised by the USGS technical code review and domain review,
+  and revise the user's manual and documentation accordingly;
+- write the unit and regression tests;
+- develop the command line program (`sedsat3-cli`) and its manual;
+- fix the defects corrected in release 1.1.7;
+- prepare the build, packaging and installer scripts.
+
+The scientific methods and the original SedSAT3 program were developed without
+AI tools, and the software contains no AI or machine-learning components. All
+AI-assisted changes were reviewed, tested and verified by the authors, who
+remain responsible for them; each such commit names the tool as co-author.
+Any use of trade, firm, or product names is for descriptive purposes only and
+does not imply endorsement by the U.S. Government.
 
 ---
 
 ## Citation
 
-<<Massoudieh, A., Peterman-Phipps, C., Gellis, A.C., … confirm full list>>,
-<<year>>, SedSAT3—Sediment Source Assessment Tool, version 3 (version
-<<version>>): U.S. Geological Survey software release,
-https://doi.org/<<10.5066/XXXXXXX>>.
+Massoudieh, A., Gellis, A.C., and Peterman-Phipps, C., 2026,
+SedSAT3—Sediment Source Assessment Tool, version 3 (version 1.1.8): U.S.
+Geological Survey software release, https://doi.org/10.5066/P1JF4HJE.
 
 Machine-readable citation metadata is in [CITATION.cff](CITATION.cff).

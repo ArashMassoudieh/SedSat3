@@ -3,24 +3,24 @@
         "name": "SedSAT3",
         "organization": "U.S. Geological Survey",
         "description": "Software for sediment source fingerprinting and apportionment using chemical and isotopic tracers, with deterministic (Levenberg-Marquardt) and Bayesian (MCMC) methods.",
-        "version": "<<version>>",
+        "version": "1.1.8",
         "status": "Development",
         "permissions": {
             "usageType": "openSource",
             "licenses": [
                 {
-                    "name": "<<CC0-1.0 or MIT — confirm with Cara>>",
-                    "URL": "<<https://code.usgs.gov/...final group path...>>/-/raw/main/LICENSE.md"
+                    "name": "GPL-3.0-only",
+                    "URL": "https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3/-/raw/main/LICENSE.md"
                 }
             ]
         },
-        "homepageURL": "<<https://code.usgs.gov/...final group path...>>",
-        "downloadURL": "<<https://code.usgs.gov/...final group path...>>/-/archive/<<version>>/SedSAT3-<<version>>.zip",
-        "disclaimerURL": "<<https://code.usgs.gov/...final group path...>>/-/raw/main/DISCLAIMER.md",
-        "repositoryURL": "<<https://code.usgs.gov/...final group path...>>.git",
+        "homepageURL": "https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3",
+        "downloadURL": "https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3/-/archive/main/SedimentSourceAssessmentTool3-main.zip",
+        "disclaimerURL": "https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3/-/raw/main/DISCLAIMER.md",
+        "repositoryURL": "https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3.git",
         "vcs": "git",
         "laborHours": 2000,
-        "doi": "<<10.5066/XXXXXXX>>",
+        "doi": "10.5066/P1JF4HJE",
         "tags": [
             "sediment",
             "source-apportionment",
@@ -29,17 +29,18 @@
             "bayesian-inference",
             "mcmc",
             "water-quality",
-            "geochemistry"
+            "geochemistry",
+            "usg-artificial-intelligence"
         ],
         "languages": [
             "C++"
         ],
         "contact": {
-            "name": "<<contact name>>",
-            "email": "<<contact email>>"
+            "name": "Cara Peterman-Phipps",
+            "email": "cphipps@usgs.gov"
         },
         "date": {
-            "metadataLastUpdated": "2026-10-16"
+            "metadataLastUpdated": "2026-11-03"
         }
     }
 ]

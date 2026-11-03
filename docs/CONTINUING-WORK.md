@@ -70,7 +70,7 @@ git remote set-url origin <development mirror URL>
 For a fresh clone:
 
 ```
-git clone --recurse-submodules <<https://code.usgs.gov/...final group path...>>.git
+git clone --recurse-submodules https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3.git
 ```
 
 Authentication is a token, not a password — GitHub stopped accepting passwords

@@ -64,7 +64,7 @@ SedSAT3 has one submodule (`thirdparty/QXlsx`). The `--recursive` flag
 is required; a plain clone will fail to configure.
 
 ```bash
-git clone --recursive <<https://code.usgs.gov/...final group path...>>.git SedSAT3
+git clone --recursive https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3.git SedSAT3
 cd SedSAT3
 ```
 

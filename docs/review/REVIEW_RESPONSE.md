@@ -26,15 +26,15 @@ Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 
 | Review item | Status | Commit | Test | Notes |
 |---|---|---|---|---|
-| Threshold question: is this a USGS product? | **Open — release coordinator** | `41393e0` | — | The repository now presents itself as USGS software: USGS header on every first-party file, USGS metadata, no links to personal repositories. Whether the code can be released by USGS, given its authorship, is for the release coordinator; nothing in the code decides it. |
+| Threshold question: is this a USGS product? | **Decided** | `41393e0` | — | SedSAT3 is a USGS software release. The authoritative repository is on code.usgs.gov and moves from `cphipps/` to the Central Plains Water Science Center group, `https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3`; any other copy is a mirror. USGS header on every first-party file, USGS metadata, no links to personal repositories. |
 | 1. AGPL / commercial-license headers in `Utilities` | **Fixed** | `41393e0` | — | The `Utilities` submodule (the author's personal GitHub library, shared with OpenHydroQual) is replaced by the 23 files SedSAT3 builds, copied into the repository from its commit `5db8d14`. The OpenHydroQual / AGPL-3.0 / "purchase a commercial license" headers on `TimeSeries*.{h,hpp}` are replaced by the SedSAT3/USGS header, which every first-party file now carries. The author (A. Massoudieh) made these copies for this purpose; OpenHydroQual's own copies are unchanged. A written statement from the author may be wanted for the release file. |
-| License | **Placeholder** | `41393e0` | — | `LICENSE.md` reads `<<CC0 1.0 Universal / MIT — confirm with Cara>>`, with the USGS CC0 text ready in a comment. `code.json` and `CITATION.cff` carry the same placeholder. |
-| 2. GPL dependency chain (GSL, QCustomPlot, Qt Charts) | **Documented — decision for release authority** | `41393e0` | — | Following the reviewer's note (SWB2's approach), `THIRD_PARTY_LICENSES.md` lists every dependency, how it is used and its license, and states that a binary package linking the GPL components is distributed under GPL-compatible terms. Nothing was re-engineered. |
-| 3. Authorship / release authority | **Open — release coordinator** | `41393e0` | — | Author list is a placeholder in `CITATION.cff` and the README citation; the About dialog keeps Massoudieh, Gellis, Peterman-Phipps. |
-| Citation | **Fixed (placeholders)** | `41393e0` | — | README citation in USGS software-release form; `CITATION.cff` added. DOI and author list are placeholders. |
+| License | **GPL-3.0** | `41393e0` | — | `LICENSE.md` holds the GPL-3.0 text; `code.json` and `CITATION.cff` give `GPL-3.0-only`. Approval by the DOI Office of the Solicitor is in progress (Cara). |
+| 2. GPL dependency chain (GSL, QCustomPlot, Qt Charts) | **Resolved by the GPL-3.0 license** | `41393e0` | — | Following the reviewer's note (SWB2's approach), `THIRD_PARTY_LICENSES.md` lists every dependency, how it is used and its license, and states that a binary package linking the GPL components is distributed under GPL-compatible terms. Nothing was re-engineered. |
+| 3. Authorship / release authority | **Done** | `41393e0` | — | Authors Massoudieh, A., Gellis, A.C., and Peterman-Phipps, C., as in the IPDS record, in `CITATION.cff`, the README citation, the manual and the About dialog. |
+| Citation | **Fixed** | `41393e0` | — | README citation in USGS software-release form with the reserved DOI 10.5066/P1JF4HJE (resolves at publication); `CITATION.cff` added. |
 | Metadata points at personal GitHub (`code.json`, README, `createdeb.sh`, submodules) | **Fixed** | `41393e0`, `2f8c463` | — | `code.json` and README rewritten with USGS GitLab placeholders; `createdeb.sh` builds and checksums only (no GitHub publishing); `Utilities` submodule removed; QXlsx submodule points at its upstream. `docs/CONTINUING-WORK.md` keeps a generic reference to a development mirror, as the reviewer allowed. |
-| Windows installer from sedsat.org is a different lineage ("CMBSource", EnviroInformatics) | **Fixed in this repository; parallel distribution for coordinator** | `41393e0` | — | README no longer links sedsat.org. Installer project (`CMB_Source.aip`): Manufacturer "EnviroInformatics" → "U.S. Geological Survey" (this changes the default install folder to `Program Files\U.S. Geological Survey\SedSat3`), URLs → USGS placeholder. The portable package (below) is built from this repository. |
-| README truncated / out of sync | **Fixed** | `41393e0` | — | Rewritten: features, manual (placeholder), portable build, build instructions and options, tests, disclaimer, license, citation. |
+| Windows installer from sedsat.org is a different lineage ("CMBSource", EnviroInformatics) | **Fixed; sedsat.org will only point to the USGS release** | `41393e0` | — | README no longer links sedsat.org. Installer project (`CMB_Source.aip`): Manufacturer "EnviroInformatics" → "U.S. Geological Survey" (this changes the default install folder to `Program Files\U.S. Geological Survey\SedSat3`), URLs → USGS placeholder. The portable package (below) is built from this repository. |
+| README truncated / out of sync | **Fixed** | `41393e0` | — | Rewritten: features, manual, portable build, build instructions and options, tests, disclaimer, license, citation. |
 | No per-file license headers; no dependency (NOTICE) inventory | **Fixed** | `41393e0` | — | Header on 149 first-party files; `THIRD_PARTY_LICENSES.md`. |
 
 ### Code defects
@@ -348,16 +348,12 @@ the extracted files the GUI opens with every module from the install folder or
 `System32`, and the CLI runs bracketing, stepwise DFA and a Bayesian run on
 the example project.
 
-## Placeholders still to fill
+## Placeholders
 
-| Placeholder | Where |
-|---|---|
-| `<<CC0 1.0 Universal / MIT — confirm with Cara>>` | `LICENSE.md`, `code.json`, `CITATION.cff` |
-| `<<10.5066/XXXXXXX>>` (DOI) | `CITATION.cff`, `code.json`, `README.md` |
-| `<<Massoudieh, A.; Peterman-Phipps, C.; Gellis, A.C.; … confirm full list>>` | `CITATION.cff`, `README.md` (About dialog lists the three names) |
-| `<<https://code.usgs.gov/...final group path...>>` | `README.md`, `code.json`, `CITATION.cff`, `CMB_Source.aip`, `docs/BUILD-Windows-MinGW.md`, `docs/CONTINUING-WORK.md` |
-| `<<USGS manual URL/DOI>>` | `README.md` |
-| `<<version>>`, `<<YYYY-MM-DD>>`, `<<year>>` | `code.json`, `CITATION.cff`, `README.md` |
-| `<<contact name>>`, `<<contact email>>` | `code.json` |
-| `<<confirm: no third-party icon sets are included>>` | `THIRD_PARTY_LICENSES.md` |
-| Approved-software disclaimer | `DISCLAIMER.md` has the provisional text; switch at release |
+All placeholders are filled: license (GPL-3.0), DOI (10.5066/P1JF4HJE),
+authors, repository path (`cpwsc/`), manual location, version (1.1.8), and the
+`code.json` contact (Cara Peterman-Phipps). `code.json` carries the
+`usg-artificial-intelligence` tag, and the README and the manual carry the AI
+disclosure statement. What remains is for the release itself: the
+approved-software disclaimer in `DISCLAIMER.md`, the publication date, and the
+tagged URLs on the release branch.

@@ -25,13 +25,13 @@
 \bibliographystyle{plainnat}
 
 \title{Sediment Source Assessment Tool, version 3 (SedSAT3): User's Manual\\[0.6em]
-\large For SedSAT3 version 1.1.8 \authornote{version to be confirmed at release}}
+\large For SedSAT3 version 1.1.8}
 \author{Arash Massoudieh
     \and
     Allen C. Gellis
     \and
     Cara L Peterman-Phipps }
-\date{Draft, October 2026 \authornote{publication date to be set at release}}
+\date{Provisional, November 2026}
 \renewcommand{\theequation}{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand{\bibname}{References}
 \begin{document}
@@ -42,7 +42,11 @@
 \maketitle
 
 \section*{Executive Summary}
-The Sediment Source Assessment Tool3 (SedSAT3) User’s Manual provides comprehensive guidance for users of the SedSAT3 software, a tool developed for sediment source fingerprinting. SedSAT3 is an update to the earlier version of SedSAT \citep{gormansanisaca2017determining}. The software facilitates the analysis of sediment sources and their contributions to a particular target site by utilizing elemental composition data. Key functions of SedSAT3 include data preparation, statistical analysis, and sediment source attribution using Levenberg--Marquardt maximum likelihood estimation and Bayesian inference by Markov chain Monte Carlo (MCMC) sampling. The manual outlines the steps required for importing and preparing raw data, followed by pre-analysis tasks like correlation matrix generation, outlier detection, and organic matter and particle size corrections. It also provides tools for advanced statistical analysis, including variance analysis and discriminant function analysis, to aid in selecting the most effective elements for fingerprinting. The manual culminates in detailed instructions for executing source attribution models and performing uncertainty analysis. A mathematical appendix explains the theoretical foundations for the modeling methods used in the software, offering users both practical and technical insights for sediment fingerprinting.   
+The Sediment Source Assessment Tool3 (SedSAT3) User’s Manual provides comprehensive guidance for users of the SedSAT3 software, a tool developed for sediment source fingerprinting. SedSAT3 is an update to the earlier version of SedSAT \citep{gormansanisaca2017determining}. The software facilitates the analysis of sediment sources and their contributions to a particular target site by utilizing elemental composition data. Key functions of SedSAT3 include data preparation, statistical analysis, and sediment source attribution using Levenberg--Marquardt maximum likelihood estimation and Bayesian inference by Markov chain Monte Carlo (MCMC) sampling. The manual outlines the steps required for importing and preparing raw data, followed by pre-analysis tasks like correlation matrix generation, outlier detection, and organic matter and particle size corrections. It also provides tools for advanced statistical analysis, including variance analysis and discriminant function analysis, to aid in selecting the most effective elements for fingerprinting. The manual culminates in detailed instructions for executing source attribution models and performing uncertainty analysis. A mathematical appendix explains the theoretical foundations for the modeling methods used in the software, offering users both practical and technical insights for sediment fingerprinting.
+
+\section*{Use of Artificial Intelligence}
+AI-assisted coding tools (Claude Code, with the Claude Opus 5 and Claude Opus 5.5 models; Anthropic) were used from September to November 2026 to fix the issues raised by the USGS technical code review and domain review and to revise this manual accordingly, to write the software's unit and regression tests, to develop the command line program and its manual, to fix the defects corrected in release 1.1.7, and to prepare the build and packaging scripts. The scientific methods and the original SedSAT3 program were developed without AI tools, and the software contains no AI or machine-learning components. All AI-assisted changes were reviewed, tested and verified by the authors, who remain responsible for them. Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government.
+
 \tableofcontents
 \listoffigures
 
@@ -52,7 +56,7 @@ The Sediment Source Assessment Tool3 (SedSAT3) User’s Manual provides comprehe
 \chapter{Getting started}\label{chap:getting-started}
 
 \section{Installing and running SedSAT3}\label{sec:installing}
-SedSAT3 is distributed through its U.S. Geological Survey software release \authornote{repository URL and DOI to be added at release}. The release provides a portable Windows package and the source code.
+SedSAT3 is distributed through its U.S. Geological Survey software release, \url{https://doi.org/10.5066/P1JF4HJE}, whose source code is at \url{https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3}. The release provides a portable Windows package and the source code.
 
 \paragraph{Windows (portable package).} The portable package needs no installer and no administrator rights.
 \begin{enumerate}
