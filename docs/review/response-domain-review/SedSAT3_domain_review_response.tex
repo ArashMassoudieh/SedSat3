@@ -51,13 +51,6 @@
 \sloppy
 \setlength{\emergencystretch}{3em}
 
-\begin{tcolorbox}[colback=todo!4,colframe=todo!70,boxrule=0.6pt]
-\textbf{Draft.} Items in \textcolor{todo}{\textbf{red}} need a decision from
-Cara Peterman-Phipps or Allen Gellis; items in \textcolor{mine}{\textbf{blue}}
-are tasks for Arash. All marked items and this note will be removed before the
-response is final.
-\end{tcolorbox}
-
 \begin{flushleft}
 Arash Massoudieh\\
 Department of Civil and Environmental Engineering\\
@@ -95,14 +88,26 @@ same branch: \commit{d7d8b92}, \commit{8708c20}, \commit{ae2e4d5} and the
 manual commits.
 
 \textbf{The version to test now.} The portable Windows package of version
-1.1.8, built from this branch with every fix in this letter, can be downloaded
-from code.usgs.gov (sign in first):\\
-\url{https://code.usgs.gov/-/project/20102/uploads/a9642eb7c4f46c966d73c3225341d418/SedSAT3-1.1.8-windows-x64-portable.zip}\\
-SHA-256: \code{0cd424f93650ed42d7888ba8863f803b9af9ab31ceee38ee407ab9afce6056b3}\\
+1.1.8 (dated October 28, 2026 in Help\,$\rightarrow$\,About), built from this
+branch with every fix in this letter, is attached to merge request !4 on
+code.usgs.gov (sign in first), as
+\code{SedSAT3-1.1.8-windows-x64-portable.\allowbreak{}zip}:\\
+\url{https://code.usgs.gov/cphipps/SedimentSourceAssessmentTool3/-/merge_requests/4}\\
+SHA-256: \code{34015266c94386e791bf7967da83e5bef7d82d2925bcd552db2a83b4eb6866be}\\
 Unzip it and run \code{SedSat3.exe} from its \code{bin\textbackslash bin} folder;
 it needs no installation and no administrator rights. It contains the
 command-line version, both manuals and the example data, and its
 \code{README-PORTABLE.txt} explains how to run it and what results to expect.
+Testing the package with users found three more problems in late October,
+all fixed in this package: an Excel import could lose the target group;
+the outlier check did not use the threshold just entered in the options; and
+Source Verification did not honour the sample exclusions or the organic matter
+and size correction (see its comment below).
+
+\textbf{Use of AI.} The fixes, the revisions of the manual and this letter were
+prepared with an AI-assisted coding tool (Claude Code, with the Claude Opus 5
+and 5.5 models; Anthropic). I reviewed and tested every change. The README and
+the manual carry the full disclosure statement.
 
 \textbf{What has changed, in brief.}
 \begin{itemize}
@@ -273,12 +278,14 @@ Links to GitHub will need to be updated to code.usgs.gov. Citation needs a DOI,
 not the GitHub URL \url{https://sedsat.org/}.
 \end{reviewer}
 \begin{response}
-The README no longer links to GitHub or sedsat.org. Its repository link and
-citation hold placeholders for the final code.usgs.gov address and the
-software release DOI, which are set at release.
-\todo{Cara: the final repository path and the DOI.}
+The README no longer links to GitHub or sedsat.org. The repository will be in
+the group of the Central Plains Water Science Center,
+\url{https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3}, and the
+citation gives the reserved software release DOI,
+\url{https://doi.org/10.5066/P1JF4HJE}, which resolves once the release is
+published. The manual uses the same address and DOI.
 \end{response}
-\status{Placeholders in place; values pending the release.}
+\status{Done.}
 
 \begin{reviewer}{Review notes}
 I do not know the regulations around storing software on a non-government
@@ -291,15 +298,18 @@ the download may not be safe.
 \begin{response}
 These questions are about sedsat.org, a site I set up before the USGS release.
 The USGS release will be distributed from code.usgs.gov, and the README and the
-manual no longer refer to sedsat.org.
-\todo{Cara, Allen: decide whether sedsat.org is retired, or kept only as a
-pointer to the USGS release, and check its download form against USGS
-guidelines if it stays.} The browser warning is likely because the Windows
-executable is not code-signed; packages from code.usgs.gov have the same
-issue unless they are signed. \todo{Cara: ask the release coordinator whether
-the Windows package should be signed.}
+manual no longer refer to sedsat.org. sedsat.org will be retired, together
+with its download form; the USGS will host the SedSAT3 package.
+Sed\_SAT~1.0 (its USGS software release) stays available to existing users as the legacy version, since
+studies under way may need to finish with the version they started with; it
+will be clearly marked as the legacy version, users will be directed to the
+new release, and its availability will be reassessed in three to five years.
+The browser warning is because the Windows program is not code-signed;
+packages from code.usgs.gov show the same warning unless they are signed.
+Whether the release package should be signed will be settled with the
+release coordinator during the release.
 \end{response}
-\status{Decision for Cara and Allen.}
+\status{Decided; code-signing to be settled at release.}
 
 % =====================================================================
 \group{Sample data}
@@ -509,13 +519,12 @@ by excerpts of a real batch run of the example data, as text.
 Version. Publication date. ``Missing'' (at the table of contents).
 \end{reviewer}
 \begin{response}
-The title page now gives the software version, 1.1.8, and the date as a
-placeholder until publication. The manual now also has a list of figures
-after the table of contents, which covers the ``missing'' item; the PDF has a
-full table of contents. \todo{Cara: confirm the version number and set
-the publication date.}
+The title page now gives the software version, 1.1.8, and the date; the
+publication date will be set when the release is published. The manual now
+also has a list of figures after the table of contents, which covers the
+``missing'' item; the PDF has a full table of contents.
 \end{response}
-\status{Done; version and date pending.}
+\status{Done.}
 
 \begin{reviewer}{Raw data preparation}
 What about missing values or zeros? Are those allowed? How are negatives
@@ -896,8 +905,6 @@ USGS guidance. I see 2 WB\_Bank and no Pasture.
           with two different groups.
     \item Fig.~3.11 is regenerated, with the ellipses.
 \end{itemize}
-\todo{Cara: if USGS has its own color guidance for figures, please point me to
-it; I followed the Okabe--Ito palette.}
 \end{response}
 \status{Fixed (\commit{d7d8b92}).}
 
@@ -1168,8 +1175,16 @@ for which target sample?
 The crash is fixed (Section~1). With the correction, each source sample being
 tested is treated as the target, so the sources are corrected to that sample's
 own organic matter content and particle size. The manual now says so.
+Answering your question also uncovered three problems in the tool, fixed in
+\commit{83da34e}: the correction was computed but not used in the fit; samples
+excluded in Include/Exclude Samples were still tested and still counted in the
+source statistics; and the tested sample stayed in its own group. Source
+Verification now applies the correction, honours the exclusions, and leaves
+the tested sample out of its group (a true leave-one-out test, so a group
+needs at least three included samples). Its results therefore differ from
+those of the version you tested.
 \end{response}
-\status{Fixed and documented.}
+\status{Fixed and documented (\commit{83da34e}).}
 
 \begin{reviewer}{Genetic Algorithm estimation}
 I do not see this option. I do not see any blue (modeled) in the modeled vs
@@ -1197,17 +1212,19 @@ bibliography is titled ``References''.
 \status{Done.}
 
 % =====================================================================
-\group{Items still open}
+\group{Release items}
 
 \begin{longtable}{@{}p{0.28\linewidth}p{0.18\linewidth}p{0.48\linewidth}@{}}
 \toprule
-Item & Who & Note \\
+Item & Status & Note \\
 \midrule
 \endhead
-Repository path, DOI, version, publication date & \todo{Cara} & README, citation and manual title page hold placeholders. \\
-sedsat.org and its download form & \todo{Cara, Allen} & Retire it or keep it as a pointer; check the form against USGS guidelines if it stays. Code-signing of the Windows package. \\
-USGS color guidance & \todo{Cara} & The charts use the Okabe--Ito color-blind-safe palette. \\
-Sed\_SAT 1.0 comparison & \todo{Allen} & Review the last column of Table~1.1. \\
+Repository path, DOI & Done & \url{https://code.usgs.gov/cpwsc/SedimentSourceAssessmentTool3}; DOI \code{10.5066/P1JF4HJE}, which resolves once the release is published. \\
+Version, publication date & Version done & Version 1.1.8; the date is set when the release is published. \\
+sedsat.org & Decided & It will be retired; the USGS will host the package. Sed\_SAT~1.0 stays available as the legacy version, to be reassessed in three to five years. \\
+Code-signing & At release & To be settled with the release coordinator. \\
+Figure colors & Done & The charts use the Okabe--Ito color-blind-safe palette. \\
+Sed\_SAT 1.0 comparison & Done & Table~1.1 reviewed by Allen Gellis. \\
 \bottomrule
 \end{longtable}
 

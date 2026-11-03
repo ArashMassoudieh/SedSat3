@@ -33,7 +33,7 @@ Tests are in `tests/unit/tst_sedsat3.cpp` (Qt Test; named below as
 | 3. Authorship / release authority | **Done** | `41393e0` | — | Authors Massoudieh, A., Gellis, A.C., and Peterman-Phipps, C., as in the IPDS record, in `CITATION.cff`, the README citation, the manual and the About dialog. |
 | Citation | **Fixed** | `41393e0` | — | README citation in USGS software-release form with the reserved DOI 10.5066/P1JF4HJE (resolves at publication); `CITATION.cff` added. |
 | Metadata points at personal GitHub (`code.json`, README, `createdeb.sh`, submodules) | **Fixed** | `41393e0`, `2f8c463` | — | `code.json` and README rewritten with USGS GitLab placeholders; `createdeb.sh` builds and checksums only (no GitHub publishing); `Utilities` submodule removed; QXlsx submodule points at its upstream. `docs/CONTINUING-WORK.md` keeps a generic reference to a development mirror, as the reviewer allowed. |
-| Windows installer from sedsat.org is a different lineage ("CMBSource", EnviroInformatics) | **Fixed; sedsat.org will only point to the USGS release** | `41393e0` | — | README no longer links sedsat.org. Installer project (`CMB_Source.aip`): Manufacturer "EnviroInformatics" → "U.S. Geological Survey" (this changes the default install folder to `Program Files\U.S. Geological Survey\SedSat3`), URLs → USGS placeholder. The portable package (below) is built from this repository. |
+| Windows installer from sedsat.org is a different lineage ("CMBSource", EnviroInformatics) | **Fixed; sedsat.org will be retired and the USGS will host the package** | `41393e0` | — | README no longer links sedsat.org. Installer project (`CMB_Source.aip`): Manufacturer "EnviroInformatics" → "U.S. Geological Survey" (this changes the default install folder to `Program Files\U.S. Geological Survey\SedSat3`), URLs → USGS placeholder. The portable package (below) is built from this repository. |
 | README truncated / out of sync | **Fixed** | `41393e0` | — | Rewritten: features, manual, portable build, build instructions and options, tests, disclaimer, license, citation. |
 | No per-file license headers; no dependency (NOTICE) inventory | **Fixed** | `41393e0` | — | Header on 149 first-party files; `THIRD_PARTY_LICENSES.md`. |
 
@@ -306,6 +306,11 @@ reviewers was rebuilt on October 24 from `74d54a6`, with
 `0cd424f93650ed42d7888ba8863f803b9af9ab31ceee38ee407ab9afce6056b3`, posted
 on merge request !4
 (<https://code.usgs.gov/-/project/20102/uploads/a9642eb7c4f46c966d73c3225341d418/SedSAT3-1.1.8-windows-x64-portable.zip>).
+It is superseded by the package of November 3 (programs dated October 28,
+with the target-group, outlier-threshold and Source Verification fixes, the
+final manual and the license files): 44.5 MB, 82 files, SHA-256
+`34015266c94386e791bf7967da83e5bef7d82d2925bcd552db2a83b4eb6866be`, attached
+to merge request !4.
 Its example script runs Levenberg–Marquardt for the 17 targets and a default
 Bayesian batch for CTAIL1 (seed 1234), and its README lists the exact results.
 It is built from the
