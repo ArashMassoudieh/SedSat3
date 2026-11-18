@@ -4116,7 +4116,10 @@ CMBTimeSeriesSet SourceSinkData::VerifySource(
         // Apply corrections if requested
         SourceSinkData corrected_dataset = test_dataset.CreateCorrectedDataset(
             sample->first, apply_om_size_correction, test_dataset.GetElementInformation());
-        corrected_dataset.SetProgressReporter(rtw_);
+        // No progress reporter for the per-sample fit: the analysis window has
+        // no chart panel, and Levenberg-Marquardt plots its error on panel 0
+        // (giving it the reporter crashed the program, and reset the bar for
+        // every sample). The loop below reports the progress over samples.
 
         // Check for negative values (would cause problems in CMB)
         vector<string> negative_elements = corrected_dataset.NegativeValueCheck();

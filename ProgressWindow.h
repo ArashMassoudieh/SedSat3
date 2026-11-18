@@ -67,6 +67,8 @@ public:
     /// @brief Closes the dialog. Named Finish() because QWidget::close() is not virtual.
     void Finish() override { close(); }
 private:
+    /// True if @p chart is one of this window's chart panels
+    bool HasChart(int chart) const;
 	Ui::ProgressWindow ui{};
     QVector<ChartCollection> ChartItems;
     QVector<QString> charttitles;

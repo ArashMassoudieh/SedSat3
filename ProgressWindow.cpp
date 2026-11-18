@@ -60,8 +60,17 @@ ProgressWindow::ProgressWindow(QWidget *parent, int number_of_panels, bool extra
 	
 }
 
+bool ProgressWindow::HasChart(int chart) const
+{
+    // A window made without chart panels (number_of_panels == 0) ignores
+    // the chart calls instead of indexing past the end of ChartItems
+    return chart >= 0 && chart < static_cast<int>(ChartItems.size());
+}
+
 void ProgressWindow::SetTitle(const QString &title, int chart)
 {
+    if (!HasChart(chart))
+        return;
     ChartItems[chart].chart->setTitle(title);
 }
 
@@ -71,6 +80,8 @@ ProgressWindow::~ProgressWindow()
 
 void ProgressWindow::AppendPoint(const double& x, const double& y, int chart)
 {
+    if (!HasChart(chart))
+        return;
     if (ChartItems[chart].series->count()==0)
     {
         ChartItems[chart].yaxis->setMin(y-0.01);
@@ -91,6 +102,8 @@ void ProgressWindow::AppendPoint(const double& x, const double& y, int chart)
 
 void ProgressWindow::ClearGraph(int chart)
 {
+    if (!HasChart(chart))
+        return;
     ChartItems[chart].series->clear();
 }
 
@@ -115,6 +128,8 @@ void ProgressWindow::SetLabel(const QString& label)
 
 void ProgressWindow::SetYRange(const double &y0, const double &y1, int chart)
 {
+    if (!HasChart(chart))
+        return;
     ChartItems[chart].yaxis->setMin(y0);
     ChartItems[chart].yaxis->setMax(y1);
     ChartItems[chart].chartView->update();
@@ -123,6 +138,8 @@ void ProgressWindow::SetYRange(const double &y0, const double &y1, int chart)
 
 void ProgressWindow::SetXRange(const double &x0, const double &x1, int chart)
 {
+    if (!HasChart(chart))
+        return;
     ChartItems[chart].xaxis->setMin(x0);
     ChartItems[chart].xaxis->setMax(x1);
     ChartItems[chart].xaxis->setTitleText("Generation");
@@ -131,9 +148,13 @@ void ProgressWindow::SetXRange(const double &x0, const double &x1, int chart)
 
 void ProgressWindow::SetXAxisTitle(const QString &title, int chart)
 {
+    if (!HasChart(chart))
+        return;
     ChartItems[chart].xaxis->setTitleText(title);
 }
 void ProgressWindow::SetYAxisTitle(const QString &title, int chart)
 {
+    if (!HasChart(chart))
+        return;
     ChartItems[chart].yaxis->setTitleText(title);
 }
