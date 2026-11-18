@@ -214,12 +214,12 @@ This tool calculates the measures of discriminant power of elements between all 
 \label{cmd:error_analysis}
 \index{Error\_Analysis}
 
-This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect of elmination of the indicated percentage of source samples on the fingerprinting results.
+This tool uses Monte-Carlo simulation, bootstrapping the source samples, to evaluate the effect of eliminating the indicated percentage of source samples on the fingerprinting results.
 
 \begin{argtable}
 \texttt{Apply size and organic matter correction} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\
 \texttt{Number of realizations} & whole number & \texttt{\dq{}1000\dq{}} & --- \\
-\texttt{Pecentage eliminated} & whole number & \texttt{\dq{}20\dq{}} & --- \\
+\texttt{Percentage eliminated} & whole number & \texttt{\dq{}20\dq{}} & --- \\
 \texttt{Sample} & name & --- & a target sample name \\
 \texttt{Softmax transformation} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\
 \end{argtable}
@@ -356,7 +356,7 @@ This tool performs step-wise Discriminant Function Analysis between the two sour
 \label{cmd:source_verify}
 \index{Source\_Verify}
 
-This tool evaluates weather the finger-printing algorithm is capable of correctly infer the source samples based on their elemental profiles. The analysis is done by treating individial source samples from the specified source group as target samples and the use the Levenberg-Marquardt optimization to infer the contribution of sources into it.
+This tool evaluates whether the fingerprinting algorithm can correctly infer the source of the source samples from their elemental profiles. Each sample of the specified source group is treated in turn as a target sample, left out of its own group, and its source contributions are estimated with Levenberg-Marquardt optimization.
 
 \begin{argtable}
 \texttt{Apply size and organic matter correction} & \texttt{true} / \texttt{false} & \texttt{\dq{}true\dq{}} & --- \\

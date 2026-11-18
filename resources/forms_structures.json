@@ -823,7 +823,7 @@
  			"type": "lineEdit",
  			"default": ""
  		},
- 		"Pecentage eliminated": {
+ 		"Percentage eliminated": {
    			"type": "spinBox",
 			"default": "20",
 			"maximum": "50",
@@ -850,7 +850,7 @@
     		},
     		"Description": {
 	    		"type": "Description",
-   			"default": "This tool uses Monte-Carlo simulation via bootstrapping the evaluate the effect of elmination of the indicated percentage of source samples on the fingerprinting results. (User's manual, Section 5.4.1.)"
+   			"default": "This tool uses Monte-Carlo simulation, bootstrapping the source samples, to evaluate the effect of eliminating the indicated percentage of source samples on the fingerprinting results. (User's manual, Section 5.4.1.)"
 		}
  	},
  	"Source_Verify": {
@@ -869,7 +869,7 @@
     		},
 		"Description": {
 	    		"type": "Description",
-   			"default": "This tool evaluates weather the finger-printing algorithm is capable of correctly infer the source samples based on their elemental profiles. The analysis is done by treating individial source samples from the specified source group as target samples and the use the Levenberg-Marquardt optimization to infer the contribution of sources into it. (User's manual, Section 5.4.2.)"
+   			"default": "This tool evaluates whether the fingerprinting algorithm can correctly infer the source of the source samples from their elemental profiles. Each sample of the specified source group is treated in turn as a target sample, left out of its own group, and its source contributions are estimated with Levenberg-Marquardt optimization. (User's manual, Section 5.4.2.)"
 		}
  	},
  	"AutoSelect": {

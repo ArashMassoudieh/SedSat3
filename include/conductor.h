@@ -686,7 +686,8 @@ private:
      *                  - "Sample": Target sample name
      *                  - "Apply size and organic matter correction": "true"/"false"
      *                  - "Softmax transformation": "true"/"false"
-     *                  - "Pecentage eliminated": Percentage of elements to remove per iteration
+     *                  - "Percentage eliminated": Percentage of source samples to remove per realization
+     *                    (the misspelled "Pecentage eliminated" of older scripts is still accepted)
      *                  - "Number of realizations": Number of bootstrap iterations
      * @return true if execution completed successfully, false if OM/Size correction unavailable or negative elements found
      */

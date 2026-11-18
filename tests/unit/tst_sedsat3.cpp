@@ -851,7 +851,7 @@ void SedSAT3Tests::errorAnalysis_sameSeedSameResult()
     std::map<std::string, std::string> arguments = {
         {"Sample", "M1"}, {"Softmax transformation", "true"},
         {"Apply size and organic matter correction", "false"},
-        {"Pecentage eliminated", "25"}, {"Number of realizations", "20"},
+        {"Percentage eliminated", "25"}, {"Number of realizations", "20"},
         {"Random seed", "99"}};
     auto run = [&](const std::map<std::string, std::string>& args) {
         SourceSinkData data;

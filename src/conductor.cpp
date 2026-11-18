@@ -2306,9 +2306,15 @@ bool Conductor::ExecuteErrorAnalysis(const std::map<std::string, std::string>& g
 
     corrected_data.InitializeParametersAndObservations(arguments.at("Sample"));
 
+    // The argument was named "Pecentage eliminated" until November 2026;
+    // scripts that still use the old name keep working
+    const std::string percentage_key =
+        (arguments.count("Percentage eliminated") == 0 && arguments.count("Pecentage eliminated") != 0)
+            ? "Pecentage eliminated" : "Percentage eliminated";
+
     bool outcome = corrected_data.BootStrap(
         &results,
-        aquiutils::atof(arguments.at("Pecentage eliminated")),
+        aquiutils::atof(arguments.at(percentage_key)),
         aquiutils::atoi(arguments.at("Number of realizations")),
         arguments.at("Sample"),
         softmax,
