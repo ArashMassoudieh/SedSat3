@@ -45,6 +45,7 @@
 #include "formelementinformation.h"
 #include "mcmcdiagnostics.h"
 #include "randomstream.h"
+#include "targetsheet.h"
 #ifdef SEDSAT3_TEST_EXCEL
 #include "excelimport.h"
 #include "xlsxdocument.h"
@@ -181,6 +182,7 @@ private slots:
 
     // ---------- Excel import (reviewer test plan, Tests 4a and 4b) ----------
     void excelImport();
+    void targetSheetGuess();
 };
 
 // =====================================================================
@@ -1323,6 +1325,30 @@ void SedSAT3Tests::excelImport()
         QCOMPARE(ImportWorkbook({{"Bank", invalid}}, data), QString("Invalid Data"));
     }
 #endif
+}
+
+// The import dialog used to preselect the first sheet as the target, so a
+// workbook whose first sheet is a source group (Forest, Target, Banks, ...)
+// silently made that source group the target: it then disappeared from every
+// source list, and the unmixing ran against the wrong samples.
+void SedSAT3Tests::targetSheetGuess()
+{
+    // The target sheet is found by name, wherever it sits in the workbook
+    QCOMPARE(GuessTargetSheet({"Forest", "Target", "Banks", "Crop", "Pasture"}), 1);
+    QCOMPARE(GuessTargetSheet({"Target", "Banks"}), 0);
+    QCOMPARE(GuessTargetSheet({"Banks", "Crop", "Sink"}), 2);
+    QCOMPARE(GuessTargetSheet({"Bank", "Mixture"}), 1);
+
+    // Case and surrounding spaces do not matter, and a longer name still counts
+    QCOMPARE(GuessTargetSheet({"Forest", "  TARGET "}), 1);
+    QCOMPARE(GuessTargetSheet({"Forest", "Target samples"}), 1);
+    QCOMPARE(GuessTargetSheet({"Sink_2013", "Forest"}), 0);
+
+    // No guess rather than a wrong one: nothing matches, or more than one does
+    QCOMPARE(GuessTargetSheet({"Forest", "Banks", "Crop"}), -1);
+    QCOMPARE(GuessTargetSheet({"Target", "Target old"}), -1);
+    QCOMPARE(GuessTargetSheet({"Target", "Mixture"}), -1);
+    QCOMPARE(GuessTargetSheet({}), -1);
 }
 
 int main(int argc, char* argv[])

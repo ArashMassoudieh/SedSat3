@@ -138,7 +138,7 @@ Some tools have the option \textit{Modify the included elements based on the res
 \end{tcolorbox}
 
 \chapter{Raw data preparation}\label{chap:raw-data}
-The raw data for SedSAT3 must be prepared as a single Excel spreadsheet file with multiple tabs. The first tab contains the elemental profiles of the target samples, and each subsequent tab contains the elemental profiles for one source group. In each sheet, each row corresponds to one sample, the first column contains the sample names, and each remaining column represents one element. Grain size and/or organic content may appear in any column. For SedSAT3 to function correctly, the data must be properly formatted; the example dataset \texttt{SampleData.xlsx} (Section~\ref{sec:installing}) shows the layout. The specific text used for column or field headers is not important, but the relative position of columns in the source and target datasets must be identical---this is a core requirement for the program to run successfully. Column or field headers should be unique; no field name may match another field name within the same dataset. Note that each sheet must contain exactly the same elements, named in exactly the same way.
+The raw data for SedSAT3 must be prepared as a single Excel spreadsheet file with multiple tabs. One tab contains the elemental profiles of the target samples, and each other tab contains the elemental profiles for one source group. The order of the tabs does not matter: you say which tab holds the target samples when you import the file (Section~\ref{sec:importing_data}). Naming that tab \texttt{Target} is recommended, because SedSAT3 then preselects it for you. In each sheet, each row corresponds to one sample, the first column contains the sample names, and each remaining column represents one element. Grain size and/or organic content may appear in any column. For SedSAT3 to function correctly, the data must be properly formatted; the example dataset \texttt{SampleData.xlsx} (Section~\ref{sec:installing}) shows the layout. The specific text used for column or field headers is not important, but the relative position of columns in the source and target datasets must be identical---this is a core requirement for the program to run successfully. Column or field headers should be unique; no field name may match another field name within the same dataset. Note that each sheet must contain exactly the same elements, named in exactly the same way.
 
 \paragraph{Missing, zero and negative values.} Every cell must contain a finite number. SedSAT3 has no code for a missing value: an empty cell, text, \texttt{NaN} or \texttt{Inf} stops the import with a message giving the sheet, row and column of the cell. A value below the detection limit must therefore be replaced, before import, by a number you choose (for example, a fraction of the detection limit). Zero and negative values are accepted, but:
 \begin{itemize}
@@ -155,6 +155,12 @@ To import the data, choose \textbf{File}$\rightarrow$\textbf{Import Data from Ex
 Before the Excel file is imported, you must select the tabs you want SedSAT3 to import.
 
 Once the Excel file is imported, a dialog box will appear asking you to identify the sheet containing the target samples (Fig.~\ref{fig:indicate_target_sample}). Select \textbf{Target} on the row of the sheet that holds the target samples; every other sheet becomes a source group. The target sheet's name is shown in bold, marked ``(target)'', and named at the top of the dialog. Click \textbf{Ok}.
+
+If exactly one sheet is named \texttt{Target}, \texttt{Sink} or \texttt{Mixture} (in any capitalization), that sheet is preselected. Otherwise no sheet is preselected and you must choose one: SedSAT3 does not guess from the order of the sheets, and it will not let you continue until a target sheet is selected.
+
+\begin{tcolorbox}[colback=yellow!10,colframe=yellow!50!black,title=Note]
+Check the target sheet before clicking \textbf{Ok}. A source group selected as the target by mistake is treated as the target everywhere afterwards: it disappears from the group drop-down list of every tool form, because those lists hold the source groups only, and the unmixing runs against its samples instead of the real target samples. If this happens, correct it in \textbf{Settings}$\rightarrow$\textbf{Target Group} (Section~\ref{sec:target-group}) and run the affected tools again.
+\end{tcolorbox}
 
 \begin{figure}[ht]
     \centering
@@ -209,6 +215,11 @@ You can visualize the elemental profiles using the tree view on the left side of
     \caption{Visualizing the raw data}
     \label{fig:constituents_vis}
 \end{figure}
+
+\subsubsection{Changing the target group}\label{sec:target-group}
+The group that holds the target samples is chosen during the import, and it is stored in the project file. To change it later, choose \textbf{Settings}$\rightarrow$\textbf{Target Group} and select the group that holds the target samples; every other group is a source group. Save the project (\textbf{File}$\rightarrow$\textbf{Save}) to keep the change.
+
+Use this when a project was imported with the wrong target group. Any results already in the project were computed against the previous target group, so run the affected tools again, and reopen any form that is showing a group list so that it is rebuilt. With the command line program the same change is made with the \texttt{set-target-group} setup command.
 
 \subsubsection{Choosing samples to be discarded}\label{sec:choosing-samples}
 To include or exclude samples, choose \textbf{Settings}$\rightarrow$\textbf{Include/Exclude Samples} from the menu. This dialog lets you mark individual samples for exclusion from all subsequent analyses without removing them from the dataset. To exclude a sample, click the \textbf{Include} cell next to its name so that it reads \texttt{No}; click again to include it.

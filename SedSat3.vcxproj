@@ -159,6 +159,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClCompile Include="src\observation.cpp" />
     <ClCompile Include="src\parameter.cpp" />
     <ClCompile Include="src\sourcesinkdata.cpp" />
+    <ClCompile Include="src\targetsheet.cpp" />
     <ClCompile Include="testmcmc.cpp" />
     <ClCompile Include="toolboxitem.cpp" />
     <QtRcc Include="SedSat3.qrc" />
@@ -229,6 +230,7 @@ copy "..\vcpkg\installed\x64-windows\bin" $(SolutionDir)$(Platform)\$(Configurat
     <ClInclude Include="include\observation.h" />
     <ClInclude Include="include\parameter.h" />
     <ClInclude Include="include\sourcesinkdata.h" />
+    <ClInclude Include="include\targetsheet.h" />
     <ClInclude Include="include\randomstream.h" />
     <ClInclude Include="include\mcmcdiagnostics.h" />
     <ClInclude Include="excelimport.h" />

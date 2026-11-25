@@ -171,6 +171,7 @@ private slots:
 
     // Data management
     void on_constituent_properties_triggered();
+    void onSetTargetGroup();
     void onIncludeExcludeSample();
     void onOMSizeCorrection();
 

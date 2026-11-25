@@ -160,6 +160,9 @@
     <ClCompile Include="src\sourcesinkdata.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\targetsheet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\GA\Binary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -351,6 +354,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\sourcesinkdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\targetsheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GA\Binary.h">

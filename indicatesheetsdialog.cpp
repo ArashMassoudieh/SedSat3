@@ -8,6 +8,7 @@
 #include "QRadioButton"
 #include "QDebug"
 #include "mainwindow.h"
+#include "targetsheet.h"
 #include <QMessageBox>
 #include <QVBoxLayout>
 
@@ -33,6 +34,15 @@ IndicateSheetsDialog::~IndicateSheetsDialog()
 
 void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
 {
+    // The first sheet used to be preselected as the target. Sheet order says
+    // nothing about which sheet is the target, so accepting the dialog
+    // unchanged made the first sheet the target: in a workbook whose sheets
+    // run Forest, Target, Banks, ... that silently made Forest the target,
+    // which dropped it from every source list and gave wrong unmixing
+    // results. Preselect the sheet whose name says it is the target, and
+    // nothing at all when no single sheet does.
+    const int guessed_target = GuessTargetSheet(sheets);
+
     for (int i=0; i<sheets.count(); i++)
     {
         QLabel *label = new QLabel(ui->scrollAreaWidgetContents);
@@ -57,8 +67,8 @@ void IndicateSheetsDialog::Populate_Table(const QStringList &sheets)
         horizontalLayout->addWidget(radioButton_source);
         radio_buttons_sources.append(radioButton_source);
 
-        radioButton_source->setChecked(i!=0);
-        radioButton_mixture->setChecked(i==0);
+        radioButton_source->setChecked(i!=guessed_target);
+        radioButton_mixture->setChecked(i==guessed_target);
         connect(radioButton_mixture,SIGNAL(clicked()),this, SLOT(on_radio_button_changed()));
         connect(radioButton_source,SIGNAL(clicked()),this, SLOT(on_radio_button_changed()));
         ui->formLayout->setWidget(i, QFormLayout::FieldRole, groupBox);

@@ -66,6 +66,7 @@ set(SEDSAT3_CORE_SOURCES
     src/observation.cpp
     src/parameter.cpp
     src/sourcesinkdata.cpp
+    src/targetsheet.cpp
     cmbmatrix.cpp
     cmbtimeseries.cpp
     cmbtimeseriesset.cpp
@@ -112,6 +113,7 @@ set(SEDSAT3_CORE_HEADERS
     include/randomstream.h
     include/mcmcdiagnostics.h
     include/sourcesinkdata.h
+    include/targetsheet.h
 )
 
 set(SEDSAT3_GA_SOURCES
@@ -141,6 +143,13 @@ function(sedsat3_configure target)
         ${ARMADILLO_INCLUDE_DIRS}
     )
     target_compile_definitions(${target} PRIVATE _arma SUPPORT_USE_QJSON GSL Q_GUI_SUPPORT Qt6)
+    # moc reaches Armadillo through sourcesinkdata.h, and its preprocessor
+    # cannot parse Armadillo's SuperLU include wrapper (__has_include with a
+    # macro argument): with a system Armadillo that enables SuperLU, every
+    # moc run fails with a parse error in include_superlu.hpp. This is for
+    # moc only; the compiled code still uses SuperLU.
+    set_property(TARGET ${target} APPEND PROPERTY
+        AUTOMOC_MOC_OPTIONS "-DARMA_DONT_USE_SUPERLU")
     if(ENABLE_GA)
         target_compile_definitions(${target} PRIVATE SEDSAT3_ENABLE_GA)
         target_include_directories(${target} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/GA)

@@ -117,6 +117,8 @@ void MainWindow::setupConnections()
     // Menu actions - Data operations
     connect(ui->actionConstituent_Properties, &QAction::triggered,
         this, &MainWindow::on_constituent_properties_triggered);
+    connect(ui->actionTarget_Group, &QAction::triggered,
+        this, &MainWindow::onSetTargetGroup);
     connect(ui->actionInclude_Exclude_Samples, &QAction::triggered,
         this, &MainWindow::onIncludeExcludeSample);
     connect(ui->actionOrganic_Matter_Size_correction, &QAction::triggered,
@@ -1102,6 +1104,51 @@ void MainWindow::on_constituent_properties_triggered()
 
     ui->verticalLayout_middle->addWidget(formElems);
     centralform.reset(formElems);
+}
+
+void MainWindow::onSetTargetGroup()
+{
+    // A project whose target group is wrong (the import dialog used to
+    // preselect the first sheet) could only be corrected by importing the
+    // workbook again, because nothing here could change it.
+    if (dataCollection.empty())
+    {
+        QMessageBox::warning(
+            this,
+            tr("SedSat3"),
+            tr("No data has been loaded."),
+            QMessageBox::Ok);
+        return;
+    }
+
+    QStringList groupNames;
+    for (const std::string& groupName : dataCollection.GetGroupNames())
+        groupNames << QString::fromStdString(groupName);
+
+    const QString current = QString::fromStdString(dataCollection.GetTargetGroup());
+    bool ok = false;
+    const QString target = QInputDialog::getItem(
+        this,
+        tr("Target group"),
+        tr("Select the group that holds the target samples. Every other group "
+           "is a source group.\n\nSave the project afterwards to keep the change."),
+        groupNames,
+        qMax(0, groupNames.indexOf(current)),
+        false,
+        &ok);
+
+    if (!ok || target.isEmpty() || target == current)
+        return;
+
+    dataCollection.SetTargetGroup(target.toStdString());
+
+    // Every result in the project was computed against the previous target
+    WriteMessageOnScreen(
+        tr("Target group is now '%1' (it was '%2'). Results already in this "
+           "project were computed with the previous target group, so re-run "
+           "them. Reopen any form that is showing a group list.")
+            .arg(target, current.isEmpty() ? tr("not set") : current),
+        Qt::blue);
 }
 
 void MainWindow::onIncludeExcludeSample()

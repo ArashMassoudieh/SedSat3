@@ -54,6 +54,7 @@
     <property name="title">
      <string>Settings</string>
     </property>
+    <addaction name="actionTarget_Group"/>
     <addaction name="actionConstituent_Properties"/>
     <addaction name="actionInclude_Exclude_Samples"/>
     <addaction name="actionOrganic_Matter_Size_correction"/>
@@ -292,6 +293,11 @@
   <action name="actionOpen_Project">
    <property name="text">
     <string>Open Project</string>
+   </property>
+  </action>
+  <action name="actionTarget_Group">
+   <property name="text">
+    <string>Target Group</string>
    </property>
   </action>
   <action name="actionInclude_Exclude_Samples">
