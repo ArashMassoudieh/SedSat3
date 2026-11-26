@@ -1,0 +1,25 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$classProgressReporter.html" title="Abstract sink for progress information produced by a running analysis." alt="" coords="5,32,139,60"/>
+<area shape="rect" id="Node000001" href="$classNullProgressReporter.html" title="ProgressReporter that discards everything reported to it." alt="" coords="202,5,362,33"/>
+<area shape="poly" id="edge28_Node000000_Node000001" title=" " alt="" coords="152,33,204,28,200,31,155,38"/>
+<area shape="rect" id="Node000002" href="$classProgressWindow.html" title="Graphical ProgressReporter that draws progress as charts in a dialog." alt="" coords="217,57,346,85"/>
+<area shape="poly" id="edge29_Node000000_Node000002" title=" " alt="" coords="153,53,219,62,215,65,155,58"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="35,265,109,293"/>
+<area shape="poly" id="edge36_Node000003_Node000002" title=" " alt="" coords="81,250,96,214,119,173,148,131,185,96,219,80,215,84,188,100,152,135,123,176,101,217,86,252"/>
+<area shape="rect" id="Node000004" href="$classAboutDialog.html" title="Professional about dialog for SedSat3 application." alt="" coords="231,109,332,137"/>
+<area shape="poly" id="edge30_Node000003_Node000004" title=" " alt="" coords="88,251,128,198,155,171,185,148,207,137,233,130,229,133,209,142,188,152,158,175,132,202,92,254"/>
+<area shape="rect" id="Node000005" href="$classDialogChooseExcelSheets.html" title=" " alt="" coords="187,161,377,189"/>
+<area shape="poly" id="edge31_Node000003_Node000005" title=" " alt="" coords="100,254,140,226,186,199,221,188,217,191,188,204,143,230,104,257"/>
+<area shape="rect" id="Node000006" href="$classGeneralChart.html" title=" " alt="" coords="228,213,336,241"/>
+<area shape="poly" id="edge32_Node000003_Node000006" title=" " alt="" coords="122,264,230,238,226,242,125,269"/>
+<area shape="rect" id="Node000007" href="$classIndicateSheetsDialog.html" title=" " alt="" coords="202,265,362,293"/>
+<area shape="poly" id="edge33_Node000003_Node000007" title=" " alt="" coords="123,277,204,277,200,281,125,282"/>
+<area shape="rect" id="Node000008" href="$classOptionsDialog.html" title=" " alt="" coords="225,317,338,345"/>
+<area shape="poly" id="edge34_Node000003_Node000008" title=" " alt="" coords="123,289,227,316,223,319,124,294"/>
+<area shape="rect" id="Node000009" href="$classPlotWindow.html" title=" " alt="" coords="233,369,331,397"/>
+<area shape="poly" id="edge35_Node000003_Node000009" title=" " alt="" coords="102,300,143,328,188,354,235,372,230,373,186,359,140,333,102,305"/>
+<area shape="rect" id="Node000010" href="$classResultTableViewer.html" title=" " alt="" coords="211,421,352,449"/>
+<area shape="poly" id="edge37_Node000003_Node000010" title=" " alt="" coords="91,304,132,357,158,383,188,406,215,421,209,421,185,411,155,387,128,360,90,309"/>
+<area shape="rect" id="Node000011" href="$classResultsWindow.html" title=" " alt="" coords="221,473,342,501"/>
+<area shape="poly" id="edge38_Node000003_Node000011" title=" " alt="" coords="84,305,101,342,123,383,152,424,188,458,224,477,218,477,185,463,148,427,119,385,96,344,83,310"/>
+</map>

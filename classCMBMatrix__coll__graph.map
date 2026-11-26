@@ -1,0 +1,9 @@
+<map id="CMBMatrix" name="CMBMatrix">
+<area shape="rect" id="Node000001" title="Matrix class with labeled rows and columns for Chemical Mass Balance analysis." alt="" coords="5,652,177,992"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,363,80,435"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="54,448,77,652,72,652,53,453"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="103,195,277,603"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="140,615,133,653,128,651,138,620"/>
+<area shape="rect" id="Node000004" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="122,5,258,122"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,120,193,179,187,178,190,125"/>
+</map>

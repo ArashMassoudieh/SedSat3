@@ -1,0 +1,9 @@
+<map id="resulttableviewer.h" name="resulttableviewer.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="157,5,304,33"/>
+<area shape="rect" id="Node000002" href="$mainwindow_8cpp.html" title=" " alt="" coords="5,81,136,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,41,100,83,98,78,186,39"/>
+<area shape="rect" id="Node000003" href="$resultswindow_8cpp.html" title=" " alt="" coords="160,81,301,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,47,233,82,228,79,229,51"/>
+<area shape="rect" id="Node000004" href="$resulttableviewer_8cpp.html" title=" " alt="" coords="326,81,487,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="277,37,378,80,373,81,275,42"/>
+</map>

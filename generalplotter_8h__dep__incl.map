@@ -1,0 +1,15 @@
+<map id="generalplotter.h" name="generalplotter.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="202,5,326,33"/>
+<area shape="rect" id="Node000002" href="$generalplotter_8cpp.html" title=" " alt="" coords="118,81,257,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,42,203,83,199,78,237,45"/>
+<area shape="rect" id="Node000003" href="$mainwindow_8h.html" title=" " alt="" coords="282,81,397,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="289,41,329,81,324,80,287,46"/>
+<area shape="rect" id="Node000004" href="$genericform_8cpp.html" title=" " alt="" coords="5,157,133,184"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="278,116,118,159,117,154,276,111"/>
+<area shape="rect" id="Node000005" href="$indicatesheetsdialog_8cpp.html" title=" " alt="" coords="157,157,341,184"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="314,118,266,159,264,154,309,120"/>
+<area shape="rect" id="Node000006" href="$mainwindow_8cpp.html" title=" " alt="" coords="365,157,496,184"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="369,116,417,157,412,156,367,121"/>
+<area shape="rect" id="Node000007" href="$plotwindow_8cpp.html" title=" " alt="" coords="520,157,642,184"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="398,111,540,156,535,156,397,116"/>
+</map>

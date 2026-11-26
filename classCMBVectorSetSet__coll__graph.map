@@ -1,0 +1,9 @@
+<map id="CMBVectorSetSet" name="CMBVectorSetSet">
+<area shape="rect" id="Node000001" title="Collection of named CMBVectorSet objects for hierarchical data organization." alt="" coords="113,652,285,1037"/>
+<area shape="rect" id="Node000002" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="5,195,179,603"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,615,156,652,150,652,144,620"/>
+<area shape="rect" id="Node000003" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="24,5,160,122"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,120,95,178,90,178,92,125"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="204,363,410,435"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="296,447,248,653,243,652,294,452"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="ResultSetItem" name="ResultSetItem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="16,518,146,613"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,250,114,322"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,336,80,518,75,518,61,338"/>
+<area shape="rect" id="Node000003" href="$classResults.html" title=" " alt="" coords="139,127,269,445"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,432,110,504,106,501,137,436"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="111,5,296,78"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="204,90,206,128,201,127,203,95"/>
+</map>

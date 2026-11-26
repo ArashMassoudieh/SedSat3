@@ -1,0 +1,13 @@
+<map id="OmSizeCorrectionTableModel" name="OmSizeCorrectionTableModel">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,1032,233,1261"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="24,770,172,842"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,854,115,1033,110,1032,100,859"/>
+<area shape="rect" id="Node000003" href="$classMultipleLinearRegressionSet.html" title=" " alt="" coords="197,652,394,959"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="218,957,188,1019,184,1016,215,961"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="139,354,332,444"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="245,456,275,652,270,652,243,461"/>
+<area shape="rect" id="Node000005" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="356,195,530,603"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="365,614,354,653,349,651,363,619"/>
+<area shape="rect" id="Node000006" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="375,5,511,122"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="444,120,446,179,441,178,443,125"/>
+</map>

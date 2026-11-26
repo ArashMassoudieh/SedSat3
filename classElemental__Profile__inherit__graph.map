@@ -1,0 +1,7 @@
+<map id="Elemental_Profile" name="Elemental_Profile">
+<area shape="rect" id="Node000001" title="Container for elemental concentration data of a single sediment sample." alt="" coords="68,483,236,801"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,173,128,268"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,279,123,483,117,484,78,284"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="152,5,326,435"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="192,447,187,484,182,483,191,452"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="element_data_groups" name="element_data_groups">
+<area shape="rect" id="Node000001" title=" " alt="" coords="45,621,197,693"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="26,313,173,385"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,383,114,547,119,605,113,604,109,548,99,387"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="31,168,107,240"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="66,237,73,289,76,297,70,298,68,289,66,243"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,5,133,95"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="69,107,72,168,67,168,69,113"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="216,168,333,240"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="202,249,183,266,132,315,127,312,179,262,205,245"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="241,458,377,548"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="277,253,288,385,302,459,296,458,283,386,274,257"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="451,313,605,385"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="346,243,469,312,464,314,346,248"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="265,14,284,86"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="275,83,277,151,272,150,274,89"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="258,547,179,612,176,608,253,549"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="480,384,387,451,384,446,475,387"/>
+</map>

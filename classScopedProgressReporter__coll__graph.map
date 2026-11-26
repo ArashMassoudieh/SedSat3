@@ -1,0 +1,7 @@
+<map id="ScopedProgressReporter" name="ScopedProgressReporter">
+<area shape="rect" id="Node000001" title="Holds a progress reporter for the duration of one analysis." alt="" coords="98,441,317,647"/>
+<area shape="rect" id="Node000002" href="$classAnalysisHost.html" title="Abstract environment that an analysis runs inside." alt="" coords="5,117,206,256"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,254,176,424,171,425,124,258"/>
+<area shape="rect" id="Node000003" href="$classProgressReporter.html" title="Abstract sink for progress information produced by a running analysis." alt="" coords="230,5,390,368"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,365,244,426,239,423,256,370"/>
+</map>

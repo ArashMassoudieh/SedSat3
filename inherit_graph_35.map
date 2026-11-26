@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,57,83,85"/>
+<area shape="rect" id="Node000001" href="$classFormElementInformation.html" title=" " alt="" coords="131,5,315,33"/>
+<area shape="poly" id="edge51_Node000000_Node000001" title=" " alt="" coords="96,53,130,43,175,32,170,35,131,48,99,58"/>
+<area shape="rect" id="Node000002" href="$classGenericForm.html" title=" " alt="" coords="171,57,275,85"/>
+<area shape="poly" id="edge52_Node000000_Node000002" title=" " alt="" coords="98,69,173,70,168,73,99,74"/>
+<area shape="rect" id="Node000003" href="$classSelectSamples.html" title=" " alt="" coords="164,109,282,137"/>
+<area shape="poly" id="edge53_Node000000_Node000003" title=" " alt="" coords="98,84,131,94,175,108,170,109,130,99,97,89"/>
+</map>

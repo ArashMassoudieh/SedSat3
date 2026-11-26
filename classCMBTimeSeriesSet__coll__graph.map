@@ -1,0 +1,9 @@
+<map id="CMBTimeSeriesSet" name="CMBTimeSeriesSet">
+<area shape="rect" id="Node000001" title="Collection of time series with labels and observed values." alt="" coords="66,652,238,970"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,363,184,435"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,448,133,652,127,652,101,453"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="208,195,382,603"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,615,209,653,204,651,218,619"/>
+<area shape="rect" id="Node000004" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="227,5,363,122"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="295,120,297,179,292,178,294,125"/>
+</map>

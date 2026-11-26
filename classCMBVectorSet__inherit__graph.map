@@ -1,0 +1,7 @@
+<map id="CMBVectorSet" name="CMBVectorSet">
+<area shape="rect" id="Node000001" title="Collection of named CMBVector objects for multi&#45;variable analysis." alt="" coords="108,483,280,779"/>
+<area shape="rect" id="Node000002" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="5,5,179,435"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,446,160,483,155,483,148,452"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="204,184,389,256"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="286,269,233,484,228,482,282,273"/>
+</map>

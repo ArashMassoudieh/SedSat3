@@ -1,0 +1,17 @@
+<map id="CMCMC&lt; T &gt;" name="CMCMC&lt; T &gt;">
+<area shape="rect" id="Node000001" title="Markov Chain Monte Carlo sampler for Bayesian parameter estimation." alt="" coords="340,1088,528,1651"/>
+<area shape="rect" id="Node000002" href="$struct__MCMC__settings.html" title="Configuration parameters for Markov Chain Monte Carlo sampling." alt="" coords="5,686,201,981"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,978,238,1062,334,1213,328,1214,233,1065,186,983"/>
+<area shape="rect" id="Node000003" href="$classCMBTimeSeriesSet.html" title="Collection of time series with labels and observed values." alt="" coords="225,674,397,992"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="348,990,368,1071,363,1071,347,995"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="163,363,342,435"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="260,447,293,674,287,674,259,453"/>
+<area shape="rect" id="Node000005" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="366,195,540,603"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="383,614,365,676,360,674,381,619"/>
+<area shape="rect" id="Node000006" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="385,5,521,122"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="453,120,455,179,450,178,452,125"/>
+<area shape="rect" id="Node000007" href="$struct__MCMC__file__names.html" title="File paths for MCMC input/output operations." alt="" coords="421,786,559,881"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="486,878,468,1072,463,1070,484,883"/>
+<area shape="rect" id="Node000008" href="$classProgressReporter.html" title="Abstract sink for progress information produced by a running analysis." alt="" coords="583,652,743,1015"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="610,1012,592,1065,538,1183,533,1180,588,1063,607,1017"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="AboutDialog" name="AboutDialog">
+<area shape="rect" id="Node000001" title="Professional about dialog for SedSat3 application." alt="" coords="5,126,205,466"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="74,5,137,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,90,108,126,103,126,105,95"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="ConcentrationSet" name="ConcentrationSet">
+<area shape="rect" id="Node000001" title="Manages a collection of concentration measurements with statistical analysis." alt="" coords="5,126,193,466"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="40,5,158,78"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,90,102,126,97,126,99,95"/>
+</map>

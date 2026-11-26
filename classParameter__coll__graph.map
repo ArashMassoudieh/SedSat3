@@ -1,0 +1,5 @@
+<map id="Parameter" name="Parameter">
+<area shape="rect" id="Node000001" title="Represents a model parameter with prior distribution and constraints." alt="" coords="14,553,180,893"/>
+<area shape="rect" id="Node000002" href="$classDistribution.html" title="Represents a parametric probability distribution for uncertainty quantification." alt="" coords="5,5,188,480"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,477,99,536,94,536,96,482"/>
+</map>

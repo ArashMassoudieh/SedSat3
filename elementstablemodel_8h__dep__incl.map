@@ -1,0 +1,9 @@
+<map id="elementstablemodel.h" name="elementstablemodel.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="233,5,401,33"/>
+<area shape="rect" id="Node000002" href="$elementstablemodel_8cpp.html" title=" " alt="" coords="5,81,189,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="266,40,137,83,136,78,261,37"/>
+<area shape="rect" id="Node000003" href="$formelementinformation_8cpp.html" title=" " alt="" coords="212,81,422,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="319,47,319,82,315,79,315,51"/>
+<area shape="rect" id="Node000004" href="$mainwindow_8cpp.html" title=" " alt="" coords="445,81,576,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="366,36,479,80,473,81,365,41"/>
+</map>

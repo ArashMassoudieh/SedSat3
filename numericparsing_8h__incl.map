@@ -1,0 +1,9 @@
+<map id="numericparsing.h" name="numericparsing.h">
+<area shape="rect" id="Node000001" title="The one place where data values entering SedSAT3 are checked." alt="" coords="62,5,196,33"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,81,75,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,33,69,73,66,69,111,34"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="98,81,160,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="131,32,132,66,127,64,128,36"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="185,81,247,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="146,31,192,71,187,71,144,36"/>
+</map>

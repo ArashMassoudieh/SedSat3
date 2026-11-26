@@ -1,0 +1,9 @@
+<map id="CMBVector" name="CMBVector">
+<area shape="rect" id="Node000001" title="Vector class with string labels for Chemical Mass Balance analysis." alt="" coords="5,652,177,970"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="18,363,79,435"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,447,78,652,72,652,53,453"/>
+<area shape="rect" id="Node000003" href="$classInterface.html" title="Abstract base class providing common serialization and visualization interface." alt="" coords="103,195,277,603"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="138,615,132,653,127,652,137,620"/>
+<area shape="rect" id="Node000004" href="$structoptions.html" title="Configuration options for data presentation and serialization." alt="" coords="122,5,258,122"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,120,193,179,187,178,190,125"/>
+</map>
