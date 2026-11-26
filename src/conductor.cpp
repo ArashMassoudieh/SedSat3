@@ -252,6 +252,43 @@ bool Conductor::CheckNegativeElements(map<string,vector<string>> negative_elemen
     return true;
 }
 
+void Conductor::ReportNegativeContributions(const vector<string>& offenders)
+{
+    if (offenders.empty())
+        return;
+
+    string message =
+        "The fit returned a negative contribution, which is not a physically "
+        "possible result - a source cannot supply a negative share of the "
+        "target sample:\n\n";
+
+    // A batch run over many target samples can produce a long list; show enough
+    // to identify the problem without a dialog that runs off the screen.
+    const unsigned int most_to_list = 20;
+    for (unsigned int i = 0; i < offenders.size() && i < most_to_list; i++)
+        message += "\t" + offenders[i] + "\n";
+
+    if (offenders.size() > most_to_list)
+    {
+        message += "\t... and " +
+                   aquiutils::numbertostring(static_cast<unsigned int>(offenders.size() - most_to_list)) +
+                   " more\n";
+    }
+
+    message +=
+        "\nWithout the softmax transformation the contributions are only "
+        "constrained to sum to one, so the optimization is free to drive one "
+        "below zero to fit the remaining sources more closely. Re-run with "
+        "'Softmax transformation' enabled, which makes a negative contribution "
+        "impossible; a source that is not present then comes out at or near "
+        "zero instead.\n\n"
+        "Expect the reported error to be slightly larger with the softmax "
+        "transformation. That is the cost of a solution that stays physically "
+        "possible.";
+
+    host->ShowWarning(message);
+}
+
 void Conductor::ReportBoxCoxSkips(SourceSinkData& dataset, const std::string& group, const std::string& consequence)
 {
     std::string message;
@@ -514,6 +551,11 @@ bool Conductor::ExecuteLevenbergMarquardt(const std::map<std::string, std::strin
         corrected_data.SolveLevenberg_Marquardt(transformation::linear);
     }
 
+    // A negative contribution is reported rather than suppressed: the results
+    // below still show the fit, and the warning says why it is not a usable
+    // answer. Only the linear parameterization can produce one.
+    ReportNegativeContributions(corrected_data.NegativeContributionCheck());
+
     results.SetName("LM " + arguments.at("Sample"));
 
     ResultItem result_contribution = corrected_data.GetContribution();
@@ -581,6 +623,31 @@ bool Conductor::ExecuteLevenbergMarquardtBatch(const std::map<std::string, std::
     if (negative_elements.size() > 0)
     {
         CheckNegativeElements(negative_elements);
+    }
+
+    // The same check the single-sample tool makes, over every target sample.
+    // The contributions are read back from the result set rather than from the
+    // dataset, because each sample was solved on its own corrected copy.
+    {
+        const double round_off = -1e-9;
+        vector<string> negative_contributions;
+
+        for (unsigned int source = 0; source < contributions->size(); source++)
+        {
+            for (unsigned int sample = 0; sample < contributions->at(source).size(); sample++)
+            {
+                const double contribution = contributions->at(source).getValue(sample);
+                if (contribution < round_off)
+                {
+                    negative_contributions.push_back(
+                        contributions->Label(sample, source) + " / " +
+                        contributions->getSeriesName(source) + ": " +
+                        aquiutils::numbertostring(contribution));
+                }
+            }
+        }
+
+        ReportNegativeContributions(negative_contributions);
     }
 
     results.SetName("LM-Batch");

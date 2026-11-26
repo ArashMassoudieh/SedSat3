@@ -468,6 +468,23 @@ public:
     vector<string> NegativeValueCheck();
 
     /**
+     * @brief Checks the solved source contributions for negative values
+     *
+     * A contribution is the fraction of the target sample a source supplied, so
+     * a negative one is not a physically possible answer. The linear
+     * parameterization of Levenberg-Marquardt constrains the contributions to
+     * sum to one but not to stay non-negative, so it can return one; the
+     * softmax parameterization cannot.
+     *
+     * Call after solving. Values below zero only by round-off are not reported.
+     *
+     * @return One "source: value" message per negative contribution
+     *
+     * @note Returns empty vector if every contribution is valid
+     */
+    vector<string> NegativeContributionCheck();
+
+    /**
      * @brief Performs bracket test to check if target concentrations fall within source ranges
      *
      * Tests whether each element's concentration in the target sample falls within

@@ -3625,6 +3625,29 @@ vector<string> SourceSinkData::NegativeValueCheck()
     return error_messages;
 }
 
+vector<string> SourceSinkData::NegativeContributionCheck()
+{
+    // Below round-off, not below zero: a contribution that is negative only in
+    // the last bits is an exact zero the arithmetic could not represent, and
+    // reporting it would cry wolf on a perfectly good solution.
+    const double round_off = -1e-9;
+
+    vector<string> error_messages;
+    const vector<string> source_names = GetSourceOrder();
+    CVector contributions = GetContributionVector();
+
+    for (size_t i = 0; i < source_names.size() && i < static_cast<size_t>(contributions.num); i++)
+    {
+        if (contributions[static_cast<int>(i)] < round_off)
+        {
+            error_messages.push_back(source_names[i] + ": " +
+                aquiutils::numbertostring(contributions[static_cast<int>(i)]));
+        }
+    }
+
+    return error_messages;
+}
+
 void SourceSinkData::IncludeExcludeAllElements(bool include_in_analysis)
 {
     // Set inclusion flag for all elements

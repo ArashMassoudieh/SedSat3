@@ -141,6 +141,18 @@ public:
     bool CheckNegativeElements(std::map<std::string, std::vector<std::string>> negative_elements);
 
     /**
+     * @brief Reports negative source contributions through the AnalysisHost
+     *
+     * Says which contributions came out negative and how to get a solution that
+     * cannot. The results are still reported: this warns about them rather than
+     * withholding them, so the user can see what the fit did.
+     *
+     * @param offenders Negative contributions, as NegativeContributionCheck() lists them
+     * @note Does nothing when @p offenders is empty
+     */
+    void ReportNegativeContributions(const std::vector<std::string>& offenders);
+
+    /**
      * @brief Warns about constituents the Box-Cox transformation leaves untransformed
      *
      * Box-Cox is defined for positive values only; constituents with a zero or
